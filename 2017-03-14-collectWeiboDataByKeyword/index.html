@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.0 -->
+    <script>
+        window.materialVersion = "1.5.0"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Title -->
+    
+    <title>
+        
+            weibo搜索爬虫 | 
+        
+        Blog
+    </title>
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Xiao Ye">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content=",爬虫">
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/Blog/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/Blog/img/favicon.png">
+    <link rel="apple-touch-icon" href="/Blog/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Blog">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.en.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/Blog/css/material.min.css?rdUU9RcgLCpXgn+BEpYF7Q==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/Blog/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/Blog/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/Blog/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-image: url(/Blog/img/ns.jpg);
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icon -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/Blog/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yexiaorain.github.io/Blog">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="weibo搜索爬虫 | Blog">
+    <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
+    <meta property="og:description" content="">
+    <meta property="og:article:tag" content="爬虫"> 
+
+    
+        <meta property="article:published_time" content="Tue Mar 14 2017 11:05:44 GMT+0800">
+        <meta property="article:modified_time" content="Sun Dec 30 2018 10:12:17 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="weibo搜索爬虫 | Blog">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="http://yexiaorain.github.io/Blog">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yexiaorain.github.io/Blog/Blog/2017-03-14-collectWeiboDataByKeyword/index.html">
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2017-03-14-collectWeiboDataByKeyword/index.html",
+    "headline": "weibo搜索爬虫",
+    "datePublished": "Tue Mar 14 2017 11:05:44 GMT+0800",
+    "dateModified": "Sun Dec 30 2018 10:12:17 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Xiao Ye",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/satan.jpg"
+        },
+        "description": "阳光只洒在金碧辉煌的高楼上"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",爬虫",
+    "description": "",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 4 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/Blog/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                weibo搜索爬虫
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/Blog/img/satan.jpg" width="44px" height="44px" alt="Author Avatar">
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Xiao Ye</strong>
+        <span>3月 14, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/Blog/tags/爬虫/">爬虫</a>
+    </li></ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=weibo搜索爬虫&url=http://yexiaorain.github.io/Blog/Blog/2017-03-14-collectWeiboDataByKeyword/index.html&pic=http://yexiaorain.github.io/Blog/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=weibo搜索爬虫&url=http://yexiaorain.github.io/Blog/Blog/2017-03-14-collectWeiboDataByKeyword/index.html&via=Xiao Ye" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yexiaorain.github.io/Blog/Blog/2017-03-14-collectWeiboDataByKeyword/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <pre><code># coding: utf-8
+
+__version__ = &#39;1.1.0&#39;
+__author__ = &#39;Zhu Jianqi (heloowird@gmail.com)&#39;
+
+&#39;&#39;&#39;
+以关键词收集新浪微博
+&#39;&#39;&#39;
+import requests
+import wx
+import csv
+import codecs
+import sys
+import urllib
+import urllib2
+import re
+import json
+import hashlib
+import os
+import time
+import datetime
+import random
+from lxml import etree
+import logging
+import gzip
+from StringIO import StringIO
+
+class CollectData():
+    &quot;&quot;&quot;数据收集类
+        利用微博高级搜索功能，按关键字搜集一定时间范围内的微博。
+
+        大体思路：构造URL，爬取网页，然后解析网页中的微博ID。后续利用微博API进行数据入库。本程序只负责收集微博的ID。
+
+        登陆新浪微博，进入高级搜索，输入关键字”空气污染“，选择”实时“，时间为”2013-07-02-2:2013-07-09-2“，地区为”北京“，之后发送请求会发现地址栏变为如下：
+        http://s.weibo.com/wb/%25E7%25A9%25BA%25E6%25B0%2594%25E6%25B1%25A1%25E6%259F%2593&amp;xsort=time&amp;region=custom:11:1000&amp;timescope=custom:2013-07-02-2:2013-07-09-2&amp;Refer=g
+
+        是不是很长，其实很简单。
+            固定地址部分：http://s.weibo.com/wb/
+            关键字二次UTF-8编码：%25E7%25A9%25BA%25E6%25B0%2594%25E6%25B1%25A1%25E6%259F%2593
+            排序为“实时”：xsort=time
+            搜索地区：region=custom:11:1000
+            搜索时间范围：timescope=custom:2013-07-02-2:2013-07-09-2
+            可忽略项：Refer=g
+            显示类似微博：nodup=1    注：这个选项可多收集微博，建议加上。默认不加此参数，省略了部分相似微博。
+            某次请求的页数：page=1
+
+        另外，高级搜索最多返回50页微博，那么时间间隔设置最小为宜。所以该类设置为搜集一定时间段内最多50页微博。
+    &quot;&quot;&quot;
+    def __init__(self, keyword, startTime, savedir, interval=&#39;50&#39;, flag=True, begin_url_per = &quot;http://s.weibo.com/weibo/&quot;):
+        self.begin_url_per = begin_url_per  #设置固定地址部分，默认为&quot;http://s.weibo.com/weibo/&quot;，或者&quot;http://s.weibo.com/wb/&quot;
+        self.setKeyword(keyword)    #设置关键字
+        self.setStartTimescope(startTime)   #设置搜索的开始时间
+        # self.setRegion(region)  #设置搜索区域
+        self.setSave_dir(savedir)   #设置结果的存储目录
+        self.setInterval(interval)  #设置邻近网页请求之间的基础时间间隔（注意：过于频繁会被认为是机器人）
+        self.setFlag(flag)  #设置
+        self.logger = logging.getLogger(&#39;main.CollectData&#39;) #初始化日志
+
+    ##设置关键字
+    ##关键字需解码
+    def setKeyword(self, keyword):
+        #self.keyword = keyword.decode(&#39;GBK&#39;).encode(&quot;utf-8&quot;)
+        self.keyword = keyword
+        print &#39;twice encode:&#39;,self.getKeyWord()
+
+    ##设置起始范围，间隔为1小时
+    ##格式为：yyyy-mm-dd-HH
+    def setStartTimescope(self, startTime):
+        if not (startTime == &#39;-&#39;):
+            self.timescope = startTime + &quot;:&quot; + startTime
+        else:
+            self.timescope = &#39;-&#39;
+
+    # ##设置搜索地区
+    # def setRegion(self, region):
+    #     self.region = region
+
+    ##设置结果的存储目录
+    def setSave_dir(self, save_dir):
+        self.save_dir = save_dir
+        if not os.path.exists(self.save_dir):
+            os.mkdir(self.save_dir)
+
+    ##设置邻近网页请求之间的基础时间间隔
+    def setInterval(self, interval):
+        self.interval = int(interval)
+
+    ##设置是否被认为机器人的标志。若为False，需要进入页面，手动输入验证码
+    def setFlag(self, flag):
+        self.flag = flag
+
+    ##构建URL
+    def getURL(self):
+        return self.begin_url_per+self.getKeyWord()+&quot;&amp;typeall=1&amp;suball=1&quot;+&quot;&amp;timescope=custom:&quot;+self.timescope+&quot;&amp;page=&quot;
+
+    ##关键字需要进行两次urlencode
+    def getKeyWord(self):
+        once = urllib.urlencode({&quot;kw&quot;:self.keyword})[3:]
+        return urllib.urlencode({&quot;kw&quot;:once})[3:]
+
+    ##爬取一次请求中的所有网页，最多返回50页
+    def download(self, url, maxTryNum=4):
+        csvFile = open(self.save_dir + os.sep + &quot;weibo_kanbing.csv&quot;, &quot;ab&quot;)  #向结果文件中写微博ID
+        csvFile.write(codecs.BOM_UTF8)
+        content = csv.writer(csvFile, dialect=&#39;excel&#39;)
+        headers = {&#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&#39;}
+        cookie = {&#39;SINAGLOBAL&#39;:&#39;3726160468139.8677.1489128973894&#39;, &#39;un&#39;:&#39;18621677460&#39;, &#39;wvr&#39;:&#39;6&#39;, &#39;SWB&#39;:&#39;usrmdinst_12&#39;, &#39;SCF&#39;:&#39;At4nsWXnBTiLQgwnhEdGW1ipfDRoyBYdEIpm4KN7_ZN3C0BxRlQeyX0sHoQOK6bDqLR6HeBBiwo6wRFXfObIvnc.&#39;, &#39;SUB&#39;:&#39;_2A251wx_bDeRxGeNP7FIR9yjFwzyIHXVWuXYTrDV8PUNbmtBeLRjVkW8ia3o1WnWjknWq3t_Uh0UkKzBqsg..&#39;, &#39;SUBP&#39;:&#39;0033WrSXqPxfM725Ws9jqgMF55529P9D9Wh_ODAX.pd3QJ6U3yvqGKET5JpX5KMhUgL.Fo-pS057S0q41h52dJLoIEUBBEXLxKqL1hnL1KnLxK-LBKeLB-zLxK-L1K5L1K2LxK-L12qLBoet&#39;, &#39;SUHB&#39;:&#39;0vJ4Ss25HO1Ohu&#39;, &#39;ALF&#39;:&#39;1521001227&#39;, &#39;SSOLoginState&#39;:&#39;1489465228&#39;, &#39;_s_tentry&#39;:&#39;login.sina.com.cn&#39;, &#39;Apache&#39;:&#39;7301168373695.357.1489465207066&#39;, &#39;ULV&#39;:&#39;1489465207130:8:8:5:7301168373695.357.1489465207066:1489412710557&#39;, &#39;UOR&#39;:&#39;,,login.sina.com.cn&#39;, &#39;WBStorage&#39;:&#39;02e13baf68409715|undefined&#39;}
+
+        hasMore = True  #某次请求可能少于50页，设置标记，判断是否还有下一页
+        isCaught = False    #某次请求被认为是机器人，设置标记，判断是否被抓住。抓住后，需要复制log中的文件，进入页面，输入验证码
+        filter = set([])    #过滤重复的微博ID
+
+        i = 1   #记录本次请求所返回的页数
+        while hasMore and i &lt; 51 and (not isCaught):    #最多返回50页，对每页进行解析，并写入结果文件
+            source_url = url + str(i)   #构建某页的URL
+            data = &#39;&#39;   #存储该页的网页数据
+            goon = True #网络中断标记
+
+            ##网络不好的情况，试着尝试请求三次
+            for tryNum in range(maxTryNum):
+                try:
+                    # set header http://stackoverflow.com/questions/385262/how-do-i-send-a-custom-header-with-urllib2-in-a-http-request
+                    # see this http://stackoverflow.com/questions/1653591/python-urllib2-response-header , so you can see &#39;gzip&#39; in response header with urllib2.urlopen(URL).info()
+                    # and this http://stackoverflow.com/questions/3947120/does-python-urllib2-automatically-uncompress-gzip-data-fetched-from-webpage teach you how to decode gzip
+                    #
+                    #r = requests.get(source_url, cookies=cookie, headers=headers, timeout=12)
+                    send_headers = {
+                            &quot;Accept&quot;:&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&quot;,
+                            &quot;Accept-Encoding&quot;:&quot;gzip, deflate, sdch&quot;,
+                            &quot;Accept-Language&quot;:&quot;zh-CN,zh;q=0.8,en;q=0.6&quot;,
+                            &quot;Cache-Control&quot;:&quot;no-cache&quot;,
+                            &quot;Connection&quot;:&quot;keep-alive&quot;,
+                            #&quot;Cookie&quot;:&quot;cookies here&quot;
+                            &quot;Host&quot;:&quot;s.weibo.com&quot;,
+                            &quot;Pragma&quot;:&quot;no-cache&quot;,
+                            &quot;Referer&quot;:&quot;http://s.weibo.com/&quot;,
+                            &quot;Upgrade-Insecure-Requests&quot;:&quot;1&quot;,
+                            &quot;User-Agent&quot;:&quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36&quot;
+                            }
+                    req = urllib2.Request(source_url , headers=send_headers)
+                    r = urllib2.urlopen(req)
+                    if r.info().get(&#39;Content-Encoding&#39;) == &#39;gzip&#39;:
+                        buf = StringIO(r.read())
+                        f = gzip.GzipFile(fileobj=buf)
+                        html = f.read()
+                    else:
+                        html = r.read()
+                    data = html
+                    #print data
+                    break
+                except:
+                    if tryNum &lt; (maxTryNum-1):
+                        time.sleep(10)
+                    else:
+                        print &#39;Internet Connect Error!&#39;
+                        self.logger.error(&#39;Internet Connect Error!&#39;)
+                        self.logger.info(&#39;filePath: &#39; + self.save_dir)
+                        self.logger.info(&#39;url: &#39; + source_url)
+                        self.logger.info(&#39;fileNum: &#39; + str(fileNum))
+                        self.logger.info(&#39;page: &#39; + str(i))
+                        self.flag = False
+                        goon = False
+                        break
+            if goon:
+                lines = data.splitlines()
+                isCaught = True
+                for line in lines:
+                    ## 判断是否有微博内容，出现这一行，则说明没有被认为是机器人
+                    if line.startswith(&#39;&lt;script&gt;STK &amp;&amp; STK.pageletM &amp;&amp; STK.pageletM.view({&quot;pid&quot;:&quot;pl_weibo_direct&quot;&#39;):
+                        isCaught = False
+                        n = line.find(&#39;html&quot;:&quot;&#39;)
+                        if n &gt; 0:
+                            j = line[n + 7: -12].encode(&quot;utf-8&quot;).decode(&#39;unicode_escape&#39;).encode(&quot;utf-8&quot;).replace(&quot;\\&quot;, &quot;&quot;).decode(&#39;utf-8&#39;)
+                            ## 没有更多结果页面
+                            if (j.find(&#39;&lt;div class=&quot;search_noresult&quot;&gt;&#39;) &gt; 0):
+                                hasMore = False
+                            ## 有结果的页面
+                            else:
+                                page = etree.HTML(j)
+                                comment_box = page.xpath(&quot;//div[@action-type=\&quot;feed_list_item\&quot;]&quot;)
+                                for each_comment in comment_box:
+                                    comment_time = each_comment.xpath(&quot;.//div[@class=\&quot;feed_from W_textb\&quot;]/a/@title&quot;)
+                                    comment_text_list = each_comment.xpath(&quot;.//p[@class=&#39;comment_txt&#39;]&quot;)
+                                    comment_text = []
+                                    for eachtext in comment_text_list:
+                                        comment_text = &#39;r&#39;.join(eachtext.xpath(&quot;.//text()&quot;))
+                                        comment_text = comment_text.replace(&#39; &#39;,&#39;&#39;).replace(&#39;\n&#39;, &#39;&#39;).replace(&#39;\r&#39;, &#39; &#39;)
+                                        comment_text = comment_text.encode(&#39;utf8&#39;)
+                                        if (comment_text != &#39;None&#39; and comment_text not in filter):
+                                            filter.add(comment_text)
+                                            content.writerow([comment_time[0], comment_text])
+                                # weibo = page.xpath(&quot;//div[@class=\&quot;feed_from W_textb\&quot;])
+                                # for weibo_time, weibo_content in weibo:
+                                #     weibo_time = weibo_time.xpath(&quot;./[@class=\&quot;feed_from W_textb\&quot;]/a/@title&quot;)
+                                #     concept = &#39;r&#39;.join(weibo_content.xpath(&quot;./text()&quot;))
+                                #     concept = concept.replace(&#39; &#39;,&#39;&#39;).replace(&#39;\n&#39;,&#39;&#39;).replace(&#39;\r&#39;,&#39; &#39;)
+                                #     concept = concept.encode(&#39;utf8&#39;)
+                                #     if (concept != &#39;None&#39; and concept not in filter):
+                                #         filter.add(concept)
+                                #         content.writerow([weibo_time, concept])
+
+                                # dls_id = page.xpath(&quot;//div[@class=\&quot;feed_from W_textb\&quot;]/a/@title&quot;)
+                                # for dl_id in dls_id:
+                                #     # mid = str(dl_id.attrib.get(&#39;nick-name&#39;))
+                                #     dl_id = dl_id.encode(&#39;utf8&#39;)
+                                #     if (dl_id != &#39;None&#39; and dl_id not in mid_filter):
+                                #         mid_filter.add(dl_id)
+                                #         content.writerow([dl_id])
+                                #
+                                # dls_text = page.xpath(&quot;//p[@class=&#39;comment_txt&#39;]&quot;)
+                                # for dl_text in dls_text:
+                                #     concept = &#39;r&#39;.join(dl_text.xpath(&quot;./text()&quot;))
+                                #     concept = concept.replace(&#39; &#39;,&#39;&#39;).replace(&#39;\n&#39;,&#39;&#39;).replace(&#39;\r&#39;,&#39; &#39;)
+                                #     concept = concept.encode(&#39;utf8&#39;)
+                                #     if (concept != &#39;None&#39; and concept not in mid_filter):
+                                #         mid_filter.add(concept)
+                                #         content.writerow([concept])
+                                        # content.writerow(&#39;\n&#39;)
+                                    # if (concept != &#39;None&#39; and concept not in mid_filter):
+                                    #     mid_filter.add(concept)
+                                    #     content.write(concept)
+                                    #     content.write(&#39;\n&#39;)
+                                    # print concept
+                                    # print &quot;----------------------&quot;
+                        break
+                lines = None
+                ## 处理被认为是机器人的情况
+                if isCaught:
+                    print &#39;Be Caught!&#39;
+                    self.logger.error(&#39;Be Caught Error!&#39;)
+                    self.logger.info(&#39;filePath: &#39; + self.save_dir)
+                    self.logger.info(&#39;url: &#39; + source_url)
+                    self.logger.info(&#39;fileNum: &#39; + str(fileNum))
+                    self.logger.info(&#39;page:&#39; + str(i))
+                    data = None
+                    self.flag = False
+                    break
+                ## 没有更多结果，结束该次请求，跳到下一个请求
+                if not hasMore:
+                    print &#39;No More Results!&#39;
+                    if i == 1:
+                        time.sleep(random.randint(55,75))
+                    else:
+                        time.sleep(15)
+                    data = None
+                    break
+                i += 1
+                ## 设置两个邻近URL请求之间的随机休眠时间，防止Be Caught。目前没有模拟登陆
+                # sleeptime_one = random.randint(self.interval-30,self.interval-10)
+                # sleeptime_two = random.randint(self.interval+10,self.interval+30)
+                # if i%2 == 0:
+                #     sleeptime = sleeptime_two
+                # else:
+                #     sleeptime = sleeptime_one
+                # print &#39;sleeping &#39; + str(sleeptime) + &#39; seconds...&#39;
+                # time.sleep(sleeptime)
+            else:
+                break
+        csvFile.close()
+        csvFile = None
+
+    ##改变搜索的时间范围，有利于获取最多的数据
+    def getTimescope(self, perTimescope, hours):
+        if not (perTimescope==&#39;-&#39;):
+            times_list = perTimescope.split(&#39;:&#39;)
+            start_datetime = datetime.datetime.fromtimestamp(time.mktime(time.strptime(times_list[-1],&quot;%Y-%m-%d-%H&quot;)))
+            start_new_datetime = start_datetime + datetime.timedelta(seconds = 3600)
+            end_new_datetime = start_new_datetime + datetime.timedelta(seconds = 3600*(hours-1))
+            start_str = start_new_datetime.strftime(&quot;%Y-%m-%d-%H&quot;)
+            end_str = end_new_datetime.strftime(&quot;%Y-%m-%d-%H&quot;)
+            return start_str + &quot;:&quot; + end_str
+        else:
+            return &#39;-&#39;
+
+def main():
+    logger = logging.getLogger(&#39;main&#39;)
+    logFile = &#39;./collect.log&#39;
+    logger.setLevel(logging.DEBUG)
+    filehandler = logging.FileHandler(logFile)
+    formatter = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s: %(message)s&#39;)
+    filehandler.setFormatter(formatter)
+    logger.addHandler(filehandler)
+
+    while True:
+        ## 接受键盘输入
+        keyword = raw_input(&#39;Enter the keyword(type \&#39;quit\&#39; to exit ):&#39;)
+        if keyword == &#39;quit&#39;:
+            sys.exit()
+        startTime = raw_input(&#39;Enter the start time(Format:YYYY-mm-dd-HH):&#39;)
+        # region = raw_input(&#39;Enter the region([BJ]11:1000,[SH]31:1000,[GZ]44:1,[CD]51:1):&#39;)
+        savedir = raw_input(&#39;Enter the save directory(Like C://data//):&#39;)
+        interval = raw_input(&#39;Enter the time interval( &gt;30 and deafult:50):&#39;)
+
+        ##实例化收集类，收集指定关键字和起始时间的微博
+        cd = CollectData(keyword, startTime, savedir, interval)
+        while cd.flag:
+            print cd.timescope
+            logger.info(cd.timescope)
+            url = cd.getURL()
+            cd.download(url)
+            cd.timescope = cd.getTimescope(cd.timescope,1)  #改变搜索的时间，到下一个小时
+        else:
+            cd = None
+            print &#39;-----------------------------------------------------&#39;
+            print &#39;-----------------------------------------------------&#39;
+    else:
+        logger.removeHandler(filehandler)
+        logger = None
+if __name__ == &#39;__main__&#39;:
+    main()
+</code></pre>
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                         
+                            This blog is under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC BY-NC-SA 3.0 Unported License</a>
+                        </strong>
+                        <br>
+                        <strong>本文鏈接：</strong><a href="http://yexiaorain.github.io/Blog/2017-03-14-collectWeiboDataByKeyword/">http://yexiaorain.github.io/Blog/2017-03-14-collectWeiboDataByKeyword/</a>
+                    </p>
+                </blockquote>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/Blog/2017-03-27-pythoncharascii/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/Blog/2016-01-01-cuw.js/" id="post_nav-older" class="next-content">
+            舊篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/Blog/img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/Blog/img/satan.jpg" alt="Xiao Ye's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        yexiaorain@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto: yexiaorain@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/Blog/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                首頁
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    過往
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/Blog/archives/2019/01/">一月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/05/">五月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/10/">十月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/09/">九月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2016/01/">一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2015/10/">十月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2015/06/">六月 2015<span class="sidebar_archives-count">2</span></a>
+            </li></ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分類
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/Blog/categories/ML/">ML<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/code/">code<span class="sidebar_archives-count">22</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/code/USACO/">USACO<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/code/codeforces/">codeforces<span class="sidebar_archives-count">12</span></a>
+            </li></ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://yexiaorain.github.com" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2013&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/Blog/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/Blog/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/Blog/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/Blog/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","/Blog/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
