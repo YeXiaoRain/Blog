@@ -1,8 +1,8 @@
 ---
 title: Stanford Machine Learning 学习笔记、个人整理
 date: 2018-04-17 22:33:44
-tags: [ML]
-category: [ML]
+tags: [Machine learning]
+category: [Machine learning]
 ---
 
 # 课程相关链接

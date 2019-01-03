@@ -1,8 +1,8 @@
 ---
 title: Stanford Machine Learning 科普
 date: 2018-04-18 23:33:33
-tags: [ML]
-category: [ML]
+tags: [Machine learning]
+category: [Machine learning]
 ---
 
 [表格整理](https://yexiaorain.github.io/Blog/2018-04-17-Stanford_Machine_Learning/)
