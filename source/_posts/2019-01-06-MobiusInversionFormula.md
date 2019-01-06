@@ -14,11 +14,11 @@ where ${\displaystyle \delta }$  is the Kronecker delta, λ(n) is the Liouville 
 
 ---
 
+μ(n) = 0 if n has a squared prime factor.
+
 μ(n) = 1 if n is a square-free positive integer with an even number of prime factors.
 
 μ(n) = −1 if n is a square-free positive integer with an odd number of prime factors.
-
-μ(n) = 0 if n has a squared prime factor.
 
 上面是 Möbius function 的定义
 
@@ -36,11 +36,17 @@ wikipedia上,还有些性质,不过和本文的关系不大,就没有 copy paste
 
 $g(n)=\sum_{d\,\mid \,n}f(d)\quad\text{for every integer }n\ge 1$
 
+那么有
+
+${\displaystyle f(n)=\sum _{d\,\mid \,n}\mu (d)g\left({\frac {n}{d}}\right)\quad {\text{for every integer }}n\geq 1}$
+
+> 证明
+
+${\displaystyle {\begin{aligned}\sum _{1\leq n\leq x}\mu (n)g\left({\frac {x}{n}}\right)&=\sum _{1\leq n\leq x}\mu (n)\sum _{1\leq m\leq {\frac {x}{n}}}f\left({\frac {x}{mn}}\right)\\&=\sum _{1\leq n\leq x}\mu (n)\sum _{1\leq m\leq {\frac {x}{n}}}\sum _{1\leq r\leq x}[r=mn]f\left({\frac {x}{r}}\right)\\&=\sum _{1\leq r\leq x}f\left({\frac {x}{r}}\right)\sum _{1\leq n\leq x}\mu (n)\sum _{1\leq m\leq {\frac {x}{n}}}\left[m={\frac {r}{n}}\right]\qquad {\text{rearranging the summation order}}\\&=\sum _{1\leq r\leq x}f\left({\frac {x}{r}}\right)\sum _{n|r}\mu (n)\\&=\sum _{1\leq r\leq x}f\left({\frac {x}{r}}\right)i(r)\\&=f(x)\qquad {\text{since }}i(r)=0{\text{ except when }}r=1\end{aligned}}}$
 
 
 # 实例代码
 
-[CF R488 Div1 E ACCEPTED](https://codeforces.com/contest/993/submission/47860243)
 
 # 相关延伸
 
