@@ -40,7 +40,7 @@ ${\displaystyle \sum _{d\mid n}\mu (d)={\begin{cases}1&{\text{if }}n=1,\\\0&{\te
 
 $\mu(n) = (-1)^{t}$, 其中n不包含平方数,t为其质因子个数
 
-${\displaystyle \sum _{d\mid n}\mu (d) = \sum_{k=0}^{t} {t \\\ k}x^{k} = (1-1)^t = 0}$
+${\displaystyle \sum _{d\mid n}\mu (d) = \sum _ {k=0}^t {t \choose k}(-1)^{k} = (1-1)^t = 0 }$
 
 证毕
 
@@ -48,7 +48,7 @@ ${\displaystyle \sum _{d\mid n}\mu (d) = \sum_{k=0}^{t} {t \\\ k}x^{k} = (1-1)^t
 
 wikipedia上,还有写些其它性质
 
-例如 μ(ab) = μ(a) μ(b) ,当 a和b互质
+例如$\mu(ab) = \mu(a) \mu(b)$ ,当 a和b互质
 
 不过和本文的关系不大,就没有 copy paste过来
 
@@ -73,12 +73,6 @@ ${\displaystyle=\sum _{m\mid x}f\left(m\right)\sum _{n\mid \frac{x}{m}}\mu (n)}$
 ${\displaystyle=f(x)}$
 
 见上面Möbius function的性质,也就是仅在m=x时 右侧的sum 才不为0,且为1
-
-
-# 实例代码
-
-
-# 相关延伸
 
 
 # 练习题目
