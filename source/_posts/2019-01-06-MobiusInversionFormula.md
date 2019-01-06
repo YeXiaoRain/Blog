@@ -48,7 +48,7 @@ ${\displaystyle \sum _{n\mid x}\mu (n)g\left({\frac {x}{n}}\right)}$
 
 ${\displaystyle =\sum _{n\mid x}\mu (n)\sum _{m\mid {\frac {x}{n}}}f\left(m\right)}$
 
-${\displaystyle=\sum _{m\mid x}f\left(m\right)\sum _{n|m}\mu (n)}$
+${\displaystyle=\sum _{m\mid x}f\left(m\right)\sum _{n\mid \frac{x}{m}}\mu (n)}$ (n能取到所有x的因子,m也能取到,且满足n,m其中一个确定时,另一个取值使得n*m为x的因子)
 
 ${\displaystyle=f(x)}$
 
