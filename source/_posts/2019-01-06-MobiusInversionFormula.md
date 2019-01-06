@@ -34,7 +34,7 @@ ${\displaystyle \sum _{d\mid n}\mu (d)={\begin{cases}1&{\text{if }}n=1,\\\0&{\te
 
 假设n的所有质因子有t个,既 $n = p_1^{a_1} * p_2^{a_2}...p_t^{a_t}$
 
-那么 所有是n的因子的x 且μ(x) != 0,的x则为这t个质因子的组合
+那么 所有是n的因子的x 且$\mu(x) \neq 0$ 的x,则为这t个质因子的组合
 
 注意到 不包含平方数的 Möbius function也可以写成
 
