@@ -48,7 +48,7 @@ ${\displaystyle \sum _{n\mid x}\mu (n)g\left({\frac {x}{n}}\right)}$
 
 ${\displaystyle =\sum _{n\mid x}\mu (n)\sum _{m\mid {\frac {x}{n}}}f\left(m\right)}$
 
-${\displaystyle=\sum _{m\mid x}f\left(m\right)\sum _{n|m}\mu (\frac {n}{m})}$
+${\displaystyle=\sum _{m\mid x}f\left(m\right)\sum _{n|m}\mu (n)}$
 
 ${\displaystyle=f(x)}$
 
