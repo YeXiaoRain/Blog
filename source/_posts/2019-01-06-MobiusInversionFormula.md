@@ -74,6 +74,36 @@ ${\displaystyle=f(x)}$
 
 见上面Möbius function的性质,也就是仅在m=x时 右侧的sum 才不为0,且为1
 
+# 实现
+
+线性筛
+
+```c++
+const int maxn = 100000000;
+int prime[maxn], tot, mu[maxn];
+bool check[maxn];
+void calmu(){
+  mu[1] = 1;
+  rep(i,2,maxn){
+    if (!check[i]){
+      prime[tot++] = i;
+      mu[i] = -1;
+    }
+    rep(j,0,tot){
+      if (i * prime[j] >= maxn) break;
+      check[i * prime[j]] = true;
+      if (i % prime[j] == 0){
+        mu[i * prime[j]] = 0;
+        break;
+      }else
+        mu[i * prime[j]] = -mu[i];
+    }
+  }
+}
+```
+
+
+
 
 # 练习题目
 
@@ -92,3 +122,7 @@ https://mathlesstraveled.com/2016/11/29/the-mobius-function-proof-part-1/
 https://mathlesstraveled.com/2016/09/08/post-without-words-11/
 
 http://2000clicks.com/MathHelp/NumberTh06MobiusFunction.aspx
+
+https://www.youtube.com/watch?v=XKjQcPNWMo0
+
+https://www.youtube.com/watch?v=-blqpqbgu0Q
