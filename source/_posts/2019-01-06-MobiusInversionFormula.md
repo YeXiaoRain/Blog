@@ -46,6 +46,10 @@ ${\displaystyle \sum _{d\mid n}\mu (d) = \sum _ {k=0}^t {t \choose k}(-1)^{k} = 
 
 ---
 
+Möbius function 是 积性函数!! [TODO证明]
+
+---
+
 wikipedia上,还有写些其它性质
 
 例如$\mu(ab) = \mu(a) \mu(b)$ ,当 a和b互质
@@ -101,9 +105,6 @@ void calmu(){
   }
 }
 ```
-
-
-
 
 # 练习题目
 
