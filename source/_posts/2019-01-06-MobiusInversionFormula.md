@@ -24,11 +24,13 @@ where ${\displaystyle \delta }$  is the Kronecker delta, λ(n) is the Liouville 
 
 > 它具有的性质
 
-μ(ab) = μ(a) μ(b) ,当 a和b互质
-
 ${\displaystyle \sum _{d\mid n}\mu (d)={\begin{cases}1&{\text{if }}n=1,\\\0&{\text{if }}n>1.\end{cases}}}$
 
-wikipedia上,还有些性质,不过和本文的关系不大,就没有 copy paste过来
+wikipedia上,还有些性质
+
+例如 μ(ab) = μ(a) μ(b) ,当 a和b互质
+
+不过和本文的关系不大,就没有 copy paste过来
 
 # Möbius inversion formula
 
@@ -42,7 +44,13 @@ ${\displaystyle f(n)=\sum _{d\,\mid \,n}\mu (d)g\left({\frac {n}{d}}\right)\quad
 
 > 证明
 
-${\displaystyle {\begin{aligned}\sum _{1\leq n\leq x}\mu (n)g\left({\frac {x}{n}}\right)&=\sum _{1\leq n\leq x}\mu (n)\sum _{1\leq m\leq {\frac {x}{n}}}f\left({\frac {x}{mn}}\right)\\&=\sum _{1\leq n\leq x}\mu (n)\sum _{1\leq m\leq {\frac {x}{n}}}\sum _{1\leq r\leq x}[r=mn]f\left({\frac {x}{r}}\right)\\&=\sum _{1\leq r\leq x}f\left({\frac {x}{r}}\right)\sum _{1\leq n\leq x}\mu (n)\sum _{1\leq m\leq {\frac {x}{n}}}\left[m={\frac {r}{n}}\right]\qquad {\text{rearranging the summation order}}\\&=\sum _{1\leq r\leq x}f\left({\frac {x}{r}}\right)\sum _{n|r}\mu (n)\\&=\sum _{1\leq r\leq x}f\left({\frac {x}{r}}\right)i(r)\\&=f(x)\qquad {\text{since }}i(r)=0{\text{ except when }}r=1\end{aligned}}}$
+${\displaystyle {\begin{aligned}\sum _{1\leq n\leq x}\mu (n)g\left({\frac {x}{n}}\right)$
+$\sum _{1\leq n\leq x}\mu (n)\sum _{1\leq m\leq {\frac {x}{n}}}f\left({\frac {x}{mn}}\right)\\$
+$\sum _{1\leq n\leq x}\mu (n)\sum _{1\leq m\leq {\frac {x}{n}}}\sum _{1\leq r\leq x}[r=mn]f\left({\frac {x}{r}}\right)\\$
+$\sum _{1\leq r\leq x}f\left({\frac {x}{r}}\right)\sum _{1\leq n\leq x}\mu (n)\sum _{1\leq m\leq {\frac {x}{n}}}\left[m={\frac {r}{n}}\right]\qquad {\text{rearranging the summation order}}\\$
+$\sum _{1\leq r\leq x}f\left({\frac {x}{r}}\right)\sum _{n|r}\mu (n)\\$
+$\sum _{1\leq r\leq x}f\left({\frac {x}{r}}\right)i(r)\\$
+$f(x)\qquad {\text{since }}i(r)=0{\text{ except when }}r=1\end{aligned}}} 见上面Möbius function的性质$
 
 
 # 实例代码
