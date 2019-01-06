@@ -50,7 +50,7 @@ ${\displaystyle =\sum _{n\mid x}\mu (n)\sum _{m\mid {\frac {x}{n}}}f\left(m\righ
 
 ${\displaystyle=\sum _{m\mid x}f\left({\frac {x}{m}}\right)\sum _{n|m}\mu (n)}$
 
-${\displaystyle=f(x)$
+${\displaystyle=f(x)}$
 
 见上面Möbius function的性质
 
