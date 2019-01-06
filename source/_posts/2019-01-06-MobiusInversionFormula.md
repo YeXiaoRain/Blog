@@ -46,17 +46,11 @@ ${\displaystyle f(n)=\sum _{d\,\mid \,n}\mu (d)g\left({\frac {n}{d}}\right)\quad
 
 ${\displaystyle \sum _{n\mid x}\mu (n)g\left({\frac {x}{n}}\right)}$
 
-${\displaystyle =\sum _{n\mid x}\mu (n)\sum _{m\mid {\frac {x}{n}}}f\left({\frac {x}{mn}}\right)}$
+${\displaystyle =\sum _{n\mid x}\mu (n)\sum _{m\mid {\frac {x}{n}}}f\left(m\right)}$
 
-${\displaystyle =\sum _{n\mid x}\mu (n)\sum _{m\mid {\frac {x}{n}}}\sum _{r\mid x}[r=mn]f\left({\frac {x}{r}}\right)}$
+${\displaystyle=\sum _{m\mid x}f\left({\frac {x}{m}}\right)\sum _{n|m}\mu (n)}$
 
-${\displaystyle =\sum _{r\mid x}f\left({\frac {x}{r}}\right)\sum _{n\mid x}\mu (n)\sum _{m\mid {\frac {x}{n}}}\left[m={\frac {r}{n}}\right]\qquad {\text{rearranging the summation order}}}$
-
-${\displaystyle=\sum _{r\mid x}f\left({\frac {x}{r}}\right)\sum _{n|r}\mu (n)}$
-
-${\displaystyle=\sum _{r\mid x}f\left({\frac {x}{r}}\right)i(r)}$
-
-${\displaystyle=f(x)\qquad {\text{since }}i(r)=0{\text{ except when }}r=1}$
+${\displaystyle=f(x)$
 
 见上面Möbius function的性质
 
