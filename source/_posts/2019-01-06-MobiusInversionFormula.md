@@ -44,7 +44,7 @@ ${\displaystyle f(n)=\sum _{d\,\mid \,n}\mu (d)g\left({\frac {n}{d}}\right)\quad
 
 > 证明
 
-${\displaystyle {\begin{aligned}\sum _{n\mid x}\mu (n)g\left({\frac {x}{n}}\right)$
+${\displaystyle {\sum _{n\mid x}\mu (n)g\left({\frac {x}{n}}\right)}}$
 
 $=\sum _{n\mid x}\mu (n)\sum _{m\mid {\frac {x}{n}}}f\left({\frac {x}{mn}}\right)\\$
 
