@@ -40,7 +40,7 @@ ${\displaystyle \sum _{d\mid n}\mu (d)={\begin{cases}1&{\text{if }}n=1,\\\0&{\te
 
 $\mu(n) = (-1)^{t}$, 其中n不包含平方数,t为其质因子个数
 
-${\displaystyle \sum _{d\mid n}\mu (d)= \sum{i=0}{t}(-1)^iC_k^i = (1-1)^t}$
+${\displaystyle \sum _{d\mid n}\mu (d)= \sum _{{k=0}}^{t}{t \choose k}x^{k} = (1-1)^t}$
 
 
 
