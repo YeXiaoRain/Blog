@@ -56,7 +56,7 @@ ${\displaystyle=\sum _{r\mid x}f\left({\frac {x}{r}}\right)\sum _{n|r}\mu (n)}$
 
 ${\displaystyle=\sum _{r\mid x}f\left({\frac {x}{r}}\right)i(r)}$
 
-${\displaystyle=f(x)\qquad {\text{since }}i(r)=0{\text{ except when }}r=1\end{aligned}}$
+${\displaystyle=f(x)\qquad {\text{since }}i(r)=0{\text{ except when }}r=1}$
 
 见上面Möbius function的性质
 
