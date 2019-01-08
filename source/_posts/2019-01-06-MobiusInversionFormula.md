@@ -46,7 +46,7 @@ ${\displaystyle \sum _{d\mid n}\mu (d) = \sum _ {k=0}^t {t \choose k}(-1)^{k} = 
 
 ---
 
-Möbius function 是 积性函数!! [TODO证明]
+Möbius function 是 积性函数!! 根据积性函数定义 如果gcd(a,b) == 1 有 f(ab)=f(a)*f(b)
 
 ---
 
