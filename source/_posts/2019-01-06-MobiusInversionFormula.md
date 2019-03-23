@@ -10,25 +10,27 @@ mathjax: true
 
 ${\displaystyle \mu (n)=\delta _{\omega (n)}^{\Omega (n)}\lambda (n)}$
 
-where ${\displaystyle \delta }$  is the Kronecker delta, λ(n) is the Liouville function, ω(n) is the number of distinct prime divisors of n, and Ω(n) is the number of prime factors of n, counted with multiplicity.
+${\displaystyle \delta }$  是 Kronecker delta, λ(n) 是 Liouville 函数, ω(n) 是n的不同的质因数个数，Ω(n) 是质因子个数
 
----
+## 定义
 
-μ(n) = 0 if n has a squared prime factor.
+μ(n) = 0 如果n的质因子有幂次大于1的
 
-μ(n) = 1 if n is a square-free positive integer with an even number of prime factors.
+μ(n) = 1 如果n由偶数个不同质数相乘
 
-μ(n) = −1 if n is a square-free positive integer with an odd number of prime factors.
+μ(n) = −1 如果n由奇数个不同质数相乘
 
-上面是 Möbius function 的定义
-
-> 它具有的性质
+## 性质
 
 ${\displaystyle \sum _{d\mid n}\mu (d)={\begin{cases}1&{\text{if }}n=1,\\\0&{\text{if }}n>1.\end{cases}}}$
 
-> 性质的证明
+有的地方写作
 
-首先 要μ(x) != 0
+$\mu * 1 = \epsilon$ 其中星号表示狄利克雷卷积(https://en.wikipedia.org/wiki/Dirichlet_convolution),正好对应的是 要因子
+
+### 性质的证明
+
+首先 要`μ(x) != 0`
 
 需要x的各个质因子次数恰好为1
 
@@ -44,15 +46,14 @@ ${\displaystyle \sum _{d\mid n}\mu (d) = \sum _ {k=0}^t {t \choose k}(-1)^{k} = 
 
 证毕
 
----
+## 积性函数
 
 Möbius function 是 积性函数!! 根据积性函数定义 如果gcd(a,b) == 1 有 f(ab)=f(a)*f(b)
 
----
+$\mu(ab) = \mu(a) \mu(b)$ ,当 a和b互质
 
 wikipedia上,还有写些其它性质
 
-例如$\mu(ab) = \mu(a) \mu(b)$ ,当 a和b互质
 
 不过和本文的关系不大,就没有 copy paste过来
 
@@ -60,11 +61,13 @@ wikipedia上,还有写些其它性质
 
 如果 f和g都是算数函数,且
 
-$g(n)=\sum_{d\,\mid \,n}f(d)\quad\text{for every integer }n\ge 1$
+$g(n)=\sum_{d\,\mid \,n}f(d)\quad\text{对所有整数 }n\ge 1$
+
+g(n)表示它所有因子对应的f的和,所以一旦有题目F(x) = sum 所有f(y),y是x的因子，就可以联想到反演
 
 那么有
 
-${\displaystyle f(n)=\sum _{d\,\mid \,n}\mu (d)g\left({\frac {n}{d}}\right)\quad {\text{for every integer }}n\geq 1}$
+${\displaystyle f(n)=\sum _{d\,\mid \,n}\mu (d)g\left({\frac {n}{d}}\right)\quad {\text{对所有整数 }}n\geq 1}$
 
 > 证明
 
