@@ -26,7 +26,7 @@ ${\displaystyle \sum _{d\mid n}\mu (d)={\begin{cases}1&{\text{if }}n=1,\\\0&{\te
 
 有的地方写作
 
-$\mu * 1 = \epsilon$ 其中星号表示狄利克雷卷积(https://en.wikipedia.org/wiki/Dirichlet_convolution),正好对应的是 要因子
+$\mu * 1 = \epsilon$ 其中星号表示[狄利克雷卷积](https://en.wikipedia.org/wiki/Dirichlet_convolution),正好对应的是 所求和的d都是n的因子
 
 ### 性质的证明
 
