@@ -3,7 +3,7 @@ title: 最小值管理
 date: 2017-04-17 23:31:33
 description: C++手工优化
 tags:
-category: [code]
+category: [Unarranged]
 ---
 
 # Minimum_maintenance.cpp

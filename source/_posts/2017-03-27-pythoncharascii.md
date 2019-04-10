@@ -2,7 +2,7 @@
 title: 某人的python作业
 date: 2017-03-27 20:49:14
 tags:
-category: [code]
+category: [Unarranged]
 ---
 
 ```python

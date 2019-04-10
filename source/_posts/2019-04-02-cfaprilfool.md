@@ -2,7 +2,7 @@
 title: CF 愚人节赛题目鉴赏
 date: 2019-04-01 01:37:14
 tags: [AprilFool]
-category: [code,codeforces]
+category: [Codeforces]
 mathjax: true
 ---
 
