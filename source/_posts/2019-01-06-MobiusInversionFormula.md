@@ -2,7 +2,7 @@
 title: Möbius inversion formula
 date: 2019-01-06 11:20:14
 tags: [Möbius function]
-category: [code]
+category: [algorithm]
 mathjax: true
 ---
 
