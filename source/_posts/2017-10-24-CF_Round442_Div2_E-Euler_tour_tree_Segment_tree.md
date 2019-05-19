@@ -2,7 +2,7 @@
 title: CF Round442 Div2 E(Euler tour tree + Segment tree)
 date: 2017-10-24 23:02:29
 tags: [segment tree]
-category: [code,codeforces]
+category: [Codeforces]
 ---
 
 # Danil and a Part-time Job
