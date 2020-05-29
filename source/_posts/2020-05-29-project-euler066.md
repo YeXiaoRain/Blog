@@ -964,9 +964,78 @@ $(x,y) = {h_{2l-1},k_{2l-1}}$ 长度为奇数
 
 # 代码
 
-似乎还不足以写代码，下面的问题是 如何得到根号n的连分数呢？ 手工三元组(分母整数，有理分子整数，无理分子的系数整数)是一个办法，有没有更好的办法呢。
+似乎还不足以写代码?，下面的问题是 如何得到根号n的连分数呢？ 手工三元组(分母整数，有理分子整数，无理分子的系数整数)是一个办法，有没有更好的办法呢。
 
 但我们至少说能证明了这个结论
+
+python3
+
+```python
+def gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd(b, a % b)
+
+
+def calc(i, p):
+    sq = int(i**(0.5))
+    if sq * sq == i:
+        return (1, 0)
+
+    hk = ((1, 0), (0, 1))
+    # a, b, c => (a+b*sqrt{d})/c
+    cur = (0, 1, 1)
+    idx = 0
+    while cur[0] == 0 or hk[0][0]*hk[0][0] - i*hk[0][1]*hk[0][1] != 1:
+        if p:
+            print("x_", idx, " = ", cur)
+        z = int((cur[0] + cur[1] * (i**(0.5)))/cur[2])
+        if p:
+            print("a_", idx, " = ",  z)
+
+        idx += 1
+        # z 1
+        # 1 0
+        #    hk 00 01
+        #       10 11
+        newhk = (
+            ((hk[0])[0]*z+(hk[1])[0], (hk[0])[1]*z+(hk[1])[1]),
+            ((hk[0])[0], (hk[0])[1])
+        )
+        hk = newhk
+        if p:
+            print("hk = ", hk)
+        a = cur[0]
+        b = cur[1]
+        c = cur[2]
+        # c/(a+b*sqrt{i}-c*z)
+        # c*(a-b*sqrt{i}-cz)/((a-cz)^2-b^2*i)
+        nv = (c*(a-c*z), -c*b, (a-c*z)*(a-c*z)-b*b*i)
+        cm = gcd(abs(nv[0]), abs(nv[1]))
+        cm = gcd(cm, abs(nv[2]))
+        nv = (nv[0]/cm, nv[1]/cm, nv[2]/cm)
+        if nv[2] < 0:
+            nv = (-nv[0], -nv[1], -nv[2])
+        cur = nv
+    return hk[0]
+
+
+def main():
+    ans = (0, (1, 0))
+    for i in range(0, 1001):
+        newans = calc(i, False)
+        if newans[0] > ans[1][0]:
+            ans = (i, newans[:])
+        print(i, " -> ", newans)
+    print(ans)
+
+
+main()
+
+```
+
+可以看到x的值会达到十进制的38位，暴力不可取!即使用了上面分析出的一些晓得性质最多优化661倍 依然是能有10的35次方的数量级。
 
 # 参考
 
