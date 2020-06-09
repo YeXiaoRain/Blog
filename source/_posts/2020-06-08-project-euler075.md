@@ -10,7 +10,7 @@ mathjax: true
 
 https://projecteuler.net/problem=75
 
-12=3+4+5,3×3+4×4=5×5;
+$12=3+4+5,3^2+4^2=5^2;$
 
 有些整数 有唯一拆分，可以拆分成直角三角形的三条边
 
@@ -58,7 +58,7 @@ fn main() {
     let (tx, rx) = mpsc::channel();
     thread::spawn(move || {
         for i in 1..N+1{
-            let tx_clone = mpsc::Sender::clone(&tx) ; // <--------------
+            let tx_clone = mpsc::Sender::clone(&tx) ; 
             thread::spawn(move || {
                 tx_clone.send( (i,f(i)) ).unwrap();
             });
@@ -78,7 +78,7 @@ fn main() {
 }
 ```
 
-答案每新增1000 输出一次当前i，但运行了3min+ 我把它掐了,准备学一学 如何数学角度优化
+答案每新增1000 输出一次当前i，但运行了3min+ (x8核) 我把它掐了,准备学一学 如何数学角度优化
 
 ```
 time ./p075 
@@ -132,20 +132,19 @@ sys	0m22.575s
 
 # 解法
 
-如果有$(a,b,c)$满足$a^2+b^2=c^2 , 0 < a < b < c$那么 这是一组勾股数
+如果有正整数对$(a,b,c)$满足$a^2+b^2=c^2$那么 这是一组勾股数
 
 我们可以有$(ka,kb,kc)$也是勾股数，对于$gcd(a,b,c) = 1$的情况 称作素勾股数字
 
-
-`m>n`且`gcd(m,n)=1` , m,n一个奇一个偶。
+若$m>n$且$gcd(m,n)=1$ , m,n一个奇一个偶。
 
 则令 $a=m^2-n^2$,$b=2mn$,$c=m^2+n^2$ ，则$(a,b,c)$是 素勾股数 
 
-显然上述 满足勾股定理,且根据gcd运算规则是素勾股数
+充分性显然，上述表达满足勾股定理,且根据gcd运算规则是素勾股数
 
-下面再证明 素勾股数 能拆解成上面的`m`和`n`,
+下面再证明必要，也就是所有素勾股数都能拆解成上面的`m`和`n`,
 
-因为 `gcd(a,b,c) = 1` 说明两两`gcd = 1`(否则如果两个gcd不为1,运算过程 会导致另一个变量也是这个gcd的倍数 )
+因为$gcd(a,b,c) = 1$ 说明两两$gcd = 1$(否则如果两个gcd不为1,运算过程 会导致另一个变量也是这个gcd的倍数 )
 
 因此 必定`a,b`一个奇一个偶
 
@@ -165,9 +164,9 @@ sys	0m22.575s
 
 ---
 
-注意到 `c=m^2+n^2`
+注意到 $c=m^2+n^2$
 
-所以 最大的只用枚举到 $sqrt{l/2}$
+所以 最大的只用枚举到 $\sqrt{\frac{l}{2}}$
 
 # code 
 
@@ -209,7 +208,7 @@ fn main() {
     let maxn = 1000; // N+1
     thread::spawn(move || {
         for i in 1..maxn{
-            let tx_clone = mpsc::Sender::clone(&tx) ; // <--------------
+            let tx_clone = mpsc::Sender::clone(&tx) ; 
             thread::spawn(move || {
                 tx_clone.send( f(i) ).unwrap();
             });
