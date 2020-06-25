@@ -276,5 +276,3 @@ $ = \prod_{n=1}^{\infty} (1+x^n)$ (这。。。无限项这样拆分相消科学
 `https://en.wikipedia.org/wiki/Partition_(number_theory)`
 
 `https://en.wikipedia.org/wiki/Pentagonal_number_theorem`
-
-

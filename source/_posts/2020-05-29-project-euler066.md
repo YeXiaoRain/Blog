@@ -334,7 +334,7 @@ $(x_1+y_1 \cdot \sqrt{d})^n < (x_k+y_k \cdot \sqrt{d}) < (x_1+y_1 \cdot \sqrt{d}
 
 $1 < (x_k+y_k \cdot \sqrt{d}) \cdot (x_1-y_1 \cdot \sqrt{d})^n < (x_1+y_1 \cdot \sqrt{d}) $
 
-注意到中间的表达式 也是满足参数形式的 也是一组解
+注意到中间的表达式 也是满足参数形式的 也是一组解(并且因为$\frac{x_1}{y_1} = \sqrt{\frac{1}{y_1^2}+d} > \sqrt{\frac{1}{y_k^2}+d} = \frac{x_k}{y_k}$,所以参数均为正数 )
 
 这与最小解定义冲突，所以所有解都是最小解生成的
 
@@ -396,7 +396,7 @@ $1 < (x_k+y_k \cdot \sqrt{d}) \cdot (x_1-y_1 \cdot \sqrt{d})^n < (x_1+y_1 \cdot 
 
 形如
 
-$x = a_0 + \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{\ddots\,}}}} $
+$\alpha = a_0 + \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{\ddots\,}}}} $
 
 例如 
 
@@ -412,7 +412,7 @@ $ \sqrt{2} = 1 + \frac{1}{2 + \cfrac{1}{2 + \cfrac{1}{2 + \cfrac{1}{2 + \cfrac{1
 
 #### 分子分母递推式
 
-渐进分数，把上述连分数部分截断得到的分数
+渐进分数，把上述表示无理数$\alpha$的连分数部分截断所得到的分数
 
 假设h,k分别为渐进分数的分子和分母,根据简化为分数的过程
 
@@ -451,33 +451,33 @@ $k_nh_{n-1}-k_{n-1}h_n=-(k_{n-1}h_{n-2}-k_{n-2}h_{n-1})=(-1)^n $,
 
 $k_nh_{n-2}-k_{n-2}h_n=a_n(k_{n-1}h_{n-2}-k_{n-2}h_{n-1})=a_n(-1)^{n-1} $, 
 
-设$\sqrt d$的精确表示为$[a_0,a_1,...,a_n,x_{n+1}]$,即是最后$a_{n+1}$替换为精确的非整数值$x_{n+1}$,有$1<=a_{n+1}<x_{n+1}<a_{n+1}+1,(n>=1)$
+设无理数$\alpha$ 的精确表示为$[a_0,a_1,...,a_n,x_{n+1}]$,即是最后$a_{n+1}$替换为精确的非整数值$x_{n+1}$,有$1<=a_{n+1}<x_{n+1}<a_{n+1}+1,(n>=1)$
 
 #### 原无理数与渐进数的差值表达式
 
 根据上方计算渐进值得到的公式，同理递推式有
 
-$\sqrt d =\frac{x_{n+1}h_n+h_{n-1}}{x_{n+1}k_n+k_{n-1}}  $
+$\alpha =\frac{x_{n+1}h_n+h_{n-1}}{x_{n+1}k_n+k_{n-1}}  $
 
-$\sqrt d-\frac{h_n}{k_n} =\frac{x_{n+1}h_n+h_{n-1}}{x_{n+1}k_n+k_{n-1}} -\frac{h_n}{k_n} $
+$\alpha - \frac{h_n}{k_n} =\frac{x_{n+1}h_n+h_{n-1}}{x_{n+1}k_n+k_{n-1}} -\frac{h_n}{k_n} $
 
 $=\frac{h_{n-1}k_{n}-h_nk_{n-1}}{k_n(x_{n+1}k_n+k_{n-1})}$
 
 $=\frac{(-1)^n}{k_n(x_{n+1}k_n+k_{n-1})}$
 
-$|\sqrt d-\frac{h_n}{k_n}| =\frac{1}{k_n(x_{n+1}k_n+k_{n-1})} < \frac{1}{k_n(a_{n+1}k_n+k_{n-1})} = \frac{1}{k_nk_{n+1}}$
+$|\alpha -\frac{h_n}{k_n}| =\frac{1}{k_n(x_{n+1}k_n+k_{n-1})} < \frac{1}{k_n(a_{n+1}k_n+k_{n-1})} = \frac{1}{k_nk_{n+1}}$
 
 注意到k的递推式，容易发现它是单调递增的正整数,所以渐进分数真的是趋近(n趋于无限大，渐进分数趋进原无理数)
 
 #### 原无理数与渐进数的差值绝对值单调递减
 
-$|k_n\sqrt d - h_n|$单调递减。
+$|k_n\alpha - h_n|$单调递减。
 
 证明:
 
-$|k_n\sqrt d - h_n| - |k_{n-1}\sqrt d - h_{n-1}|$
+$|k_n\alpha - h_n| - |k_{n-1}\alpha - h_{n-1}|$
 
-$ = |k_n(\sqrt d - \frac{h_n}{k_n})| - |k_{n-1}(\sqrt d - \frac{h_{n-1}}{k_{n-1}}|)$
+$ = |k_n(\alpha - \frac{h_n}{k_n})| - |k_{n-1}(\alpha - \frac{h_{n-1}}{k_{n-1}})|$
 
 $ = \frac 1{x_{n+1}k_n+k_{n-1}} - \frac 1{x_{n}k_{n-1}+k_{n-2}} $
 
@@ -494,13 +494,13 @@ $ = \frac {(1-x_{n+1})(x_{n+1}k_n+k_{n-1})}{x_{n+1}(x_{n+1}k_n+k_{n-1})(x_{n}k_{
 
 ---
 
-由此也可知$|\sqrt d-\frac{h_n}{k_n}|$单调递减
+由此也可知$|\alpha - \frac{h_n}{k_n}|$单调递减
 
-$|\sqrt d-\frac{h_n}{k_n}|-|\sqrt d-\frac{h_{n-1}}{k_{n-1}}|$
+$|\alpha - \frac{h_n}{k_n}|-|\alpha -\frac{h_{n-1}}{k_{n-1}}|$
 
-$=\frac {|{k_n}\sqrt d-{h_n}|-\frac {k_n}{k_{n-1}}|{k_{n-1}}\sqrt d-{h_{n-1}}|}{k_n}$
+$=\frac {|{k_n}\alpha-{h_n}|-\frac {k_n}{k_{n-1}}|{k_{n-1}}\alpha-{h_{n-1}}|}{k_n}$
 
-$<\frac {|{k_n}\sqrt d-{h_n}|-|{k_{n-1}}\sqrt d-{h_{n-1}}|}{k_n} < 0$
+$<\frac {|{k_n}\alpha-{h_n}|-|{k_{n-1}}\alpha-{h_{n-1}}|}{k_n} < 0$
 
 // 或者因为$k_n$单调递增
 
@@ -510,7 +510,7 @@ $<\frac {|{k_n}\sqrt d-{h_n}|-|{k_{n-1}}\sqrt d-{h_{n-1}}|}{k_n} < 0$
 
 取任意$h\neq h_n$,根据三角不等式
 
-$|\sqrt d -\frac{h}{k_n}| \geq |\frac{h-h_n}{k_n}| - |\sqrt d - \frac{h_n}{k_n}|$
+$|\alpha -\frac{h}{k_n}| \geq |\frac{h-h_n}{k_n}| - |\alpha - \frac{h_n}{k_n}|$
 
 $>\frac 1{k_n} - \frac 1{k_nk_{n+1}} $,因为n足够大 $k_{n+1}>=3$有
 
@@ -518,17 +518,17 @@ $> \frac 1{k_n} - \frac 1{2k_n} $
 
 $=\frac 1{2k_n} $
 
-$>  \frac 1{k_nk_{n+1}} > |\sqrt d -\frac{h_n}{k_n}|$
+$>  \frac 1{k_nk_{n+1}} > |\alpha -\frac{h_n}{k_n}|$
 
 证明了$h_n$是最接近的分子
 
-即 $|k_n\sqrt d-h|$在 $h=h_n$时取最小值
+即 $|k_n\alpha - h|$在 $h=h_n$时取最小值
 
 #### 分母小于等于渐进数的分母的所有分数中，渐进数能使|分子x原无理数-分母|取最小值
 
-下面证明在$(0<k<=k_n)$中，对于所有$(h,k)$，有$|k_n\sqrt d -  h_n|$为最小值
+下面证明在$(0<k<=k_n)$中，对于所有$(h,k)$，有$|k_n\alpha -  h_n|$为最小值
 
-考虑任意$(h,k),(0<k<k_n)$，且$\frac hk$的最简分数不是渐进数，（因为已经证明了渐进数随着n增大$|k\sqrt d - h|$单调递减，且渐进数分子分母互质，所以如果最简分数是渐进数则对应渐进数的该表达式 更大，又是分子分母是渐进数的倍数，则该表达式的结果还要乘上倍数会更大）
+考虑任意$(h,k),(0<k<k_n)$，且$\frac hk$的最简分数不是渐进数，（因为已经证明了渐进数随着n增大$|k\alpha - h|$单调递减，且渐进数分子分母互质，所以如果最简分数是渐进数则对应渐进数的该表达式 更大，又是分子分母是渐进数的倍数，则该表达式的结果还要乘上倍数会更大）
 
 // 同时它是最简分数，因为上表达式 带入分数和其最简分数得到的值刚好是其分子和其最简分数的分子的比值的倍数
 
@@ -542,21 +542,21 @@ $k_nx+k_{n-1}y=k$
 
 因为$\frac hk$不是渐进分数，所以$x,y$都是非零整数，又因为$k<k_n$和$k_nx+k_{n-1}y=k$有:$x,y$异号
 
-因为$\sqrt d - \frac {h_n}{k_n}$的分子为$(-1)^n$,分母为正数,
+因为$\alpha - \frac {h_n}{k_n}$的分子为$(-1)^n$,分母为正数,
 
-因此$\sqrt d - \frac {h_n}{k_n}$和$\sqrt d - \frac {h_{n-1}}{k_{n-1}}$异号
+因此$\alpha - \frac {h_n}{k_n}$和$\alpha - \frac {h_{n-1}}{k_{n-1}}$异号
 
-$k_n\sqrt d - {h_n}$和$k_{n-1}\sqrt d - {h_{n-1}}$异号
+$k_n\alpha - {h_n}$和$k_{n-1}\alpha - {h_{n-1}}$异号
 
-$x(k_n\sqrt d - {h_n})$和$y(k_{n-1}\sqrt d - {h_{n-1}})$同号
+$x(k_n\alpha - {h_n})$和$y(k_{n-1}\alpha - {h_{n-1}})$同号
 
-$|k\sqrt d -h| = |(k_nx+k_{n-1}y)\sqrt d - (h_nx+h_{n-1}y)|$
+$|k\alpha -h| = |(k_nx+k_{n-1}y)\alpha - (h_nx+h_{n-1}y)|$
 
-$= |x(k_n\sqrt d - {h_n}) + y(k_{n-1}\sqrt d - {h_{n-1}})|$,因为同号：
+$= |x(k_n\alpha - {h_n}) + y(k_{n-1}\alpha - {h_{n-1}})|$,因为同号：
 
-$= |x(k_n\sqrt d - {h_n})|+|y(k_{n-1}\sqrt d - {h_{n-1}})|$，因为$x,y$非零整数:
+$= |x(k_n\alpha - {h_n})|+|y(k_{n-1}\alpha - {h_{n-1}})|$，因为$x,y$非零整数:
 
-$|k\sqrt d -h| > |k_n\sqrt d - {h_n}|$且$|k\sqrt d -h|>|k_{n-1}\sqrt d - {h_{n-1}}|$
+$|k\alpha - h| > |k_n\alpha - {h_n}|$且$|k\alpha -h|>|k_{n-1}\alpha - {h_{n-1}}|$
 
 内容得证
 
@@ -564,13 +564,13 @@ $|k\sqrt d -h| > |k_n\sqrt d - {h_n}|$且$|k\sqrt d -h|>|k_{n-1}\sqrt d - {h_{n-
 
 至于为什么是这个标题 见后面的部分
 
-连续的两个渐进数中至少有一个满足，$|\sqrt d - \frac hk|<\frac 1{2k^2}$
+连续的两个渐进数中至少有一个满足，$|\alpha - \frac hk|<\frac 1{2k^2}$
 
 证明:
 
 假设都不满足，有
 
-$0 \leq |\sqrt d-\frac{h_{n+1}}{k_{n+1}}| - \frac{1}{2k_{n+1}^2} + |\sqrt d-\frac{h_{n}}{k_{n}}|-\frac{1}{2k_{n}^2}$, 因为$\sqrt d - \frac{h_{n}}{k_{n}}$正负交替,所以
+$0 \leq |\alpha-\frac{h_{n+1}}{k_{n+1}}| - \frac{1}{2k_{n+1}^2} + |\alpha-\frac{h_{n}}{k_{n}}|-\frac{1}{2k_{n}^2}$, 因为$\alpha - \frac{h_{n}}{k_{n}}$正负交替,所以
 
 $ = |\frac{h_{n+1}}{k_{n+1}}-\frac{h_{n}}{k_{n}}|-\frac 1{2k_{n+1}^2} -\frac 1{2k_{n}^2}$
 
@@ -586,31 +586,33 @@ $ = \frac {-(k_n-k_{n+1})^2}{2k_{n}^2k_{n+1}^2} < 0$
 
 因此至少有一个大于满足 得证
 
-__#### 任何最简分数如果满足pell方程必要的不等式，那么它是一个渐进分数
+#### 任何最简分数如果满足pell方程必要的不等式，那么它是一个渐进分数
 
-任何最简分数如果满足$|\sqrt d - \frac hk|<\frac 1{2k^2}$，那么它是个渐进分数
+任何最简分数如果满足$|\alpha - \frac hk|<\frac 1{2k^2}$，那么它是个渐进分数
 
 证明
 
-设$\frac hk$满足不等式$|\sqrt d - \frac hk|<\frac 1{2k^2}$，则存在n使得渐进数分母满足 $k_{n+2}>k>=k_n $且$\frac {h_n}{k_n}$满足$|\sqrt d - \frac hk|<\frac 1{2k^2}$(因为相邻渐进数必有一个满足,这里是取n和n+2之间)，根据上面的不等式 有$|k_n\sqrt d- h_n| < |k\sqrt d - h\|$，若$\frac hk \neq \frac{h_n}{k_n}$,即$k_n < k$
+设$\frac hk$满足不等式$|\alpha - \frac hk|<\frac 1{2k^2}$，则存在n使得渐进数分母满足 $k_{n+2}>k>=k_n $且$\frac {h_n}{k_n}$满足$|\alpha - \frac hk|<\frac 1{2k^2}$(因为相邻渐进数必有一个满足,这里是取n和n+2之间)，根据上面的不等式 有$|k_n\alpha- h_n| < |k\alpha - h\|$，若$\frac hk \neq \frac{h_n}{k_n}$,即$k_n < k$
 
 $0 \leq \frac{|hk_n-h_nk|-1}{kk_n}$
 
 $= |\frac{h}{k}-\frac{h_n}{k_n}|-\frac{1}{kk_n}$,因为三角不等式，有
 
-$\leq |\sqrt d -\frac{h}{k}|+|\sqrt d -\frac{h_n}{k_n}|-\frac{1}{kk_n}$, 因为假设满足的不等式
+$\leq |\alpha -\frac{h}{k}|+|\alpha -\frac{h_n}{k_n}|-\frac{1}{kk_n}$, 因为假设满足的不等式
 
-$< \frac 1{2k^2} + \frac 1{k_n}|k_n\sqrt d - h_n|-\frac{1}{kk_n}$,因为上面的最小接近
+$< \frac 1{2k^2} + \frac 1{k_n}|k_n\alpha - h_n|-\frac{1}{kk_n}$,因为上面的最小接近
 
-$< \frac 1{2k^2} + \frac 1{k_n}|k\sqrt d - h|-\frac{1}{kk_n}$
+$< \frac 1{2k^2} + \frac 1{k_n}|k\alpha - h|-\frac{1}{kk_n}$
 
-$= \frac 1{2k^2} + \frac {k}{k_n}|\sqrt d - \frac hk|-\frac{1}{kk_n}$因为假设满足的不等式
+$= \frac 1{2k^2} + \frac {k}{k_n}|\alpha - \frac hk|-\frac{1}{kk_n}$因为假设满足的不等式
 
 $< \frac 1{2k^2} + \frac {k}{k_n}\cdot \frac 1{2k^2}-\frac{1}{kk_n}$
 
 $= \frac {k_n-k}{2k^2k_n} < 0$
 
 矛盾，因此$\frac hk$和某个渐进数相等
+
+**注记：最开始该文的版本，的渐进分数的部分直接使用的是pell方程中$\sqrt{d}$,其中d是非平方正整数，但为了写100需要的证明，需要把它扩充到实数，（当然也是成立的），所以这部分改写了一次**
 
 ### Lagrange’s Theorem 二次无理数与有循环节的连分数
 
