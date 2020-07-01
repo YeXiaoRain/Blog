@@ -98,7 +98,7 @@ $V(x_0,x_1,\cdots ,x_{n-1})=\begin{bmatrix} {1}&{1}&{\cdots}&{1} \\\\
 
 注意到x取其中一个点时，求和的表达式只有一个不为0
 
-也很明显 $k_i = y_i\prod\limits_{j\not =i}\dfrac{x-x_j}{x_i-x_j}$
+也很明显 $k_i = y_i\prod\limits_{j\not =i}\dfrac{1}{x_i-x_j}$
 
 $f(x)=\sum\limits_{i=0}^ky_i\prod\limits_{j\not =i}\dfrac{x-x_j}{x_i-x_j}$, 也可以知道它的逆矩阵 就是求和每一部分 的展开式的系数，(令 $y = [0 ... 0 1 0 ... 0]$ 即可知
 
