@@ -10,8 +10,6 @@ mathjax: true
 
 https://projecteuler.net/problem=101
 
-https://projecteuler.net/problem=101
-
 # 大意
 
 给你一个多项式表达式
