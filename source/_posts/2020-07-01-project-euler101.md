@@ -28,7 +28,7 @@ https://www.hackerrank.com/contests/projecteuler/challenges/euler101/problem
 
 首先Vandermonde就需要一个高效求逆的办法，最后再O(n^2)算算
 
-# 高效求逆
+# 高效求逆?
 
 为什么要, 因为 我们有了原表达式，要去做拟合 实际就是
 
@@ -90,7 +90,7 @@ $V(x_0,x_1,\cdots ,x_{n-1})=\begin{bmatrix} {1}&{1}&{\cdots}&{1} \\\\
 
 众所周知 $A^{-1} = \frac{1}{|A|} A^*$,然而 这暴力算是4次方复杂度，似乎比玩高斯消元3次方还要久
 
-换个方法 拉格朗日插值
+# 换个方法 拉格朗日插值
 
 想法很简单 比如过点 (1,1) (4,7) (9,100)的二次函数
 
