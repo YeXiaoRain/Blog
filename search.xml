@@ -1036,8 +1036,6 @@
             
             <tag> DP </tag>
             
-            <tag> 常数优化 </tag>
-            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -1045,6 +1043,8 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> 常数优化 </tag>
             
         </tags>
       
@@ -1071,8 +1071,6 @@
             
             <tag> DP </tag>
             
-            <tag> 常数优化 </tag>
-            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -1080,6 +1078,8 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> 常数优化 </tag>
             
         </tags>
       
@@ -1590,25 +1590,6 @@
     
     
     <entry>
-      <title>CF EDU 61 E 数学题未知数表示法</title>
-      <link href="/Blog/2019-03-09-cfEDU61E/"/>
-      <url>/Blog/2019-03-09-cfEDU61E/</url>
-      
-        <content type="html"><![CDATA[<h1 id="题目HERE"><a href="#题目HERE" class="headerlink" title="题目HERE"></a><a href="https://codeforces.com/contest/1132/problem/E" target="_blank" rel="noopener">题目HERE</a></h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>给你</p><p>a1 个1</p><p>a2 个2</p><p>…</p><p>a8 个8</p><p>求用这些数中的一部分相加，得到的 最大的 不大于W的 数为多少</p><p>其中</p><p><code>1&lt;=ai&lt;=10^16</code></p><p><code>0&lt;=W&lt;=10^18</code></p><h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>翻译自<a href="https://codeforces.com/blog/entry/65752" target="_blank" rel="noopener">官方题解</a></p><p>假设在未知的最优解中 i 取<code>c_i</code>个</p><p>L = lcm(1,,,,8) = 840</p><p>那么<code>c_i</code>可以表示为</p><p><code>c_i= (L/i)*P_i+q_i</code> 根据除法余数性质可以让q满足 <code>0&lt;=q&lt;L/i</code></p><p><code>(L/i)*P_i</code>个i是L的倍数(且是1,2,3,4…倍 占满)（小学未知数乘法?）</p><p>所以只用枚举<code>q_i</code>的部分</p><p>然而这样 所有方案<code>840**8/8/7/6/5/4/3/2/1=6147715553280000000</code>时间内肯定过不了</p><p><code>dp[1-&gt;x types of items][weight] =  把构成weight的部分去除后 还能最多有多少个L</code> 这里的构成</p><p>空间<code>O(8*8L)</code></p><p>时间<code>O(8L*sum(L/1+L/2+...+L/8))</code></p><p><code>ans = max{ weight + L * min(dp[0][weight],(W-j)/L) (0&lt;=weight&lt;=8L)</code></p><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="c++">#include &lt;bits/stdc++.h&gt;using namespace std;const int N = 9;const int L = 840;typedef long long li;li dp[N][L * N];li W;li cnt[N];int main(){  cin &gt;&gt; W;  for(int i = 0; i &lt; 8; i++)    cin &gt;&gt; cnt[i];  for(int i = 0; i &lt; N; i++) for(int j = 0; j &lt; L * N; j++) dp[i][j] = -1;  dp[0][0] = 0;  for(int i = 0; i &lt; 8; i++)  {    for(int j = 0; j &lt; L * N; j++)    {      if(dp[i][j] == -1) continue;      int b = L / (i + 1);      if(cnt[i] &lt; b)        b = cnt[i];      for(int k = 0; k &lt;= b; k++)      {        li&amp; d = dp[i + 1][j + k * (i + 1)];        d = max(d, dp[i][j] + (cnt[i] - k) / (L / (i + 1)));      }    }  }  li ans = 0;  for(int j = 0; j &lt; L * N; j++)  {    if(j &gt; W || dp[8][j] == -1)      continue;    ans = max(ans, j + L * (min(dp[8][j], (W - j) / L)));  }  cout &lt;&lt; ans &lt;&lt; endl;}</code></pre>]]></content>
-      
-      
-      <categories>
-          
-          <category> Codeforces </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>CF EDU 61 E</title>
       <link href="/Blog/2019-03-11-CFP1137C/"/>
       <url>/Blog/2019-03-11-CFP1137C/</url>
@@ -1621,6 +1602,25 @@
           <category> code </category>
           
           <category> codeforces </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>CF EDU 61 E 数学题未知数表示法</title>
+      <link href="/Blog/2019-03-09-cfEDU61E/"/>
+      <url>/Blog/2019-03-09-cfEDU61E/</url>
+      
+        <content type="html"><![CDATA[<h1 id="题目HERE"><a href="#题目HERE" class="headerlink" title="题目HERE"></a><a href="https://codeforces.com/contest/1132/problem/E" target="_blank" rel="noopener">题目HERE</a></h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>给你</p><p>a1 个1</p><p>a2 个2</p><p>…</p><p>a8 个8</p><p>求用这些数中的一部分相加，得到的 最大的 不大于W的 数为多少</p><p>其中</p><p><code>1&lt;=ai&lt;=10^16</code></p><p><code>0&lt;=W&lt;=10^18</code></p><h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>翻译自<a href="https://codeforces.com/blog/entry/65752" target="_blank" rel="noopener">官方题解</a></p><p>假设在未知的最优解中 i 取<code>c_i</code>个</p><p>L = lcm(1,,,,8) = 840</p><p>那么<code>c_i</code>可以表示为</p><p><code>c_i= (L/i)*P_i+q_i</code> 根据除法余数性质可以让q满足 <code>0&lt;=q&lt;L/i</code></p><p><code>(L/i)*P_i</code>个i是L的倍数(且是1,2,3,4…倍 占满)（小学未知数乘法?）</p><p>所以只用枚举<code>q_i</code>的部分</p><p>然而这样 所有方案<code>840**8/8/7/6/5/4/3/2/1=6147715553280000000</code>时间内肯定过不了</p><p><code>dp[1-&gt;x types of items][weight] =  把构成weight的部分去除后 还能最多有多少个L</code> 这里的构成</p><p>空间<code>O(8*8L)</code></p><p>时间<code>O(8L*sum(L/1+L/2+...+L/8))</code></p><p><code>ans = max{ weight + L * min(dp[0][weight],(W-j)/L) (0&lt;=weight&lt;=8L)</code></p><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="c++">#include &lt;bits/stdc++.h&gt;using namespace std;const int N = 9;const int L = 840;typedef long long li;li dp[N][L * N];li W;li cnt[N];int main(){  cin &gt;&gt; W;  for(int i = 0; i &lt; 8; i++)    cin &gt;&gt; cnt[i];  for(int i = 0; i &lt; N; i++) for(int j = 0; j &lt; L * N; j++) dp[i][j] = -1;  dp[0][0] = 0;  for(int i = 0; i &lt; 8; i++)  {    for(int j = 0; j &lt; L * N; j++)    {      if(dp[i][j] == -1) continue;      int b = L / (i + 1);      if(cnt[i] &lt; b)        b = cnt[i];      for(int k = 0; k &lt;= b; k++)      {        li&amp; d = dp[i + 1][j + k * (i + 1)];        d = max(d, dp[i][j] + (cnt[i] - k) / (L / (i + 1)));      }    }  }  li ans = 0;  for(int j = 0; j &lt; L * N; j++)  {    if(j &gt; W || dp[8][j] == -1)      continue;    ans = max(ans, j + L * (min(dp[8][j], (W - j) / L)));  }  cout &lt;&lt; ans &lt;&lt; endl;}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Codeforces </category>
           
       </categories>
       
