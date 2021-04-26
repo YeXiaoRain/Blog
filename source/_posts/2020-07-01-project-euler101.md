@@ -2,7 +2,7 @@
 title: project euler 101 Optimum polynomial
 date: 2020-07-01 10:37:14
 tags: [pe,project euler,math,Vandermonde]
-category: [project euler]
+category: [Project Euler]
 mathjax: true
 ---
 

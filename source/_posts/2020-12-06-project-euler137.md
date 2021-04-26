@@ -2,7 +2,7 @@
 title: project euler 137 (pell 方程右侧为-4 )
 date: 2020-12-06 10:37:14
 tags: [pe,project euler,math]
-category: [project euler]
+category: [Project Euler]
 mathjax: true
 ---
 

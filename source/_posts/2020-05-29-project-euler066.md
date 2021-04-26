@@ -2,7 +2,7 @@
 title: project euler 066 diophantine equation
 date: 2020-05-29 10:37:14
 tags: [pe,project euler,math]
-category: [project euler]
+category: [Project Euler]
 mathjax: true
 ---
 

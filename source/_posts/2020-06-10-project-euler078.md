@@ -2,7 +2,7 @@
 title: project euler 078 Coin partitions
 date: 2020-06-10 10:37:14
 tags: [pe,project euler,math]
-category: [project euler]
+category: [Project Euler]
 mathjax: true
 ---
 
