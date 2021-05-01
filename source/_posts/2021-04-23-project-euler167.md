@@ -67,7 +67,7 @@ The Ulam sequence can be generalized by the s-additive sequence.
 
 
 
-# 性质
+## 性质
 
 0. 有无限多个。显然做pe到176了，这还是很明显，最大两个的和一定唯一表示，所以至少有一个大于且唯一表示的，所以得证
 1. 除了第3个，其它的都不是上两个的和, $U_{n-2}+U_{n}$ 是唯一的计算方案，所以，$U_{n-2}+U_{n} \ge U_{n+1}$, 得证
@@ -79,13 +79,13 @@ The Ulam sequence can be generalized by the s-additive sequence.
 
 `(u, v)-Ulam 序列` is regular 如果序列的差分，是最终周期性的(也就是除去一定的非周期序列前缀后，剩余部分是周期序列)
 
-# 法文的paper
+# paper
 
 法文令人抠头XD, 这个老哥是 诗人作家，业余数学家!?还是重名?
 
 英文还稍微能看，法文只剩公式靠猜为主，用了一下google的pdf翻译功能XD
 
-# s-additive sequences
+## s-additive sequences
 
 s-additive 如果除了开始2个以外的数，正好能表示成s种前面的数之和，因此 Ulam numbers and the (u, v)-Ulam numbers are 1-additive sequences
 
@@ -221,8 +221,6 @@ $3v+(4k+2)$和$3v+4k$注意到这两个都是奇数，而奇数=奇数+偶数，
 $2$,$v~2v+1$的等差2的奇数序列,$2v+2$,$2v+3~3v$等差2的奇数序列,$3v~5v+2$的等差4的奇数序列
 
 然后我暂时不想再往5v和7v去证明了
-
-# 换paper 82710604
 
 ## 定理1
 
@@ -370,7 +368,7 @@ On the Regularity of Certain 1 -Additive Sequences 这篇论文还给了一个�
 
 > 定义 如果一个1-additive序列的差分是最终周期性的，称它为regular的
 
-### 定理2
+## 定理2
 
 如果一个1-additive 序列只有有限个偶数项，那么它是regular的
 
@@ -392,9 +390,134 @@ g(x) 的状态数为 2v 有限，因此g(x+4v)也是有限的
 
 循环证必
 
-### 找循环节
+> 注意这里取4v有点大，实际上可以缩小到一定范围都行，比如有paper是按照更小的来取的，这里主要是能制造一个靠固定公式递推的向量即可，足够大，可以完全不考虑其具体大小得到“循环”这个性质
+
+## 找循环节
 
 直接按照上面的方法能找到一个，然后根据约数缩减即可
+
+仔细一想，因为是从小到大尝试是否是循环节，那么这个值就一定是起始值和循环节，因此不需要约数
+
+## 继续
+
+我以为证明了有循环节就可以编码了，
+
+然后写完以后，跑得很慢，看了一下论文的table上面的数据，在(2,17),(2,19),(2,21)时，循环节很大，滑窗搜索写得就有太慢了？也许是我写的问题？感觉我写的 (2v+1)k^2起 ，k是循环节，而在21时，循环节已经2e6了，感觉我内存炸掉比结果先来到
+
+差分循环节长度$N$
+
+循环节的差 $D = a_{N+n} - a_n$ 
+
+比如对于(2,5) 有`(N,D) = (32,126)`
+
+令$b_n $表示 $2n+1$ 的方案数
+
+对于足够大的n, 因为有且只有两个偶数其实我们就得到 $b_n = b_{n-1} xor b_{n-v-1}$,实际上就是由2或2v+2组成
+
+这里paper提到了ring，// 奈何我暂无相关知识(查了一下 两种运算(加法和乘法)闭合集) XD, 虽然可以抑或，但缺点是抑或没有组合性质，那就加法模2
+
+$b_n = b_{n-1} xor b_{n-v-1} (mod 2)$,$b_n$取值范围在$0,1$中
+
+其实我们把它们变成矩阵和矩阵乘法
+
+
+初始矩阵，令
+
+$\beta_{(v+1)/2} = (b_{-(v+1)/2} b_{-(v-1)/2} \cdots b_{(v-3)/2} b_{(v-1)/2})^T = (0 0 \cdots 0 1)^T$
+
+也就是注意到$b_{(v-1)/2}$表示的是v可以表达，前面的都是小于v的奇数不论正负，都不能表达，从而产生奇数的序列。
+
+
+转换矩阵是
+
+$\mathbf{A}_{(v+1)\times (v+1)} = \begin{bmatrix}
+0 & 1 & 0 & 0 & \cdots & 0 & 0 \\\\
+0 & 0 & 1 & 0 & \cdots & 0 & 0 \\\\
+0 & 0 & 0 & 1 & \cdots & 0 & 0 \\\\
+\cdots & \cdots & \cdots & \cdots & \cdots & \cdots & \cdots \\\\
+0 & 0 & 0 & 0 & \cdots & 1 & 0 \\\\
+0 & 0 & 0 & 0 & \cdots & 0 & 1 \\\\
+1 & 0 & 0 & 0 & \cdots & 0 & 1 \end{bmatrix}$
+
+除了最后一行是递推，上面的都是平移
+
+这里我们注意到，转换矩阵是模非零，说明矩阵存在，所以循环一定能循环到初始矩阵
+
+我们令$p = (v+1)/2$假设$q, q > p$首次让$\beta_q = \beta_p$
+
+那么
+
+$ N = \sum_{k=p-1}^{q-2} b_k$, 其实就是$\beta$的下标和向量内最大的b的下标差1,然后 统计这之间所有等于1的$b_k$
+
+$D=2(q-p)$,直接就是值的差
+
+特征多项式 $f(x) = det(xI + A) = x^{v+1}+x^v+1， f(-A) = 0$, v的奇数决定了矩阵的长宽是偶数, 用途是加速矩阵高幂次运算
+
+我们之前有递推 $\beta_{n+1} = A \beta_n$,有这两个工具即使枚举就可以很快得到答案了
+
+---
+
+推到这，我才突然回想，既然在证明循环时，已经有了递推表达式，那就不需要模拟，也不需要上面这样去算
+
+# 代码
+
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+#define rep(i,a,n) for (ll i=a;i<n;i++)
+#define pb push_back
+
+ll v ; // (2,v)
+vector<int> arr; // [0]v,[1]v+2,[2]v+4
+vector<ll> vals; // [0]v,[1]v+2,[2]v+4
+
+int getidx(int idx){
+  if(idx < v)return 0;
+  return arr[(idx-v)/2];
+}
+
+ll work(ll val,ll query){
+  arr.clear();
+  vals.clear();
+  v = val;
+  arr.pb(1);
+  vals.pb(v);
+  ll idx = v+2;
+  // zero cnt // 初始状态 v个0 1个1
+  for(int zCnt = 0;;idx+=2){
+    auto zo = getidx(idx-2) ^ getidx(idx-2*v-2);
+    arr.pb(zo);
+    if(!zo){
+      zCnt++;
+    }else{ // zo == 1
+      if(zCnt == v){
+        // query is enough large
+        printf("%lld:%zu %lld\n",v, vals.size(),idx-v);
+        query -= 2 + 1; // 2even number and 0-index
+        ll ans = vals[query % vals.size()] + (query/vals.size()) * (idx-v);
+        printf("[%lld]\n",ans);
+        return ans;
+      }else{
+        zCnt = 0;
+        vals.pb(idx);
+      }
+    }
+  }
+  // never be here
+  return 0;
+};
+
+int main(){
+  ll ans = 0;
+  rep(i,2,11){
+    ans += work(2*i+1, 100'000'000'000);
+  }
+  printf("Ans: %lld\n",ans);
+  return 0;
+}
+```
 
 # 回顾
 
@@ -418,7 +541,7 @@ g(x) 的状态数为 2v 有限，因此g(x+4v)也是有限的
 
 上面有不少部分和题目本身无关，如s-additives在s>1的情况的性质
 
-最后代码也就没什么特别难度了, 或者直接用表
+这里的向量忽略掉偶数的建立方式和只包含首个v的建立方式，有点意思，简化了初始和边界问题（不过也依赖本身偶数只是穿插到奇数序列中，不影响奇数序列本身的递推公式的性质上，
 
 TODO 整理表述、符号一致性和笔误修复
 
