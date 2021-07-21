@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>project euler 218 (别写代码用数学)</title>
+      <link href="/Blog/2021-07-20-project-euler218/"/>
+      <url>/Blog/2021-07-20-project-euler218/</url>
+      
+        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="http://projecteuler.net/index.php?section=problems&amp;id=218" target="_blank" rel="noopener">原题链接</a></p><p>直角三角形$(a,b,c)$,其中$c$为斜边</p><p>perfect定义</p><ol><li>边互质$gcd(a,b) = 1$</li><li>斜边是平方数$c = x^2$</li></ol><p>super-perfect</p><ol><li>perfect</li><li>直角三角形面积是6和28的倍数</li></ol><p>求</p><p>$c \le 10^{16}$ 内,有多少perfect的不是super-perfect</p><h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>前面的PE我们学习到，$gcd(a,b)=1$ 的直角三角形可以唯一表示成</p><p>$(a,b,c) = (m^2-n^2,2mn,m^2+n^2)$</p><p>其中两个直角边可以对换</p><p>其中 $gcd(m,n) = 1, (m+n) = 1 (\bmod 2)$</p><p>$lcm(6,28) = 84$</p><hr><p>简化成</p><p>$m^2+n^2 = c = x^2 \le 10^{16} $</p><p>求 $mn(m^2-n^2) != 0 (\bmod 84)$ 的个数</p><hr><p>注意到 这里又是一个直角三角形公式</p><p>$ordered(m,n,x) = ordered(2uv,u^2-v^2,u^2+v^2)$</p><hr><p>即</p><p>$u &gt; v, gcd(u,v) = 1, u+v = 1 (\bmod 2)$</p><p>$u^2+v^2 \le 10^{8}$</p><p>$ordered(m,n) = ordered(2uv,u^2-v^2) $</p><p>求 $mn(m^2-n^2) != 0 (\bmod 84)$ 的个数</p><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>直接翻译很好写了</p><pre><code class="python">perfect_but_not_super_perfect = 0def gcd(a,b):    if b == 0:        return a    return gcd(b,a%b)for v in range(1,10**4):    if v % 100 == 0:        print(&quot;b:&quot;, v)    for u in range(v+1,10**4,2):        if gcd(u,v) != 1:            continue        if u**2+v**2 &gt; 10**8:            break;        m,n = u**2-v**2,2*u*v        if n &gt; m:            m,n=n,m        if (m*n*(m**2-n**2)) % 84 != 0:            perfect_but_not_super_perfect += 1print(&quot;ans&quot;,perfect_but_not_super_perfect )</code></pre><p>时间</p><pre><code>real    0m30.195suser    0m30.195ssys     0m0.000s</code></pre><h1 id="不要到此为止-上数学"><a href="#不要到此为止-上数学" class="headerlink" title="不要到此为止 上数学"></a>不要到此为止 上数学</h1><p>就完了吗</p><p>它要是个长长的数字可能也没这篇文章了，因为PE的 one-minute rule 已经满足了</p><p>但是它的答案是0那就激起了推导的兴趣</p><h2 id="命题"><a href="#命题" class="headerlink" title="命题"></a>命题</h2><p>$u &gt; v, gcd(u,v) = 1, u+v = 1 (\bmod 2)$</p><p>$(m,n) = (2uv,u^2-v^2) $</p><p>则 $mn(m^2-n^2) = 0 (\bmod 84)$</p><p>这里我们没有范围限制，考虑模运算的性质，没有了大小顺序正负</p><h3 id="代入"><a href="#代入" class="headerlink" title="代入"></a>代入</h3><p>$2uv(u^2-v^2)(6u^2v^2-u^4-v^4) = 0 (\bmod 84)$</p><p>$uv(u^2-v^2)(6u^2v^2-u^4-v^4) = 0 (\bmod 42)$</p><p>$42 = 2 \cdot 3 \cdot 7$</p><h3 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h3><p>2 显然，因为$u+v=1(\bmod 2)$ , u 和 v一奇一偶</p><p>3 如果u和v其中有3的倍数，那么是3的倍数，如果均不是3的倍数,因为 $1^2=2^2=1 (\bmod 3)$ , 所以 $u^2-v^2 = 0 (\bmod 3)$</p><p>7 如果u和v其中有7的倍数，那么是7的倍数，否则都不是7的倍数，还是写一点代码</p><pre><code class="python">for u in range(1,7):    for v in range(1,7):        print(u,v,((u**2-v**2)*(6*u*u*v*v-u**4-v**4))%7)</code></pre><p>输出都是0 得证</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Project Euler </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> pe </tag>
+            
+            <tag> project euler </tag>
+            
+            <tag> math </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>project euler 216 (质数判别)</title>
       <link href="/Blog/2021-06-12-project-euler216/"/>
       <url>/Blog/2021-06-12-project-euler216/</url>
@@ -1197,8 +1226,6 @@
             
             <tag> DP </tag>
             
-            <tag> 常数优化 </tag>
-            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -1206,6 +1233,8 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> 常数优化 </tag>
             
         </tags>
       
@@ -1232,8 +1261,6 @@
             
             <tag> DP </tag>
             
-            <tag> 常数优化 </tag>
-            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -1241,6 +1268,8 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> 常数优化 </tag>
             
         </tags>
       
