@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.0 -->
+    <script>
+        window.materialVersion = "1.5.0"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Title -->
+    
+    <title>
+        
+            1292C - Xenon_s Attack on the Gangs(树上区间DP,mex) | 
+        
+        Blog
+    </title>
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Xiao Ye">
+    <meta name="description" itemprop="description" content>
+    <meta name="keywords" content=",dp,贪心,树,区间dp,mex">
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/Blog/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/Blog/img/favicon.png">
+    <link rel="apple-touch-icon" href="/Blog/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Blog">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel="alternate" type="application/atom+xml" href="atom.xml">
+        
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.en.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/Blog/css/material.min.css?rdUU9RcgLCpXgn+BEpYF7Q==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/Blog/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/Blog/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/Blog/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-image: url(/Blog/img/ns.jpg);
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icon -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/Blog/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yexiaorain.github.io/Blog">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="1292C - Xenon_s Attack on the Gangs(树上区间DP,mex) | Blog">
+    <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
+    <meta property="og:description" content>
+    <meta property="og:article:tag" content="dp"> <meta property="og:article:tag" content="贪心"> <meta property="og:article:tag" content="树"> <meta property="og:article:tag" content="区间dp"> <meta property="og:article:tag" content="mex"> 
+
+    
+        <meta property="article:published_time" content="Mon Jan 20 2020 10:37:14 GMT+0800">
+        <meta property="article:modified_time" content="Tue Mar 22 2022 23:18:45 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="1292C - Xenon_s Attack on the Gangs(树上区间DP,mex) | Blog">
+    <meta name="twitter:description" content>
+    <meta name="twitter:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="http://yexiaorain.github.io/Blog">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yexiaorain.github.io/Blog/Blog/2020-01-20-1292C/index.html">
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2020-01-20-1292C/index.html",
+    "headline": "1292C - Xenon_s Attack on the Gangs(树上区间DP,mex)",
+    "datePublished": "Mon Jan 20 2020 10:37:14 GMT+0800",
+    "dateModified": "Tue Mar 22 2022 23:18:45 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Xiao Ye",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/satan.jpg"
+        },
+        "description": "阳光只洒在金碧辉煌的高楼上"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",dp,贪心,树,区间dp,mex",
+    "description": "",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#题目"><span class="post-toc-number">1.</span> <span class="post-toc-text">题目</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#大意"><span class="post-toc-number">2.</span> <span class="post-toc-text">大意</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#数据范围"><span class="post-toc-number">3.</span> <span class="post-toc-text">数据范围</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#题解"><span class="post-toc-number">4.</span> <span class="post-toc-text">题解</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#代码"><span class="post-toc-number">5.</span> <span class="post-toc-text">代码</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">6.</span> <span class="post-toc-text">总结</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 4 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/Blog/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                1292C - Xenon_s Attack on the Gangs(树上区间DP,mex)
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/Blog/img/satan.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Xiao Ye</strong>
+        <span>1月 20, 2020</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/Blog/tags/dp/">dp</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/mex/">mex</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/区间dp/">区间dp</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/树/">树</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/贪心/">贪心</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=1292C - Xenon_s Attack on the Gangs(树上区间DP,mex)&url=http://yexiaorain.github.io/Blog/Blog/2020-01-20-1292C/index.html&pic=http://yexiaorain.github.io/Blog/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=1292C - Xenon_s Attack on the Gangs(树上区间DP,mex)&url=http://yexiaorain.github.io/Blog/Blog/2020-01-20-1292C/index.html&via=Xiao Ye" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yexiaorain.github.io/Blog/Blog/2020-01-20-1292C/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Blog&title=1292C - Xenon_s Attack on the Gangs(树上区间DP,mex)&summary=&pics=http://yexiaorain.github.io/Blog/img/favicon.png&url=http://yexiaorain.github.io/Blog/Blog/2020-01-20-1292C/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+        <a class="post_share-link" href="https://telegram.me/share/url?url=http://yexiaorain.github.io/Blog/Blog/2020-01-20-1292C/index.html&text=1292C - Xenon_s Attack on the Gangs(树上区间DP,mex)" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Telegram
+            </li>
+        </a>
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://codeforces.com/contest/1292/problem/C" target="_blank" rel="noopener">https://codeforces.com/contest/1292/problem/C</a></p>
+<p>2300评分</p>
+<h1 id="大意"><a href="#大意" class="headerlink" title="大意"></a>大意</h1><p>给树的形状，你需要把0到n-2分别填在边上。</p>
+<p>求 sum{mex{所有简单边}}的最大期望值</p>
+<h1 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h1><p>节点数小于3000</p>
+<p>3s</p>
+<p>512MB</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p><a href="https://codeforces.com/blog/entry/73051" target="_blank" rel="noopener">官方题解</a></p>
+<p>感觉对mex的题始终不会</p>
+<p>$S = \sum_{1 \leq u &lt; v \leq n} mex(u, v) = \sum_{1 \leq x \leq n} \left( \sum_{mex(u, v) = x} mex(u,v) \right) = \sum_{1 \leq x \leq n} \left( \sum_{mex(u, v) = x} x \right) = \sum_{1 \leq x \leq n} \left( \sum_{mex(u, v) \geq x} 1 \right) = \sum_{1 \leq x \leq n} f(x)$</p>
+<p>直接解读这个公式。</p>
+<p>第一个等式是定义</p>
+<p>第二个第三个等式是按照mex的值进行拆分，</p>
+<p>第四个等式的转换是 $x = \sum_{1\leq y \leq x} 1$,也就是原来在x时增加 $sum mex$ 倍 $x$,改为 从1 到x，各增加 sum mex倍 1</p>
+<p>最后一个等式是定义 f(x)函数</p>
+<p>$f(x) = count(mex(u,v) \ge x) =$ 包含 [0 -&gt;x-1]的简单路径数量</p>
+<hr>
+<blockquote>
+<p>证明叶子到叶子包含0到len-1</p>
+</blockquote>
+<p>考虑一个树的形成过程如果是从0到n-2的放置，如果当前0到x-1已经固定，准备放x，那么只有把它放在0到x-1所有都在的路径上（如果可能），才能产生更大的mex，如果不这样，那么x以及所有大于x的最后的mex都已经固定。</p>
+<p>因此放置时如果能够放到0到x-1的路径上，则一定是放在路径上。</p>
+<p>也就意为这 一定有一条从叶子到叶子的简单路径 放了 0到length-1, 并且剩余的无论怎么放(因为已经叶子到叶子，不可能再集齐0到i了，mex也就不会变了) 对结果都没有影响</p>
+<hr>
+<blockquote>
+<p>证明这条路径上赋值山谷形状</p>
+</blockquote>
+<p>现在假设固定了简单路径的位置，下面要证明最优值的放置 是山谷形状，也就是 a1&gt;a2&gt;…&gt;ap&lt;…&lt;al−1&lt;al.</p>
+<p>假设，[0-&gt;x-1]是连续的一段，x和这一段不连续 不妨设x在这一段的右侧（否则就左侧）</p>
+<p><code>? ? ? ? [0到x-1连续的一段] vali ? ? ? ? ? x ? ? ? ?</code></p>
+<p>我们交换 vali和x的位置</p>
+<p>显然，对于f(0-&gt;x-1)不会变 因为 连续段的位置没有改动，也就是包含[0-&gt;x-1]的简单路径数量不变</p>
+<p>对于f(x)变大，因为包含[0-&gt;x]的 简单路径数量 = <code>连续段</code>左侧分支数量 * <code>x</code>右侧分支数量，乘法第一个值不变，第二个值变大，总的值一定变大</p>
+<p>对于f(&gt;x) 不减， 对于左侧点位置不变，对于右侧点不变或者有更进的右侧点，所以包含[0-&gt;(&gt;x)]的 简单路径数量 = <code>连续段</code>左侧分支数量 * <code>x</code>右侧分支数量，乘法第一个值不变，第二个值不减，总的值一定不减</p>
+<p>总的来说，如果不满足上述状态，则一定有一个更优的摆放方法。综上，一定是山谷形</p>
+<hr>
+<p>然后就有了dp[u][v]  = $\sum_{1 \leq x \leq l} f(x)$的最大值，且u到v 填写的是0到l-1</p>
+<p>定义(方便描述)</p>
+<p>par(r,u): 以r为树的根节点，u的父节点</p>
+<p>sub(r,u), 以r为树的根节点，u的子树的节点个数</p>
+<p>官方题解的解释图</p>
+<p><img src="https://espresso.codeforces.com/5e845e83910666767bba5505c6859ae17f68e48b.png" alt="官方题解解释图"></p>
+<hr>
+<p>计算<code>dp[u][v]</code>,根据我们的山谷原理，和dp的定义，<code>dp[u][v]</code>的最大值一定在两端的某一端</p>
+<p>所以 剩余的部分为<code>dp[u][par(u,v)]</code> 或者 <code>dp[par(v,u)][v]</code>,又dp只关心<code>f(&lt;=l)</code>,所以剩余只有<code>f(l)</code>要计算</p>
+<p>这显然 <code>f(l) = sub(u,v) * sub(v,u)</code></p>
+<p>$dp[u][v] = sub(u, v) \times sub(v, u) + \max(dp[par(v, u)][v], dp[u][par(u, v)])$</p>
+<p>一个点的所有分支子节点 直接dfs，对于父方向的= 总量-1-子分支即可，也就是每个点各个分支子节点数O(n)计算完，要计算一个具体sub时可以O(1)计算</p>
+<p>对于par，我们可以把dp改为递推即可，</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a href="https://codeforces.com/contest/1292/submission/69184244" target="_blank" rel="noopener">TLE14</a></p>
+<p><a href="https://codeforces.com/contest/1292/submission/69184419" target="_blank" rel="noopener">去掉map WA17</a></p>
+<p><a href="https://codeforces.com/contest/1292/submission/69184602" target="_blank" rel="noopener">int 改 long long Accept</a></p>
+<pre><code class="cplusplus">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+typedef long long ll;
+#define INF 0x3f3f3f3f3f3f3f3f
+#define MOD 1000000007
+#define rep(i,a,n) for (int i=a;i&lt;n;i++)
+#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+#define pb push_back
+#define foreach(i, v) for (__typeof((v).begin()) i = (v).begin(); i != (v).end(); ++ i)
+const double pi = acos(-1.0);
+
+// 树,边被赋值[0,n-2]
+// 输入n 3000
+// 树状
+
+int n;
+vector&lt;int&gt;p2[3010];
+
+map&lt;int,int&gt;chcnt[3010];// child cnt [idx][p2] = childcnt
+
+vector&lt;pair&lt;int,int&gt; &gt; cur; // [u&lt;v] = [par,par,sum]
+tuple&lt;int,int,ll&gt;cost[3010][3010]; // [u&lt;v] = [par,par,sum]
+
+int initchcnt(int idx,int fa){
+  int cnt = 1;
+  for(auto item:p2[idx]){
+    if(item == fa)continue;
+    cnt+= (chcnt[idx][item] = initchcnt(item,idx));
+  }
+  if(fa){
+    chcnt[idx][fa] = n - cnt;
+  }
+  return cnt;
+}
+
+ll cnt(int u,int paru){
+  return n-chcnt[u][paru];
+}
+ll ans = 0;
+
+// u pvu .... puv v
+void addrel(int u,int v,int pvu,int puv,ll count){
+  if(u &gt; v){
+    swap(u,v);
+    swap(pvu,puv);
+  }
+  ll newcount = count + cnt(u,pvu)*cnt(v,puv);
+  ans=max(ans,newcount);
+  if(get&lt;2&gt;(cost[u][v])==0){
+    cur.pb({u,v});
+  }
+  if(get&lt;2&gt;(cost[u][v]) &lt; newcount ){
+    cost[u][v] = {pvu,puv,newcount};
+  }
+}
+
+int main(){
+  cin&gt;&gt;n;
+  rep(i,0,n-1){
+    int u,v;
+    scanf(&quot;%d %d&quot;,&amp;u,&amp;v);
+    p2[u].pb(v);
+    p2[v].pb(u);
+  }
+  initchcnt(1,0);
+  // 减少重复运算u&lt;v
+  // 按照length递增 广搜
+  rep(i,1,n+1){
+    for(auto item:p2[i]){
+      if(item &lt; i)continue;
+      addrel(i,item,item,i,0);
+    }
+  }
+  rep(i,0,cur.size()){
+    auto [u,v] = cur[i];
+    auto [pvu,puv,count] = cost[u][v];
+    // u pvu .... puv v
+    // 扩展u
+    for(auto nu:p2[u]){
+      if(nu == pvu)continue;
+      addrel(nu,v,u,puv,count);
+    }
+    // 扩展v
+    for(auto nv:p2[v]){
+      if(nv == puv)continue;
+      addrel(u,nv,pvu,v,count);
+    }
+  }
+  printf(&quot;%lld\n&quot;,ans);
+
+  return 0;
+}
+</code></pre>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>看到max，min有可能去考虑贪心或者说局部最优，比如这里的 山谷形状</p>
+<p>mex是真的自闭</p>
+<p>n看到了3000就算想到了n方dp，没想到上面这些证明也没卵用</p>
+
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                         
+                            This blog is under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC BY-NC-SA 3.0 Unported License</a>
+                        </strong>
+                        <br>
+                        <strong>本文鏈接：</strong><a href="http://yexiaorain.github.io/Blog/2020-01-20-1292C/">http://yexiaorain.github.io/Blog/2020-01-20-1292C/</a>
+                    </p>
+                </blockquote>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://yexiaorain.github.io/Blog/2020-01-20-1292C/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://yexiaorain.github.io/Blog/2020-01-20-1292C/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//yexiaorain.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/Blog/2020-02-13-cfP1303E/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/Blog/2020-01-10-nim-game/" id="post_nav-older" class="next-content">
+            舊篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/Blog/img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/Blog/img/satan.jpg" alt="Xiao Ye's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        yexiaorain@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto: yexiaorain@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/Blog/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                首頁
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    過往
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/Blog/archives/2022/05/">五月 2022<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/04/">四月 2022<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/03/">三月 2022<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/12/">十二月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/11/">十一月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/09/">九月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/08/">八月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/07/">七月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/06/">六月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/05/">五月 2021<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/04/">四月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/02/">二月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/12/">十二月 2020<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/11/">十一月 2020<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/08/">八月 2020<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/07/">七月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/06/">六月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/05/">五月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/04/">四月 2020<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/01/">一月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/11/">十一月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/10/">十月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/09/">九月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/07/">七月 2019<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/06/">六月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/05/">五月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/04/">四月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/03/">三月 2019<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/02/">二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/05/">五月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/10/">十月 2017<span class="sidebar_archives-count">5</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分類
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/Blog/categories/Atcoder/">Atcoder<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Codeforces/">Codeforces<span class="sidebar_archives-count">54</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Machine-learning/">Machine learning<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/">NowCoder<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/LCA/">LCA<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Project-Euler/">Project Euler<span class="sidebar_archives-count">19</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/USACO/">USACO<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/algorithm/">algorithm<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/c/">c++<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/code/">code<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/codeforce/">codeforce<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/luogu/">luogu<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/math/">math<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/tencent/">tencent<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://yexiaorain.github.com" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2013&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/Blog/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/Blog/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/Blog/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//yexiaorain.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/Blog/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","/Blog/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

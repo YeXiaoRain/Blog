@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.0 -->
+    <script>
+        window.materialVersion = "1.5.0"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Title -->
+    
+    <title>
+        
+            Codeforces 1657F(2-SAT,tarjan,scc) | 
+        
+        Blog
+    </title>
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Xiao Ye">
+    <meta name="description" itemprop="description" content>
+    <meta name="keywords" content=",scc,tarjan,最大联通分量,2-SAT">
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/Blog/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/Blog/img/favicon.png">
+    <link rel="apple-touch-icon" href="/Blog/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Blog">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel="alternate" type="application/atom+xml" href="atom.xml">
+        
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.en.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/Blog/css/material.min.css?rdUU9RcgLCpXgn+BEpYF7Q==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/Blog/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/Blog/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/Blog/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-image: url(/Blog/img/ns.jpg);
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icon -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/Blog/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yexiaorain.github.io/Blog">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Codeforces 1657F(2-SAT,tarjan,scc) | Blog">
+    <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
+    <meta property="og:description" content>
+    <meta property="og:article:tag" content="scc"> <meta property="og:article:tag" content="tarjan"> <meta property="og:article:tag" content="最大联通分量"> <meta property="og:article:tag" content="2-SAT"> 
+
+    
+        <meta property="article:published_time" content="Sun Apr 03 2022 10:37:14 GMT+0800">
+        <meta property="article:modified_time" content="Sun Apr 03 2022 17:44:08 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="Codeforces 1657F(2-SAT,tarjan,scc) | Blog">
+    <meta name="twitter:description" content>
+    <meta name="twitter:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="http://yexiaorain.github.io/Blog">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yexiaorain.github.io/Blog/Blog/2022-04-03-CF1657F/index.html">
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2022-04-03-CF1657F/index.html",
+    "headline": "Codeforces 1657F(2-SAT,tarjan,scc)",
+    "datePublished": "Sun Apr 03 2022 10:37:14 GMT+0800",
+    "dateModified": "Sun Apr 03 2022 17:44:08 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Xiao Ye",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/satan.jpg"
+        },
+        "description": "阳光只洒在金碧辉煌的高楼上"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",scc,tarjan,最大联通分量,2-SAT",
+    "description": "",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#题目"><span class="post-toc-number">1.</span> <span class="post-toc-text">题目</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#范围"><span class="post-toc-number">2.</span> <span class="post-toc-text">范围</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#题解"><span class="post-toc-number">3.</span> <span class="post-toc-text">题解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-SAT"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">2-SAT</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最大联通分量scc"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">最大联通分量scc</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#代码"><span class="post-toc-number">4.</span> <span class="post-toc-text">代码</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">6.</span> <span class="post-toc-text">参考</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 4 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/Blog/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Codeforces 1657F(2-SAT,tarjan,scc)
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/Blog/img/satan.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Xiao Ye</strong>
+        <span>4月 03, 2022</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/Blog/tags/2-SAT/">2-SAT</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/scc/">scc</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/tarjan/">tarjan</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/最大联通分量/">最大联通分量</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Codeforces 1657F(2-SAT,tarjan,scc)&url=http://yexiaorain.github.io/Blog/Blog/2022-04-03-CF1657F/index.html&pic=http://yexiaorain.github.io/Blog/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Codeforces 1657F(2-SAT,tarjan,scc)&url=http://yexiaorain.github.io/Blog/Blog/2022-04-03-CF1657F/index.html&via=Xiao Ye" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yexiaorain.github.io/Blog/Blog/2022-04-03-CF1657F/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Blog&title=Codeforces 1657F(2-SAT,tarjan,scc)&summary=&pics=http://yexiaorain.github.io/Blog/img/favicon.png&url=http://yexiaorain.github.io/Blog/Blog/2022-04-03-CF1657F/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+        <a class="post_share-link" href="https://telegram.me/share/url?url=http://yexiaorain.github.io/Blog/Blog/2022-04-03-CF1657F/index.html&text=Codeforces 1657F(2-SAT,tarjan,scc)" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Telegram
+            </li>
+        </a>
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://codeforces.com/contest/1657/problem/F" target="_blank" rel="noopener">https://codeforces.com/contest/1657/problem/F</a></p>
+<p>一个树上,每个点有小写字母</p>
+<p>q个描述(&lt;=4e5)</p>
+<p>ai,bi 的简单路径得到字符串si , 注意方向可能a到b,也可能b到a</p>
+<p>求一种满足上述所有描述的一种方案,或输出无法满足</p>
+<h1 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h1><p>点数不超过4e5</p>
+<p>字符串长度和不超过4e5</p>
+<p>9s</p>
+<p>1GB</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="2-SAT"><a href="#2-SAT" class="headerlink" title="2-SAT"></a>2-SAT</h2><p>对于被字符串覆盖到的点, 如果正反字符相等,那么必定是这个字符</p>
+<p>如果不等那么它也只有两种可能</p>
+<p>于是问题变成了每个点有两种可能,并且选中其中一个时会决定它被覆盖的字符串上其它点的选择</p>
+<p>这就是2-sat问题(每个点0/1 , 选定情况会决定其它的点情况,找一种可行方案)</p>
+<p>2-sat问题的解法就是 建立有向图(注意这里是全部双向关系) ,求最大联通分量缩点,看是否有矛盾(一个点同时选了两个不同字符)</p>
+<p>注意这里字符串在转化成图之前, 额外操作就是多个字符串覆盖到同一个点时, 有时能直接确定哪个字符是有效的,无效字符可以在转化前确定一部分</p>
+<p>处理也很直白,同字符唯一确定,不同字符两个可能,多个字符串覆盖, 需要一个字符出现次数刚好是多个字符出现总次数一半</p>
+<h2 id="最大联通分量scc"><a href="#最大联通分量scc" class="headerlink" title="最大联通分量scc"></a>最大联通分量scc</h2><p>上述处理以后就是scc的求解,这直接上tarjan</p>
+<p>tarjan 主要就是</p>
+<p>dfn 深度搜索访问记号</p>
+<p>low 最小可达的前向点记号</p>
+<p>stk 当前访问栈</p>
+<p>res 结果数组</p>
+<pre><code>tarjan(u){
+    DFN[u] = Low[u] = ++Index//为节点u设定次序编号和Low初值
+    Stack.push(u) //将节点u压入栈中
+    for each(u,v) in E //枚举每一条边
+        if (v not visited) //如果节点v未被访问过
+            tarjan(v) //继续向下找
+            Low[u]=min(Low[u],Low[v])
+        else if (v in S) //如果节点v还在栈内
+                Low[u]=min(Low[u], DFN[v])
+    if ( DFN[u] == Low[u] ){ //如果节点u是强连通分量的根
+        component = {}
+        repeat{
+            v = S.pop//将v退栈，为该强连通分量中一个顶点
+            component.append(v)
+            until( u == v)
+        }
+        print component
+    }
+}
+</code></pre><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+typedef long long ll;
+#define rep(i,a,n) for (ll i=a;i&lt;(n);i++)
+#define per(i,a,n) for (ll i=(ll)n-1;i&gt;=a;i--)
+#define pb push_back
+
+const int N = 400000;
+vector&lt;int&gt; p2[N+10];
+int dep[N+10];
+int fa[N+10];
+char s[N+10];
+map&lt;char,vector&lt;int&gt; &gt; p2charid[N+10];
+vector&lt;pair&lt;int,char&gt; &gt; id2pchar;
+vector&lt;int&gt; id2scc;
+vector&lt;vector&lt;int&gt; &gt; scc2ids ;
+vector&lt;bool&gt; vis ;
+char ans[N+10];
+
+class Tarjan{
+  vector&lt;int&gt; low;
+  vector&lt;int&gt; dfn;
+  stack&lt;int&gt; stk;
+  vector&lt;int&gt; res;
+  vector&lt;vector&lt;int&gt; &gt; p;
+  int n;
+  void scc(int v) {
+    static int id = 0;
+    low[v] = dfn[v] = ++id;
+    stk.push(v);
+    for(auto w:p[v]){
+      if(!dfn[w]){ // 未访问过
+        scc(w);
+        low[v] = min(low[v],low[w]);
+      } else if(!res[w]){ // 访问过但没有结果(在栈中)
+        low[v] = min(low[v],dfn[w]);
+      }
+    }
+    int u;
+    if(low[v] == dfn[v])  {
+      do{
+        res[u = stk.top()] = v;
+        stk.pop();
+      }while(u != v);
+    }
+  }
+public:
+  Tarjan(int SZ):n(SZ){
+    low = vector&lt;int&gt;(n+1);
+    dfn = vector&lt;int&gt;(n+1);
+    stk = {};
+    res = vector&lt;int&gt; (n+1);
+    p = vector&lt;vector&lt;int&gt; &gt;(n+1);
+  }
+  vector&lt;int&gt; calc(){
+    rep(i,1,n+1){
+      if(!res[i]){
+        scc(i);
+      }
+    }
+    return res;
+  }
+  void p2(int i,int j){
+    p[i].pb(j);
+  }
+};
+
+void build(int idx,int father){
+  fa[idx] = father;
+  dep[idx] = dep[father]+1;
+  for(auto x:p2[idx]) {
+    if(x == father)continue;
+    build(x, idx);
+  }
+}
+
+// 因为要具体路径, LCA帮不上忙,直接暴力找
+vector&lt;int&gt; getpath(int u,int v){
+  if(dep[u] &gt; dep[v])swap(u,v);
+  vector&lt;int&gt; r1 = {};
+  vector&lt;int&gt; r2 = {};
+  while(dep[v] &gt; dep[u]){
+    r1.push_back(v);
+    v = fa[v];
+  }
+  while(u != v){
+    r1.push_back(v);
+    v = fa[v];
+    r2.push_back(u);
+    u = fa[u];
+  }
+  r1.push_back(u);
+  per(i,0,r2.size()){
+    r1.push_back(r2[i]);
+  }
+  return r1;
+}
+
+bool add(int u,int v, Tarjan &amp;t){
+  vector&lt;int&gt; path = getpath(u, v);
+  // 只记录不确定的
+  vector&lt;int&gt;inc;
+  vector&lt;int&gt;dec;
+  rep(i,0,(int)path.size()){
+    int p = path[i];
+    char ch1 = s[i];
+    char ch2 = s[path.size() - 1 -i];
+    if(ch1 == ch2){ // 直接确定
+      if(ans[p] != 0 &amp;&amp; ans[p] != ch1){
+        return false;
+      }
+      ans[p] = ch1; // 一个的改值, 两个的是 增加统计
+    }else{ // 先建立关系 不关心冲突
+      int id = id2pchar.size();
+      id2pchar.push_back({p,ch1});
+      p2charid[p][ch1].push_back(id);
+      inc.pb(id);
+
+      id = id2pchar.size();
+      id2pchar.push_back({p,ch2});
+      p2charid[p][ch2].push_back(id);
+      dec.pb(id);
+    }
+  }
+  assert(dec.size() == inc.size());
+  rep(i,0,(int)inc.size()){
+    t.p2(inc[i],inc[(i+1)%inc.size()]);
+    t.p2(dec[i],dec[(i+1)%dec.size()]);
+  }
+  return true;
+}
+
+bool checkscc(int scc){
+  vector&lt;pair&lt;int,char&gt;&gt; pch;
+  for(auto id:scc2ids[scc]){
+    auto [p, ch] = id2pchar[id];
+    if(ans[p] == ch || ans[p] == 0){
+      pch.push_back({p,ch});
+    }else{
+      return false;
+    }
+  }
+  sort(pch.begin(),pch.end());
+  rep(i,1,(int)pch.size()){
+    if(pch[i-1].first != pch[i].first) continue; // 同一个点
+    if(pch[i-1].second != pch[i].second) return false; // 不同字符
+  }
+  return true;
+}
+
+bool applyscc(int scc){
+  vis[scc] = true;
+  for(auto id:scc2ids[scc]){
+    auto [p, ch] = id2pchar[id];
+    if(ans[p] == ch)continue;
+    if(ans[p] == 0){
+      ans[p] = ch;
+    }else{
+      return false;
+    }
+  }
+  return true;
+}
+
+bool rmscc(int scc){
+  vis[scc] = true;
+  for(auto id:scc2ids[scc]){
+    if(id == 1)continue;
+    auto [p, ch] = id2pchar[id];
+    if(ans[p] == ch) return false; // 失效和已经填入的冲突
+    if(p2charid[p].count(ch)){
+      p2charid[p].erase(ch);
+      if(ans[p] == 0 &amp;&amp; p2charid[p].size() == 0)return false; //
+      if(p2charid[p].size() == 1){
+        auto [ch,ids] = *p2charid[p].begin();
+        if(ans[p] != 0 &amp;&amp; ans[p] != ch)return false;
+        ans[p] = ch;
+        for(auto id:ids){
+          if(!vis[id2scc[id]]){
+            int r = applyscc(id2scc[id]);
+            if(!r)return r;
+          }
+        }
+      }
+    }
+  }
+  return true;
+}
+
+int main(){
+  id2pchar.push_back({-1,&#39;X&#39;}); // 占位0
+  id2pchar.push_back({-1,&#39;X&#39;}); // 建立特殊失效节点, 下标为1
+  int n,q;
+  cin&gt;&gt;n&gt;&gt;q;
+  rep(i,0,n-1){
+    int u,v;
+    scanf(&quot;%d %d&quot;,&amp;u,&amp;v);
+    p2[u].push_back(v);
+    p2[v].push_back(u);
+  }
+  build(1,0); // 父节点和深度
+  Tarjan t(2*N+2);
+  rep(i,0,q){
+    int u,v;
+    scanf(&quot;%d %d&quot;,&amp;u,&amp;v);
+    scanf(&quot;%s&quot;,s);
+    bool r = add(u,v,t);
+    if(!r){
+      printf(&quot;NO\n&quot;);
+      return 0;
+    }
+  }
+  // 处理每个点明确不可能的情况
+  rep(i,1,n+1) {
+    if(ans[i]){ // 已确定的
+      for(auto [ch,ids]:p2charid[i]){
+        if(ch == ans[i])continue;
+        for(auto id: ids){
+          t.p2(1,id); // 失效的
+          t.p2(id,1); // 失效的
+        }
+      }
+    }else{ // 未确定的
+      if(p2charid[i].size() == 0){
+        ans [i] = &#39;a&#39;; // 没有限制
+      }else { // 每次贡献两个不同的,那么答案要占恰好一半出现
+        int total = 0;
+        for(auto [ch,ids]:p2charid[i]){
+          total+=ids.size();
+        }
+        for(auto [ch,ids]:p2charid[i]){
+          if((int)ids.size()*2 != total){
+            for(auto id: ids){
+              t.p2(1,id); // 建立不可能
+              t.p2(id,1);
+            }
+          }
+        }
+      }
+    }
+  }
+  id2scc = t.calc();
+  scc2ids = vector&lt;vector&lt;int&gt;&gt;(id2pchar.size());
+  vis = vector&lt;bool&gt;(id2pchar.size());
+  rep(i,1,(int)id2pchar.size()){
+    scc2ids[id2scc[i]].pb(i);
+  }
+  // 处理掉直接不可能
+  bool r = rmscc(1);
+  if(!r){
+    printf(&quot;NO\n&quot;);
+    return 0;
+  }
+  rep(scc,2,(int)id2pchar.size()){
+    if(!scc2ids[scc].size())continue;
+    if(vis[scc])continue;
+    if(!checkscc(scc)){
+      bool r = rmscc(scc);
+      if(!r){
+        printf(&quot;NO\n&quot;);
+        return 0;
+      }
+    }else{
+      bool r = applyscc(scc);
+      if(!r){
+        printf(&quot;NO\n&quot;);
+        return 0;
+      }
+    }
+  }
+  rep(i,1,n+1){
+    if(!ans[i]){
+      printf(&quot;NO\n&quot;);
+      return 0;
+    }
+  }
+  printf(&quot;YES\n&quot;);
+  rep(i,1,n+1){
+    printf(&quot;%c&quot;,ans[i]);
+  }
+  printf(&quot;\n&quot;);
+  return 0;
+}
+
+</code></pre>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>还是知识点不够, 一个是太久没写tarjan scc,一个是没搞过2-sat</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://codeforces.com/blog/entry/101161" target="_blank" rel="noopener">官方题解</a></p>
+
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                         
+                            This blog is under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC BY-NC-SA 3.0 Unported License</a>
+                        </strong>
+                        <br>
+                        <strong>本文鏈接：</strong><a href="http://yexiaorain.github.io/Blog/2022-04-03-CF1657F/">http://yexiaorain.github.io/Blog/2022-04-03-CF1657F/</a>
+                    </p>
+                </blockquote>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://yexiaorain.github.io/Blog/2022-04-03-CF1657F/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://yexiaorain.github.io/Blog/2022-04-03-CF1657F/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//yexiaorain.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/Blog/2022-04-08-CF1658F/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/Blog/2022-03-30-CF1654F/" id="post_nav-older" class="next-content">
+            舊篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/Blog/img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/Blog/img/satan.jpg" alt="Xiao Ye's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        yexiaorain@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto: yexiaorain@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/Blog/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                首頁
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    過往
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/Blog/archives/2022/05/">五月 2022<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/04/">四月 2022<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/03/">三月 2022<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/12/">十二月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/11/">十一月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/09/">九月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/08/">八月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/07/">七月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/06/">六月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/05/">五月 2021<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/04/">四月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/02/">二月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/12/">十二月 2020<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/11/">十一月 2020<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/08/">八月 2020<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/07/">七月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/06/">六月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/05/">五月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/04/">四月 2020<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/01/">一月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/11/">十一月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/10/">十月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/09/">九月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/07/">七月 2019<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/06/">六月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/05/">五月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/04/">四月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/03/">三月 2019<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/02/">二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/05/">五月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/10/">十月 2017<span class="sidebar_archives-count">5</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分類
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/Blog/categories/Atcoder/">Atcoder<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Codeforces/">Codeforces<span class="sidebar_archives-count">54</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Machine-learning/">Machine learning<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/">NowCoder<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/LCA/">LCA<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Project-Euler/">Project Euler<span class="sidebar_archives-count">19</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/USACO/">USACO<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/algorithm/">algorithm<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/c/">c++<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/code/">code<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/codeforce/">codeforce<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/luogu/">luogu<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/math/">math<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/tencent/">tencent<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://yexiaorain.github.com" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2013&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/Blog/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/Blog/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/Blog/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//yexiaorain.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/Blog/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","/Blog/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

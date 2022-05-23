@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.0 -->
+    <script>
+        window.materialVersion = "1.5.0"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Title -->
+    
+    <title>
+        
+            USACO 6.4 章节 | 
+        
+        Blog
+    </title>
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Xiao Ye">
+    <meta name="description" itemprop="description" content>
+    <meta name="keywords" content=",搜索,模拟退火,凸函数,暴搜">
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/Blog/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/Blog/img/favicon.png">
+    <link rel="apple-touch-icon" href="/Blog/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Blog">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel="alternate" type="application/atom+xml" href="atom.xml">
+        
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.en.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/Blog/css/material.min.css?rdUU9RcgLCpXgn+BEpYF7Q==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/Blog/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/Blog/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/Blog/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-image: url(/Blog/img/ns.jpg);
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icon -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/Blog/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yexiaorain.github.io/Blog">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="USACO 6.4 章节 | Blog">
+    <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
+    <meta property="og:description" content>
+    <meta property="og:article:tag" content="搜索"> <meta property="og:article:tag" content="模拟退火"> <meta property="og:article:tag" content="凸函数"> <meta property="og:article:tag" content="暴搜"> 
+
+    
+        <meta property="article:published_time" content="Wed Jul 03 2019 01:37:14 GMT+0800">
+        <meta property="article:modified_time" content="Wed May 12 2021 14:21:36 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="USACO 6.4 章节 | Blog">
+    <meta name="twitter:description" content>
+    <meta name="twitter:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="http://yexiaorain.github.io/Blog">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yexiaorain.github.io/Blog/Blog/2019-07-03-USACO-6.4/index.html">
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2019-07-03-USACO-6.4/index.html",
+    "headline": "USACO 6.4 章节",
+    "datePublished": "Wed Jul 03 2019 01:37:14 GMT+0800",
+    "dateModified": "Wed May 12 2021 14:21:36 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Xiao Ye",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/satan.jpg"
+        },
+        "description": "阳光只洒在金碧辉煌的高楼上"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",搜索,模拟退火,凸函数,暴搜",
+    "description": "",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#The-Primes"><span class="post-toc-number">1.</span> <span class="post-toc-text">The Primes</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题目大意"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">题目大意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Electric-Fences"><span class="post-toc-number">2.</span> <span class="post-toc-text">Electric Fences</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题目大意-1"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">题目大意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Wisconsin-Squares"><span class="post-toc-number">3.</span> <span class="post-toc-text">Wisconsin Squares</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题目大意-2"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">题目大意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解-2"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#本文其它博客地址"><span class="post-toc-number">5.</span> <span class="post-toc-text">本文其它博客地址</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 4 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/Blog/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                USACO 6.4 章节
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/Blog/img/satan.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Xiao Ye</strong>
+        <span>7月 03, 2019</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/Blog/tags/凸函数/">凸函数</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/搜索/">搜索</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/暴搜/">暴搜</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/模拟退火/">模拟退火</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=USACO 6.4 章节&url=http://yexiaorain.github.io/Blog/Blog/2019-07-03-USACO-6.4/index.html&pic=http://yexiaorain.github.io/Blog/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=USACO 6.4 章节&url=http://yexiaorain.github.io/Blog/Blog/2019-07-03-USACO-6.4/index.html&via=Xiao Ye" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yexiaorain.github.io/Blog/Blog/2019-07-03-USACO-6.4/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Blog&title=USACO 6.4 章节&summary=&pics=http://yexiaorain.github.io/Blog/img/favicon.png&url=http://yexiaorain.github.io/Blog/Blog/2019-07-03-USACO-6.4/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+        <a class="post_share-link" href="https://telegram.me/share/url?url=http://yexiaorain.github.io/Blog/Blog/2019-07-03-USACO-6.4/index.html&text=USACO 6.4 章节" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Telegram
+            </li>
+        </a>
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="The-Primes"><a href="#The-Primes" class="headerlink" title="The Primes"></a>The Primes</h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p><code>5*5</code>矩阵,给定<code>左上角</code></p>
+<p>要所有<code>行</code>，<code>列</code>，<code>从左向右看对角线</code>为质数，没有前导零，且这些质数<code>数位和</code>相等(题目给和)</p>
+<p>按字典序输出所有方案。。。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>看上去就是个 无脑暴搜</p>
+<p>题目条件翻译成<code>处理</code>或<code>剪枝</code></p>
+<ol>
+<li>按照 字典序顺序搜，</li>
+<li>末位是奇数</li>
+<li>和确定了，那么前4位的和的奇偶性确定了</li>
+<li>数值是5位数，可以先生成质数表</li>
+<li>和-前n位和 小于 9乘剩余位数</li>
+</ol>
+<p>也许先把第一行和第一列定下，然后按照数位和 再分组质数，搜索量会超级小?</p>
+<p><code>17 7</code>的这组数据 超过5s (<code>i7-7700HQ</code>)</p>
+<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
+#define rep(i,a,n) for (long long i=a;i&lt;n;i++)
+#define per(i,a,n) for (long long i=n-1;i&gt;=a;i--)
+
+using namespace std;
+
+const string filename = &quot;prime3&quot;;
+
+void usefile(){
+  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
+  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
+}
+
+int A[10][10];
+int p[100010];
+int s;
+
+bool check(int idxi,int idxj){
+  {
+    int sum = 0;
+    rep(i,0,idxi+1){
+      sum+=A[i][idxj];
+    }
+    if(sum &gt; s){
+      return false;
+    }
+    if( (s-sum) &gt; (4-idxi)*9 ){
+      return false;
+    }
+    if(idxi == 0 &amp;&amp; sum == 0){
+      return false;
+    }
+    if(idxi == 4){
+      if(sum != s){
+        return false;
+      }
+      int v = 0;
+      rep(i,0,5){
+        v*=10;
+        v+=A[i][idxj];
+      }
+      if(p[v]){
+        return false;
+      }
+    }
+    if(idxi == 3 &amp;&amp; (s-sum)%2 == 0){
+      return false;
+    }
+  }
+  {
+
+    int sum = 0;
+    rep(j,0,idxj+1){
+      sum+=A[idxi][j];
+    }
+    if(sum &gt; s){
+      return false;
+    }
+    if( (s-sum) &gt; (4-idxj)*9 ){
+      return false;
+    }
+    if(idxj == 0 &amp;&amp; sum == 0){
+      return false;
+    }
+    if(idxj == 4){
+      if(sum != s){
+        return false;
+      }
+      int v = 0;
+      rep(j,0,5){
+        v*=10;
+        v+=A[idxi][j];
+      }
+      if(p[v]){
+        return false;
+      }
+    }
+    if(idxj == 3 &amp;&amp; (s-sum)%2 == 0){
+      return false;
+    }
+  }
+  {
+    // 左下到右上
+    if(idxi+idxj == 4){
+      int sum = 0;
+      rep(i,0,idxi+1){
+        sum+=A[i][4-i];
+      }
+      if(sum &gt; s){
+        return false;
+      }
+      if( (s-sum) &gt; (4-idxi)*9 ){
+        return false;
+      }
+      if(idxi == 4){
+        if(sum != s){
+          return false;
+        }
+        int v = 0;
+        per(i,0,5){
+          v*=10;
+          v+=A[i][4-i];
+        }
+        if(p[v]){
+          return false;
+        }
+      }
+    }
+  }
+  {
+    // 左上到右下
+    if(idxi-idxj == 0){
+      int sum = 0;
+      rep(i,0,idxi+1){
+        sum+=A[i][i];
+      }
+      if(sum &gt; s){
+        return false;
+      }
+      if( (s-sum) &gt; (4-idxi)*9 ){
+        return false;
+      }
+      if(idxi == 4){
+        if(sum != s){
+          return false;
+        }
+        int v = 0;
+        rep(i,0,5){
+          v*=10;
+          v+=A[i][i];
+        }
+        if(p[v]){
+          return false;
+        }
+      }
+      if(idxj == 3 &amp;&amp; (s-sum)%2 == 0){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+void print(){
+  static bool pre_n = false;
+  if(pre_n){
+    printf(&quot;\n&quot;);
+  }else{
+    pre_n = true;
+  }
+  rep(i,0,5){
+    rep(j,0,5){
+      printf(&quot;%d&quot;,A[i][j]);
+    }
+    printf(&quot;\n&quot;);
+  }
+}
+
+void dfs(int pos){
+  if(pos == 25){
+    print();
+    return ;
+  }
+  int idxi = pos/5;
+  int idxj = pos%5;
+  rep(i,0,10){
+    A[idxi][idxj] = i;
+    if(check(idxi,idxj)){
+      dfs(pos+1);
+    }
+  }
+}
+
+void init(){
+  rep(i,2,100000){
+    if(!p[i]){
+      for(long long j = i*i;j&lt;100000;j+=i){
+        p[j] = 1;
+      }
+    }
+  }
+}
+
+int main(){
+  usefile();
+  init();
+  cin&gt;&gt;s&gt;&gt;A[0][0];
+  dfs(1);
+
+  return 0;
+}
+</code></pre>
+<p>根据和来看看个数得到 <code>和:个数</code></p>
+<pre><code>4:4
+5:12
+7:28
+8:45
+10:95
+11:143
+13:236
+14:272
+16:411
+17:479
+19:630
+20:664
+22:742
+23:757
+25:741
+26:706
+28:580
+29:528
+31:379
+32:341
+34:205
+35:166
+37:84
+38:62
+40:34
+41:13
+43:4
+44:2
+</code></pre><p>相对于原来 的搜索空间 小了很多</p>
+<p>改完以后 第6个点超时: <code>17 1</code></p>
+<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
+#define rep(i,a,n) for (long long i=a;i&lt;n;i++)
+#define per(i,a,n) for (long long i=n-1;i&gt;=a;i--)
+
+using namespace std;
+
+const string filename = &quot;prime3&quot;;
+
+void usefile(){
+  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
+  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
+}
+
+int A[10][10];
+int p[100010];
+map&lt;int,vector&lt;int&gt;&gt;sum2v;
+set&lt;string&gt;ss;
+int s;
+
+void print(){
+  string news = &quot;&quot;;
+  rep(i,0,5){
+    rep(j,0,5){
+      news += (&#39;0&#39;+A[i][j]);
+    }
+    news += &#39;\n&#39;;
+  }
+  ss.insert(news);
+  return ;
+  static bool pre_n = false;
+  if(pre_n){
+    printf(&quot;\n&quot;);
+  }else{
+    pre_n = true;
+  }
+  rep(i,0,5){
+    rep(j,0,5){
+      printf(&quot;%d&quot;,A[i][j]);
+    }
+    printf(&quot;\n&quot;);
+  }
+}
+
+void check(){
+  int ncnt = 0;
+  int sum = 0;
+  per(i,0,5){
+    sum*=10;
+    sum+=A[i][4-i];
+    ncnt+=A[i][4-i];
+  }
+  if(ncnt != s)return;
+  if(p[sum])return;
+  int sum0=0;
+  int ncnt0=0;
+  rep(i,0,4){
+    sum0+=A[i][i];
+    sum0*=10;
+    ncnt0+=A[i][i];
+  }
+  int sum1=0;
+  int ncnt1=0;
+  rep(j,0,4){
+    sum1+=A[4][j];
+    sum1*=10;
+    ncnt1+=A[4][j];
+  }
+  int sum2=0;
+  int ncnt2=0;
+  rep(i,0,4){
+    sum2+=A[i][4];
+    sum2*=10;
+    ncnt2+=A[i][4];
+  }
+  if(ncnt0 != ncnt1 || ncnt0 != ncnt2)return;
+  int i = s - ncnt0;
+  if(i &lt; 0 || i &gt; 10 || i%2 == 0)return ;
+  if((!p[sum0+i]) &amp;&amp; (!p[sum1+i]) &amp;&amp; (!p[sum2+i])){
+    // printf(&quot;sum:%d\n&quot;,sum);
+    A[4][4] = i;
+    print();
+  }
+}
+
+void dfs(int ij){
+  if(ij == 4){
+    check();
+    return ;
+  }
+  int prerow = 0;
+  int precol = 0;
+  rep(j,0,ij){
+    prerow *=10;
+    prerow += A[ij][j];
+  }
+  if(ij == 0){
+    prerow = A[0][0];
+  }
+
+  rep(i,0,ij){
+    precol += A[i][ij];
+    precol *=10;
+  }
+
+  for(auto vrow:sum2v[prerow]){
+    int pre0 = false;
+    per(j,0,5){
+      // printf(&quot;[%d]%d ==&gt; vrow[%05d]A0[%d][%lld]=%d\n&quot;,ij,prerow,vrow,ij,j,vrow%10);
+      A[ij][j]=vrow%10;
+      vrow/=10;
+      if(ij == 0 &amp;&amp; A[ij][j] == 0){
+        pre0 = true;
+        break;
+      }
+    }
+    if(pre0)continue;
+    int pcol = precol+A[ij][ij];
+    for(auto vcol:sum2v[pcol]){
+      pre0 = false;
+      per(i,0,5){
+        // printf(&quot;\t[%d] %d ==&gt; vcol[%05d]A1[%lld][%d]=%d\n&quot;,ij,pcol,vcol,i,ij,vcol%10);
+        A[i][ij]=vcol%10;
+        vcol/=10;
+        if(ij == 0 &amp;&amp; A[i][ij] == 0){
+          pre0 = true;
+          break;
+        }
+      }
+      if(pre0)continue;
+      dfs(ij+1);
+    }
+  }
+}
+
+void init(){
+  rep(i,2,100000){
+    if(!p[i]){
+      if(i&gt;=10000){
+        int sum = 0;
+        int ii = i;
+        rep(idx,0,5){
+          sum+=ii%10;
+          ii/=10;
+        }
+        if(sum == s){
+          int ii = i;
+          rep(idx,0,5){
+            sum2v[ii].push_back(i);
+            ii/=10;
+          }
+        }
+      }
+      for(long long j = i*i;j&lt;100000;j+=i){
+        p[j] = 1;
+      }
+    }
+  }
+}
+
+int main(){
+  usefile();
+  cin&gt;&gt;s&gt;&gt;A[0][0];
+  init();
+  dfs(0);
+  for(auto item:ss){
+    static bool pn = false;
+    if(pn){
+      printf(&quot;\n&quot;);
+    }else{
+      pn = true;
+    }
+    printf(&quot;%s&quot;,item.c_str());
+  }
+  return 0;
+}
+</code></pre>
+<p>再增加一个预先剪枝 依然没过 第<code>6</code>个点，在我的电脑上<code>1.893s</code></p>
+<p>然后我对 中间的点，进行了预处理(预先判断 左下角到右上角)，<code>tle 9</code>,数据是<code>23 1</code>,虽然我的电脑上<code>1.099s</code></p>
+<p>然后 把map换成 数组 就本地<code>0.227s</code>，USACO就过了…</p>
+<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
+#define rep(i,a,n) for (long long i=a;i&lt;n;i++)
+#define per(i,a,n) for (long long i=n-1;i&gt;=a;i--)
+
+using namespace std;
+
+const string filename = &quot;prime3&quot;;
+
+void usefile(){
+  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
+  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
+}
+
+int A[10][10];
+int p[100010];
+vector&lt;int&gt;sum2v[100010];
+set&lt;string&gt;ss;
+int s;
+
+void print(){
+  string news = &quot;&quot;;
+  rep(i,0,5){
+    rep(j,0,5){
+      news += (&#39;0&#39;+A[i][j]);
+    }
+    news += &#39;\n&#39;;
+  }
+  ss.insert(news);
+  return ;
+  static bool pre_n = false;
+  if(pre_n){
+    printf(&quot;\n&quot;);
+  }else{
+    pre_n = true;
+  }
+  rep(i,0,5){
+    rep(j,0,5){
+      printf(&quot;%d&quot;,A[i][j]);
+    }
+    printf(&quot;\n&quot;);
+  }
+}
+
+void check(){
+  int ncnt = 0;
+  int sum = 0;
+  per(i,0,5){
+    sum*=10;
+    sum+=A[i][4-i];
+    ncnt+=A[i][4-i];
+  }
+  if(ncnt != s)return;
+  if(p[sum])return;
+  int sum0=0;
+  int ncnt0=0;
+  rep(i,0,4){
+    sum0+=A[i][i];
+    sum0*=10;
+    ncnt0+=A[i][i];
+  }
+  int sum1=0;
+  int ncnt1=0;
+  rep(j,0,4){
+    sum1+=A[4][j];
+    sum1*=10;
+    ncnt1+=A[4][j];
+  }
+  int sum2=0;
+  int ncnt2=0;
+  rep(i,0,4){
+    sum2+=A[i][4];
+    sum2*=10;
+    ncnt2+=A[i][4];
+  }
+  if(ncnt0 != ncnt1 || ncnt0 != ncnt2)return;
+  int i = s - ncnt0;
+  if(i &lt; 0 || i &gt; 10 || i%2 == 0)return ;
+  if((!p[sum0+i]) &amp;&amp; (!p[sum1+i]) &amp;&amp; (!p[sum2+i])){
+    // printf(&quot;sum:%d\n&quot;,sum);
+    A[4][4] = i;
+    print();
+  }
+}
+
+bool precheck(int ij){
+  rep(i,ij+1,5){
+    int pre = 0;
+    rep(j,0,ij+1){
+      pre*=10;
+      pre+=A[i][j];
+    }
+    if(!sum2v[pre].size())return false;
+  }
+  rep(j,ij+1,5){
+    int pre = 0;
+    rep(i,0,ij+1){
+      pre*=10;
+      pre+=A[i][j];
+    }
+    if(!sum2v[pre].size())return false;
+  }
+  if(ij == 2){
+    int sum = 0;
+    int pre = 0;
+    per(i,0,5){
+      pre*=10;
+      pre+=A[i][4-i];
+      sum+=A[i][4-i];
+    }
+    if(s!=sum)return false;
+    if(p[pre])return false;
+  }
+  return true;
+}
+
+
+void dfs(int ij){
+  if(ij == 4){
+    check();
+    return ;
+  }
+  int prerow = 0;
+  int precol = 0;
+  rep(j,0,ij){
+    prerow *=10;
+    prerow += A[ij][j];
+  }
+  if(ij == 0){
+    prerow = A[0][0];
+  }
+
+  rep(i,0,ij){
+    precol += A[i][ij];
+    precol *=10;
+  }
+
+  // A[2][2]
+  if(ij == 2){
+    int mid = s- A[4][0]-A[3][1]-A[1][3]-A[0][4];
+    if(mid &lt; 0 || mid &gt; 9)return;
+    int v = A[4][0]*10000+A[3][1]*1000+mid*100+A[1][3]*10+A[0][4];
+    if(p[v])return;// 左下到右上
+    prerow = prerow*10+mid;
+  }
+
+  for(auto vrow:sum2v[prerow]){
+    int pre0 = false;
+    per(j,0,5){
+      A[ij][j]=vrow%10;
+      vrow/=10;
+      if(ij == 0 &amp;&amp; A[ij][j] == 0){
+        pre0 = true;
+        break;
+      }
+    }
+    if(pre0)continue;
+    int pcol = precol+A[ij][ij];
+    for(auto vcol:sum2v[pcol]){
+      pre0 = false;
+      per(i,0,5){
+        A[i][ij]=vcol%10;
+        vcol/=10;
+        if(ij == 0 &amp;&amp; A[i][ij] == 0){
+          pre0 = true;
+          break;
+        }
+      }
+      if(pre0)continue;
+      if(!precheck(ij))continue;
+      dfs(ij+1);
+    }
+  }
+}
+
+void init(){
+  rep(i,2,100000){
+    if(!p[i]){
+      if(i&gt;=10000){
+        int sum = 0;
+        int ii = i;
+        rep(idx,0,5){
+          sum+=ii%10;
+          ii/=10;
+        }
+        if(sum == s){
+          int ii = i;
+          rep(idx,0,5){
+            sum2v[ii].push_back(i);
+            ii/=10;
+          }
+        }
+      }
+      for(long long j = i*i;j&lt;100000;j+=i){
+        p[j] = 1;
+      }
+    }
+  }
+}
+
+int main(){
+  usefile();
+  cin&gt;&gt;s&gt;&gt;A[0][0];
+  init();
+  dfs(0);
+  for(auto item:ss){
+    static bool pn = false;
+    if(pn){
+      printf(&quot;\n&quot;);
+    }else{
+      pn = true;
+    }
+    printf(&quot;%s&quot;,item.c_str());
+  }
+  return 0;
+}
+</code></pre>
+<blockquote>
+<p>提交后测试</p>
+</blockquote>
+<ol>
+<li>把precheck 去掉， 发现也能过，甚至更快XD，说明其作用 小于 其副作用</li>
+<li>把<code>A[2][2]</code> 预处理去掉 会超时第8个点</li>
+</ol>
+<h1 id="Electric-Fences"><a href="#Electric-Fences" class="headerlink" title="Electric Fences"></a>Electric Fences</h1><h2 id="题目大意-1"><a href="#题目大意-1" class="headerlink" title="题目大意"></a>题目大意</h2><p><code>&lt;=150</code>条线段(和X 轴或 Y轴平行) ， 坐标 范围<code>0&lt;= x,y&lt;=100</code></p>
+<p>求一个点(可以非整数,最多1位小数)，从这个点 向每一条线段连出一个线段，使连出的线段长度综合最小，求点坐标和 最小总长度</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>如果我们得到了一个点，那么 这个点到一条线段做垂线，如果垂线的垂点在线段上那么为这条垂线，否则为点到这条线段其中一个端点的长度</p>
+<p><del>显然 和计算几何有关</del>因为都和坐标轴平行了，完全用不到计算几何</p>
+<p>有什么用呢？到所有线段都刚刚是垂线段最好？</p>
+<p>显然有反例 <code>(0,0)-(1,0)</code>,<code>(0,0)-(0,1)</code>,<code>(1,1)-(2,1)</code>, 如果是所有线段都刚刚垂线段那么显然选点<code>(1,1)</code>,然而选点<code>0,0</code>可以得到更好的线段长度总和，说明<code>(1,1)</code>不是最优点</p>
+<ol>
+<li>一个办法是 坐标乘10 ，然后枚举<code>O(1000*1000*150)</code></li>
+<li>一个算法是模拟退火！！！</li>
+<li>精度逼近法,如果 一个区域的 最大距离 小于 另一个区域的最小距离，那么显然抛弃另一个，对这个区域可以进行再划分,至于怎么划分 还没具体方法</li>
+<li>二维三分,求助！证明 在x和y方向 ，距离值函数都是凹函数(上凸)</li>
+</ol>
+<p>基于未证明的 凸 假设 下的简化模拟退火, AC</p>
+<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
+#define rep(i,a,n) for (int i=a;i&lt;n;i++)
+#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+
+using namespace std;
+
+const string filename = &quot;fence3&quot;;
+
+void usefile(){
+  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
+  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
+}
+
+double absarrow(double derx,double dery){
+  return sqrt(derx*derx+dery*dery);
+}
+
+struct re{
+  int x1,y1,x2,y2;
+}l[160];
+double dis(double x,double y,int idx){
+  if(l[idx].x1==l[idx].x2){
+    if(y&lt;l[idx].y1)return absarrow(x-l[idx].x1,y-l[idx].y1);
+    if(y&gt;l[idx].y2)return absarrow(x-l[idx].x2,y-l[idx].y2);
+    return fabs(x-l[idx].x1);
+  }else{
+    if(x&lt;l[idx].x1)return absarrow(x-l[idx].x1,y-l[idx].y1);
+    if(x&gt;l[idx].x2)return absarrow(x-l[idx].x2,y-l[idx].y2);
+    return fabs(y-l[idx].y1);
+  }
+}
+
+int main(){
+  usefile();
+  srand(size_t(time(NULL)));
+  int n=0;
+  cin &gt;&gt; n;
+  double x=rand()%100;
+  double y=rand()%100;
+  double step=100;
+  tuple&lt;double,double,double&gt;ans;
+  rep(i,0,n){
+    scanf(&quot;%d %d %d %d&quot;, &amp;l[i].x1,&amp;l[i].y1,&amp;l[i].x2,&amp;l[i].y2);
+    // 因为平行于坐标轴 所以 必定有一组相等，所以只用换一组
+    if(l[i].x1&gt;l[i].x2)swap(l[i].x1,l[i].x2);
+    if(l[i].y1&gt;l[i].y2)swap(l[i].y1,l[i].y2);
+    get&lt;2&gt;(ans) += dis(x,y,i);
+  }
+  int d=31;
+  while(step&gt;10e-3){
+    rep(i,0,500){
+      // 以任意方向 长度为step进行下降 d((x,y),(newx,newy)) = step
+      double newx,newy;
+      newx=step*(double(rand())/double(RAND_MAX))*(2*(rand()%2)-1); // [-step,step]
+      newy=sqrt(step*step-newx*newx)*(2*(rand()%2)-1)+y; // 保证x y变化的向量长度是 step
+      newx+=x;
+      double lencnt=0;
+      rep(idx,0,n){
+        lencnt+=dis(newx,newy,idx);
+      }
+      // 如果更优下降
+      if(lencnt-get&lt;2&gt;(ans)&lt;0){
+        x=newx;
+        y=newy;
+        ans={newx,newy,lencnt};
+      }
+    }
+    d++;
+    // 约从 1.1568910657987959 速率开始
+    step/=log10(d)/log10(20);
+  }
+  printf(&quot;%.1lf %.1lf %.1lf\n&quot;,get&lt;0&gt;(ans),get&lt;1&gt;(ans),get&lt;2&gt;(ans));
+  return 0;
+}
+</code></pre>
+<p>延伸思考， 1.如何证明凸性质，2.如果增加线段，加一些不平行于坐标轴的线段，是否还是有凸的性质</p>
+<h1 id="Wisconsin-Squares"><a href="#Wisconsin-Squares" class="headerlink" title="Wisconsin Squares"></a>Wisconsin Squares</h1><h2 id="题目大意-2"><a href="#题目大意-2" class="headerlink" title="题目大意"></a>题目大意</h2><p><del>考英语了 考英语了 Guernseys (A), Jerseys (B), Herefords (C), Black Angus (D), and Longhorns (E).</del></p>
+<p><code>4*4</code> 的矩阵</p>
+<p>原来有<code>3*A0,3*B0,4*C0,3*D0,3*E0</code> 现在需要有<code>3*A1,3*B1,3*C1,4*D1,3*E1</code></p>
+<p>现在的操作是 每次替换一个<code>某种0</code> 为 <code>任意一种1</code>,直到把<code>4*4</code>的所有替换完</p>
+<p>限制，每次操作后，保证 没有相邻(8向)的相同字母, 如<code>C0</code>和<code>C0</code>算相同字母， <code>A1</code>和<code>A0</code>算相同字母</p>
+<p>输入 初始 布局</p>
+<p>输出 字典序最小的可行的方案过程和 可行的方案过程的总数</p>
+<h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><p>一看就想暴搜啊</p>
+<p>……然后 真的就过了，只有一个测试点</p>
+<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
+#define rep(i,a,n) for (int i=a;i&lt;n;i++)
+#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+
+using namespace std;
+
+const string filename = &quot;wissqu&quot;;
+
+pair&lt;int,int&gt; v[10][10];
+char s[10][10];
+
+void usefile(){
+  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
+  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
+}
+
+int cnt[10];
+bool success = false;
+int anscnt = 0;
+tuple&lt;char,int,int&gt; pick[100];
+
+int di[]={-1,-1,-1,0,0,0,1,1,1};
+int dj[]={-1,0,1,-1,0,1,-1,0,1};
+
+void dfs(int deep){
+  if(deep == 16){
+    anscnt++;
+    if(!success){
+      success = true;
+      rep(i,0,16){
+        printf(&quot;%c %d %d\n&quot;,get&lt;0&gt;(pick[i]),get&lt;1&gt;(pick[i]),get&lt;2&gt;(pick[i]));
+      }
+    }
+    return ;
+  }
+  rep(k,0,5){
+    if(deep == 0 &amp;&amp; k != 3)continue;
+    if(!cnt[k])continue;
+    rep(i,0,4){
+      rep(j,0,4){
+        if(v[i][j].second)continue;
+        bool conflict = false;
+        rep(m,0,9){
+          int newi = i+di[m];
+          int newj = j+dj[m];
+          if(newi &lt; 0 || newj &lt; 0 || newi &gt; 4 || newj &gt; 4){
+            continue;
+          }
+          if(v[newi][newj].first == k){
+            conflict = true;
+            break;
+          }
+        }
+        if(conflict)continue;
+        auto old = v[i][j];
+        v[i][j] = {k,1};
+        pick[deep] = {&#39;A&#39;+k,i+1,j+1};
+        cnt[k]--;
+        dfs(deep+1);
+        cnt[k]++;
+        v[i][j] = old;
+      }
+    }
+  }
+}
+
+int main(){
+  usefile();
+  rep(i,0,4){
+    scanf(&quot;%s&quot;,s[i]);
+  }
+  cnt[0] = 3;
+  cnt[1] = 3;
+  cnt[2] = 3;
+  cnt[3] = 4;
+  cnt[4] = 3;
+  rep(i,0,4){
+    rep(j,0,4){
+      v[i][j] = {s[i][j]-&#39;A&#39;,0};
+    }
+  }
+  dfs(0);
+  printf(&quot;%d\n&quot;,anscnt);
+  return 0;
+}
+</code></pre>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我发现 普通的题，基本是一眼算法+分析复杂度+实现</p>
+<p>而这种搜索剪枝的是，先上暴搜，逐个尝试加剪枝看效果XD,因为只能大概猜剪枝对效率的影响，而无法很直接的估计复杂度</p>
+<p>另外，具体实现的常数有时很重要</p>
+<p>和上一章的各种剪枝相比，这一章真的easy</p>
+<h1 id="本文其它博客地址"><a href="#本文其它博客地址" class="headerlink" title="本文其它博客地址"></a>本文其它博客地址</h1><p>牛客: <a href="https://blog.nowcoder.net/n/911e9688897749a888ed979a19d1cf20" target="_blank" rel="noopener">https://blog.nowcoder.net/n/911e9688897749a888ed979a19d1cf20</a></p>
+<p>博客园: <a href="https://www.cnblogs.com/CroMarmot/p/11130744.html" target="_blank" rel="noopener">https://www.cnblogs.com/CroMarmot/p/11130744.html</a></p>
+
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                         
+                            This blog is under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC BY-NC-SA 3.0 Unported License</a>
+                        </strong>
+                        <br>
+                        <strong>本文鏈接：</strong><a href="http://yexiaorain.github.io/Blog/2019-07-03-USACO-6.4/">http://yexiaorain.github.io/Blog/2019-07-03-USACO-6.4/</a>
+                    </p>
+                </blockquote>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://yexiaorain.github.io/Blog/2019-07-03-USACO-6.4/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://yexiaorain.github.io/Blog/2019-07-03-USACO-6.4/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//yexiaorain.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/Blog/2019-07-07-USACO-6.5/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/Blog/2019-07-01-USACO-6.3/" id="post_nav-older" class="next-content">
+            舊篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/Blog/img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/Blog/img/satan.jpg" alt="Xiao Ye's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        yexiaorain@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto: yexiaorain@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/Blog/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                首頁
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    過往
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/Blog/archives/2022/05/">五月 2022<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/04/">四月 2022<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/03/">三月 2022<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/12/">十二月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/11/">十一月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/09/">九月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/08/">八月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/07/">七月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/06/">六月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/05/">五月 2021<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/04/">四月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/02/">二月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/12/">十二月 2020<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/11/">十一月 2020<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/08/">八月 2020<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/07/">七月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/06/">六月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/05/">五月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/04/">四月 2020<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/01/">一月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/11/">十一月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/10/">十月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/09/">九月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/07/">七月 2019<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/06/">六月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/05/">五月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/04/">四月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/03/">三月 2019<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/02/">二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/05/">五月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/10/">十月 2017<span class="sidebar_archives-count">5</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分類
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/Blog/categories/Atcoder/">Atcoder<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Codeforces/">Codeforces<span class="sidebar_archives-count">54</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Machine-learning/">Machine learning<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/">NowCoder<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/LCA/">LCA<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Project-Euler/">Project Euler<span class="sidebar_archives-count">19</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/USACO/">USACO<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/algorithm/">algorithm<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/c/">c++<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/code/">code<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/codeforce/">codeforce<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/luogu/">luogu<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/math/">math<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/tencent/">tencent<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://yexiaorain.github.com" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2013&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/Blog/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/Blog/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/Blog/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//yexiaorain.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/Blog/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","/Blog/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

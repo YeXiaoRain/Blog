@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.0 -->
+    <script>
+        window.materialVersion = "1.5.0"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Title -->
+    
+    <title>
+        
+            Atcoder agc1560 B, dp,分治,前缀和,数学 | 
+        
+        Blog
+    </title>
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Xiao Ye">
+    <meta name="description" itemprop="description" content>
+    <meta name="keywords" content=",math,dp,分治,前缀和">
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/Blog/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/Blog/img/favicon.png">
+    <link rel="apple-touch-icon" href="/Blog/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Blog">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel="alternate" type="application/atom+xml" href="atom.xml">
+        
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.en.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/Blog/css/material.min.css?rdUU9RcgLCpXgn+BEpYF7Q==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/Blog/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/Blog/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/Blog/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-image: url(/Blog/img/ns.jpg);
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icon -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/Blog/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yexiaorain.github.io/Blog">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Atcoder agc1560 B, dp,分治,前缀和,数学 | Blog">
+    <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
+    <meta property="og:description" content>
+    <meta property="og:article:tag" content="math"> <meta property="og:article:tag" content="dp"> <meta property="og:article:tag" content="分治"> <meta property="og:article:tag" content="前缀和"> 
+
+    
+        <meta property="article:published_time" content="Mon Dec 06 2021 10:37:14 GMT+0800">
+        <meta property="article:modified_time" content="Tue Dec 07 2021 02:11:48 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="Atcoder agc1560 B, dp,分治,前缀和,数学 | Blog">
+    <meta name="twitter:description" content>
+    <meta name="twitter:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="http://yexiaorain.github.io/Blog">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yexiaorain.github.io/Blog/Blog/2021-12-06-ac_agc056B/index.html">
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2021-12-06-ac_agc056B/index.html",
+    "headline": "Atcoder agc1560 B, dp,分治,前缀和,数学",
+    "datePublished": "Mon Dec 06 2021 10:37:14 GMT+0800",
+    "dateModified": "Tue Dec 07 2021 02:11:48 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Xiao Ye",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/satan.jpg"
+        },
+        "description": "阳光只洒在金碧辉煌的高楼上"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",math,dp,分治,前缀和",
+    "description": "",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#题目"><span class="post-toc-number">1.</span> <span class="post-toc-text">题目</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#题解"><span class="post-toc-number">2.</span> <span class="post-toc-text">题解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#先不考虑重复"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">先不考虑重复</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重复"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">重复</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#代码"><span class="post-toc-number">3.</span> <span class="post-toc-text">代码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#例子"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">例子</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#改版"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">改版</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">4.</span> <span class="post-toc-text">参考</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 4 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/Blog/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Atcoder agc1560 B, dp,分治,前缀和,数学
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/Blog/img/satan.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Xiao Ye</strong>
+        <span>12月 06, 2021</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/Blog/tags/dp/">dp</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/math/">math</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/分治/">分治</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/前缀和/">前缀和</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Atcoder agc1560 B, dp,分治,前缀和,数学&url=http://yexiaorain.github.io/Blog/Blog/2021-12-06-ac_agc056B/index.html&pic=http://yexiaorain.github.io/Blog/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Atcoder agc1560 B, dp,分治,前缀和,数学&url=http://yexiaorain.github.io/Blog/Blog/2021-12-06-ac_agc056B/index.html&via=Xiao Ye" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yexiaorain.github.io/Blog/Blog/2021-12-06-ac_agc056B/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Blog&title=Atcoder agc1560 B, dp,分治,前缀和,数学&summary=&pics=http://yexiaorain.github.io/Blog/img/favicon.png&url=http://yexiaorain.github.io/Blog/Blog/2021-12-06-ac_agc056B/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+        <a class="post_share-link" href="https://telegram.me/share/url?url=http://yexiaorain.github.io/Blog/Blog/2021-12-06-ac_agc056B/index.html&text=Atcoder agc1560 B, dp,分治,前缀和,数学" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Telegram
+            </li>
+        </a>
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://atcoder.jp/contests/agc056/tasks/agc056_b" target="_blank" rel="noopener">https://atcoder.jp/contests/agc056/tasks/agc056_b</a></p>
+<p>一个长度为n的排列</p>
+<p>对于q个查询构成的大小为q向量有多少种</p>
+<p>其中每次查询排列[l..r] 中最大值的下标</p>
+<p>n &lt;= 300</p>
+<p>查询不重复, 合法(l &lt; r)</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>考虑把数字从大到小放入排列的位置.</p>
+<p>假设把N放在位置pos,那么有三类区间</p>
+<ol>
+<li>包含pos的</li>
+<li>完全在pos左侧</li>
+<li>完全在pos右侧</li>
+</ol>
+<p>那么显然对于所有查询区间包含pos的,返回都是pos</p>
+<p>而对剩余的,如果把左侧位置的所有值保持相对顺序,右侧位置的所有值保持相对顺序, 然后调整值让左侧所有值大于右侧所有值, 对于输出的q维向量没有变化.(因为相对顺序不变,左侧和右侧内部,原来哪个位置大还是哪个大,且都在pos单侧互不影响), 因此不妨我们选定pos后如此调整</p>
+<h2 id="先不考虑重复"><a href="#先不考虑重复" class="headerlink" title="先不考虑重复"></a>先不考虑重复</h2><p>那么设计状态<code>dp[i][j][pos] =</code> 在<code>[i..j]</code>中, <code>pos</code>为最大值, 且属于<code>[i..j]</code>中某个<strong>完整</strong>区间的 方案数</p>
+<p>那么注意到上面,当我们选定了pos, 就是把区间划分成<code>[i..pos-1]pos[pos+1..j]</code></p>
+<p>原题的答案变为 <code>sum(dp[0][n-1][pos = 0..n-1])</code></p>
+<p>其中注意到,我们在对于无效的pos结果为0, 例如 pos不属于<code>[i..j]</code>中任何一个完整区间, 其对应的情景是最大值不属于任何一个区间,那么 这个位置删掉都行 更不用考虑值了</p>
+<p>那么上面的转移方程有</p>
+<p><code>dp[0][n-1][pos] = sum(dp[0][pos-1][0..pos-1]) * sum(dp[pos+1][n-1][pos+1..n-1])</code></p>
+<p>也就是 左侧 和 右侧分别独立计算.</p>
+<p>而这个计算规则实际上和原问题是同一个问题. 因此可以看成是分治</p>
+<p><code>dp[i][j][p] = sum(dp[i][p-1][i..p-1]) * sum(dp[p+1][j][p+1..j])</code></p>
+<p>其中 sum为零时,记为1,属于空方案</p>
+<hr>
+<p>引理: 分治中数值的大小无影响,只有输出有影响</p>
+<p>因为隔离性,假设右侧不动,来考虑左侧的排列数值变化,但产出向量不变,对结果有什么影响.</p>
+<p>假设左侧存在<code>[1..2][3..4]</code> 非重叠 或者 <code>[1..2][2..3]</code>重叠区间或其它任何状态, 那么可能不同的值,有相同的向量产生 </p>
+<p>一旦左侧的产出向量确定了, 注意到转移方程的剩余部分,一个是pos,那一定比左侧都大,而右侧根据它们的隔离性,比左侧都小,所以转移方程的任何剩余向量也不会受到影响.</p>
+<p>所以, 转移方程只与单侧的向量产生相关, 与具体值无关</p>
+<hr>
+<p>上面的东西,看上去搞个前缀和,再<code>for(len)for(左端点i)for(最大值下标pos)</code> 就搞完了</p>
+<h2 id="重复"><a href="#重复" class="headerlink" title="重复"></a>重复</h2><p>基本的东西有了,下面是精确计算值</p>
+<p>正如上面的例子<code>[1..2][3..4]</code></p>
+<p>如果是1234 输出是(2,4)</p>
+<p>如果是3412 输出也是(2,4)</p>
+<p>而对于dp来说,一个是按照 第4位 开始划分,一个是按照第2位开始划分的. 有重复的问题</p>
+<hr>
+<p>同样,对于<code>[1..2][2..3]</code> 来说</p>
+<p>如果312 和  213 也会重复.分别是第1位和第3位最大进行讨论的, 而它们的输出都是(1,3)</p>
+<p>注意, 这里 132 和231 不会重复统计</p>
+<hr>
+<p>一个办法是容斥(本文不会提到</p>
+<hr>
+<p>另一个就是发现其数学性质</p>
+<p>当在<code>[i..j]</code> 中 pos是最大值的下标 且属于其中某个完整区间时</p>
+<p>如果<code>[i..pos-1]</code> 中的最大值 在idx, 且idx和pos 在<code>[i..j]</code> 中不属于任何同一个完整区间, 那么 让idx变为 <code>[i..j]</code>中的最大值, pos改为次大值,总输出向量不变</p>
+<p>证明</p>
+<p>因为前面假设过, value[pos] &gt; 所有左侧值 &gt; 所有右侧值,所以pos最大,idx次大</p>
+<p>交换以后,value[idx] &gt; value[pos] &gt; 其它左侧值 &gt; 所有右侧值</p>
+<p>按情况讨论区间</p>
+<ol>
+<li>pos右侧的所有区间,因为包含的内容全在右侧值中,所以都不受影响</li>
+<li>包含pos的所有区间, 原本输出pos, 因为不包括idx,现在pos次大,所以依然输出pos</li>
+<li>pos左侧所有区间, 只有idx变大了,但对于所有左侧区间来说,相对顺序都没有变化, 所以左侧的也都没有变</li>
+</ol>
+<p>所以总的向量没有变</p>
+<hr>
+<p>以上证明了,如果<code>[i..pos-1]</code>中的最大值和pos在<code>[i..j]</code>中不属于同一个完整区间,那么会被重复统计. 所以</p>
+<p><code>dp[i][j][p] = sum(dp[i][p-1][i..p-1]) * sum(dp[p+1][j][p+1..j])</code></p>
+<p>要改为</p>
+<p><code>dp[i][j][p] = sum(dp[i][p-1][f(p)..p-1]) * sum(dp[p+1][j][p+1..j])</code></p>
+<p><code>f(p) =</code> 最小的 在<code>[i..j]</code>中和<code>p</code>属于同一个完整区间的 </p>
+<hr>
+<p>不漏从dp过程中已经保证了,上面我们只是提到了去重,而并不能说明所有重复都没有了.下面证明所有重复都没有了</p>
+<p>即是证明 任何输出向量,只会被至多统计一次</p>
+<p>不妨设某个 输出被统计了两次.</p>
+<p>根据统计过程, 如果它在首次被不同的最大值下标统计了,那么</p>
+<ol>
+<li>这两个下标属于同一个区间,和下标是最大值矛盾,一个区间只有一个下标是最大值</li>
+<li>这两个下标不属于任何同一个区间,那么根据上面的变化, 只会统计在左侧为更大值</li>
+</ol>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>基于 heno239 的代码 <a href="https://atcoder.jp/contests/agc056/submissions/27693073" target="_blank" rel="noopener">https://atcoder.jp/contests/agc056/submissions/27693073</a></p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+#define rep(i, a, n) for (ll i = a; i &lt; n; i++)
+#define per(i, a, n) for (ll i = n - 1; i &gt;= a; i--)
+constexpr ll mod = 998244353;
+#define all(v) (v).begin(), (v).end()
+
+struct modint {
+  int n;
+  modint() : n(0) { ; }
+  modint(ll m) {
+    if (m &lt; 0 || mod &lt;= m) {
+      m %= mod;
+      if (m &lt; 0)
+        m += mod;
+    }
+    n = m;
+  }
+  operator int() { return n; }
+};
+bool operator==(modint a, modint b) {
+  return a.n == b.n;
+}
+modint operator+=(modint&amp; a, modint b) {
+  a.n += b.n;
+  if (a.n &gt;= mod)
+    a.n -= mod;
+  return a;
+}
+modint operator-=(modint&amp; a, modint b) {
+  a.n -= b.n;
+  if (a.n &lt; 0)
+    a.n += mod;
+  return a;
+}
+modint operator*=(modint&amp; a, modint b) {
+  a.n = ((ll)a.n * b.n) % mod;
+  return a;
+}
+modint operator+(modint a, modint b) {
+  return a += b;
+}
+modint operator-(modint a, modint b) {
+  return a -= b;
+}
+modint operator*(modint a, modint b) {
+  return a *= b;
+}
+modint operator^(modint a, ll n) {
+  if (n == 0)
+    return modint(1);
+  modint res = (a * a) ^ (n / 2);
+  if (n % 2)
+    res = res * a;
+  return res;
+}
+
+ll inv(ll a, ll p) {
+  return (a == 1 ? 1 : (1 - p * inv(p % a, a)) / a + p);
+}
+modint operator/(modint a, modint b) {
+  return a * modint(inv(b, mod));
+}
+modint operator/=(modint&amp; a, modint b) {
+  a = a / b;
+  return a;
+}
+
+vector&lt;int&gt; vle[305];       // [r pos] = {l pos...} 区间右端点到左端点
+modint dp[305][305][305];   // [l][r][x] = [l..r-1] 最大的是x的方案数, 其中不论l取值多少,x与[l,r-1]至少属于[l,r-1]中的一个完整区间
+modint rdp[305][305][305];  // rdp[l][r][i] =  dp[l][r][0..i-1] 的前缀和
+
+// 默认 全false, 右端点在[l+1..r]之间，长度 &lt;= r-l 的区间是否存在
+bool exi[305][305];
+
+int cl[305];  // 计算过程中[l..r-1] 中, cl[i] = 与i同属于完整区间属于[l..r-1]的 最左端点
+int main() {
+  int n, m;
+  scanf(&quot;%d %d&quot;, &amp;n, &amp;m);
+  rep(i, 0, m) {
+    int l, r;
+    scanf(&quot;%d %d&quot;, &amp;l, &amp;r);
+    vle[r].push_back(l - 1);
+  }
+  // 同样右端点 左端点从小到大, 方便后面二分找满足条件的左端点
+  rep(i, 0, n + 1) sort(all(vle[i]));
+  rep(len, 1, n + 1) {    // 枚举 长度[1..n], 因为每次划分是 左右两个更短的范围
+    rep(r, len, n + 1) {  // 右端点从小到大 [len..n]
+      int l = r - len;    // 左侧端点 = 右端点-长度
+      int nw = r; // 遍历过程中,当前属于[l..r-1]的完整区间的最小左端点
+      per(j, l + 1, r + 1) {  // j（右端点）从大到小 [l+1,r] 范围内的每个右端点
+        // 第一个大于或等于某个元素的位置, 二分查找
+        int t = lower_bound(all(vle[j]), l) - vle[j].begin();
+        if (t &lt; vle[j].size()) {  // [nw,j] 区间小于等于 len
+          nw = min(nw, vle[j][t]);
+        }
+        // 右端点 [j..r] 中的区间的最小左端点, 不存在的情况 r &gt; j - 1
+        cl[j - 1] = nw;
+      }
+      if (nw == r) {  // 没有任何有效区间
+        exi[l][r] = false;
+        continue;
+      }
+      exi[l][r] = true;  // 右端点在 [l+1 ..r], 长度小于等于 len 的区间 存在
+      rep(x, l, r) {    // [l..r-1]
+        if (x &lt; cl[x])  // 不存在 [l,r] 之间的小区间 包含 坐标x
+          continue;
+        // [l..x-1]x[x+1..r-1]
+        // 存在右端在 [l+1..x], 长度小于 x-l 的区间,
+        // sl = sum{dp[l][x][cl[x]..x-1]}
+        // 注意这里, 当[l..x-1]不存在时是1, 而[l..x-1]存在时,因为防止重复统计可能[cl[x]..x-1]是0
+        modint sl = exi[l][x] ? rdp[l][x][x] - rdp[l][x][cl[x]] : (modint)1;
+        // 存在右端在 [x+2..r], 长度小于 r-x-l 的区间,
+        // sr = sum{dp[x+1][r][x+1..r-1]}
+        // 而对于右侧 似乎可以直接判断前缀和是否非零,但实际上因为是取mod运算,可能为mod的倍数,所以还是需要一个exi的辅助数组
+        modint sr =
+            exi[x + 1][r] ? rdp[x + 1][r][r] - rdp[x + 1][r][x + 1] : (modint)1;
+        dp[l][r][x] = sl * sr;  // [l,r-1]中 最大的下标为x, 方案数
+        // 下面由此输出
+        // printf(&quot;%d %lld %lld =&gt; %d %d\n&quot;,l,r,x,(int)sl,(int)sr);
+      }
+      rep(j, l, r) {
+        // [l..r-1]
+        // rdp[l][r][j] = dp[l][r][0..j-1] 前缀和
+        rdp[l][r][j + 1] = rdp[l][r][j] + dp[l][r][j];
+      }
+    }
+  }
+  printf(&quot;%d&quot;, (int)rdp[0][n][n]); // [0,n-1] 最大下标[0..n-1]的方案数
+  return 0;
+}
+</code></pre>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><pre><code class="cpp">//
+// [l          x-1]x[x+1          ]r
+// x 是最大值
+// dp[l][r][x] = 左边方案数 x 右边方案数, 其中右边的长度覆盖了x
+//             = sum{dp[l][x][cl[x]..x-1]} * sum{dp[x+1][r][x+1..r-1]}
+//             = x 是最大值，对左侧的影响当前 最近的是 cl[x]
+//
+//
+// 012345678
+//  xx
+//   xxx
+//     xxx
+//      xx
+//        xx
+//
+/*
+9 5
+2 3
+3 5
+5 7
+6 7
+8 9
+*/
+/*
+l r x ==sl*sr
+[l r) 左闭右开,所以 实际区间是[l..r-1]
+
+len = 2
+1 3 1 =&gt; 1 1
+1 3 2 =&gt; 1 1
+
+5 7 5 =&gt; 1 1
+5 7 6 =&gt; 1 1
+
+7 9 7 =&gt; 1 1
+7 9 8 =&gt; 1 1
+
+len = 3
+0 3 1 =&gt; 1 1
+0 3 2 =&gt; 1 1 (0不属于完整区间,所以没有 0 3 0
+
+1 4 1 =&gt; 1 1
+1 4 2 =&gt; 1 1 (虽然3和属于[2..4]的完整区间,但这里的区间是[1..3],3 不属于这之间的任何完整区间, 所以也没有 1,3,3
+
+2 5 2 =&gt; 1 1
+2 5 3 =&gt; 1 1
+2 5 4 =&gt; 1 1
+
+4 7 4 =&gt; 1 2 (首次包含关系 区间,一个[4..6]一个[5..6],右侧 = dp[5][7][5] + dp[5][7][6] = 1+1 = 2, 也就是[4..6] 最大值在4时,不影响右侧不包含它的区间,右侧有两种值
+4 7 5 =&gt; 1 1
+4 7 6 =&gt; 1 1
+
+5 8 5 =&gt; 1 1
+5 8 6 =&gt; 1 1
+
+6 9 7 =&gt; 1 1
+6 9 8 =&gt; 1 1
+
+len = 4
+0 4 1 =&gt; 1 1
+0 4 2 =&gt; 1 1
+
+1 5 1 =&gt; 1 3 (同 上面 4 7 4
+1 5 2 =&gt; 1 1 (这个和下面两个都是 1 1, 但实际上有些不同, 下面两个的左边的1, 如果按照上面右侧的统计法,应该是 2 而不是1, 注意到上面算sl和sr是有区别的,一个是[cl[x]..x-1], 一个是[x+1..r], 如果一致应该是[l..x-1]而不是[cl[x]..x-1], 说面 左侧最大值, 一定要和x属于同一组,如果不同组, 让左侧更大,其它平移补位, 总输出不变. 所以下面两个都是1.
+1 5 3 =&gt; 1 1
+1 5 4 =&gt; 1 1 
+
+2 6 2 =&gt; 1 1
+2 6 3 =&gt; 1 1
+2 6 4 =&gt; 1 1
+
+3 7 4 =&gt; 1 2
+3 7 5 =&gt; 1 1
+3 7 6 =&gt; 1 1
+
+4 8 4 =&gt; 1 2
+4 8 5 =&gt; 1 1
+4 8 6 =&gt; 1 1
+
+5 9 5 =&gt; 1 2
+5 9 6 =&gt; 1 2
+5 9 7 =&gt; 0 1
+5 9 8 =&gt; 0 1
+
+len = 5
+0 5 1 =&gt; 1 3
+0 5 2 =&gt; 1 1
+0 5 3 =&gt; 1 1
+0 5 4 =&gt; 1 1
+1 6 1 =&gt; 1 3
+1 6 2 =&gt; 1 1
+1 6 3 =&gt; 1 1
+1 6 4 =&gt; 1 1
+2 7 2 =&gt; 1 4
+2 7 3 =&gt; 1 4
+2 7 4 =&gt; 1 2
+2 7 5 =&gt; 1 1
+2 7 6 =&gt; 1 1
+3 8 4 =&gt; 1 2
+3 8 5 =&gt; 1 1
+3 8 6 =&gt; 1 1
+4 9 4 =&gt; 1 4
+4 9 5 =&gt; 1 2
+4 9 6 =&gt; 1 2
+4 9 7 =&gt; 0 1
+4 9 8 =&gt; 0 1
+
+len = 6
+0 6 1 =&gt; 1 3
+0 6 2 =&gt; 1 1
+0 6 3 =&gt; 1 1
+0 6 4 =&gt; 1 1
+1 7 1 =&gt; 1 12
+1 7 2 =&gt; 1 4
+1 7 3 =&gt; 1 4
+1 7 4 =&gt; 1 2
+1 7 5 =&gt; 1 1
+1 7 6 =&gt; 1 1
+2 8 2 =&gt; 1 4
+2 8 3 =&gt; 1 4
+2 8 4 =&gt; 1 2
+2 8 5 =&gt; 1 1
+2 8 6 =&gt; 1 1
+3 9 4 =&gt; 1 4
+3 9 5 =&gt; 1 2
+3 9 6 =&gt; 1 2
+3 9 7 =&gt; 0 1
+3 9 8 =&gt; 0 1
+
+len = 7
+0 7 1 =&gt; 1 12
+0 7 2 =&gt; 1 4
+0 7 3 =&gt; 1 4
+0 7 4 =&gt; 1 2
+0 7 5 =&gt; 1 1
+0 7 6 =&gt; 1 1
+1 8 1 =&gt; 1 12
+1 8 2 =&gt; 1 4
+1 8 3 =&gt; 1 4
+1 8 4 =&gt; 1 2
+1 8 5 =&gt; 1 1
+1 8 6 =&gt; 1 1
+2 9 2 =&gt; 1 8
+2 9 3 =&gt; 1 8
+2 9 4 =&gt; 1 4
+2 9 5 =&gt; 1 2
+2 9 6 =&gt; 1 2
+2 9 7 =&gt; 0 1
+2 9 8 =&gt; 0 1
+
+len = 8
+0 8 1 =&gt; 1 12
+0 8 2 =&gt; 1 4
+0 8 3 =&gt; 1 4
+0 8 4 =&gt; 1 2
+0 8 5 =&gt; 1 1
+0 8 6 =&gt; 1 1
+1 9 1 =&gt; 1 24
+1 9 2 =&gt; 1 8
+1 9 3 =&gt; 1 8
+1 9 4 =&gt; 1 4
+1 9 5 =&gt; 1 2
+1 9 6 =&gt; 1 2
+1 9 7 =&gt; 0 1
+1 9 8 =&gt; 0 1
+
+len = 9
+0 9 1 =&gt; 1 24
+0 9 2 =&gt; 1 8
+0 9 3 =&gt; 1 8
+0 9 4 =&gt; 1 4
+0 9 5 =&gt; 1 2
+0 9 6 =&gt; 1 2
+0 9 7 =&gt; 0 1
+0 9 8 =&gt; 0 1
+*/
+</code></pre>
+<h2 id="改版"><a href="#改版" class="headerlink" title="改版"></a>改版</h2><p>对于上面代码改了主要几个部分</p>
+<p>把<code>[l,r]</code>改为左右都是闭区间了,不用考虑加减1的描述范围</p>
+<p>把所有下标按照题目变成<code>1-index</code>而不是上面的<code>0-index</code>,因为这样也方便前缀和不用单独处理下标0</p>
+<p>去掉了 大佬的modint, 假设没有modint的实现的情况下,直接加mod运算</p>
+<p><a href="https://atcoder.jp/contests/agc056/submissions/27743665" target="_blank" rel="noopener">https://atcoder.jp/contests/agc056/submissions/27743665</a></p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+#define rep(i, a, n) for (ll i = a; i &lt; n; i++)
+#define per(i, a, n) for (ll i = n - 1; i &gt;= a; i--)
+constexpr ll mod = 998244353;
+#define all(v) (v).begin(), (v).end()
+
+vector&lt;int&gt; vle[305];   // [r pos] = {l pos...} 区间右端点到左端点
+ll dp[305][305][305];   // [l][r][x] = [l..r] 最大的是x的方案数, 其中不论l取值多少,x与[l,r]至少属于[l,r]中的一个完整区间
+ll rdp[305][305][305];  // dp 前缀和
+bool exi[305][305];     // 默认 全false, 在[l..r]之间 是否存在完整区间
+int cl[305];            // 右端点 in [i..最右侧] = 区间的最小左端点
+int main() {
+  int n, m;
+  scanf(&quot;%d %d&quot;, &amp;n, &amp;m);
+  rep(i, 0, m) {
+    int l, r;
+    scanf(&quot;%d %d&quot;, &amp;l, &amp;r);
+    vle[r].push_back(l);
+  }
+  rep(i, 1, n+1) sort(all(vle[i]));
+  rep(len, 2, n+1) {              // 枚举 长度
+    rep(r, len, n+1) {            // 右端点 从小到大
+      int l = r - len + 1;        // 左侧端点 = 右端点 - 长度 +1
+      int nw = r + 1;             // 左端点, 在[l..r] 中
+      per(j, l, r + 1) {          // j（右端点）从大到小 [l,r] 范围内的每个右端点
+        int t = lower_bound(all(vle[j]), l) - vle[j].begin();
+        if (t &lt; vle[j].size()) nw = min(nw, vle[j][t]);
+        cl[j] = nw;
+      }
+      if (nw == r+1) {            // 没有任何有效区间
+        exi[l][r] = false;
+        continue;
+      }
+      exi[l][r] = true;           // 右端点在 [l+1 ..r], 长度小于等于 len 的区间 存在
+      rep(x, l, r+1) {            // [l..x-1]x[x+1..r]
+        if (x &lt; cl[x]) continue;  // 不存在 [l,r] 之间的小区间 包含 坐标x
+        ll sl = exi[l][x-1] ? rdp[l][x-1][x-1] - rdp[l][x-1][cl[x]-1] : 1;
+        ll sr = exi[x+1][r] ? rdp[x+1][r][r] - rdp[x + 1][r][x] : 1;
+        dp[l][r][x] = ((sl%mod) * (sr%mod))%mod;    // [l,r-1]中 最大的下标为x, 方案数
+      }
+      rep(j, l, r + 1) rdp[l][r][j] = (rdp[l][r][j-1] + dp[l][r][j])%mod;
+    }
+  }
+  printf(&quot;%lld&quot;, (rdp[1][n][n]+mod)%mod); 
+  return 0;
+}
+</code></pre>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>官方题解 <a href="https://atcoder.jp/contests/agc056/editorial/3045" target="_blank" rel="noopener">https://atcoder.jp/contests/agc056/editorial/3045</a></p>
+
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                         
+                            This blog is under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC BY-NC-SA 3.0 Unported License</a>
+                        </strong>
+                        <br>
+                        <strong>本文鏈接：</strong><a href="http://yexiaorain.github.io/Blog/2021-12-06-ac_agc056B/">http://yexiaorain.github.io/Blog/2021-12-06-ac_agc056B/</a>
+                    </p>
+                </blockquote>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://yexiaorain.github.io/Blog/2021-12-06-ac_agc056B/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://yexiaorain.github.io/Blog/2021-12-06-ac_agc056B/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//yexiaorain.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/Blog/2021-12-31-donut/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/Blog/2021-12-01-ac_arc130E/" id="post_nav-older" class="next-content">
+            舊篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/Blog/img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/Blog/img/satan.jpg" alt="Xiao Ye's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        yexiaorain@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto: yexiaorain@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/Blog/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                首頁
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    過往
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/Blog/archives/2022/05/">五月 2022<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/04/">四月 2022<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/03/">三月 2022<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/12/">十二月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/11/">十一月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/09/">九月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/08/">八月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/07/">七月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/06/">六月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/05/">五月 2021<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/04/">四月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/02/">二月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/12/">十二月 2020<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/11/">十一月 2020<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/08/">八月 2020<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/07/">七月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/06/">六月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/05/">五月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/04/">四月 2020<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/01/">一月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/11/">十一月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/10/">十月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/09/">九月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/07/">七月 2019<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/06/">六月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/05/">五月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/04/">四月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/03/">三月 2019<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/02/">二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/05/">五月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/10/">十月 2017<span class="sidebar_archives-count">5</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分類
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/Blog/categories/Atcoder/">Atcoder<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Codeforces/">Codeforces<span class="sidebar_archives-count">54</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Machine-learning/">Machine learning<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/">NowCoder<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/LCA/">LCA<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Project-Euler/">Project Euler<span class="sidebar_archives-count">19</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/USACO/">USACO<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/algorithm/">algorithm<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/c/">c++<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/code/">code<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/codeforce/">codeforce<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/luogu/">luogu<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/math/">math<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/tencent/">tencent<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://yexiaorain.github.com" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2013&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/Blog/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/Blog/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/Blog/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//yexiaorain.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/Blog/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","/Blog/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
