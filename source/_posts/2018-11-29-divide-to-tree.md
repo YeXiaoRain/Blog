@@ -2,7 +2,7 @@
 title: 简单三分(CF EDU 55E)
 date: 2018-11-29 01:12:33
 tags:
-category: [code,codeforces]
+category: [Codeforces]
 mathjax: true
 ---
 
