@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Atcoder arc142</title>
+      <link href="/Blog/2022-06-24-ac_arc142/"/>
+      <url>/Blog/2022-06-24-ac_arc142/</url>
+      
+        <content type="html"><![CDATA[<p>D(树,dp)</p><h1 id="D"><a href="#D" class="headerlink" title="D"></a>D</h1><p>评分2900,远高于C的难度</p><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><a href="https://atcoder.jp/contests/arc142/tasks/arc142_d" target="_blank" rel="noopener">https://atcoder.jp/contests/arc142/tasks/arc142_d</a></p><p>给你一个树,要上面放一些棋子</p><p>每个时间周期,所有棋子要向它相邻的任意一个点移动,确保移动时每条边最大负债1,移动后每个点最多棋子1个</p><p>且保证任意个时间周期的结果唯一</p><p>问所有合法放置方案数</p><h3 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h3><p>n 2e5</p><p>2s</p><p>1024mb</p><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h3><p>要唯一,考虑做树上dp</p><p><code>dp[from][to][tofa]</code> 每个点2x2x2=8 最多8个状态</p><p>from表示根原来有或没, to表示移动一次后有或没, tofa表示移动一次以后对父节点是否有贡献</p><p>但转移感觉只有手动推一推, 不知道自动怎么算</p><h3 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h3><p>注意到是唯一的反复跳 <code>u-&gt;v-&gt;u-&gt;v</code></p><p>那么实际上树是由多个不相交的链组成的</p><p>如果分叉角度说</p><p>a-b a-c a-d</p><p>a总有一轮是1, 两轮都是0是不可能的(这样有多个摆放方案</p><p>那么移动一次后一是到b,c,d中的一个</p><p>而下一次会移动回来</p><p>说明a至多和两个位置跳来跳去剩下的就是和a不相关的链了</p><hr><p>那么<code>1110110</code>, 这样的看作两条链</p><p>问题就是如何划分链</p><p>potato167 的blog上画了很多方便理解的图</p><p>注意到每个独立的链都是 <code>111110</code> 的形式, 而不相交的相邻链是 1和0 相临的, 且独立的链最小长度为2</p><p>然后一条链的端点也不能和另一条链的中间点相邻, 但两条链的中点可以相邻</p><p>所以对于一个点来讲,它可以是头0,头1或者中间的1,</p><p>dp上 就考虑根的状态了</p><hr><p>0 端点 ( 另一个端点是这个端点的后代</p><p>1 端点 ( 另一个端点不是这个端点的后代</p><p>2 非端点, 且连接父节点</p><p>3 非端点, 且连接两个子节点</p><p>这里的状态划分也不再关心是端点是0还是1,因为你只需要保证端点之和端点相邻(相邻的端点相互决定),这样只用关心有多少自由端点的个数n即可, $2^n$</p><hr><p>手推4种状态</p><p>0: 1个子节点1/2, 剩余都是0</p><p>1: 所有子节点都是0</p><p>2: 1个子节点1/2, 剩余都是3</p><p>3: 2个子节点1/2, 剩余都是3</p><p>除了状态转移, 还需要统计自由度</p><p>中间的3 和 根的0 会让自由度+1</p><p>自由度+1, 相当于答案乘2, 所以直接统计答案比记录自由度更方便</p><hr><p>计算</p><p>0: </p><p>一种方案是</p><p><code>sum (dp[v][1]+dp[v][2]) * ((sum dp[..][0]) - dp[v][0])</code></p><p><code>sum (dp[v][1]+dp[v][2]) * (sum dp[..][0]) - sum (dp[v][1]+dp[v][2]) *  dp[v][0])</code></p><p><code>(sum1+sum2)*sum0 - sum( (v1+v2)(v0))</code></p><p>另一种按照循环增加的算法是</p><p><code>res = (res * dp[v][0]) + (dp[v][1] + dp[v][2])*(before all 0)</code></p><p>1: all0</p><p>2: 类似0的计算方法 采取循环子节点 的方法</p><p><code>res = (res * dp[v][3]) + (dp[v][1] + dp[v][2])*(before all 3)</code></p><p>3: 相当于双状态转移</p><p><code>res[2个满足子节点] = res[2] * dp3 + (dp1+dp2)*(before res[1])</code></p><p><code>res[1个满足子节点] = res[1] * dp3 + (dp1+dp2)*(before res[0] = before all 3)</code></p><p>最后记得3还要再乘2</p><p>当然注意到 1和2只有过程中的计算才是分开的, 父子之间处理是一起使用的, 还可以降低一个状态,虽然意义不大</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/arc142/submissions/32681890" target="_blank" rel="noopener">https://atcoder.jp/contests/arc142/submissions/32681890</a></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;#define MOD 998244353#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)#define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)#define pb push_backll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // readvector&lt;int&gt; G[200010];int main() {  int n = read();  rep(i,1,n){    int u = read() - 1;    int v = read() - 1;    G[u].push_back(v);    G[v].push_back(u);  }  vector&lt;int&gt; fa(n,-1); // 父节点?  vector&lt;int&gt; order={0}; // 树上bfs 顺序, 反序就是树上dp  rep(i,0,n) {    int u = order[i];    for(auto v:G[u]){      if(v == fa[u]) continue;      fa[v] = u;      order.push_back(v);    }  }  vector&lt;vector&lt;ll&gt;&gt; dp(n,vector&lt;ll&gt;(4));  per(i,0,n){    int u = order[i];    dp[u][1] = 1;    ll all0 = 1;    ll all3 = 1;    ll pre1 = 0;    for(auto v:G[u]){      if(fa[v]!=u) continue;      ll s12 = (dp[v][1]+dp[v][2])%MOD;      // 0      dp[u][0] = (dp[u][0] * dp[v][0] % MOD + all0 * s12 % MOD)%MOD;      // 2      dp[u][2] = (dp[u][2] * dp[v][3] % MOD + all3 * s12 % MOD)%MOD;      // 3      dp[u][3] = (dp[u][3] * dp[v][3] % MOD + pre1 * s12 % MOD)%MOD;      pre1     = (pre1     * dp[v][3] % MOD + all3 * s12 % MOD)%MOD;      (all0 *= dp[v][0]) %= MOD;      (all3 *= dp[v][3]) %= MOD;    }    // 1    dp[u][1] = all0;    (dp[u][3] *= 2) %= MOD;  }  printf(&quot;%lld\n&quot;,(dp[0][0] * 2 % MOD + dp[0][3])%MOD);}</code></pre><p>如果再压缩1和2的状态</p><pre><code class="cpp">vector&lt;vector&lt;ll&gt;&gt; dp(n,vector&lt;ll&gt;(3)); // 0:0, 1:1&amp;2, 2:3per(i,0,n){  int u = order[i];  ll all0 = 1;  ll all3 = 1;  ll pre1 = 0;  for(auto v:G[u]){    if(fa[v]!=u) continue;    dp[u][0] = (dp[u][0] * dp[v][0] % MOD + all0 * dp[v][1] % MOD)%MOD; // 0    dp[u][1] = (dp[u][1] * dp[v][2] % MOD + all3 * dp[v][1] % MOD)%MOD; // 2    dp[u][2] = (dp[u][2] * dp[v][2] % MOD + pre1 * dp[v][1] % MOD)%MOD; // 3    pre1     = (pre1     * dp[v][2] % MOD + all3 * dp[v][1] % MOD)%MOD;    (all0 *= dp[v][0]) %= MOD;    (all3 *= dp[v][2]) %= MOD;  }  (dp[u][1] += all0) %= MOD; // 1 &amp; 2  (dp[u][2] *= 2) %= MOD;}printf(&quot;%lld\n&quot;,(dp[0][0] * 2 % MOD + dp[0][2])%MOD);</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>D</p><p>我突然觉得我的<code>dp[from][to][tofa]</code> 是不是也可能可以做?? 看起来是完全不同的思路</p><p>虽然想到反复横跳,但拆成链以及链的链接合法方式完全没想过</p><p>而且即使是拆成链,看了积分代码, 所做的树上dp也不相同, 能拆成这样四个也是很需要功力的</p><p>看potato167的代码学了一手非递归的树上dp, 通过先建立order,再逆序做</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc142/editorial" target="_blank" rel="noopener">官方题解</a></p><p><a href="https://potato167.hatenablog.com/entry/2022/06/21/005732" target="_blank" rel="noopener">potato167</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Atcoder </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dp </tag>
+            
+            <tag> 树 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>June Lunchtime 2022 Division 1</title>
       <link href="/Blog/2022-06-22-LTIME109A/"/>
       <url>/Blog/2022-06-22-LTIME109A/</url>
