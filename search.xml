@@ -37,6 +37,35 @@
     
     
     <entry>
+      <title>Atcoder arc143</title>
+      <link href="/Blog/2022-06-27-ac_arc143/"/>
+      <url>/Blog/2022-06-27-ac_arc143/</url>
+      
+        <content type="html"><![CDATA[<p>D(dfs,无向图无桥联通块,强连通分量)</p><p>哎 超时8min过了E,但这个D我还是不会</p><h1 id="D"><a href="#D" class="headerlink" title="D"></a>D</h1><p>评分2229</p><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><a href="https://atcoder.jp/contests/arc143/tasks/arc143_d" target="_blank" rel="noopener">https://atcoder.jp/contests/arc143/tasks/arc143_d</a></p><p>左边1-n的点</p><p>右边1-n的点</p><p>左i-右i有边</p><p>给你m对数 (ai,bi), 你需要输出长度为m的0/1字符串</p><p>如果你要(左ai-右bi) 则第i个字符为0, 如果你要(左bi-右ai)则第i个字符是1</p><p>最终让图里的桥最少, 求一个字符串方案</p><h3 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h3><p>n 2e5</p><p>m 2e5</p><p>2s</p><p>1024mb</p><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h3><p>只想着贪心</p><p>首先如果一个边在任意环里那它就不是桥, 所以希望能贪心尽量让边进入环</p><p>统计给的m对数中, 每个值出现的次数</p><p>对于只出现一次的无药可救,先不管它</p><p>对于出现2次的,那就安排让它左右各连出一个</p><p>如果运算过程中某个点一侧被连了,另一侧没有连,还有关于这个点的数对,那么就去连另一测</p><p>已经两侧都连了的就不管</p><hr><p>但就写的来看似乎有问题, 还蛮多人过了这个题</p><h3 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h3><blockquote><p>一句话 把它当成一个未定向的有向图， 然后在图上找环， 并定向即可</p></blockquote><p>首先考虑一个n个点, m边的无向图, 按照ai-bi的连接</p><p>如果有边在无向图中也是桥, 那么在题目问题中它只能是桥</p><p>对于无向图来说,移除了所有桥以后, 每个连通块可以单独独立处理</p><p>所以假设 拿到一个无向连通 无桥图</p><p>总有办法给所有边一个方向,让连通图变成强联通图</p><p>一个办法就是 直接做dfs树</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/arc143/submissions/32806181" target="_blank" rel="noopener">https://atcoder.jp/contests/arc143/submissions/32806181</a></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;using namespace std;#define rep(i,a,n) for (int i=a;i&lt;n;i++)#define pb push_backint read(){int r;scanf(&quot;%intd&quot;,&amp;r);return r;} // readint n;int m;char s[200010]; // answerpair&lt;int,int&gt; ab[200010];vector&lt;array&lt;int,3&gt;&gt; u2[200010]; // {v, ab idx, &#39;0&#39;,&#39;1&#39;}bool vis[200010];void dfs(int u){  vis[u] = true;  for(auto [v,i,o]:u2[u]){    if(s[i]) continue; // 边处理过    s[i] = (char)o;    if(!vis[v]) dfs(v);  }}int main(){  n = read();  m = read();  rep(i,0,m) ab[i].first = read();  rep(i,0,m){    int a = ab[i].first;    int b = ab[i].second = read();    u2[a].pb({b,i,(int)&#39;0&#39;});    u2[b].pb({a,i,(int)&#39;1&#39;});  }  rep(i,1,n+1){    if(vis[i])continue;    dfs(i);  }  rep(i,0,m){    if(!s[i]) s[i] = &#39;0&#39;;  }  printf(&quot;%s\n&quot;,s);  return 0;}</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>D</p><p>知道逻辑以后 10min 随便写了QAQ</p><p>我不知道应该怎么归类,信息提取,还是有向图无向图连通性质</p><p>我觉得有一点 算是 无向图的无桥联通块 能通过指定所有边 变成有向图的强连通分量这一点吧,但好像又是一个提炼性质</p><p>哎</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc143/editorial/4210" target="_blank" rel="noopener">官方题解</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Atcoder </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dfs </tag>
+            
+            <tag> 无向图无桥联通块 </tag>
+            
+            <tag> 强连通分量 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Atcoder abc257</title>
       <link href="/Blog/2022-06-25-ac_abc257/"/>
       <url>/Blog/2022-06-25-ac_abc257/</url>
