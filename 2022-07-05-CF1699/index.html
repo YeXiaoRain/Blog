@@ -242,7 +242,7 @@
 
     
         <meta property="article:published_time" content="Tue Jul 05 2022 22:24:00 GMT+0800">
-        <meta property="article:modified_time" content="Tue Jul 05 2022 07:07:07 GMT+0000">
+        <meta property="article:modified_time" content="Tue Jul 05 2022 07:19:47 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2022-07-05-CF1699/index.html",
     "headline": "Codeforces 1699",
     "datePublished": "Tue Jul 05 2022 22:24:00 GMT+0800",
-    "dateModified": "Tue Jul 05 2022 07:07:07 GMT+0000",
+    "dateModified": "Tue Jul 05 2022 07:19:47 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Xiao Ye",
@@ -521,45 +521,28 @@
 <p>如果有办法就是n^2 的总复杂度了</p>
 <h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>首先如果一个数出现次数超过一半,那最终剩下的一定是它,所以这种情况不用猜留哪个</p>
 <p>如果整个长度是偶, 且没有数出现次数超过一半,那么可以被完全删除</p>
+<p>然后通过O(n^2) 计算所有区间 最多出现的数字,或者全部可消除</p>
 <p>啊 我知道啊</p>
 <hr>
-<p>然后通过O(n^2) 计算所有区间 最多出现的数字,或者全部可消除</p>
 <p>dp[i] 表示a[0…i]删除以后 结果包含a[i] 的最大长度</p>
-<p>初始化 如果[0..i-1] 能完全删除 dp[i] = 1, 否则 dp[i] = 0</p>
-<p>如果 j &lt; i, a[i] == a[j] 且 [j+1..i-1] 能完全删除</p>
-<p>dp[i] = max(dp[j]+1) &amp;&amp; rm[j..end] == true</p>
-<p>所以最后就是求所有中的最大的, 相当于找结果的末尾位置</p>
+<p>初始化 如果[0..i-1] 能完全删除 dp[i] = 1, 否则 dp[i] = -INF</p>
+<p>如果<code>j &lt; i, a[i] == a[j]</code> 且 <code>[j+1..i-1]</code> 能完全删除</p>
+<p><code>dp[i] = max(dp[j]+1)</code></p>
+<p>所以最后就是求所有中的最大的且后缀可删除<code>rm[j..end] == true</code>, 相当于找结果的末尾位置</p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://codeforces.com/contest/1699/submission/162852461" target="_blank" rel="noopener">https://codeforces.com/contest/1699/submission/162852461</a></p>
 <pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 typedef long long ll;
-#define MOD 1000000007
 #define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)
 #define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)
 #define pb push_back
 
-#define SEG_ROOT 1,0,n-1
-#define SEG_L (o&lt;&lt;1)
-#define SEG_R (o&lt;&lt;1|1)
-#define mid (l+r)/2
-#define SEG_L_CHILD SEG_L,l,mid
-#define SEG_R_CHILD SEG_R,mid+1,r
-
-namespace X{
-  ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // read
-  void add(ll &amp;v0,ll &amp;v1){(v0+=v1%MOD)%=MOD;} // add with MOD
-  ll mpow(ll v,ll mi){ll r = 1;while(mi){if(mi%2)(r*=v)%=MOD;(v*=v)%=MOD;mi&gt;&gt;=1;};return r;} // quick power with MOD
-  ll mod(ll v){return (v%MOD+MOD)%MOD;} // output
-  ll gcd(ll a,ll b){return b == 0?a:gcd(b,a%b);}
-};
-
-using namespace X;
+ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // read
 
 int n;
 
 int a[5010];  // 5000 n^2
-
 bool rm[5010][5010]; // rm[i][j] = [i..j] 完全删除
 int dp[5010]; // 前[0..i] 删完剩下 a[i] 的个数
 
@@ -570,19 +553,16 @@ void w(){
   rep(i,0,n) a[i] = read();
   rep(i,0,n){
     fill(rm[i],rm[i]+n,false);
-    // 次数统计
-    vector&lt;int&gt;cnt(n+1,0);
+    vector&lt;int&gt;cnt(n+1,0); // 次数统计
     int maxc = -1; // 出现最多的
     rep(j,i,n){
       cnt[a[j]]++;
-      if(maxc == -1 || cnt[maxc] &lt; cnt[a[j]]){
-        maxc = a[j];
-      }
+      if(maxc == -1 || cnt[maxc] &lt; cnt[a[j]]) maxc = a[j];
       if((j-i)%2 == 0)continue;
       if(cnt[maxc] &lt;= (j-i+1)/2) rm[i][j] = true;
     }
   }
-  rep(i,0,n) dp[i] = (i == 0 || rm[0][i-1]) ? 1: -INF;
+  rep(i,0,n) dp[i] = (i == 0 || rm[0][i-1]) ? 1: -INF; // 初始化
   int ans = 0;
   rep(i,0,n){
     rep(j,0,i){
@@ -590,7 +570,7 @@ void w(){
       if(a[i] != a[j]) continue;
       if(j == i-1 || rm[j+1][i-1]) dp[i] = max(dp[i], dp[j]+1);
     }
-    if(i == n-1 || rm[i+1][n-1]) ans = max(ans,dp[i]);
+    if(i == n-1 || rm[i+1][n-1]) ans = max(ans,dp[i]); // 后续可删
   }
   printf(&quot;%d\n&quot;,ans);
 }
@@ -601,10 +581,9 @@ int main(){
   return 0;
 }
 </code></pre>
-<h1 id="E"><a href="#E" class="headerlink" title="E"></a>E</h1><p>给你长度n数组</p>
-<p>每次你可以把任意一个值拆成 它的两个非1因子之乘积</p>
-<p>要让 max(数组) - min(数组)尽量小</p>
-<p>求这个最小值</p>
+<h1 id="E"><a href="#E" class="headerlink" title="E"></a>E</h1><p>给你长度n数组a</p>
+<p>每次你可以把任意一个值v=a乘b,拆成a,b,</p>
+<p>求 min(max(数组) - min(数组))</p>
 <h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 1e6</p>
 <p>ai [1..5e6]</p>
 <p>4s</p>
@@ -617,23 +596,20 @@ int main(){
 <p>而问题是让区间尽量小</p>
 <p>区间长度并没有单调性或凹凸性, 想法方向GG</p>
 <hr>
-<p>第二个就是</p>
+<p>第二个想法是</p>
 <p>我直接拆每个数, 去计算每个数的<code>map[间隔] = vector&lt; pair&lt;最小,最大&gt; &gt;</code></p>
 <p>比如 <code>4: [0] = { { 2 , 2 } , { 4 , 4 } }</code></p>
 <p>但不知道怎么拆, dfs暴力?</p>
 <p>以及拆分后怎么在不同ai之间组合</p>
 <h3 id="题解-3"><a href="#题解-3" class="headerlink" title="题解"></a>题解</h3><p>和我第一个想法类似但是倒着for最小的因子</p>
-<p>以为不同v的拆法互不影响,考虑一个具体的原数组中出现过的 v</p>
-<p>假设 当前最小因子恰好为i</p>
-<p>那么</p>
-<ol>
-<li>v不是i的倍数, 则,之前v怎么拆分就怎么拆分</li>
-<li><code>v &lt; i^2</code>, 显然不能拆,如果拆了 另一个因子就会小于i</li>
-</ol>
+<p>因为不同v的拆法互不影响,考虑一个具体的原数组中出现过的 v</p>
+<p>若当前最小因子恰好为i, 那么</p>
+<p>如果 v不是i的倍数, 则,之前v怎么拆分就怎么拆分</p>
+<p>如果 <code>v &lt; i^2</code>, 显然不能拆,如果拆了 另一个因子就会小于i</p>
 <p><code>v &gt;= i^2</code> 且<code>v = ik</code> , 那么会拆成<code>i 和 k</code>, 而对于<code>k</code>可能也有拆的方案</p>
 <p>我们直接记录<code>dp[k] =</code>当前拆分方案中, 最大的因子</p>
 <p>有<code>dp[ik] = min(old dp[ik], dp[k])</code>, 其中<code>k &gt;= i</code></p>
-<p>这里要注意的是当一个数<code>v=ik</code>是i的倍数,它按i拆开仅是可更让最大因子最小,而不是一定, 所以要和之前的<code>dp[v]</code> 比较</p>
+<p>这里要注意的是当一个数<code>v=ik</code>是i的倍数,它按i拆开仅是可能让最大因子更小,而不是一定, 所以要和之前的<code>dp[v]</code> 比较</p>
 <hr>
 <p>而最大值, 显然是非严格单调递减, 我们只需要 统计每个值拆分后的最大因子(也是非严格单调递减)出现次数, 就能知道最大值</p>
 <h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://codeforces.com/contest/1699/submission/162860620" target="_blank" rel="noopener">https://codeforces.com/contest/1699/submission/162860620</a></p>
@@ -697,10 +673,9 @@ int main() {
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>D</p>
 <p>核心其实还是dpi可以和ai挂钩,因为其它什么区间可删除都想到了, 感觉应该还很常见的</p>
 <p>E</p>
-<p>几点</p>
 <p>倒着处理</p>
 <p>只更新会影响的部分内容</p>
-<p>因为遍历的i就是最小, 所以拆分统计, 不需要统计非最大因子以外的内容, 统计量级上的优化</p>
+<p>因为遍历的i就是最小, 所以拆分统计, 不需要统计非最大因子以外的内容, 优化统计</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://codeforces.com/blog/entry/104088" target="_blank" rel="noopener">官方</a></p>
 
         
