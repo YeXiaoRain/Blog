@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>Atcoder abc214</title>
+      <link href="/Blog/2022-07-30-ac_abc214/"/>
+      <url>/Blog/2022-07-30-ac_abc214/</url>
+      
+        <content type="html"><![CDATA[<p>G(排列,图,容斥,dp,环)H()</p><h1 id="G-Three-Permutations"><a href="#G-Three-Permutations" class="headerlink" title="G - Three Permutations"></a>G - Three Permutations</h1><p><a href="https://atcoder.jp/contests/abc214/tasks/abc214_g" target="_blank" rel="noopener">https://atcoder.jp/contests/abc214/tasks/abc214_g</a></p><p>给[1..N]的排列p和q</p><p>求多少个排列r 满足 r[i] != p[i] , r[i] != q[i], i = [0..N]</p><p>mod 1e9+7</p><h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>n 3000</p><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h3><p>如果只是给一个排列p</p><p>要找另一个排列r让每个位置对应不等(r[i] != p[i])</p><p>一个想法是, 把它直接按照p[i]的1到n重新排序</p><p>问题变成了 找r[i] != i的排列方案数</p><p>考虑长度n的和n-1之间变化</p><p>如果i放的n,而n放的i ,那么 去掉i和n, 方案数 为f(n-2)</p><p>n 有 n-1中交替放的方案, (n-1) f(n-2)</p><p>如果i放的n,而n放的不是i, 那么,交换i和n放的, 前n-1也合法, f(n-1)</p><p>f(n-1) 每个方案每个位置和n换, 贡献(n-1)f(n-1)</p><p>f(n) = (n-1)(f(n-1) + f(n-2))</p><p>f(1) = 0</p><p>f(2) = 1</p><p>f(3) = 2(1+0) = 2</p><hr><p>那么对于两个序列</p><p>首先一样的思路按照p 来排序</p><p>那么变成 r[i] != q[i], r[i] != i</p><p>但因为q[i]的限制并不能 像上面那样转移</p><h3 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h3><p>如果对于每个位置,计算ri=pi或ri=qi的排列方案数,可以考虑容斥</p><p>假设 i1,i2,…ik, 对应的下标满足, ri=pi 或 ri=qi, 那么要计算所有r[i1],r[i2]..r[ik]的值方案</p><p>对于每个 i in i[1..k],在图中,我们增加一个(pi,qi)的边, 只需计算每条边分配给其一个端点的总数，以便没有两条不同的边共享一个分配给它的顶点。(意思就是边即是i, 而给边分配的点,即是r[i]的值, 不能共享点,意味着值不重复</p><p>(注意到 如果(pi,qi)链接的话, 只可能是 链 或 环,不可能出现分叉</p><p>对于每个联通分量考虑(除去孤立点和自环)</p><p>因为环之间两两不相关, 所以每一组i的选择答案 = 不同环的方案的乘积</p><p>我们对于一个K个点的环内, 选了k条边, 的方案数</p><p>当所有边被选(所有的i都有相等关系), 那么有2种方案</p><p>不是全部都选, 考虑把环剖成链讨论首尾是否选择</p><hr><p><code>dp[i][j][s0=0/1/2][si=0/1/2]</code> 表示前i条边,选择了j条, 且第一条是s0 状态,第i条是si状态的方案数</p><p>0: 未选择</p><p>1: 该边分配了左点</p><p>2: 该边分配了右点</p><p>状态转移</p><p>不选 <code>dp[i][j][s0][0] = sum dp[i-1][j][s0][0..2]</code></p><p>向左 <code>dp[i][j][s0][1] = sum dp[i-1][j-1][s0][0..1]</code></p><p>向右 <code>dp[i][j][s0][2] = sum dp[i-1][j-1][s0][0..2]</code></p><p>这样最后长n的环选了k条链的总方案数 就是<code>sum dp[n][k][s0][s1], 且 (s0 != 1 || s1 != 2)</code></p><p>记为<code>circle[n][k]</code></p><hr><p>如果gi 表示 指定了i个不合法的选择, 剩余的n-i个任意选(可以合法也可以不合法,但始终满足是排列)</p><p>那么 $ans = \sum_{i=0}^n (-1)^i(n-i)! g_i$</p><hr><p>而gi也可以通过上面环的结果, 去做dp</p><p><code>f[i][k] =</code> 前i个环指定了k个边 的方案数</p><p><code>f[i][k] = sum{f[i-1][k-t] * circle[sz[i]][t]}</code> 前i个环指定了k个边 的方案数</p><hr><p>于是把所有环剖成链连续放在数组上</p><p><code>g[i][j][s0][s1]</code> = 前i边,指定分配了j条, i所在环的起始是s0,结束是s1的方案数, 这里也是把s0也与i做相关意义了</p><p>转移类似, 分别是跨环转移 和 环内转移</p><hr><p>感觉这题还可以改控制最大环长, 但增大总长度, 变成矩阵乘法</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc214/submissions/33643608" target="_blank" rel="noopener">https://atcoder.jp/contests/abc214/submissions/33643608</a></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#include &lt;atcoder/all&gt;using namespace std;using mint = atcoder::modint1000000007;#define rep(i,a,n) for (int i=a;i&lt;(int)n;i++)int read(){int r;scanf(&quot;%d&quot;,&amp;r);return r;} // readconst int N = 3000;int p[N+10];int q[N+10];int e[N+10]; // 单向边int vis2[N+10]; // 每个环的结束位置 = 1, 例如环为 2 3 5, 那么 [2]=1,[2+3=5]=1,[5+5=10]=1, 自环结束位置=2// 0 不分配, 1 分配左点, 2分配右点mint g[N+10][N+10][3][3]; // [i][j][s0][si] 每个环剖成链以后,长度i的链 分配了j条, 当前环 首个点state 0, 最后一个点stateimint fac[N+10]; // n!int main() {  int n=read();  fac[0]=1;  rep(i,1,n+1) fac[i]=fac[i-1]*i;  rep(i,0,n) p[i] = read();  rep(i,0,n) e[p[i]] = q[i] = read(); // 建立边 p,q =&gt; e  { // e =&gt; vis2    vector&lt;bool&gt; vis(n+1,false); // 点是否被访问    int m = 0;    rep(i,1,n+1) if(!vis[i]){      if(e[i]==i) { // 自环        vis2[++m]=2;        continue;      }      for(int j=i;!vis[j];j=e[j]) {        vis[j]=1;        m++;      }      vis2[m]=1;    }  }  g[0][0][0][0] = 1; // 初始状态  vis2[0] = 1;       // 初始状态  rep(i,0,n+1) rep(j,0,i+1){ // 剖成链, 前i个边, 指定j个不合法, 第i个点所在环首个点s0,第i个点s1状态    if(vis2[i]) { // 环结束位置      g[i][j][1][2] = 0; // 环首为向左环尾向右      if(vis2[i]==2) g[i][j][1][1]=0; // 自环, 不选是一种, 选左和选右相同, 去掉一个      rep(k,0,3) rep(l,0,3) { // i+1 是新的环        auto v = g[i][j][k][l];        g[i+1][j  ][0][0] += v; // 新环 本身与i 无关, 应该是1,这里相当于全部乘上前面的倍数        g[i+1][j+1][1][1] += v;        g[i+1][j+1][2][2] += v;      }    } else { // 环内      rep(k,0,3) rep(l,0,3){        auto v = g[i][j][k][l];        g[i+1][j  ][k][0] += v;        g[i+1][j+1][k][1] += ((l == 2) ? 0 : v); // 不能下一个向左 这一个向右        g[i+1][j+1][k][2] += v;      }    }  }  mint res = 0;  rep(i,0,n+1) {    mint cnt = 0; // 方案数    rep(j,0,3) rep(k,0,3) cnt += g[n][i][j][k];    res += fac[n-i]*cnt*(i%2?-1:1); // 容斥  }  printf(&quot;%d&quot;,res.val());  return 0;}</code></pre><h1 id="H-Collecting"><a href="#H-Collecting" class="headerlink" title="H - Collecting"></a>H - Collecting</h1><p><a href="https://atcoder.jp/contests/abc214/tasks/abc214_h" target="_blank" rel="noopener">https://atcoder.jp/contests/abc214/tasks/abc214_h</a></p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p><p>容斥还是不熟 感觉这个式子需要记忆 $ans = \sum_{i=0}^n (-1)^i c_i$</p><p>然后这个排列会构成多个环感觉很常用虽然知道, 但是这里通过边表示i, 分配点表示取值还是没有想到, 感觉也是一种转化思路</p><p>然后环拆成链+两头也是很经典的方法了</p><p>实现上把 环变成链 再在数组上连续性, 去做dp的方法, 比多重再算g更神奇</p><p>另外这里递推贡献更新时没有保证正确性, 有的在处理时才修复正确性 比如<code>[1][2]</code> 和自环</p><p>H</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc214/editorial" target="_blank" rel="noopener">官方题解</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Atcoder </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 图 </tag>
+            
+            <tag> dp </tag>
+            
+            <tag> 排列 </tag>
+            
+            <tag> 容斥 </tag>
+            
+            <tag> 环 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Atcoder abc261</title>
       <link href="/Blog/2022-07-29-ac_abc261/"/>
       <url>/Blog/2022-07-29-ac_abc261/</url>
@@ -3215,6 +3248,8 @@
             
             <tag> DP </tag>
             
+            <tag> 常数优化 </tag>
+            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -3222,8 +3257,6 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
-            
-            <tag> 常数优化 </tag>
             
         </tags>
       
@@ -3250,6 +3283,8 @@
             
             <tag> DP </tag>
             
+            <tag> 常数优化 </tag>
+            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -3257,8 +3292,6 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
-            
-            <tag> 常数优化 </tag>
             
         </tags>
       
