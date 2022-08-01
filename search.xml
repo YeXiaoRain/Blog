@@ -4,6 +4,53 @@
   
     
     <entry>
+      <title>Atcoder abc215</title>
+      <link href="/Blog/2022-07-31-ac_abc215/"/>
+      <url>/Blog/2022-07-31-ac_abc215/</url>
+      
+        <content type="html"><![CDATA[<p>G(概率论,组合数,期望,贡献统计)H(二分图,霍尔定理,SOSDP,子集反演)</p><h1 id="G-Colorful-Candies-2"><a href="#G-Colorful-Candies-2" class="headerlink" title="G - Colorful Candies 2"></a>G - Colorful Candies 2</h1><p>N 个 有色糖果,第i个颜色c[i]</p><p>从中选K个有 binom(N,K)种方案</p><p>等概率选一种方案</p><p>价值=所选的颜色的不同的数量</p><p>对于每个 k= 1…N 求期望价值</p><p>mod 998244353</p><h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>N 5e4</p><p>c[i]  [1,1e9]</p><p>4s</p><p>1024mb</p><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>首先只关心不同值,显然c[i]可以离散化到[1..N]</p><p>答案 = sum{价值} / binom(N,K)</p><p>不同颜色互不影响</p><p>所以 选了j种颜色, 一共k个, 如果能算方案出来 f(j), 那么答案 = sum j * f(j)</p><p>指定的 c[…] 中选的话</p><p>似乎可以卷积</p><p>去表示每个颜色 选t个的方案数, 然后卷积意义是前 j 种颜色(可能有的不选) 选k个的方案数 </p><p>好像无法获得选了几个颜色</p><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>反过来, 也就是每个颜色出现一次的概率 的贡献和</p><p>P(出现一次) = 1-P(一次都不出现)</p><p>binom(n-x,k) / binom(n,k) , 也就是x 是这个颜色的个数</p><p>其中 n-x &lt; k 的话, 必定出现p = 1</p><p>(binom(n,k) - binom(n-x,k))/binom(n,k) , 也就是x 是这个颜色的个数</p><p>可以减少计算</p><p>注意到 可以统计个数为x的有多少个, 这样最多 $\sqrt(N)$个统计</p><p>因此对于k来讲,是$O(\sqrt{N})$的</p><p>总的便是$O(N^{\frac{3}{2}})$</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc215/submissions/33712411" target="_blank" rel="noopener">https://atcoder.jp/contests/abc215/submissions/33712411</a></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#include &lt;atcoder/all&gt;using mint = atcoder::modint998244353;using namespace std;typedef long long ll;const int MOD = 998244353;#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)#define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)#define pb push_backll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // readint c[50010];mint fac[50010] = {1};mint invv[50010] = {0,1};mint invfac[50010] = {1};mint binom(int n,int m){  if(m &gt; n) return 0;  return fac[n] * invfac[m] * invfac[n-m];}int main(){  int n = read();  rep(i,0,n) c[i] = read();  rep(i,1,n+1) fac[i] = fac[i-1] * i;  invv[1] = 1;  rep(i,2,n+1) invv[i] = (MOD - MOD/i) * invv[MOD%i];  rep(i,1,n+1) invfac[i] = invfac[i-1] * invv[i];  sort(c,c+n);  vector&lt;int&gt; sz = {1};  rep(i,1,n){    if(c[i] != c[i-1]){      sz.push_back(1);    }else{      sz.back()++;    }  }  sort(sz.begin(),sz.end());  vector&lt;pair&lt;int,int&gt;&gt; sc; // size count  int cnt = 0;  rep(i,0,sz.size()){    cnt++;    if(i+1 == (int)sz.size() || sz[i] != sz[i+1]){      sc.push_back({sz[i],cnt});      cnt = 0;    }  }  rep(k,1,n+1){    mint bnk = binom(n,k);    mint ans = bnk * sz.size() ;    for(auto [s,t]:sc) {      if(n-s &lt; k) break; // n-s &lt; k 的话, 必定出现p = 1      ans -= binom(n-s,k) * t; // * 次数    }    ans /= bnk;    printf(&quot;%d\n&quot;,ans.val());  }  return 0;}</code></pre><h1 id="G-Cabbage-Master"><a href="#G-Cabbage-Master" class="headerlink" title="G - Cabbage Master"></a>G - Cabbage Master</h1><p>N种菜,每种 A[i] 个</p><p>M个需求, 每个需求B[i] 个, 但是限制<code>c[i][j] = 0/1</code> 表示第i个需求 是否允许得到 第j种菜</p><p>如果 能满足所有需求则 成功</p><p>现在要尽量少的删除一些菜的个数, 让它无法成功</p><p>并且求, 删除同样数量的方案数  mod 998244353</p><h2 id="限制-1"><a href="#限制-1" class="headerlink" title="限制"></a>限制</h2><p>n 20</p><p>m 1e4</p><p>a[i] 1e5</p><p>b[i] 1e5</p><p>3s</p><p>1024mb</p><h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>一眼感觉网络流, 但是看着这n这么少</p><p>又觉得说 会不会是 maskdp</p><p>2^20 = 1048576, 大概1e6</p><hr><p>网络流思路</p><p>就是 S -&gt; Ini 流量 A[i]</p><p>Ini -&gt; Outj 流量无限 如果<code>c[i][j] == 1</code></p><p>Outj -&gt; T 流量B[i]</p><p>那么目标是让最小割(最大流) &lt;= sum B[i] 即可</p><h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>二分图</p><p>左侧N个颜色, 右侧M个需求</p><p>注意到 这里成功对应的是 匹配 = sum 右侧</p><p>所以是枚举右侧的的点集,看对应左侧的点集是否大于等于右侧</p><p>左侧L, 右侧R</p><p>要能完美匹配 $forall S \subset R $</p><p>左侧对应集合并的和 &gt;= S对应需求的和</p><p>即 min (左侧对应集合并的和 - S对应需求的和) &gt;= 0</p><hr><p>n=20, 考虑枚举左侧的并,来找右侧的max</p><p>但似乎通过枚举子集可能有m 2^n 复杂度</p><p>但实际上我们要的是</p><p>min {f(L0) - g(L0)} &gt;= 0, 其中f 算的集合里左侧的和, g 算的映射到左侧包含于集合的右侧的值的和</p><p>g中计算 子集和可以sosdp 高维前缀和</p><p>那么删除数量X = min( f(L0) - g(L0)) + 1</p><hr><p>然后问题变成如何计算方案数</p><p>ans = 0 , 不操作1种</p><p>对于ans &gt; 0</p><p>设 左侧移除的X的值 来自的点集合恰好为S</p><p>当存在 S1 满足 S 是 S1 的子集, 且 f(L0) - g(S1) + 1 == X, 这时 S移除X的方案数h(S) 会有贡献</p><p>binom(S的个数,X) = sum h(T), T 是S的子集</p><p>这就是 子集反演问题</p><p>$h(S) = sum (-1)^{|S|-|T|} binom(T的个数,X)$, T是S的子集</p><p>又是求子集的函数和, 那么这里把和原集合有关的移动一下</p><p>$(-1)^{|S|} {h(S)} = sum (-1)^{|T|} \binom{f(T)}{X}$, T是S的子集</p><p>同样FWT, SOSDP可以处理</p><h2 id="霍尔-Hall-定理"><a href="#霍尔-Hall-定理" class="headerlink" title="霍尔(Hall)定理"></a>霍尔(Hall)定理</h2><p>二分图 左侧n点 右侧 m 点, n&lt;= m</p><p>二分图的最大匹配个数=|n| 的充要条件, 左侧点n的任意大小(=k)的子集连到右图的点的个数都满足&gt;=k</p><p>必要性, 因为最大匹配=|n|,所以存在一个方案, 任意左侧子集(=k)的方案对应右侧的点都是k, 所以连接的一定 &gt;= k</p><p>充分性, 归纳法, 显然 n = 1时 成立</p><p>如果n时成立</p><p>对于n+1个点</p><p>假设存在k(&lt;=n)个左侧点对应可达右侧刚好是k个, 那么存在一组匹配</p><p>注意到左侧 n+1对应 右侧&gt;=n+1, 那么从左右分别去掉上面的k个</p><p>那么左侧n+1-k, 右侧 &gt;=n+1-k, 归纳有方案</p><hr><p>如果上述不存在, 则所有k(&lt;=n)个左侧 对应的是 &gt;= k+1个右侧</p><p>那么 任意取一个匹配, 那么剩下的n个左点对应的右点 &gt;= k 个, 所以归纳成立</p><h2 id="子集反演"><a href="#子集反演" class="headerlink" title="子集反演"></a>子集反演</h2><p>$g(S) = sum f(T)$, T是S的子集合</p><p>$f(S) = sum (-1)^{|S| - |T|} g(T)$ , T是S的子集合</p><h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc215/submissions/33719233" target="_blank" rel="noopener">https://atcoder.jp/contests/abc215/submissions/33719233</a></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#include &lt;atcoder/all&gt;using mint = atcoder::modint998244353;using namespace std;typedef long long ll;#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)#define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // readconst ll INF = 0x3f3f3f3f; // &gt; 1e9const int N = 20;const int MASK = ( 1 &lt;&lt; N ) ;const int M = N * 100000;mint fac[M+10] = {1}; // 阶乘mint ifac[M+10] ={1}; // 阶乘的逆向int f[MASK+10]; // f[1&lt;&lt;i] = A[i], f[mask] = sum Aint g[MASK+10]; // g[左侧mask] = sum B , 通过sosdp 变成子集和mint h[MASK+10]; // h(S=bitmask) S中移除 X 个的方案数,(每个恰好一个)int cnt[MASK+10]; // mask 中1的个数int cont[MASK+10]; // cont[mask] = 多少个父集合 是满足 最小代价为X的 在mask中移除让Hall定理触发不满足int B[M+10]; // 读入int adj[M+10]; // adj[右侧] = 左侧的bitmaskmint binom( int n, int m ) { return n &lt; m ? 0 : fac[n] * ifac[m] * ifac[n - m]; }int main() {  rep(i,1,M+1) fac[i] = fac[i - 1]*i;  ifac[M] = fac[M].inv();  per(i,0,M) ifac[i] = ifac[i + 1]*(i + 1);  int n = read();  int m = read();  rep(i,0,n)f[1&lt;&lt;i]=read();//f[1&lt;&lt;i]=A[i]  rep(j,0,m)B[j]=read();;  rep(i,0,n)rep(j,0,m) if(read())adj[j]|=1&lt;&lt;i; // 转换成mask  rep(j,0,m)g[adj[j]] += B[j]; // g[对应左侧mask] += B[j]  rep(mask,1,1&lt;&lt;n) cnt[mask] = cnt[mask &gt;&gt; 1] + ( mask &amp; 1 ); // 计算1个数  rep(mask,1,1&lt;&lt;n) f[mask] = f[mask&amp;(-mask)] + f[mask&amp;(mask-1)]; // 去掉最后一个1 和最后一个1的mask之和  rep(pwr,0,n) rep(mask,1,1&lt;&lt;n) if(mask &amp; (1&lt;&lt;pwr)) g[mask] += g[mask ^ (1&lt;&lt;pwr)]; // sosdp 高维前缀和  rep(mask,0,1&lt;&lt;n) if(!g[mask]) g[mask] = -INF; // 右侧没有集合对应左侧集合是mask的子集合  int X = INF; // 答案第一部分 删除个数  rep(mask,1,1&lt;&lt;n) X = min(X,f[mask]-g[mask]+1 ); // Hall定理, min(左子集值和 - 右侧来源子集和)  if(max(X,0) == 0) { // 本来就不合法    printf( &quot;0 1\n&quot; );    return 0;  }  // h&#39;(S) = (-1)^|S| h(S) = sum (-1)^|T| binom(f[t], X) SOSDP  rep(mask,1,1&lt;&lt;n) h[mask] = binom(f[mask], X) * (cnt[mask] &amp; 1 ? -1 : 1);  rep(pwr,0,n) rep(mask,0,1&lt;&lt;n) if(mask &amp; (1&lt;&lt;pwr)) h[mask] += h[mask ^ (1&lt;&lt;pwr)];  rep(mask,0,1&lt;&lt;n) h[mask] = h[mask] * ((cnt[mask] &amp; 1)?-1:1);  // SOSDP 父集合反演(本质上还是 子集反演, 你只是把每个mask 看成mask的取反即可, 注意pwr顺序才是关键, mask每次之间没有链式依赖,都是两两依赖, 所以mask不需要换顺序  rep(mask,1,1&lt;&lt;n) if( f[mask] - g[mask] + 1 == X ) cont[mask] = 1;  rep(pwr,0,n) rep(mask,0,1&lt;&lt;n) if(mask &amp; (1&lt;&lt;pwr)) cont[mask ^ (1&lt;&lt;pwr)] += cont[mask]; // 统计父集合可行的次数  mint ans = 0;  rep(mask,0,1&lt;&lt;n) if(cont[mask]) ans += h[mask];  printf(&quot;%d %d\n&quot;,X, ans.val());  return 0;}</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p><p>其实还算基础知识点, 如何批量算模拟元,批量阶乘和阶乘模逆元,如何基于它们快速bionom</p><p>然后就是概率统计变形状和相同次数统计变成$\sqrt{N}$</p><p>评分 2267 也差不多</p><p>H</p><p>二分图,霍尔定理</p><p>二分图一定程度上, 就不在意初始设计的方向了,  因为是匹配, 内部是没有关系的</p><p>霍尔定理对于这种大于1流量的也适用(因为从本质上看 左/右侧最多k个, 无非是k个点, 有无穷大边, 无非是这些拆开后的左右侧按照原来的关系两两有边, 而这个思路是不是特殊题型还能反过来思考)</p><p>这种”任意”的条件，可以考虑是在哪个部分将它破坏的</p><p>还涉及到 子集反演( 以及用子集反演完成父集合反演)</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc215/editorial" target="_blank" rel="noopener">官方题解</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Atcoder </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 图 </tag>
+            
+            <tag> dp </tag>
+            
+            <tag> 网络流 </tag>
+            
+            <tag> scc </tag>
+            
+            <tag> 二分图 </tag>
+            
+            <tag> 排列 </tag>
+            
+            <tag> 容斥 </tag>
+            
+            <tag> 环 </tag>
+            
+            <tag> 费用流 </tag>
+            
+            <tag> 霍尔定理 </tag>
+            
+            <tag> SOSDP </tag>
+            
+            <tag> 子集反演 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Atcoder abc214</title>
       <link href="/Blog/2022-07-30-ac_abc214/"/>
       <url>/Blog/2022-07-30-ac_abc214/</url>
@@ -24,9 +71,9 @@
             
             <tag> dp </tag>
             
-            <tag> scc </tag>
-            
             <tag> 网络流 </tag>
+            
+            <tag> scc </tag>
             
             <tag> 排列 </tag>
             
@@ -2705,10 +2752,10 @@
     
     <entry>
       <title>tencent 04 26 C 状压dp入门</title>
-      <link href="/Blog/2020-04-27-tencent042C/"/>
-      <url>/Blog/2020-04-27-tencent042C/</url>
+      <link href="/Blog/2020-04-29-codejam1BC/"/>
+      <url>/Blog/2020-04-29-codejam1BC/</url>
       
-        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>n张牌，正反两面都有数字，给初始序列。</p><p>一次操作交换相邻的两张牌并翻转这两张牌。</p><p>求问能否最后所有朝上的牌构成非减序列</p><p>2&lt;= n&lt;=18</p><h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>显然数值范围没意义，因为就算很大，离散一下也就最多36个</p><p>显然根据交换规则，把i放到j后，它的正反面是确定的</p><p>所以排列的状态数是<code>n!</code>，18的阶乘就不要想枚举了</p><p>这题的边界感觉也能很难想，所以有想过的一个骗分方向是迭代加深，但是估计只能骗分答案比较小，或者n比较小的点</p><hr><p>有人贪心100%了？？ 不知道腾讯出题的人在干嘛？这样明显一堆hack点的能100%，叫那些写状压的没满的怎么想</p><hr><p>前置知识：冒泡排序操作数 = 逆序对个数。</p><p>这题目只看操作过程中坐标的变化，实际就是在进行冒泡排序，所以我们的步数也就是 最初顺序标号变成最后顺序标号的逆序对个数</p><hr><p>状态设计[前i个，使用的元素的state，第i个用的是下标j]</p><p>注意到state用0/1来表示是否选择，1的个数就是i，所以可以省略为<code>[state,j]</code></p><p>这个状态对应的值 <code>dp[state,j]</code>为 已经选出的元素的逆序对的最小值</p><p>转移方程为</p><p><code>dp[state][j] = min(dp[state 去掉 j][for剩余可选] + state剩余部分和j构成的逆序对)</code> </p><p>注意到<code>state</code>内部顺序不影响state剩余部分 和 j构成的逆序对的值</p><p><code>= min(dp[state 去掉 j][for剩余可选]) + state剩余部分和j构成的逆序对</code></p><p>所以 一个状态的最小，是从去掉最后一个的最小来的</p><p>(感觉这里局部最优/最小性证明有点绕，或者可以用归纳证？</p><p>注意保证题目限制非减序列别忘了</p><h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><p>不是我写的，链接在下方,加了点注释</p><pre><code>作者：qin_peng链接：https://www.nowcoder.com/discuss/417957?type=0&amp;order=0&amp;pos=77&amp;page=1来源：牛客网</code></pre><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;#define me(a,x) memset(a,x,sizeof(a))#define sc scanf#define pr printf#define IN freopen(&quot;in.txt&quot;,&quot;r&quot;,stdin);#define OUT freopen(&quot;out.txt&quot;,&quot;w&quot;,stdout);typedef long long ll;typedef unsigned long long ull;const int N=1e6+6;const int mod=1e9+7;int O(){putchar(&#39;\n&#39;);return 0;}template&lt;typename T,typename... Ty&gt;int O(const T&amp; a,const Ty&amp;... b){cout&lt;&lt;a&lt;&lt;&#39; &#39;;return O(b...);}void I(){}template&lt;typename T,typename... Ty&gt;void I(T&amp; a,Ty&amp;... b){cin&gt;&gt;a;I(b...);}template&lt;typename T&gt;void db(T *bg,T *ed){while(bg!=ed)cout&lt;&lt;*bg++&lt;&lt;&#39; &#39;;pr(&quot;\n&quot;);}inline ll mul_64(ll x,ll y,ll c){return (x*y-(ll)((long double)x/c*y)*c+c)%c;}inline ll ksm(ll a,ll b,ll c){ll ans=1;for(;b;b&gt;&gt;=1,a=a*a%c)if(b&amp;1)ans=ans*a%c;return ans;}int n,a[20],b[20];int dp[1&lt;&lt;20][20];const int INF=1e9;int main(){    I(n);    for(int i=0;i&lt;n;i++)sc(&quot;%d&quot;,&amp;a[i]);    for(int i=0;i&lt;n;i++)sc(&quot;%d&quot;,&amp;b[i]);    for(int i=1;i&lt;n;i+=2)swap(a[i],b[i]);    for(int i=0;i&lt;(1&lt;&lt;n);i++){        for(int j=0;j&lt;n;j++){            dp[i][j]=INF; // 不可达        }    }    for(int i=0;i&lt;n;i++)dp[1&lt;&lt;i][i]=0; // 选单个 逆序对为0    for(int i=0;i&lt;(1&lt;&lt;n);i++){ // 保证子状态先于父状态计算        for(int j=0;j&lt;n;j++){            if(dp[i][j]==INF)continue;            for(int k=0;k&lt;n;k++){                if(i&gt;&gt;k&amp;1)continue;                int x=__builtin_popcount(i)&amp;1; // 内置计算1的个数                if(x){ // 非减 限制                    if(b[k]&lt;a[j])continue;                }else{                    if(a[k]&lt;b[j])continue;                }                int ans=0;                for(int l=k+1;l&lt;n;l++){ // 计算 state补上k以后 state与k之间新形成的逆序对                    if(i&gt;&gt;l&amp;1)ans++;                }                dp[i|1&lt;&lt;k][k]=min(dp[i|1&lt;&lt;k][k],dp[i][j]+ans); // 递推感觉局部最小性有点奇怪？只有我？但是从上向下看是没问题的。所以逻辑一致没问题            }        }    }    int ans=INF;    for(int i=0;i&lt;n;i++)ans=min(ans,dp[(1&lt;&lt;n)-1][i]);    if(ans==INF)O(-1);    else O(ans);}</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>很早看到18 就条件反射的想2的n次方</p><p>看到交换两个也想到了逆序对和冒泡</p><p>但没想出最后的状态以及转移，果然设计状态有点难啊，我好菜哇</p><p>大概技术总结的话应该是 除了最简单的状态，还有一种是<code>[state][末尾选择]</code>，这样的话能保证性质就行，如这里的末尾选择就是用来保证 非减少的</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1>]]></content>
       
       
       <categories>
@@ -2730,10 +2777,10 @@
     
     <entry>
       <title>tencent 04 26 C 状压dp入门</title>
-      <link href="/Blog/2020-04-29-codejam1BC/"/>
-      <url>/Blog/2020-04-29-codejam1BC/</url>
+      <link href="/Blog/2020-04-27-tencent042C/"/>
+      <url>/Blog/2020-04-27-tencent042C/</url>
       
-        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1>]]></content>
+        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>n张牌，正反两面都有数字，给初始序列。</p><p>一次操作交换相邻的两张牌并翻转这两张牌。</p><p>求问能否最后所有朝上的牌构成非减序列</p><p>2&lt;= n&lt;=18</p><h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>显然数值范围没意义，因为就算很大，离散一下也就最多36个</p><p>显然根据交换规则，把i放到j后，它的正反面是确定的</p><p>所以排列的状态数是<code>n!</code>，18的阶乘就不要想枚举了</p><p>这题的边界感觉也能很难想，所以有想过的一个骗分方向是迭代加深，但是估计只能骗分答案比较小，或者n比较小的点</p><hr><p>有人贪心100%了？？ 不知道腾讯出题的人在干嘛？这样明显一堆hack点的能100%，叫那些写状压的没满的怎么想</p><hr><p>前置知识：冒泡排序操作数 = 逆序对个数。</p><p>这题目只看操作过程中坐标的变化，实际就是在进行冒泡排序，所以我们的步数也就是 最初顺序标号变成最后顺序标号的逆序对个数</p><hr><p>状态设计[前i个，使用的元素的state，第i个用的是下标j]</p><p>注意到state用0/1来表示是否选择，1的个数就是i，所以可以省略为<code>[state,j]</code></p><p>这个状态对应的值 <code>dp[state,j]</code>为 已经选出的元素的逆序对的最小值</p><p>转移方程为</p><p><code>dp[state][j] = min(dp[state 去掉 j][for剩余可选] + state剩余部分和j构成的逆序对)</code> </p><p>注意到<code>state</code>内部顺序不影响state剩余部分 和 j构成的逆序对的值</p><p><code>= min(dp[state 去掉 j][for剩余可选]) + state剩余部分和j构成的逆序对</code></p><p>所以 一个状态的最小，是从去掉最后一个的最小来的</p><p>(感觉这里局部最优/最小性证明有点绕，或者可以用归纳证？</p><p>注意保证题目限制非减序列别忘了</p><h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><p>不是我写的，链接在下方,加了点注释</p><pre><code>作者：qin_peng链接：https://www.nowcoder.com/discuss/417957?type=0&amp;order=0&amp;pos=77&amp;page=1来源：牛客网</code></pre><pre><code class="cpp">#include&lt;bits/stdc++.h&gt;using namespace std;#define me(a,x) memset(a,x,sizeof(a))#define sc scanf#define pr printf#define IN freopen(&quot;in.txt&quot;,&quot;r&quot;,stdin);#define OUT freopen(&quot;out.txt&quot;,&quot;w&quot;,stdout);typedef long long ll;typedef unsigned long long ull;const int N=1e6+6;const int mod=1e9+7;int O(){putchar(&#39;\n&#39;);return 0;}template&lt;typename T,typename... Ty&gt;int O(const T&amp; a,const Ty&amp;... b){cout&lt;&lt;a&lt;&lt;&#39; &#39;;return O(b...);}void I(){}template&lt;typename T,typename... Ty&gt;void I(T&amp; a,Ty&amp;... b){cin&gt;&gt;a;I(b...);}template&lt;typename T&gt;void db(T *bg,T *ed){while(bg!=ed)cout&lt;&lt;*bg++&lt;&lt;&#39; &#39;;pr(&quot;\n&quot;);}inline ll mul_64(ll x,ll y,ll c){return (x*y-(ll)((long double)x/c*y)*c+c)%c;}inline ll ksm(ll a,ll b,ll c){ll ans=1;for(;b;b&gt;&gt;=1,a=a*a%c)if(b&amp;1)ans=ans*a%c;return ans;}int n,a[20],b[20];int dp[1&lt;&lt;20][20];const int INF=1e9;int main(){    I(n);    for(int i=0;i&lt;n;i++)sc(&quot;%d&quot;,&amp;a[i]);    for(int i=0;i&lt;n;i++)sc(&quot;%d&quot;,&amp;b[i]);    for(int i=1;i&lt;n;i+=2)swap(a[i],b[i]);    for(int i=0;i&lt;(1&lt;&lt;n);i++){        for(int j=0;j&lt;n;j++){            dp[i][j]=INF; // 不可达        }    }    for(int i=0;i&lt;n;i++)dp[1&lt;&lt;i][i]=0; // 选单个 逆序对为0    for(int i=0;i&lt;(1&lt;&lt;n);i++){ // 保证子状态先于父状态计算        for(int j=0;j&lt;n;j++){            if(dp[i][j]==INF)continue;            for(int k=0;k&lt;n;k++){                if(i&gt;&gt;k&amp;1)continue;                int x=__builtin_popcount(i)&amp;1; // 内置计算1的个数                if(x){ // 非减 限制                    if(b[k]&lt;a[j])continue;                }else{                    if(a[k]&lt;b[j])continue;                }                int ans=0;                for(int l=k+1;l&lt;n;l++){ // 计算 state补上k以后 state与k之间新形成的逆序对                    if(i&gt;&gt;l&amp;1)ans++;                }                dp[i|1&lt;&lt;k][k]=min(dp[i|1&lt;&lt;k][k],dp[i][j]+ans); // 递推感觉局部最小性有点奇怪？只有我？但是从上向下看是没问题的。所以逻辑一致没问题            }        }    }    int ans=INF;    for(int i=0;i&lt;n;i++)ans=min(ans,dp[(1&lt;&lt;n)-1][i]);    if(ans==INF)O(-1);    else O(ans);}</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>很早看到18 就条件反射的想2的n次方</p><p>看到交换两个也想到了逆序对和冒泡</p><p>但没想出最后的状态以及转移，果然设计状态有点难啊，我好菜哇</p><p>大概技术总结的话应该是 除了最简单的状态，还有一种是<code>[state][末尾选择]</code>，这样的话能保证性质就行，如这里的末尾选择就是用来保证 非减少的</p>]]></content>
       
       
       <categories>
@@ -3254,8 +3301,6 @@
             
             <tag> DP </tag>
             
-            <tag> 常数优化 </tag>
-            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -3263,6 +3308,8 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> 常数优化 </tag>
             
         </tags>
       
@@ -3289,8 +3336,6 @@
             
             <tag> DP </tag>
             
-            <tag> 常数优化 </tag>
-            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -3298,6 +3343,8 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> 常数优化 </tag>
             
         </tags>
       
