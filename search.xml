@@ -4,6 +4,50 @@
   
     
     <entry>
+      <title>POJ 3169</title>
+      <link href="/Blog/2022-08-02-poj3169/"/>
+      <url>/Blog/2022-08-02-poj3169/</url>
+      
+        <content type="html"><![CDATA[<p>cow game, 差分约束</p><h1 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h1><p><a href="http://poj.org/problem?id=3169" target="_blank" rel="noopener">http://poj.org/problem?id=3169</a></p><p>数轴上放N个点(按照i的顺序坐标非严格单调递增</p><p>10000 个大于限制, 点i和点j距离不超过 di (1e6)</p><p>10000 个小于限制, 点i和点j距离不小于 di (1e6)</p><p>1s</p><p>64MB</p><p>求点1 和 点N的最大距离</p><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>传说中日本众所周知的的cow game</p><p>也就是 全部小于号, (大于号同乘-1)</p><p>注意到上面要保证i的顺序( 所以 大-小 &lt;= Di 或者 大减小 &gt;= Di</p><p>然后说 差分约束本质上还是 最短路 只是需要建图</p><p>b-a &lt;= d</p><p>转化成 a + d &gt;= b, 所以 a -&gt; b如果有边长d的话, 那么b的距离最小就是 a+d 还可能更小</p><p>b-a &gt;= d的话</p><p>转化成 b-d &gt;= a, 也就是 b -&gt; a 如果有边长 (-d), 那么a的距离最小是 b-d, 还可能更小</p><p>总而言之转化成</p><p>点0 + ? &gt;= 点1 的形式, 然后从点0 发一条长? 的边</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><h3 id="过不了编译版本"><a href="#过不了编译版本" class="headerlink" title="过不了编译版本"></a>过不了编译版本</h3><p>这poj g++版本太老了</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;#define rep(i,a,n) for (int i=a;i&lt;n;i++)ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // readconst int INF = 0x3f3f3f3f; // 1e9vector&lt;array&lt;int,3&gt; &gt; e; // 有向边 [u,v,weight/length]int main(){  int N = read();  int ML = read();  int MD = read();  // 建图  rep(i,1,N) e.push_back({i+1, i, 0}); // 从i+1-&gt;i权值为0的边 保证顺序i的距离不大于i+1  rep(i,0,ML){ //&#39;喜欢&#39;关系约束 &lt;= DL    int a = read();    int b = read(); // 保证 b&gt;a    int d = read(); // |距离| &lt;= DL[i]    /* b-a&lt;=d, 即 a+d&gt;=b 从a到b权值为d的边 */    e.push_back({a,b,d});  }  rep(i,0,MD){ //&#39;不喜欢&#39;关系约束 &gt;= DD    int a = read();    int b = read(); // 保证 b&gt;a    int d = read(); // |距离| &gt;= DD[i]    /* BD - AD &gt;= DD 即 BD - DD &gt;= AD,  从BD到AD权值-DD的边*/    e.push_back({b,a,-d});  }  // Bellman_Ford  vector&lt;int&gt;dist(N+1,INF);// 最短距离  dist[1] = 0;  //循环N-1次 对所有边进行松弛操作  rep(i,0,N-1) for(auto [u,v,w]: e) if(dist[u] != INF) dist[v] = min(dist[v], dist[u] + w);  //再遍历一次所有边（第N次循环）如果本次有更新，则存在负环  bool ngloop = false;  for(auto [u,v,w]: e) if(dist[u] != INF &amp;&amp; dist[u] + w &lt; dist[v] ) ngloop = true;  int ans = dist[N];  if (ngloop) ans = -1;  else if(ans == INF) ans = -2;  printf(&quot;%d\n&quot;, ans);  return 0;}</code></pre><h3 id="AC-版本"><a href="#AC-版本" class="headerlink" title="AC 版本"></a>AC 版本</h3><pre><code class="cpp">#include &lt;stdio.h&gt;#include &lt;iostream&gt;#include &lt;vector&gt;using namespace std;typedef long long ll;#define rep(i,a,n) for (int i=a;i&lt;n;i++)#define mt make_tuplell read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // readconst int INF = 0x3f3f3f3f; // 1e9// 没有tuplestruct edge{  int u;  int v;  int w;  // 结构体直接赋值也没有  edge(int _u,int _v,int _w){    u = _u;    v = _v;    w = _w;  }};vector&lt;edge&gt; e; // 有向边 [u,v,weight/length]int main(){  int N = read();  int ML = read();  int MD = read();  // 建图  rep(i,1,N) e.push_back(edge(i+1, i, 0)); // 从i+1-&gt;i权值为0的边 保证顺序i的距离不大于i+1  rep(i,0,ML){ //&#39;喜欢&#39;关系约束 &lt;= DL    int a = read();    int b = read(); // 保证 b&gt;a    int d = read(); // |距离| &lt;= DL[i]    /* b-a&lt;=d, 即 a+d&gt;=b 从a到b权值为d的边 */    e.push_back(edge(a,b,d));  }  rep(i,0,MD){ //&#39;不喜欢&#39;关系约束 &gt;= DD    int a = read();    int b = read(); // 保证 b&gt;a    int d = read(); // |距离| &gt;= DD[i]    /* BD - AD &gt;= DD 即 BD - DD &gt;= AD,  从BD到AD权值-DD的边*/    e.push_back(edge(b,a,-d));  }  // Bellman_Ford  vector&lt;int&gt;dist(N+1,INF);// 最短距离  dist[1] = 0;  //循环N-1次 对所有边进行松弛操作  rep(t,0,N-1) rep(i,0,e.size()){    edge &amp;uvw = e[i]; // 不支持auto    int u = uvw.u;    int v = uvw.v;    int w = uvw.w;    if(dist[u] != INF) dist[v] = min(dist[v], dist[u] + w);  }  //再遍历一次所有边（第N次循环）如果本次有更新，则存在负环  bool ngloop = false;  rep(i,0,e.size()){    edge &amp;uvw = e[i]; // 不支持auto    int u = uvw.u;    int v = uvw.v;    int w = uvw.w;    if(dist[u] != INF &amp;&amp; dist[u] + w &lt; dist[v] ) ngloop = true;  }  int ans = dist[N];  if (ngloop) ans = -1;  else if(ans == INF) ans = -2;  printf(&quot;%d\n&quot;, ans);  return 0;}</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>就是如何对差分变成图</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> poj </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 差分约束 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Atcoder abc216</title>
+      <link href="/Blog/2022-08-01-ac_abc216/"/>
+      <url>/Blog/2022-08-01-ac_abc216/</url>
+      
+        <content type="html"><![CDATA[<p>G(贪心)H()</p><h1 id="G-01Sequence"><a href="#G-01Sequence" class="headerlink" title="G - 01Sequence"></a>G - 01Sequence</h1><p><a href="https://atcoder.jp/contests/abc216/tasks/abc216_g" target="_blank" rel="noopener">https://atcoder.jp/contests/abc216/tasks/abc216_g</a></p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc216/submissions/33727628" target="_blank" rel="noopener">https://atcoder.jp/contests/abc216/submissions/33727628</a></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;using namespace std;#define rep(i,a,n) for (int i=a;i&lt;(int)n;i++)int read(){int r;scanf(&quot;%d&quot;,&amp;r);return r;} // readconst int N=200000;int a[N+10]; // a[空白个数] = 到右侧点, 之间全是1int r[N+10]; // 读入int y[N+10]; // 左侧0个数vector&lt;int&gt; l2i[N+10]; // 左端点到第i个区间int main() {  int n = read();  int m = read();  rep(i,1,m+1){    int l = read();    r[i] = read();    y[i] = (r[i]-l+1) - read(); // 左侧0个数 [[....yi],1,1,1,1,1,1]    l2i[l].push_back(i);  }  int cnt = 0; // 遍历过程中 (&lt;l) 0 的个数  rep(pos,1,n+1){ // 下标    for(auto i:l2i[pos]) a[y[i]+cnt] = max(a[y[i]+cnt],r[i]);// [pos.....r[i]]    printf(&quot;%d &quot;, a[cnt] &gt;= pos); // 这一段全是1, 1尽量向右,贪心塞0    cnt += (a[cnt] &lt; pos); // 计数+1  }  return 0;}</code></pre><h1 id="H-Random-Robots"><a href="#H-Random-Robots" class="headerlink" title="H - Random Robots"></a>H - Random Robots</h1><p>数轴上k个机器人, 初始位置分别在xi</p><p>每次 每个机器人独立选择 移动(正向+1)或不动 1/2 概率</p><p>问经过N次,过程中没有任何两个robot 同时在同位置的概率</p><p>mod 998244353</p><h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>k [2,10]</p><p>n 1000</p><p>xi [0,1000], 严格单增提供</p><p>2s</p><p>1024mb</p><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>一般来说 概率 = 次/总次数 可以互相转化</p><p>不相遇 可以 和相遇的容斥互相转化</p><p>k 10 的话可能和k的bitmask有关系</p><p>如果进行一次</p><p>而碰撞比不碰撞似乎好算一些</p><p>而且一般是相邻碰撞</p><p>pi 和pi+1 在t次时刻碰撞</p><p>意味着 t-1 次时距离1, t时 1/4 概率</p><p>0~t-1 时刻每次 1/4 +1, 1/4 -1, 1/2 不变</p><p>设原来距离 为d</p><p>那么 -1 次数 减去 +1 次数 = d-1, 且中间不能有负数情况</p><p>变成后缀个数统计问题</p><p>似乎可以强行算出t时刻 的概率, 实在组合排列不行, <code>dp[时刻1000][距离2000]</code> 来算也可以</p><hr><p>那么无碰撞 = 所有 - 碰撞</p><p>所以想办法容斥掉碰撞</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p><p>贪心完全不会</p><p>题解说有个cow game</p><p>有一些 dj-di &lt;= wij 的限制</p><p>寻找最大的 dT-dS, 可以变成最短路问题</p><p><a href="http://poj.org/problem?id=3169" target="_blank" rel="noopener">http://poj.org/problem?id=3169</a></p><p>H</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc216/editorial" target="_blank" rel="noopener">官方题解</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Atcoder </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Atcoder abc215</title>
       <link href="/Blog/2022-07-31-ac_abc215/"/>
       <url>/Blog/2022-07-31-ac_abc215/</url>
@@ -153,9 +197,9 @@
             
             <tag> bitmask </tag>
             
-            <tag> NTT </tag>
-            
             <tag> SA </tag>
+            
+            <tag> NTT </tag>
             
             <tag> 集合论 </tag>
             
@@ -325,6 +369,31 @@
     
     
     <entry>
+      <title>LGV 引理</title>
+      <link href="/Blog/2022-07-22-LGVlemma/"/>
+      <url>/Blog/2022-07-22-LGVlemma/</url>
+      
+        <content type="html"><![CDATA[<p>Lindström–Gessel–Viennot lemma</p><p><a href="https://oi-wiki.org/graph/lgv/" target="_blank" rel="noopener">https://oi-wiki.org/graph/lgv/</a></p><p>前置知识, 图论基础,矩阵,行列式,高斯消元</p><p>适用于DAG上(有向无环图)</p><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>$P$ 路径</p><p>$\omega(P) = $ 路径$P$上边权之积</p><p>点$u,v$</p><p>$e(u,v) = \sum_{P:u\to v} \omega(P)$每一条 $u$到 $v$ 的路径$S$,的$\omega(P)$之和</p><p>大小为n的 起点集合A,终点集合B, (点集内也可能有边, 满足DAG</p><p>$S$ 一组不相交的路径组(路径集合,包含所有起点终点): 任意两个路径$S_i,S_j$没有公共顶点</p><p>$\sigma(S)$ 表示一个具体的路径集合$S$中,$A$按照顺序($S_i$的起点是$A_i$)时, $B$的下标序列</p><p>$N(\sigma) = \sigma$的逆序对个数</p><p>系数矩阵</p><p>$M = \begin{bmatrix}e(A_1,B_1)&amp;e(A_1,B_2)&amp;\cdots&amp;e(A_1,B_n)\\<br>e(A_2,B_1)&amp;e(A_2,B_2)&amp;\cdots&amp;e(A_2,B_n)\\<br>\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\<br>e(A_n,B_1)&amp;e(A_n,B_2)&amp;\cdots&amp;e(A_n,B_n)\end{bmatrix}<br>$</p><h2 id="引理"><a href="#引理" class="headerlink" title="引理"></a>引理</h2><p>其中$S$是不相交路径组</p><p>$\det(M)=\sum\limits_{S:A\rightarrow B}(-1)^{N(\sigma(S))}\prod\limits_{i=1}^n \omega(S_i)$</p><p>M的行列式的值是所有不相交路径的边权乘积的带符号数量和</p><hr><p>证明:</p><p>由行列式定义</p><p>$\begin{aligned}<br>\det(M)&amp;=\sum_{\sigma}(-1)^{N(\sigma)}\prod_{i=1}^ne(A_i,B_{\sigma_i})\\<br>&amp;=\sum_{\sigma}(-1)^{N(\sigma)}\prod_{i=1}^n\left(\sum_{P:A_i\rightarrow B_{\sigma_i}}\omega(P)\right)\\<br>&amp;=\sum_\sigma(-1)^{N(\sigma)}\sum_{\sigma=\sigma(S)}\prod_{i=1}^n \omega(S_i)\\<br>&amp;=\sum_{S:A\rightarrow B} (-1)^{N(\sigma(S))} \prod_{i=1}^n \omega(S_i)<br>\end{aligned}$</p><p>第一步是行列式展开</p><p>第二步是,e等价替换</p><p>第三步是,神奇的分配率, $(\omega(A_1\to B_{\sigma_1}方案0) + \omega(A_1\to B_{\sigma_1}方案1) + \cdots) \cdot (\omega(A_2\to B_{\sigma_2}方案0) + \omega(A_2\to B_{\sigma_2}方案1) + \cdots) \cdot (\cdots)$</p><p>这个使用分配率乘开了就是 方案之间的$\omega$之乘积, 再求和</p><p>再换句话说,原来内部的求和的是针对指定的起始点$A_i$结束点$B_{\sigma_i}$, 而拆开以后,把一个路径组看作单位,对路径组中第$i$条路径($A_i$)开头的进行统计</p><p>第四步就是, 把上面按照一个行列式的$\sigma$作为贡献的单位来计算,变成一个具体的$S$来计算,也是求和分配</p><hr><p>注意到上面仅证明了行列式能转换, 也保证了路径之间起点和终点互异, 但是<strong>没有证明是不相交路径</strong></p><p>但注意到对于所有(起点终点两两不同)的路径组,这个表达式也成立</p><p>对路径集合划分,$U$为不相交路径组,$V$为相交路径组</p><p>$\begin{aligned}<br>&amp;\sum_{S:A\rightarrow B} (-1)^{N(\sigma(S))} \prod_{i=1}^n \omega(S_i)\\<br>=&amp;\sum_{U:A\rightarrow B} (-1)^{N(\sigma(U))} \prod_{i=1}^n \omega(U_i)+\sum_{V:A\rightarrow B} (-1)^{N(\sigma(V))} \prod_{i=1}^n \omega(V_i)<br>\end{aligned}$</p><p>要证明右侧$\sum_{V:A\rightarrow B} (-1)^{N(\sigma(V))} \prod_{i=1}^n \omega(V_i) = 0$ 即可</p><p>对于$V$中一个具体的路径组$S$,取最小的相交路径的二元组$(i,j)$</p><p>有路径$S_i: A_i \to u \to B_{\sigma(S)_ i}$, $S_j: A_j \to u \to B_{\sigma(S)_ j}$, 其中$u$是路径上首次相交的点(注意到是DAG,所以两条路径中都是首次</p><p>修改得到路径$S_i: A_i \to u \to B_{\sigma(S)_ j}$, $S_j: A_j \to u \to B_{\sigma(S)_ i}$</p><p>这样得到$S’$</p><p>首先乘积的部分一致$\prod_{i=1}^n \omega(S_i) = \prod_{i=1}^n \omega(S’_ i)$, 而逆序对变化为$1 = |N(\sigma(S)) - N(\sigma(S’))|$, 所以 $S$与$S’$的贡献互为相反数, 总贡献和为$0$</p><p>并且根据这个交换产生规则,$S$唯一映射到$S’$,$S’$也唯一映射到$S$, 且$S \neq S’$</p><p>综上, 所有V中的两两成对,贡献和为$0$, 因此$V$的总贡献为$0$</p><p>证毕</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这又是行列式知识, 每个乘积的正负号 = (-1)的逆序对次方 乘对应位置的积</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> lgv lemma </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Codeforces 1707</title>
       <link href="/Blog/2022-07-18-CF1707/"/>
       <url>/Blog/2022-07-18-CF1707/</url>
@@ -353,11 +422,11 @@
             
             <tag> 数学 </tag>
             
-            <tag> 倍增 </tag>
-            
             <tag> 最小生成树 </tag>
             
             <tag> 树上DP </tag>
+            
+            <tag> 倍增 </tag>
             
         </tags>
       
