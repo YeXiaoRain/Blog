@@ -242,7 +242,7 @@
 
     
         <meta property="article:published_time" content="Fri Jul 22 2022 22:24:00 GMT+0800">
-        <meta property="article:modified_time" content="Tue Aug 02 2022 17:49:52 GMT+0000">
+        <meta property="article:modified_time" content="Tue Aug 02 2022 21:15:42 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2022-07-22-LGVlemma/index.html",
     "headline": "LGV 引理",
     "datePublished": "Fri Jul 22 2022 22:24:00 GMT+0800",
-    "dateModified": "Tue Aug 02 2022 17:49:52 GMT+0000",
+    "dateModified": "Tue Aug 02 2022 21:15:42 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Xiao Ye",
@@ -509,7 +509,7 @@
 <p>$\omega(P) = $ 路径$P$上边权之积</p>
 <p>点$u,v$</p>
 <p>$e(u,v) = \sum_{P:u\to v} \omega(P)$每一条 $u$到 $v$ 的路径$S$,的$\omega(P)$之和</p>
-<p>大小为n的 起点集合A,终点集合B, (点集内也可能有边, 满足DAG</p>
+<p>大小为n的 起点集合A,终点集合B, (点集内也可能有边, 满足DAG, 以及还有一些不是起点也不是终点的其它中间的点</p>
 <p>$S$ 一组不相交的路径组(路径集合,包含所有起点终点): 任意两个路径$S_i,S_j$没有公共顶点</p>
 <p>$\sigma(S)$ 表示一个具体的路径集合$S$中,$A$按照顺序($S_i$的起点是$A_i$)时, $B$的下标序列</p>
 <p>$N(\sigma) = \sigma$的逆序对个数</p>
@@ -539,7 +539,9 @@
 <p>修改得到路径$S_i: A_i \to u \to B_{\sigma(S)_ j}$, $S_j: A_j \to u \to B_{\sigma(S)_ i}$</p>
 <p>这样得到$S’$</p>
 <p>首先乘积的部分一致$\prod_{i=1}^n \omega(S_i) = \prod_{i=1}^n \omega(S’_ i)$, 而逆序对变化为$1 = |N(\sigma(S)) - N(\sigma(S’))|$, 所以 $S$与$S’$的贡献互为相反数, 总贡献和为$0$</p>
-<p>并且根据这个交换产生规则,$S$唯一映射到$S’$,$S’$也唯一映射到$S$, 且$S \neq S’$</p>
+<p>并且根据这个交换产生规则,$S$唯一映射到$S’$,$S’$也唯一映射到$S$, 且$S \neq S’$ ??????? ( 感觉有点没对, 这样构造并不能保证交换后 最小二元组还是$(i,j)$, 因为被交换的路径和$i$ 有交,变成$(i,k)$</p>
+<p>但是整体思路还是可以用的, 就是找标识去构建对称,总贡献为0.</p>
+<p>这里需要改变的是, 把S中所有相交路径的交点中取编号最小的u, 在u处相交的取最小的二元组$(i,j)$ 并交换u以后的部分, 这样 交换以后能保证, 所有交点不变, 所以u依然最小,而在u处相交的也不变,依然是$(i,j)$, 这才有一一对应的关系</p>
 <p>综上, 所有V中的两两成对,贡献和为$0$, 因此$V$的总贡献为$0$</p>
 <p>证毕</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这又是行列式知识, 每个乘积的正负号 = (-1)的逆序对次方 乘对应位置的积</p>
