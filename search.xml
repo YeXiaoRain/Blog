@@ -4,6 +4,62 @@
   
     
     <entry>
+      <title>Atcoder abc221</title>
+      <link href="/Blog/2022-08-07-ac_abc221/"/>
+      <url>/Blog/2022-08-07-ac_abc221/</url>
+      
+        <content type="html"><![CDATA[<p>F()G()H()</p><h1 id="G-Isosceles-Trapezium"><a href="#G-Isosceles-Trapezium" class="headerlink" title="G - Isosceles Trapezium"></a>G - Isosceles Trapezium</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F</p><p>G</p><p>H</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc221/editorial" target="_blank" rel="noopener">官方题解</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Atcoder </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Atcoder abc220</title>
+      <link href="/Blog/2022-08-06-ac_abc220/"/>
+      <url>/Blog/2022-08-06-ac_abc220/</url>
+      
+        <content type="html"><![CDATA[<p>G(计算几何,排序,自定义排序)H(FWHT,FWT,meet-in-middle,bitmask)</p><h1 id="G-Isosceles-Trapezium"><a href="#G-Isosceles-Trapezium" class="headerlink" title="G - Isosceles Trapezium"></a>G - Isosceles Trapezium</h1><p>二维平面, N个点,坐标Xi,Yi, 权重Ci</p><p>选4个点, 形成 等腰梯形, 问选的4个点最大权重和</p><h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>N 1000</p><p>Xi,Yi [-1e9,1e9]</p><p>Ci [1,1e9]</p><p>无重点</p><p>3s</p><p>1024</p><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>有点计算几何</p><p>N的样子,像是N^2的做法</p><p>如果是暴力找三个点, 确定平行边,那么剩下一个点就自然确定了, 这样的话是 <code>N^3 log(N)</code></p><hr><p>换个想法, 按对称轴来找</p><p>如果是垂于对称轴的一点,则找对称轴最远的两个点</p><p>这样 N^2 的对称轴, 其中相等的里面 按照垂点相同的最大的,找不同的两组就行了??</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc220/submissions/33799130" target="_blank" rel="noopener">https://atcoder.jp/contests/abc220/submissions/33799130</a></p><pre><code class="cpp">    #include &lt;bits/stdc++.h&gt;    using namespace std;    typedef long long ll;    #define MOD 1000000007    #define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)    #define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)    #define pb push_back    ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // read    ll gcd(ll a,ll b){      a = abs(a);      b = abs(b);      while(b!= 0) tie(a,b) = make_pair(b,a%b);      return a;    }    const ll INF = 0x3f3f3f3f3f3f3f3f;    array&lt;ll,3&gt; xyv[1010];    map&lt;tuple&lt;ll,ll,ll&gt;, vector&lt;pair&lt;int,int&gt; &gt; &gt; cx;    void addp(int i,int j){      auto [x0,y0,v0] = xyv[i];      auto [x1,y1,v1] = xyv[j];      // 对称轴, 标准化      ll ky = 2*(y1-y0);      ll kx = -2*(x1-x0);      ll k  = (x1-x0)*(x1+x0) + (y1-y0)*(y1+y0);      ll g = gcd(k,gcd(ky,kx));      ky /= g;      kx /= g;      k  /= g;      if(ky &lt; 0){        ky = -ky;        kx = -kx;        k  = -k;      }else if(ky == 0 &amp;&amp; kx &lt; 0){        kx = -kx;        k  = -k;      }      cx[{ky,kx,k}].push_back({i,j});    }    int main(){      int n = read();      rep(i,0,n){        int x = read();        int y = read();        int v = read();        xyv[i] = {x,y,v};      }      rep(i,0,n) rep(j,i+1,n) addp(i,j);      ll ans = -1;      for(auto [_,vec]:cx){        auto center = [=](const pair&lt;int,int&gt;&amp;ij){            auto [i0,j0] = ij;            auto [x0,y0,v0] = xyv[i0];            auto [x1,y1,v1] = xyv[j0];            return make_pair(x0+x1,y0+y1);        };        sort(vec.begin(),vec.end(), [=](const auto &amp;ij0,const auto &amp;ij1){            return center(ij0) &lt; center(ij1);        });        ll lastmax = -INF;        ll cur = -INF;        rep(i,0,vec.size()){          if(i == 0 || center(vec[i]) != center(vec[i-1])){            lastmax = max(lastmax,cur);            cur = 0;          }          auto [i0,j0] = vec[i];          cur = max(cur, xyv[i0][2] + xyv[j0][2]);          if(lastmax != -INF){            ans = max(ans, lastmax + cur);          }        }      }      printf(&quot;%lld\n&quot;,ans);      return 0;    }    // y = -(x1-x0)/(y1-y0) (x - (x0+x1)/2) + (y0+y1)/2    // 2(y1-y0) y = -2(x1-x0) x + (x1-x0)(x1+x0) + (y0+y1)(y1-y0)</code></pre><h1 id="H-Security-Camera"><a href="#H-Security-Camera" class="headerlink" title="H - Security Camera"></a>H - Security Camera</h1><p>N 点, M 边</p><p>选定一些点, 让边(至少一个点上有被选定的)的数量是偶数个</p><p>求合法方案数</p><h2 id="限制-1"><a href="#限制-1" class="headerlink" title="限制"></a>限制</h2><p>N 40</p><p>无重边,自环</p><p>2s</p><p>1024mb</p><h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>感觉题面就是个朴素的图论</p><p>40 呢, 对应边就是780</p><p>估计是个边平方~ 3次方 左右的算法, 或者点的5次方?</p><hr><p>思路正向就是考虑局部可行方案加上插头状态</p><p>逆向就是 所有减去存在未选择的 做容斥</p><p>点数量40, 2^40 = 1099511627776</p><hr><p>如果, 是一个一个安装的, 那么考虑对于个数的影响</p><p>增量是 相邻未安装的和</p><p>而对于这个连接出的点,相邻未安装的奇偶性发生颠倒</p><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>2^20 = 1048576</p><p>折半</p><p>把拆成两个点集合S,T</p><p><code>L1[S,s] =</code> 点集S的子集s 被选了, 覆盖的边数的奇偶性</p><p><code>L2[S,T,s] =</code> 点集T中, 连向S\s的数量是奇数的点集? (因为偶数的话,首先不被s选,其次不论在T中是否被选不影响奇偶性</p><p><code>R[T,t] =</code> 点集T的子集t被选了,覆盖的两端属于T的边的奇偶性</p><p>因为对于每个选中状态, 可以枚举剩下所有点, 所以 可以$O(|S|2^{|S|})$ 暴力算完</p><p>那么对于答案有贡献的</p><p>$L_1[s] \oplus  ((\text{popcount} (L_2[s]  \&amp;  t) ) \&amp;1) \oplus R[t] = 0$</p><p>意义 s得到的奇数偶,t内部奇偶,和t向S\s的奇偶 = 最终奇偶</p><hr><p>中间这玩意怪怪的,虽然很长意义也就是<code>L2[s] &amp; t</code> 的1的个数的奇偶性</p><p>像个办法把右侧合并一下</p><p>$F[S,T,s] = \sum_{t \subset T} ((\text{popcount} (L_2[s]  \&amp;  t) ) \&amp; 1) \oplus R[t] $</p><p>注意到 求和部分,奇数贡献1, 偶数贡献0, 所以这里是对于给定s,在T的子集中, 让上述表达式贡献1的个数</p><p>那么贡献0的个数就是 $2^{|T|} - F[S,T,s]$</p><p>如果能求出来, 那么对于每个$s$, 有$L1[s]$ 的奇偶性, 直接加上对应贡献即可</p><hr><p>问题变成是如何求出<code>F[S,T,s]</code></p><p>这里记$t’ = L2[s]$, 这样一个s唯一对应一个<code>t&#39;</code>, 但<code>t&#39;</code>可能有多个<code>s</code> 映射过来</p><p>记作$G[T,t’] = \sum_{t \subset T} ((\text{popcount} (t’ \&amp;  t) ) \&amp;1) \oplus R[t] $</p><p>这样有个好处是,不再关心<code>S</code>和<code>s</code>, 只用管<code>T</code>中的即可</p><hr><p>注意到 $FWHT$的变换公式是</p><p>$fwht[a]_ i = \sum_{(\text{popcount}(i \&amp; j) \bmod 2 = 0}a_j - \sum_{(\text{popcount}(i\&amp; j) \bmod 2  = 1}a_j$</p><p>对于给定 i</p><p>一个具体的j</p><p>左侧为0时, 原式子贡献是 R[j], 而fwht贡献是 a[j]</p><p>左侧为1时, 原式子贡献是 R[j]^1, 而fwht贡献是 -a[j]</p><p>如果让a[j] = R[j], 那么</p><p>左侧为0时, 原式子贡献是 0 , 而fwht贡献是 0</p><p>左侧为0时, 原式子贡献是 1 , 而fwht贡献是 1</p><p>左侧为1时, 原式子贡献是 0^1, 而fwht贡献是 -0</p><p>左侧为1时, 原式子贡献是 1^1, 而fwht贡献是 -1</p><p>左侧为0和为1各占一半, 总贡献会少掉$2^{|T|-1}$</p><p>加上即可?</p><h2 id="另一个做法"><a href="#另一个做法" class="headerlink" title="另一个做法"></a>另一个做法</h2><p>所有边变成”有向”, 小点连出到大点</p><p><code>f[i][j][k] =</code> 前i个点, 未覆盖的边的两端都在前i的边数为j(奇1/偶0), 一些未来不选的会影响未覆盖边的奇偶性的点的方案数</p><p><code>i+1</code>选 <code>f[i][j][k]</code> 贡献 <code>f[i+1][j][k高(i+2)位]</code></p><p><code>i+1</code>不选 <code>f[i][j][k]</code> 贡献 <code>f[i+1][j^(i+1是否在k中)][(k高(i+2)位) ^ (i+1 连出的边) ]</code></p><hr><p>很神奇的是, 这样每个点对于每个上个状态最多分支出两个状态</p><p>那么前一半最多<code>2^20</code>个状态</p><p>而状态低<code>i</code>位都是<code>0</code>, 所以后面的一半也是最多<code>2^20</code>个状态</p><p>所以复杂度也是</p><p><code>n 2^{n/2}</code></p><p>从一定程度上也有meet-in-middle 的感觉,而没有了fwt的需要</p><h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc220/submissions/33847519" target="_blank" rel="noopener">https://atcoder.jp/contests/abc220/submissions/33847519</a></p><p>1.7s 快超时了, 为什么有人6ms 啊</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // readll g[50]; // g[小点] = 大点的bit mask// f[前i个点][两端均在前i个中的未覆盖的边的奇偶][mask中的点每不选一个奇偶性变化1]=方案数unordered_map&lt;ll,ll&gt;f[50][2];int main() {  int n = read(); // 点  int m = read(); // 边  rep(i,0,m){    int x = read() - 1;    int y = read() - 1;    if(x &gt; y) swap(x,y);    g[x] |= 1ll&lt;&lt;y; // 全是小 -&gt; 大  }  f[0][0][0]=1; // 选 点0，所有点因为不选 未覆盖 的边都为0，为偶数。  f[0][0][g[0]]++; // 不选 点0，0指向的点因为不选 未覆盖 的边+1.  rep(i,0,n-1) rep(j,0,2) { // 枚举当前的未覆盖的边数的奇偶。    for(auto [mask,cnt]:f[i][j]) { // 枚举上一层的所有状态，进行推磨式转移。      ll bit = (mask &gt;&gt; (i+1)) &amp; 1;// 确定 不选点i+1 未覆盖的边的 奇偶变化。      //选 点i+1，所有点(i+1之后的点) 因为不选而未覆盖的边数的就不变。且j的状态不变。      f[i+1][j][mask^(bit&lt;&lt;(i+1))]+=cnt;      //不选 点i+1，j的状态 根据当前j 和 因为i不选要未覆盖的边数的就确定      //并且改变之后的点因为不选而未覆盖的边的奇偶      f[i+1][j^bit][mask^(bit&lt;&lt;(i+1))^g[i+1]] += cnt;    }  }  ll ans=0;  for(auto [_,cnt]:f[n-1][m&amp;1]) ans += cnt; // m&amp;1 未覆盖的奇偶和总边一样,则覆盖了的为偶数  printf(&quot;%lld&quot;,ans);  return 0;}</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p><p>没啥难的</p><p>简单的计算几何,排序,自定义排序</p><p>H</p><p>一个是40的一半是20, 2^20 是可以范围内的</p><p>另一个是拆的时候,可以按点拆分,一半是有点就包含,另一半是需要两端都属于集合</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc220/editorial" target="_blank" rel="noopener">官方题解</a></p><p><a href="https://www.cnblogs.com/gcfer/p/15344079.html" target="_blank" rel="noopener">csdn 逆天峰 H</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Atcoder </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 计算几何 </tag>
+            
+            <tag> 排序 </tag>
+            
+            <tag> bitmask </tag>
+            
+            <tag> FWT </tag>
+            
+            <tag> FWHT </tag>
+            
+            <tag> 自定义排序 </tag>
+            
+            <tag> meet-in-middle </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Atcoder abc219</title>
       <link href="/Blog/2022-08-05-ac_abc219/"/>
       <url>/Blog/2022-08-05-ac_abc219/</url>
@@ -181,9 +237,9 @@
             
             <tag> dp </tag>
             
-            <tag> 网络流 </tag>
-            
             <tag> scc </tag>
+            
+            <tag> 网络流 </tag>
             
             <tag> 二分图 </tag>
             
@@ -228,9 +284,9 @@
             
             <tag> dp </tag>
             
-            <tag> 网络流 </tag>
-            
             <tag> scc </tag>
+            
+            <tag> 网络流 </tag>
             
             <tag> 排列 </tag>
             
@@ -3483,6 +3539,8 @@
             
             <tag> DP </tag>
             
+            <tag> 常数优化 </tag>
+            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -3490,8 +3548,6 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
-            
-            <tag> 常数优化 </tag>
             
         </tags>
       
@@ -3518,6 +3574,8 @@
             
             <tag> DP </tag>
             
+            <tag> 常数优化 </tag>
+            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -3525,8 +3583,6 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
-            
-            <tag> 常数优化 </tag>
             
         </tags>
       
