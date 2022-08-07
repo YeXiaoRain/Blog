@@ -1,5 +1,5 @@
 ---
-title: Pollard-Rho 质数拆分
+title: Pollard-Rho 质数拆分,分解
 date: 2022-06-03 10:37:14
 tags: [math,prime]
 category: [Math]
@@ -73,22 +73,117 @@ $N = 4,N = 1$ 需要特判
 让x=0
 
 ```cpp
-ll Pollard_Rho(ll N) {
-  assert(N!=1);
+typedef long long ll;
+typedef __int128 lll;
+#define rep(i,a,n) for (ll i=a;i<(ll)n;i++)
+ll quick_p(ll b, ll p,ll mod){
+  ll r = 1;
+  while(p){
+    if(p%2)(r*=b)%=mod;
+    (b*=b)%=mod;
+    assert(r>0);
+    assert(b>0);
+    p/=2;
+  }
+  return r%mod;
+}
+
+bool is_prime_32(ll v){
+  if(v == 2)return true;
+  if(v < 2)return false;
+  if(v%2 == 0)return false;
+  ll test_g[] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
+  ll startp = v-1;
+  while(startp%2 == 0)startp>>=1;
+  rep(i,0,7){
+    ll p = startp;
+    ll base = test_g[i];
+    // don't break may cause 4033 bug
+    if(base % v == 0)continue;
+    bool find = false;
+    ll r = quick_p(base,p,v);
+    while(p != v-1){
+      if(r == v-1){
+        find = true;
+        break;
+      }
+      // -1 开始的序列, 或全1序列
+      if(r == 1){
+        if(p == startp){
+          find = true;
+          break;
+        }
+        return false;
+      }
+      p*=2;
+      (r*=r)%=v;
+    }
+    if(!find){
+      return false;
+    }
+  }
+  return true;
+}
+
+ll my_sqrt(ll v){
+  assert(v > 1);
+  ll l = 1;
+  ll r = v; // care overflow
+  ll ret = 1;
+  while(l < r){
+    ll m = (l+r)/2;
+    ll m2 = m*m;
+    if(m2 == v) return m;
+    if(m2 < v) {
+      ret = m;
+      l = m + 1;
+    } else {
+      r = m - 1;
+    }
+  }
+  return ret;
+}
+
+ll randint(ll low,ll hi){
+  return low + (rand() % static_cast<int>(hi - low + 1));
+}
+
+ll Pollard_Rho(ll N) { // 返回一个> 1的因数
+  assert(N > 1);
   if (N == 4) return 2;
-  if (is_prime(N)) return N;
-  if (is_prime_square(N)) return prime_square(N);
+  ll ret = my_sqrt(N); // 质数平方 效率低 提前判断
+  if(ret * ret == N) return ret;
   while(true) {
     ll c = randint(1, N - 1); // 生成随机的c
-    auto f = [=](ll x) { return ((lll)x * x + c) % N; }; // lll表示__int128，防溢出
-    ll t = 0, r = 0;
+    auto f = [=](ll x) { return ((lll)x * x + c) % N; }; // ll 表示__int128，防溢出
+    ll t = 0, r = 0; // 初始两个相同
     do{
-      t = f(t);
-      r = f(f(r));
+      t = f(t); // 1倍速度
+      r = f(f(r)); // 2倍速度
       ll d = gcd(abs(t - r), N);
-      if (d > 1) return d;
-    }while (t != r)
+      if (d > 1 && d < N) return d;
+    }while (t != r);
   }
+}
+
+// 分解x为质因数, sorted
+vector<int> fenjie(ll x) {
+  vector<int> res = {};
+  deque <ll> arr = {x};
+  while(arr.size()){
+    ll v = arr.front();
+    arr.pop_front();
+    if(v == 1) continue;
+    if(is_prime_32(v)) {
+      res.pb(v);
+      continue;
+    }
+    ll divisor = Pollard_Rho(v);
+    arr.push_back(divisor);
+    arr.push_back(v/divisor);
+  }
+  sort(res.begin(),res.end());
+  return res;
 }
 ```
 
