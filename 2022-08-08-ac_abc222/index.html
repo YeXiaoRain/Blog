@@ -242,7 +242,7 @@
 
     
         <meta property="article:published_time" content="Mon Aug 08 2022 04:25:14 GMT+0800">
-        <meta property="article:modified_time" content="Mon Aug 08 2022 00:44:33 GMT+0000">
+        <meta property="article:modified_time" content="Mon Aug 08 2022 00:54:42 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2022-08-08-ac_abc222/index.html",
     "headline": "Atcoder abc222",
     "datePublished": "Mon Aug 08 2022 04:25:14 GMT+0800",
-    "dateModified": "Mon Aug 08 2022 00:44:33 GMT+0000",
+    "dateModified": "Mon Aug 08 2022 00:54:42 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Xiao Ye",
@@ -813,23 +813,24 @@ int main(){
 <p>一个子节点时 $2(a_{i-1}+b_{i-1})$</p>
 <p>所以 $a_i = 2(a_{i-1}+b_{i-1}) + \sum_{j=1}^{i-2} (a_j+b_j)(a_{i-1-j} + b_{i-1-j}), i &gt; 1$</p>
 <hr>
-<p>~一点简化?(并不是) 是不是令$a_0 = 1,b_0 = 0$ 可以让上面变成完全的求和式子~</p>
+<p><del>一点简化?(并不是) 是不是令$a_0 = 1,b_0 = 0$ 可以让上面变成完全的求和式子</del></p>
 <hr>
-<p>这里也说 分治类fft 可以做到 $N log^2 N$, 虽然没试过两个怎么做分治</p>
+<p>这里也说 分治类fft 可以做到 $N log^2 N$, 虽然没试过两个怎么做分治, 但会超时</p>
 <h3 id="生成方程"><a href="#生成方程" class="headerlink" title="生成方程"></a>生成方程</h3><p>$a_0 = b_0 = 0$</p>
 <p>分别把$a_i$和$b_i$作为系数做它们的生成方程$A(x),B(x)$</p>
 <p>那么第一个表达式和$B=2A+A^2$等价</p>
 <p>第二个和$A = x + 2x(A+B) + x(A+B)^2$</p>
 <p>然后两个生成式带入一下</p>
 <p>$A = x(1+A+B)^2 = x(1+3A+A^2)^2$</p>
-<p>用 Newton’s algorithm 据说可以 $O(N log N)$</p>
+<p>用 Newton’s algorithm 据说可以 $O(N log N)$, 也会超时</p>
 <h3 id="Lagrange-inversion-theorem-拉格朗日反演"><a href="#Lagrange-inversion-theorem-拉格朗日反演" class="headerlink" title="Lagrange inversion theorem 拉格朗日反演?"></a>Lagrange inversion theorem 拉格朗日反演?</h3><p>解决的问题, 给定F(x)</p>
 <p>找G(x) 使得 G(F(x)) = x</p>
-<p><strong>这里有一点要用到,但是没有证明的是 $G(F(x)) = x$ 则 $F(G(x)) = x$</strong>, 只能说在$F(x)$的值域内$F(G(F(x)) = F(x)$即$F(G(x)) = x$, 但在值域外不知道..</p>
+<p><strong>这里有一点要用到,但是没有证明的是 $G(F(x)) = x$ 则 $F(G(x)) = x$</strong>, 只能说在$F(x)$的值域内$F(G(F(x)) = F(x)$即$F(G(x)) = x$可以证明, 但在值域外不知道如何证明…</p>
 <p>如果 F,G满足, 且它们0次项系数均为0, 1次项系数均非0</p>
-<p>那么有G的n次项 = $(\frac{x}{F(x)})^n$ 的$n-1$次项的$\frac{1}{n}$</p>
-<p>记作$\lbrack x^n \rbrack G(x) = \frac{1}{n} \lbrack x^{n-1} \rbrack \left(\frac{x}{F(x)}\right)^n.$</p>
+<p>那么有$\lbrack x^n \rbrack G(x) = \frac{1}{n} \lbrack x^{n-1} \rbrack \left(\frac{x}{F(x)}\right)^n.$</p>
+<p>即是G的n次项 = $(\frac{x}{F(x)})^n$ 的$n-1$次项的$\frac{1}{n}$</p>
 <p>证明</p>
+<hr>
 <p>辅助lemma: 对于任何0次系数为0,存在非0次系数不为0的$F(x)$, 有对于整数$k$</p>
 <p>$\lbrack x^{-1} \rbrack F’(x) F(x)^k = \lbrack k = -1\rbrack$, 即是$k=-1$时$-1$次系数为$1$,否则$-1$次系数为$0$</p>
 <p>证明lemma:</p>
@@ -837,15 +838,14 @@ int main(){
 <p>对于$k = -1$, $F(x) = \sum_{i&gt;0} a_i x^i$</p>
 <p>$\frac{F’(x)}{F(x)} = \frac{a_1+2a_2x+3a_3x^2+\cdots}{x(a_1+a_2x+a_3x^2+\cdots}= x^{-1} \frac{1 + 2\frac{a_2}{a_1}x + \cdots}{1 + \frac{a_2}{a_1}x + \cdots}$</p>
 <p>也就是右侧这个分式除完以后是$1+k_1x+k_2x^2+\cdots$的样子, 因此 -1 次方的系数是 1, lemma 证毕.</p>
+<hr>
 <p>因此$G(F(x)) = x$, 的$G$ 满足条件</p>
-<p>有$G’(F)\cdot F’ = 1$</p>
-<p>展开$\sum_i i(\lbrack x^i\rbrack G(x) ) F^{i-1} F’ = 1$, 基本的求导法则 $(ax^i)’ = iax^{i-1}$, 注意到前两项都是系数而非生成函数</p>
-<p>同乘上$F^{-n}$</p>
-<p>$\sum_{i} i (\lbrack x^i \rbrack G (x)) F^{i-1-n} F’ = F^{-n}.$</p>
-<p>提取$-1$次项目的系数</p>
-<p>$\lbrack x^{-1}\rbrack \left(\sum_{i} i (\lbrack x^i \rbrack G (x)) F^{i-1-n} F’\right) = \lbrack x^{-1}\rbrack \left(F^{-n}\right).$</p>
+<p>$G’(F)\cdot F’ = 1$ ( 同时求导</p>
+<p>展开$\sum_i i(\lbrack x^i\rbrack G(x) ) F^{i-1} F’ = 1$, (基本的求导法则 $(ax^i)’ = iax^{i-1}$, 注意到前两项都是系数而非生成函数</p>
+<p>$\sum_{i} i (\lbrack x^i \rbrack G (x)) F^{i-1-n} F’ = F^{-n}.$ ( 同乘上$F^{-n}$</p>
+<p>$\lbrack x^{-1}\rbrack \left(\sum_{i} i (\lbrack x^i \rbrack G (x)) F^{i-1-n} F’\right) = \lbrack x^{-1}\rbrack \left(F^{-n}\right).$ (提取$-1$次项目的系数</p>
 <p>因为左侧$i (\lbrack x^i \rbrack G (x)) $ 整个都是系数,以及上面的lemma, 左侧只有$i=n$时 生成系数的内容才为$1$,其它则是$0$</p>
-<p>因此$n[x^n]G = [x^{-1}]F^{-n}$</p>
+<p>$n[x^n]G = [x^{-1}]F^{-n}$</p>
 <p>变形一下,就有了最初要证明的$\lbrack x^n \rbrack G(x) = \frac{1}{n} \lbrack x^{n-1} \rbrack \left(\frac{x}{F(x)}\right)^n.$</p>
 <hr>
 <p>这玩意 百科上说建立了函数方程和幂级数之间的联系</p>
@@ -878,7 +878,9 @@ int main(){
 <hr>
 <p>不做递推的直接求</p>
 <p>$\begin{aligned}<br>u_k &amp;= \lbrack x^k \rbrack (1+3x+x^2)^{2N} \\<br>&amp;= \lbrack x^k \rbrack ( (1+3x)+x^2)^{2N} \\<br>&amp;=\lbrack x^k \rbrack \sum_{0 \leq j \leq 2N} \binom{2N}{j}x^{2j} (1+3x)^{2N-j} \\<br>&amp;=\sum_{0 \leq j \leq 2N} \binom{2N}{j}\lbrack x^{k-2j} \rbrack (1+3x)^{2N-j} \\<br>&amp;=\sum_{0 \leq j \leq 2N} \binom{2N}{j} \binom{2N-j}{k-2j} 3^{k-2j},<br>\end{aligned}$</p>
-<p>至此可以 O(N), 算出</p>
+<p>至此可以$O(N)$, 算出</p>
+<hr>
+<p>再次注意,要算的是$N-1$次项系数再除以$N$</p>
 <h3 id="继续优化-P-recursive"><a href="#继续优化-P-recursive" class="headerlink" title="继续优化 P-recursive"></a>继续优化 P-recursive</h3><p>TODO, orz</p>
 <p>据说能做到$O(\sqrt{N} log N)$</p>
 <h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><p>基于 最后那个非递推求的</p>
