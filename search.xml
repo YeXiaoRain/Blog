@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Atcoder abc224</title>
+      <link href="/Blog/2022-08-10-ac_abc224/"/>
+      <url>/Blog/2022-08-10-ac_abc224/</url>
+      
+        <content type="html"><![CDATA[<p>G(概率论,二分)H()</p><h1 id="G-Roll-or-Increment"><a href="#G-Roll-or-Increment" class="headerlink" title="G - Roll or Increment"></a>G - Roll or Increment</h1><p><a href="https://atcoder.jp/contests/abc224/tasks/abc224_g" target="_blank" rel="noopener">https://atcoder.jp/contests/abc224/tasks/abc224_g</a></p><p>1~N 骰子</p><p>初始S, 得分f(X) = X</p><p>A元, 让得分+1</p><p>B元, 重新转</p><p>求最小期望代价, 让得分为T</p><h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>N 1e9</p><p>A,B [1,1e9]</p><p>2s</p><p>1024 mb</p><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>日常不会概率论</p><p>猜一个</p><p>S &lt; T</p><p>直接通过A, (T-S)A</p><p>转一次的期望 E</p><p>(N-T)/N * (B+E), 大于T 部分的贡献</p><p>1/N ( min(0,B+E) + min(A,B+E) + min(2A,B+E) + … + min((T-1)A,B+E)),  $\le T$ 部分的贡献</p><p>$E = \frac{N-T}{N} \cdot (B+E) + \frac{1}{N} ( min(0,B+E) + min(A,B+E) + min(2A,B+E) + \cdots + min((T-1)A,B+E))$</p><p>若能求出E, 就做出来了</p><p>转化一下</p><p>$NB + \sum_{i=0}^{T-1} \text{min}(iA-(B+E),0) = 0$</p><p>只有E是变化的, 随着E 增大, 表示式变小, 单调, 可二分</p><hr><p>好像还真就过了</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc224/submissions/33889681" target="_blank" rel="noopener">https://atcoder.jp/contests/abc224/submissions/33889681</a></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;typedef long double LD;#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // readint main(){  ll N = read();  ll S = read();  ll T = read();  ll A = read();  ll B = read();  auto calc = [=](LD E){    ll l = 0;    ll r = T-1;    if(r*A-B-E&lt;=0){      l = r;    }else{      while(l+1&lt;r){        ll m = (l+r)/2;        if(m*A-B-E&lt;=0) l = m;        else r = m;      }    }    // nb + sum min(iA-B - E,0), i = 0~T-1;    return N * B+ A * l * (l+1) / 2 - (B+E) * (l+1) ;  };  LD LE = 0;  LD RE = A * T;  while(calc(RE) &gt; 0) RE *= 2;  rep(t,0,10000){ // E增, 和减    LD E = (LE+RE)/2;    (calc(E) &gt; 0 ? LE : RE) = E;  }  LD ans = B + LE;  if(S &lt;= T) ans = min(ans,(LD)((T-S) * A));  printf(&quot;%.15Lf&quot;,ans);  return 0;}</code></pre><h1 id="H-Security-Camera-2"><a href="#H-Security-Camera-2" class="headerlink" title="H - Security Camera 2"></a>H - Security Camera 2</h1><p><a href="https://atcoder.jp/contests/abc224/tasks/abc224_h" target="_blank" rel="noopener">https://atcoder.jp/contests/abc224/tasks/abc224_h</a></p><p>二分图, 左侧L个点,右侧R个点</p><p>在点i上每次安装摄像头, 有 Ai(左侧),Bj(右侧) 的代价, 一个点可安多次</p><p>目标 让 i上安装的个数 + j上安装的个数 &gt;= Cij</p><p>一左一右侧</p><p>问最小安装代价</p><h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>L,R 100</p><p>Ai,Bi [1,10]</p><p>Cij, [0,100]</p><p>2s</p><p>1024mb</p><h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>这个数还不少, 而代价的范围还挺小的?</p><p>然后有点费用流又有点2sat的感觉</p><p>emmmm</p><hr><p>TODO</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p><p>概率论, 竟然对了</p><p>H</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc224/editorial" target="_blank" rel="noopener">官方题解</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Atcoder </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 二分 </tag>
+            
+            <tag> 概率论 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Atcoder abc223</title>
       <link href="/Blog/2022-08-09-ac_abc223/"/>
       <url>/Blog/2022-08-09-ac_abc223/</url>
@@ -17,6 +44,12 @@
           
       </categories>
       
+      
+        <tags>
+            
+            <tag> 线性基 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -3625,8 +3658,6 @@
             
             <tag> DP </tag>
             
-            <tag> 常数优化 </tag>
-            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -3634,6 +3665,8 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> 常数优化 </tag>
             
         </tags>
       
@@ -3660,8 +3693,6 @@
             
             <tag> DP </tag>
             
-            <tag> 常数优化 </tag>
-            
             <tag> 状态压缩 </tag>
             
             <tag> 状压DP </tag>
@@ -3669,6 +3700,8 @@
             <tag> 贪心 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> 常数优化 </tag>
             
         </tags>
       
