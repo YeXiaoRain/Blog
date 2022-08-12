@@ -49,7 +49,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Xiao Ye">
     <meta name="description" itemprop="description" content>
-    <meta name="keywords" content>
+    <meta name="keywords" content=",贪心">
 
     <!-- Import lsloader -->
     <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
@@ -238,11 +238,11 @@
     <meta property="og:title" content="Atcoder abc226 | Blog">
     <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
     <meta property="og:description" content>
-    
+    <meta property="og:article:tag" content="贪心"> 
 
     
         <meta property="article:published_time" content="Sat Aug 13 2022 04:25:14 GMT+0800">
-        <meta property="article:modified_time" content="Wed Aug 10 2022 23:17:33 GMT+0000">
+        <meta property="article:modified_time" content="Fri Aug 12 2022 03:21:09 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2022-08-13-ac_abc226/index.html",
     "headline": "Atcoder abc226",
     "datePublished": "Sat Aug 13 2022 04:25:14 GMT+0800",
-    "dateModified": "Wed Aug 10 2022 23:17:33 GMT+0000",
+    "dateModified": "Fri Aug 12 2022 03:21:09 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Xiao Ye",
@@ -287,7 +287,7 @@
             "url": "/img/favicon.png"
         }
     },
-    "keywords": "",
+    "keywords": ",贪心",
     "description": "",
 }
 </script>
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#F-String-Cards"><span class="post-toc-number">1.</span> <span class="post-toc-text">F - String Cards</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">2.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#F-Score-of-Permutations"><span class="post-toc-number">1.</span> <span class="post-toc-text">F - Score of Permutations</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#限制"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">限制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#我的思路"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">我的思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#G-The-baggage"><span class="post-toc-number">2.</span> <span class="post-toc-text">G - The baggage</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#范围"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">范围</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#我的思路-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">我的思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">题解</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码-1"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#H-Random-Kth-Max"><span class="post-toc-number">3.</span> <span class="post-toc-text">H - Random Kth Max</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考</span></a></li></ol>
     </ul>
     
 
@@ -421,6 +421,15 @@
     
 
     <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/Blog/tags/贪心/">贪心</a>
+    </ul>
     
 
     <!-- Share -->
@@ -492,9 +501,231 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>F()G()H()</p>
-<h1 id="F-String-Cards"><a href="#F-String-Cards" class="headerlink" title="F - String Cards"></a>F - String Cards</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F</p>
+        <p>F(DP,组合数,gcd)G(贪心)H()</p>
+<h1 id="F-Score-of-Permutations"><a href="#F-Score-of-Permutations" class="headerlink" title="F - Score of Permutations"></a>F - Score of Permutations</h1><p>排列P, </p>
+<p>初始,i号人有球i</p>
+<p>每次 所有 i != pi 的人, 把球给pi号人</p>
+<p>在 &gt; 0 次后,如果所有人又是i号人有球i, 那么就停止</p>
+<p>分数 = 最小的次数</p>
+<hr>
+<p>求所有排列方案 的分数的k次方的和</p>
+<p>mod 998244353</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>N 50</p>
+<p>k 1e4</p>
+<p>2 s</p>
+<p>1024 mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>很明显, 交换的圈构成环, 次数 = lcm(每个环长)</p>
+<p>N 很小, 是不是可以枚举因数</p>
+<p><code>dp[i][j] =</code> 使用i个,最大是j,的<code>{lcm,方案数}</code></p>
+<p><code>dp[i][j]</code> 贡献来自 <code>dp[i- tm][m],m &gt; j, t &gt; 0</code>, 即<code>n-i+tm</code>个中选<code>tm</code>个, 然后分成<code>t</code>组每组m个</p>
+<p>因为组合tm中分成t组,每组m个</p>
+<p>这样想,tm中最小的作为开头,依次剩下的选m-1个, 然后剩余就是(t-1)m 同样的</p>
+<p>这样每次考虑最小的所在环, 就不重不漏</p>
+<p>$\binom{n-i+tm}{tm} A(tm-1,m-1) \cdot A((t-1)m-1,m-1) \cdots$</p>
+<p>$ = \binom{n-i+tm}{tm} \frac{(tm)!}{m\cdot 2m \cdots tm}$</p>
+<p>$ = \binom{n-i+tm}{tm} \frac{(tm)!}{m^t * t!}$</p>
+<p>似乎就对了</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc226/submissions/33934208" target="_blank" rel="noopener">https://atcoder.jp/contests/abc226/submissions/33934208</a></p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+#include &lt;atcoder/modint&gt;
+using mint = atcoder::modint998244353;
+using namespace std;
+
+typedef long long ll;
+#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)
+#define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)
+
+ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // read
+ll gcd(int a,int b){ return b == 0? a: gcd(b,a%b);}
+
+map&lt;int,mint&gt; dp[60][60]; // dp[选最小i个][最大的环为j] = {lcm, count}
+mint fac[100] = {1};
+mint ifac[100];
+mint binom(int n,int m) { return fac[n] * ifac[m] * ifac[n-m];}
+
+int main(){
+  rep(i,1,51) fac[i] = fac[i-1] * i;
+  ifac[50] = fac[50].inv();
+  per(i,0,50) ifac[i] = ifac[i+1] * (i+1);
+
+  int n = read();
+  int k = read();
+  dp[0][0][1] = 1;
+  rep(i,1,n+1) rep(j,1,i+1){
+    mint invj = mint(j).inv();
+    rep(t,1,n+1){
+      int oldi = i - j*t; // [i - j*t][&lt;j]
+      if(oldi &lt; 0) break;
+      rep(k,0,j) for(auto [lcm,cnt]: dp[oldi][k]){
+        dp[i][j][lcm * j / gcd(lcm,j)] += cnt * binom(n-oldi,j*t) * fac[j*t] * ifac[t] * invj.pow(t);
+      }
+    }
+  }
+  mint ans = 0;
+  rep(j,1,n+1) for(auto [lcm,cnt]:dp[n][j]) ans += cnt * mint(lcm).pow(k);
+  printf(&quot;%d\n&quot;,ans.val());
+  return 0;
+}
+</code></pre>
+<h1 id="G-The-baggage"><a href="#G-The-baggage" class="headerlink" title="G - The baggage"></a>G - The baggage</h1><p>重量1~5的物品每个Ai个</p>
+<p>搬运能力1~5的人每个Bi个</p>
+<p>问是否有方法, 让所有物品被至少一个人搬运,且每个人搬运的物品重量和不大于他的能力</p>
+<p>一共T个询问</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>T 5e4</p>
+<p>Ai,Bi [0,10^16]</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>一样看上去, 枚举或者数学题</p>
+<p>考虑 物品重量不超过5的组合</p>
+<p>再 组合x能力, 应该大概有 5x2^5以内的选项 </p>
+<p>每个选项有限制, 一些之间的和小于等于Bi, 一些之间的和 = Ai, 看是否有方案</p>
+<p>似乎变成2sat? 然后是 偏序的样子, 但Ai,Bi范围大, 似乎没法那么多点</p>
+<hr>
+<p>另一个从能力从小到大</p>
+<p>能力1的只能消耗重量1,那么贪心</p>
+<p>能力2的可以消耗 1个2,2个1,1个1, 而如果同时有1个2和2个1, 显然后面的更灵活,所以贪心消耗1个2,再消耗1</p>
+<p>能力3的也是先1个3,然后2+1,然后剩余1</p>
+<p>能力4的,先1个4, 问题来了, 是3+1先还是2+2先呢? 如果都考虑3+1还是2+2了, 说明4消耗完了,对5来说 5,3,2,1的处理肯定先整个5,然后先3找2,再去2+2+1</p>
+<p>所以对于4来说,先2+2,后3+1</p>
+<p>就这样? 似乎贪心就没了?</p>
+<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+
+typedef long long ll;
+#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)
+#define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)
+
+ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // read
+
+int n;
+
+ll a[10];
+ll b[10];
+
+vector&lt;vector&lt;pair&lt;int,int&gt; &gt; &gt; child[10];
+
+void w(){
+  rep(i,1,5+1) a[i] = read();
+  rep(i,1,5+1) b[i] = read();
+
+  rep(i,1,5+1) per(j,1,i+1) for(auto arr: child[j]){
+    ll c = b[i];
+    for(auto [v,t]:arr) c = min(c, a[v] / t);
+    b[i] -= c;
+    for(auto [v,t]:arr) a[v] -= c*t;
+  }
+  ll s = 0;
+  rep(i,1,5+1) s += a[i];
+  printf(&quot;%s\n&quot;,s == 0 ? &quot;Yes&quot; : &quot;No&quot;);
+}
+
+int main(){
+  child[1] = {
+    {{1,1}} // 1
+  };
+  child[2] = {
+    {{2,1}}, // 2
+    {{1,2}} // 1+1
+  };
+  child[3] = {
+    {{3,1}}, // 3
+    {{2,1},{1,1}}, // 2+1
+    {{1,3}} // 1+1+1
+  };
+  child[4] = {
+    {{4,1}}, // 4
+    {{2,2}}, // 2+2
+    {{3,1},{1,1}},// 3+1
+    {{2,1},{1,2}}, // 2+1+1
+    {{1,4}} // 1+1+1+1
+  };
+  child[5] = {
+    {{5,1}}, // 5
+    {{4,1},{1,1}}, // 4+1
+    {{3,1},{2,1}}, // 3+2
+    {{3,1},{1,2}}, // 3+1+1
+    {{2,2},{1,1}}, // 2+2+1
+    {{2,1},{1,3}}, // 2+1+1+1
+    {{1,5}} // 1+1+1+1+1
+  };
+
+  int t = read();
+  while(t--) w();
+  return 0;
+}
+</code></pre>
+<p>但ac x15, wa x33</p>
+<p>看起来贪假了</p>
+<hr>
+<p>原因大概是<code>{1,5}</code> 优先级比<code>{3,1},{1,1}</code> 高了?</p>
+<p>调了半天优先顺序都没对</p>
+<p>好神奇啊这题</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>还是贪心,</p>
+<p>但是说</p>
+<p>5拿5</p>
+<p>4拿4</p>
+<p>5拿4</p>
+<p>3拿3</p>
+<p>5拿3</p>
+<p>4拿3</p>
+<p>5拿2</p>
+<p>4拿2</p>
+<p>3拿2</p>
+<p>2拿2</p>
+<p>5拿1</p>
+<p>4拿1</p>
+<p>3拿1</p>
+<p>2拿1</p>
+<p>1拿1</p>
+<p>????????????? 学不会</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc226/submissions/33953558" target="_blank" rel="noopener">https://atcoder.jp/contests/abc226/submissions/33953558</a></p>
+<pre><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+
+typedef long long ll;
+#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)
+#define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)
+
+ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // read
+
+int n;
+
+ll a[10];
+ll b[10];
+
+void pack(ll x, ll y) {
+  ll c = min(a[x], b[y]);
+  a[x] -= c;
+  b[y] -= c;
+  if(y-x) b[y - x] += c; // c个工人的负重还剩下y-x
+  return;
+}
+
+void w(){
+  rep(i,1,5+1) a[i] = read();
+  rep(i,1,5+1) b[i] = read();
+
+  per(i,1,5+1){
+    pack(i,i);
+    per(j,i+1,5+1) pack(i,j);
+    pack(i,i);
+  }
+
+  bool ans = true;
+  rep(i,1,5+1)if (a[i] &gt; 0)ans = false;
+  printf(&quot;%s\n&quot;, ans? &quot;Yes&quot;: &quot;No&quot;);
+}
+
+int main(){
+  int t = read();
+  while(t--) w();
+  return 0;
+}
+
+</code></pre><h1 id="H-Random-Kth-Max"><a href="#H-Random-Kth-Max" class="headerlink" title="H - Random Kth Max"></a>H - Random Kth Max</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F</p>
+<p>dp 组合数, 主要是看到和很小,所以lcm估计也很少,没啥难的</p>
 <p>G</p>
+<p>贪心完全不会</p>
 <p>H</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc226/editorial" target="_blank" rel="noopener">官方题解</a></p>
 
