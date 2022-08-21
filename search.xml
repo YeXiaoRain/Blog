@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>Atcoder arc146 C</title>
+      <link href="/Blog/2022-08-21-ac_arc146/"/>
+      <url>/Blog/2022-08-21-ac_arc146/</url>
+      
+        <content type="html"><![CDATA[<p>C(数学,组合数,集合,dp)</p><h1 id="C-Even-XOR"><a href="#C-Even-XOR" class="headerlink" title="C - Even XOR"></a>C - Even XOR</h1><p><a href="https://atcoder.jp/contests/arc146/tasks/arc146_c" target="_blank" rel="noopener">https://atcoder.jp/contests/arc146/tasks/arc146_c</a></p><p>求多少个 元素值范围在[0,2^N)的集合满足</p><p>集合的任意偶数个数的非空子集合,元素xor均不为0</p><p>mod 998244353</p><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>先是在想 线性基, 但实际上 1 2 3 4, 也是合法的, 因为, 虽然3可以由2线性表出,但是它们是3个不是偶数个</p><hr><p>然后想转移 n -&gt; n+1</p><p>显然集合合法,它的子集也是合法</p><p>如果n 合法的方案, 拆一部分 高位填,0 另一部分高位填1, 这样的方案一定是合法, 那么 <code>ans[n][len]</code> 乘<code>2^len</code>, 贡献到<code>a[n+1][len]</code></p><p>如果对于n合法,必定不存在 a,a+高位,b,b+高位 同时存在的情况, 因此至多有一个 自身和自身+高位同时存在</p><p>那么考虑 合法的选定一个 做这种自身和高位都存在, 剩下的依然拆分, 这样依然是合法的, <code>ans[n][len] * len * 2^{len-1}</code> 贡献到<code>a[n+1][len+1]</code></p><hr><p>然后这样似乎能多次做路径计算+组合数可以做</p><p>但是问题是 这样算出来 n=3时答案=141, 而正确的是149</p><p>也就是漏情况了</p><p>可能存在 不合法的n的方案 但是赋予高位0,1 以后变成n+1的方案 就合法了?</p><p>那么就是任意在n中 的 xor(A)^xor(B) = 0, </p><p>在n+1中 = xor(A)^xor(B+高位) = 高位</p><p>也就是n+1 中所有低位产生xor = 0 的必然对应的高位个数是奇数</p><p>不会推了</p><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>$S$如果合法</p><p>$T \subset S,size(T) = 1 \pmod 2, X = xor(T)$</p><p>如果$X$加入, 则显然$T + X$ 不合法</p><p>因此$S$ 的所有奇个数子集的xor不能被加</p><p>任意$U,V \subset S$, 且都是奇数大小</p><p>下面证明它们的xor不同</p><p>显然 如果相同, 那么两个集合元素合并起来,去掉出现两次的元素, 得到的是个偶数大小且xor = 0 的集合</p><p>得证</p><p>这里还有个好处是, 本身一个元素也是奇数个,所以不需要额外判重</p><p>个数就是经典的 ((1-1)^n + (1+1)^n)/2</p><hr><p>然后dp一下就没了</p><p>dp[0] = 1</p><p>dp[1] = 2^n</p><p>dp[i] = (dp[i-1] * (2^n - 2^{i-2})  )/i , 每个集合被统计了i次因此除以i</p><hr><p>emmm 其实我好奇, 我那个想法是不是没法搞</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/arc146/submissions/34195315" target="_blank" rel="noopener">https://atcoder.jp/contests/arc146/submissions/34195315</a></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;#include &lt;atcoder/modint&gt;using mint = atcoder::modint998244353;typedef long long ll;const int MOD = 998244353;#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)#define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // readmint inv[200010] = {0,1};mint _pwr2[200010] = {0,1}; // 令 2^-1 = 0mint *pwr2 = _pwr2+1;int main(){  int n = read();  rep(i,2,n+1+1) inv[i] = (MOD-MOD/i) * inv[MOD%i];  rep(i,1,n+1) pwr2[i] = pwr2[i-1]*2;  mint ans = 1; // dp[0] + dp[1] * (1+k1(1+k2(1+k3(...)))), dp[n+2] = 0  per(i,1,n+1+1) (ans *= (pwr2[n] - pwr2[i-2]) * inv[i]) += 1;  printf(&quot;%d\n&quot;,ans.val());  return 0;}</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>C</p><p>感觉不知道怎么找切入点, 事后看起来也觉得显然, 也没有不会的知识点</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc146/editorial" target="_blank" rel="noopener">官方题解</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Atcoder </category>
+          
+          <category> ARC </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dp </tag>
+            
+            <tag> 组合数 </tag>
+            
+            <tag> 数学 </tag>
+            
+            <tag> 集合 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Atcoder abc226</title>
       <link href="/Blog/2022-08-13-ac_abc226/"/>
       <url>/Blog/2022-08-13-ac_abc226/</url>
