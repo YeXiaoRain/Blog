@@ -242,7 +242,7 @@
 
     
         <meta property="article:published_time" content="Sun Jun 05 2022 22:24:00 GMT+0800">
-        <meta property="article:modified_time" content="Tue Aug 23 2022 05:38:52 GMT+0000">
+        <meta property="article:modified_time" content="Tue Aug 23 2022 05:40:49 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2022-06-05-CF1687D/index.html",
     "headline": "Codeforces 1687D(数学,跳点)",
     "datePublished": "Sun Jun 05 2022 22:24:00 GMT+0800",
-    "dateModified": "Tue Aug 23 2022 05:38:52 GMT+0000",
+    "dateModified": "Tue Aug 23 2022 05:40:49 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Xiao Ye",
@@ -599,12 +599,14 @@ bool calc(ll w,ll &amp;l,ll &amp;r){
 int main(){
   n = read();
   rep(i,0,n) a[i] = read();
-  rep(w,mysqrt(a[0]),a[n-1]+1){ // w = f(a_0 + k) = [sqrt(a[0])..a[n-1]]
+  // w = f(a_0 + k) = [sqrt(a[0])..a[n-1]]
+  rep(w,mysqrt(a[0]),a[n-1]+1){
     // 初始化 k的范围[l..r]
     ll l = max(w*w - a[0],(ll)0);
     ll r = w*(w+1) - a[0];
     if(r &lt; l) continue;
-    if(calc(w,l,r)){ // 成功的话 k \in [l..r] 都是合法的, l就是要求的最小的
+    // 成功的话 k \in [l..r] 都是合法的, l就是要求的最小的
+    if(calc(w,l,r)){
       printf(&quot;%lld\n&quot;,l);
       return 0;
     }
@@ -615,6 +617,7 @@ int main(){
 </code></pre>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过枚举$w = f(a_0+k)$来让$k$的取值范围是连续的一段, 且只有$a$的区间端点有影响</p>
 <p>完全没想到是通过$w$来划分的, 也就是还是有点按结果划分的感觉,但又不是二分的划分形式</p>
+<p>而且这里$w$会让变化次数是$O(\frac{a_n}{w})$ 也是优化的关键点</p>
 <p>然后就是这个神奇的刚刚好, 向右平移的交一定是连续区间</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://codeforces.com/blog/entry/103493" target="_blank" rel="noopener">官方</a></p>
 
