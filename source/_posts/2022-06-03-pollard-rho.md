@@ -73,89 +73,76 @@ $N = 4,N = 1$ 需要特判
 让x=0
 
 ```cpp
+#include <bits/stdc++.h>
+#include <atcoder/modint>
+using mint = atcoder::modint998244353;
+using namespace std;
+
 typedef long long ll;
-typedef __int128 lll;
 #define rep(i,a,n) for (ll i=a;i<(ll)n;i++)
-ll quick_p(ll b, ll p,ll mod){
-  ll r = 1;
+#define pb push_back
+
+ll read(){ll r;scanf("%lld",&r);return r;} // read
+
+typedef __int128_t lll;
+ll quick_p(lll b, ll p,ll mod){
+  lll r = 1;
   while(p){
     if(p%2)(r*=b)%=mod;
     (b*=b)%=mod;
-    assert(r>0);
-    assert(b>0);
     p/=2;
   }
-  return r%mod;
+  return r % mod;
 }
 
-bool is_prime_32(ll v){
+bool miller_robin(ll v, ll base, ll startpwr){
+  lll r = quick_p(base,startpwr,v);
+  for(ll p = startpwr; p < v-1; p *=2){
+    if(r == v-1) return true; // -1 开始的序列
+    if(r == 1) return p == startpwr; // 全1序列
+    (r*=r)%=v;
+  }
+  return false;
+}
+
+bool is_prime_64(ll v){
   if(v == 2)return true;
-  if(v < 2)return false;
-  if(v%2 == 0)return false;
-  ll test_g[] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
-  ll startp = v-1;
-  while(startp%2 == 0)startp>>=1;
-  rep(i,0,7){
-    ll p = startp;
-    ll base = test_g[i];
-    // don't break may cause 4033 bug
-    if(base % v == 0)continue;
-    bool find = false;
-    ll r = quick_p(base,p,v);
-    while(p != v-1){
-      if(r == v-1){
-        find = true;
-        break;
-      }
-      // -1 开始的序列, 或全1序列
-      if(r == 1){
-        if(p == startp){
-          find = true;
-          break;
-        }
-        return false;
-      }
-      p*=2;
-      (r*=r)%=v;
-    }
-    if(!find){
-      return false;
-    }
+  if(v < 2 || v % 2 == 0)return false;
+  ll p = v-1;
+  while(p % 2 == 0) p /= 2;
+  for(auto base:{2, 325, 9375, 28178, 450775, 9780504, 1795265022}){
+    if(base % v == 0) continue; // don't break may cause 4033 bug
+    // 需要所有都能找到-1开始, 或奇数次开始 全1
+    if(!miller_robin(v,base,p)) return false;
   }
   return true;
 }
 
 ll my_sqrt(ll v){
-  assert(v > 1);
-  ll l = 1;
-  ll r = v; // care overflow
-  ll ret = 1;
-  while(l < r){
+  if(v <= 1) return v;
+  ll l = 1; // 左ok
+  ll r = v; // 右not ok
+  while(r - l > 1){
     ll m = (l+r)/2;
-    ll m2 = m*m;
-    if(m2 == v) return m;
-    if(m2 < v) {
-      ret = m;
-      l = m + 1;
-    } else {
-      r = m - 1;
-    }
+    (v/m < m ? r : l) = m; // 防止 overflow
   }
-  return ret;
+  return l;
 }
+unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+mt19937 rand_num(seed);
 
-ll randint(ll low,ll hi){
-  return low + (rand() % static_cast<int>(hi - low + 1));
+ll randll(ll low,ll hi){
+  return low + (rand_num() % static_cast<ll>(hi - low + 1));
 }
 
 ll Pollard_Rho(ll N) { // 返回一个> 1的因数
   assert(N > 1);
   if (N == 4) return 2;
-  ll ret = my_sqrt(N); // 质数平方 效率低 提前判断
+  lll ret = my_sqrt(N); // 质数平方 效率低 提前判断
   if(ret * ret == N) return ret;
   while(true) {
-    ll c = randint(1, N - 1); // 生成随机的c
-    auto f = [=](ll x) { return ((lll)x * x + c) % N; }; // ll 表示__int128，防溢出
+    ll c = randll(1, N - 1); // 生成随机的c
+    auto f = [=](lll x) { return ((lll)x * x + c) % N; }; // ll 表示__int128，防溢出
     ll t = 0, r = 0; // 初始两个相同
     do{
       t = f(t); // 1倍速度
@@ -167,14 +154,14 @@ ll Pollard_Rho(ll N) { // 返回一个> 1的因数
 }
 
 // 分解x为质因数, sorted
-vector<int> fenjie(ll x) {
-  vector<int> res = {};
+vector<ll> fenjie(ll x) {
+  vector<ll> res = {};
   deque <ll> arr = {x};
   while(arr.size()){
     ll v = arr.front();
     arr.pop_front();
     if(v == 1) continue;
-    if(is_prime_32(v)) {
+    if(is_prime_64(v)) {
       res.pb(v);
       continue;
     }
