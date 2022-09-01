@@ -1,7 +1,7 @@
 ---
 title: project euler 686 (2的幂的前3位)???
 date: 2021-05-10 10:37:14
-tags: [pe,project euler,math,TODO]
+tags: [数学,TODO]
 category: [Project Euler]
 mathjax: true
 ---

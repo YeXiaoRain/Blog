@@ -1,7 +1,7 @@
 ---
 title: project euler 516 (5-smooth,二分,前缀和,prime)
 date: 2022-02-11 10:37:14
-tags: [pe,project euler,math]
+tags: [数学]
 category: [Project Euler]
 mathjax: true
 ---

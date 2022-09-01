@@ -1,7 +1,7 @@
 ---
 title: project euler 709 (OEIS A000111)
 date: 2021-05-31 10:37:14
-tags: [pe,project euler,math]
+tags: [数学]
 category: [Project Euler]
 mathjax: true
 ---

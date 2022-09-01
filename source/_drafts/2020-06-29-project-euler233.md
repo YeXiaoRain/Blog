@@ -1,7 +1,7 @@
 ---
 title: project euler 233 Lattice points on a circle
 date: 2020-06-29 10:37:14
-tags: [pe,project euler,math]
+tags: [数学]
 category: [project euler]
 mathjax: true
 ---

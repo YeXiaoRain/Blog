@@ -1,7 +1,7 @@
 ---
 title: project euler 167 (Ulam Number Sequence)
 date: 2021-04-22 10:37:14
-tags: [pe,project euler,math]
+tags: [数学]
 category: [Project Euler]
 mathjax: true
 ---

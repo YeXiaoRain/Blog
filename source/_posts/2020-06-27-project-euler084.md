@@ -1,7 +1,7 @@
 ---
 title: project euler 84 Monopoly odds 不会了 算概率是认真的吗？
 date: 2020-06-27 10:37:14
-tags: [pe,project euler,math,概率统计]
+tags: [数学,概率统计]
 category: [Project Euler]
 mathjax: true
 ---

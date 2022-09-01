@@ -1,7 +1,7 @@
 ---
 title: project euler 622 (函数周期)
 date: 2021-05-30 10:37:14
-tags: [pe,project euler,math]
+tags: [数学]
 category: [Project Euler]
 mathjax: true
 ---

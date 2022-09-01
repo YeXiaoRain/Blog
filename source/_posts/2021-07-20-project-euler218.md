@@ -1,7 +1,7 @@
 ---
 title: project euler 218 (别写代码用数学)
 date: 2021-07-20 10:37:14
-tags: [pe,project euler,math]
+tags: [数学]
 category: [Project Euler]
 mathjax: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: project euler 100 Arranged probability
 date: 2020-06-23 10:37:14
-tags: [pe,project euler,math,pell eq]
+tags: [数学,pell eq]
 category: [Project Euler]
 mathjax: true
 ---

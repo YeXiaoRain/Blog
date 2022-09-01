@@ -1,7 +1,7 @@
 ---
 title: project euler 233 (直角三角形)
 date: 2021-09-24 10:37:14
-tags: [pe,project euler,math]
+tags: [数学]
 category: [Project Euler]
 mathjax: true
 ---

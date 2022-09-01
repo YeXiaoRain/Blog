@@ -1,7 +1,7 @@
 ---
 title: project euler 216 (质数判别)
 date: 2021-06-12 10:37:14
-tags: [pe,project euler,math,prime]
+tags: [数学,质数]
 category: [Project Euler]
 mathjax: true
 ---
