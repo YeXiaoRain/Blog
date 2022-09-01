@@ -8,7 +8,7 @@
       <link href="/Blog/2022-09-01-ac-abc230/"/>
       <url>/Blog/2022-09-01-ac-abc230/</url>
       
-        <content type="html"><![CDATA[<p>G()H()</p><p><a href="https://atcoder.jp/contests/abc230/tasks" target="_blank" rel="noopener">https://atcoder.jp/contests/abc230/tasks</a></p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p><p>H</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc230/editorial" target="_blank" rel="noopener">官方题解</a></p>]]></content>
+        <content type="html"><![CDATA[<p>G(Möbius函数)H()</p><p><a href="https://atcoder.jp/contests/abc230/tasks" target="_blank" rel="noopener">https://atcoder.jp/contests/abc230/tasks</a></p><h1 id="G-GCD-Permutation"><a href="#G-GCD-Permutation" class="headerlink" title="G - GCD Permutation"></a>G - GCD Permutation</h1><p>给一个1~N的排列p</p><p>问有多少个有序对 (i,j), (i&lt;=j), 满足 gcd(i,j) != 1, gcd(p[i],p[j]) != 1</p><h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p><p>5s</p><p>1024mb</p><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>有点想暴力 然后证明复杂度?</p><p>对于 (i,Pi), 取两个中较小的一个, 找所有包含它下标的, 用较大的去验证gcd</p><p>最多有6个不同质数因子, 最坏情况 1/2+1/3+1/5+1/7+1/11+1/13 = 1.3左右</p><p>所以最坏情况是 找n个坐标</p><p>先写个代码再说</p><p><a href="https://atcoder.jp/contests/abc230/submissions/34500571" target="_blank" rel="noopener">https://atcoder.jp/contests/abc230/submissions/34500571</a></p><hr><p>显然 有很多是2 的倍数的,它们如果每个都会去访问n/2, 那么已经就是n^2了, 肯定会超时</p><hr><p>想法就是 如果 (2的倍数,3的倍数) 之类做容斥? 但是我容斥完全不会</p><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>$\tilde{\mu}(n)= 1,-1,0$</p><p>1: 当n为奇数个不同的质数乘积</p><p>-1: 当n为偶数个不同的质数乘积</p><p>0: 其它</p><p>相当于 Möbius函数 取相反数,且 $\mu(1) = 0$</p><p>那么满足 $\sum_{d|n} \tilde{\mu}(d)=<br>\begin{cases}<br>0 &amp; (\text{if }n=1)  \\<br>1 &amp; (\text{if }n\geq 2)<br>\end{cases}$</p><p>这和Möbius函数 很像, <code>和= 1-Möbius的和</code></p><hr><p>定义函数</p><p>$f(a,b;i,j) = 1/0$, 表示 i,j是a的倍数且 pi,pj 是b的倍数</p><p>对于和$S=\sum_{1\leq i\leq j\leq N} \sum_{a=1}^N \sum_{b=1}^N  \tilde{\mu}(a) \tilde{\mu}(b)f(a,b;i,j).$</p><p>对于给定的$(i,j)$ 令$g=GCD(i,j),g’=GCD(p_i,p_j)$</p><p>考虑右侧f要为1, 那么需要同时a是g的约数,b是g’的约数</p><p>$\sum_{1\leq i\leq j\leq N} \sum_{a=1}^N \sum_{b=1}^N  \tilde{\mu}(a) \tilde{\mu}(b)f(a,b;i,j) = \sum_{1\leq i\leq j\leq N} \sum_{a|g} \sum_{b|g’}  \tilde{\mu}(a) \tilde{\mu}(b)$</p><p>$= \sum_{1\leq i\leq j\leq N} \sum_{a|g} \tilde{\mu}(a) \sum_{b|g’}  \tilde{\mu}(b)$</p><p>所以考虑右侧, 只要g,g’ 同时大于等于2,则为1, 否则为0</p><p>$= \sum_{1\leq i\leq j\leq N} (g \ge 2 , g’ \ge 2)$, 这里证明了和原题意等价, 因此S就是要求的答案</p><hr><p>令$num(a,b) = (a|i,b|p_i)$ 的个数</p><p>对于给定$(a,b)$ 有 $\sum_{1\le i\le j\le N}f(a,b;i,j)=\frac{num(a,b)(num(a,b)+1)}{2}$, 相当于找出所有满足$(a|i,b|p_i)$ 的然后组成顺序对</p><p>因此又有$S=\sum_{a=1}^N \sum_{b=1}^N  \tilde{\mu}(a) \tilde{\mu}(b)<br>\frac{num(a,b)(num(a,b)+1)}{2}.$</p><p>这样你可以计算S了, 虽然是N^2<br>但是实际上, 对于a, 因为有$(a|i,b|p_i)$, 所以 b 的可选值很小</p><h3 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h3><p>讲了一下Möbius function 函数的定义,和约数和的结果, 提到了$\displaystyle\sum_{d|n} \tilde{\mu}(d)=1-\sum_{d|n}\mu(d)$</p><p>因此每个都可以被快速计算</p><h2 id="正向思路"><a href="#正向思路" class="headerlink" title="正向思路?"></a>正向思路?</h2><p>其实从上面过程中还是能看见一点</p><p>本身是要求 $= \sum_{1\leq i\leq j\leq N} (GCD(i,j) \ge 2 , GCD(p_i,p_j) \ge 2)$</p><p>有莫比乌斯函数知识有 $[x = 1] = \sum_{i|x} \mu(i)$, 这里$\mu$是莫比乌斯函数</p><p>因此可以变形为</p><p>$= \sum_{1\leq i\leq j\leq N} (1-\sum_{t_0|GCD(i,j)} \mu(t_0))\cdot (1-\sum_{t_1|GCD(p_i,p_j)} \mu(t_1))$</p><p>$= \sum_{1\leq i\leq j\leq N} 1-(\sum_{1\leq i\leq j\leq N}\sum_{t_0|GCD(i,j)} \mu(t_0) + \sum_{1\leq i\leq j\leq N}\sum_{t_1|GCD(p_i,p_j)} \mu(t_1)) + \sum_{1\leq i\leq j\leq N}\sum_{t_0|GCD(i,j)} \mu(t_0) \sum_{t_1|GCD(p_i,p_j)} \mu(t_1)$</p><p>3部分</p><p>第一部分就是$i\le j$的个数</p><p>第二部分,对于$t_0,t_1$ 分别考虑,都是类似的,找都是$t_0 / t_1$的倍数</p><p>第三部分,从$t_0,t_1$ 的角度看, 就是上面所谓的num(a,b) 一样的想法</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>map 850ms <a href="https://atcoder.jp/contests/abc230/submissions/34500944" target="_blank" rel="noopener">https://atcoder.jp/contests/abc230/submissions/34500944</a></p><p>vector+vis 270ms <a href="https://atcoder.jp/contests/abc230/submissions/34500900" target="_blank" rel="noopener">https://atcoder.jp/contests/abc230/submissions/34500900</a></p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;typedef long long ll;#define rep(i,a,n) for (int i=a;i&lt;(int)n;i++)int read(){int r;scanf(&quot;%d&quot;,&amp;r);return r;} // read#define N 200000int p[N+10]; // 读入,排列bool pr[N+10]; // prime[i] = true/falseint mu[N+10]; // mu, 新定义的mu, mu(1) = 0, mu(i) = -莫比乌斯函数(i), i&gt; 1std::vector&lt;int&gt;d[N+10]; // d[v] = `v的mu不为0的因子`int main() {  int n = read();;  ll ans = 0;  rep(i,1,n+1) p[i] = read();  std::fill(pr+2,pr+n+1,true);  std::fill(mu+2,mu+n+1,-1);  rep(i,2,n+1){    if (pr[i]) {      mu[i] *= -1;      for (int j = 2*i; j &lt;= n; j+=i) {        pr[j] = false;        mu[j] *= ((j/i)%i) ? -1 :0;      }    }    if (mu[i] != 0) for (int j = i; j &lt;= n; j += i) d[j].push_back(i);  }  rep(a,2,n+1) if(mu[a] != 0) { // mu(a) * mu(b) * (num(a,b)(num(a,b)+1))/2    std::unordered_map&lt;int, ll&gt; b2c; // 对于给定a, 的b2c[b] = num(a,b)    for (int i = a; i &lt;= n; i += a) for (int b : d[p[i]]) b2c[b]++;// a|i, b|p[i]    for (auto [b,c]: b2c) ans += mu[a] * mu[b] * (c * (c + 1)) / 2;  }  printf(&quot;%lld\n&quot;,ans);  return 0;}</code></pre><h1 id="H-Bullion"><a href="#H-Bullion" class="headerlink" title="H - Bullion"></a>H - Bullion</h1><p>无限数量的块分别重w1,w2,…,wk, 每个两两不同</p><p>无限数量包,重量1</p><p>包可以容纳 任意个非空包 和 任意个块</p><p>安排一辆卡车, 运载力W,</p><p>考虑 w=2..W 的每个情况</p><p>你需要 让最终外层包重量为w的打包方案数, 包可以嵌套,不能有空包</p><p>物品重量相同视为相同, 包内没有顺序,看成可重集合</p><p>输出对于每个w的方案数 mod 998244353</p><h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>w 2.5e5</p><p>8s</p><p>1024mb</p><h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>先考虑给定w</p><p>那么它的内容重量和=w-1</p><p>假设包的部分是重k, 那么剩余直接的块重量和为w-k-1</p><p>所以f(w) = sum g(k) h(w-k-1)</p><p>g(x) = 多个包裹总重量为x的方案数</p><p>h(x) = 多个块总重量为x的方案数</p><p>像生成函数, 但不会了</p><h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>这里也提到了上次的222H</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p><p>感觉还是莫比乌斯反演相关的知识点</p><p>这个S的定义 感觉凭空出现啊, 这题解有一点搞</p><p>但如果不知道这种定义, 还是可以从莫比乌斯函数推导出的</p><p>H</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc230/editorial" target="_blank" rel="noopener">官方题解</a></p><p><a href="https://yexiaorain.github.io/Blog/2019-01-06-MobiusInversionFormula/">之前写的莫反笔记</a></p><p><a href="https://yexiaorain.github.io/Blog/2019-03-23-cfP1139D/">莫反 CF 548 Div2 D</a></p><p><a href="https://yexiaorain.github.io/Blog/2020-11-07-nowcoder8282D/">莫反NowCoder 8282 D</a></p><p><a href="http://localhost:4000/Blog/2022-08-08-ac_abc222/" target="_blank" rel="noopener">222H</a></p>]]></content>
       
       
       <categories>
@@ -19,6 +19,14 @@
           
       </categories>
       
+      
+        <tags>
+            
+            <tag> Möbius function </tag>
+            
+            <tag> Möbius函数 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -148,9 +156,9 @@
             
             <tag> dp </tag>
             
-            <tag> 组合数 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 组合数 </tag>
             
             <tag> 集合 </tag>
             
@@ -171,6 +179,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ABC </category>
           
       </categories>
       
@@ -230,6 +240,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -239,11 +251,11 @@
             
             <tag> 网络流 </tag>
             
+            <tag> 字符串 </tag>
+            
             <tag> 分治 </tag>
             
             <tag> NTT </tag>
-            
-            <tag> 字符串 </tag>
             
             <tag> FFT </tag>
             
@@ -268,6 +280,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ABC </category>
           
       </categories>
       
@@ -304,6 +318,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -328,6 +344,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ABC </category>
           
       </categories>
       
@@ -374,6 +392,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -415,6 +435,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -452,6 +474,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -486,6 +510,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ABC </category>
           
       </categories>
       
@@ -523,6 +549,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ABC </category>
           
       </categories>
       
@@ -576,6 +604,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -609,6 +639,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -618,9 +650,9 @@
             
             <tag> dp </tag>
             
-            <tag> 网络流 </tag>
-            
             <tag> scc </tag>
+            
+            <tag> 网络流 </tag>
             
             <tag> 二分图 </tag>
             
@@ -656,6 +688,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -665,9 +699,9 @@
             
             <tag> dp </tag>
             
-            <tag> 网络流 </tag>
-            
             <tag> scc </tag>
+            
+            <tag> 网络流 </tag>
             
             <tag> 排列 </tag>
             
@@ -695,6 +729,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -704,9 +740,9 @@
             
             <tag> dp </tag>
             
-            <tag> 拓扑排序 </tag>
-            
             <tag> 字符串 </tag>
+            
+            <tag> 拓扑排序 </tag>
             
             <tag> dij </tag>
             
@@ -729,6 +765,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ABC </category>
           
       </categories>
       
@@ -802,7 +840,7 @@
       
       <categories>
           
-          <category> Codeforces </category>
+          <category> algorithm </category>
           
       </categories>
       
@@ -830,6 +868,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ABC </category>
           
       </categories>
       
@@ -864,7 +904,7 @@
       
       <categories>
           
-          <category> Codeforces </category>
+          <category> algorithm </category>
           
       </categories>
       
@@ -928,7 +968,7 @@
       
       <categories>
           
-          <category> 算法 </category>
+          <category> algorithm </category>
           
       </categories>
       
@@ -964,13 +1004,13 @@
             
             <tag> DP </tag>
             
-            <tag> 前缀和 </tag>
+            <tag> 数学 </tag>
             
             <tag> 组合数 </tag>
             
-            <tag> 树上差分 </tag>
+            <tag> 前缀和 </tag>
             
-            <tag> 数学 </tag>
+            <tag> 树上差分 </tag>
             
             <tag> 倍增 </tag>
             
@@ -996,6 +1036,8 @@
           
           <category> Atcoder </category>
           
+          <category> ARC </category>
+          
       </categories>
       
       
@@ -1005,9 +1047,9 @@
             
             <tag> gcd </tag>
             
-            <tag> 组合数 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 组合数 </tag>
             
             <tag> 有向图 </tag>
             
@@ -1032,6 +1074,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ABC </category>
           
       </categories>
       
@@ -1093,6 +1137,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -1127,9 +1173,9 @@
       
         <tags>
             
-            <tag> 数学 </tag>
-            
             <tag> 数组 </tag>
+            
+            <tag> 数学 </tag>
             
             <tag> 相邻无序对 </tag>
             
@@ -1156,6 +1202,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ARC </category>
           
       </categories>
       
@@ -1219,6 +1267,8 @@
           
           <category> Atcoder </category>
           
+          <category> ABC </category>
+          
       </categories>
       
       
@@ -1245,6 +1295,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ARC </category>
           
       </categories>
       
@@ -1363,11 +1415,11 @@
             
             <tag> 贪心 </tag>
             
-            <tag> 贡献 </tag>
-            
             <tag> 数学 </tag>
             
             <tag> 树状数组 </tag>
+            
+            <tag> 贡献 </tag>
             
             <tag> 标记 </tag>
             
@@ -1417,6 +1469,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ABC </category>
           
       </categories>
       
@@ -1473,9 +1527,9 @@
       
         <tags>
             
-            <tag> 构造 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 构造 </tag>
             
             <tag> min-max容斥 </tag>
             
@@ -1553,7 +1607,7 @@
       
       <categories>
           
-          <category> Math </category>
+          <category> algorithm </category>
           
       </categories>
       
@@ -1581,6 +1635,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ARC </category>
           
       </categories>
       
@@ -1624,11 +1680,11 @@
             
             <tag> 并查集 </tag>
             
+            <tag> 数学 </tag>
+            
             <tag> 前缀和 </tag>
             
             <tag> 构造 </tag>
-            
-            <tag> 数学 </tag>
             
             <tag> 排列 </tag>
             
@@ -1663,19 +1719,19 @@
             
             <tag> 排序 </tag>
             
+            <tag> 数学 </tag>
+            
+            <tag> 树状数组 </tag>
+            
             <tag> 前缀和 </tag>
             
             <tag> 离线 </tag>
             
             <tag> 二分图 </tag>
             
-            <tag> 数学 </tag>
-            
             <tag> 排列 </tag>
             
             <tag> 拓扑排序 </tag>
-            
-            <tag> 树状数组 </tag>
             
             <tag> 差分 </tag>
             
@@ -1702,6 +1758,8 @@
       
         <tags>
             
+            <tag> 数学 </tag>
+            
             <tag> 分治 </tag>
             
             <tag> 构造 </tag>
@@ -1715,8 +1773,6 @@
             <tag> 同值跳点 </tag>
             
             <tag> 二分图 </tag>
-            
-            <tag> 数学 </tag>
             
         </tags>
       
@@ -1848,6 +1904,8 @@
           
           <category> Atcoder </category>
           
+          <category> ARC </category>
+          
       </categories>
       
       
@@ -1966,6 +2024,8 @@
           
           <category> Atcoder </category>
           
+          <category> AGC </category>
+          
       </categories>
       
       
@@ -2053,12 +2113,18 @@
           
           <category> Atcoder </category>
           
+          <category> ARC </category>
+          
       </categories>
       
       
         <tags>
             
-            <tag> math </tag>
+            <tag> 频率频次 </tag>
+            
+            <tag> 贡献统计 </tag>
+            
+            <tag> 二项式分布 </tag>
             
         </tags>
       
@@ -2106,6 +2172,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ARC </category>
           
       </categories>
       
@@ -2327,7 +2395,7 @@
       
       <categories>
           
-          <category> algorithm </category>
+          <category> Codeforces </category>
           
       </categories>
       
@@ -2376,31 +2444,6 @@
     
     
     <entry>
-      <title>甜甜圈数学 from 2006</title>
-      <link href="/Blog/2021-12-31-donut/"/>
-      <url>/Blog/2021-12-31-donut/</url>
-      
-        <content type="html"><![CDATA[<h1 id="本文尽量逐句翻译"><a href="#本文尽量逐句翻译" class="headerlink" title="本文尽量逐句翻译"></a>本文尽量逐句翻译</h1><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><p><code>donut.c</code>:</p><pre><code class="c">             k;double sin()         ,cos();main(){float A=       0,B=0,i,j,z[1760];char b[     1760];printf(&quot;\x1b[2J&quot;);for(;;  ){memset(b,32,1760);memset(z,0,7040)  ;for(j=0;6.28&gt;j;j+=0.07)for(i=0;6.28 &gt;i;i+=0.02){float c=sin(i),d=cos(j),e= sin(A),f=sin(j),g=cos(A),h=d+2,D=1/(c* h*e+f*g+5),l=cos      (i),m=cos(B),n=s\in(B),t=c*h*g-f*        e;int x=40+30*D*(l*h*m-t*n),y=            12+15*D*(l*h*n+t*m),o=x+80*y,          N=8*((f*e-c*d*g )*m-c*d*e-f*g-l        *d*n);if(22&gt;y&amp;&amp; y&gt;0&amp;&amp;x&gt;0&amp;&amp;80&gt;x&amp;&amp;D&gt;z[o]){z[o]=D;;;b[o]= &quot;.,-~:;=!*#$@&quot;[N&gt;0?N:0];}}/*#****!!-*/  printf(&quot;\x1b[H&quot;);for(k=0;1761&gt;k;k++)   putchar(k%80?b[k]:10);A+=0.04;B+=     0.02;}}/*****####*******!!=;:~       ~::==!!!**********!!!==::-         .,~~;;;========;;;:~-.             ..,--------,*/</code></pre><p><code>gcc -o donut donut.c -lm &amp;&amp; ./donut</code></p><p>这是作者第一次尝试混淆C代码, 这个版本是相对简单优雅的</p><h2 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h2><p><strong>注意</strong> 下面13行,因为我本地的hexo相关工具不能正确工作,为了尽可能展示代码,我在<code>&lt;</code>和<code>.</code>之间加了一个空格,实际上是没有空格的,所以如果从这里拷贝代码,记得去掉多出的空格</p><pre><code class="c">    _,x,y,o       ,N;char       b[1840]       ;p(n,c)    {for(;n       --;x++)       c==10?y       +=80,x=    o-1:x&gt;=       0?80&gt;x?       c!=&#39;~&#39;?       b[y+x]=    c:0:0:0       ;}c(q,l       ,r,o,v)       char*l,           *r;{for       (;q&gt;=0;       )q=(&quot;A&quot;       &quot;YLrZ^&quot;           &quot;w^?EX&quot;           &quot;novne&quot;     &quot;bYV&quot;       &quot;dO}LE&quot;           &quot;{yWlw&quot;      &quot;Jl_Ja|[ur]zovpu&quot;   &quot;&quot;       &quot;i]e|y&quot;           &quot;ao_Be&quot;   &quot;osmIg}r]]r]m|wkZU}{O}&quot;         &quot;xys]]\    x|ya|y&quot;        &quot;sm||{uel}|r{yIcsm||ya[{uE&quot;  &quot;{qY\    w|gGor&quot;      &quot;VrVWioriI}Qac{{BIY[sXjjsVW]aM"  "T\    tXjjss"     "sV_OUkRUlSiorVXp_qOM>E{BadB"[_/6  ]-    62>>_++    %6&1?r[q]:l[q])-o;return q;}E(a){for (           o= x=a,y=0,_=0;1095>_;)a= " < .,`'/)(\n-"  "\\_~"[           c  (12,"!%*/')#3"  ""     "+-6,8","\"(.$" "01245"           " &79",46)+14],  p(""       "#$%&'()0:439 "[ c(10           , "&(*#,./1345" ,"')"       "+%-$02\"! ", 44)+12]    -34,a);  }main(k){float     A=0,B= 0,i,j,z[1840];    puts(""  "\x1b[2J");;;      for(;; ){float e=sin    (A), n=  sin(B),g=cos(      A),m=  cos(B);for(k=    0;1840>   k;k++)y=-10-k/    80   ,o=41+(k%80-40           )* 1.3/y+n,N=A-100.0/y,b[k]=".#"[o+N&1],  z[k]=0;           E(  80-(int)(9*B)%250);for(j=0;6.28>j;j   +=0.07)           for  (i=0;6.28>i;i+=0.02){float c=sin(    i),  d=           cos(  j),f=sin(j),h=d+2,D=15/(c*h*e+f     *g+5),l    =cos(i)        ,t=c*h*g-f*e;x=40+2*D*(l*h*  m-t*n    ),y=12+       D  *(l*h*n+t*m),o=x+80*y,N  =8*((f*    e-c*d*g       )*m   -c*d*e-f*g-l*d*n)     ;if(D>z    [o])z[o       ]=D,b[     o]=" ."          ".,,-+"           "+=#$@"       [N>0?N:       0];;;;}       printf(           "%c[H",       27);for       (k=1;18       *100+41           >k;k++)       putchar       (k%80?b       [k]:10)           ;;;;A+=       0.053;;       B+=0.03       ;;;;;}}</code></pre><p>同样的编译和运行命令, 这次是有背景, 有弹幕的版本</p><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>2011 年,有人提起了作者的2006年的作品,有很多请求作者讲解原理的,但过去了5年,作者并不能清晰记得,所以作者打算从零开始,非常详尽的细节,希望能得到相近的结果</p><p>这个内容的核心是利用 帧buffer 和 Z-buffer 来渲染像素(通过ascii渲染低分辨率的图像)</p><p>通过固定的角度增量的,来绘制对应的环面(torus), 亮度是从暗到亮对应的<code>ASCII</code>是<code>.,-~:;=!*#$@</code>.(不需要射线追踪</p><h3 id="3D物体-到-2D屏幕"><a href="#3D物体-到-2D屏幕" class="headerlink" title="3D物体 到 2D屏幕"></a>3D物体 到 2D屏幕</h3><p><img src="https://www.a1k0n.net/img/perspective.png" alt="3D和2D映射"></p><p>如图, 当一个人看一个3D 物体时,眼睛和物体连线与屏幕的交点, 就是我们要的投影</p><p>把3D物品渲染到2D屏幕上</p><p>$(x,y,z)$实际的点投影到 距离眼睛为$z’$的屏幕的$(x’,y’)$上</p><p>显然相似三角形</p><p>$\frac{y’}{y}=\frac{x’}{x}=\frac{z’}{z}$</p><p>换句话说$(x’,y’) = (z’\frac{x}{z},z’\frac{y}{z})$, 左边是要求的,右边是三维空间中已知</p><p>其中呢,人到屏幕距离$z’$是常量, 这个常量变化相当于把屏幕推远或拉近,取决于你希望展示多少内容</p><hr><p>因为物体有深度,所以可能多个点对应到2D屏幕上同一个点,那我们需要一个记录每个我们绘制的点的z坐标,这样可以保证后面的点不会覆盖前面的点</p><p>在记录<code>z-buffer</code>同时,我们可以同时增加<code>1/z-buffer</code>.</p><ol><li><code>1/z</code> 表示无穷远</li><li>计算$x’,y’$时,可以直接乘<code>1/z</code>,比除两次代价小(?</li></ol><p>现在可以开始绘制 甜甜圈了(torus)</p><hr><p>torus 是一个旋转体, 一个方法是把2D的圆,绕着一个圆外的轴旋转, 下图是个示意的切面</p><p><img src="https://www.a1k0n.net/img/torusxsec.png" alt="圆绕轴旋转"></p><p>先谈圆, 一个半径$R_1$的圆,其圆心在$(R_2,0,0)$</p><p>那么圆上的点$(x,y,z) = (R_2,0,0) + (R_1 \cos \theta,R_1 \sin \theta,0)$</p><p>如果绕y轴旋转, 其y轴不变, 根据旋转矩阵为</p><p>$\left( \begin{matrix} R_2 + R_1 \cos \theta, &amp; R_1 \sin \theta, &amp; 0 \end{matrix} \right)<br>\cdot \left( \begin{matrix} \cos \phi &amp; 0 &amp; \sin \phi \\ 0 &amp; 1 &amp; 0 \\ -\sin \phi &amp; 0 &amp; \cos \phi \end{matrix} \right)$</p><p>$= \left( \begin{matrix} (R_2 + R_1 \cos \theta)\cos \phi, &amp; R_1 \sin \theta, &amp; -(R_2 + R_1 \cos \theta)\sin \phi \end{matrix} \right)$</p><p>如果你希望也绕 x轴转$A$,或者 z轴旋转$B$, 只需要多乘上对应的旋转矩阵就完了</p><p>$\left( \begin{matrix}<br>1 &amp; 0 &amp; 0 \\<br>0 &amp; \cos A &amp; \sin A \\<br>0 &amp; -\sin A &amp; \cos A \end{matrix} \right)<br>\cdot<br>\left( \begin{matrix}<br>\cos B &amp; \sin B &amp; 0 \\<br>-\sin B &amp; \cos B &amp; 0 \\<br>0 &amp; 0 &amp; 1 \end{matrix} \right)$</p><hr><p>但对于上面来说, 会发现它其实整个的旋转中心都是原点,而我们上面给出的3D到2D的投影,过原点的是屏幕而不是物品, 不过幸运的是,我们仅需要把物体沿着z轴平移,就可以让它不再在原点上</p><p>对此,我们 令$K_1 = z’$控制人屏之间的距离,$K_2 = $ 人到物体旋转中心的距离,</p><p>$(x’,y’) = (z’\frac{x}{z},z’\frac{y}{z}) = (\frac{K_1 x}{K_2+z},\frac{K_1 y}{K_2+z})$</p><p>其中,第二第三个式子中的z并不相同,第二个是描述的距离人的z,而第三个是距离旋转中心的z</p><hr><p>把上述的矩阵展开</p><p>$\left( \begin{matrix} x \\ y \\ z \end{matrix} \right) = \left( \begin{matrix} (R_2 + R_1 \cos \theta) (\cos B \cos \phi + \sin A \sin B \sin \phi) - R_1 \cos A \sin B \sin \theta \\ (R_2 + R_1 \cos \theta) (\cos \phi \sin B - \cos B \sin A \sin \phi) + R_1 \cos A \cos B \sin \theta \\  \cos A (R_2 + R_1 \cos \theta) \sin \phi + R_1 \sin A \sin \theta \end{matrix} \right) = \left( \begin{matrix} C_x(\cos B \cos \phi + \sin A \sin B \sin \phi) - C_y \cos A \sin B  \\ C_x(\cos \phi \sin B - \cos B \sin A \sin \phi) + C_y \cos A \cos B \\  C_x \cos A \sin \phi + C_y \sin A \end{matrix} \right)$</p><p>其中$C_x,C_y$ 表示绕轴旋转前,圆上的点</p><p>实际上和最开始代码中的乘法因子完全不同(留给读者展开,原来的代码也交换了A的sin和cos, 高效的旋转90度,所以估计原来推导有些不同,但都能用)</p><hr><p>现在呢,知道了像素放在哪里,但是还没有阴影的概念, (也有意义,如果把投影全部同色绘制,就可以当影子看</p><p>要计算照明, 我们需要知道平面上每一点的法向量</p><p>如果知道了法向量,再和光的方向点积,其中光的方向自定义, </p><p>接下来就是向量点级的绝对值越大,亮度越大,正负选一面为看不见(根据法向量方向不同)</p><p>如何求法向量呢, 首先注意到法向量和平面同时一起旋转的, 那么对于圆上的点的法向量</p><p>是 $(\cos \theta,\sin \theta, 0)$</p><p>剩下的无非是乘上旋转矩阵了</p><p>$\left( \begin{matrix} N_x, &amp; N_y, &amp; N_z \end{matrix} \right) = \left( \begin{matrix} \cos \theta, &amp;<br>\sin \theta, &amp; 0 \end{matrix} \right) \cdot \left( \begin{matrix} \cos \phi &amp; 0 &amp; \sin \phi \\ 0 &amp; 1 &amp; 0 \\ -\sin \phi &amp; 0 &amp; \cos \phi \end{matrix} \right) \cdot \left( \begin{matrix} 1 &amp; 0 &amp; 0 \\<br>0 &amp; \cos A &amp; \sin A \\ 0 &amp; -\sin A &amp; \cos A \end{matrix} \right) \cdot \left( \begin{matrix} \cos B &amp; \sin B &amp; 0 \\ -\sin B &amp; \cos B &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{matrix} \right)$</p><p>光的方向,这里选择45度夹角的光$(0,1,-1)$ (这里不是单位向量,长度根号2)</p><p>$\begin{aligned} L &amp;= \left( \begin{matrix} N_x, &amp; N_y, &amp; N_z \end{matrix} \right) \cdot \left( \begin{matrix} 0, &amp; 1, &amp;  -1 \end{matrix} \right) \\  &amp;= \cos \phi \cos \theta \sin B - \cos A \cos \theta \sin \phi - \sin A \sin \theta +  \cos B ( \cos A \sin \theta - \cos \theta \sin A \sin \phi) \end{aligned}$</p><p>这样我们有了亮度</p><p>剩下的就是选择你希望的 $K_1$(眼睛屏幕距离, 缩放大小),$K_2$(眼睛物体距离),$R_1$ 切面圆形半径,$R_2$ 圆形中心到旋转轴距离</p><p>对于代码中,选取的是$R_1=1,R_2=2$</p><hr><p>综上</p><p>$(x,y,z)$ 由 两个半径,枚举旋转体角度,和绕x轴,z轴旋转 得到</p><p>$(x,y,z)$ 投影到$(\frac{K_1 x}{K_2+z},\frac{K_1 y}{K_2+z})$</p><p>亮度为$L$</p><p>我们有了伪代码</p><pre><code class="c++">const float theta_spacing = 0.07; // 旋转体切面的圆上的点弧度旋转const float phi_spacing   = 0.02; // 旋转体绕轴每份旋转弧度const float R1 = 1; // 旋转体切面圆半径const float R2 = 2; // 旋转体切面圆心和旋转轴距离const float K2 = 5; // 人和旋转体旋转中心的距离// 基于屏幕大小计算 K1 // 对于torus的边缘, 也就是距离旋转中心$R1+R2$// 我们希望它能被展示到屏幕的 3/8,也就是整个展示到屏幕的6/8,上下左右留白1/8// 根据3D和2D转换关系// 屏幕宽度*3/8 = K1*(R1+R2)/(K2+0)const float K1 = screen_width*K2*3/(8*(R1+R2));render_frame(float A, float B) { // A,B就是上面的旋转角度  // 预计算 A,B的sin和cos  float cosA = cos(A), sinA = sin(A);  float cosB = cos(B), sinB = sin(B);  // 输出字符  char output[0..screen_width, 0..screen_height] = &#39; &#39;;  // 2D屏幕上的点原来在3D物体上的z坐标记录  float zbuffer[0..screen_width, 0..screen_height] = 0;  // 且面圆上的点  for (float theta=0; theta &lt; 2*pi; theta += theta_spacing) {    // 预先计算 theta 的sin和cos    float costheta = cos(theta), sintheta = sin(theta);    // 旋转体 ,上面的圆绕旋转轴旋转phi    for(float phi=0; phi &lt; 2*pi; phi += phi_spacing) {      // 同样预先计算 phi 的 sin和cos      float cosphi = cos(phi), sinphi = sin(phi);      // 绕y轴旋转前 圆上的点 的 x,y      float circlex = R2 + R1*costheta;      float circley = R1*sintheta;      // 计算出最终的 3D (x,y,z) 坐标, 上面公式是想对于旋转中心,这里z加上K2 表示相对于人的眼睛的      float x = circlex*(cosB*cosphi + sinA*sinB*sinphi)        - circley*cosA*sinB;       float y = circlex*(sinB*cosphi - sinA*cosB*sinphi)        + circley*cosA*cosB;      float z = K2 + cosA*circlex*sinphi + circley*sinA;      float ooz = 1/z;  // &quot;one over z&quot;      // 计算在屏幕上的x和y,因为是屏幕上原点要移动到 屏幕中心, 至此有了2D上的位置      int xp = (int) (screen_width/2 + K1*ooz*x);      int yp = (int) (screen_height/2 - K1*ooz*y);      // 计算光照      float L = cosphi*costheta*sinB - cosA*costheta*sinphi -        sinA*sintheta + cosB*(cosA*sintheta - costheta*sinA*sinphi);      // 因为选取的光的模长度sqrt2, 所以光强度[-sqrt2,sqrt2]之间, 小于零的视作在背面直接看不见      if (L &gt; 0) {        // 检查z级别, z越小ooz越大,离人越近,覆盖优先级更高        if(ooz &gt; zbuffer[xp,yp]) {          zbuffer[xp, yp] = ooz;          int luminance_index = L*8;          // luminance_index 现在范围是 0..11 (8*sqrt(2) = 11.3)          // 因此字符映射如下          output[xp, yp] = &quot;.,-~:;=!*#$@&quot;[luminance_index];        }      }    }  }  // 最后输出output到屏幕即可  // 在终端里 控制光标到终端的起始,可以重用屏幕输出  printf(&quot;\x1b[H&quot;);  for (int j = 0; j &lt; screen_height; j++) {    for (int i = 0; i &lt; screen_width; i++) {      putchar(output[i,j]);    }    putchar(&#39;\n&#39;);  }}</code></pre><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><code>index.html</code></p><pre><code class="html">&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;header&gt;        &lt;title&gt;donut.js&lt;/title&gt;        &lt;script type=&quot;text/javascript&quot; async=&quot;&quot; src=&quot;./index.js&quot;&gt;&lt;/script&gt;    &lt;/header&gt;    &lt;body&gt;        &lt;div&gt;            &lt;button onclick=&quot;anim1();&quot;&gt;toggle animation&lt;/button&gt;            &lt;pre id=&quot;d&quot; style=&quot;background-color:#000; color:#ccc; font-size: 10pt;&quot;&gt;&lt;/pre&gt;            &lt;button onclick=&quot;anim2();&quot;&gt;toggle animation&lt;/button&gt;        &lt;canvas id=&quot;canvasdonut&quot; width=&quot;300&quot; height=&quot;240&quot;&gt;&lt;/canvas&gt;            &lt;button onclick=&quot;anim3();&quot;&gt;toggle animation&lt;/button&gt;        &lt;canvas id=&quot;canvascube&quot; width=&quot;300&quot; height=&quot;240&quot;&gt;&lt;/canvas&gt;        &lt;/div&gt;    &lt;/body&gt;&lt;/html&gt;</code></pre><p><code>index.js</code>:</p><pre><code class="js">(function() {let _onload = () =&gt; {  let pretag = document.getElementById(&#39;d&#39;);  let canvastag = document.getElementById(&#39;canvasdonut&#39;);  let canvascube = document.getElementById(&#39;canvascube&#39;);  let tmr1 = undefined;  let tmr2 = undefined;  // This is copied, pasted, reformatted, and ported directly from my original  // donut.c code  let asciiframe= ((A,B) =&gt; () =&gt; {    let b=[];    let z=[];    A += 0.07;    B += 0.03;    let cA=Math.cos(A), sA=Math.sin(A),        cB=Math.cos(B), sB=Math.sin(B);    for(let k=0;k&lt;1760;k++) {      b[k]= k%80 == 79 ? &quot;\n&quot; : &quot; &quot;;      z[k]= 0;    }    for(let j=0;j&lt;6.28;j+=0.07) { // j &lt;=&gt; theta      let ct=Math.cos(j),st=Math.sin(j);      for(i=0;i&lt;6.28;i+=0.02) {   // i &lt;=&gt; phi        let sp=Math.sin(i),cp=Math.cos(i),            h=ct+2, // R1 + R2*cos(theta)            D=1/(sp*h*sA+st*cA+5), // this is 1/z            t=sp*h*cA-st*sA; // this is a clever factoring of some of the terms in x&#39; and y&#39;        let x=0|(40+30*D*(cp*h*cB-t*sB)),            y=0|(12+15*D*(cp*h*sB+t*cB)),            o=x+80*y,            N=0|(8*((st*sA-sp*ct*cA)*cB-sp*ct*sA-st*cA-cp*ct*sB));        if(y&lt;22 &amp;&amp; y&gt;=0 &amp;&amp; x&gt;=0 &amp;&amp; x&lt;79 &amp;&amp; D&gt;z[o]) {          z[o]=D;          b[o]=&quot;.,-~:;=!*#$@&quot;[N&gt;0?N:0];        }      }    }    pretag.innerHTML = b.join(&quot;&quot;);  })(Math.random()*Math.PI,Math.random()*Math.PI);  window.anim1 = () =&gt; {    if(tmr1 === undefined) {      tmr1 = setInterval(asciiframe, 50);    } else {      clearInterval(tmr1);      tmr1 = undefined;    }  };  // This is a reimplementation according to my math derivation on the page  let canvasframe = ((A,B) =&gt; (R1,R2,K1,K2,rA,rB) =&gt; {    let ctx = canvastag.getContext(&#39;2d&#39;);    ctx.fillStyle=&#39;#000&#39;;    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);    A += rA*(Math.random()+0.5);    B += rB*(Math.random()+0.5);    // precompute cosines and sines of A, B, theta, phi, same as before    let cA=Math.cos(A), sA=Math.sin(A),        cB=Math.cos(B), sB=Math.sin(B);    for(let j=0;j&lt;6.28;j+=0.3) { // j &lt;=&gt; theta      let ct=Math.cos(j),st=Math.sin(j); // cosine theta, sine theta      for(i=0;i&lt;6.28;i+=0.1) {   // i &lt;=&gt; phi        let sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi        let ox = R2 + R1*ct, // object x, y = (R2,0,0) + (R1 cos theta, R1 sin theta, 0)            oy = R1*st;        let x = ox*(cB*cp + sA*sB*sp) - oy*cA*sB; // final 3D x coordinate        let y = ox*(sB*cp - sA*cB*sp) + oy*cA*cB; // final 3D y        let ooz = 1/(K2 + cA*ox*sp + sA*oy); // one over z        let xp=(150+K1*ooz*x); // x&#39; = screen space coordinate, translated and scaled to fit our 320x240 canvas element        let yp=(120-K1*ooz*y); // y&#39; (it&#39;s negative here because in our output, positive y goes down but in our 3D space, positive y goes up)        // luminance, scaled back to 0 to 1        let L=0.7*(cp*ct*sB - cA*ct*sp - sA*st + cB*(cA*st - ct*sA*sp));        if(L &gt; 0) {          ctx.fillStyle = `rgba(255,255,255,${L}`;          ctx.fillRect(xp, yp, 10*L, 10*L);        }      }    }  })(Math.random()*Math.PI,Math.random()*Math.PI);  window.anim2 = () =&gt; {    if(tmr2 === undefined) {      tmr2 = setInterval(() =&gt; canvasframe(1,2,150,5,0.07,0.03), 50);    } else {      clearInterval(tmr2);      tmr2 = undefined;    }  };  // Cube  let canvasframe2 = ((A,B) =&gt; (W,K1,K2,rA,rB,sX,sY) =&gt; {    let ctx = canvascube.getContext(&#39;2d&#39;);    ctx.fillStyle=&#39;#000&#39;;    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);    A += rA*(Math.random()+0.5);    B += rB*(Math.random()+0.5);    // precompute cosines and sines of A, B, theta, phi, same as before    let cA=Math.cos(A), sA=Math.sin(A),        cB=Math.cos(B), sB=Math.sin(B);    for(let j=-W/2;j&lt;W/2;j+=0.2) { // j &lt;=&gt; theta      for(i=-W/2;i&lt;W/2;i+=0.2) {   // i &lt;=&gt; phi        for(z=-W/2;z&lt;W/2;z+=0.2){ // (j,i,z)          let x = j*cB - z*sA*sB - i*cA*sB; // final 3D x coordinate          let y = j*sB + z*cB*sA + i*cA*cB; // final 3D y          let ooz = K1/(K2 - z*cA + i*sA); // one over z          let xp=(sX/2+ooz*x); // x&#39; = screen space coordinate, translated and scaled to fit our 320x240 canvas element          let yp=(sY/2-ooz*y); // y&#39; (it&#39;s negative here because in our output, positive y goes down but in our 3D space, positive y goes up)          // luminance, scaled back to 0 to 1          let L=(y + W/2 + (z*cA - i*sA)+W/2)/(2*W);          if(L &gt; 0) {            ctx.fillStyle = `rgba(255,255,255,${L}`;            ctx.fillRect(xp, yp, 10*L, 10*L);          }        }      }    }  })(Math.random()*Math.PI,Math.random()*Math.PI);  window.anim3 = ((tmr)=&gt; () =&gt; {    if(tmr === undefined) {      tmr = setInterval(() =&gt; canvasframe2(1,300,5,0.07,0.03,300,240), 50);    } else {      clearInterval(tmr);      tmr = undefined;    }  })();  window.anim1();  window.anim2();  window.anim3();}if(document.all)  window.attachEvent(&#39;onload&#39;,_onload);else  window.addEventListener(&quot;load&quot;,_onload,false);})();</code></pre><h2 id="去掉数学库"><a href="#去掉数学库" class="headerlink" title="去掉数学库"></a>去掉数学库</h2><p><a href="https://www.youtube.com/watch?v=DEqXNfs_HhY" target="_blank" rel="noopener">Lex Fridman Youtube</a></p><p><a href="https://www.youtube.com/watch?v=sW9npZVpiMI" target="_blank" rel="noopener">Joma Tech</a></p><p>早知道会受到这么多关注,我就会在它上面花更多时间</p><p>对于程序中来说,<code>sin</code>,<code>cos</code>这两个函数消耗最大,并且需要<code>-lm</code></p><p>既然有旋转公式,那么</p><p>$\begin{bmatrix} c’ \\ s’ \end{bmatrix} = \begin{bmatrix} \cos \theta &amp; -\sin \theta \\ \sin \theta &amp; \cos \theta \end{bmatrix} \begin{bmatrix} c \\ s \end{bmatrix}$</p><p>可以每次旋转一度,来完成转换,而不是计算<code>sin/cos</code>, 我们只需要硬编码<code>sin(2pi/314),cos(2pi/314)</code> 即可</p><pre><code class="c">float c=1, s=0;  // c for cos, s for sinfor (int i = 0; i &lt; 314; i++) {  // 314 * .02 ~= 2π  // (use c, s in code)  float newc = 0.9998*c - 0.019998666*s;  s = 0.019998666*c + 0.9998*s;  c = newc;}</code></pre><p>然而如果如此做下去,会出现误差累积(不论多少精度),最终导致不是个圆形</p><p><img src="https://www.a1k0n.net/img/sincos-mag.png" alt="误差累积后"></p><p>一个思路是每次单位化结果.但如果直接去根号,那还是需要数学库,这一块可以用牛顿切线,不论是直接处理根号,还是根号分之1, 即使没有牛顿切的知识,二分也是类似的思路,就是手动实现开根</p><p>不过这里 作者说只做一步牛顿切,觉得它足够接近1</p><h2 id="CORDIC"><a href="#CORDIC" class="headerlink" title="CORDIC"></a>CORDIC</h2><ol><li>提取cos</li></ol><p>$\begin{bmatrix} c’ \\ s’ \end{bmatrix} = \frac{1}{\cos \theta}\begin{bmatrix} 1 &amp; -\tan \theta \\ \tan \theta &amp; 1 \end{bmatrix} \begin{bmatrix} c \\ s \end{bmatrix}$</p><ol start="2"><li>cos足够接近1, 我们甚至可以省略它,直接只用tan的部分加上牛顿切</li></ol><p>其中t 是 tan, 宏编程</p><pre><code class="c">#define R(t,x,y) \  f = x; \  x -= t*y; \  y += t*f; \  f = (3-x*x-y*y)/2; \  x *= f; \  y *= f;</code></pre><h2 id="去掉float"><a href="#去掉float" class="headerlink" title="去掉float"></a>去掉float</h2><p>We can use exactly the same ideas with integer fixed-point arithmetic, and not use any float math whatsoever. I’ve redone all the math with 10-bit precision and produced the following C code which runs well on embedded devices which can do 32-bit multiplications and have ~4k of available RAM:</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol><li>本身上数学难度算不高,但是涉及了不少现有技术的基础,如3D到2D,光照计算,3D物体旋转,ASCII亮度表现法</li><li>混乱后的代码看上去更”有趣”,不过博主没有介绍混淆,只介绍了实现,实际上混淆方法多,用就是了.</li><li>基于每一步的详细解读,修改内容可以实现正方体,不同光源,的渲染,如上面代码中就有正方体的渲染</li></ol><h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a href="https://www.a1k0n.net/2006/09/15/obfuscated-c-donut.html" target="_blank" rel="noopener">原文0 2006</a></p><p><a href="https://www.a1k0n.net/2006/09/20/obfuscated-c-donut-2.html" target="_blank" rel="noopener">原文1 2006</a></p><p><a href="https://www.a1k0n.net/2011/07/20/donut-math.html" target="_blank" rel="noopener">原文2 2011</a></p><p><a href="https://www.a1k0n.net/2021/01/13/optimizing-donut.html" target="_blank" rel="noopener">原文3 2021</a></p><p><a href="https://en.wikipedia.org/wiki/Z-buffering" target="_blank" rel="noopener">Z-buffering</a></p><p><a href="https://en.wikipedia.org/wiki/Torus" target="_blank" rel="noopener">环面 torus</a></p><p><a href="https://en.wikipedia.org/wiki/Solid_of_revolution" target="_blank" rel="noopener">旋转体 solid of revolution</a></p><p><a href="https://en.wikipedia.org/wiki/Rotation_matrix" target="_blank" rel="noopener">旋转矩阵 rotation matrix</a></p><p><a href="http://en.wikipedia.org/wiki/Surface_normal" target="_blank" rel="noopener">平面法线 surface normal</a></p><p><a href="https://en.wikipedia.org/wiki/CORDIC" target="_blank" rel="noopener">CORDIC</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> math </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> math </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Atcoder agc1560 B, dp,分治,前缀和,数学</title>
       <link href="/Blog/2021-12-06-ac_agc056B/"/>
       <url>/Blog/2021-12-06-ac_agc056B/</url>
@@ -2411,6 +2454,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> AGC </category>
           
       </categories>
       
@@ -2442,6 +2487,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ARC </category>
           
       </categories>
       
@@ -2493,6 +2540,8 @@
           
           <category> Atcoder </category>
           
+          <category> ARC </category>
+          
       </categories>
       
       
@@ -2519,6 +2568,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> ARC </category>
           
       </categories>
       
@@ -2574,7 +2625,7 @@
       
       <categories>
           
-          <category> algorithm </category>
+          <category> Codeforces </category>
           
       </categories>
       
@@ -2583,9 +2634,7 @@
             
             <tag> math </tag>
             
-            <tag> algorithm </tag>
-            
-            <tag> codeforces </tag>
+            <tag> 图，互斥拆分，bitmap枚举子集，概率论 </tag>
             
         </tags>
       
@@ -2603,16 +2652,28 @@
       
       <categories>
           
-          <category> algorithm </category>
+          <category> Codeforces </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> math </tag>
+            <tag> 二分 </tag>
             
-            <tag> algorithm </tag>
+            <tag> bfs </tag>
+            
+            <tag> 数学 </tag>
+            
+            <tag> dp优化 </tag>
+            
+            <tag> 插入排序 </tag>
+            
+            <tag> 组合数 </tag>
+            
+            <tag> 树状数组 </tag>
+            
+            <tag> 图论 </tag>
             
         </tags>
       
@@ -2630,7 +2691,7 @@
       
       <categories>
           
-          <category> algorithm </category>
+          <category> bestcoder </category>
           
       </categories>
       
@@ -2639,7 +2700,9 @@
             
             <tag> math </tag>
             
-            <tag> algorithm </tag>
+            <tag> bestcoder </tag>
+            
+            <tag> 第二类斯特林数 </tag>
             
         </tags>
       
@@ -2825,14 +2888,14 @@
       
       <categories>
           
-          <category> codeforce </category>
+          <category> Codeforces </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> codeforce </tag>
+            <tag> 树 </tag>
             
         </tags>
       
@@ -2912,14 +2975,16 @@
           
           <category> Atcoder </category>
           
+          <category> ARC </category>
+          
       </categories>
       
       
         <tags>
             
-            <tag> math </tag>
+            <tag> 枚举 </tag>
             
-            <tag> enum </tag>
+            <tag> 数学 </tag>
             
         </tags>
       
@@ -3124,39 +3189,16 @@
       
       <categories>
           
-          <category> code </category>
+          <category> NowCoder </category>
           
       </categories>
       
       
         <tags>
+            
+            <tag> 莫比乌斯函数 </tag>
             
             <tag> mu </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>一个积分</title>
-      <link href="/Blog/2020-08-29-a-integral/"/>
-      <url>/Blog/2020-08-29-a-integral/</url>
-      
-        <content type="html"><![CDATA[<h1 id="题目-amp-解答"><a href="#题目-amp-解答" class="headerlink" title="题目 &amp; 解答"></a>题目 &amp; 解答</h1><p>$ \int_0^1 (x-x^2)^n dx$ (换元$t=x-\frac{1}{2}$</p><p>$= \int_{-\frac{1}{2}}^{\frac{1}{2}} (\frac{1}{4} - x^2)^n dx$ (偶函数</p><p>$= 2 \int_{0}^{\frac{1}{2}} (\frac{1}{4} - x^2)^n dx $(换元$t=2x$</p><p>$= \frac{1}{4^n}\int_0^1 (1 - x^2)^n dx$(换元$t=sin(x)$</p><p>$= \frac{1}{4^n} \int_0^{\frac{\pi}{2}} (1 - sin(x)^2)^n d(sin(x))$</p><p>$= \frac{1}{4^n} \int_0^{\frac{\pi}{2}} cos(x)^{2n+1} d x$ (<code>Wallis&#39;_integrals</code></p><p>$= \frac{1}{4^n} \cdot \frac{2n(2n-2)\cdots 2}{(2n+1)(2n-1)3}$</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> math </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> \integral </tag>
             
         </tags>
       
@@ -3174,7 +3216,7 @@
       
       <categories>
           
-          <category> algorithm </category>
+          <category> NowCoder </category>
           
       </categories>
       
@@ -3395,31 +3437,6 @@
     
     
     <entry>
-      <title>tencent 04 26 C 状压dp入门</title>
-      <link href="/Blog/2020-04-29-codejam1BC/"/>
-      <url>/Blog/2020-04-29-codejam1BC/</url>
-      
-        <content type="html"><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1>]]></content>
-      
-      
-      <categories>
-          
-          <category> tencent </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> bitdp </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Codeforces 1340 C, 入门bfs</title>
       <link href="/Blog/2020-04-25-cf1340c/"/>
       <url>/Blog/2020-04-25-cf1340c/</url>
@@ -3472,33 +3489,6 @@
     
     
     <entry>
-      <title>c++ template</title>
-      <link href="/Blog/2020-04-14-cplusplustemplate/"/>
-      <url>/Blog/2020-04-14-cplusplustemplate/</url>
-      
-        <content type="html"><![CDATA[<h1 id="通用函数可变参数模板"><a href="#通用函数可变参数模板" class="headerlink" title="通用函数可变参数模板"></a>通用函数可变参数模板</h1><p>// 迷，不是有处理args的办法吗？)</p><pre><code class="cplusplus">#include&lt;iostream&gt;void showall() { return; }template &lt;typename R1 ,typename...  Args&gt;void showall(R1 var, Args...args) {    std::cout &lt;&lt; var &lt;&lt; std::endl;    showall(args...);}int main(int argc, char * args[]) {    showall(1, 2, 3, 4, 5);    showall(&quot;gxjun&quot;,&quot;dadw&quot;,&quot;dasds&quot;);    showall(1.0,2,&quot;3&quot;);    return 0;}</code></pre><h1 id="仿函数"><a href="#仿函数" class="headerlink" title="仿函数"></a>仿函数</h1><pre><code class="cplusplus">#include&lt;iostream&gt;#include&lt;functional&gt;using namespace std;using namespace std::placeholders;  template &lt;typename R1 , typename R2&gt;struct  Calc{    void add(R1 a) {        cout &lt;&lt; a &lt;&lt; endl;    };    void add_1(R1 a, R1 b) {        cout &lt;&lt; a + b &lt;&lt; endl;    }  };int main(int argc, char * args[]) {    //函数指针    void(Calc&lt;int, double&gt;::*fc)(int  a) = &amp;Calc&lt;int, double &gt;::add;    // fc(25);    //显然上面的式子比较的麻烦    Calc &lt; int, int&gt; calc;    auto  fun = bind(&amp;Calc&lt;int, int &gt;::add, &amp;calc, _1);    auto  fun_2 = bind(&amp;Calc&lt;int, int &gt;::add_1, &amp;calc, _1,_2);    fun(123);    fun_2(12,24);   cin.get(); return 0;}</code></pre>]]></content>
-      
-      
-      <categories>
-          
-          <category> c++ </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> c++ </tag>
-            
-            <tag> template </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>字符串hash Eowcoder 5026 E</title>
       <link href="/Blog/2020-04-11-nowcoder5026E/"/>
       <url>/Blog/2020-04-11-nowcoder5026E/</url>
@@ -3510,14 +3500,14 @@
           
           <category> NowCoder </category>
           
-          <category> LCA </category>
-          
       </categories>
       
       
         <tags>
             
-            <tag> LCA </tag>
+            <tag> 字符串 </tag>
+            
+            <tag> hash </tag>
             
         </tags>
       
@@ -3540,6 +3530,12 @@
       </categories>
       
       
+        <tags>
+            
+            <tag> 数组 </tag>
+            
+        </tags>
+      
     </entry>
     
     
@@ -3555,8 +3551,6 @@
       <categories>
           
           <category> NowCoder </category>
-          
-          <category> LCA </category>
           
       </categories>
       
@@ -3585,6 +3579,12 @@
           
       </categories>
       
+      
+        <tags>
+            
+            <tag> 贪心 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -3668,6 +3668,8 @@
             <tag> nim的游戏 </tag>
             
             <tag> 博弈论 </tag>
+            
+            <tag> sg </tag>
             
         </tags>
       
@@ -3830,6 +3832,8 @@
           
           <category> Atcoder </category>
           
+          <category> AGC </category>
+          
       </categories>
       
       
@@ -3883,6 +3887,8 @@
       <categories>
           
           <category> Atcoder </category>
+          
+          <category> AGC </category>
           
       </categories>
       
@@ -4469,16 +4475,26 @@
       </categories>
       
       
+        <tags>
+            
+            <tag> 莫比乌斯反演 </tag>
+            
+            <tag> 莫比乌斯 </tag>
+            
+            <tag> 莫比乌斯函数 </tag>
+            
+        </tags>
+      
     </entry>
     
     
     
     <entry>
-      <title>CF EDU 61 E</title>
-      <link href="/Blog/2019-03-11-CFP1137C/"/>
-      <url>/Blog/2019-03-11-CFP1137C/</url>
+      <title>CF EDU 61 E 数学题未知数表示法</title>
+      <link href="/Blog/2019-03-09-cfEDU61E/"/>
+      <url>/Blog/2019-03-09-cfEDU61E/</url>
       
-        <content type="html"><![CDATA[<h1 id="题目HERE"><a href="#题目HERE" class="headerlink" title="题目HERE"></a><a href="https://codeforces.com/contest/1137/problem/C" target="_blank" rel="noopener">题目HERE</a></h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>n 个点 (<code>1&lt;=n&lt;=100000</code>)</p><p>m 条边 (<code>1&lt;=m&lt;=100000</code>)</p><p>有向图</p><p>从端点1出发，总共走d (<code>1&lt;=d&lt;=50</code>)天，每天能走一条边，能访问多少个不同的开放的点</p><p>开放时间表 <code>n*d</code>,0表示N号点 在D天关闭，1表示开放</p><h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>翻译自<a href="https://codeforces.com/blog/entry/65825" target="_blank" rel="noopener">官方题解</a></p><p>新建一个图</p><p>图上的点为 <code>([1-&gt;n],[0-&gt;d-1])</code> O(nd)</p><p>如果原来题目图上有(u,v)</p><p>建立边 <code>(u,t) -&gt; (v,(t+1)%d)</code> , O(m d d)</p><p>然后算 新图 的强连通分量，对每一个强连通分量缩点，计算 不同的开放的点的个数 = cost</p><p>在新的DAG上求最长路</p><p>假设一个点u 在新图中拆成 (u,j1)和(u,j2),也就是u 能通过某些边走到j1，注意到，新图里的边只和原图是否连通有关，所以 (u,j2) 能走到(u,(j2+(j2-j1))%d) 沿着<code>j1-&gt;j2</code>的路径，沿着这条路径走d-1次，那么走到<code>(u,(j2+(d-1)(j2-j1))%d) = (u,j1+d*(j2-j1)%d) = (u,j1)</code> 所以如果(u,j1)和(u,j2)弱连通，则它们强连通</p><p>在新的DAG(缩点后的)上 不会存在2个 u</p><p>在DAG有向无环图上 做dp</p><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>待补</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="题目HERE"><a href="#题目HERE" class="headerlink" title="题目HERE"></a><a href="https://codeforces.com/contest/1132/problem/E" target="_blank" rel="noopener">题目HERE</a></h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>给你</p><p>a1 个1</p><p>a2 个2</p><p>…</p><p>a8 个8</p><p>求用这些数中的一部分相加，得到的 最大的 不大于W的 数为多少</p><p>其中</p><p><code>1&lt;=ai&lt;=10^16</code></p><p><code>0&lt;=W&lt;=10^18</code></p><h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>翻译自<a href="https://codeforces.com/blog/entry/65752" target="_blank" rel="noopener">官方题解</a></p><p>假设在未知的最优解中 i 取<code>c_i</code>个</p><p>L = lcm(1,,,,8) = 840</p><p>那么<code>c_i</code>可以表示为</p><p><code>c_i= (L/i)*P_i+q_i</code> 根据除法余数性质可以让q满足 <code>0&lt;=q&lt;L/i</code></p><p><code>(L/i)*P_i</code>个i是L的倍数(且是1,2,3,4…倍 占满)（小学未知数乘法?）</p><p>所以只用枚举<code>q_i</code>的部分</p><p>然而这样 所有方案<code>840**8/8/7/6/5/4/3/2/1=6147715553280000000</code>时间内肯定过不了</p><p><code>dp[1-&gt;x types of items][weight] =  把构成weight的部分去除后 还能最多有多少个L</code> 这里的构成</p><p>空间<code>O(8*8L)</code></p><p>时间<code>O(8L*sum(L/1+L/2+...+L/8))</code></p><p><code>ans = max{ weight + L * min(dp[0][weight],(W-j)/L) (0&lt;=weight&lt;=8L)</code></p><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="c++">#include &lt;bits/stdc++.h&gt;using namespace std;const int N = 9;const int L = 840;typedef long long li;li dp[N][L * N];li W;li cnt[N];int main(){  cin &gt;&gt; W;  for(int i = 0; i &lt; 8; i++)    cin &gt;&gt; cnt[i];  for(int i = 0; i &lt; N; i++) for(int j = 0; j &lt; L * N; j++) dp[i][j] = -1;  dp[0][0] = 0;  for(int i = 0; i &lt; 8; i++)  {    for(int j = 0; j &lt; L * N; j++)    {      if(dp[i][j] == -1) continue;      int b = L / (i + 1);      if(cnt[i] &lt; b)        b = cnt[i];      for(int k = 0; k &lt;= b; k++)      {        li&amp; d = dp[i + 1][j + k * (i + 1)];        d = max(d, dp[i][j] + (cnt[i] - k) / (L / (i + 1)));      }    }  }  li ans = 0;  for(int j = 0; j &lt; L * N; j++)  {    if(j &gt; W || dp[8][j] == -1)      continue;    ans = max(ans, j + L * (min(dp[8][j], (W - j) / L)));  }  cout &lt;&lt; ans &lt;&lt; endl;}</code></pre>]]></content>
       
       
       <categories>
@@ -4493,11 +4509,11 @@
     
     
     <entry>
-      <title>CF EDU 61 E 数学题未知数表示法</title>
-      <link href="/Blog/2019-03-09-cfEDU61E/"/>
-      <url>/Blog/2019-03-09-cfEDU61E/</url>
+      <title>CF EDU 61 E</title>
+      <link href="/Blog/2019-03-11-CFP1137C/"/>
+      <url>/Blog/2019-03-11-CFP1137C/</url>
       
-        <content type="html"><![CDATA[<h1 id="题目HERE"><a href="#题目HERE" class="headerlink" title="题目HERE"></a><a href="https://codeforces.com/contest/1132/problem/E" target="_blank" rel="noopener">题目HERE</a></h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>给你</p><p>a1 个1</p><p>a2 个2</p><p>…</p><p>a8 个8</p><p>求用这些数中的一部分相加，得到的 最大的 不大于W的 数为多少</p><p>其中</p><p><code>1&lt;=ai&lt;=10^16</code></p><p><code>0&lt;=W&lt;=10^18</code></p><h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>翻译自<a href="https://codeforces.com/blog/entry/65752" target="_blank" rel="noopener">官方题解</a></p><p>假设在未知的最优解中 i 取<code>c_i</code>个</p><p>L = lcm(1,,,,8) = 840</p><p>那么<code>c_i</code>可以表示为</p><p><code>c_i= (L/i)*P_i+q_i</code> 根据除法余数性质可以让q满足 <code>0&lt;=q&lt;L/i</code></p><p><code>(L/i)*P_i</code>个i是L的倍数(且是1,2,3,4…倍 占满)（小学未知数乘法?）</p><p>所以只用枚举<code>q_i</code>的部分</p><p>然而这样 所有方案<code>840**8/8/7/6/5/4/3/2/1=6147715553280000000</code>时间内肯定过不了</p><p><code>dp[1-&gt;x types of items][weight] =  把构成weight的部分去除后 还能最多有多少个L</code> 这里的构成</p><p>空间<code>O(8*8L)</code></p><p>时间<code>O(8L*sum(L/1+L/2+...+L/8))</code></p><p><code>ans = max{ weight + L * min(dp[0][weight],(W-j)/L) (0&lt;=weight&lt;=8L)</code></p><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="c++">#include &lt;bits/stdc++.h&gt;using namespace std;const int N = 9;const int L = 840;typedef long long li;li dp[N][L * N];li W;li cnt[N];int main(){  cin &gt;&gt; W;  for(int i = 0; i &lt; 8; i++)    cin &gt;&gt; cnt[i];  for(int i = 0; i &lt; N; i++) for(int j = 0; j &lt; L * N; j++) dp[i][j] = -1;  dp[0][0] = 0;  for(int i = 0; i &lt; 8; i++)  {    for(int j = 0; j &lt; L * N; j++)    {      if(dp[i][j] == -1) continue;      int b = L / (i + 1);      if(cnt[i] &lt; b)        b = cnt[i];      for(int k = 0; k &lt;= b; k++)      {        li&amp; d = dp[i + 1][j + k * (i + 1)];        d = max(d, dp[i][j] + (cnt[i] - k) / (L / (i + 1)));      }    }  }  li ans = 0;  for(int j = 0; j &lt; L * N; j++)  {    if(j &gt; W || dp[8][j] == -1)      continue;    ans = max(ans, j + L * (min(dp[8][j], (W - j) / L)));  }  cout &lt;&lt; ans &lt;&lt; endl;}</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="题目HERE"><a href="#题目HERE" class="headerlink" title="题目HERE"></a><a href="https://codeforces.com/contest/1137/problem/C" target="_blank" rel="noopener">题目HERE</a></h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>n 个点 (<code>1&lt;=n&lt;=100000</code>)</p><p>m 条边 (<code>1&lt;=m&lt;=100000</code>)</p><p>有向图</p><p>从端点1出发，总共走d (<code>1&lt;=d&lt;=50</code>)天，每天能走一条边，能访问多少个不同的开放的点</p><p>开放时间表 <code>n*d</code>,0表示N号点 在D天关闭，1表示开放</p><h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>翻译自<a href="https://codeforces.com/blog/entry/65825" target="_blank" rel="noopener">官方题解</a></p><p>新建一个图</p><p>图上的点为 <code>([1-&gt;n],[0-&gt;d-1])</code> O(nd)</p><p>如果原来题目图上有(u,v)</p><p>建立边 <code>(u,t) -&gt; (v,(t+1)%d)</code> , O(m d d)</p><p>然后算 新图 的强连通分量，对每一个强连通分量缩点，计算 不同的开放的点的个数 = cost</p><p>在新的DAG上求最长路</p><p>假设一个点u 在新图中拆成 (u,j1)和(u,j2),也就是u 能通过某些边走到j1，注意到，新图里的边只和原图是否连通有关，所以 (u,j2) 能走到(u,(j2+(j2-j1))%d) 沿着<code>j1-&gt;j2</code>的路径，沿着这条路径走d-1次，那么走到<code>(u,(j2+(d-1)(j2-j1))%d) = (u,j1+d*(j2-j1)%d) = (u,j1)</code> 所以如果(u,j1)和(u,j2)弱连通，则它们强连通</p><p>在新的DAG(缩点后的)上 不会存在2个 u</p><p>在DAG有向无环图上 做dp</p><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>待补</p>]]></content>
       
       
       <categories>
@@ -4606,6 +4622,8 @@
             
             <tag> Möbius function </tag>
             
+            <tag> 莫比乌斯反演 </tag>
+            
         </tags>
       
     </entry>
@@ -4653,7 +4671,7 @@
       
       <categories>
           
-          <category> Codeforces </category>
+          <category> algorithm </category>
           
       </categories>
       
@@ -4988,19 +5006,6 @@
             <tag> segment tree </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>linux Distribution Timeline</title>
-      <link href="/Blog/2017-10-14-linuxDistributionTimeline/"/>
-      <url>/Blog/2017-10-14-linuxDistributionTimeline/</url>
-      
-        <content type="html"><![CDATA[<iframe height="1000px" src="/Blog/img/Linux_Distribution_Timeline.svg" type="image/svg+xml"></iframe>]]></content>
-      
-      
       
     </entry>
     
