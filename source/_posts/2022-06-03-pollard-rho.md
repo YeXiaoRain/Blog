@@ -2,7 +2,7 @@
 title: Pollard-Rho 质数拆分,分解
 date: 2022-06-03 10:37:14
 tags: [math,prime]
-category: [Math]
+category: [algorithm]
 mathjax: true
 ---
 

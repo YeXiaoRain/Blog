@@ -1,7 +1,7 @@
 ---
 title: Möbius inversion formula
 date: 2019-01-06 11:20:14
-tags: [Möbius function]
+tags: [Möbius function,莫比乌斯反演]
 category: [algorithm]
 mathjax: true
 ---
