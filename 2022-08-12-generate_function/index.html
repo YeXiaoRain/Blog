@@ -1,506 +1,324 @@
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.0 -->
-    <script>
-        window.materialVersion = "1.5.0"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1'
-        ]
-    </script>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="生成方程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="maspy 生成方程与问题解决">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/2022-08-12-generate_function/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="生成方程">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-08-12T14:24:00.000Z">
+<meta property="article:modified_time" content="2022-09-02T03:53:44.464Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="生成方程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/2022-08-12-generate_function/">
 
 
 
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/2022-08-12-generate_function/","path":"2022-08-12-generate_function/","title":"maspy 生成方程与问题解决"}</script>
 
-
-
-
-
-
-
-
-    <!-- Title -->
-    
-    <title>
-        
-            maspy 生成方程与问题解决 | 
-        
-        YeXiaoRain Blog
-    </title>
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Xiao Ye">
-    <meta name="description" itemprop="description" content>
-    <meta name="keywords" content=",生成方程">
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/Blog/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/Blog/img/favicon.png">
-    <link rel="apple-touch-icon" href="/Blog/img/favicon.png">
-
-    <!--iOS -->
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="YeXiaoRain Blog">
-
-    <!-- Site Verification -->
-    
-    
-
-    <!-- RSS -->
-    
-        
-            <link rel="alternate" type="application/atom+xml" href="atom.xml">
-        
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.en.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/Blog/css/material.min.css?rdUU9RcgLCpXgn+BEpYF7Q==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/Blog/css/style.min.css?4ixU3PVzPicZm76KlybVwQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/Blog/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/Blog/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-    overflow-x: hidden !important;
-  }
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>maspy 生成方程与问题解决 | YeXiaoRain Blog</title>
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-image: url(/Blog/img/ns.jpg);
-      }
-    </style>
 
 
 
 
-<!-- Fade Effect -->
 
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-
-
-<!-- Import Material Icon -->
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/Blog/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://yexiaorain.github.io/Blog">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="maspy 生成方程与问题解决 | YeXiaoRain Blog">
-    <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
-    <meta property="og:description" content>
-    <meta property="og:article:tag" content="生成方程"> 
-
-    
-        <meta property="article:published_time" content="Fri Aug 12 2022 22:24:00 GMT+0800">
-        <meta property="article:modified_time" content="Thu Sep 01 2022 22:54:57 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="maspy 生成方程与问题解决 | YeXiaoRain Blog">
-    <meta name="twitter:description" content>
-    <meta name="twitter:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="http://yexiaorain.github.io/Blog">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="http://yexiaorain.github.io/Blog/Blog/2022-08-12-generate_function/index.html">
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2022-08-12-generate_function/index.html",
-    "headline": "maspy 生成方程与问题解决",
-    "datePublished": "Fri Aug 12 2022 22:24:00 GMT+0800",
-    "dateModified": "Thu Sep 01 2022 22:54:57 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Xiao Ye",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/satan.jpg"
-        },
-        "description": "阳光只洒在金碧辉煌的高楼上"
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "YeXiaoRain Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/favicon.png"
-        }
-    },
-    "keywords": ",生成方程",
-    "description": "",
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
-    
-    
-    
-
-    <!-- Custom Head -->
-    
-
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-    -->
+  </div>
 
+  <div class="site-meta">
 
-    <!-- Left aligned menu below button -->
-    
-    
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
 
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#生成方程"><span class="post-toc-number">1.</span> <span class="post-toc-text">生成方程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#maspy-1-如何把问题转化"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">maspy 1 如何把问题转化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#高维"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">高维</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#maspy-2-如何计算"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">maspy 2 如何计算</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二项式定理"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">二项式定理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#等比数列求和"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">等比数列求和</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#形式幂级数-运算法则"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">形式幂级数 运算法则</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#形式的べき級数環の位相"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">形式的べき級数環の位相</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#形式幂级数的倒数"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">形式幂级数的倒数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#幂级数-示例"><span class="post-toc-number">1.2.6.</span> <span class="post-toc-text">幂级数 示例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#因式分解-示例"><span class="post-toc-number">1.2.7.</span> <span class="post-toc-text">因式分解 示例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#积累和-推到-dp转换"><span class="post-toc-number">1.2.8.</span> <span class="post-toc-text">积累和 推到 dp转换</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DP的推导返回"><span class="post-toc-number">1.2.9.</span> <span class="post-toc-text">DP的推导返回</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#交换律-和-迭代平方法"><span class="post-toc-number">1.2.10.</span> <span class="post-toc-text">交换律 和 迭代平方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#负二项式定理"><span class="post-toc-number">1.2.11.</span> <span class="post-toc-text">负二项式定理</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Ref"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Ref</span></a></li></ol></li></ol>
-    </ul>
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 4 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/Blog/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                maspy 生成方程与问题解决
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/Blog/img/satan.jpg" width="44px" height="44px" alt="Author Avatar"/>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Xiao Ye</strong>
-        <span>8月 12, 2022</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/Blog/tags/生成方程/">生成方程</a>
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=maspy 生成方程与问题解决&url=http://yexiaorain.github.io/Blog/Blog/2022-08-12-generate_function/index.html&pic=http://yexiaorain.github.io/Blog/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=maspy 生成方程与问题解决&url=http://yexiaorain.github.io/Blog/Blog/2022-08-12-generate_function/index.html&via=Xiao Ye" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yexiaorain.github.io/Blog/Blog/2022-08-12-generate_function/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=YeXiaoRain Blog&title=maspy 生成方程与问题解决&summary=&pics=http://yexiaorain.github.io/Blog/img/favicon.png&url=http://yexiaorain.github.io/Blog/Blog/2022-08-12-generate_function/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 QQ
-            </li>
-        </a>
-    
-
-    <!-- Share Telegram -->
-    
-        <a class="post_share-link" href="https://telegram.me/share/url?url=http://yexiaorain.github.io/Blog/Blog/2022-08-12-generate_function/index.html&text=maspy 生成方程与问题解决" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Telegram
-            </li>
-        </a>
-    
-</ul>
-
+  </div>
 </div>
 
-                
 
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">171</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">166</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%96%B9%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">生成方程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#maspy-1-%E5%A6%82%E4%BD%95%E6%8A%8A%E9%97%AE%E9%A2%98%E8%BD%AC%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">maspy 1 如何把问题转化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E7%BB%B4"><span class="nav-number">1.1.1.</span> <span class="nav-text">高维</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maspy-2-%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97"><span class="nav-number">1.2.</span> <span class="nav-text">maspy 2 如何计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%AE%9A%E7%90%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">二项式定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%89%E6%AF%94%E6%95%B0%E5%88%97%E6%B1%82%E5%92%8C"><span class="nav-number">1.2.2.</span> <span class="nav-text">等比数列求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%A2%E5%BC%8F%E5%B9%82%E7%BA%A7%E6%95%B0-%E8%BF%90%E7%AE%97%E6%B3%95%E5%88%99"><span class="nav-number">1.2.3.</span> <span class="nav-text">形式幂级数 运算法则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%A2%E5%BC%8F%E7%9A%84%E3%81%B9%E3%81%8D%E7%B4%9A%E6%95%B0%E7%92%B0%E3%81%AE%E4%BD%8D%E7%9B%B8"><span class="nav-number">1.2.4.</span> <span class="nav-text">形式的べき級数環の位相</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%A2%E5%BC%8F%E5%B9%82%E7%BA%A7%E6%95%B0%E7%9A%84%E5%80%92%E6%95%B0"><span class="nav-number">1.2.5.</span> <span class="nav-text">形式幂级数的倒数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%82%E7%BA%A7%E6%95%B0-%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.6.</span> <span class="nav-text">幂级数 示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%A0%E5%BC%8F%E5%88%86%E8%A7%A3-%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.7.</span> <span class="nav-text">因式分解 示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%AF%E7%B4%AF%E5%92%8C-%E6%8E%A8%E5%88%B0-dp%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.2.8.</span> <span class="nav-text">积累和 推到 dp转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DP%E7%9A%84%E6%8E%A8%E5%AF%BC%E8%BF%94%E5%9B%9E"><span class="nav-number">1.2.9.</span> <span class="nav-text">DP的推导返回</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E5%BE%8B-%E5%92%8C-%E8%BF%AD%E4%BB%A3%E5%B9%B3%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.10.</span> <span class="nav-text">交换律 和 迭代平方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9F%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%AE%9A%E7%90%86"><span class="nav-number">1.2.11.</span> <span class="nav-text">负二项式定理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref"><span class="nav-number">1.3.</span> <span class="nav-text">Ref</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">166</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-08-12-generate_function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="maspy 生成方程与问题解决 | YeXiaoRain Blog">
+      <meta itemprop="description" content="生成方程">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          maspy 生成方程与问题解决
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-08-12 22:24:00" itemprop="dateCreated datePublished" datetime="2022-08-12T22:24:00+08:00">2022-08-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2022-08-12-generate_function/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-08-12-generate_function/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>6.7k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>6 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">生成方程</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
         <h1 id="生成方程"><a href="#生成方程" class="headerlink" title="生成方程"></a>生成方程</h1><p>感谢google翻译和maspy大佬的几篇博客, 见下方链接</p>
 <p>用很多例子来实例如何使用 多项式乘积</p>
 <p>状態ごとに何らかの値が計算されているときに、その計算結果を多項式の形で持ちます。この際、 「多項式の次数」が「考えている状態」、「係数」が状態ごとの「計算した値」（多くの場合、数え上げ）を表すように多項式を持つのが原則です。</p>
@@ -509,20 +327,20 @@
 <p>以下未强调的都是非负整数</p>
 <p>注意的是有不少都可以写成无限次方的上限,因为超过n不会影响n,看具体情况哪个更好用用哪个</p>
 <h2 id="maspy-1-如何把问题转化"><a href="#maspy-1-如何把问题转化" class="headerlink" title="maspy 1 如何把问题转化"></a>maspy 1 如何把问题转化</h2><blockquote>
-<p>问题1, $A=\{2,3\},B=\{2,4\},C=\{3,5,7\} , a+b+c=n$ 有多少种方法可以</p>
+<p>问题1, $A&#x3D;\{2,3\},B&#x3D;\{2,4\},C&#x3D;\{3,5,7\} , a+b+c&#x3D;n$ 有多少种方法可以</p>
 </blockquote>
 <p>$\lbrack x^n \rbrack (x^2+x^3)(x^2+x^4)(x^3+x^5+x^7)$, 就是乘开后$n$次项的系数</p>
 <blockquote>
-<p>问题2. $a \le 2,b\le 3,c\le 4, a+b+c = n$ 有多少种</p>
+<p>问题2. $a \le 2,b\le 3,c\le 4, a+b+c &#x3D; n$ 有多少种</p>
 </blockquote>
 <p>$\lbrack x^n \rbrack (1+x+x^2)(1+x+x^2+x^3)(1+x+x^2+x^3+x^4)$</p>
 <blockquote>
-<p>问题3. 无限制的$a,b,c \ge 0, a+b+c=n$ 有多少种</p>
+<p>问题3. 无限制的$a,b,c \ge 0, a+b+c&#x3D;n$ 有多少种</p>
 </blockquote>
 <p>$\lbrack x^n \rbrack (1+x+x^2+\cdots)^3$</p>
 <p>$\lbrack x^n \rbrack (1+x+x^2+\cdots+x^n)^3$, (因为高次不影响n</p>
 <blockquote>
-<p>问题4(ABC149E), $A=\{a_1,a_2,\cdots,a_k\}, n = a_i + a_j$ 有多少种</p>
+<p>问题4(ABC149E), $A&#x3D;\{a_1,a_2,\cdots,a_k\}, n &#x3D; a_i + a_j$ 有多少种</p>
 </blockquote>
 <p>$\lbrack x^n \rbrack (x^{a_1}+x^{a_2}+\cdots+x^{a_k})^2$</p>
 <blockquote>
@@ -533,8 +351,8 @@
 <blockquote>
 <p>问题6, 从1开始,每次+2或+3, 移动到N的方案数</p>
 </blockquote>
-<p>$\lbrack x^{N-1} \rbrack \sum_{n=0}^{\infty}(x^2+x^3)^n$</p>
-<p>$\lbrack x^{N-1} \rbrack \sum_{n=0}^{\frac{N}{2}}(x^2+x^3)^n$</p>
+<p>$\lbrack x^{N-1} \rbrack \sum_{n&#x3D;0}^{\infty}(x^2+x^3)^n$</p>
+<p>$\lbrack x^{N-1} \rbrack \sum_{n&#x3D;0}^{\frac{N}{2}}(x^2+x^3)^n$</p>
 <blockquote>
 <p>问题7, 1元,5元,10元有无限多, 组合成n元方案数</p>
 </blockquote>
@@ -542,55 +360,55 @@
 <blockquote>
 <p>问题8, 重量分别$w_i$, 总重量不超过$W$ 有多少方案</p>
 </blockquote>
-<p>$\sum_{n=0}^W \lbrack x^n \rbrack (1+x^{w_1})(1+x^{w_2})\cdots (1+x^{w_k})$</p>
-<p>$\sum_{n=0}^{W}[x^n]\prod_{i=1}^k$</p>
+<p>$\sum_{n&#x3D;0}^W \lbrack x^n \rbrack (1+x^{w_1})(1+x^{w_2})\cdots (1+x^{w_k})$</p>
+<p>$\sum_{n&#x3D;0}^{W}[x^n]\prod_{i&#x3D;1}^k$</p>
 <blockquote>
-<p>问题9, $0\le a_i \le N$, $a_1+\cdots+a_8=6N$ $a_i$的方案数</p>
+<p>问题9, $0\le a_i \le N$, $a_1+\cdots+a_8&#x3D;6N$ $a_i$的方案数</p>
 </blockquote>
 <p>$\lbrack x^{6N} \rbrack (1+x^1+x^2+\cdots+x^N)^8$</p>
 <blockquote>
 <p>问题10, $0\le a,b,c \le N$且为素数,$a+b+c$ 也是素数方案数</p>
 </blockquote>
-<p>$\sum_{p=2}^{3N} \lbrack x^{p} \rbrack (x^2+x^3+x^5+x^7+\cdots+x^{prime,\le N})^3$, 且$p$为素数</p>
+<p>$\sum_{p&#x3D;2}^{3N} \lbrack x^{p} \rbrack (x^2+x^3+x^5+x^7+\cdots+x^{prime,\le N})^3$, 且$p$为素数</p>
 <blockquote>
 <p>问题11, $N$ 拆成正整数求和表达式(关心顺序)</p>
 </blockquote>
-<p>$\sum_{n=1}^{\infty} \lbrack x^{N} \rbrack (x^1+x^2+x^3+\cdots+x^N)^n$</p>
-<p>$\sum_{n=1}^{N} \lbrack x^{N} \rbrack (x^1+x^2+x^3+\cdots+x^N)^n$</p>
-<p>$\lbrack x^{N} \rbrack \sum_{n=1}^{N} (x^1+x^2+x^3+\cdots+x^N)^n$</p>
+<p>$\sum_{n&#x3D;1}^{\infty} \lbrack x^{N} \rbrack (x^1+x^2+x^3+\cdots+x^N)^n$</p>
+<p>$\sum_{n&#x3D;1}^{N} \lbrack x^{N} \rbrack (x^1+x^2+x^3+\cdots+x^N)^n$</p>
+<p>$\lbrack x^{N} \rbrack \sum_{n&#x3D;1}^{N} (x^1+x^2+x^3+\cdots+x^N)^n$</p>
 <blockquote>
 <p>问题12, $N$ 拆成正整数求和表达式, 但是数字从小到大(不关心顺序)</p>
 </blockquote>
-<p>$\lbrack x^{N} \rbrack \prod_{k=1}^{\infty} (\sum_{i=0}^{\infty} x^{ki})$, 相当于数字相同的视作一致,只有每个的数字的个数</p>
-<p>$\lbrack x^{N} \rbrack \prod_{k=1}^{n} (\sum_{i=0}^{n} x^{ki})$</p>
+<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{\infty} (\sum_{i&#x3D;0}^{\infty} x^{ki})$, 相当于数字相同的视作一致,只有每个的数字的个数</p>
+<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{n} (\sum_{i&#x3D;0}^{n} x^{ki})$</p>
 <blockquote>
 <p>问题13, $N$ 拆成多个不同整数的和, 但是数字从小到大(不关心顺序)</p>
 </blockquote>
-<p>$\lbrack x^{N} \rbrack \prod_{k=1}^{\infty} (1+x^k)$, 选或不选</p>
-<p>$\lbrack x^{N} \rbrack \prod_{k=1}^{N} (1+x^k)$</p>
+<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{\infty} (1+x^k)$, 选或不选</p>
+<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{N} (1+x^k)$</p>
 <blockquote>
-<p>问题14, $N,M &gt; 0, 0 &lt; A_1 \le A_2 \le \cdots \le A_N = M$, 相邻$A_i$的差在$[3,5]$, 求方案数</p>
+<p>问题14, $N,M &gt; 0, 0 &lt; A_1 \le A_2 \le \cdots \le A_N &#x3D; M$, 相邻$A_i$的差在$[3,5]$, 求方案数</p>
 </blockquote>
 <p>$\lbrack x^M \rbrack (x^1+x^2+\cdots+x^M)(x^3+x^4+x^5)^{N-1}$, 相当于一个是$A_1$ 的选择,后面是增加到$A_N$的选择</p>
 <blockquote>
 <p>问题15, $N,M &gt; 0, 0 &lt; A_1 \le A_2 \le \cdots \le A_N &lt; M$, 相邻$A_i$的差在$[3,5]$, 求方案数, 和上面不同的是最后</p>
 </blockquote>
-<p>$\sum_{m=0}^{M-1} \lbrack x^m \rbrack (x^1+x^2+\cdots+x^m)(x^3+x^4+x^5)^{N-1}$, 相当于枚举$A_N$的值</p>
-<p>$\lbrack x^M \rbrack (x^1+x^2+\cdots+x^M)(x^3+x^4+x^5)^{N-1}(x^1+x^2+\cdots+x^M)$, 相当于想象多一个$A_{N+1} = M$</p>
+<p>$\sum_{m&#x3D;0}^{M-1} \lbrack x^m \rbrack (x^1+x^2+\cdots+x^m)(x^3+x^4+x^5)^{N-1}$, 相当于枚举$A_N$的值</p>
+<p>$\lbrack x^M \rbrack (x^1+x^2+\cdots+x^M)(x^3+x^4+x^5)^{N-1}(x^1+x^2+\cdots+x^M)$, 相当于想象多一个$A_{N+1} &#x3D; M$</p>
 <blockquote>
 <p>问题16, $[1,6]$的骰子,扔100次, 总和为$n$的概率</p>
 </blockquote>
 <p>$\lbrack x^{n} \rbrack (\frac{x^1+x^2+x^3+x^4+x^5+x^6}{6})^{100}$ 这里系数终于不是1了,而是概率倍数的贡献</p>
 <blockquote>
-<p>问题17, $p+q = 1,p,q\ge 0$是 实数概率, $p$概率$+1$,$q$概率$-1$, 总和$=100$的概率</p>
+<p>问题17, $p+q &#x3D; 1,p,q\ge 0$是 实数概率, $p$概率$+1$,$q$概率$-1$, 总和$&#x3D;100$的概率</p>
 </blockquote>
 <p>$\lbrack x^{n} \rbrack (px+qx^{-1})^{100}$ , 这里一个是再次展示了系数,一个是出现了负数幂次, 称作 Laurent polynomial, 几乎没有区别 </p>
 <p>$\lbrack x^{n+100} \rbrack x^{100}(px+qx^{-1})^{100}$</p>
 <p>$\lbrack x^{n+100} \rbrack (px^2+q)^{100}$</p>
 <blockquote>
-<p>问题18(AGC013E), 对N划分成有序的正整数的和, 划分后 获得价值 = 所有正整数的平方的乘积, 求所有方案的 价值和</p>
+<p>问题18(AGC013E), 对N划分成有序的正整数的和, 划分后 获得价值 &#x3D; 所有正整数的平方的乘积, 求所有方案的 价值和</p>
 </blockquote>
-<p>$\lbrack x^N \rbrack \sum_{n=0}^{N} (x+4x^2+9x^3+16x^4+\cdots+N^2x^N)^n$, 代价拆散到每个选择上</p>
+<p>$\lbrack x^N \rbrack \sum_{n&#x3D;0}^{N} (x+4x^2+9x^3+16x^4+\cdots+N^2x^N)^n$, 代价拆散到每个选择上</p>
 <h3 id="高维"><a href="#高维" class="headerlink" title="高维"></a>高维</h3><blockquote>
 <p>问题19, A:3元,4克; B:5元,6克, 每个最多选2个, 构成n元,m克的方案数</p>
 </blockquote>
@@ -607,72 +425,72 @@
 <p>问题22, $x,y,z$ 每次随机一个$\pm 1$或 全部一起$\pm 1$, 问$(0,0,0)$在恰好$T$次走到$(a,b,c)$的方案数</p>
 </blockquote>
 <p>$\lbrack x^ay^bz^c \rbrack (x+x^{-1}+y+y^{-1}+z+z^{-1}+xyz+(xyz)^{-1})^T$, 很能表达或关系</p>
-<p><a href="https://maspypy.com/atcoder-k-one-or-all%ef%bc%88kupc-2019%ef%bc%89" target="_blank" rel="noopener">21,22, maspy 具体计算方案</a></p>
+<p><a target="_blank" rel="noopener" href="https://maspypy.com/atcoder-k-one-or-all%ef%bc%88kupc-2019%ef%bc%89">21,22, maspy 具体计算方案</a></p>
 <blockquote>
 <p>问题23, $(x,y,z)$ 每次任意非0正增量,任意维度变化$\ge 0$, 至少一个维度变化$ &gt; 0$, 求原点到$(a,b,c)$的方案数</p>
 </blockquote>
-<p>$\lbrack x^ay^bz^c \rbrack \sum_{n=0}^{\infty} ((1+x+x^2+x^3+\cdots)(1+y+y^2+y^3+\cdots)(1+z+z^2+z^3+\cdots) - 1)^n$</p>
+<p>$\lbrack x^ay^bz^c \rbrack \sum_{n&#x3D;0}^{\infty} ((1+x+x^2+x^3+\cdots)(1+y+y^2+y^3+\cdots)(1+z+z^2+z^3+\cdots) - 1)^n$</p>
 <blockquote>
-<p>问题24, $(x,y,z)$ 每次随机一个方向随机$\pm 1$, T次,$3a+4b+5c=n$的概率</p>
+<p>问题24, $(x,y,z)$ 每次随机一个方向随机$\pm 1$, T次,$3a+4b+5c&#x3D;n$的概率</p>
 </blockquote>
-<p>$\sum_{3a+4b+5c=n} \lbrack x^ay^bz^c \rbrack (\frac{x+x^{-1}+y+y^{-1}+z+z^{-1}}{6})^T$</p>
+<p>$\sum_{3a+4b+5c&#x3D;n} \lbrack x^ay^bz^c \rbrack (\frac{x+x^{-1}+y+y^{-1}+z+z^{-1}}{6})^T$</p>
 <p>$\lbrack t^n \rbrack (\frac{t^3+t^{-3}+t^4+t^{-4}+t^5+t^{-5}}{6})^T$, 其实对各个坐标没限制 只对总和限制,$3,4,5$看成贡献倍数</p>
-<h2 id="maspy-2-如何计算"><a href="#maspy-2-如何计算" class="headerlink" title="maspy 2 如何计算"></a>maspy 2 如何计算</h2><h3 id="二项式定理"><a href="#二项式定理" class="headerlink" title="二项式定理"></a>二项式定理</h3><p>$(x+y)^n = \sum_{i=0}^{n} \binom{n}{i} x^iy^{n-i}$</p>
-<p>其中$\binom{n}{i} = \frac{n!}{i!(n-i)!}$是排列数, 为了方便当$ i &lt; 0 $或$ i &gt; n$ 时令它为$0$</p>
-<p>$(x+y)^n = \sum_{i=0}^{\infty} \binom{n}{i} x^iy^{n-i}$</p>
+<h2 id="maspy-2-如何计算"><a href="#maspy-2-如何计算" class="headerlink" title="maspy 2 如何计算"></a>maspy 2 如何计算</h2><h3 id="二项式定理"><a href="#二项式定理" class="headerlink" title="二项式定理"></a>二项式定理</h3><p>$(x+y)^n &#x3D; \sum_{i&#x3D;0}^{n} \binom{n}{i} x^iy^{n-i}$</p>
+<p>其中$\binom{n}{i} &#x3D; \frac{n!}{i!(n-i)!}$是排列数, 为了方便当$ i &lt; 0 $或$ i &gt; n$ 时令它为$0$</p>
+<p>$(x+y)^n &#x3D; \sum_{i&#x3D;0}^{\infty} \binom{n}{i} x^iy^{n-i}$</p>
 <h3 id="等比数列求和"><a href="#等比数列求和" class="headerlink" title="等比数列求和"></a>等比数列求和</h3><p>$r\neq 1$时</p>
-<p>$\sum_{i=0}^{n} r^i = \frac{1-r^{n+1}}{1-r}$</p>
-<h3 id="形式幂级数-运算法则"><a href="#形式幂级数-运算法则" class="headerlink" title="形式幂级数 运算法则"></a>形式幂级数 运算法则</h3><p>形式幂级数 $F = \sum_{n=0}^{\infty} f_nx^n$</p>
-<p>若$G = \sum_{n=0}^{\infty} g_nx^n$</p>
-<p>加减: $\lbrack x^n \rbrack (F\pm G) = f_n \pm g_n$</p>
-<p>乘法: $\lbrack x^n \rbrack (FG) =  \sum_{i+j=n}f_ig_j.$</p>
+<p>$\sum_{i&#x3D;0}^{n} r^i &#x3D; \frac{1-r^{n+1}}{1-r}$</p>
+<h3 id="形式幂级数-运算法则"><a href="#形式幂级数-运算法则" class="headerlink" title="形式幂级数 运算法则"></a>形式幂级数 运算法则</h3><p>形式幂级数 $F &#x3D; \sum_{n&#x3D;0}^{\infty} f_nx^n$</p>
+<p>若$G &#x3D; \sum_{n&#x3D;0}^{\infty} g_nx^n$</p>
+<p>加减: $\lbrack x^n \rbrack (F\pm G) &#x3D; f_n \pm g_n$</p>
+<p>乘法: $\lbrack x^n \rbrack (FG) &#x3D;  \sum_{i+j&#x3D;n}f_ig_j.$</p>
 <p>在运算中可以 只考虑 小于等于 $x^n$的部分</p>
 <p>满足,交换律,结合律,分配律, 被称作 环</p>
 <h3 id="形式的べき級数環の位相"><a href="#形式的べき級数環の位相" class="headerlink" title="形式的べき級数環の位相"></a>形式的べき級数環の位相</h3><p>形式的べき級数$F$は、最低次の項が高いほど、 $0$に近いと考えて扱います。このことを利用して、形式的べき級数の列の極限を定義することができます：</p>
 <p>【定義】</p>
 <p>形式的べき級数列$F1,F2,F3\cdots F$ に収束するとは、任意の$k$ に対してある$N$が存在して、$n\ge N$ ならば $F_n$ と $F$ の $k$ 次未満部分が一致することを指す。</p>
 <p>我没看懂翻译以后的XD</p>
-<h3 id="形式幂级数的倒数"><a href="#形式幂级数的倒数" class="headerlink" title="形式幂级数的倒数"></a>形式幂级数的倒数</h3><p>$FG = 1$, 则$F = \frac{1}{G}$</p>
-<p>也可以和正常分数类似的计算规则$\frac{F_1}{G_1}\pm\frac{F_2}{G_2}=\frac{F_1G_2\pm F_2G_1}{G_1G_2}$</p>
+<h3 id="形式幂级数的倒数"><a href="#形式幂级数的倒数" class="headerlink" title="形式幂级数的倒数"></a>形式幂级数的倒数</h3><p>$FG &#x3D; 1$, 则$F &#x3D; \frac{1}{G}$</p>
+<p>也可以和正常分数类似的计算规则$\frac{F_1}{G_1}\pm\frac{F_2}{G_2}&#x3D;\frac{F_1G_2\pm F_2G_1}{G_1G_2}$</p>
 <p>最常用的一个</p>
-<p>$\frac{1}{1-x} = 1 + x + x^2 + x^3 + x^4 + \cdots = \sum_{n=0}^{\infty}x^n$</p>
+<p>$\frac{1}{1-x} &#x3D; 1 + x + x^2 + x^3 + x^4 + \cdots &#x3D; \sum_{n&#x3D;0}^{\infty}x^n$</p>
 <p>因为$(1-x)(1+x+x^2+x^3+\cdots) $, 而对于一个具体$x^n$ 前面乘了以后会变成$1-x^{\infty}$, 又高于$x^n$不会对$x^n$的系数有影响, 所以即使 从级数收敛角度看起来 $x \ge 1$ 时它不收敛, 但从求系数意义上它是合理 </p>
 <p>对于<strong>没有常数项的</strong>多项式 $F$, 也有, 原理也是相同的, 也需要注意没有常数项</p>
-<p>$\frac{1}{1-F} = 1 + F + F^2 + F^3 + F^4 + \cdots  = \sum_{n=0}^{\infty}F^n.$</p>
+<p>$\frac{1}{1-F} &#x3D; 1 + F + F^2 + F^3 + F^4 + \cdots  &#x3D; \sum_{n&#x3D;0}^{\infty}F^n.$</p>
 <h3 id="幂级数-示例"><a href="#幂级数-示例" class="headerlink" title="幂级数 示例"></a>幂级数 示例</h3><blockquote>
 <p>问题 N拆成正整数和的表达式</p>
 </blockquote>
 <p>前面已经有转换了</p>
-<p>$\lbrack x^N \rbrack \sum_{n=0}^{\infty} (x+x^2+x^3+\cdots)^n$</p>
+<p>$\lbrack x^N \rbrack \sum_{n&#x3D;0}^{\infty} (x+x^2+x^3+\cdots)^n$</p>
 <p>然后利用这里幂级数</p>
-<p>$ = \lbrack x^N \rbrack \sum_{n=0}^{\infty} (\frac{x}{1-x})^n$</p>
-<p>$ = \lbrack x^N \rbrack \frac{1}{1- \frac{x}{1-x}}$</p>
-<p>$ = \lbrack x^N \rbrack \frac{1-x}{1-2x}$</p>
-<p>$ = \lbrack x^N \rbrack (1-x)(1+2x+4x^2+8x^3+\cdots)$</p>
-<p>$ = 2^N - 2^{N-1}$</p>
-<p>$ = 2^{N-1} $</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \sum_{n&#x3D;0}^{\infty} (\frac{x}{1-x})^n$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \frac{1}{1- \frac{x}{1-x}}$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \frac{1-x}{1-2x}$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack (1-x)(1+2x+4x^2+8x^3+\cdots)$</p>
+<p>$ &#x3D; 2^N - 2^{N-1}$</p>
+<p>$ &#x3D; 2^{N-1} $</p>
 <p>同样在分数过程也可以简化掉 分子</p>
-<p>$ = \lbrack x^N \rbrack \frac{1-x}{1-2x}$</p>
-<p>$ = \lbrack x^N \rbrack \frac{1}{2} + \frac{1}{2} \cdot \frac{1}{1-2x}$</p>
-<p>$ = \lbrack x^N \rbrack \frac{1}{2} + \frac{1}{2}(1+2x+4x^2+8x^3+\cdots)$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \frac{1-x}{1-2x}$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \frac{1}{2} + \frac{1}{2} \cdot \frac{1}{1-2x}$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \frac{1}{2} + \frac{1}{2}(1+2x+4x^2+8x^3+\cdots)$</p>
 <h3 id="因式分解-示例"><a href="#因式分解-示例" class="headerlink" title="因式分解 示例"></a>因式分解 示例</h3><blockquote>
 <p>问题 $\lbrack x^ay^b\rbrack(x+x^{-1}+y+y^{-1})^T$</p>
 </blockquote>
-<p>$ = \lbrack x^ay^b \rbrack ((xy)^{-1}(xy+1)(x+y))^T$</p>
-<p>$ = \lbrack x^ay^b \rbrack \sum_{i,j} \binom {T}{i}\binom{T}{j}x^{i+j-T}y^{i-j}.$</p>
+<p>$ &#x3D; \lbrack x^ay^b \rbrack ((xy)^{-1}(xy+1)(x+y))^T$</p>
+<p>$ &#x3D; \lbrack x^ay^b \rbrack \sum_{i,j} \binom {T}{i}\binom{T}{j}x^{i+j-T}y^{i-j}.$</p>
 <p>只会有唯一的$(i,j)$</p>
 <h3 id="积累和-推到-dp转换"><a href="#积累和-推到-dp转换" class="headerlink" title="积累和 推到 dp转换"></a>积累和 推到 dp转换</h3><blockquote>
-<p>问题 $xi \in [0,a_i]$, 选择$x_1+\cdots+x_N = M$, 找出方案数, $a_i \le M \le 10^5, N \le 100$</p>
+<p>问题 $xi \in [0,a_i]$, 选择$x_1+\cdots+x_N &#x3D; M$, 找出方案数, $a_i \le M \le 10^5, N \le 100$</p>
 </blockquote>
-<p>$\lbrack x^M \rbrack \prod_{i=1}^N (\sum_{j=0}^{a_i} x^j)$</p>
-<p>$\lbrack x^M \rbrack \prod_{i=1}^N \frac{1-x^{a_i+1}}{1-x}$</p>
+<p>$\lbrack x^M \rbrack \prod_{i&#x3D;1}^N (\sum_{j&#x3D;0}^{a_i} x^j)$</p>
+<p>$\lbrack x^M \rbrack \prod_{i&#x3D;1}^N \frac{1-x^{a_i+1}}{1-x}$</p>
 <hr>
-<p>分解成一个稀疏多项式(项少,就可以DP)的方法, $(1-x)Q = P$, 那么$p_n = q_n-q_{n-1}$, 有可以$q_n = q_{n-1}+p_n$递推</p>
-<p>$1-x^{a_i+1}$ 也是类似, 相当于$dp[j] = dp[j] - dp[j-(a_i+1)]$</p>
+<p>分解成一个稀疏多项式(项少,就可以DP)的方法, $(1-x)Q &#x3D; P$, 那么$p_n &#x3D; q_n-q_{n-1}$, 有可以$q_n &#x3D; q_{n-1}+p_n$递推</p>
+<p>$1-x^{a_i+1}$ 也是类似, 相当于$dp[j] &#x3D; dp[j] - dp[j-(a_i+1)]$</p>
 <p>这样是$O(NM)$, 这里$NM \le 10^7$ 可做</p>
-<p>据说$N = 1e5$ 也有方法可搞?</p>
+<p>据说$N &#x3D; 1e5$ 也有方法可搞?</p>
 <h3 id="DP的推导返回"><a href="#DP的推导返回" class="headerlink" title="DP的推导返回"></a>DP的推导返回</h3><blockquote>
-<p>问题 $xi \in [0,a_i]$, 选择$x_1+\cdots+x_N = M$, 找出方案数<br>但是Q个独立询问, 让$x_{p_j} = c_j$<br>$a_i \le M \le 2000, N \le 2000, Q \le 500000$</p>
+<p>问题 $xi \in [0,a_i]$, 选择$x_1+\cdots+x_N &#x3D; M$, 找出方案数<br>但是Q个独立询问, 让$x_{p_j} &#x3D; c_j$<br>$a_i \le M \le 2000, N \le 2000, Q \le 500000$</p>
 </blockquote>
 <p>对i以外的前后缀来计算 $\prod$, 再用FFT 可以得到</p>
 <p>另一个思路是,能否接受除法</p>
@@ -680,485 +498,137 @@
 <h3 id="交换律-和-迭代平方法"><a href="#交换律-和-迭代平方法" class="headerlink" title="交换律 和 迭代平方法"></a>交换律 和 迭代平方法</h3><p>没看懂翻译</p>
 <hr>
 <p>鸽</p>
-<h3 id="负二项式定理"><a href="#负二项式定理" class="headerlink" title="负二项式定理"></a>负二项式定理</h3><p>$(1-rx)^{-d} = \sum_{n=0}^{\infty}\binom{n+d-1}{d-1}(rx)^n$</p>
+<h3 id="负二项式定理"><a href="#负二项式定理" class="headerlink" title="负二项式定理"></a>负二项式定理</h3><p>$(1-rx)^{-d} &#x3D; \sum_{n&#x3D;0}^{\infty}\binom{n+d-1}{d-1}(rx)^n$</p>
 <p>证明:</p>
 <p>归纳+导数, 可证 <code>-d</code>成立,那么<code>-d-1</code>也成立</p>
 <p>这个在百度百科上也有</p>
-<p>$(1+x)^{-d} = \sum_{n=0}^{\infty} (-1)^n \binom{d+n-1}{n}x^n$</p>
-<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a href="https://maspypy.com/category/%e5%bd%a2%e5%bc%8f%e7%9a%84%e3%81%b9%e3%81%8d%e7%b4%9a%e6%95%b0%e8%a7%a3%e8%aa%ac" target="_blank" rel="noopener">maspy</a></p>
-<p><a href="https://baike.baidu.com/item/%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%AE%9A%E7%90%86" target="_blank" rel="noopener">百度百科 二项式定理推广</a></p>
+<p>$(1+x)^{-d} &#x3D; \sum_{n&#x3D;0}^{\infty} (-1)^n \binom{d+n-1}{n}x^n$</p>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a target="_blank" rel="noopener" href="https://maspypy.com/category/%e5%bd%a2%e5%bc%8f%e7%9a%84%e3%81%b9%e3%81%8d%e7%b4%9a%e6%95%b0%e8%a7%a3%e8%aa%ac">maspy</a></p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%AE%9A%E7%90%86">百度百科 二项式定理推广</a></p>
 
-        
-                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
-                    <p><strong>
-                         
-                            This blog is under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC BY-NC-SA 3.0 Unported License</a>
-                        </strong>
-                        <br>
-                        <strong>本文鏈接：</strong><a href="http://yexiaorain.github.io/Blog/2022-08-12-generate_function/">http://yexiaorain.github.io/Blog/2022-08-12-generate_function/</a>
-                    </p>
-                </blockquote>
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'http://yexiaorain.github.io/Blog/2022-08-12-generate_function/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://yexiaorain.github.io/Blog/2022-08-12-generate_function/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//yexiaorain.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/Blog/2022-08-13-ac_abc226/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/Blog/2022-08-11-ac_abc225/" id="post_nav-older" class="next-content">
-            舊篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
     </div>
 
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/Blog/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/Blog/img/satan.jpg" alt="Xiao Ye's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        yexiaorain@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto: yexiaorain@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
     
-        <li id="sidebar-first-li">
-            <a href="/Blog/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                首頁
-            </a>
-        </li>
-        
     
+    
+      
 
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    過往
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/Blog/archives/2022/09/">九月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/08/">八月 2022<span class="sidebar_archives-count">17</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/07/">七月 2022<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/06/">六月 2022<span class="sidebar_archives-count">17</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/05/">五月 2022<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/04/">四月 2022<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/03/">三月 2022<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/12/">十二月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/11/">十一月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/09/">九月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/08/">八月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/07/">七月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/06/">六月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/05/">五月 2021<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/04/">四月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/02/">二月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/12/">十二月 2020<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/11/">十一月 2020<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/08/">八月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/07/">七月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/06/">六月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/05/">五月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/04/">四月 2020<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/01/">一月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/11/">十一月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/10/">十月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/09/">九月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/07/">七月 2019<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/06/">六月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/05/">五月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/04/">四月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/03/">三月 2019<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/02/">二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/05/">五月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/10/">十月 2017<span class="sidebar_archives-count">4</span></a>
-            </ul>
-        </li>
-        
-    
 
-    <!-- Categories  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
-                
-                分類
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                <a class="sidebar_archives-link" href="/Blog/categories/Atcoder/">Atcoder<span class="sidebar_archives-count">40</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/ABC/">ABC<span class="sidebar_archives-count">24</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/AGC/">AGC<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/ARC/">ARC<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/CodeChef/">CodeChef<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Codeforces/">Codeforces<span class="sidebar_archives-count">73</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Machine-learning/">Machine learning<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/">NowCoder<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Project-Euler/">Project Euler<span class="sidebar_archives-count">19</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/USACO/">USACO<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/algorithm/">algorithm<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/bestcoder/">bestcoder<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/luogu/">luogu<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/poj/">poj<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/tencent/">tencent<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
+    <footer class="post-footer">
+          
 
-    <!-- Pages  -->
-    
-
-    <!-- Article Number  -->
-    
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/2022-08-12-generate_function/" title="maspy 生成方程与问题解决">https://yexiaorain.github.io/Blog/2022-08-12-generate_function/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
 </ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E7%94%9F%E6%88%90%E6%96%B9%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 生成方程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2022-08-11-ac_abc225/" rel="prev" title="Atcoder abc225">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc225
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/2022-08-13-ac_abc226/" rel="next" title="Atcoder abc226">
+                  Atcoder abc226 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
 
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
 
 
-<!-- Theme Material -->
 
 
-<!-- Help & Support -->
-<!--
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
 
--->
+  <footer class="footer">
+    <div class="footer-inner">
 
-<!-- Feedback -->
-<!--
 
--->
-
-<!-- About Theme -->
-<!--
-
--->
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">728k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">11:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
 
     </div>
+  </footer>
 
-    <!-- Sidebar Image -->
-    
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
 
-</aside>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
 
-                    
 
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
 
-                    
 
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
 
-    <!-- Facebook -->
-    
+  
 
-    <!-- Google + -->
-    
 
-    <!-- Weibo -->
-    
 
-    <!-- Instagram -->
-    
 
-    <!-- Tumblr -->
-    
+  
 
-    <!-- Github -->
-    
-        <a href="https://yexiaorain.github.com" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
 
-    <!-- LinkedIn -->
-    
 
-    <!-- Zhihu -->
-    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/2022-08-12-generate_function/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
 
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-    
-    <!-- V2EX -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;2013&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>YeXiaoRain Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
-            </div>
-        </div>
-    
-</footer>
-
-
-                    <!-- Import JS File -->
-
-    <script>lsloader.load("lazyload_js","/Blog/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
-
-
-
-    <script>lsloader.load("js_js","/Blog/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
-
-
-
-    <script>lsloader.load("np_js","/Blog/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//yexiaorain.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/Blog/css/uc.css">');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/Blog/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
-    })()
-console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
-
-                </main>
-            </div>
-        </body>
-    
+</body>
 </html>

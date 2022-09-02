@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="D(数学,跳点) E(数学,构造,min-max容斥,kmin&#x2F;kmax容斥)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces 1687">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/2022-06-05-CF1687/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="D(数学,跳点) E(数学,构造,min-max容斥,kmin&#x2F;kmax容斥)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-06-05T14:24:00.000Z">
+<meta property="article:modified_time" content="2022-09-02T03:53:44.460Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="跳点">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/2022-06-05-CF1687/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/2022-06-05-CF1687/","path":"2022-06-05-CF1687/","title":"Codeforces 1687"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Codeforces 1687 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">171</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">166</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#D"><span class="nav-number">1.</span> <span class="nav-text">D</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-number">1.1.</span> <span class="nav-text">范围</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-number">2.1.</span> <span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%98%E6%96%B9"><span class="nav-number">2.2.</span> <span class="nav-text">官方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#E"><span class="nav-number">5.</span> <span class="nav-text">E</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-number">5.1.</span> <span class="nav-text">范围</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-number">6.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-number">6.1.</span> <span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%98%E6%96%B9-1"><span class="nav-number">6.2.</span> <span class="nav-text">官方</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EMin-Max-%E5%AE%B9%E6%96%A5"><span class="nav-number">6.2.1.</span> <span class="nav-text">关于Min-Max 容斥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">6.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83-1"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">166</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-06-05-CF1687/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Codeforces 1687 | YeXiaoRain Blog">
+      <meta itemprop="description" content="D(数学,跳点) E(数学,构造,min-max容斥,kmin/kmax容斥)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Codeforces 1687
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-06-05 22:24:00" itemprop="dateCreated datePublished" datetime="2022-06-05T22:24:00+08:00">2022-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2022-06-05-CF1687/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-06-05-CF1687/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>9.4k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>9 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">D(数学,跳点) E(数学,构造,min-max容斥,kmin/kmax容斥)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="D"><a href="#D" class="headerlink" title="D"></a><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1687/problem/D">D</a></h1><p>$f(x) &#x3D; $比x大的最小平方数</p>
+<p>$g(x) &#x3D; $比x小的最大平方数</p>
+<p>如果 $x - g(x) &lt; f(x) - x$ 那么$x$是好的</p>
+<p>给长度$n$的单调数组$a$, 求最小非负$k$,使得$a_i+k$ 全为好的</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>$n \le 10^6$</p>
+<p>$a_i \le 2\cdot 10^6$</p>
+<p>2s</p>
+<p>256MB</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>先做点数学变形</p>
+<p>易知对于任意$x&#x3D;a_i$, 如果$\exists w, x \in [w^2,w^2+w]$ 那么$x$是好的</p>
+<p>然后 真不会了</p>
+<h2 id="官方"><a href="#官方" class="headerlink" title="官方"></a>官方</h2><p>显然 $k \le a_n^2$, 因为 $[a_n^2,a_n^2+a_n]$ 的长度都是 $a_n$ 一定能放下所有数</p>
+<p>根据上面的令$f(x) &#x3D; w$, $w$由$x$唯一得到,也可能不存在, 且有$max(w) \le a_n$, </p>
+<p>枚举$f(a_1 + k)$的结果$w_1$, 因为$w_1 \le a_n$ 得到$\le a_n$个初始的$k$取值范围区间</p>
+<hr>
+<p>然后枚举 $f(a_i + k)$ 的所有区间</p>
+<p>这里有个神奇的地方在于</p>
+<p>如果把好的位置用x标出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 2 3 4 5 6 7 8 9 10 11 12</span><br><span class="line">x x   x x x     x  x  x  x </span><br></pre></td></tr></table></figure>
+
+<p>那么选择一个好的完整区间, 向右任意平移, 去取交, 一定只会和一个区间相交, 这样就保证了无论怎么交 都是连续的区间</p>
+<p>因此这里假设计算之前$k$的范围是$[min(k),max(k)]$ , 那么计算$[a_i+min(k),a_i+max(k)]$中合法的区间, 而这一定是其中连续的一段, 所以只需要$min,max$两个指针就能维护$k$的取值范围</p>
+<hr>
+<p>伪代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for w_1 = sqrt(a_1)...a[n]: // 枚举w = f(a_1+k)</span><br><span class="line">  krange = [...] // k的可选范围</span><br><span class="line">  for i = 2..n:</span><br><span class="line">    // 注意到 合法与不合法的间隔单调递增, 所以 交完后还是连续区间</span><br><span class="line">    krange = krange 交 calc(krange, a_i)</span><br><span class="line">    if len(krange) == 0:</span><br><span class="line">      break</span><br><span class="line">  if len(krange) &gt; 0:</span><br><span class="line">    return krange.start</span><br></pre></td></tr></table></figure>
+
+<p>这样外层$w_1$范围$O(a_n)$, 每轮内部循环最多$n$次, 总复杂度$O(n a_n)$, 过不了</p>
+<hr>
+<p>实际上只需要考虑的是$f(a_i+k) \neq f(a_{i-1} + k)$, 这样的$a_{i-1}$和$a_i$带来的影响 </p>
+<p>因为如果 $i \in [l,r]$ 都让$f(a_i + k) &#x3D; w$的话, 那么只有端点$l$和$r$ 会真实的对$k$的区间产生贡献</p>
+<p>对于给定的 $f(a_1+k) &#x3D; w_1$ ,相邻的$f$不等的情况不超过$O(\frac{a_n}{w_1})$种</p>
+<p>因为 $a_1+k \in [w_1^2,w_1^2+w_1]$, 所以$a_n+k \in [w_1^2+a_n-a_1,w_1^2+w_1 + a_n-a_1]$</p>
+<p>$f(a_n+k) \le \sqrt{w_1^2+w_1 + a_n-a_1} \le \sqrt{(w_1+1)^2 + a_n + (\frac{a_n}{2(w_1+1)})^2} \le w_1+1 + \frac{a_n}{2(w_1+1)}$, 得证</p>
+<p>? 有啥简单一点的证明方式吗</p>
+<p>所以总复杂度是 $O(\sum_{w_1&#x3D;\sqrt{a_1}}^{a_n}{\frac{a_n}{w_1}}) &#x3D; O(a_n log (a_n))$,</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1687/submission/159707568">https://codeforces.com/contest/1687/submission/159707568</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line">ll a[<span class="number">1000010</span>]; <span class="comment">// 有序 ai &lt; 2e6</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">mysqrt</span><span class="params">(ll v)</span></span>&#123;</span><br><span class="line">  ll l = <span class="number">1</span>;</span><br><span class="line">  ll r = v;</span><br><span class="line">  <span class="keyword">while</span>(l != r)&#123;</span><br><span class="line">    ll mid = (l+r)/<span class="number">2</span>;</span><br><span class="line">    <span class="comment">// 先控范围防止 overflow</span></span><br><span class="line">    <span class="keyword">if</span>( v/mid &lt; mid )&#123;</span><br><span class="line">      r = mid - <span class="number">1</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>( mid * mid &lt;= v &amp;&amp; (mid+<span class="number">1</span>)*(mid+<span class="number">1</span>) &gt; v)&#123;</span><br><span class="line">      <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>( (mid+<span class="number">1</span>) * (mid+<span class="number">1</span>) &lt;= v)&#123;</span><br><span class="line">      l = mid + <span class="number">1</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      r = mid - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> l;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// k 的初始范围 [l_k..r_k], 初始f(a_1+k) = w</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">calc</span><span class="params">(ll w,ll &amp;l,ll &amp;r)</span></span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    <span class="comment">// [a[i] + l_k, a[i] + r_k] \subset [w^2,w^2+w]</span></span><br><span class="line">    <span class="comment">// 找同为w的最大的j [a[j] + l_k, a[j] + r_k] \subset [w^2,w^2+w]</span></span><br><span class="line">    <span class="comment">// (a[j] + l_k) \in [w^2,w^2+w] 即, a[j] &lt;= w^2+w - l_k</span></span><br><span class="line">    <span class="comment">//                                  r_k &lt;= w^2+w-a[j]</span></span><br><span class="line">    <span class="type">int</span> idx = <span class="built_in">lower_bound</span>(a,a+n,w*(w+<span class="number">1</span>)-l+<span class="number">1</span>) - a; <span class="comment">// j = idx-1</span></span><br><span class="line">    r = <span class="built_in">min</span>(r,w*(w+<span class="number">1</span>) - a[idx<span class="number">-1</span>]); <span class="comment">// 更新 r_k &lt;= w^2+w - a[j]</span></span><br><span class="line">    <span class="keyword">if</span>(l &gt; r) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(idx == n)<span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// 最后一个</span></span><br><span class="line"></span><br><span class="line">    w = <span class="built_in">mysqrt</span>(a[idx]+r); <span class="comment">// 下一个位置的w, (a[idx]+r_k) \in [w_1^2,(w_1+1)^2]</span></span><br><span class="line">    l = <span class="built_in">max</span>(l,w*w - a[idx]);</span><br><span class="line">    r = <span class="built_in">min</span>(r,w*(w+<span class="number">1</span>) - a[idx]);</span><br><span class="line">    <span class="keyword">if</span>(l &gt; r) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">assert</span>(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i] = <span class="built_in">read</span>();</span><br><span class="line">  <span class="comment">// w = f(a_0 + k) = [sqrt(a[0])..a[n-1]]</span></span><br><span class="line">  <span class="built_in">rep</span>(w,<span class="built_in">mysqrt</span>(a[<span class="number">0</span>]),a[n<span class="number">-1</span>]+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="comment">// 初始化 k的范围[l..r]</span></span><br><span class="line">    ll l = <span class="built_in">max</span>(w*w - a[<span class="number">0</span>],(ll)<span class="number">0</span>);</span><br><span class="line">    ll r = w*(w+<span class="number">1</span>) - a[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">if</span>(r &lt; l) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="comment">// 成功的话 k \in [l..r] 都是合法的, l就是要求的最小的</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">calc</span>(w,l,r))&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,l);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">assert</span>(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过枚举$w &#x3D; f(a_0+k)$来让$k$的取值范围是连续的一段, 且只有$a$的区间端点有影响</p>
+<p>完全没想到是通过$w$来划分的, 也就是还是有点按结果划分的感觉,但又不是二分的划分形式</p>
+<p>而且这里$w$会让变化次数是$O(\frac{a_n}{w})$ 也是优化的关键点</p>
+<p>然后就是这个神奇的刚刚好, 向右平移的交一定是连续区间</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/103493">官方</a></p>
+<hr>
+<h1 id="E"><a href="#E" class="headerlink" title="E"></a><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1687/problem/E">E</a></h1><p>评分3500,题是国内洛谷大佬出的, t神都炸了</p>
+<p>长n的数列a</p>
+<p>初始 v &#x3D; 1</p>
+<p>不超过1e5操作,让gcd(all(ai * aj)) &#x3D; v,i !&#x3D; j, 就是所有不相同的两个数的乘积的gcd</p>
+<p>一次操作, 选取a的一个子序列b,(子序列&#x3D;保持顺序不要求连续)</p>
+<p>并执行<code>v = v * lcm(b)</code>或 <code>v = v / lcm(b)</code>, 注意的是过程中,v 可以不是整数, 这里是数学除,不是整除</p>
+<p>同时保证,所有选取的b的长度和 小于1e6</p>
+<p>输出任何一个满足要求的方案</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 1e5</p>
+<p>ai 1e6</p>
+<p>3s</p>
+<p>512MB</p>
+<h1 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h1><h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>考虑所有与 a1 乘的</p>
+<p><code>a1 * gcd(a2,...,an)</code></p>
+<p>所有与a2乘的</p>
+<p><code>a2 * gcd(a1,a3,...,an)</code></p>
+<p>但怎么组合并不知道</p>
+<p>反过来,既然是gcd&#x2F;lcm,乘法,那么就考虑质数的出现计数</p>
+<p>所有ai的两两相乘的gcd,其实就是 每个质数出现次数, 最小的两个和</p>
+<p>所以目标的v 是O(n log ai) 可以得到的</p>
+<hr>
+<p>那么问题是如何通过lcm去搞, 题目里说 It can be shown that the answer exists</p>
+<p>如果是两个数的gcd</p>
+<p>gcd(a,b) * lcm(a,b) &#x3D; ab</p>
+<p>gcd(a,b) &#x3D; lcm(a,a) * lcm(b,b) &#x2F; lcm(a,b)</p>
+<hr>
+<p>考虑一下小的情况</p>
+<blockquote>
+<p>两个数</p>
+</blockquote>
+<p>v &#x3D; a0 a1 &#x3D; lcm(a0,a0) * lcm(a1,a1)</p>
+<blockquote>
+<p>三个数</p>
+</blockquote>
+<p>a0 &#x3D; k0 q x y</p>
+<p>a1 &#x3D; k1 q y z</p>
+<p>a2 &#x3D; k2 q z x</p>
+<p>其中 q &#x3D; gcd(a0,a1,a2)</p>
+<p>gcd(a0,a1) &#x3D; qy</p>
+<p>gcd(a1,a2) &#x3D; qz</p>
+<p>gcd(a2,a0) &#x3D; qx</p>
+<p>那么有 lcm(a0,a1,a2) &#x3D; k0 k1 k2 q x y z</p>
+<p>lcm(a0,a1) &#x3D; k0 k1 q x y z</p>
+<p>lcm(a1,a2) &#x3D; k1 k2 q x y z</p>
+<p>lcm(a2,a0) &#x3D; k2 k0 q x y z</p>
+<p>那么 目标 v &#x3D; q q x y z</p>
+<p>而观察上面的lcm, 注意到如果用一个的, 会出现如果要x y z 相等 那么会造成 q比它们多, 需要使用一个元素</p>
+<p>那么 q x y z &#x3D; lcm0 lcm1 lcm2 &#x2F; lcm 012</p>
+<blockquote>
+<p>四个数</p>
+</blockquote>
+<p>考虑从三个数变形</p>
+<p>a0 &#x3D; k0 q x y</p>
+<p>a1 &#x3D; k1 q y z</p>
+<p>a2 &#x3D; k2 q z x</p>
+<p>a3</p>
+<p>目标是 v &#x3D; gcd(a3 q,q q x y z)</p>
+<p>这相当于 v(a0,a1,a2,a3) &#x3D; gcd(a3 gcd(a0,a1,a2),v(a0,a1,a2))</p>
+<p>如果按照这个写法,去看3个数</p>
+<p>v(a0,a1,a2) &#x3D; gcd(a2 gcd(a0,a1), v(a0,a1))</p>
+<p>&#x3D; lcm(a2 gcd(a0,a1) lcm(v(a0,a1)) &#x2F; lcm(a2 gcd(a0,a1), v(a0,a1))</p>
+<p>&#x3D; v(a0,a1) a2 gcd(a0,a1) &#x2F; lcm(a2 gcd(a0,a1), v(a0,a1))</p>
+<p>&#x3D; v(a0,a1) lcm(a2) lcm(a0) lcm(a1) &#x2F; (lcm(a2 gcd(a0,a1), v(a0,a1)) lcm(a0,a1))</p>
+<p>&#x3D; ???</p>
+<p>&#x3D; 0 1 2 &#x2F; 012</p>
+<p>只能说 v(a0,a1) &#x2F; (lcm(a2 gcd(a0,a1), v(a0,a1) lcm(a0,a1) &#x3D;&#x3D; lcm(0,1,2) ?</p>
+<p>没有什么思路</p>
+<hr>
+<p>再会看题目 n是1e5, 但希望操作不要超过1e5</p>
+<p>但注意到上面3个数的时候用了4次,</p>
+<p>具体例子</p>
+<p>a0 &#x3D; 11 2 3 5</p>
+<p>a1 &#x3D; 13 2 5 7</p>
+<p>a2 &#x3D; 17 2 7 3</p>
+<p>lcm(0,1) &#x3D; 11 13 2 3 5 7</p>
+<p>lcm(1,2) &#x3D; 13 17 2 3 5 7</p>
+<p>lcm(2,0) &#x3D; 17 11 2 3 5 7</p>
+<p>lcm(0,1,2) &#x3D; 11 13 17 2 3 5 7</p>
+<p>v(0,1,2) &#x3D; 2 2 3 5 7 &#x3D; lcm0 lcm1 lcm2 &#x2F; lcm012</p>
+<p>说明3个的做法对于大的n并不通用, 通用的应该要能达到n个是n次的样子</p>
+<p>对于大的n, 不会使用单个, 因为单个会有独立的系数, 任何其它gcd无法消掉</p>
+<hr>
+<p>那不如强行拆一下四个数</p>
+<p>其中k是独立的部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a0 = k0  b c d        w x y    q</span><br><span class="line">a1 = k1  b     e f    w x   z  q</span><br><span class="line">a2 = k2    c   e   g  w   y z  q</span><br><span class="line">a3 = k3      d   f g    x y z  q</span><br></pre></td></tr></table></figure>
+
+<p>发现其中出现次数都是C(4,i)对应的表现</p>
+<p><code>v = w x y z q q</code></p>
+<p>一个为组的轮换 (1次) (2次) (3次) (4次)</p>
+<p>两个为组的轮换 (3次) (5次) (6次) (6次)</p>
+<p>三个为组的轮换 (3次) (4次) (4次) (4次)</p>
+<p>四个为组的轮换 (1次) (1次) (1次) (1次)</p>
+<p>以线性方程组的知识, 显然 <code>(0 0 1 2) = (1 2 3 4) + 2(1 1 1 1) - (3 4 4 4)</code>, 次数是 <code>4 + 2 * 1 + 4 </code> 要10次</p>
+<hr>
+<p>剩下的观察就是, n 1e5, 而 ai 1e6</p>
+<p>也就是说可能有不少的因子被干掉了</p>
+<p>并不知道如何量化分析了</p>
+<p>只知道 k0,k1,k2,k3,b,c,d,e,f,w,x,y,z 应该是两两互质的, 否则把它们的gcd提取出来转到下一级别</p>
+<p>而如果全部互质, 那么<code>2*3*5*7*8*11*13 = 240240</code> 在超界的边缘</p>
+<p>似乎不可能构成的样子</p>
+<h2 id="官方-1"><a href="#官方-1" class="headerlink" title="官方"></a>官方</h2><p>考虑容斥原理</p>
+<p>一样的, 对于一个质数的幂次 在结果中 &#x3D; 这个质数最小出现的两个幂次的和</p>
+<p>广义 容斥</p>
+<p>$\gcd_{i\ne j}{A_i\times A_j}&#x3D;\prod_{T\subseteq U}\text{lcm}(T)^{(-1)^{|T|}(|T|-2)}$</p>
+<p>证明一下这个表达式</p>
+<p>因为对于不同质数,可以独立的看其幂次</p>
+<p>不妨设对于一个具体质数, 它在这些数组元素中的幂次从小到大为 <code>p0 p1 &gt;=p1 &gt;=p1 ...</code>, 也就是a0按照p的幂次排序</p>
+<p>需要的是$p_1+p_2$</p>
+<p>$(lcm(a_1)) \cdot (lcm(a_2) \cdot lcm(a_1,a_2)^0 ) \cdot ( a_3^{ 1 + 0 + (-1) } \cdot (a4^{ 1 + 0 + (-1 \cdot 3) + 2 \cdot 1}) \cdot (a_5^{1 + 0 + (-1 \cdot 6) + (2 \cdot 4) + (-3 \cdot 1)}) \cdots$</p>
+<p>$ &#x3D; a_1 \cdot a_2 &#x3D; p^{p_1+p_2}$</p>
+<p>这么神奇的吗</p>
+<p>你会发现$lcm_k, k \ge 3$ 的幂次为</p>
+<p>$ \sum_{i&#x3D;1}^k (-1)^i \cdot (i-2) \cdot C(k-1,i-1) $</p>
+<p>$ &#x3D; - \sum_{i&#x3D;0}^{k-1} (-1)^i \cdot (i-1) \cdot C(k-1,i)$</p>
+<p>$ &#x3D; - \sum_{i&#x3D;0}^{w} (-1)^i \cdot (i-1) \cdot C(w,i) , w &#x3D; k-1 \ge 2$</p>
+<p>$ &#x3D; - \sum_{i&#x3D;0}^{w} (-1)^i \cdot i \cdot C(w,i)$ ( 因为$w \ge 2 &gt; 0 时, 0 &#x3D; (1-1)^w &#x3D; \sum_{i&#x3D;0}^{w} (-1)^i \cdot C(w,i)$</p>
+<p>$ &#x3D; - \sum_{i&#x3D;0}^w (-1)^i \cdot i \cdot \frac{w!}{i!(w-i)!} $</p>
+<p>$ &#x3D; - \sum_{i&#x3D;1}^w (-1)^i \cdot i \cdot \frac{w!}{i!(w-i)!} $</p>
+<p>$ &#x3D; - \sum_{i&#x3D;1}^w (-1)^i \cdot \frac{w!}{(i-1)!(w-i)!} $</p>
+<p>$ &#x3D; - w \sum_{i&#x3D;1}^w (-1)^i \cdot \frac{(w-1)!}{(i-1)!(w-i)!} $</p>
+<p>$ &#x3D; - w \sum_{i&#x3D;1}^w (-1)^i \cdot C(w-1,i-1) $ ( 同上 因为$w-1 \ge 2-1 &gt; 0 时, 0 &#x3D; (1-1)^w &#x3D; \sum_{i&#x3D;0}^{w} (-1)^i \cdot C(w,i)$</p>
+<p>$ &#x3D; - w \cdot 0$</p>
+<p>$ &#x3D; 0 $</p>
+<p>其中 $ k - 1 &#x3D; w \ge 2$</p>
+<p>算强行证明了</p>
+<hr>
+<p>题解的过程是 有得到第k小的数的反演公式 $k\text{-th}\min{S}&#x3D;\sum\limits_{\varnothing\ne T\subseteq S}(-1)^{|T|-k}\tbinom{|T|-1}{k-1}\max{T}$</p>
+<p>那么 其实就是最小的(k&#x3D;1) + 次小的(k&#x3D;2) 得到</p>
+<hr>
+<p>一个可重整数集$S$, 其中整数范围$[1,10^6]$, 那么 总能选出大小不超过7的子集$T\subseteq S$, 让$\gcd(S)&#x3D;\gcd(T)$</p>
+<p>易证,因为$gcd(S) \le 10^6$ 所以它的质因子个数不超过7个, T只需要每个质因子的最小幂次选出来就行了</p>
+<p>但和本题还是有区别</p>
+<p>本题是 $gcd_2(S)$的情况, 两两下标不同乘积的gcd</p>
+<p>这样考虑 先让集合$T$为空, 然后我们针对质数p 的幂次来讲, 假设前面已经选了几轮了, 那么最坏情况, 没有选p的最低和次低幂次, 所以为了让p的幂次满足, 任选两个最低和次低幂次, 也就是填2个, 而这种情况说明$gcd_2(S)$ 至少包含p的一次方</p>
+<p>所以 最多有7个不同的有效p,最多选14个就能达成</p>
+<hr>
+<p>这样也没要求最小数量</p>
+<p>直接用上面的lcm和gcd的min&#x2F;max 表达式就可以了</p>
+<hr>
+<p>因为可能其它数字 虽然贡献是两个0次,但是因为, 只做了幂次最小限制,会让它们的gcd不止是对应的幂次</p>
+<p>wa5或者看下面的例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2   3 5 7</span><br><span class="line">2     5</span><br><span class="line">2 2 3</span><br><span class="line">2 2     7</span><br></pre></td></tr></table></figure>
+
+<p>注意到3,5,7的最小两个幂次和都是0,而2的最小两个幂次和为1+1&#x3D;2</p>
+<p>但是如果你只选前两个去做集合运算,那么gcd &#x3D; 2 5</p>
+<p>所以你可以通过数量控制</p>
+<h3 id="关于Min-Max-容斥"><a href="#关于Min-Max-容斥" class="headerlink" title="关于Min-Max 容斥"></a>关于Min-Max 容斥</h3><p>$max_k(S) &#x3D; $ 集合$S$的第$k$大元素</p>
+<p>TODO 再整理一篇文章: 反演 &#x3D;&gt; 二项式反演 &#x3D;&gt; min-max 反演 &#x3D;&gt; kmax&#x2F;kmin 反演</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p>感觉代码还真不难写, 纯代码不到100行,毕竟给了3s</p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1687/submission/159885371">https://codeforces.com/contest/1687/submission/159885371</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> all(O) O.begin(),O.end()</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> a[<span class="number">100010</span>];</span><br><span class="line"><span class="type">int</span> v2p[<span class="number">1000010</span>]; <span class="comment">// 每个数的质数拆解</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getpwr</span><span class="params">(<span class="type">int</span> v,<span class="type">int</span> p)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> r = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(v % p == <span class="number">0</span>)&#123;</span><br><span class="line">    r++;</span><br><span class="line">    v/=p;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) a[i] = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 质数 到最低两个幂次 和对应的数的下标</span></span><br><span class="line">  unordered_map&lt;<span class="type">int</span>, vector&lt; pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; &gt; &gt; p2low2;</span><br><span class="line">  <span class="comment">// 质数</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>, <span class="number">1000000</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(v2p[i])<span class="keyword">continue</span>; <span class="comment">// 合数</span></span><br><span class="line">    p2low2[i] = <span class="built_in">vector</span>(<span class="number">2</span>,<span class="built_in">make_pair</span>(INF,<span class="number">-1</span>));</span><br><span class="line">    <span class="keyword">for</span>(ll j = i*i;j &lt;= <span class="number">1000000</span>;j+=i)&#123;</span><br><span class="line">      v2p[j] = i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 筛出至多14个数</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) &#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; rm;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;item: p2low2)&#123;</span><br><span class="line">      <span class="keyword">auto</span> &amp;[p,low2] = item;</span><br><span class="line">      low2.<span class="built_in">push_back</span>(&#123;<span class="built_in">getpwr</span>(a[i],p),i&#125;);</span><br><span class="line">      <span class="built_in">sort</span>(<span class="built_in">all</span>(low2));</span><br><span class="line">      low2.<span class="built_in">pop_back</span>();</span><br><span class="line">      <span class="keyword">if</span>(low2.<span class="built_in">back</span>().first == <span class="number">0</span> &amp;&amp; p2low2.<span class="built_in">size</span>() &gt;= <span class="number">7</span> + <span class="number">1</span> + rm.<span class="built_in">size</span>())&#123; <span class="comment">// wa5, 0 幂次贡献也有作用</span></span><br><span class="line">        rm.<span class="built_in">push_back</span>(p);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> p:rm) p2low2.<span class="built_in">erase</span>(p);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; pos;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;[p,low2]:p2low2)&#123;</span><br><span class="line">    pos.<span class="built_in">push_back</span>(low2[<span class="number">0</span>].second);</span><br><span class="line">    pos.<span class="built_in">push_back</span>(low2[<span class="number">1</span>].second);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">assert</span>(pos.<span class="built_in">size</span>() &lt;= <span class="number">14</span>);</span><br><span class="line">  <span class="comment">// 排序去重</span></span><br><span class="line">  <span class="built_in">sort</span>(<span class="built_in">all</span>(pos));</span><br><span class="line">  pos.<span class="built_in">erase</span>(<span class="built_in">unique</span>(<span class="built_in">all</span>(pos)),pos.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// 公式输出</span></span><br><span class="line">  <span class="built_in">rep</span>(bits,<span class="number">1</span>,(<span class="number">1</span>&lt;&lt;pos.<span class="built_in">size</span>()))&#123;</span><br><span class="line">    <span class="comment">// lcm&#123;set&#125; ^ ( (-1)^|set| (|set| - 2))</span></span><br><span class="line">    <span class="type">int</span> t = __builtin_popcount(bits);</span><br><span class="line">    <span class="type">int</span> pwr = (t%<span class="number">2</span>?<span class="number">-1</span>:<span class="number">1</span>) * (t<span class="number">-2</span>);</span><br><span class="line">    cnt += <span class="built_in">abs</span>(pwr);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,cnt);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(bits,<span class="number">1</span>,(<span class="number">1</span>&lt;&lt;pos.<span class="built_in">size</span>()))&#123;</span><br><span class="line">    <span class="comment">// lcm&#123;set&#125; ^ ( (-1)^|set| (|set| - 2))</span></span><br><span class="line">    <span class="type">int</span> t = __builtin_popcount(bits);</span><br><span class="line">    <span class="type">int</span> pwr = (t%<span class="number">2</span>?<span class="number">-1</span>:<span class="number">1</span>) * (t<span class="number">-2</span>);</span><br><span class="line">    <span class="keyword">if</span>(!pwr) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="type">int</span> op = pwr &lt; <span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    pwr = <span class="built_in">abs</span>(pwr);</span><br><span class="line">    <span class="keyword">while</span>(pwr--)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%d %d&quot;</span>,op,t);</span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,pos.<span class="built_in">size</span>())&#123;</span><br><span class="line">        <span class="keyword">if</span>(bits &amp; (<span class="number">1</span>&lt;&lt;i))&#123;</span><br><span class="line">          <span class="built_in">printf</span>(<span class="string">&quot; %d&quot;</span>, pos[i]);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h1><p>光是这个容斥公式, 我都得不出, 全靠手工算了个特例</p>
+<p>知识点1, kmin&#x2F;kmax 反演 有地一个公式</p>
+<p>知识点2, 从gcd 集合, 推理到gcd2集合的元素个数上限和一种构造方案</p>
+<p>gcd2(S) &#x3D;&gt; gcd2(T) &#x3D;&gt; kmin容斥</p>
+<hr>
+<p>思考角度从小量枚举和得到的线性公式是可以的,而主要缺乏相关反演知识,应该去补充</p>
+<p>然后有感觉到可能被值的范围限制了运算, 但是没想到考虑从gcd 演变到gcd2</p>
+<h1 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/103493">官方</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/solution/CF1687E">luogu</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/command-block/xuan-ku-fan-yan-mo-shu">反演</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/2022-06-05-CF1687/" title="Codeforces 1687">https://yexiaorain.github.io/Blog/2022-06-05-CF1687/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+              <a href="/Blog/tags/%E8%B7%B3%E7%82%B9/" rel="tag"><i class="fa fa-tag"></i> 跳点</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2022-06-04-CF1691F/" rel="prev" title="Codeforces 1691F(贡献统计,组合数,树)">
+                  <i class="fa fa-chevron-left"></i> Codeforces 1691F(贡献统计,组合数,树)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/2022-06-12-COOK142A-4/" rel="next" title="CodeChef June Div1 Prefix Suffix Distinct(数学)">
+                  CodeChef June Div1 Prefix Suffix Distinct(数学) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">728k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">11:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/2022-06-05-CF1687/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

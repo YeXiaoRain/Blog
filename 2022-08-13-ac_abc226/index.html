@@ -1,512 +1,337 @@
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.0 -->
-    <script>
-        window.materialVersion = "1.5.0"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1'
-        ]
-    </script>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="F(DP,组合数,gcd)G(贪心)H(概率论,微积分)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc226">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="F(DP,组合数,gcd)G(贪心)H(概率论,微积分)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-08-12T20:25:14.000Z">
+<meta property="article:modified_time" content="2022-09-02T03:53:44.464Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="概率论">
+<meta property="article:tag" content="贪心">
+<meta property="article:tag" content="微积分">
+<meta property="article:tag" content="beta function">
+<meta property="article:tag" content="Gamma Function">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/">
 
 
 
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/","path":"2022-08-13-ac_abc226/","title":"Atcoder abc226"}</script>
 
-
-
-
-
-
-
-
-    <!-- Title -->
-    
-    <title>
-        
-            Atcoder abc226 | 
-        
-        YeXiaoRain Blog
-    </title>
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Xiao Ye">
-    <meta name="description" itemprop="description" content>
-    <meta name="keywords" content=",贪心,概率论,微积分,beta function,Gamma Function">
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/Blog/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/Blog/img/favicon.png">
-    <link rel="apple-touch-icon" href="/Blog/img/favicon.png">
-
-    <!--iOS -->
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="YeXiaoRain Blog">
-
-    <!-- Site Verification -->
-    
-    
-
-    <!-- RSS -->
-    
-        
-            <link rel="alternate" type="application/atom+xml" href="atom.xml">
-        
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.en.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/Blog/css/material.min.css?rdUU9RcgLCpXgn+BEpYF7Q==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/Blog/css/style.min.css?4ixU3PVzPicZm76KlybVwQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/Blog/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/Blog/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-    overflow-x: hidden !important;
-  }
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc226 | YeXiaoRain Blog</title>
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-image: url(/Blog/img/ns.jpg);
-      }
-    </style>
 
 
 
 
-<!-- Fade Effect -->
 
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-
-
-<!-- Import Material Icon -->
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/Blog/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://yexiaorain.github.io/Blog">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Atcoder abc226 | YeXiaoRain Blog">
-    <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
-    <meta property="og:description" content>
-    <meta property="og:article:tag" content="贪心"> <meta property="og:article:tag" content="概率论"> <meta property="og:article:tag" content="微积分"> <meta property="og:article:tag" content="beta function"> <meta property="og:article:tag" content="Gamma Function"> 
-
-    
-        <meta property="article:published_time" content="Sat Aug 13 2022 04:25:14 GMT+0800">
-        <meta property="article:modified_time" content="Thu Sep 01 2022 22:54:57 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="Atcoder abc226 | YeXiaoRain Blog">
-    <meta name="twitter:description" content>
-    <meta name="twitter:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="http://yexiaorain.github.io/Blog">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="http://yexiaorain.github.io/Blog/Blog/2022-08-13-ac_abc226/index.html">
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2022-08-13-ac_abc226/index.html",
-    "headline": "Atcoder abc226",
-    "datePublished": "Sat Aug 13 2022 04:25:14 GMT+0800",
-    "dateModified": "Thu Sep 01 2022 22:54:57 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Xiao Ye",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/satan.jpg"
-        },
-        "description": "阳光只洒在金碧辉煌的高楼上"
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "YeXiaoRain Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/favicon.png"
-        }
-    },
-    "keywords": ",贪心,概率论,微积分,beta function,Gamma Function",
-    "description": "",
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
-    
-    
-    
-
-    <!-- Custom Head -->
-    
-
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-    -->
+  </div>
 
+  <div class="site-meta">
 
-    <!-- Left aligned menu below button -->
-    
-    
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
 
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#F-Score-of-Permutations"><span class="post-toc-number">1.</span> <span class="post-toc-text">F - Score of Permutations</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#限制"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">限制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#我的思路"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">我的思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#G-The-baggage"><span class="post-toc-number">2.</span> <span class="post-toc-text">G - The baggage</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#范围"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">范围</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#我的思路-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">我的思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">题解</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码-1"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#H-Random-Kth-Max"><span class="post-toc-number">3.</span> <span class="post-toc-text">H - Random Kth Max</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#范围-1"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">范围</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#我的思路-2"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">我的思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解-1"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">题解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Beta-Function-Gamma-Function"><span class="post-toc-number">3.3.1.</span> <span class="post-toc-text">Beta Function, Gamma Function</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#回到原问题"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">回到原问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码-2"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考</span></a></li></ol>
-    </ul>
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 4 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/Blog/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                Atcoder abc226
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/Blog/img/satan.jpg" width="44px" height="44px" alt="Author Avatar"/>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Xiao Ye</strong>
-        <span>8月 13, 2022</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/Blog/tags/Gamma-Function/">Gamma Function</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/beta-function/">beta function</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/微积分/">微积分</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/概率论/">概率论</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/贪心/">贪心</a>
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Atcoder abc226&url=http://yexiaorain.github.io/Blog/Blog/2022-08-13-ac_abc226/index.html&pic=http://yexiaorain.github.io/Blog/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Atcoder abc226&url=http://yexiaorain.github.io/Blog/Blog/2022-08-13-ac_abc226/index.html&via=Xiao Ye" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yexiaorain.github.io/Blog/Blog/2022-08-13-ac_abc226/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=YeXiaoRain Blog&title=Atcoder abc226&summary=&pics=http://yexiaorain.github.io/Blog/img/favicon.png&url=http://yexiaorain.github.io/Blog/Blog/2022-08-13-ac_abc226/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 QQ
-            </li>
-        </a>
-    
-
-    <!-- Share Telegram -->
-    
-        <a class="post_share-link" href="https://telegram.me/share/url?url=http://yexiaorain.github.io/Blog/Blog/2022-08-13-ac_abc226/index.html&text=Atcoder abc226" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Telegram
-            </li>
-        </a>
-    
-</ul>
-
+  </div>
 </div>
 
-                
 
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">171</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">166</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#F-Score-of-Permutations"><span class="nav-number">1.</span> <span class="nav-text">F - Score of Permutations</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%90%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#G-The-baggage"><span class="nav-number">2.</span> <span class="nav-text">G - The baggage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-number">2.1.</span> <span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-number">2.2.</span> <span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">2.4.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#H-Random-Kth-Max"><span class="nav-number">3.</span> <span class="nav-text">H - Random Kth Max</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-number">3.1.</span> <span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-2"><span class="nav-number">3.2.</span> <span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-number">3.3.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Beta-Function-Gamma-Function"><span class="nav-number">3.3.1.</span> <span class="nav-text">Beta Function, Gamma Function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0%E5%8E%9F%E9%97%AE%E9%A2%98"><span class="nav-number">3.4.</span> <span class="nav-text">回到原问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="nav-number">3.5.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">166</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
-        <p>F(DP,组合数,gcd)G(贪心)H(概率论,微积分)</p>
-<h1 id="F-Score-of-Permutations"><a href="#F-Score-of-Permutations" class="headerlink" title="F - Score of Permutations"></a>F - Score of Permutations</h1><p>排列P, </p>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc226 | YeXiaoRain Blog">
+      <meta itemprop="description" content="F(DP,组合数,gcd)G(贪心)H(概率论,微积分)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc226
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-08-13 04:25:14" itemprop="dateCreated datePublished" datetime="2022-08-13T04:25:14+08:00">2022-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2022-08-13-ac_abc226/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-08-13-ac_abc226/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>8.4k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>8 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">F(DP,组合数,gcd)G(贪心)H(概率论,微积分)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="F-Score-of-Permutations"><a href="#F-Score-of-Permutations" class="headerlink" title="F - Score of Permutations"></a>F - Score of Permutations</h1><p>排列P, </p>
 <p>初始,i号人有球i</p>
-<p>每次 所有 i != pi 的人, 把球给pi号人</p>
+<p>每次 所有 i !&#x3D; pi 的人, 把球给pi号人</p>
 <p>在 &gt; 0 次后,如果所有人又是i号人有球i, 那么就停止</p>
-<p>分数 = 最小的次数</p>
+<p>分数 &#x3D; 最小的次数</p>
 <hr>
 <p>求所有排列方案 的分数的k次方的和</p>
 <p>mod 998244353</p>
@@ -514,59 +339,20 @@
 <p>k 1e4</p>
 <p>2 s</p>
 <p>1024 mb</p>
-<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>很明显, 交换的圈构成环, 次数 = lcm(每个环长)</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>很明显, 交换的圈构成环, 次数 &#x3D; lcm(每个环长)</p>
 <p>N 很小, 是不是可以枚举因数</p>
-<p><code>dp[i][j] =</code> 使用i个,最大是j,的<code>{lcm,方案数}</code></p>
+<p><code>dp[i][j] = </code> 使用i个,最大是j,的<code>&#123;lcm,方案数&#125;</code></p>
 <p><code>dp[i][j]</code> 贡献来自 <code>dp[i- tm][m],m &gt; j, t &gt; 0</code>, 即<code>n-i+tm</code>个中选<code>tm</code>个, 然后分成<code>t</code>组每组m个</p>
 <p>因为组合tm中分成t组,每组m个</p>
 <p>这样想,tm中最小的作为开头,依次剩下的选m-1个, 然后剩余就是(t-1)m 同样的</p>
 <p>这样每次考虑最小的所在环, 就不重不漏</p>
 <p>$\binom{n-i+tm}{tm} A(tm-1,m-1) \cdot A((t-1)m-1,m-1) \cdots$</p>
-<p>$ = \binom{n-i+tm}{tm} \frac{(tm)!}{m\cdot 2m \cdots tm}$</p>
-<p>$ = \binom{n-i+tm}{tm} \frac{(tm)!}{m^t * t!}$</p>
+<p>$ &#x3D; \binom{n-i+tm}{tm} \frac{(tm)!}{m\cdot 2m \cdots tm}$</p>
+<p>$ &#x3D; \binom{n-i+tm}{tm} \frac{(tm)!}{m^t * t!}$</p>
 <p>似乎就对了</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc226/submissions/33934208" target="_blank" rel="noopener">https://atcoder.jp/contests/abc226/submissions/33934208</a></p>
-<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#include &lt;atcoder/modint&gt;
-using mint = atcoder::modint998244353;
-using namespace std;
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc226/submissions/33934208">https://atcoder.jp/contests/abc226/submissions/33934208</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="function">ll <span class="title">gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123; <span class="keyword">return</span> b == <span class="number">0</span>? a: <span class="built_in">gcd</span>(b,a%b);&#125;</span><br><span class="line"></span><br><span class="line">map&lt;<span class="type">int</span>,mint&gt; dp[<span class="number">60</span>][<span class="number">60</span>]; <span class="comment">// dp[选最小i个][最大的环为j] = &#123;lcm, count&#125;</span></span><br><span class="line">mint fac[<span class="number">100</span>] = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint ifac[<span class="number">100</span>];</span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m)</span> </span>&#123; <span class="keyword">return</span> fac[n] * ifac[m] * ifac[n-m];&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">51</span>) fac[i] = fac[i<span class="number">-1</span>] * i;</span><br><span class="line">  ifac[<span class="number">50</span>] = fac[<span class="number">50</span>].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,<span class="number">50</span>) ifac[i] = ifac[i+<span class="number">1</span>] * (i+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> k = <span class="built_in">read</span>();</span><br><span class="line">  dp[<span class="number">0</span>][<span class="number">0</span>][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(j,<span class="number">1</span>,i+<span class="number">1</span>)&#123;</span><br><span class="line">    mint invj = <span class="built_in">mint</span>(j).<span class="built_in">inv</span>();</span><br><span class="line">    <span class="built_in">rep</span>(t,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="type">int</span> oldi = i - j*t; <span class="comment">// [i - j*t][&lt;j]</span></span><br><span class="line">      <span class="keyword">if</span>(oldi &lt; <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">      <span class="built_in">rep</span>(k,<span class="number">0</span>,j) <span class="keyword">for</span>(<span class="keyword">auto</span> [lcm,cnt]: dp[oldi][k])&#123;</span><br><span class="line">        dp[i][j][lcm * j / <span class="built_in">gcd</span>(lcm,j)] += cnt * <span class="built_in">binom</span>(n-oldi,j*t) * fac[j*t] * ifac[t] * invj.<span class="built_in">pow</span>(t);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">1</span>,n+<span class="number">1</span>) <span class="keyword">for</span>(<span class="keyword">auto</span> [lcm,cnt]:dp[n][j]) ans += cnt * <span class="built_in">mint</span>(lcm).<span class="built_in">pow</span>(k);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-typedef long long ll;
-#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)
-#define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)
-
-ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // read
-ll gcd(int a,int b){ return b == 0? a: gcd(b,a%b);}
-
-map&lt;int,mint&gt; dp[60][60]; // dp[选最小i个][最大的环为j] = {lcm, count}
-mint fac[100] = {1};
-mint ifac[100];
-mint binom(int n,int m) { return fac[n] * ifac[m] * ifac[n-m];}
-
-int main(){
-  rep(i,1,51) fac[i] = fac[i-1] * i;
-  ifac[50] = fac[50].inv();
-  per(i,0,50) ifac[i] = ifac[i+1] * (i+1);
-
-  int n = read();
-  int k = read();
-  dp[0][0][1] = 1;
-  rep(i,1,n+1) rep(j,1,i+1){
-    mint invj = mint(j).inv();
-    rep(t,1,n+1){
-      int oldi = i - j*t; // [i - j*t][&lt;j]
-      if(oldi &lt; 0) break;
-      rep(k,0,j) for(auto [lcm,cnt]: dp[oldi][k]){
-        dp[i][j][lcm * j / gcd(lcm,j)] += cnt * binom(n-oldi,j*t) * fac[j*t] * ifac[t] * invj.pow(t);
-      }
-    }
-  }
-  mint ans = 0;
-  rep(j,1,n+1) for(auto [lcm,cnt]:dp[n][j]) ans += cnt * mint(lcm).pow(k);
-  printf(&quot;%d\n&quot;,ans.val());
-  return 0;
-}
-</code></pre>
 <h1 id="G-The-baggage"><a href="#G-The-baggage" class="headerlink" title="G - The baggage"></a>G - The baggage</h1><p>重量1~5的物品每个Ai个</p>
 <p>搬运能力1~5的人每个Bi个</p>
 <p>问是否有方法, 让所有物品被至少一个人搬运,且每个人搬运的物品重量和不大于他的能力</p>
@@ -578,7 +364,7 @@ int main(){
 <h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>一样看上去, 枚举或者数学题</p>
 <p>考虑 物品重量不超过5的组合</p>
 <p>再 组合x能力, 应该大概有 5x2^5以内的选项 </p>
-<p>每个选项有限制, 一些之间的和小于等于Bi, 一些之间的和 = Ai, 看是否有方案</p>
+<p>每个选项有限制, 一些之间的和小于等于Bi, 一些之间的和 &#x3D; Ai, 看是否有方案</p>
 <p>似乎变成2sat? 然后是 偏序的样子, 但Ai,Bi范围大, 似乎没法那么多点</p>
 <hr>
 <p>另一个从能力从小到大</p>
@@ -588,76 +374,12 @@ int main(){
 <p>能力4的,先1个4, 问题来了, 是3+1先还是2+2先呢? 如果都考虑3+1还是2+2了, 说明4消耗完了,对5来说 5,3,2,1的处理肯定先整个5,然后先3找2,再去2+2+1</p>
 <p>所以对于4来说,先2+2,后3+1</p>
 <p>就这样? 似乎贪心就没了?</p>
-<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line">ll a[<span class="number">10</span>];</span><br><span class="line">ll b[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">vector&lt;vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; &gt; &gt; child[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">w</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">5</span>+<span class="number">1</span>) a[i] = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">5</span>+<span class="number">1</span>) b[i] = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">5</span>+<span class="number">1</span>) <span class="built_in">per</span>(j,<span class="number">1</span>,i+<span class="number">1</span>) <span class="keyword">for</span>(<span class="keyword">auto</span> arr: child[j])&#123;</span><br><span class="line">    ll c = b[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [v,t]:arr) c = <span class="built_in">min</span>(c, a[v] / t);</span><br><span class="line">    b[i] -= c;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [v,t]:arr) a[v] -= c*t;</span><br><span class="line">  &#125;</span><br><span class="line">  ll s = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">5</span>+<span class="number">1</span>) s += a[i];</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,s == <span class="number">0</span> ? <span class="string">&quot;Yes&quot;</span> : <span class="string">&quot;No&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  child[<span class="number">1</span>] = &#123;</span><br><span class="line">    &#123;&#123;<span class="number">1</span>,<span class="number">1</span>&#125;&#125; <span class="comment">// 1</span></span><br><span class="line">  &#125;;</span><br><span class="line">  child[<span class="number">2</span>] = &#123;</span><br><span class="line">    &#123;&#123;<span class="number">2</span>,<span class="number">1</span>&#125;&#125;, <span class="comment">// 2</span></span><br><span class="line">    &#123;&#123;<span class="number">1</span>,<span class="number">2</span>&#125;&#125; <span class="comment">// 1+1</span></span><br><span class="line">  &#125;;</span><br><span class="line">  child[<span class="number">3</span>] = &#123;</span><br><span class="line">    &#123;&#123;<span class="number">3</span>,<span class="number">1</span>&#125;&#125;, <span class="comment">// 3</span></span><br><span class="line">    &#123;&#123;<span class="number">2</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">1</span>&#125;&#125;, <span class="comment">// 2+1</span></span><br><span class="line">    &#123;&#123;<span class="number">1</span>,<span class="number">3</span>&#125;&#125; <span class="comment">// 1+1+1</span></span><br><span class="line">  &#125;;</span><br><span class="line">  child[<span class="number">4</span>] = &#123;</span><br><span class="line">    &#123;&#123;<span class="number">4</span>,<span class="number">1</span>&#125;&#125;, <span class="comment">// 4</span></span><br><span class="line">    &#123;&#123;<span class="number">2</span>,<span class="number">2</span>&#125;&#125;, <span class="comment">// 2+2</span></span><br><span class="line">    &#123;&#123;<span class="number">3</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">1</span>&#125;&#125;,<span class="comment">// 3+1</span></span><br><span class="line">    &#123;&#123;<span class="number">2</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">2</span>&#125;&#125;, <span class="comment">// 2+1+1</span></span><br><span class="line">    &#123;&#123;<span class="number">1</span>,<span class="number">4</span>&#125;&#125; <span class="comment">// 1+1+1+1</span></span><br><span class="line">  &#125;;</span><br><span class="line">  child[<span class="number">5</span>] = &#123;</span><br><span class="line">    &#123;&#123;<span class="number">5</span>,<span class="number">1</span>&#125;&#125;, <span class="comment">// 5</span></span><br><span class="line">    &#123;&#123;<span class="number">4</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">1</span>&#125;&#125;, <span class="comment">// 4+1</span></span><br><span class="line">    &#123;&#123;<span class="number">3</span>,<span class="number">1</span>&#125;,&#123;<span class="number">2</span>,<span class="number">1</span>&#125;&#125;, <span class="comment">// 3+2</span></span><br><span class="line">    &#123;&#123;<span class="number">3</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">2</span>&#125;&#125;, <span class="comment">// 3+1+1</span></span><br><span class="line">    &#123;&#123;<span class="number">2</span>,<span class="number">2</span>&#125;,&#123;<span class="number">1</span>,<span class="number">1</span>&#125;&#125;, <span class="comment">// 2+2+1</span></span><br><span class="line">    &#123;&#123;<span class="number">2</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">3</span>&#125;&#125;, <span class="comment">// 2+1+1+1</span></span><br><span class="line">    &#123;&#123;<span class="number">1</span>,<span class="number">5</span>&#125;&#125; <span class="comment">// 1+1+1+1+1</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> t = <span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">while</span>(t--) <span class="built_in">w</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-typedef long long ll;
-#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)
-#define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)
-
-ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // read
-
-int n;
-
-ll a[10];
-ll b[10];
-
-vector&lt;vector&lt;pair&lt;int,int&gt; &gt; &gt; child[10];
-
-void w(){
-  rep(i,1,5+1) a[i] = read();
-  rep(i,1,5+1) b[i] = read();
-
-  rep(i,1,5+1) per(j,1,i+1) for(auto arr: child[j]){
-    ll c = b[i];
-    for(auto [v,t]:arr) c = min(c, a[v] / t);
-    b[i] -= c;
-    for(auto [v,t]:arr) a[v] -= c*t;
-  }
-  ll s = 0;
-  rep(i,1,5+1) s += a[i];
-  printf(&quot;%s\n&quot;,s == 0 ? &quot;Yes&quot; : &quot;No&quot;);
-}
-
-int main(){
-  child[1] = {
-    {{1,1}} // 1
-  };
-  child[2] = {
-    {{2,1}}, // 2
-    {{1,2}} // 1+1
-  };
-  child[3] = {
-    {{3,1}}, // 3
-    {{2,1},{1,1}}, // 2+1
-    {{1,3}} // 1+1+1
-  };
-  child[4] = {
-    {{4,1}}, // 4
-    {{2,2}}, // 2+2
-    {{3,1},{1,1}},// 3+1
-    {{2,1},{1,2}}, // 2+1+1
-    {{1,4}} // 1+1+1+1
-  };
-  child[5] = {
-    {{5,1}}, // 5
-    {{4,1},{1,1}}, // 4+1
-    {{3,1},{2,1}}, // 3+2
-    {{3,1},{1,2}}, // 3+1+1
-    {{2,2},{1,1}}, // 2+2+1
-    {{2,1},{1,3}}, // 2+1+1+1
-    {{1,5}} // 1+1+1+1+1
-  };
-
-  int t = read();
-  while(t--) w();
-  return 0;
-}
-</code></pre>
 <p>但ac x15, wa x33</p>
 <p>看起来贪假了</p>
 <hr>
-<p>原因大概是<code>{1,5}</code> 优先级比<code>{3,1},{1,1}</code> 高了?</p>
+<p>原因大概是<code>&#123;1,5&#125;</code> 优先级比<code>&#123;3,1&#125;,&#123;1,1&#125;</code> 高了?</p>
 <p>调了半天优先顺序都没对</p>
 <p>好神奇啊这题</p>
 <h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>还是贪心,</p>
@@ -679,51 +401,10 @@ int main(){
 <p>1拿1</p>
 <p>????????????? 学不会</p>
 <p>tourist 都wa了一次</p>
-<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc226/submissions/33953558" target="_blank" rel="noopener">https://atcoder.jp/contests/abc226/submissions/33953558</a></p>
-<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc226/submissions/33953558">https://atcoder.jp/contests/abc226/submissions/33953558</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line">ll a[<span class="number">10</span>];</span><br><span class="line">ll b[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pack</span><span class="params">(ll x, ll y)</span> </span>&#123;</span><br><span class="line">  ll c = <span class="built_in">min</span>(a[x], b[y]);</span><br><span class="line">  a[x] -= c;</span><br><span class="line">  b[y] -= c;</span><br><span class="line">  <span class="keyword">if</span>(y-x) b[y - x] += c; <span class="comment">// c个工人的负重还剩下y-x</span></span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">w</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">5</span>+<span class="number">1</span>) a[i] = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">5</span>+<span class="number">1</span>) b[i] = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">1</span>,<span class="number">5</span>+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">pack</span>(i,i);</span><br><span class="line">    <span class="built_in">per</span>(j,i+<span class="number">1</span>,<span class="number">5</span>+<span class="number">1</span>) <span class="built_in">pack</span>(i,j);</span><br><span class="line">    <span class="built_in">pack</span>(i,i);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">bool</span> ans = <span class="literal">true</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">5</span>+<span class="number">1</span>)<span class="keyword">if</span> (a[i] &gt; <span class="number">0</span>)ans = <span class="literal">false</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, ans? <span class="string">&quot;Yes&quot;</span>: <span class="string">&quot;No&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> t = <span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">while</span>(t--) <span class="built_in">w</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-typedef long long ll;
-#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)
-#define per(i,a,n) for (ll i=n;i--&gt;(ll)a;)
 
-ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // read
-
-int n;
-
-ll a[10];
-ll b[10];
-
-void pack(ll x, ll y) {
-  ll c = min(a[x], b[y]);
-  a[x] -= c;
-  b[y] -= c;
-  if(y-x) b[y - x] += c; // c个工人的负重还剩下y-x
-  return;
-}
-
-void w(){
-  rep(i,1,5+1) a[i] = read();
-  rep(i,1,5+1) b[i] = read();
-
-  per(i,1,5+1){
-    pack(i,i);
-    per(j,i+1,5+1) pack(i,j);
-    pack(i,i);
-  }
-
-  bool ans = true;
-  rep(i,1,5+1)if (a[i] &gt; 0)ans = false;
-  printf(&quot;%s\n&quot;, ans? &quot;Yes&quot;: &quot;No&quot;);
-}
-
-int main(){
-  int t = read();
-  while(t--) w();
-  return 0;
-}
-
-</code></pre>
 <h1 id="H-Random-Kth-Max"><a href="#H-Random-Kth-Max" class="headerlink" title="H - Random Kth Max"></a>H - Random Kth Max</h1><p>N 个随机量</p>
 <p>Xi 均匀分布于[Li,Ri]的实数区间</p>
 <p>输出 期望 E(第k大的元素) mod 998244353</p>
@@ -735,39 +416,39 @@ int main(){
 <p>如果指定了哪个是第k大的, 那么剩下有k-1个小于等于它的(虽然等于可能带来重复计算,但是在样本区间是连续的里面,单个的不会影响</p>
 <p>但问题是如果制定了第k大的,它依然是区间而不是值</p>
 <p>$v_i \in [L_i,R_i]$</p>
-<p>其它的不大于它的概率为 $p_j = (v_i-l_j)/(r_j-l_j)$</p>
+<p>其它的不大于它的概率为 $p_j &#x3D; (v_i-l_j)&#x2F;(r_j-l_j)$</p>
 <p>感觉上会变成v的k次方的表达式</p>
 <p>然后再积分??</p>
 <p>不会了</p>
-<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>考虑其分布函数 $F_X(x) = P(X \le x) = x$</p>
-<p>$P(a &lt; X \le b ) = F(b) - F(a)$</p>
-<p>$F(x) = \int_{-\infty}^x f(t)dt.$</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>考虑其分布函数 $F_X(x) &#x3D; P(X \le x) &#x3D; x$</p>
+<p>$P(a &lt; X \le b ) &#x3D; F(b) - F(a)$</p>
+<p>$F(x) &#x3D; \int_{-\infty}^x f(t)dt.$</p>
 <p>若$X$在$[a,b]$之间分布</p>
-<p>$1 = \int_{a}^b f(x)dx,$</p>
-<p>$E \lbrack X \rbrack = \int_{a}^b xf(x)dx,$</p>
-<p>$ = \int_{a}^b x d F(x) $</p>
-<p>$ = (bF(b) - aF(a)) - \int_{a}^b F(x) d x $</p>
-<p>$ = b - \int_{a}^b F(x) d x $</p>
-<p>$ = a + (b - a) + \int_{a}^b -F(x) d x $</p>
-<p>$ = a + \int_{a}^{b} (1 - F(x)) dx.$</p>
+<p>$1 &#x3D; \int_{a}^b f(x)dx,$</p>
+<p>$E \lbrack X \rbrack &#x3D; \int_{a}^b xf(x)dx,$</p>
+<p>$ &#x3D; \int_{a}^b x d F(x) $</p>
+<p>$ &#x3D; (bF(b) - aF(a)) - \int_{a}^b F(x) d x $</p>
+<p>$ &#x3D; b - \int_{a}^b F(x) d x $</p>
+<p>$ &#x3D; a + (b - a) + \int_{a}^b -F(x) d x $</p>
+<p>$ &#x3D; a + \int_{a}^{b} (1 - F(x)) dx.$</p>
 <hr>
 <p>考虑子问题</p>
 <p>N个随机变量都是 (0,1) 随机分布, 求第k大的数的期望</p>
 <p>比x大的期望是$1-x$ 比x小的期望是$x$</p>
-<p>因此第k大的数比x大的期望是 $1-F(x) = \overline{F}(x) = \sum_{i=k}^n \binom{n}{i} (1-x)^i x^{n-i}.$</p>
-<p>解释一下,就是n个中选$i = [k\cdots n]$个大于x, 而剩余的小于x</p>
+<p>因此第k大的数比x大的期望是 $1-F(x) &#x3D; \overline{F}(x) &#x3D; \sum_{i&#x3D;k}^n \binom{n}{i} (1-x)^i x^{n-i}.$</p>
+<p>解释一下,就是n个中选$i &#x3D; [k\cdots n]$个大于x, 而剩余的小于x</p>
 <p>根据上面的期望表达式有(这里用了beta function</p>
-<p>$\begin{aligned}<br>f(n,k) &amp;= E\lbrack X \rbrack \\<br>&amp;= \int_{0}^{1} \left\lbrace \sum_{i=k}^n \binom{n}{i} (1-x)^i x^{n-i} \right\rbrace dx \\<br>&amp;= \sum_{i=k}^n \binom{n}{i}  \int_{0}^{1} (1-x)^i x^{n-i} dx \\<br>&amp;= \sum_{i=k}^n \binom{n}{i} \frac{i!(n-i)!}{(n+1)!} \\<br>&amp;= \sum_{i=k}^n \frac{n!}{i!(n-i)!} \frac{i!(n-i)!}{(n+1)!} \\<br>&amp;= \sum_{i=k}^n \frac{1}{n+1} \\<br>&amp;= \frac{n-k+1}{n+1} \\<br>&amp;= 1 - \frac{k}{n+1}.<br>\end{aligned}$</p>
+<p>$\begin{aligned}<br>f(n,k) &amp;&#x3D; E\lbrack X \rbrack \\<br>&amp;&#x3D; \int_{0}^{1} \left\lbrace \sum_{i&#x3D;k}^n \binom{n}{i} (1-x)^i x^{n-i} \right\rbrace dx \\<br>&amp;&#x3D; \sum_{i&#x3D;k}^n \binom{n}{i}  \int_{0}^{1} (1-x)^i x^{n-i} dx \\<br>&amp;&#x3D; \sum_{i&#x3D;k}^n \binom{n}{i} \frac{i!(n-i)!}{(n+1)!} \\<br>&amp;&#x3D; \sum_{i&#x3D;k}^n \frac{n!}{i!(n-i)!} \frac{i!(n-i)!}{(n+1)!} \\<br>&amp;&#x3D; \sum_{i&#x3D;k}^n \frac{1}{n+1} \\<br>&amp;&#x3D; \frac{n-k+1}{n+1} \\<br>&amp;&#x3D; 1 - \frac{k}{n+1}.<br>\end{aligned}$</p>
 <h3 id="Beta-Function-Gamma-Function"><a href="#Beta-Function-Gamma-Function" class="headerlink" title="Beta Function, Gamma Function"></a>Beta Function, Gamma Function</h3><p>beta function , $\forall P,Q &gt; 0$</p>
-<p>$B(P,Q) = \int_0^1 x^{P-1}(1-x)^{Q-1}dx$</p>
+<p>$B(P,Q) &#x3D; \int_0^1 x^{P-1}(1-x)^{Q-1}dx$</p>
 <p>Gamma Function</p>
-<p>$\Gamma(x) \equiv \int_0^{+\infty} t^{x-1}  \mathrm{e} ^{-t}  \,\mathrm{d}{t}  \qquad (x &gt; 0)$</p>
-<p>$x! = \Gamma(x+1)$</p>
-<p>$B(P,Q) = \frac{\Gamma(P)\Gamma(Q)}{\Gamma(P+Q)}$</p>
-<p>对于整数$m,n$ 有 $\int_{0}^{1} x^m (1-x)^n dx = B(m+1,n+1) = \frac{\Gamma(m+1)\Gamma(n+1)}{\Gamma(n+m+2)} = \frac{m!n!}{(m+n+1)!},$</p>
+<p>$\Gamma(x) \equiv \int_0^{+\infty} t^{x-1}  \mathrm{e} ^{-t}  ,\mathrm{d}{t}  \qquad (x &gt; 0)$</p>
+<p>$x! &#x3D; \Gamma(x+1)$</p>
+<p>$B(P,Q) &#x3D; \frac{\Gamma(P)\Gamma(Q)}{\Gamma(P+Q)}$</p>
+<p>对于整数$m,n$ 有 $\int_{0}^{1} x^m (1-x)^n dx &#x3D; B(m+1,n+1) &#x3D; \frac{\Gamma(m+1)\Gamma(n+1)}{\Gamma(n+m+2)} &#x3D; \frac{m!n!}{(m+n+1)!},$</p>
 <h2 id="回到原问题"><a href="#回到原问题" class="headerlink" title="回到原问题"></a>回到原问题</h2><p>!!!!!拆线段, 让每个值都在 多个长度为1的线段里分布,再计算答案</p>
 <p>对于每个线段<code>[A,A+1]</code>算dp,最后算贡献</p>
-<p><code>dp[i][j][t] =</code> 前i个随机变量, j个大于A+1, t 个在<code>[A,A+1]</code> 之间 的概率</p>
+<p><code>dp[i][j][t] = </code> 前i个随机变量, j个大于A+1, t 个在<code>[A,A+1]</code> 之间 的概率</p>
 <p>第<code>i</code>无非3种, <code>&lt; A</code>, <code>[A,A+1]</code>之间<code>&gt; A+1</code></p>
 <p><code>&lt; A</code>: <code>+dp[i-1][j][t] * (min(A,ri)-li)/(ri-li)</code>, 需要<code>A &gt;= li</code></p>
 <p><code>[A,A+1]</code>: <code>+dp[i-1][j][t-1] * 1/(ri-li)</code>, 且<code>[A,A+1]</code> 在<code>[li,ri]</code> 之间</p>
@@ -775,59 +456,13 @@ int main(){
 <p>滚动可以空间$O(N^2)$</p>
 <hr>
 <p><code>j</code>个大于<code>A+1</code>, <code>t</code>个在<code>[A,A+1]</code>中, 那么第<code>k</code>大的期望就是 <code>[A,A+1]</code>中第<code>k-j</code>大的期望</p>
-<p>那么<code>[A,A+1]</code> 对答案的贡献, $\sum dp_{n,j = 0 \cdots n, t = 0 \cdots n} \cdot (A + 1 - \frac{k-j}{t+1})$ </p>
+<p>那么<code>[A,A+1]</code> 对答案的贡献, $\sum dp_{n,j &#x3D; 0 \cdots n, t &#x3D; 0 \cdots n} \cdot (A + 1 - \frac{k-j}{t+1})$ </p>
 <p>看起来$O(n^4)$ 但是有些状态达不到, 常数一般 </p>
 <hr>
 <p>看起来还有$O(N^3)$ 甚至 taylor shift 分治可以$N^2 log^2 N$ 的做法</p>
-<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc226/submissions/34060577" target="_blank" rel="noopener">https://atcoder.jp/contests/abc226/submissions/34060577</a></p>
-<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-#include &lt;atcoder/modint&gt;
-using mint = atcoder::modint998244353;
-using namespace std;
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc226/submissions/34060577">https://atcoder.jp/contests/abc226/submissions/34060577</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n;i--&gt;(int)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line">ll inv[<span class="number">110</span>] = &#123;<span class="number">0</span>,<span class="number">1</span>&#125;; <span class="comment">// inv[i] = 1/i</span></span><br><span class="line"><span class="type">int</span> l[<span class="number">60</span>];</span><br><span class="line"><span class="type">int</span> r[<span class="number">60</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,<span class="number">100</span>+<span class="number">1</span>) inv[i] = (MOD-MOD/i) * inv[MOD%i] % MOD;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> K = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    l[i] = <span class="built_in">read</span>();</span><br><span class="line">    r[i] = <span class="built_in">read</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> minl = *<span class="built_in">min_element</span>(l+<span class="number">1</span>,l+n+<span class="number">1</span>);</span><br><span class="line">  <span class="type">int</span> maxr = *<span class="built_in">max_element</span>(r+<span class="number">1</span>,r+n+<span class="number">1</span>);</span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(A,minl,maxr)&#123;<span class="comment">// 处理区间[A,A+1]</span></span><br><span class="line">    <span class="comment">// dp[i][j][t] = 前i个, j个大于, t个在`[A,A+1]`, 滚动掉一个维度</span></span><br><span class="line">    <span class="keyword">auto</span> dp = <span class="built_in">vector</span>(n+<span class="number">1</span>,<span class="built_in">vector</span>&lt;mint&gt;(n+<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="type">int</span> invrl = inv[r[i]-l[i]];</span><br><span class="line">      <span class="built_in">per</span>(j,<span class="number">0</span>,i+<span class="number">1</span>) <span class="keyword">if</span>(j &lt;= K) <span class="built_in">per</span>(t,<span class="number">0</span>,i-j+<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="comment">// val[i] &lt; A</span></span><br><span class="line">        dp[j][t] = (l[i] &lt;= A) ?                  dp[j  ][t  ]*(<span class="built_in">min</span>(r[i],A) - l[i])*invrl : <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// val[i] \in [A,A+1]</span></span><br><span class="line">        <span class="keyword">if</span>(l[i]&lt;=A &amp;&amp; A+<span class="number">1</span>&lt;=r[i] &amp;&amp; t) dp[j][t] += dp[j  ][t<span class="number">-1</span>]                     *invrl;</span><br><span class="line">        <span class="comment">// val[i] &gt; A+1</span></span><br><span class="line">        <span class="keyword">if</span>(A+<span class="number">1</span>&lt;=r[i] &amp;&amp; j )           dp[j][t] += dp[j<span class="number">-1</span>][t  ]*(r[i]-<span class="built_in">max</span>(l[i],A+<span class="number">1</span>))*invrl;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,K) <span class="built_in">rep</span>(t,<span class="number">0</span>,n+<span class="number">1</span>) <span class="keyword">if</span> (K-j &lt;= t) ans += dp[j][t] * (A+<span class="number">1</span>-(K-j)*inv[t+<span class="number">1</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-typedef long long ll;
-#define MOD 998244353
-#define rep(i,a,n) for (int i=a;i&lt;(int)n;i++)
-#define per(i,a,n) for (int i=n;i--&gt;(int)a;)
-
-ll read(){ll r;scanf(&quot;%lld&quot;,&amp;r);return r;} // read
-
-ll inv[110] = {0,1}; // inv[i] = 1/i
-int l[60];
-int r[60];
-
-int main() {
-  rep(i,2,100+1) inv[i] = (MOD-MOD/i) * inv[MOD%i] % MOD;
-  int n = read();
-  int K = read();
-  rep(i,1,n+1){
-    l[i] = read();
-    r[i] = read();
-  }
-  int minl = *min_element(l+1,l+n+1);
-  int maxr = *max_element(r+1,r+n+1);
-  mint ans = 0;
-  rep(A,minl,maxr){// 处理区间[A,A+1]
-    // dp[i][j][t] = 前i个, j个大于, t个在`[A,A+1]`, 滚动掉一个维度
-    auto dp = vector(n+1,vector&lt;mint&gt;(n+1,0));
-    dp[0][0] = 1;
-    rep(i,1,n+1){
-      int invrl = inv[r[i]-l[i]];
-      per(j,0,i+1) if(j &lt;= K) per(t,0,i-j+1){
-        // val[i] &lt; A
-        dp[j][t] = (l[i] &lt;= A) ?                  dp[j  ][t  ]*(min(r[i],A) - l[i])*invrl : 0;
-        // val[i] \in [A,A+1]
-        if(l[i]&lt;=A &amp;&amp; A+1&lt;=r[i] &amp;&amp; t) dp[j][t] += dp[j  ][t-1]                     *invrl;
-        // val[i] &gt; A+1
-        if(A+1&lt;=r[i] &amp;&amp; j )           dp[j][t] += dp[j-1][t  ]*(r[i]-max(l[i],A+1))*invrl;
-      }
-    }
-    rep(j,0,K) rep(t,0,n+1) if (K-j &lt;= t) ans += dp[j][t] * (A+1-(K-j)*inv[t+1]);
-  }
-  printf(&quot;%d\n&quot;,ans.val());
-  return 0;
-}
-</code></pre>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F</p>
 <p>dp 组合数, 主要是看到和很小,所以lcm估计也很少,没啥难的</p>
 <p>G</p>
@@ -836,481 +471,137 @@ int main() {
 <p>概率论完全不会, 这里思路还是积分类的</p>
 <p>就是对于连续的概率分布,转变成 概率分布以后,就方便计算分布函数的概率,而不是单点的概率表达式, 这样再反推概率表达式也行, 直接得到E(X)也行</p>
 <p>这个拆线段也是很神奇, 没想到, 感觉大量的dp做的还是离散的,这里的有针对这种连续的处理方法</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc226/editorial" target="_blank" rel="noopener">官方题解</a></p>
-<p><a href="https://baike.baidu.com/item/%E8%B4%9D%E5%A1%94%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">贝塔函数 百度百科</a></p>
-<p><a href="https://wuli.wiki/changed/Gamma.html" target="_blank" rel="noopener">wuli.wiki gamma</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc226/editorial">官方题解</a></p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B4%9D%E5%A1%94%E5%87%BD%E6%95%B0">贝塔函数 百度百科</a></p>
+<p><a target="_blank" rel="noopener" href="https://wuli.wiki/changed/Gamma.html">wuli.wiki gamma</a></p>
 
-        
-                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
-                    <p><strong>
-                         
-                            This blog is under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC BY-NC-SA 3.0 Unported License</a>
-                        </strong>
-                        <br>
-                        <strong>本文鏈接：</strong><a href="http://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/">http://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/</a>
-                    </p>
-                </blockquote>
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'http://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//yexiaorain.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/Blog/2022-08-21-ac_arc146/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/Blog/2022-08-12-generate_function/" id="post_nav-older" class="next-content">
-            舊篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
     </div>
 
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/Blog/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/Blog/img/satan.jpg" alt="Xiao Ye's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        yexiaorain@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto: yexiaorain@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
     
-        <li id="sidebar-first-li">
-            <a href="/Blog/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                首頁
-            </a>
-        </li>
-        
     
+    
+      
 
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    過往
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/Blog/archives/2022/09/">九月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/08/">八月 2022<span class="sidebar_archives-count">17</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/07/">七月 2022<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/06/">六月 2022<span class="sidebar_archives-count">17</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/05/">五月 2022<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/04/">四月 2022<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/03/">三月 2022<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/12/">十二月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/11/">十一月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/09/">九月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/08/">八月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/07/">七月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/06/">六月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/05/">五月 2021<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/04/">四月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/02/">二月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/12/">十二月 2020<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/11/">十一月 2020<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/08/">八月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/07/">七月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/06/">六月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/05/">五月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/04/">四月 2020<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/01/">一月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/11/">十一月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/10/">十月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/09/">九月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/07/">七月 2019<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/06/">六月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/05/">五月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/04/">四月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/03/">三月 2019<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/02/">二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/05/">五月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/10/">十月 2017<span class="sidebar_archives-count">4</span></a>
-            </ul>
-        </li>
-        
-    
 
-    <!-- Categories  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
-                
-                分類
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                <a class="sidebar_archives-link" href="/Blog/categories/Atcoder/">Atcoder<span class="sidebar_archives-count">40</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/ABC/">ABC<span class="sidebar_archives-count">24</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/AGC/">AGC<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/ARC/">ARC<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/CodeChef/">CodeChef<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Codeforces/">Codeforces<span class="sidebar_archives-count">73</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Machine-learning/">Machine learning<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/">NowCoder<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Project-Euler/">Project Euler<span class="sidebar_archives-count">19</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/USACO/">USACO<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/algorithm/">algorithm<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/bestcoder/">bestcoder<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/luogu/">luogu<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/poj/">poj<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/tencent/">tencent<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
+    <footer class="post-footer">
+          
 
-    <!-- Pages  -->
-    
-
-    <!-- Article Number  -->
-    
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/" title="Atcoder abc226">https://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
 </ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%A6%82%E7%8E%87%E8%AE%BA/" rel="tag"><i class="fa fa-tag"></i> 概率论</a>
+              <a href="/Blog/tags/%E8%B4%AA%E5%BF%83/" rel="tag"><i class="fa fa-tag"></i> 贪心</a>
+              <a href="/Blog/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" rel="tag"><i class="fa fa-tag"></i> 微积分</a>
+              <a href="/Blog/tags/beta-function/" rel="tag"><i class="fa fa-tag"></i> beta function</a>
+              <a href="/Blog/tags/Gamma-Function/" rel="tag"><i class="fa fa-tag"></i> Gamma Function</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2022-08-12-generate_function/" rel="prev" title="maspy 生成方程与问题解决">
+                  <i class="fa fa-chevron-left"></i> maspy 生成方程与问题解决
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/2022-08-21-ac_arc146/" rel="next" title="Atcoder arc146 C">
+                  Atcoder arc146 C <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
 
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
 
 
-<!-- Theme Material -->
 
 
-<!-- Help & Support -->
-<!--
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
 
--->
+  <footer class="footer">
+    <div class="footer-inner">
 
-<!-- Feedback -->
-<!--
 
--->
-
-<!-- About Theme -->
-<!--
-
--->
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">728k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">11:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
 
     </div>
+  </footer>
 
-    <!-- Sidebar Image -->
-    
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
 
-</aside>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
 
-                    
 
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
 
-                    
 
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
 
-    <!-- Facebook -->
-    
+  
 
-    <!-- Google + -->
-    
 
-    <!-- Weibo -->
-    
 
-    <!-- Instagram -->
-    
 
-    <!-- Tumblr -->
-    
+  
 
-    <!-- Github -->
-    
-        <a href="https://yexiaorain.github.com" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
 
-    <!-- LinkedIn -->
-    
 
-    <!-- Zhihu -->
-    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
 
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-    
-    <!-- V2EX -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;2013&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>YeXiaoRain Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
-            </div>
-        </div>
-    
-</footer>
-
-
-                    <!-- Import JS File -->
-
-    <script>lsloader.load("lazyload_js","/Blog/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
-
-
-
-    <script>lsloader.load("js_js","/Blog/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
-
-
-
-    <script>lsloader.load("np_js","/Blog/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//yexiaorain.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/Blog/css/uc.css">');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/Blog/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
-    })()
-console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
-
-                </main>
-            </div>
-        </body>
-    
+</body>
 </html>

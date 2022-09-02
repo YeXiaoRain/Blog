@@ -1,506 +1,328 @@
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.0 -->
-    <script>
-        window.materialVersion = "1.5.0"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1'
-        ]
-    </script>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="Heuristic Search,IDDFS,离散化,scc,块状矩阵">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USACO 5.3 章节">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="Heuristic Search,IDDFS,离散化,scc,块状矩阵">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-05-17T17:37:14.000Z">
+<meta property="article:modified_time" content="2022-09-02T03:53:44.452Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="离散化">
+<meta property="article:tag" content="启发式搜索">
+<meta property="article:tag" content="迭代加深搜索">
+<meta property="article:tag" content="scc">
+<meta property="article:tag" content="矩阵">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/">
 
 
 
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/","path":"2019-05-18-USACO-5.3/","title":"USACO 5.3 章节"}</script>
 
-
-
-
-
-
-
-
-    <!-- Title -->
-    
-    <title>
-        
-            USACO 5.3 章节 | 
-        
-        YeXiaoRain Blog
-    </title>
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Xiao Ye">
-    <meta name="description" itemprop="description" content>
-    <meta name="keywords" content=",离散化,Heuristic Search,IDDFS,scc,块状矩阵">
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/Blog/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/Blog/img/favicon.png">
-    <link rel="apple-touch-icon" href="/Blog/img/favicon.png">
-
-    <!--iOS -->
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="YeXiaoRain Blog">
-
-    <!-- Site Verification -->
-    
-    
-
-    <!-- RSS -->
-    
-        
-            <link rel="alternate" type="application/atom+xml" href="atom.xml">
-        
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.en.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/Blog/css/material.min.css?rdUU9RcgLCpXgn+BEpYF7Q==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/Blog/css/style.min.css?4ixU3PVzPicZm76KlybVwQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/Blog/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/Blog/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-    overflow-x: hidden !important;
-  }
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>USACO 5.3 章节 | YeXiaoRain Blog</title>
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-image: url(/Blog/img/ns.jpg);
-      }
-    </style>
 
 
 
 
-<!-- Fade Effect -->
 
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-
-
-<!-- Import Material Icon -->
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/Blog/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://yexiaorain.github.io/Blog">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="USACO 5.3 章节 | YeXiaoRain Blog">
-    <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
-    <meta property="og:description" content>
-    <meta property="og:article:tag" content="离散化"> <meta property="og:article:tag" content="Heuristic Search"> <meta property="og:article:tag" content="IDDFS"> <meta property="og:article:tag" content="scc"> <meta property="og:article:tag" content="块状矩阵"> 
-
-    
-        <meta property="article:published_time" content="Sat May 18 2019 01:37:14 GMT+0800">
-        <meta property="article:modified_time" content="Thu Sep 01 2022 22:54:57 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="USACO 5.3 章节 | YeXiaoRain Blog">
-    <meta name="twitter:description" content>
-    <meta name="twitter:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="http://yexiaorain.github.io/Blog">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="http://yexiaorain.github.io/Blog/Blog/2019-05-18-USACO-5.3/index.html">
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2019-05-18-USACO-5.3/index.html",
-    "headline": "USACO 5.3 章节",
-    "datePublished": "Sat May 18 2019 01:37:14 GMT+0800",
-    "dateModified": "Thu Sep 01 2022 22:54:57 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Xiao Ye",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/satan.jpg"
-        },
-        "description": "阳光只洒在金碧辉煌的高楼上"
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "YeXiaoRain Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/favicon.png"
-        }
-    },
-    "keywords": ",离散化,Heuristic Search,IDDFS,scc,块状矩阵",
-    "description": "",
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
-    
-    
-    
-
-    <!-- Custom Head -->
-    
-
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-    -->
+  </div>
 
+  <div class="site-meta">
 
-    <!-- Left aligned menu below button -->
-    
-    
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
 
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#USACO-Section-5-3-启发式搜索"><span class="post-toc-number">1.</span> <span class="post-toc-text">USACO Section 5.3 启发式搜索</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Milk-Measuring-milk4"><span class="post-toc-number">2.</span> <span class="post-toc-text">Milk Measuring - milk4</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题意"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">题意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#通过不了的题解"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">通过不了的题解</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#可通过的解"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">可通过的解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Window-Area-window"><span class="post-toc-number">3.</span> <span class="post-toc-text">Window Area - window</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题意-1"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">题意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Network-of-Schools-schlnet"><span class="post-toc-number">4.</span> <span class="post-toc-text">Network of Schools - schlnet</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题意-2"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">题意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解-1"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Big-Barn-bigbrn"><span class="post-toc-number">5.</span> <span class="post-toc-text">Big Barn - bigbrn</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题意-3"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">题意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解-2"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">6.</span> <span class="post-toc-text">总结</span></a></li></ol>
-    </ul>
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 4 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/Blog/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                USACO 5.3 章节
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/Blog/img/satan.jpg" width="44px" height="44px" alt="Author Avatar"/>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Xiao Ye</strong>
-        <span>5月 18, 2019</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/Blog/tags/Heuristic-Search/">Heuristic Search</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/IDDFS/">IDDFS</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/scc/">scc</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/块状矩阵/">块状矩阵</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/离散化/">离散化</a>
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=USACO 5.3 章节&url=http://yexiaorain.github.io/Blog/Blog/2019-05-18-USACO-5.3/index.html&pic=http://yexiaorain.github.io/Blog/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=USACO 5.3 章节&url=http://yexiaorain.github.io/Blog/Blog/2019-05-18-USACO-5.3/index.html&via=Xiao Ye" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yexiaorain.github.io/Blog/Blog/2019-05-18-USACO-5.3/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=YeXiaoRain Blog&title=USACO 5.3 章节&summary=&pics=http://yexiaorain.github.io/Blog/img/favicon.png&url=http://yexiaorain.github.io/Blog/Blog/2019-05-18-USACO-5.3/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 QQ
-            </li>
-        </a>
-    
-
-    <!-- Share Telegram -->
-    
-        <a class="post_share-link" href="https://telegram.me/share/url?url=http://yexiaorain.github.io/Blog/Blog/2019-05-18-USACO-5.3/index.html&text=USACO 5.3 章节" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Telegram
-            </li>
-        </a>
-    
-</ul>
-
+  </div>
 </div>
 
-                
 
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">171</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">166</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#USACO-Section-5-3-%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2"><span class="nav-number">1.</span> <span class="nav-text">USACO Section 5.3 启发式搜索</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Milk-Measuring-milk4"><span class="nav-number">2.</span> <span class="nav-text">Milk Measuring - milk4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">2.1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E4%B8%8D%E4%BA%86%E7%9A%84%E9%A2%98%E8%A7%A3"><span class="nav-number">2.2.</span> <span class="nav-text">通过不了的题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E9%80%9A%E8%BF%87%E7%9A%84%E8%A7%A3"><span class="nav-number">2.3.</span> <span class="nav-text">可通过的解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Window-Area-window"><span class="nav-number">3.</span> <span class="nav-text">Window Area - window</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E6%84%8F-1"><span class="nav-number">3.1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.2.</span> <span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Network-of-Schools-schlnet"><span class="nav-number">4.</span> <span class="nav-text">Network of Schools - schlnet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E6%84%8F-2"><span class="nav-number">4.1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-number">4.2.</span> <span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Big-Barn-bigbrn"><span class="nav-number">5.</span> <span class="nav-text">Big Barn - bigbrn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E6%84%8F-3"><span class="nav-number">5.1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-2"><span class="nav-number">5.2.</span> <span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">166</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="USACO 5.3 章节 | YeXiaoRain Blog">
+      <meta itemprop="description" content="Heuristic Search,IDDFS,离散化,scc,块状矩阵">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          USACO 5.3 章节
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-05-18 01:37:14" itemprop="dateCreated datePublished" datetime="2019-05-18T01:37:14+08:00">2019-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/USACO/" itemprop="url" rel="index"><span itemprop="name">USACO</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2019-05-18-USACO-5.3/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019-05-18-USACO-5.3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>12 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">Heuristic Search,IDDFS,离散化,scc,块状矩阵</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
         <p>相关讲解可在USACO上看原文，也可以搜索nocow找到翻译的！ (nocow上有些微翻译是有问题的，如果想看nocow翻译的建议也对着英文看)</p>
 <p>以下记录以下 自己之前未掌握的一些要点,以及按自己的括号表述的形式来记录。</p>
 <h1 id="USACO-Section-5-3-启发式搜索"><a href="#USACO-Section-5-3-启发式搜索" class="headerlink" title="USACO Section 5.3 启发式搜索"></a>USACO Section 5.3 启发式搜索</h1><p>启发式搜索的主要思想是通过评价一个状态有”多好”来改进对于解的搜索.</p>
@@ -516,7 +338,7 @@
 <blockquote>
 <p>关于估价函数<br>如果为0，可以看做毫无优化的默认算法。<br>如果为实际代价，那么就直接可以最快向目标前进。</p>
 </blockquote>
-<h1 id="Milk-Measuring-milk4"><a href="#Milk-Measuring-milk4" class="headerlink" title="Milk Measuring - milk4"></a>Milk Measuring - milk4</h1><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>从P个数中选 取任意个数，使得它们的整数倍数的和=Q</p>
+<h1 id="Milk-Measuring-milk4"><a href="#Milk-Measuring-milk4" class="headerlink" title="Milk Measuring - milk4"></a>Milk Measuring - milk4</h1><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>从P个数中选 取任意个数，使得它们的整数倍数的和&#x3D;Q</p>
 <p>如P: 3,3,5,7</p>
 <p>Q:16</p>
 <p><code>16=3*2+5*1</code></p>
@@ -525,319 +347,34 @@
 <p><code>1&lt;=P&lt;=100</code></p>
 <p><code>1&lt;=每个数&lt;=10000</code></p>
 <p>输出选择的方案</p>
-<h2 id="通过不了的题解"><a href="#通过不了的题解" class="headerlink" title="通过不了的题解"></a>通过不了的题解</h2><p>emmmm 我为什么一看就是个sort(从大到小)+<code>dp[当前第几个数][和的值]= {最小选取的个数,最后选择的index,选择的个数,倒数第一次选择的index}</code></p>
+<h2 id="通过不了的题解"><a href="#通过不了的题解" class="headerlink" title="通过不了的题解"></a>通过不了的题解</h2><p>emmmm 我为什么一看就是个sort(从大到小)+<code>dp[当前第几个数][和的值]= &#123;最小选取的个数,最后选择的index,选择的个数,倒数第一次选择的index&#125;</code></p>
 <p>空间<code>O(Q*P)</code>,时间<code>O(Q*P)</code> 能得到最小的个和方案,</p>
 <p>dp时 优先个数(目标要求个数)，其次上一次的index(因为sort过 且目标要求字典序)，个数用来反向输出方案</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;milk4&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tuple&lt;<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>&gt;dp[<span class="number">110</span>][<span class="number">20010</span>]; <span class="comment">// &#123;usecnt+1,lastuseidx,lastusecnt,preidx&#125;;</span></span><br><span class="line"><span class="type">int</span> val[<span class="number">110</span>];</span><br><span class="line"><span class="type">int</span> Q;</span><br><span class="line"><span class="type">int</span> P;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  cin&gt;&gt;Q;</span><br><span class="line">  cin&gt;&gt;P;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,P)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,val+i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(val,val+P,<span class="built_in">greater</span>&lt;<span class="type">int</span>&gt;());</span><br><span class="line">  <span class="built_in">rep</span>(p,<span class="number">0</span>,P)&#123;</span><br><span class="line">    dp[p][<span class="number">0</span>] = &#123;<span class="number">1</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">-1</span>&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(p,<span class="number">0</span>,P)&#123;</span><br><span class="line">    <span class="keyword">if</span>(p&gt;<span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">rep</span>(q,<span class="number">0</span>,Q+<span class="number">1</span>)&#123;</span><br><span class="line">        dp[p][q]=dp[p<span class="number">-1</span>][q];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(q,<span class="number">0</span>,Q)&#123;</span><br><span class="line">      <span class="keyword">auto</span> &amp; item = dp[p][q];</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(item) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(q+val[p] &gt; Q)<span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">auto</span> &amp; pre = dp[p][q+val[p]];</span><br><span class="line">        tuple&lt;<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>&gt; now = &#123;</span><br><span class="line">          <span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(item)+ (p !=<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(item)),</span><br><span class="line">          p,</span><br><span class="line">          (p!=<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(item))?<span class="number">1</span>:<span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(item)+<span class="number">1</span>,</span><br><span class="line">          (p!=<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(item))?<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(item):<span class="built_in">get</span>&lt;<span class="number">3</span>&gt;(item)</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(pre) == <span class="number">0</span> || <span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(pre) &gt;= <span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(now))&#123;</span><br><span class="line">          pre = now;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// rep(p,0,P)&#123;</span></span><br><span class="line">  <span class="comment">//   cout&lt;&lt;&quot;P:&quot;&lt;&lt;p&lt;&lt;endl;</span></span><br><span class="line">  <span class="comment">//   rep(q,0,Q+1)&#123;</span></span><br><span class="line">  <span class="comment">//     printf(&quot;[%d %d %d %d]&quot;,get&lt;0&gt;(dp[p][q]),get&lt;1&gt;(dp[p][q]),get&lt;2&gt;(dp[p][q]),get&lt;3&gt;(dp[p][q]));</span></span><br><span class="line">  <span class="comment">//   &#125;</span></span><br><span class="line">  <span class="comment">//   cout&lt;&lt;endl;</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">  <span class="keyword">auto</span> ans = dp[P<span class="number">-1</span>][Q];</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,<span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(ans)<span class="number">-1</span>);</span><br><span class="line">  <span class="type">int</span> qq = Q;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; %d&quot;</span>,val[<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(ans)]);</span><br><span class="line">    qq-= <span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(ans) * val[<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(ans)];</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">get</span>&lt;<span class="number">3</span>&gt;(ans) == <span class="number">-1</span>)&#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ans = dp[<span class="built_in">get</span>&lt;<span class="number">3</span>&gt;(ans)][qq];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;milk4&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-tuple&lt;int,int,int,int&gt;dp[110][20010]; // {usecnt+1,lastuseidx,lastusecnt,preidx};
-int val[110];
-int Q;
-int P;
-
-int main(){
-  usefile();
-  cin&gt;&gt;Q;
-  cin&gt;&gt;P;
-  rep(i,0,P){
-    scanf(&quot;%d&quot;,val+i);
-  }
-  sort(val,val+P,greater&lt;int&gt;());
-  rep(p,0,P){
-    dp[p][0] = {1,-1,0,-1};
-  }
-  rep(p,0,P){
-    if(p&gt;0){
-      rep(q,0,Q+1){
-        dp[p][q]=dp[p-1][q];
-      }
-    }
-    rep(q,0,Q){
-      auto &amp; item = dp[p][q];
-      if(get&lt;0&gt;(item) &gt; 0){
-        if(q+val[p] &gt; Q)break;
-        auto &amp; pre = dp[p][q+val[p]];
-        tuple&lt;int,int,int,int&gt; now = {
-          get&lt;0&gt;(item)+ (p !=get&lt;1&gt;(item)),
-          p,
-          (p!=get&lt;1&gt;(item))?1:get&lt;2&gt;(item)+1,
-          (p!=get&lt;1&gt;(item))?get&lt;1&gt;(item):get&lt;3&gt;(item)
-        };
-        if(get&lt;0&gt;(pre) == 0 || get&lt;0&gt;(pre) &gt;= get&lt;0&gt;(now)){
-          pre = now;
-        }
-      }
-    }
-  }
-  // rep(p,0,P){
-  //   cout&lt;&lt;&quot;P:&quot;&lt;&lt;p&lt;&lt;endl;
-  //   rep(q,0,Q+1){
-  //     printf(&quot;[%d %d %d %d]&quot;,get&lt;0&gt;(dp[p][q]),get&lt;1&gt;(dp[p][q]),get&lt;2&gt;(dp[p][q]),get&lt;3&gt;(dp[p][q]));
-  //   }
-  //   cout&lt;&lt;endl;
-  // }
-  auto ans = dp[P-1][Q];
-  printf(&quot;%d&quot;,get&lt;0&gt;(ans)-1);
-  int qq = Q;
-  while(1){
-    printf(&quot; %d&quot;,val[get&lt;1&gt;(ans)]);
-    qq-= get&lt;2&gt;(ans) * val[get&lt;1&gt;(ans)];
-    if(get&lt;3&gt;(ans) == -1){
-      break;
-    }
-    ans = dp[get&lt;3&gt;(ans)][qq];
-  }
-  printf(&quot;\n&quot;);
-  return 0;
-}
-</code></pre>
 <p>然而不幸的是超空间限制了</p>
-<p><code>Execution error: Your program (</code>milk4’) exited with signal #11 (segmentation violation [maybe caused by accessing memory out of bounds, array indexing out of bounds, using a bad pointer (failed open(), failed malloc), or going over the maximum specified memory limit]). The program ran for 0.000 CPU seconds before the signal. It used 31552 KB of memory. `</p>
+<p><code>Execution error: Your program (</code>milk4’) exited with signal #11 (segmentation violation [maybe caused by accessing memory out of bounds, array indexing out of bounds, using a bad pointer (failed open(), failed malloc), or going over the maximum specified memory limit]). The program ran for 0.000 CPU seconds before the signal. It used 31552 KB of memory. &#96;</p>
 <p>优化可以优化掉p，在实现记录的时候用指针的方式，没有尝试能不能改过</p>
-<h2 id="可通过的解"><a href="#可通过的解" class="headerlink" title="可通过的解"></a>可通过的解</h2><p>IDDFS 迭代加深搜索，使用场景，在低的层级找到解就是最优/目标解。</p>
+<h2 id="可通过的解"><a href="#可通过的解" class="headerlink" title="可通过的解"></a>可通过的解</h2><p>IDDFS 迭代加深搜索，使用场景，在低的层级找到解就是最优&#x2F;目标解。</p>
 <p>和广搜的区别是，广搜过程中会用内存记录，而迭代加深每次都是深搜，但是逐次增加深度。</p>
 <p>可行性：每次加深深度，新的状态和上一层的状态是数量级差异，所以其实只和最后成功搜索到的层数的数量级相关。</p>
 <p>综上，IDDFS有着接近广搜的性能，有着接近深搜的空间消耗。</p>
 <p>实现pass如下</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;milk4&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> vis[<span class="number">20010</span>];</span><br><span class="line"><span class="type">int</span> ans[<span class="number">110</span>];</span><br><span class="line"><span class="type">int</span> val[<span class="number">20010</span>];</span><br><span class="line"><span class="type">int</span> Q;</span><br><span class="line"><span class="type">int</span> P;</span><br><span class="line"><span class="type">int</span> dep;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">check</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,Q+<span class="number">1</span>)&#123;</span><br><span class="line">    vis[i]=<span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,dep)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,Q+<span class="number">1</span>-ans[i])&#123;</span><br><span class="line">      <span class="keyword">if</span>(vis[j])&#123;</span><br><span class="line">        vis[j+ans[i]]=<span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(vis[Q])&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> idx,<span class="type">int</span> cnt)</span></span>&#123;</span><br><span class="line">  ans[cnt] = val[idx];</span><br><span class="line">  <span class="keyword">if</span>(cnt+<span class="number">1</span> == dep)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">check</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(j,idx+<span class="number">1</span>,P+<span class="number">2</span>+cnt-dep)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">dfs</span>(j,cnt+<span class="number">1</span>))&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">output</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,dep);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,dep)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; %d&quot;</span>,ans[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  cin&gt;&gt;Q;</span><br><span class="line">  cin&gt;&gt;P;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,P)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,val+i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(val,val+P);</span><br><span class="line">  vis[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(dep=<span class="number">1</span>;dep&lt;=P;dep++)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,P+<span class="number">1</span>-dep)&#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">dfs</span>(i,<span class="number">0</span>))&#123;</span><br><span class="line">        <span class="built_in">output</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;milk4&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-int vis[20010];
-int ans[110];
-int val[20010];
-int Q;
-int P;
-int dep;
-
-bool check(){
-  rep(i,1,Q+1){
-    vis[i]=0;
-  }
-  rep(i,0,dep){
-    rep(j,0,Q+1-ans[i]){
-      if(vis[j]){
-        vis[j+ans[i]]=true;
-      }
-    }
-  }
-  if(vis[Q]){
-    return true;
-  }
-  return false;
-}
-
-bool dfs(int idx,int cnt){
-  ans[cnt] = val[idx];
-  if(cnt+1 == dep){
-    return check();
-  }
-  rep(j,idx+1,P+2+cnt-dep){
-    if(dfs(j,cnt+1)){
-      return true;
-    }
-  }
-  return false;
-}
-
-void output(){
-  printf(&quot;%d&quot;,dep);
-  rep(i,0,dep){
-    printf(&quot; %d&quot;,ans[i]);
-  }
-  printf(&quot;\n&quot;);
-}
-
-int main(){
-  usefile();
-  cin&gt;&gt;Q;
-  cin&gt;&gt;P;
-  rep(i,0,P){
-    scanf(&quot;%d&quot;,val+i);
-  }
-  sort(val,val+P);
-  vis[0]=1;
-  for(dep=1;dep&lt;=P;dep++){
-    rep(i,0,P+1-dep){
-      if(dfs(i,0)){
-        output();
-        return 0;
-      }
-    }
-  }
-  return 0;
-}
-</code></pre>
 <h1 id="Window-Area-window"><a href="#Window-Area-window" class="headerlink" title="Window Area - window"></a>Window Area - window</h1><h2 id="题意-1"><a href="#题意-1" class="headerlink" title="题意"></a>题意</h2><p>在电脑上窗口的操作,5种</p>
 <ul>
 <li>新建窗口(标识符，x1,y1,x2,y2)</li>
 <li>置顶t(标识符)</li>
 <li>置底b(标识符)</li>
 <li>删除d(标识符)</li>
-<li>输出窗体可见百分比s(I) ,询问数&lt;=500</li>
+<li>输出窗体可见百分比s(I) ,询问数&lt;&#x3D;500</li>
 </ul>
 <p>窗体个数上限<code>(2*26+10=62)</code></p>
 <p>坐标范围<code>[1-&gt;32767]</code></p>
 <h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>那么显然 横纵坐标只有<code>((2×62)^2)</code>个，离线+离散+没了？</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
-typedef long long ll;
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;window&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">list&lt;<span class="type">int</span>&gt;Is[<span class="number">240</span>][<span class="number">240</span>]; <span class="comment">// 大小猜的</span></span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt;x;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;y;</span><br><span class="line"></span><br><span class="line">vector&lt;tuple&lt;<span class="type">int</span>,<span class="type">int</span>&gt; &gt;q;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> itr = <span class="number">0</span>;</span><br><span class="line">vector&lt;tuple&lt;<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>&gt; &gt;xys;</span><br><span class="line"></span><br><span class="line">tuple&lt;<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>&gt; xyxy[<span class="number">123</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">rm</span><span class="params">(<span class="type">int</span> ix,<span class="type">int</span> iy,<span class="type">char</span> I)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (list&lt;<span class="type">int</span>&gt;::iterator it=Is[ix][iy].<span class="built_in">begin</span>(); it!=Is[ix][iy].<span class="built_in">end</span>(); ++it)&#123;</span><br><span class="line">    <span class="keyword">if</span>(*it == I)&#123;</span><br><span class="line">      Is[ix][iy].<span class="built_in">erase</span>(it);</span><br><span class="line">      <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">top</span><span class="params">(<span class="type">int</span> ix,<span class="type">int</span> iy,<span class="type">char</span> I)</span></span>&#123;</span><br><span class="line">  <span class="built_in">rm</span>(ix,iy,I);</span><br><span class="line">  Is[ix][iy].<span class="built_in">push_front</span>(I);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">bot</span><span class="params">(<span class="type">int</span> ix,<span class="type">int</span> iy,<span class="type">char</span> I)</span></span>&#123;</span><br><span class="line">  <span class="built_in">rm</span>(ix,iy,I);</span><br><span class="line">  Is[ix][iy].<span class="built_in">push_back</span>(I);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  <span class="type">char</span> op;</span><br><span class="line">  <span class="keyword">while</span>(~<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;op))&#123;</span><br><span class="line">    <span class="keyword">if</span>(op!=<span class="string">&#x27;w&#x27;</span> &amp;&amp; op!=<span class="string">&#x27;t&#x27;</span> &amp;&amp; op!=<span class="string">&#x27;b&#x27;</span> &amp;&amp; op!=<span class="string">&#x27;d&#x27;</span> &amp;&amp; op!=<span class="string">&#x27;s&#x27;</span>)<span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">if</span>(op == <span class="string">&#x27;w&#x27;</span>)&#123;</span><br><span class="line">      <span class="type">char</span> I;</span><br><span class="line">      <span class="type">int</span> x1,y1;</span><br><span class="line">      <span class="type">int</span> x2,y2;</span><br><span class="line">      <span class="built_in">scanf</span>(<span class="string">&quot;(%c,%d,%d,%d,%d)&quot;</span>,&amp;I,&amp;x1,&amp;y1,&amp;x2,&amp;y2);</span><br><span class="line">      <span class="keyword">if</span>(x1&gt; x2)&#123;</span><br><span class="line">        <span class="built_in">swap</span>(x1,x2);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(y1&gt;y2)&#123;</span><br><span class="line">        <span class="built_in">swap</span>(y1,y2);</span><br><span class="line">      &#125;</span><br><span class="line">      x.<span class="built_in">push_back</span>(x1);</span><br><span class="line">      x.<span class="built_in">push_back</span>(x2);</span><br><span class="line">      y.<span class="built_in">push_back</span>(y1);</span><br><span class="line">      y.<span class="built_in">push_back</span>(y2);</span><br><span class="line">      q.<span class="built_in">push_back</span>(&#123;op,I&#125;);</span><br><span class="line">      xys.<span class="built_in">push_back</span>(&#123;x1,y1,x2,y2&#125;);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="type">char</span> I;</span><br><span class="line">      <span class="built_in">scanf</span>(<span class="string">&quot;(%c)&quot;</span>,&amp;I);</span><br><span class="line">      q.<span class="built_in">push_back</span>(&#123;op,I&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(x.<span class="built_in">begin</span>(),x.<span class="built_in">end</span>());</span><br><span class="line">  <span class="built_in">sort</span>(y.<span class="built_in">begin</span>(),y.<span class="built_in">end</span>());</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> item:q)&#123;</span><br><span class="line">    <span class="type">int</span> op = <span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(item);</span><br><span class="line">    <span class="type">int</span> I = <span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(item);</span><br><span class="line">    <span class="keyword">if</span>(op == <span class="string">&#x27;w&#x27;</span>)&#123;</span><br><span class="line">      xyxy[I] = xys[itr++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> x1idx=<span class="built_in">lower_bound</span>(x.<span class="built_in">begin</span>(),x.<span class="built_in">end</span>(),<span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(xyxy[I]))-x.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="type">int</span> y1idx=<span class="built_in">lower_bound</span>(y.<span class="built_in">begin</span>(),y.<span class="built_in">end</span>(),<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(xyxy[I]))-y.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="type">int</span> x2idx=<span class="built_in">lower_bound</span>(x.<span class="built_in">begin</span>(),x.<span class="built_in">end</span>(),<span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(xyxy[I]))-x.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="type">int</span> y2idx=<span class="built_in">lower_bound</span>(y.<span class="built_in">begin</span>(),y.<span class="built_in">end</span>(),<span class="built_in">get</span>&lt;<span class="number">3</span>&gt;(xyxy[I]))-y.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="keyword">switch</span>(op)&#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;w&#x27;</span>:</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">rep</span>(ix,x1idx,x2idx)&#123;</span><br><span class="line">            <span class="built_in">rep</span>(iy,y1idx,y2idx)&#123;</span><br><span class="line">              Is[ix][iy].<span class="built_in">push_front</span>(I);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;t&#x27;</span>:</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">rep</span>(ix,x1idx,x2idx)&#123;</span><br><span class="line">            <span class="built_in">rep</span>(iy,y1idx,y2idx)&#123;</span><br><span class="line">              <span class="built_in">top</span>(ix,iy,I);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;b&#x27;</span>:</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">rep</span>(ix,x1idx,x2idx)&#123;</span><br><span class="line">            <span class="built_in">rep</span>(iy,y1idx,y2idx)&#123;</span><br><span class="line">              <span class="built_in">bot</span>(ix,iy,I);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;d&#x27;</span>:</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">rep</span>(ix,x1idx,x2idx)&#123;</span><br><span class="line">            <span class="built_in">rep</span>(iy,y1idx,y2idx)&#123;</span><br><span class="line">              <span class="built_in">rm</span>(ix,iy,I);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;s&#x27;</span>:</span><br><span class="line">        &#123;</span><br><span class="line">          ll sshow = <span class="number">0</span>;</span><br><span class="line">          <span class="built_in">rep</span>(ix,x1idx,x2idx)&#123;</span><br><span class="line">            <span class="built_in">rep</span>(iy,y1idx,y2idx)&#123;</span><br><span class="line">              sshow+= ((*Is[ix][iy].<span class="built_in">begin</span>() == I)?(x[ix+<span class="number">1</span>]-x[ix])*<span class="built_in">ll</span>(y[iy+<span class="number">1</span>]-y[iy]):<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          ll scnt = (x[x2idx]-x[x1idx])*<span class="built_in">ll</span>(y[y2idx]-y[y1idx]);</span><br><span class="line">          <span class="built_in">printf</span>(<span class="string">&quot;%.3lf\n&quot;</span>,sshow*<span class="number">100</span>/<span class="built_in">double</span>(scnt));</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;window&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-list&lt;int&gt;Is[240][240]; // 大小猜的
-
-vector&lt;int&gt;x;
-vector&lt;int&gt;y;
-
-vector&lt;tuple&lt;int,int&gt; &gt;q;
-
-int itr = 0;
-vector&lt;tuple&lt;int,int,int,int&gt; &gt;xys;
-
-tuple&lt;int,int,int,int&gt; xyxy[123];
-
-void rm(int ix,int iy,char I){
-  for (list&lt;int&gt;::iterator it=Is[ix][iy].begin(); it!=Is[ix][iy].end(); ++it){
-    if(*it == I){
-      Is[ix][iy].erase(it);
-      return ;
-    }
-  }
-}
-
-void top(int ix,int iy,char I){
-  rm(ix,iy,I);
-  Is[ix][iy].push_front(I);
-}
-
-void bot(int ix,int iy,char I){
-  rm(ix,iy,I);
-  Is[ix][iy].push_back(I);
-}
-
-int main(){
-  usefile();
-  char op;
-  while(~scanf(&quot;%c&quot;,&amp;op)){
-    if(op!=&#39;w&#39; &amp;&amp; op!=&#39;t&#39; &amp;&amp; op!=&#39;b&#39; &amp;&amp; op!=&#39;d&#39; &amp;&amp; op!=&#39;s&#39;)continue;
-    if(op == &#39;w&#39;){
-      char I;
-      int x1,y1;
-      int x2,y2;
-      scanf(&quot;(%c,%d,%d,%d,%d)&quot;,&amp;I,&amp;x1,&amp;y1,&amp;x2,&amp;y2);
-      if(x1&gt; x2){
-        swap(x1,x2);
-      }
-      if(y1&gt;y2){
-        swap(y1,y2);
-      }
-      x.push_back(x1);
-      x.push_back(x2);
-      y.push_back(y1);
-      y.push_back(y2);
-      q.push_back({op,I});
-      xys.push_back({x1,y1,x2,y2});
-    }else{
-      char I;
-      scanf(&quot;(%c)&quot;,&amp;I);
-      q.push_back({op,I});
-    }
-  }
-  sort(x.begin(),x.end());
-  sort(y.begin(),y.end());
-  for(auto item:q){
-    int op = get&lt;0&gt;(item);
-    int I = get&lt;1&gt;(item);
-    if(op == &#39;w&#39;){
-      xyxy[I] = xys[itr++];
-    }
-    int x1idx=lower_bound(x.begin(),x.end(),get&lt;0&gt;(xyxy[I]))-x.begin();
-    int y1idx=lower_bound(y.begin(),y.end(),get&lt;1&gt;(xyxy[I]))-y.begin();
-    int x2idx=lower_bound(x.begin(),x.end(),get&lt;2&gt;(xyxy[I]))-x.begin();
-    int y2idx=lower_bound(y.begin(),y.end(),get&lt;3&gt;(xyxy[I]))-y.begin();
-    switch(op){
-      case &#39;w&#39;:
-        {
-          rep(ix,x1idx,x2idx){
-            rep(iy,y1idx,y2idx){
-              Is[ix][iy].push_front(I);
-            }
-          }
-          break;
-        }
-      case &#39;t&#39;:
-        {
-          rep(ix,x1idx,x2idx){
-            rep(iy,y1idx,y2idx){
-              top(ix,iy,I);
-            }
-          }
-          break;
-        }
-      case &#39;b&#39;:
-        {
-          rep(ix,x1idx,x2idx){
-            rep(iy,y1idx,y2idx){
-              bot(ix,iy,I);
-            }
-          }
-          break;
-        }
-      case &#39;d&#39;:
-        {
-          rep(ix,x1idx,x2idx){
-            rep(iy,y1idx,y2idx){
-              rm(ix,iy,I);
-            }
-          }
-          break;
-        }
-      case &#39;s&#39;:
-        {
-          ll sshow = 0;
-          rep(ix,x1idx,x2idx){
-            rep(iy,y1idx,y2idx){
-              sshow+= ((*Is[ix][iy].begin() == I)?(x[ix+1]-x[ix])*ll(y[iy+1]-y[iy]):0);
-            }
-          }
-          ll scnt = (x[x2idx]-x[x1idx])*ll(y[y2idx]-y[y1idx]);
-          printf(&quot;%.3lf\n&quot;,sshow*100/double(scnt));
-          break;
-        }
-    }
-  }
-  return 0;
-}
-</code></pre>
 <p>emmmmmm 在第11个点的时候 出现了唯一标识复用的情况，也就是说 先创建 再删除 再创建，所以期望的边数也就不只 <code>(26*2+10)*2</code>，我这里尝试的是开到<code>240*240</code>才能过</p>
 <p>所以基本上是 离散化 <code>O(长乘宽(分化的区块个数)*62(每次操作代价)*(t+b+r操作个数)+长乘宽(分化区块个数)*1(操作代价)*(w+s操作个数))</code></p>
 <p>以上代码还可以优化的地方:</p>
@@ -848,7 +385,7 @@ int main(){
 </li>
 </ol>
 <p>然后有一些博文有 两个矩形之间处理的优化，也就是 不分成9块，而是分成最多5块，类似旋图，然后平时只记录相对的层数(z-index)，然后在查询的时候，才自值开始向上查找。</p>
-<h1 id="Network-of-Schools-schlnet"><a href="#Network-of-Schools-schlnet" class="headerlink" title="Network of Schools - schlnet"></a>Network of Schools - schlnet</h1><h2 id="题意-2"><a href="#题意-2" class="headerlink" title="题意"></a>题意</h2><p>有向图,(N&lt;=100)个节点</p>
+<h1 id="Network-of-Schools-schlnet"><a href="#Network-of-Schools-schlnet" class="headerlink" title="Network of Schools - schlnet"></a>Network of Schools - schlnet</h1><h2 id="题意-2"><a href="#题意-2" class="headerlink" title="题意"></a>题意</h2><p>有向图,(N&lt;&#x3D;100)个节点</p>
 <ol>
 <li>求最少选取多少个点，通过这些点能够沿着有向边到达所有的点</li>
 <li>求最少加多少边，让真个图变成全连通</li>
@@ -859,135 +396,10 @@ int main(){
 <li>把这些缩点后的 max(出度为0的点,入度为0的点)</li>
 </ol>
 <p>强连通直接tarjan</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;schlnet&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt;p2[<span class="number">110</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> id = <span class="number">0</span>;</span><br><span class="line"><span class="type">bool</span> vis[N+<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span> low[N+<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span> dfn[N+<span class="number">10</span>];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;stk;</span><br><span class="line"><span class="type">bool</span> instk[N+<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> incnt[N+<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span> outcnt[N+<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">scc</span><span class="params">(<span class="type">int</span> idx)</span></span>&#123;</span><br><span class="line">  <span class="comment">// cout&lt;&lt;&quot;scc&quot;&lt;&lt;idx&lt;&lt;endl;</span></span><br><span class="line">  dfn[idx] = low[idx] = ++id;</span><br><span class="line">  vis[idx] = <span class="literal">true</span>;</span><br><span class="line">  stk.<span class="built_in">push_back</span>(idx);</span><br><span class="line">  instk[idx] = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> item:p2[idx])&#123;</span><br><span class="line">    <span class="keyword">if</span>(!vis[item])&#123;</span><br><span class="line">      <span class="built_in">scc</span>(item);</span><br><span class="line">      low[idx]=<span class="built_in">min</span>(low[idx],low[item]);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(instk[item])&#123;</span><br><span class="line">      low[idx]=<span class="built_in">min</span>(low[idx],dfn[item]); <span class="comment">// dfn-&gt;low</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(low[idx] == dfn[idx])&#123;</span><br><span class="line">    <span class="comment">// cout&lt;&lt;&quot;zip:&quot;&lt;&lt;idx&lt;&lt;endl;</span></span><br><span class="line">    <span class="comment">// for(auto item:stk)&#123;</span></span><br><span class="line">    <span class="comment">//   printf(&quot;\t\tstk[%d]\n&quot;,item);</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="type">int</span> u;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">      u = *(stk.<span class="built_in">end</span>()<span class="number">-1</span>);</span><br><span class="line">      <span class="comment">// cout&lt;&lt;&quot;\tu:&quot;&lt;&lt;u&lt;&lt;endl;</span></span><br><span class="line">      dfn[u] = idx;</span><br><span class="line">      instk[u] = <span class="literal">false</span>;</span><br><span class="line">      stk.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;<span class="keyword">while</span>(u != idx);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">tarjan</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(!vis[i])&#123;</span><br><span class="line">      <span class="built_in">scc</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// rep(i,1,n+1)&#123;</span></span><br><span class="line">  <span class="comment">//   cout&lt;&lt;&quot;dfn:&quot;&lt;&lt;i&lt;&lt;&quot; = &quot;&lt;&lt;dfn[i]&lt;&lt;endl;</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="type">int</span> v;</span><br><span class="line">      <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;v);</span><br><span class="line">      <span class="keyword">if</span>(v == <span class="number">0</span>)<span class="keyword">break</span>;</span><br><span class="line">      p2[i].<span class="built_in">push_back</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">tarjan</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(dfn[i]!=i)&#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> item:p2[i])&#123;</span><br><span class="line">        p2[dfn[i]].<span class="built_in">push_back</span>(dfn[item]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;item:p2[i])&#123;</span><br><span class="line">        item = dfn[item];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(dfn[i] == i)&#123;</span><br><span class="line">      <span class="built_in">sort</span>(p2[i].<span class="built_in">begin</span>(),p2[i].<span class="built_in">end</span>());</span><br><span class="line">      p2[i].<span class="built_in">erase</span>(<span class="built_in">unique</span>(p2[i].<span class="built_in">begin</span>(),p2[i].<span class="built_in">end</span>()),p2[i].<span class="built_in">end</span>());</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> item:p2[i])&#123;</span><br><span class="line">        <span class="keyword">if</span>(item == i)<span class="keyword">continue</span>;</span><br><span class="line">        <span class="comment">// printf(&quot;%d -&gt; %d\n&quot;,i,item);</span></span><br><span class="line">        incnt[item]++;</span><br><span class="line">        outcnt[i]++;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> in0cnt=<span class="number">0</span>,out0cnt=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(dfn[i] == i)&#123;</span><br><span class="line">      in0cnt+=incnt[i] == <span class="number">0</span>;</span><br><span class="line">      out0cnt+=outcnt[i] == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,in0cnt);</span><br><span class="line">  <span class="comment">// single check</span></span><br><span class="line">  <span class="type">int</span> pcnt = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    pcnt+=dfn[i]==i;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(pcnt == <span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;0\n&quot;</span>);</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">max</span>(in0cnt,out0cnt));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;schlnet&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-int n;
-
-vector&lt;int&gt;p2[110];
-
-const int N=100;
-
-
-int id = 0;
-bool vis[N+10];
-int low[N+10];
-int dfn[N+10];
-vector&lt;int&gt;stk;
-bool instk[N+10];
-
-int incnt[N+10];
-int outcnt[N+10];
-
-void scc(int idx){
-  // cout&lt;&lt;&quot;scc&quot;&lt;&lt;idx&lt;&lt;endl;
-  dfn[idx] = low[idx] = ++id;
-  vis[idx] = true;
-  stk.push_back(idx);
-  instk[idx] = true;
-  for(auto item:p2[idx]){
-    if(!vis[item]){
-      scc(item);
-      low[idx]=min(low[idx],low[item]);
-    }else if(instk[item]){
-      low[idx]=min(low[idx],dfn[item]); // dfn-&gt;low
-    }
-  }
-  if(low[idx] == dfn[idx]){
-    // cout&lt;&lt;&quot;zip:&quot;&lt;&lt;idx&lt;&lt;endl;
-    // for(auto item:stk){
-    //   printf(&quot;\t\tstk[%d]\n&quot;,item);
-    // }
-    int u;
-    do{
-      u = *(stk.end()-1);
-      // cout&lt;&lt;&quot;\tu:&quot;&lt;&lt;u&lt;&lt;endl;
-      dfn[u] = idx;
-      instk[u] = false;
-      stk.pop_back();
-    }while(u != idx);
-  }
-}
-
-void tarjan(){
-  rep(i,1,n+1){
-    if(!vis[i]){
-      scc(i);
-    }
-  }
-  // rep(i,1,n+1){
-  //   cout&lt;&lt;&quot;dfn:&quot;&lt;&lt;i&lt;&lt;&quot; = &quot;&lt;&lt;dfn[i]&lt;&lt;endl;
-  // }
-}
-
-int main(){
-  usefile();
-  cin&gt;&gt;n;
-  rep(i,1,n+1){
-    while(1){
-      int v;
-      scanf(&quot;%d&quot;,&amp;v);
-      if(v == 0)break;
-      p2[i].push_back(v);
-    }
-  }
-  tarjan();
-  rep(i,1,n+1){
-    if(dfn[i]!=i){
-      for(auto item:p2[i]){
-        p2[dfn[i]].push_back(dfn[item]);
-      }
-    }else{
-      for(auto &amp;item:p2[i]){
-        item = dfn[item];
-      }
-    }
-  }
-  rep(i,1,n+1){
-    if(dfn[i] == i){
-      sort(p2[i].begin(),p2[i].end());
-      p2[i].erase(unique(p2[i].begin(),p2[i].end()),p2[i].end());
-      for(auto item:p2[i]){
-        if(item == i)continue;
-        // printf(&quot;%d -&gt; %d\n&quot;,i,item);
-        incnt[item]++;
-        outcnt[i]++;
-      }
-    }
-  }
-  int in0cnt=0,out0cnt=0;
-  rep(i,1,n+1){
-    if(dfn[i] == i){
-      in0cnt+=incnt[i] == 0;
-      out0cnt+=outcnt[i] == 0;
-    }
-  }
-  printf(&quot;%d\n&quot;,in0cnt);
-  // single check
-  int pcnt = 0;
-  rep(i,1,n+1){
-    pcnt+=dfn[i]==i;
-  }
-  if(pcnt == 1){
-    printf(&quot;0\n&quot;);
-  }else{
-    printf(&quot;%d\n&quot;,max(in0cnt,out0cnt));
-  }
-  return 0;
-}
-</code></pre>
-<h1 id="Big-Barn-bigbrn"><a href="#Big-Barn-bigbrn" class="headerlink" title="Big Barn - bigbrn"></a>Big Barn - bigbrn</h1><h2 id="题意-3"><a href="#题意-3" class="headerlink" title="题意"></a>题意</h2><p>NxN(N&lt;=1000)矩阵A点上值有0或1</p>
-<p>1的个数&lt;=10000</p>
+<h1 id="Big-Barn-bigbrn"><a href="#Big-Barn-bigbrn" class="headerlink" title="Big Barn - bigbrn"></a>Big Barn - bigbrn</h1><h2 id="题意-3"><a href="#题意-3" class="headerlink" title="题意"></a>题意</h2><p>NxN(N&lt;&#x3D;1000)矩阵A点上值有0或1</p>
+<p>1的个数&lt;&#x3D;10000</p>
 <p>求最大的全0正方形(不能斜着)</p>
 <p>输出边长即可</p>
 <h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><p>这感觉二分答案？因为二分的话如果大的可行，那么小的必定可行</p>
@@ -999,580 +411,137 @@ int main(){
 <p><code>C[i][j]</code>表示<code>A[i-&gt;i+len-1][j-&gt;j+len-1]</code>为1的个数,即是<code>C[i][j-&gt;j+len-1]</code></p>
 <p>根据前缀和类似的算法，<code>A-&gt;B</code>可以在<code>O(N^2)</code>完成<code>B-&gt;C</code>也同理,综上<code>O(N^2*log(N))</code></p>
 <p>然而很不幸的是 usaco给的空间是真的有限，就算换成 new 也会在第11个点挂掉,所以bit压位,然而事后发现，可以不用存储C，直接判断C的值就好了，从空间<code>O(3N^2)</code>变为<code>O(2N^2)</code>就能过</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;bigbrn&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n,t;</span><br><span class="line"></span><br><span class="line"><span class="comment">// bitset&lt;8&gt; A[1010][130];// [1010][1010]; // N*N</span></span><br><span class="line"><span class="comment">// bitset&lt;8&gt; B[1010][130];// [1010][1010]; // (N+1-len)*N</span></span><br><span class="line"><span class="comment">// //bitset&lt;8&gt; C[1010][130];// [1010][1010]; // (N+1-len)*(N+1-len)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果注释掉下面两行用 上面bitset的A和B也能过</span></span><br><span class="line"><span class="type">int</span> A[<span class="number">1010</span>][<span class="number">1010</span>];</span><br><span class="line"><span class="type">int</span> B[<span class="number">1010</span>][<span class="number">1010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setv</span><span class="params">(bitset&lt;<span class="number">8</span>&gt; *arr,<span class="type">int</span> idx,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  arr[idx/<span class="number">8</span>].<span class="built_in">set</span>(idx%<span class="number">8</span>,<span class="built_in">bool</span>(v));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getv</span><span class="params">(bitset&lt;<span class="number">8</span>&gt; *arr,<span class="type">int</span> idx)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> arr[idx/<span class="number">8</span>][idx%<span class="number">8</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setv</span><span class="params">(<span class="type">int</span> *arr,<span class="type">int</span> idx,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  arr[idx]=v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getv</span><span class="params">(<span class="type">int</span> *arr,<span class="type">int</span> idx)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> arr[idx];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">ok</span><span class="params">(<span class="type">int</span> len)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(len == <span class="number">0</span>)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  <span class="comment">// A-&gt;B</span></span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,len)&#123;</span><br><span class="line">      cnt+=<span class="built_in">getv</span>(A[i],j);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">setv</span>(B[<span class="number">0</span>],j,cnt);</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>-len)&#123;</span><br><span class="line">      cnt+=<span class="built_in">getv</span>(A[i+len<span class="number">-1</span>],j)-<span class="built_in">getv</span>(A[i<span class="number">-1</span>],j);</span><br><span class="line">      <span class="built_in">setv</span>(B[i],j,cnt);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// B-&gt;C</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>-len)&#123;</span><br><span class="line">    <span class="type">int</span> cnt= <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,len)</span><br><span class="line">      cnt+=<span class="built_in">getv</span>(B[i],j);</span><br><span class="line">    <span class="keyword">if</span>(cnt == <span class="number">0</span>)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">1</span>,n+<span class="number">1</span>-len)&#123;</span><br><span class="line">      cnt+=<span class="built_in">getv</span>(B[i],j+len<span class="number">-1</span>)-<span class="built_in">getv</span>(B[i],j<span class="number">-1</span>);</span><br><span class="line">      <span class="keyword">if</span>(cnt == <span class="number">0</span>)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">all1</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,n)&#123;</span><br><span class="line">      <span class="keyword">if</span>(A[i][j] == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  cin&gt;&gt;n&gt;&gt;t;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,t)&#123;</span><br><span class="line">    <span class="type">int</span> x,y;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;x,&amp;y);</span><br><span class="line">    <span class="built_in">setv</span>(A[x<span class="number">-1</span>],y<span class="number">-1</span>,<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> lenl=<span class="number">0</span>,lenr=n+<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span>(lenl+<span class="number">1</span>&lt;lenr)&#123;</span><br><span class="line">    <span class="type">int</span> mid=(lenl+lenr)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">ok</span>(mid))&#123;</span><br><span class="line">      lenl=mid;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      lenr=mid;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  cout&lt;&lt;lenl&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;bigbrn&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-int n,t;
-
-// bitset&lt;8&gt; A[1010][130];// [1010][1010]; // N*N
-// bitset&lt;8&gt; B[1010][130];// [1010][1010]; // (N+1-len)*N
-// //bitset&lt;8&gt; C[1010][130];// [1010][1010]; // (N+1-len)*(N+1-len)
-
-// 如果注释掉下面两行用 上面bitset的A和B也能过
-int A[1010][1010];
-int B[1010][1010];
-
-void setv(bitset&lt;8&gt; *arr,int idx,int v){
-  arr[idx/8].set(idx%8,bool(v));
-}
-
-int getv(bitset&lt;8&gt; *arr,int idx){
-  return arr[idx/8][idx%8];
-}
-
-void setv(int *arr,int idx,int v){
-  arr[idx]=v;
-}
-
-int getv(int *arr,int idx){
-  return arr[idx];
-}
-
-bool ok(int len){
-  if(len == 0)return true;
-  // A-&gt;B
-  rep(j,0,n){
-    int cnt = 0;
-    rep(i,0,len){
-      cnt+=getv(A[i],j);
-    }
-    setv(B[0],j,cnt);
-    rep(i,1,n+1-len){
-      cnt+=getv(A[i+len-1],j)-getv(A[i-1],j);
-      setv(B[i],j,cnt);
-    }
-  }
-  // B-&gt;C
-  rep(i,0,n+1-len){
-    int cnt= 0;
-    rep(j,0,len)
-      cnt+=getv(B[i],j);
-    if(cnt == 0)return true;
-    rep(j,1,n+1-len){
-      cnt+=getv(B[i],j+len-1)-getv(B[i],j-1);
-      if(cnt == 0)return true;
-    }
-  }
-  return false;
-}
-
-bool all1(){
-  rep(i,0,n){
-    rep(j,0,n){
-      if(A[i][j] == 0){
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-int main(){
-  usefile();
-  cin&gt;&gt;n&gt;&gt;t;
-  rep(i,0,t){
-    int x,y;
-    scanf(&quot;%d %d&quot;,&amp;x,&amp;y);
-    setv(A[x-1],y-1,1);
-  }
-
-  int lenl=0,lenr=n+1;
-  while(lenl+1&lt;lenr){
-    int mid=(lenl+lenr)/2;
-    if(ok(mid)){
-      lenl=mid;
-    }else{
-      lenr=mid;
-    }
-  }
-  cout&lt;&lt;lenl&lt;&lt;endl;
-
-  return 0;
-}
-</code></pre>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>emmmmm所以这些题目和标题的启发式搜索的关系是?</p>
 
-        
-                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
-                    <p><strong>
-                         
-                            This blog is under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC BY-NC-SA 3.0 Unported License</a>
-                        </strong>
-                        <br>
-                        <strong>本文鏈接：</strong><a href="http://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/">http://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/</a>
-                    </p>
-                </blockquote>
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'http://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//yexiaorain.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/Blog/2019-06-10-USACO-5.4/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/Blog/2019-04-30-cf1152D/" id="post_nav-older" class="next-content">
-            舊篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
     </div>
 
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/Blog/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/Blog/img/satan.jpg" alt="Xiao Ye's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        yexiaorain@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto: yexiaorain@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
     
-        <li id="sidebar-first-li">
-            <a href="/Blog/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                首頁
-            </a>
-        </li>
-        
     
+    
+      
 
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    過往
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/Blog/archives/2022/09/">九月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/08/">八月 2022<span class="sidebar_archives-count">17</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/07/">七月 2022<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/06/">六月 2022<span class="sidebar_archives-count">17</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/05/">五月 2022<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/04/">四月 2022<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/03/">三月 2022<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/12/">十二月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/11/">十一月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/09/">九月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/08/">八月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/07/">七月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/06/">六月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/05/">五月 2021<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/04/">四月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/02/">二月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/12/">十二月 2020<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/11/">十一月 2020<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/08/">八月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/07/">七月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/06/">六月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/05/">五月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/04/">四月 2020<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/01/">一月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/11/">十一月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/10/">十月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/09/">九月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/07/">七月 2019<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/06/">六月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/05/">五月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/04/">四月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/03/">三月 2019<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/02/">二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/05/">五月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/10/">十月 2017<span class="sidebar_archives-count">4</span></a>
-            </ul>
-        </li>
-        
-    
 
-    <!-- Categories  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
-                
-                分類
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                <a class="sidebar_archives-link" href="/Blog/categories/Atcoder/">Atcoder<span class="sidebar_archives-count">40</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/ABC/">ABC<span class="sidebar_archives-count">24</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/AGC/">AGC<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/ARC/">ARC<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/CodeChef/">CodeChef<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Codeforces/">Codeforces<span class="sidebar_archives-count">73</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Machine-learning/">Machine learning<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/">NowCoder<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Project-Euler/">Project Euler<span class="sidebar_archives-count">19</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/USACO/">USACO<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/algorithm/">algorithm<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/bestcoder/">bestcoder<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/luogu/">luogu<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/poj/">poj<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/tencent/">tencent<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
+    <footer class="post-footer">
+          
 
-    <!-- Pages  -->
-    
-
-    <!-- Article Number  -->
-    
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/" title="USACO 5.3 章节">https://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
 </ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E7%A6%BB%E6%95%A3%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 离散化</a>
+              <a href="/Blog/tags/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2/" rel="tag"><i class="fa fa-tag"></i> 启发式搜索</a>
+              <a href="/Blog/tags/%E8%BF%AD%E4%BB%A3%E5%8A%A0%E6%B7%B1%E6%90%9C%E7%B4%A2/" rel="tag"><i class="fa fa-tag"></i> 迭代加深搜索</a>
+              <a href="/Blog/tags/scc/" rel="tag"><i class="fa fa-tag"></i> scc</a>
+              <a href="/Blog/tags/%E7%9F%A9%E9%98%B5/" rel="tag"><i class="fa fa-tag"></i> 矩阵</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2019-04-30-cf1152D/" rel="prev" title="CF 1152 D (最值可达入门)">
+                  <i class="fa fa-chevron-left"></i> CF 1152 D (最值可达入门)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/2019-06-10-USACO-5.4/" rel="next" title="USACO 5.4 章节">
+                  USACO 5.4 章节 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
 
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
 
 
-<!-- Theme Material -->
 
 
-<!-- Help & Support -->
-<!--
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
 
--->
+  <footer class="footer">
+    <div class="footer-inner">
 
-<!-- Feedback -->
-<!--
 
--->
-
-<!-- About Theme -->
-<!--
-
--->
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">728k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">11:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
 
     </div>
+  </footer>
 
-    <!-- Sidebar Image -->
-    
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
 
-</aside>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
 
-                    
 
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
 
-                    
 
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
 
-    <!-- Facebook -->
-    
+  
 
-    <!-- Google + -->
-    
 
-    <!-- Weibo -->
-    
 
-    <!-- Instagram -->
-    
 
-    <!-- Tumblr -->
-    
+  
 
-    <!-- Github -->
-    
-        <a href="https://yexiaorain.github.com" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
 
-    <!-- LinkedIn -->
-    
 
-    <!-- Zhihu -->
-    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/2019-05-18-USACO-5.3/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
 
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-    
-    <!-- V2EX -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;2013&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>YeXiaoRain Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
-            </div>
-        </div>
-    
-</footer>
-
-
-                    <!-- Import JS File -->
-
-    <script>lsloader.load("lazyload_js","/Blog/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
-
-
-
-    <script>lsloader.load("js_js","/Blog/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
-
-
-
-    <script>lsloader.load("np_js","/Blog/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//yexiaorain.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/Blog/css/uc.css">');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/Blog/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
-    })()
-console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
-
-                </main>
-            </div>
-        </body>
-    
+</body>
 </html>

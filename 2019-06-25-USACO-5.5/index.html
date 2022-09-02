@@ -1,571 +1,337 @@
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.0 -->
-    <script>
-        window.materialVersion = "1.5.0"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1'
-        ]
-    </script>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="离散化,扫描线,最小值性质,DP,按位逼近">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USACO 5.5 章节">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="离散化,扫描线,最小值性质,DP,按位逼近">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-06-24T17:37:14.000Z">
+<meta property="article:modified_time" content="2022-09-02T03:53:44.452Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="离散化">
+<meta property="article:tag" content="扫描线">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/">
 
 
 
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/","path":"2019-06-25-USACO-5.5/","title":"USACO 5.5 章节"}</script>
 
-
-
-
-
-
-
-
-    <!-- Title -->
-    
-    <title>
-        
-            USACO 5.5 章节 | 
-        
-        YeXiaoRain Blog
-    </title>
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Xiao Ye">
-    <meta name="description" itemprop="description" content>
-    <meta name="keywords" content=",离散化,扫描线,最小值性质,动态规划,按位逼近">
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/Blog/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/Blog/img/favicon.png">
-    <link rel="apple-touch-icon" href="/Blog/img/favicon.png">
-
-    <!--iOS -->
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="YeXiaoRain Blog">
-
-    <!-- Site Verification -->
-    
-    
-
-    <!-- RSS -->
-    
-        
-            <link rel="alternate" type="application/atom+xml" href="atom.xml">
-        
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.en.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/Blog/css/material.min.css?rdUU9RcgLCpXgn+BEpYF7Q==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/Blog/css/style.min.css?4ixU3PVzPicZm76KlybVwQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/Blog/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/Blog/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-    overflow-x: hidden !important;
-  }
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>USACO 5.5 章节 | YeXiaoRain Blog</title>
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-image: url(/Blog/img/ns.jpg);
-      }
-    </style>
 
 
 
 
-<!-- Fade Effect -->
 
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-
-
-<!-- Import Material Icon -->
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/Blog/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://yexiaorain.github.io/Blog">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="USACO 5.5 章节 | YeXiaoRain Blog">
-    <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
-    <meta property="og:description" content>
-    <meta property="og:article:tag" content="离散化"> <meta property="og:article:tag" content="扫描线"> <meta property="og:article:tag" content="最小值性质"> <meta property="og:article:tag" content="动态规划"> <meta property="og:article:tag" content="按位逼近"> 
-
-    
-        <meta property="article:published_time" content="Tue Jun 25 2019 01:37:14 GMT+0800">
-        <meta property="article:modified_time" content="Thu Sep 01 2022 22:54:57 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="USACO 5.5 章节 | YeXiaoRain Blog">
-    <meta name="twitter:description" content>
-    <meta name="twitter:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="http://yexiaorain.github.io/Blog">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="http://yexiaorain.github.io/Blog/Blog/2019-06-25-USACO-5.5/index.html">
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2019-06-25-USACO-5.5/index.html",
-    "headline": "USACO 5.5 章节",
-    "datePublished": "Tue Jun 25 2019 01:37:14 GMT+0800",
-    "dateModified": "Thu Sep 01 2022 22:54:57 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Xiao Ye",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/satan.jpg"
-        },
-        "description": "阳光只洒在金碧辉煌的高楼上"
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "YeXiaoRain Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/favicon.png"
-        }
-    },
-    "keywords": ",离散化,扫描线,最小值性质,动态规划,按位逼近",
-    "description": "",
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
-    
-    
-    
-
-    <!-- Custom Head -->
-    
-
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-    -->
+  </div>
 
+  <div class="site-meta">
 
-    <!-- Left aligned menu below button -->
-    
-    
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
 
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Picture"><span class="post-toc-number">1.</span> <span class="post-toc-text">Picture</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题目大意"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">题目大意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Hidden-Password"><span class="post-toc-number">2.</span> <span class="post-toc-text">Hidden Password</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题目大意-1"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">题目大意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Twofive"><span class="post-toc-number">3.</span> <span class="post-toc-text">Twofive</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题目大意-2"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">题目大意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#尝试思路"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">尝试思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解-2"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">题解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#记忆化-dp"><span class="post-toc-number">3.3.1.</span> <span class="post-toc-text">记忆化+dp</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#求解"><span class="post-toc-number">3.3.2.</span> <span class="post-toc-text">求解</span></a></li></ol></li></ol></li></ol>
-    </ul>
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 4 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/Blog/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                USACO 5.5 章节
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/Blog/img/satan.jpg" width="44px" height="44px" alt="Author Avatar"/>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Xiao Ye</strong>
-        <span>6月 25, 2019</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/Blog/tags/动态规划/">动态规划</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/扫描线/">扫描线</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/按位逼近/">按位逼近</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/最小值性质/">最小值性质</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/离散化/">离散化</a>
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=USACO 5.5 章节&url=http://yexiaorain.github.io/Blog/Blog/2019-06-25-USACO-5.5/index.html&pic=http://yexiaorain.github.io/Blog/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=USACO 5.5 章节&url=http://yexiaorain.github.io/Blog/Blog/2019-06-25-USACO-5.5/index.html&via=Xiao Ye" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yexiaorain.github.io/Blog/Blog/2019-06-25-USACO-5.5/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=YeXiaoRain Blog&title=USACO 5.5 章节&summary=&pics=http://yexiaorain.github.io/Blog/img/favicon.png&url=http://yexiaorain.github.io/Blog/Blog/2019-06-25-USACO-5.5/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 QQ
-            </li>
-        </a>
-    
-
-    <!-- Share Telegram -->
-    
-        <a class="post_share-link" href="https://telegram.me/share/url?url=http://yexiaorain.github.io/Blog/Blog/2019-06-25-USACO-5.5/index.html&text=USACO 5.5 章节" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Telegram
-            </li>
-        </a>
-    
-</ul>
-
+  </div>
 </div>
 
-                
 
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">171</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">166</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Picture"><span class="nav-number">1.</span> <span class="nav-text">Picture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F"><span class="nav-number">1.1.</span> <span class="nav-text">题目大意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">1.2.</span> <span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hidden-Password"><span class="nav-number">2.</span> <span class="nav-text">Hidden Password</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目大意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-number">2.2.</span> <span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Twofive"><span class="nav-number">3.</span> <span class="nav-text">Twofive</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F-2"><span class="nav-number">3.1.</span> <span class="nav-text">题目大意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%9D%E8%AF%95%E6%80%9D%E8%B7%AF"><span class="nav-number">3.2.</span> <span class="nav-text">尝试思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-2"><span class="nav-number">3.3.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BF%86%E5%8C%96-dp"><span class="nav-number">3.3.1.</span> <span class="nav-text">记忆化+dp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E8%A7%A3"><span class="nav-number">3.3.2.</span> <span class="nav-text">求解</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">166</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="USACO 5.5 章节 | YeXiaoRain Blog">
+      <meta itemprop="description" content="离散化,扫描线,最小值性质,DP,按位逼近">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          USACO 5.5 章节
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-06-25 01:37:14" itemprop="dateCreated datePublished" datetime="2019-06-25T01:37:14+08:00">2019-06-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/USACO/" itemprop="url" rel="index"><span itemprop="name">USACO</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2019-06-25-USACO-5.5/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019-06-25-USACO-5.5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>8.6k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>8 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">离散化,扫描线,最小值性质,DP,按位逼近</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
         <h1 id="Picture"><a href="#Picture" class="headerlink" title="Picture"></a>Picture</h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>IOI 1998</p>
-<p>求n (&lt;=5000)个矩形 覆盖的图形 的周长(包括洞), 坐标范围<code>[-10000,10000]</code></p>
+<p>求n (&lt;&#x3D;5000)个矩形 覆盖的图形 的周长(包括洞), 坐标范围<code>[-10000,10000]</code></p>
 <h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>一眼离散化+2维线段树，但仔细一想 空间不太够,时间勉强接受</p>
 <p>然后目测可能1维线段树+扫描线了?</p>
 <p>然后 竟然 裸的扫描线可以过，如下面代码</p>
 <p>总数量级上来讲，输入<code>O(n)</code>,排序<code>O(n log n)</code>,扫描过程<code>O(sum(len周长))</code> 约<code>5000*20000*4</code>的上限[ 不过USACO给过了，</p>
 <p>所以还是线段树好?</p>
 <p>从实现来讲，把矩形拆分成x和y方向，靠计算每个块的累计层数 来判断边界</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
-
-using namespace std;
-
-const string filename = &quot;picture&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-int N,ans=0;
-// OX向和OY向的 线段分离处理，互不影响
-tuple&lt;int,bool,int,int&gt; Lx[10010],Ly[10010]; // {位置idx坐标,结束边bool?,st-&gt;end}
-int level[20010];
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;picture&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> N,ans=<span class="number">0</span>;</span><br><span class="line"><span class="comment">// OX向和OY向的 线段分离处理，互不影响</span></span><br><span class="line">tuple&lt;<span class="type">int</span>,<span class="type">bool</span>,<span class="type">int</span>,<span class="type">int</span>&gt; Lx[<span class="number">10010</span>],Ly[<span class="number">10010</span>]; <span class="comment">// &#123;位置idx坐标,结束边bool?,st-&gt;end&#125;</span></span><br><span class="line"><span class="type">int</span> level[<span class="number">20010</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Scan</span><span class="params">(tuple&lt;<span class="type">int</span>,<span class="type">bool</span>,<span class="type">int</span>,<span class="type">int</span>&gt; *L)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">sort</span>(L,L+N);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">20001</span>)</span><br><span class="line">    level[i]=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(L[i]),<span class="built_in">get</span>&lt;<span class="number">3</span>&gt;(L[i]))&#123;</span><br><span class="line">      <span class="keyword">if</span> (!<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(L[i]))&#123;</span><br><span class="line">        ans += level[j+<span class="number">10000</span>]==<span class="number">0</span>;</span><br><span class="line">        level[j+<span class="number">10000</span>]++;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        level[j+<span class="number">10000</span>]--;</span><br><span class="line">        ans += level[j+<span class="number">10000</span>]==<span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;N);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N)&#123;</span><br><span class="line">    <span class="type">int</span> x1,x2,y1,y2;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d %d&quot;</span>,&amp;x1,&amp;y1,&amp;x2,&amp;y2);</span><br><span class="line">    <span class="comment">// OX 方向边</span></span><br><span class="line">    Lx[i*<span class="number">2</span>] = &#123;y1,<span class="literal">false</span>,x1,x2&#125;;</span><br><span class="line">    Lx[i*<span class="number">2</span>+<span class="number">1</span>] = &#123;y2,<span class="literal">true</span>,x1,x2&#125;;</span><br><span class="line">    <span class="comment">// OY 方向边</span></span><br><span class="line">    Ly[i*<span class="number">2</span>] = &#123;x1,<span class="literal">false</span>,y1,y2&#125;;</span><br><span class="line">    Ly[i*<span class="number">2</span>+<span class="number">1</span>] = &#123;x2,<span class="literal">true</span>,y1,y2&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  N*=<span class="number">2</span>;</span><br><span class="line">  <span class="built_in">Scan</span>(Lx);</span><br><span class="line">  <span class="built_in">Scan</span>(Ly);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-void Scan(tuple&lt;int,bool,int,int&gt; *L) {
-  sort(L,L+N);
-  rep(i,0,20001)
-    level[i]=0;
-  rep(i,0,N){
-    rep(j,get&lt;2&gt;(L[i]),get&lt;3&gt;(L[i])){
-      if (!get&lt;1&gt;(L[i])){
-        ans += level[j+10000]==0;
-        level[j+10000]++;
-      } else {
-        level[j+10000]--;
-        ans += level[j+10000]==0;
-      }
-    }
-  }
-}
-
-
-int main(){
-  usefile();
-  scanf(&quot;%d&quot;,&amp;N);
-  rep(i,0,N){
-    int x1,x2,y1,y2;
-    scanf(&quot;%d %d %d %d&quot;,&amp;x1,&amp;y1,&amp;x2,&amp;y2);
-    // OX 方向边
-    Lx[i*2] = {y1,false,x1,x2};
-    Lx[i*2+1] = {y2,true,x1,x2};
-    // OY 方向边
-    Ly[i*2] = {x1,false,y1,y2};
-    Ly[i*2+1] = {x2,true,y1,y2};
-  }
-  N*=2;
-  Scan(Lx);
-  Scan(Ly);
-  printf(&quot;%d\n&quot;,ans);
-  return 0;
-}
-</code></pre>
 <h1 id="Hidden-Password"><a href="#Hidden-Password" class="headerlink" title="Hidden Password"></a>Hidden Password</h1><p>ACM South Eastern Europe – 2003</p>
 <h2 id="题目大意-1"><a href="#题目大意-1" class="headerlink" title="题目大意"></a>题目大意</h2><p>字符串L(长度<code>&lt;=100’000</code>)</p>
 <p>求 以该字符串，平移后的， 所有字符串中 字典序最小的字符串的首字母在原字符串中的下标</p>
@@ -594,9 +360,9 @@ int main(){
 </ol>
 <p>假设字符aabbabbb，</p>
 <p>那么在找完最小字符后，起始坐标还剩下<code>[0,1,4]</code>,一旦发现任意一个扩充的下一步(<code>[1,2,5]</code>) 是一个维持的点，那么长度翻倍，后一个点删除，在这种情况下，扩充的位置不是最小坐标的点直接移除。</p>
-<p>因为我们维持的点 == 从1到该长度下，每个长度 都是字典序最小的，所以没有在维护中的点，都是非字典序最小的,所以 可以倍增</p>
+<p>因为我们维持的点 &#x3D;&#x3D; 从1到该长度下，每个长度 都是字典序最小的，所以没有在维护中的点，都是非字典序最小的,所以 可以倍增</p>
 <p>删除右边的点是因为 扩充右边的维护点的字典序一定大于等于 左边的点，等于的情况由判环处理</p>
-<p>如上在一次扩充后发现<code>0</code>的下一个扩充是<code>1</code>，而<code>1</code>是我们维持着的点，所以长度=<code>1*2</code>,<code>1</code>点删除，<code>4</code>扩充是<code>5</code>，那么<code>5</code>没有被维持，所以<code>4</code>点也被删除，综上最后剩下<code>0</code></p>
+<p>如上在一次扩充后发现<code>0</code>的下一个扩充是<code>1</code>，而<code>1</code>是我们维持着的点，所以长度&#x3D;<code>1*2</code>,<code>1</code>点删除，<code>4</code>扩充是<code>5</code>，那么<code>5</code>没有被维持，所以<code>4</code>点也被删除，综上最后剩下<code>0</code></p>
 <blockquote>
 <p>以上描述存在的问题：起始点是哪个点？</p>
 </blockquote>
@@ -616,205 +382,26 @@ int main(){
 <p>大自也是<code>O(12n)=O(n)</code>的复杂度，</p>
 <p>下面就是实际上，是这两种穿插 ，那么一定小于等于<code>O(2n+12n)=O(n)</code>, (数学的习惯懒得分类讨论不等的情况 能用就行，所以留一个等于)</p>
 <p>综上 时间空间均满足</p>
-<pre><code class="c++">char s[100010];
-int sz=0;
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> s[<span class="number">100010</span>];</span><br><span class="line"><span class="type">int</span> sz=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> pos[<span class="number">100010</span>];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;p;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;q;</span><br><span class="line"><span class="type">int</span> L;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">circle</span><span class="params">(<span class="type">int</span> idx,<span class="type">int</span> len,<span class="type">int</span> &amp;newidx)</span></span>&#123;</span><br><span class="line">  newidx = (idx+L-len)%L;</span><br><span class="line">  <span class="keyword">while</span>(newidx != idx)&#123;</span><br><span class="line">    <span class="keyword">if</span>(!pos[newidx])&#123;</span><br><span class="line">      (newidx+=len)%=L;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      newidx = (newidx+L-len)%L;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>(newidx - L &gt; <span class="number">0</span>)&#123;</span><br><span class="line">    newidx -= L;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,newidx);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  <span class="comment">// 同步增长，冲突取前，倍增 其余删除(因为保证最小)</span></span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;L);</span><br><span class="line">  <span class="keyword">while</span>(sz&lt;L)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s+sz);</span><br><span class="line">    sz+=<span class="built_in">strlen</span>(s+sz);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">char</span> minch = s[<span class="number">0</span>];</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,L)&#123;</span><br><span class="line">    minch = <span class="built_in">min</span>(minch,s[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,L)&#123;</span><br><span class="line">    <span class="keyword">if</span>(s[i] == minch)&#123;</span><br><span class="line">      p.<span class="built_in">push_back</span>(i);</span><br><span class="line">      pos[i]=<span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> l = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span>(p.<span class="built_in">size</span>() &gt; <span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> state = <span class="number">0</span>; <span class="comment">// 0 for +1, 1 for *2</span></span><br><span class="line">    minch = s[(p[<span class="number">0</span>]+l)%L];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> idx : p)&#123;</span><br><span class="line">      <span class="keyword">if</span>(pos[(idx+l)%L] == <span class="literal">true</span>)&#123;</span><br><span class="line">        state = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      minch = <span class="built_in">min</span>(minch,s[(idx+l)%L]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(state == <span class="number">0</span>)&#123;</span><br><span class="line">      q.<span class="built_in">clear</span>();</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> idx:p)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!pos[idx])<span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span>(s[(idx+l)%L] == minch)&#123;</span><br><span class="line">          q.<span class="built_in">push_back</span>(idx);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          pos[idx]=<span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      p=q;</span><br><span class="line">      l++;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      q.<span class="built_in">clear</span>();</span><br><span class="line">      <span class="type">int</span> startidx ;</span><br><span class="line">      <span class="type">int</span> ret = <span class="built_in">circle</span>(p[<span class="number">0</span>],l,startidx);</span><br><span class="line">      <span class="keyword">if</span>(ret)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="type">int</span> pidx = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(pidx=<span class="number">0</span>;pidx&lt;p.<span class="built_in">size</span>();pidx++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(p[pidx] == startidx)&#123;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">rep</span>(i,pidx,p.<span class="built_in">size</span>())&#123;</span><br><span class="line">        <span class="type">int</span> idx = p[i];</span><br><span class="line">        <span class="keyword">if</span>(!pos[idx])<span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span>(pos[(idx+l)%L])&#123;</span><br><span class="line">          q.<span class="built_in">push_back</span>(idx);</span><br><span class="line">          pos[(idx+l)%L] = <span class="literal">false</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          pos[idx]=<span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,pidx)&#123;</span><br><span class="line">        <span class="type">int</span> idx = p[i];</span><br><span class="line">        <span class="keyword">if</span>(!pos[idx])<span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span>(pos[(idx+l)%L])&#123;</span><br><span class="line">          q.<span class="built_in">push_back</span>(idx);</span><br><span class="line">          pos[(idx+l)%L] = <span class="literal">false</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          pos[idx]=<span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      p=q;</span><br><span class="line">      l*=<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,p[<span class="number">0</span>]);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-bool pos[100010];
-vector&lt;int&gt;p;
-vector&lt;int&gt;q;
-int L;
-
-bool circle(int idx,int len,int &amp;newidx){
-  newidx = (idx+L-len)%L;
-  while(newidx != idx){
-    if(!pos[newidx]){
-      (newidx+=len)%=L;
-      return false;
-    }else{
-      newidx = (newidx+L-len)%L;
-    }
-  }
-  while(newidx - L &gt; 0){
-    newidx -= L;
-  }
-  printf(&quot;%d\n&quot;,newidx);
-  return true;
-}
-
-int main(){
-  usefile();
-  // 同步增长，冲突取前，倍增 其余删除(因为保证最小)
-  scanf(&quot;%d&quot;,&amp;L);
-  while(sz&lt;L){
-    scanf(&quot;%s&quot;,s+sz);
-    sz+=strlen(s+sz);
-  }
-  char minch = s[0];
-  rep(i,1,L){
-    minch = min(minch,s[i]);
-  }
-  rep(i,0,L){
-    if(s[i] == minch){
-      p.push_back(i);
-      pos[i]=true;
-    }
-  }
-  int l = 1;
-  while(p.size() &gt; 1){
-    int state = 0; // 0 for +1, 1 for *2
-    minch = s[(p[0]+l)%L];
-    for(auto idx : p){
-      if(pos[(idx+l)%L] == true){
-        state = 1;
-        break;
-      }
-      minch = min(minch,s[(idx+l)%L]);
-    }
-    if(state == 0){
-      q.clear();
-      for(auto idx:p){
-        if(!pos[idx])continue;
-        if(s[(idx+l)%L] == minch){
-          q.push_back(idx);
-        }else{
-          pos[idx]=false;
-        }
-      }
-      p=q;
-      l++;
-    }else{
-      q.clear();
-      int startidx ;
-      int ret = circle(p[0],l,startidx);
-      if(ret){
-        return 0;
-      }
-      int pidx = 0;
-      for(pidx=0;pidx&lt;p.size();pidx++){
-        if(p[pidx] == startidx){
-          break;
-        }
-      }
-      rep(i,pidx,p.size()){
-        int idx = p[i];
-        if(!pos[idx])continue;
-        if(pos[(idx+l)%L]){
-          q.push_back(idx);
-          pos[(idx+l)%L] = false;
-        }else{
-          pos[idx]=false;
-        }
-      }
-      rep(i,0,pidx){
-        int idx = p[i];
-        if(!pos[idx])continue;
-        if(pos[(idx+l)%L]){
-          q.push_back(idx);
-          pos[(idx+l)%L] = false;
-        }else{
-          pos[idx]=false;
-        }
-      }
-      p=q;
-      l*=2;
-    }
-  }
-  printf(&quot;%d\n&quot;,p[0]);
-  return 0;
-}
-</code></pre>
 <h1 id="Twofive"><a href="#Twofive" class="headerlink" title="Twofive"></a>Twofive</h1><h2 id="题目大意-2"><a href="#题目大意-2" class="headerlink" title="题目大意"></a>题目大意</h2><p>IOI 2001</p>
 <p><code>A到Y</code>构成的排列，满足 把这<code>25</code>个字母排成 <code>5*5</code>矩阵后 每行每列，单调递增，则为合法的</p>
 <p>所有合法的排列，按照字典序 排序</p>
 <p>请编写 字典序序号 到字符串  和 字符串反向转换为字典序序号的程序</p>
 <h2 id="尝试思路"><a href="#尝试思路" class="headerlink" title="尝试思路"></a>尝试思路</h2><p>看数据量，我自己也估计不到实际大小于是先写了一个打表，(上界 是<code>25!</code>但是有限制所以不知道是否会降低</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;twofive&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> chars[<span class="number">30</span>];</span><br><span class="line"><span class="type">int</span> vis[<span class="number">30</span>];</span><br><span class="line"><span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cout&lt;&lt;endl;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">5</span>)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,<span class="number">5</span>)&#123;</span><br><span class="line">      cout&lt;&lt;<span class="built_in">char</span>(chars[i*<span class="number">5</span>+j]+<span class="string">&#x27;a&#x27;</span>)&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">gen</span><span class="params">(<span class="type">int</span> idx)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(idx%<span class="number">5</span>==<span class="number">0</span>)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">25</span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(vis[i] == <span class="number">0</span>)&#123;</span><br><span class="line">        vis[i]=<span class="number">1</span>;</span><br><span class="line">        chars[idx] = i;</span><br><span class="line">        <span class="built_in">gen</span>(idx+<span class="number">1</span>);</span><br><span class="line">        vis[i]=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(idx == <span class="number">24</span>)&#123;</span><br><span class="line">    cnt++;</span><br><span class="line">    chars[<span class="number">24</span>]=<span class="number">24</span>;</span><br><span class="line">    <span class="built_in">print</span>();</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> sti = chars[idx<span class="number">-1</span>];</span><br><span class="line">  <span class="keyword">if</span>(idx&gt;<span class="number">5</span>)&#123;</span><br><span class="line">    sti=<span class="built_in">min</span>(sti,chars[idx<span class="number">-5</span>]);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(i,sti+<span class="number">1</span>,<span class="number">26</span>-(<span class="number">5</span>-idx%<span class="number">5</span>)*(<span class="number">5</span>-idx/<span class="number">5</span>))&#123;</span><br><span class="line">    <span class="keyword">if</span>(vis[i])<span class="keyword">continue</span>;</span><br><span class="line">    vis[i]=<span class="number">1</span>;</span><br><span class="line">    chars[idx] = i;</span><br><span class="line">    <span class="built_in">gen</span>(idx+<span class="number">1</span>);</span><br><span class="line">    vis[i]=<span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// usefile();</span></span><br><span class="line">  <span class="built_in">gen</span>(<span class="number">0</span>);</span><br><span class="line">  cout&lt;&lt;cnt&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;twofive&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-int chars[30];
-int vis[30];
-int cnt = 0;
-
-void print(){
-  cout&lt;&lt;endl;
-  rep(i,0,5){
-    rep(j,0,5){
-      cout&lt;&lt;char(chars[i*5+j]+&#39;a&#39;)&lt;&lt;&quot; &quot;;
-    }
-    cout&lt;&lt;endl;
-  }
-}
-
-void gen(int idx){
-  if(idx%5==0){
-    rep(i,0,25){
-      if(vis[i] == 0){
-        vis[i]=1;
-        chars[idx] = i;
-        gen(idx+1);
-        vis[i]=0;
-        return ;
-      }
-    }
-  }
-  if(idx == 24){
-    cnt++;
-    chars[24]=24;
-    print();
-    return ;
-  }
-  int sti = chars[idx-1];
-  if(idx&gt;5){
-    sti=min(sti,chars[idx-5]);
-  }
-
-  rep(i,sti+1,26-(5-idx%5)*(5-idx/5)){
-    if(vis[i])continue;
-    vis[i]=1;
-    chars[idx] = i;
-    gen(idx+1);
-    vis[i]=0;
-  }
-}
-
-
-int main(){
-  // usefile();
-  gen(0);
-  cout&lt;&lt;cnt&lt;&lt;endl;
-
-  return 0;
-}
-</code></pre>
 <p>跑了一下大概</p>
-<pre><code>7951237
-a b c d e 
-f g h l n 
-i m k q w 
-j p o r u 
-s t v x y 
-</code></pre><p>以上的改动才到<code>i</code>,说明 数量级上，不可能期望打表了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">7951237</span><br><span class="line">a b c d e </span><br><span class="line">f g h l n </span><br><span class="line">i m k q w </span><br><span class="line">j p o r u </span><br><span class="line">s t v x y </span><br></pre></td></tr></table></figure>
+
+<p>以上的改动才到<code>i</code>,说明 数量级上，不可能期望打表了</p>
 <p>接下来，注意到，如果我们有方法从数字序号转换到 对应的单词，那么 可以2分法 找到对应的单词</p>
 <p>同理，如果我们找到 单词映射到序号的方法，那么2分（如果可以，因为这里二分单词似乎没那么好做）也能反过来找数字，所以分析上，任何一个问题 都可以解决对应的一个</p>
-<p>还有个思路是，简单的排序，计算被删掉的个数,那么序列= 总排序-被删掉比它小的个数</p>
+<p>还有个思路是，简单的排序，计算被删掉的个数,那么序列&#x3D; 总排序-被删掉比它小的个数</p>
 <h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><h3 id="记忆化-dp"><a href="#记忆化-dp" class="headerlink" title="记忆化+dp"></a>记忆化+dp</h3><p>我们如果把数从小到大填入</p>
 <p>那么显然，新插入的数在已经插入的数的行末,也在已经插入的数的列末，如</p>
-<pre><code class="c++">a b e
-c d f
-g
-h
-i
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a b e</span><br><span class="line">c d f</span><br><span class="line">g</span><br><span class="line">h</span><br><span class="line">i</span><br></pre></td></tr></table></figure>
+
 <p><code>j</code>可插入的位置 为<code>g右侧</code>或<code>e右侧</code></p>
 <p>所以 我们有dp</p>
 <p><code>dp[i0][i1][i2][i3][i4]</code> 表示 第0行<code>i0</code>个，第1行<code>i1</code>个数…第<code>i4</code>行个数的情况下，剩余未填部分的期望个数</p>
@@ -827,562 +414,142 @@ i
 <p>因为所求的idx为实际的 合法twofive的字典序</p>
 <p>那么我们可以按位逼近，<code>//延伸阅读 BROP的按位枚举攻击方法</code></p>
 <p>假设我们求的是</p>
-<p><code>ADEFGBHIJKC...Y</code>, 那么 它 的字典序 = <code>AB...的所有</code>+<code>AC...的所有</code>+…</p>
+<p><code>ADEFGBHIJKC...Y</code>, 那么 它 的字典序 &#x3D; <code>AB...的所有</code>+<code>AC...的所有</code>+…</p>
 <p>简单的说，如果一个前缀小于 要求的等长前缀，那么加上该前缀的所有个数，</p>
 <p>如果该前缀等于要求的值的等长前缀，那么前缀长度+1</p>
 <p>外层for前缀长度，中间for字母， 时间复杂度小于 <code>O(25*25)</code></p>
 <p>以上我们可以 从 字符串转化为index</p>
 <p>相反</p>
 <p>同样用逼近的方法，可以<code>O(25*25)</code>时间复杂度内 index转化为 字符串</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;twofive&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> s[<span class="number">100</span>]; <span class="comment">// 按位逼近的</span></span><br><span class="line"><span class="type">char</span> str[<span class="number">100</span>]; <span class="comment">// str2index</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> dp[<span class="number">6</span>][<span class="number">6</span>][<span class="number">6</span>][<span class="number">6</span>][<span class="number">6</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> a=<span class="number">0</span>, <span class="type">int</span> b=<span class="number">0</span>, <span class="type">int</span> c=<span class="number">0</span>, <span class="type">int</span> d=<span class="number">0</span>, <span class="type">int</span> e=<span class="number">0</span>, <span class="type">char</span> ch=<span class="string">&#x27;A&#x27;</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ch &gt; <span class="string">&#x27;Y&#x27;</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> &amp;ret = dp[a][b][c][d][e];</span><br><span class="line">  <span class="keyword">if</span>(ret) <span class="keyword">return</span> ret;</span><br><span class="line">  <span class="comment">// 每一行 一定小于等于上一行</span></span><br><span class="line">  <span class="type">int</span> w = <span class="number">5</span>;</span><br><span class="line">  <span class="type">int</span> *v[<span class="number">6</span>]=&#123;&amp;w,&amp;a,&amp;b,&amp;c,&amp;d,&amp;e&#125;;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">6</span>)&#123;</span><br><span class="line">    <span class="comment">// 未填过 和 已经填过(按照 字母顺序扩展)</span></span><br><span class="line">    <span class="type">int</span> idx = *v[i]+(i<span class="number">-1</span>)*<span class="number">5</span>;</span><br><span class="line">    <span class="keyword">if</span>(*v[i] &lt; *v[i<span class="number">-1</span>] &amp;&amp; (s[idx] == <span class="number">0</span> || s[idx] == ch))&#123;</span><br><span class="line">      (*v[i])++;</span><br><span class="line">      ret+=<span class="built_in">dfs</span>(a,b,c,d,e,ch+<span class="number">1</span>);</span><br><span class="line">      (*v[i])--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">index2word</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">25</span>)&#123;</span><br><span class="line">    <span class="keyword">for</span>(s[i] = <span class="string">&#x27;A&#x27;</span>;; s[i]++) &#123; <span class="comment">// 按位逼近 时间复杂度25×25</span></span><br><span class="line">      <span class="built_in">memset</span>(dp, <span class="number">0</span>,<span class="built_in">sizeof</span>(dp));</span><br><span class="line">      <span class="type">int</span> ret = <span class="built_in">dfs</span>();</span><br><span class="line">      <span class="comment">// cout&lt;&lt;i&lt;&lt;&quot; = &quot;&lt;&lt;s[i]&lt;&lt;&quot;\tret = &quot;&lt;&lt;ret&lt;&lt;endl;</span></span><br><span class="line">      <span class="keyword">if</span>(ret &gt;= n) <span class="keyword">break</span>;</span><br><span class="line">      n -= ret;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">word2index</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, str);</span><br><span class="line">  <span class="type">int</span> ans = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">0</span>, <span class="number">25</span>)  &#123;</span><br><span class="line">    <span class="keyword">for</span>(s[i] = <span class="string">&#x27;A&#x27;</span>; s[i] &lt; str[i]; s[i]++) &#123;</span><br><span class="line">      <span class="built_in">memset</span>(dp, <span class="number">0</span>,<span class="built_in">sizeof</span>(dp));</span><br><span class="line">      ans += <span class="built_in">dfs</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  <span class="type">char</span> c;</span><br><span class="line">  cin &gt;&gt; c;</span><br><span class="line">  <span class="keyword">if</span>(c == <span class="string">&#x27;N&#x27;</span>)  &#123; <span class="comment">// index 2 word</span></span><br><span class="line">    <span class="built_in">index2word</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span>(c == <span class="string">&#x27;W&#x27;</span>)  &#123; <span class="comment">// word 2 index</span></span><br><span class="line">    <span class="built_in">word2index</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;twofive&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-char s[100]; // 按位逼近的
-char str[100]; // str2index
-
-int dp[6][6][6][6][6];
-
-int dfs(int a=0, int b=0, int c=0, int d=0, int e=0, char ch=&#39;A&#39;) {
-  if(ch &gt; &#39;Y&#39;) return 1;
-  int &amp;ret = dp[a][b][c][d][e];
-  if(ret) return ret;
-  // 每一行 一定小于等于上一行
-  int w = 5;
-  int *v[6]={&amp;w,&amp;a,&amp;b,&amp;c,&amp;d,&amp;e};
-  rep(i,1,6){
-    // 未填过 和 已经填过(按照 字母顺序扩展)
-    int idx = *v[i]+(i-1)*5;
-    if(*v[i] &lt; *v[i-1] &amp;&amp; (s[idx] == 0 || s[idx] == ch)){
-      (*v[i])++;
-      ret+=dfs(a,b,c,d,e,ch+1);
-      (*v[i])--;
-    }
-  }
-  return ret;
-}
-
-void index2word(){
-  int n;
-  scanf(&quot;%d&quot;,&amp;n);
-  rep(i,0,25){
-    for(s[i] = &#39;A&#39;;; s[i]++) { // 按位逼近 时间复杂度25×25
-      memset(dp, 0,sizeof(dp));
-      int ret = dfs();
-      // cout&lt;&lt;i&lt;&lt;&quot; = &quot;&lt;&lt;s[i]&lt;&lt;&quot;\tret = &quot;&lt;&lt;ret&lt;&lt;endl;
-      if(ret &gt;= n) break;
-      n -= ret;
-    }
-  }
-  printf(&quot;%s\n&quot;, s);
-}
-
-void word2index(){
-  scanf(&quot;%s&quot;, str);
-  int ans = 1;
-  rep(i, 0, 25)  {
-    for(s[i] = &#39;A&#39;; s[i] &lt; str[i]; s[i]++) {
-      memset(dp, 0,sizeof(dp));
-      ans += dfs();
-    }
-  }
-  printf(&quot;%d\n&quot;, ans);
-}
-
-int main(){
-  usefile();
-  char c;
-  cin &gt;&gt; c;
-  if(c == &#39;N&#39;)  { // index 2 word
-    index2word();
-  } else if(c == &#39;W&#39;)  { // word 2 index
-    word2index();
-  }
-  return 0;
-}
-</code></pre>
 <p>上面实现中 dp过程是按照字母顺序填写，由ch保证，所以在最外层枚举dp的时候，就直接从A 到Y 了</p>
 
-        
-                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
-                    <p><strong>
-                         
-                            This blog is under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC BY-NC-SA 3.0 Unported License</a>
-                        </strong>
-                        <br>
-                        <strong>本文鏈接：</strong><a href="http://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/">http://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/</a>
-                    </p>
-                </blockquote>
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'http://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//yexiaorain.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/Blog/2019-06-26-USACO-6.1/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/Blog/2019-06-10-USACO-5.4/" id="post_nav-older" class="next-content">
-            舊篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
     </div>
 
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/Blog/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/Blog/img/satan.jpg" alt="Xiao Ye's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        yexiaorain@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto: yexiaorain@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
     
-        <li id="sidebar-first-li">
-            <a href="/Blog/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                首頁
-            </a>
-        </li>
-        
     
+    
+      
 
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    過往
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/Blog/archives/2022/09/">九月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/08/">八月 2022<span class="sidebar_archives-count">17</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/07/">七月 2022<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/06/">六月 2022<span class="sidebar_archives-count">17</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/05/">五月 2022<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/04/">四月 2022<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/03/">三月 2022<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/12/">十二月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/11/">十一月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/09/">九月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/08/">八月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/07/">七月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/06/">六月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/05/">五月 2021<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/04/">四月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/02/">二月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/12/">十二月 2020<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/11/">十一月 2020<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/08/">八月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/07/">七月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/06/">六月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/05/">五月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/04/">四月 2020<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/01/">一月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/11/">十一月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/10/">十月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/09/">九月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/07/">七月 2019<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/06/">六月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/05/">五月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/04/">四月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/03/">三月 2019<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/02/">二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/05/">五月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/10/">十月 2017<span class="sidebar_archives-count">4</span></a>
-            </ul>
-        </li>
-        
-    
 
-    <!-- Categories  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
-                
-                分類
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                <a class="sidebar_archives-link" href="/Blog/categories/Atcoder/">Atcoder<span class="sidebar_archives-count">40</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/ABC/">ABC<span class="sidebar_archives-count">24</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/AGC/">AGC<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/ARC/">ARC<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/CodeChef/">CodeChef<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Codeforces/">Codeforces<span class="sidebar_archives-count">73</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Machine-learning/">Machine learning<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/">NowCoder<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Project-Euler/">Project Euler<span class="sidebar_archives-count">19</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/USACO/">USACO<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/algorithm/">algorithm<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/bestcoder/">bestcoder<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/luogu/">luogu<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/poj/">poj<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/tencent/">tencent<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
+    <footer class="post-footer">
+          
 
-    <!-- Pages  -->
-    
-
-    <!-- Article Number  -->
-    
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/" title="USACO 5.5 章节">https://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
 </ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E7%A6%BB%E6%95%A3%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 离散化</a>
+              <a href="/Blog/tags/%E6%89%AB%E6%8F%8F%E7%BA%BF/" rel="tag"><i class="fa fa-tag"></i> 扫描线</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2019-06-10-USACO-5.4/" rel="prev" title="USACO 5.4 章节">
+                  <i class="fa fa-chevron-left"></i> USACO 5.4 章节
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/2019-06-26-USACO-6.1/" rel="next" title="USACO 6.1 章节">
+                  USACO 6.1 章节 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
 
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
 
 
-<!-- Theme Material -->
 
 
-<!-- Help & Support -->
-<!--
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
 
--->
+  <footer class="footer">
+    <div class="footer-inner">
 
-<!-- Feedback -->
-<!--
 
--->
-
-<!-- About Theme -->
-<!--
-
--->
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">728k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">11:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
 
     </div>
+  </footer>
 
-    <!-- Sidebar Image -->
-    
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
 
-</aside>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
 
-                    
 
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
 
-                    
 
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
 
-    <!-- Facebook -->
-    
+  
 
-    <!-- Google + -->
-    
 
-    <!-- Weibo -->
-    
 
-    <!-- Instagram -->
-    
 
-    <!-- Tumblr -->
-    
+  
 
-    <!-- Github -->
-    
-        <a href="https://yexiaorain.github.com" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
 
-    <!-- LinkedIn -->
-    
 
-    <!-- Zhihu -->
-    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/2019-06-25-USACO-5.5/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
 
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-    
-    <!-- V2EX -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;2013&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>YeXiaoRain Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
-            </div>
-        </div>
-    
-</footer>
-
-
-                    <!-- Import JS File -->
-
-    <script>lsloader.load("lazyload_js","/Blog/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
-
-
-
-    <script>lsloader.load("js_js","/Blog/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
-
-
-
-    <script>lsloader.load("np_js","/Blog/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//yexiaorain.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/Blog/css/uc.css">');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/Blog/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
-    })()
-console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
-
-                </main>
-            </div>
-        </body>
-    
+</body>
 </html>

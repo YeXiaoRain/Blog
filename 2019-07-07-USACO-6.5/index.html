@@ -1,563 +1,334 @@
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.0 -->
-    <script>
-        window.materialVersion = "1.5.0"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1'
-        ]
-    </script>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="All Latin Squares题目大意n x n矩阵(n&#x3D;2-&gt;7) 第一行1 2 3 4 5 ..N 每行每列，1-N各出现一次，求总方案数 题解n最大为7 显然打表 写了个先数值后位置的暴搜 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#inc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USACO 6.5 章节">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="All Latin Squares题目大意n x n矩阵(n&#x3D;2-&gt;7) 第一行1 2 3 4 5 ..N 每行每列，1-N各出现一次，求总方案数 题解n最大为7 显然打表 写了个先数值后位置的暴搜 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#inc">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-07-05T17:37:14.000Z">
+<meta property="article:modified_time" content="2022-09-02T03:53:44.456Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="计算几何">
+<meta property="article:tag" content="插头DP">
+<meta property="article:tag" content="搜索">
+<meta property="article:tag" content="打表">
+<meta property="article:tag" content="群论">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/">
 
 
 
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/","path":"2019-07-07-USACO-6.5/","title":"USACO 6.5 章节"}</script>
 
-
-
-
-
-
-
-
-    <!-- Title -->
-    
-    <title>
-        
-            USACO 6.5 章节 世界上本没有龙 屠龙的人多了也便有了 | 
-        
-        YeXiaoRain Blog
-    </title>
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Xiao Ye">
-    <meta name="description" itemprop="description" content>
-    <meta name="keywords" content=",插头DP,搜索,打表,群论,计算几何">
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/Blog/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/Blog/img/favicon.png">
-    <link rel="apple-touch-icon" href="/Blog/img/favicon.png">
-
-    <!--iOS -->
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="YeXiaoRain Blog">
-
-    <!-- Site Verification -->
-    
-    
-
-    <!-- RSS -->
-    
-        
-            <link rel="alternate" type="application/atom+xml" href="atom.xml">
-        
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.en.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/Blog/css/material.min.css?rdUU9RcgLCpXgn+BEpYF7Q==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/Blog/css/style.min.css?4ixU3PVzPicZm76KlybVwQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/Blog/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/Blog/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-    overflow-x: hidden !important;
-  }
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>USACO 6.5 章节 | YeXiaoRain Blog</title>
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-image: url(/Blog/img/ns.jpg);
-      }
-    </style>
 
 
 
 
-<!-- Fade Effect -->
 
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-
-
-<!-- Import Material Icon -->
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/Blog/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://yexiaorain.github.io/Blog">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="USACO 6.5 章节 世界上本没有龙 屠龙的人多了也便有了 | YeXiaoRain Blog">
-    <meta property="og:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
-    <meta property="og:description" content>
-    <meta property="og:article:tag" content="插头DP"> <meta property="og:article:tag" content="搜索"> <meta property="og:article:tag" content="打表"> <meta property="og:article:tag" content="群论"> <meta property="og:article:tag" content="计算几何"> 
-
-    
-        <meta property="article:published_time" content="Sat Jul 06 2019 01:37:14 GMT+0800">
-        <meta property="article:modified_time" content="Thu Sep 01 2022 22:54:57 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="USACO 6.5 章节 世界上本没有龙 屠龙的人多了也便有了 | YeXiaoRain Blog">
-    <meta name="twitter:description" content>
-    <meta name="twitter:image" content="http://yexiaorain.github.io/Blog/img/favicon.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="http://yexiaorain.github.io/Blog">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="http://yexiaorain.github.io/Blog/Blog/2019-07-07-USACO-6.5/index.html">
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "http://yexiaorain.github.io/Blog/Blog/2019-07-07-USACO-6.5/index.html",
-    "headline": "USACO 6.5 章节 世界上本没有龙 屠龙的人多了也便有了",
-    "datePublished": "Sat Jul 06 2019 01:37:14 GMT+0800",
-    "dateModified": "Thu Sep 01 2022 22:54:57 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Xiao Ye",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/satan.jpg"
-        },
-        "description": "阳光只洒在金碧辉煌的高楼上"
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "YeXiaoRain Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/favicon.png"
-        }
-    },
-    "keywords": ",插头DP,搜索,打表,群论,计算几何",
-    "description": "",
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
-    
-    
-    
-
-    <!-- Custom Head -->
-    
-
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-    -->
+  </div>
 
+  <div class="site-meta">
 
-    <!-- Left aligned menu below button -->
-    
-    
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
 
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#All-Latin-Squares"><span class="post-toc-number">1.</span> <span class="post-toc-text">All Latin Squares</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题目大意"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">题目大意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Closed-Fences"><span class="post-toc-number">2.</span> <span class="post-toc-text">Closed Fences</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题目大意-1"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">题目大意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Betsy’s-Tour"><span class="post-toc-number">3.</span> <span class="post-toc-text">Betsy’s Tour</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题目大意-2"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">题目大意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题解-2"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">题解</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#本文其它链接"><span class="post-toc-number">5.</span> <span class="post-toc-text">本文其它链接</span></a></li></ol>
-    </ul>
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 4 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/Blog/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                USACO 6.5 章节 世界上本没有龙 屠龙的人多了也便有了
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/Blog/img/satan.jpg" width="44px" height="44px" alt="Author Avatar"/>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Xiao Ye</strong>
-        <span>7月 06, 2019</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/Blog/tags/打表/">打表</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/插头DP/">插头DP</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/搜索/">搜索</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/群论/">群论</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/Blog/tags/计算几何/">计算几何</a>
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=USACO 6.5 章节 世界上本没有龙 屠龙的人多了也便有了&url=http://yexiaorain.github.io/Blog/Blog/2019-07-07-USACO-6.5/index.html&pic=http://yexiaorain.github.io/Blog/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=USACO 6.5 章节 世界上本没有龙 屠龙的人多了也便有了&url=http://yexiaorain.github.io/Blog/Blog/2019-07-07-USACO-6.5/index.html&via=Xiao Ye" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yexiaorain.github.io/Blog/Blog/2019-07-07-USACO-6.5/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=YeXiaoRain Blog&title=USACO 6.5 章节 世界上本没有龙 屠龙的人多了也便有了&summary=&pics=http://yexiaorain.github.io/Blog/img/favicon.png&url=http://yexiaorain.github.io/Blog/Blog/2019-07-07-USACO-6.5/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 QQ
-            </li>
-        </a>
-    
-
-    <!-- Share Telegram -->
-    
-        <a class="post_share-link" href="https://telegram.me/share/url?url=http://yexiaorain.github.io/Blog/Blog/2019-07-07-USACO-6.5/index.html&text=USACO 6.5 章节 世界上本没有龙 屠龙的人多了也便有了" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Telegram
-            </li>
-        </a>
-    
-</ul>
-
+  </div>
 </div>
 
-                
 
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">171</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">166</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#All-Latin-Squares"><span class="nav-number">1.</span> <span class="nav-text">All Latin Squares</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F"><span class="nav-number">1.1.</span> <span class="nav-text">题目大意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">1.2.</span> <span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Closed-Fences"><span class="nav-number">2.</span> <span class="nav-text">Closed Fences</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目大意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-number">2.2.</span> <span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Betsy%E2%80%99s-Tour"><span class="nav-number">3.</span> <span class="nav-text">Betsy’s Tour</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F-2"><span class="nav-number">3.1.</span> <span class="nav-text">题目大意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-2"><span class="nav-number">3.2.</span> <span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E6%96%87%E5%85%B6%E5%AE%83%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">本文其它链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">166</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="USACO 6.5 章节 | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          USACO 6.5 章节
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-07-06 01:37:14" itemprop="dateCreated datePublished" datetime="2019-07-06T01:37:14+08:00">2019-07-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/USACO/" itemprop="url" rel="index"><span itemprop="name">USACO</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2019-07-07-USACO-6.5/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019-07-07-USACO-6.5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>9.9k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>9 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
         <h1 id="All-Latin-Squares"><a href="#All-Latin-Squares" class="headerlink" title="All Latin Squares"></a>All Latin Squares</h1><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p><code>n x n</code>矩阵(<code>n=2-&gt;7</code>)</p>
 <p>第一行<code>1 2 3 4 5 ..N</code></p>
 <p>每行每列，<code>1-N</code>各出现一次，求总方案数</p>
 <h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><del>n最大为7 显然打表</del></p>
 <p>写了个先数值后位置的暴搜</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;latin&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> v[<span class="number">10</span>][<span class="number">10</span>]; <span class="comment">// [row][col]</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> vis[<span class="number">10</span>][<span class="number">10</span>]; <span class="comment">// [val][col]</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> anscnt =<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> val,<span class="type">int</span> row)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(val &gt; n)&#123;</span><br><span class="line">    anscnt++;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(v[row][j] == <span class="number">0</span> &amp;&amp; !vis[val][j])&#123;</span><br><span class="line">      v[row][j] = <span class="number">1</span>;</span><br><span class="line">      vis[val][j] = <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">if</span>(row+<span class="number">1</span> &lt; n)&#123;</span><br><span class="line">        <span class="built_in">dfs</span>(val,row+<span class="number">1</span>);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">dfs</span>(val+<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      vis[val][j] = <span class="number">0</span>;</span><br><span class="line">      v[row][j] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">//  usefile();</span></span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    v[<span class="number">0</span>][i]=i;</span><br><span class="line">    vis[i][i]=<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">dfs</span>(<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">  cout&lt;&lt;anscnt&lt;&lt;endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;latin&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-int n;
-int v[10][10]; // [row][col]
-
-int vis[10][10]; // [val][col]
-
-int anscnt =0;
-
-void dfs(int val,int row){
-  if(val &gt; n){
-    anscnt++;
-    return ;
-  }
-  rep(j,1,n+1){
-    if(v[row][j] == 0 &amp;&amp; !vis[val][j]){
-      v[row][j] = 1;
-      vis[val][j] = 1;
-      if(row+1 &lt; n){
-        dfs(val,row+1);
-      }else{
-        dfs(val+1,1);
-      }
-      vis[val][j] = 0;
-      v[row][j] = 0;
-    }
-  }
-}
-
-int main(){
-  //  usefile();
-  cin&gt;&gt;n;
-  rep(i,1,n+1){
-    v[0][i]=i;
-    vis[i][i]=1;
-  }
-  dfs(1,1);
-  cout&lt;&lt;anscnt&lt;&lt;endl;
-  return 0;
-}
-</code></pre>
 <p>6能搜出来，7要等好久,考虑改算法</p>
 <p>但是数列嘛,当然先上<code>OEIS</code>看看<code>http://oeis.org/search?q=1%2C2%2C24%2C1344%2C1128960&amp;sort=&amp;language=english&amp;go=Search</code></p>
 <p><code>7</code>的时候答案是<code>12198297600</code>,看来直接暴搜是不太可能</p>
@@ -565,114 +336,15 @@ int main(){
 <p>所以考虑第一列也定为<code>1</code>到<code>N</code>,最后乘上<code>(N-1)!</code></p>
 <p>这样计算的次数是<code>16942080</code></p>
 <p>在我<code>i7-7700HQ</code>上跑是</p>
-<pre><code class="c++">&gt; time echo 7 | ./6.5.1
-12198297600
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; time echo <span class="number">7</span> | ./<span class="number">6.5</span><span class="number">.1</span></span><br><span class="line"><span class="number">12198297600</span></span><br><span class="line"></span><br><span class="line">real	<span class="number">0</span>m17<span class="number">.194</span>s</span><br><span class="line">user	<span class="number">0</span>m17<span class="number">.190</span>s</span><br><span class="line">sys	<span class="number">0</span>m0<span class="number">.006</span>s</span><br></pre></td></tr></table></figure>
 
-real    0m17.194s
-user    0m17.190s
-sys    0m0.006s
-</code></pre>
 <p>固定第一列的代码</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;latin&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> v[<span class="number">10</span>][<span class="number">10</span>]; <span class="comment">// [row][col]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// [0-&gt;n-1][1-&gt;n]</span></span><br><span class="line"><span class="type">int</span> vis[<span class="number">10</span>][<span class="number">10</span>]; <span class="comment">// [val][col]</span></span><br><span class="line"></span><br><span class="line"><span class="type">long</span> <span class="type">long</span> anscnt =<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> val,<span class="type">int</span> row)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(val &gt; n)&#123;</span><br><span class="line">    anscnt++;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(val == row+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(row+<span class="number">1</span> &lt; n)&#123;</span><br><span class="line">      <span class="built_in">dfs</span>(val,row+<span class="number">1</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="built_in">dfs</span>(val+<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(v[row][j] == <span class="number">0</span> &amp;&amp; !vis[val][j])&#123;</span><br><span class="line">      v[row][j] = <span class="number">1</span>;</span><br><span class="line">      vis[val][j] = <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">if</span>(row+<span class="number">1</span> &lt; n)&#123;</span><br><span class="line">        <span class="built_in">dfs</span>(val,row+<span class="number">1</span>);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">dfs</span>(val+<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      vis[val][j] = <span class="number">0</span>;</span><br><span class="line">      v[row][j] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">//  usefile();</span></span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    v[<span class="number">0</span>][j]=j;</span><br><span class="line">    vis[j][j]=<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">    v[i][<span class="number">1</span>]=i+<span class="number">1</span>;</span><br><span class="line">    vis[i+<span class="number">1</span>][<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">dfs</span>(<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">    anscnt*=i;</span><br><span class="line">  &#125;</span><br><span class="line">  cout&lt;&lt;anscnt&lt;&lt;endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;latin&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-int n;
-int v[10][10]; // [row][col]
-
-// [0-&gt;n-1][1-&gt;n]
-int vis[10][10]; // [val][col]
-
-long long anscnt =0;
-
-void dfs(int val,int row){
-  if(val &gt; n){
-    anscnt++;
-    return ;
-  }
-  if(val == row+1){
-    if(row+1 &lt; n){
-      dfs(val,row+1);
-    }else{
-      dfs(val+1,1);
-    }
-    return ;
-  }
-  rep(j,1,n+1){
-    if(v[row][j] == 0 &amp;&amp; !vis[val][j]){
-      v[row][j] = 1;
-      vis[val][j] = 1;
-      if(row+1 &lt; n){
-        dfs(val,row+1);
-      }else{
-        dfs(val+1,1);
-      }
-      vis[val][j] = 0;
-      v[row][j] = 0;
-    }
-  }
-}
-
-int main(){
-  //  usefile();
-  cin&gt;&gt;n;
-  rep(j,1,n+1){
-    v[0][j]=j;
-    vis[j][j]=1;
-  }
-  rep(i,1,n){
-    v[i][1]=i+1;
-    vis[i+1][1]=1;
-  }
-  dfs(1,1);
-  rep(i,1,n){
-    anscnt*=i;
-  }
-  cout&lt;&lt;anscnt&lt;&lt;endl;
-  return 0;
-}
-</code></pre>
 <p>网上搜了一下方法，有一种是 靠循环节 <code>置换圈</code> 大概群论相关</p>
 <p>而我决定 放弃，打表吧XD</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;latin&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line">map&lt;<span class="type">int</span>,<span class="type">long</span> <span class="type">long</span> &gt;ans;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  ans[<span class="number">2</span>]= <span class="number">1</span>;</span><br><span class="line">  ans[<span class="number">3</span>]= <span class="number">2</span>;</span><br><span class="line">  ans[<span class="number">4</span>]= <span class="number">24</span>;</span><br><span class="line">  ans[<span class="number">5</span>]= <span class="number">1344</span>;</span><br><span class="line">  ans[<span class="number">6</span>]= <span class="number">1128960</span>;</span><br><span class="line">  ans[<span class="number">7</span>]= <span class="number">12198297600</span>;</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  cout&lt;&lt;ans[n]&lt;&lt;endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;latin&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-int n;
-
-map&lt;int,long long &gt;ans;
-
-int main(){
-  usefile();
-  ans[2]= 1;
-  ans[3]= 2;
-  ans[4]= 24;
-  ans[5]= 1344;
-  ans[6]= 1128960;
-  ans[7]= 12198297600;
-  cin&gt;&gt;n;
-  cout&lt;&lt;ans[n]&lt;&lt;endl;
-  return 0;
-}
-</code></pre>
 <h1 id="Closed-Fences"><a href="#Closed-Fences" class="headerlink" title="Closed Fences"></a>Closed Fences</h1><h2 id="题目大意-1"><a href="#题目大意-1" class="headerlink" title="题目大意"></a>题目大意</h2><p>计算几何</p>
 <p>逆时针给一系列点<code>(&lt;=200个)</code>,坐标范围<code>(| |&lt;=2^16)</code>检查 这些点是否能围成一个围栏</p>
 <p>如果可行,再给一点 输出 从该点发出射线，能照到的线段 (只要部分能被照到 就输出整段)</p>
@@ -682,122 +354,17 @@ int main(){
 <p>然后枚举所有线段，对每一条线段1000等分，枚举从给定的点 向等分点是否与其它线段有交点</p>
 <p>时间复杂度<code>O(n*n*1000)</code>;</p>
 <p>[这题的核心还是说写计算几何的算法</p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
-
-using namespace std;
-
-const string filename = &quot;fence4&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;fence4&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; p;</span><br><span class="line">pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; P[<span class="number">210</span>];</span><br><span class="line"><span class="type">int</span> N;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">cross</span><span class="params">(pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt; a,pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt; b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a.first*b.second-a.second*b.first;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt; <span class="keyword">operator</span> + (pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt; a,pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt; b)  &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;a.first+b.first,a.second+b.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt; <span class="keyword">operator</span> - (pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt; a,pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt; b)   &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;a.first-b.first,a.second-b.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isIntersect</span><span class="params">(pair&lt;pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt;,pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt;&gt; line1,pair&lt;pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt;,pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt;&gt; line2)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span>  !(</span><br><span class="line">      (<span class="built_in">cross</span>(line1.first -line2.first,line2.second-line2.first) &gt; <span class="number">0</span>) ==</span><br><span class="line">      (<span class="built_in">cross</span>(line1.second-line2.first,line2.second-line2.first) &gt; <span class="number">0</span>) ||</span><br><span class="line">      (<span class="built_in">cross</span>(line2.first -line1.first,line1.second-line1.first) &gt; <span class="number">0</span>) ==</span><br><span class="line">      (<span class="built_in">cross</span>(line2.second-line1.first,line1.second-line1.first) &gt; <span class="number">0</span>)</span><br><span class="line">      );</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isValid</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(j,i+<span class="number">2</span>,N)&#123;</span><br><span class="line">      <span class="keyword">if</span>(i == <span class="number">0</span> &amp;&amp; j == N<span class="number">-1</span>)<span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">isIntersect</span>(&#123;P[i],P[i+<span class="number">1</span>]&#125;, &#123;P[j],P[(j+<span class="number">1</span>)%N]&#125;))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 共线</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isColine</span><span class="params">(<span class="type">int</span> idx)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">cross</span>(P[idx]-P[(idx+<span class="number">1</span>)%N],p) == <span class="built_in">cross</span>(P[idx],P[(idx+<span class="number">1</span>)%N]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isSeen</span><span class="params">(<span class="type">int</span> idx)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> x1 = P[idx].first;</span><br><span class="line">  <span class="type">int</span> y1 = P[idx].second;</span><br><span class="line">  <span class="type">int</span> nsegments = <span class="number">1000</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,nsegments)&#123;</span><br><span class="line">    pair&lt;<span class="type">double</span>,<span class="type">double</span>&gt; point_ =  &#123;</span><br><span class="line">      x1 + i * <span class="number">1.0</span> / nsegments * (P[(idx + <span class="number">1</span>) % N].first  - x1),</span><br><span class="line">      y1 + i * <span class="number">1.0</span> / nsegments * (P[(idx + <span class="number">1</span>) % N].second - y1)&#125;;</span><br><span class="line">    <span class="type">bool</span> blocked = <span class="literal">false</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,N)&#123;</span><br><span class="line">      <span class="keyword">if</span>(j == idx)      &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">isIntersect</span>(&#123;p,point_&#125;, &#123;P[j],P[(j+<span class="number">1</span>)%N]&#125;))&#123;</span><br><span class="line">        blocked = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!blocked)    &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;N);</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;p.first,&amp;p.second);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>( <span class="string">&quot;%d %d&quot;</span>, &amp;P[i].first, &amp;P[i].second);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">isValid</span>())  &#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;NOFENCE\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N)&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">isColine</span>(i) &amp;&amp; <span class="built_in">isSeen</span>(i))    &#123;</span><br><span class="line">      ans.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(ans.<span class="built_in">size</span>() &gt;= <span class="number">2</span> &amp;&amp; ans[ans.<span class="built_in">size</span>() - <span class="number">2</span>] == N - <span class="number">2</span>)&#123;</span><br><span class="line">    ans[ans.<span class="built_in">size</span>() - <span class="number">2</span>] = N - <span class="number">1</span>;</span><br><span class="line">    ans[ans.<span class="built_in">size</span>() - <span class="number">1</span>] = N - <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">int</span>(ans.<span class="built_in">size</span>()));</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ans.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="keyword">if</span>(ans[i] == N - <span class="number">1</span>)    &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%d %d %d %d\n&quot;</span>, P[<span class="number">0</span>].first, P[<span class="number">0</span>].second, P[ans[i]].first, P[ans[i]].second);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="built_in">printf</span>( <span class="string">&quot;%d %d %d %d\n&quot;</span>, P[ans[i]].first, P[ans[i]].second, P[ans[i] + <span class="number">1</span>].first, P[ans[i] + <span class="number">1</span>].second);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-pair&lt;int,int&gt; p;
-pair&lt;int,int&gt; P[210];
-int N;
 
 
-double cross(pair&lt;double,double&gt; a,pair&lt;double,double&gt; b){
-  return a.first*b.second-a.second*b.first;
-}
 
-pair&lt;double,double&gt; operator + (pair&lt;double,double&gt; a,pair&lt;double,double&gt; b)  {
-  return {a.first+b.first,a.second+b.second};
-}
 
-pair&lt;double,double&gt; operator - (pair&lt;double,double&gt; a,pair&lt;double,double&gt; b)   {
-  return {a.first-b.first,a.second-b.second};
-}
 
-bool isIntersect(pair&lt;pair&lt;double,double&gt;,pair&lt;double,double&gt;&gt; line1,pair&lt;pair&lt;double,double&gt;,pair&lt;double,double&gt;&gt; line2){
-  return  !(
-      (cross(line1.first -line2.first,line2.second-line2.first) &gt; 0) ==
-      (cross(line1.second-line2.first,line2.second-line2.first) &gt; 0) ||
-      (cross(line2.first -line1.first,line1.second-line1.first) &gt; 0) ==
-      (cross(line2.second-line1.first,line1.second-line1.first) &gt; 0)
-      );
 
-}
 
-bool isValid(){
-  rep(i,0,N){
-    rep(j,i+2,N){
-      if(i == 0 &amp;&amp; j == N-1)continue;
-      if(isIntersect({P[i],P[i+1]}, {P[j],P[(j+1)%N]})){
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-// 共线
-bool isColine(int idx){
-  return cross(P[idx]-P[(idx+1)%N],p) == cross(P[idx],P[(idx+1)%N]);
-}
-
-bool isSeen(int idx){
-  int x1 = P[idx].first;
-  int y1 = P[idx].second;
-  int nsegments = 1000;
-  rep(i,1,nsegments){
-    pair&lt;double,double&gt; point_ =  {
-      x1 + i * 1.0 / nsegments * (P[(idx + 1) % N].first  - x1),
-      y1 + i * 1.0 / nsegments * (P[(idx + 1) % N].second - y1)};
-    bool blocked = false;
-    rep(j,0,N){
-      if(j == idx)      {
-        continue;
-      }
-      if(isIntersect({p,point_}, {P[j],P[(j+1)%N]})){
-        blocked = true;
-        break;
-      }
-    }
-    if(!blocked)    {
-      return true;
-    }
-  }
-  return false;
-}
-
-vector&lt;int&gt; ans;
-int main(){
-  usefile();
-  scanf(&quot;%d&quot;, &amp;N);
-  scanf(&quot;%d %d&quot;, &amp;p.first,&amp;p.second);
-  rep(i,0,N){
-    scanf( &quot;%d %d&quot;, &amp;P[i].first, &amp;P[i].second);
-  }
-  if(!isValid())  {
-    printf( &quot;NOFENCE\n&quot;);
-    return 0;
-  }
-  rep(i,0,N){
-    if(!isColine(i) &amp;&amp; isSeen(i))    {
-      ans.push_back(i);
-    }
-  }
-  if(ans.size() &gt;= 2 &amp;&amp; ans[ans.size() - 2] == N - 2){
-    ans[ans.size() - 2] = N - 1;
-    ans[ans.size() - 1] = N - 2;
-  }
-  printf(&quot;%d\n&quot;, int(ans.size()));
-  rep(i,0,ans.size()){
-    if(ans[i] == N - 1)    {
-      printf(&quot;%d %d %d %d\n&quot;, P[0].first, P[0].second, P[ans[i]].first, P[ans[i]].second);
-    }else{
-      printf( &quot;%d %d %d %d\n&quot;, P[ans[i]].first, P[ans[i]].second, P[ans[i] + 1].first, P[ans[i] + 1].second);
-    }
-  }
-  return 0;
-}
-</code></pre>
-<h1 id="Betsy’s-Tour"><a href="#Betsy’s-Tour" class="headerlink" title="Betsy’s Tour"></a>Betsy’s Tour</h1><h2 id="题目大意-2"><a href="#题目大意-2" class="headerlink" title="题目大意"></a>题目大意</h2><p><code>n x n</code>(n&lt;=7) 的矩阵，从左上走到坐下，每个格子最多经过一次的方案数</p>
+<h1 id="Betsy’s-Tour"><a href="#Betsy’s-Tour" class="headerlink" title="Betsy’s Tour"></a>Betsy’s Tour</h1><h2 id="题目大意-2"><a href="#题目大意-2" class="headerlink" title="题目大意"></a>题目大意</h2><p><code>n x n</code>(n&lt;&#x3D;7) 的矩阵，从左上走到坐下，每个格子最多经过一次的方案数</p>
 <h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><p><del>暴搜+打表</del></p>
 <p>插头dp ? 像是</p>
 <p>实现了一下 果然过了，注意处理<code>n = 1</code></p>
@@ -808,616 +375,139 @@ int main(){
 <li>在上面两个优化下 初始状态是<code>(______)</code>这样的</li>
 </ol>
 <p>时间复杂度<code>O(i*j*state) = O(7*7*3^7)</code></p>
-<pre><code class="c++">#include &lt;bits/stdc++.h&gt;
-#define rep(i,a,n) for (int i=a;i&lt;n;i++)
-#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> string filename = <span class="string">&quot;betsy&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">usefile</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.in&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">  <span class="built_in">freopen</span>((filename+<span class="string">&quot;.out&quot;</span>).<span class="built_in">c_str</span>(),<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 中间的 每个块 连接 两个方向，</span></span><br><span class="line"></span><br><span class="line">map&lt;pair&lt;<span class="type">int</span>,<span class="type">long</span> <span class="type">long</span>&gt;,<span class="type">long</span> <span class="type">long</span>&gt; res;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">get_state</span><span class="params">(<span class="type">long</span> <span class="type">long</span> state,<span class="type">int</span> pos)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (state &gt;&gt; (<span class="number">2</span>*pos)) % <span class="number">4</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">set_state</span><span class="params">(<span class="type">long</span> <span class="type">long</span> state,<span class="type">int</span> pos)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> state &lt;&lt; (<span class="number">2</span>*pos);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ((    ) ())</span></span><br><span class="line"><span class="comment">// block: 的2进制位 0b3210</span></span><br><span class="line"><span class="comment">//   3</span></span><br><span class="line"><span class="comment">//  0 2</span></span><br><span class="line"><span class="comment">//   1</span></span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">insert_state</span><span class="params">(<span class="type">long</span> <span class="type">long</span> old_state,<span class="type">int</span> pos,<span class="type">int</span> block)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> arr[<span class="number">10</span>];</span><br><span class="line">  <span class="comment">// 栈计算括号对</span></span><br><span class="line">  <span class="type">int</span> p[<span class="number">10</span>];</span><br><span class="line">  <span class="type">int</span> stk[<span class="number">10</span>];</span><br><span class="line">  <span class="type">int</span> stki = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    arr[i] = <span class="built_in">get_state</span>(old_state,i);</span><br><span class="line">    <span class="keyword">if</span>(arr[i] == <span class="number">0</span>)<span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">if</span>(arr[i] == <span class="number">1</span>)stk[stki++]=i;</span><br><span class="line">    <span class="keyword">if</span>(arr[i] == <span class="number">2</span>)&#123;</span><br><span class="line">      p[i] = stk[stki<span class="number">-1</span>];</span><br><span class="line">      p[stk[stki<span class="number">-1</span>]] = i;</span><br><span class="line">      stki--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">4</span>)&#123;</span><br><span class="line">    cnt+= !!(block &amp; (<span class="number">1</span>&lt;&lt;i));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">assert</span>(cnt == <span class="number">2</span>);</span><br><span class="line">  <span class="comment">// 插入的块和 被插入的位置 同时有或没有</span></span><br><span class="line">  <span class="keyword">if</span>( (!(block &amp; <span class="number">0b1000</span>) != !arr[pos]) || (!(block &amp; <span class="number">0b0001</span>) != !arr[pos+<span class="number">1</span>]) )&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 原来为空 新建边</span></span><br><span class="line">  <span class="keyword">if</span>( (block &amp; <span class="number">0b0100</span>) &amp;&amp; (block &amp; <span class="number">0b0010</span>))&#123;</span><br><span class="line">    arr[pos] = <span class="number">1</span>;</span><br><span class="line">    arr[pos+<span class="number">1</span>] = <span class="number">2</span>;</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>( (block &amp; <span class="number">0b0100</span>) || (block &amp; <span class="number">0b0010</span>) )&#123; <span class="comment">// 引出一条原来的边</span></span><br><span class="line">    <span class="keyword">if</span>(block &amp; <span class="number">0b0100</span>)&#123;</span><br><span class="line">      arr[pos] = arr[pos]+arr[pos+<span class="number">1</span>];</span><br><span class="line">      arr[pos+<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      arr[pos+<span class="number">1</span>] = arr[pos]+arr[pos+<span class="number">1</span>];</span><br><span class="line">      arr[pos] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123; <span class="comment">// 把原来两段 连接起来</span></span><br><span class="line">    <span class="keyword">if</span>(arr[pos] == <span class="number">1</span> &amp;&amp;  arr[pos+<span class="number">1</span>] == <span class="number">2</span>)&#123;</span><br><span class="line">      arr[pos] = <span class="number">0</span> ;</span><br><span class="line">      arr[pos+<span class="number">1</span>] = <span class="number">0</span> ;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      arr[pos] = <span class="number">0</span>;</span><br><span class="line">      arr[pos+<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">      <span class="type">int</span> p1 = p[pos];</span><br><span class="line">      <span class="type">int</span> p2 = p[pos+<span class="number">1</span>];</span><br><span class="line">      <span class="keyword">if</span>(p1 &gt; p2)<span class="built_in">swap</span>(p1,p2);</span><br><span class="line">      arr[p1] = <span class="number">1</span>;</span><br><span class="line">      arr[p2] = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> new_state = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    new_state += <span class="built_in">set_state</span>(arr[i],i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> new_state;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">dp</span><span class="params">(<span class="type">int</span> idxi,<span class="type">int</span> idxj,<span class="type">long</span> <span class="type">long</span> state)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> &amp;ret = res[&#123;(idxi&lt;&lt;<span class="number">3</span>)+idxj,state&#125;];</span><br><span class="line">  <span class="keyword">if</span>(ret != <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;</span><br><span class="line">    <span class="comment">// 右下角允许自连</span></span><br><span class="line">  <span class="keyword">if</span>(idxj == n<span class="number">-1</span> &amp;&amp; idxi == n<span class="number">-1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> ret = (<span class="built_in">get_state</span>(state,n<span class="number">-1</span>) == <span class="number">1</span> &amp;&amp; <span class="built_in">get_state</span>(state,n) == <span class="number">2</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 过程中不允许自连</span></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">get_state</span>(state,idxi) == <span class="number">1</span> &amp;&amp; <span class="built_in">get_state</span>(state,idxi+<span class="number">1</span>) == <span class="number">2</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">4</span>)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(j,i+<span class="number">1</span>,<span class="number">4</span>)&#123;</span><br><span class="line">      <span class="type">int</span> new_state = <span class="built_in">insert_state</span>(state,idxi,(<span class="number">1</span>&lt;&lt;i)+(<span class="number">1</span>&lt;&lt;j));</span><br><span class="line">      <span class="keyword">if</span>(new_state == <span class="number">-1</span>)<span class="keyword">continue</span>;</span><br><span class="line">      <span class="comment">// 最后一列</span></span><br><span class="line">      <span class="keyword">if</span>(idxj == n<span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">get_state</span>(new_state,idxi) != <span class="number">0</span>)<span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 最后一行</span></span><br><span class="line">      <span class="keyword">if</span>(idxi == n<span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">get_state</span>(new_state,idxi+<span class="number">1</span>) != <span class="number">0</span>)<span class="keyword">continue</span>;</span><br><span class="line">        new_state &lt;&lt;=<span class="number">2</span>;</span><br><span class="line">        ret+=<span class="built_in">dp</span>(<span class="number">0</span>,idxj+<span class="number">1</span>,new_state);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        ret+=<span class="built_in">dp</span>(idxi+<span class="number">1</span>,idxj,new_state);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// printf(&quot;(%d,%d) &#123;%lld,%lld,%lld&#125; = %lld\n&quot;,idxi,idxj,(state)%4,(state&gt;&gt;2)%4,(state&gt;&gt;4)%4,ret);</span></span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">usefile</span>();</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">    cout&lt;&lt;<span class="number">1</span>&lt;&lt;endl;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    cout&lt;&lt;<span class="built_in">dp</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="built_in">set_state</span>(<span class="number">1</span>,<span class="number">1</span>)+<span class="built_in">set_state</span>(<span class="number">2</span>,n))&lt;&lt;endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-using namespace std;
-
-const string filename = &quot;betsy&quot;;
-
-void usefile(){
-  freopen((filename+&quot;.in&quot;).c_str(),&quot;r&quot;,stdin);
-  freopen((filename+&quot;.out&quot;).c_str(),&quot;w&quot;,stdout);
-}
-
-int n;
-
-// 中间的 每个块 连接 两个方向，
-
-map&lt;pair&lt;int,long long&gt;,long long&gt; res;
-
-int get_state(long long state,int pos){
-  return (state &gt;&gt; (2*pos)) % 4;
-}
-
-int set_state(long long state,int pos){
-  return state &lt;&lt; (2*pos);
-}
-
-// ((    ) ())
-// block: 的2进制位 0b3210
-//   3
-//  0 2
-//   1
-long long insert_state(long long old_state,int pos,int block){
-  int arr[10];
-  // 栈计算括号对
-  int p[10];
-  int stk[10];
-  int stki = 0;
-  rep(i,0,n+1){
-    arr[i] = get_state(old_state,i);
-    if(arr[i] == 0)continue;
-    if(arr[i] == 1)stk[stki++]=i;
-    if(arr[i] == 2){
-      p[i] = stk[stki-1];
-      p[stk[stki-1]] = i;
-      stki--;
-    }
-  }
-  int cnt = 0;
-  rep(i,0,4){
-    cnt+= !!(block &amp; (1&lt;&lt;i));
-  }
-  assert(cnt == 2);
-  // 插入的块和 被插入的位置 同时有或没有
-  if( (!(block &amp; 0b1000) != !arr[pos]) || (!(block &amp; 0b0001) != !arr[pos+1]) ){
-    return -1;
-  }
-  // 原来为空 新建边
-  if( (block &amp; 0b0100) &amp;&amp; (block &amp; 0b0010)){
-    arr[pos] = 1;
-    arr[pos+1] = 2;
-  }else if( (block &amp; 0b0100) || (block &amp; 0b0010) ){ // 引出一条原来的边
-    if(block &amp; 0b0100){
-      arr[pos] = arr[pos]+arr[pos+1];
-      arr[pos+1] = 0;
-    }else {
-      arr[pos+1] = arr[pos]+arr[pos+1];
-      arr[pos] = 0;
-    }
-  }else{ // 把原来两段 连接起来
-    if(arr[pos] == 1 &amp;&amp;  arr[pos+1] == 2){
-      arr[pos] = 0 ;
-      arr[pos+1] = 0 ;
-    }else{
-      arr[pos] = 0;
-      arr[pos+1] = 0;
-      int p1 = p[pos];
-      int p2 = p[pos+1];
-      if(p1 &gt; p2)swap(p1,p2);
-      arr[p1] = 1;
-      arr[p2] = 2;
-    }
-  }
-  long long new_state = 0;
-  rep(i,0,n+1){
-    new_state += set_state(arr[i],i);
-  }
-  return new_state;
-}
-
-long long dp(int idxi,int idxj,long long state){
-  long long &amp;ret = res[{(idxi&lt;&lt;3)+idxj,state}];
-  if(ret != 0){
-    return ret;
-  }
-    // 右下角允许自连
-  if(idxj == n-1 &amp;&amp; idxi == n-1) {
-    return ret = (get_state(state,n-1) == 1 &amp;&amp; get_state(state,n) == 2);
-  }
-  // 过程中不允许自连
-  //
-  if (get_state(state,idxi) == 1 &amp;&amp; get_state(state,idxi+1) == 2)return 0;
-  rep(i,0,4){
-    rep(j,i+1,4){
-      int new_state = insert_state(state,idxi,(1&lt;&lt;i)+(1&lt;&lt;j));
-      if(new_state == -1)continue;
-      // 最后一列
-      if(idxj == n-1) {
-        if(get_state(new_state,idxi) != 0)continue;
-      }
-      // 最后一行
-      if(idxi == n-1){
-        if(get_state(new_state,idxi+1) != 0)continue;
-        new_state &lt;&lt;=2;
-        ret+=dp(0,idxj+1,new_state);
-      }else{
-        ret+=dp(idxi+1,idxj,new_state);
-      }
-    }
-  }
-  // printf(&quot;(%d,%d) {%lld,%lld,%lld} = %lld\n&quot;,idxi,idxj,(state)%4,(state&gt;&gt;2)%4,(state&gt;&gt;4)%4,ret);
-  return ret;
-}
-
-int main(){
-  usefile();
-  cin&gt;&gt;n;
-  if(n == 1){
-    cout&lt;&lt;1&lt;&lt;endl;
-  }else{
-    cout&lt;&lt;dp(0,0,set_state(1,1)+set_state(2,n))&lt;&lt;endl;
-  }
-  return 0;
-}
-</code></pre>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>6.5章其实有5个题,但后面两题 我很久很久很就以前做了 就不想再做一次了，所以这里只写了3题</p>
-<h1 id="本文其它链接"><a href="#本文其它链接" class="headerlink" title="本文其它链接"></a>本文其它链接</h1><p>牛客: <a href="https://blog.nowcoder.net/n/c7f0a70d69254c9180dd0b7e475d1248" target="_blank" rel="noopener">https://blog.nowcoder.net/n/c7f0a70d69254c9180dd0b7e475d1248</a></p>
-<p>cnblogs: <a href="https://www.cnblogs.com/CroMarmot/p/11149313.html" target="_blank" rel="noopener">https://www.cnblogs.com/CroMarmot/p/11149313.html</a></p>
+<h1 id="本文其它链接"><a href="#本文其它链接" class="headerlink" title="本文其它链接"></a>本文其它链接</h1><p>牛客: <a target="_blank" rel="noopener" href="https://blog.nowcoder.net/n/c7f0a70d69254c9180dd0b7e475d1248">https://blog.nowcoder.net/n/c7f0a70d69254c9180dd0b7e475d1248</a></p>
+<p>cnblogs: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/CroMarmot/p/11149313.html">https://www.cnblogs.com/CroMarmot/p/11149313.html</a></p>
 
-        
-                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
-                    <p><strong>
-                         
-                            This blog is under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC BY-NC-SA 3.0 Unported License</a>
-                        </strong>
-                        <br>
-                        <strong>本文鏈接：</strong><a href="http://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/">http://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/</a>
-                    </p>
-                </blockquote>
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'http://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//yexiaorain.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/Blog/2019-07-29-cf1197E/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/Blog/2019-07-03-USACO-6.4/" id="post_nav-older" class="next-content">
-            舊篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
     </div>
 
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/Blog/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/Blog/img/satan.jpg" alt="Xiao Ye's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        yexiaorain@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto: yexiaorain@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
     
-        <li id="sidebar-first-li">
-            <a href="/Blog/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                首頁
-            </a>
-        </li>
-        
     
+    
+      
 
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    過往
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/Blog/archives/2022/09/">九月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/08/">八月 2022<span class="sidebar_archives-count">17</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/07/">七月 2022<span class="sidebar_archives-count">16</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/06/">六月 2022<span class="sidebar_archives-count">17</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/05/">五月 2022<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/04/">四月 2022<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/03/">三月 2022<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/12/">十二月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/11/">十一月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/09/">九月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/08/">八月 2021<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/07/">七月 2021<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/06/">六月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/05/">五月 2021<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/04/">四月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2021/02/">二月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/12/">十二月 2020<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/11/">十一月 2020<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/08/">八月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/07/">七月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/06/">六月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/05/">五月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/04/">四月 2020<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2020/01/">一月 2020<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/11/">十一月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/10/">十月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/09/">九月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/07/">七月 2019<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/06/">六月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/05/">五月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/04/">四月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/03/">三月 2019<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/02/">二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/11/">十一月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/05/">五月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2018/04/">四月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/archives/2017/10/">十月 2017<span class="sidebar_archives-count">4</span></a>
-            </ul>
-        </li>
-        
-    
 
-    <!-- Categories  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
-                
-                分類
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                <a class="sidebar_archives-link" href="/Blog/categories/Atcoder/">Atcoder<span class="sidebar_archives-count">40</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/ABC/">ABC<span class="sidebar_archives-count">24</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/AGC/">AGC<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Atcoder/ARC/">ARC<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/CodeChef/">CodeChef<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Codeforces/">Codeforces<span class="sidebar_archives-count">73</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Machine-learning/">Machine learning<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/NowCoder/">NowCoder<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/Project-Euler/">Project Euler<span class="sidebar_archives-count">19</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/USACO/">USACO<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/algorithm/">algorithm<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/bestcoder/">bestcoder<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/luogu/">luogu<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/poj/">poj<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/Blog/categories/tencent/">tencent<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
+    <footer class="post-footer">
+          
 
-    <!-- Pages  -->
-    
-
-    <!-- Article Number  -->
-    
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/" title="USACO 6.5 章节">https://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
 </ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/" rel="tag"><i class="fa fa-tag"></i> 计算几何</a>
+              <a href="/Blog/tags/%E6%8F%92%E5%A4%B4DP/" rel="tag"><i class="fa fa-tag"></i> 插头DP</a>
+              <a href="/Blog/tags/%E6%90%9C%E7%B4%A2/" rel="tag"><i class="fa fa-tag"></i> 搜索</a>
+              <a href="/Blog/tags/%E6%89%93%E8%A1%A8/" rel="tag"><i class="fa fa-tag"></i> 打表</a>
+              <a href="/Blog/tags/%E7%BE%A4%E8%AE%BA/" rel="tag"><i class="fa fa-tag"></i> 群论</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2019-07-03-USACO-6.4/" rel="prev" title="USACO 6.4 章节">
+                  <i class="fa fa-chevron-left"></i> USACO 6.4 章节
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/2019-07-29-cf1197E/" rel="next" title="CF 1197 E (dp+sort+二分)">
+                  CF 1197 E (dp+sort+二分) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
 
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
 
 
-<!-- Theme Material -->
 
 
-<!-- Help & Support -->
-<!--
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
 
--->
+  <footer class="footer">
+    <div class="footer-inner">
 
-<!-- Feedback -->
-<!--
 
--->
-
-<!-- About Theme -->
-<!--
-
--->
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">728k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">11:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
 
     </div>
+  </footer>
 
-    <!-- Sidebar Image -->
-    
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
 
-</aside>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
 
-                    
 
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
 
-                    
 
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
 
-    <!-- Facebook -->
-    
+  
 
-    <!-- Google + -->
-    
 
-    <!-- Weibo -->
-    
 
-    <!-- Instagram -->
-    
 
-    <!-- Tumblr -->
-    
+  
 
-    <!-- Github -->
-    
-        <a href="https://yexiaorain.github.com" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
 
-    <!-- LinkedIn -->
-    
 
-    <!-- Zhihu -->
-    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/2019-07-07-USACO-6.5/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
 
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-    
-    <!-- V2EX -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;2013&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>YeXiaoRain Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
-            </div>
-        </div>
-    
-</footer>
-
-
-                    <!-- Import JS File -->
-
-    <script>lsloader.load("lazyload_js","/Blog/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
-
-
-
-    <script>lsloader.load("js_js","/Blog/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
-
-
-
-    <script>lsloader.load("np_js","/Blog/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//yexiaorain.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/Blog/css/uc.css">');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/Blog/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
-    })()
-console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
-
-                </main>
-            </div>
-        </body>
-    
+</body>
 </html>
