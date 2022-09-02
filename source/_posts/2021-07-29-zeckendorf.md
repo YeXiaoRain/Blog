@@ -1,7 +1,7 @@
 ---
 title: Zeckendorf's theorem
 date: 2021-07-29 10:37:14
-tags: [algorithm]
+tags: [Fibonacci]
 category: [algorithm]
 mathjax: true
 ---

@@ -1,7 +1,7 @@
 ---
-title: 我可能根本不会容斥原理(493D1C,497D1B)
+title: 我可能根本不会容斥(493D1C,497D1B)
 date: 2018-07-14 03:45:30
-tags: [容斥原理]
+tags: [容斥]
 category: [Codeforces]
 mathjax: true
 ---

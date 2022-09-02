@@ -1,3 +1,18 @@
-# Bug
+# [Blog](https://yexiaorain.github.io/Blog)
 
-node 版本需要12. 不知道为啥 14和16 会炸, 产生空页面
+```bash
+yarn global add hexo-cli
+yarn
+```
+
+## local server
+
+```bash
+hexo s
+```
+
+## generate static pages
+
+```bash
+hexo build
+```

@@ -3,7 +3,7 @@ title: maspy 生成方程与问题解决
 date: 2022-08-12 22:24:00
 tags: [生成方程]
 category: [algorithm]
-mathjax: true
+description: 生成方程
 ---
 
 # 生成方程

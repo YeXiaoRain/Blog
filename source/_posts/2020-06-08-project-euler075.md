@@ -1,7 +1,7 @@
 ---
 title: project euler 075 Singular integer right triangles
 date: 2020-06-08 10:37:14
-tags: [pe,project euler,数学]
+tags: [数学]
 category: [Project Euler]
 mathjax: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: STOER-WAGNER 无源无汇最小割
 date: 2021-07-27 10:37:14
-tags: [algorithm]
+tags: [最小割]
 category: [algorithm]
 mathjax: true
 ---
