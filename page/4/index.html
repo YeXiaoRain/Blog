@@ -224,7 +224,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-07-11-ac_abc259/">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-08-03-ac_abc217/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
@@ -242,7 +242,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-07-11-ac_abc259/" class="post-title-link" itemprop="url">Atcoder abc259</a>
+          <a href="/Blog/2022-08-03-ac_abc217/" class="post-title-link" itemprop="url">Atcoder abc217</a>
         </h2>
 
         <div class="post-meta-container">
@@ -253,14 +253,14 @@
       </span>
       <span class="post-meta-item-text">發表於</span>
 
-      <time title="創建時間：2022-07-11 04:25:14" itemprop="dateCreated datePublished" datetime="2022-07-11T04:25:14+08:00">2022-07-11</time>
+      <time title="創建時間：2022-08-03 04:25:14" itemprop="dateCreated datePublished" datetime="2022-08-03T04:25:14+08:00">2022-08-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -285,8 +285,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/Blog/2022-07-11-ac_abc259/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-07-11-ac_abc259/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Blog/2022-08-03-ac_abc217/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-08-03-ac_abc217/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -297,7 +297,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>2.8k</span>
+      <span>3.4k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
@@ -308,6 +308,7 @@
     </span>
 </div>
 
+            <div class="post-description">G(DP)H(凸函数)</div>
         </div>
       </header>
 
@@ -315,15 +316,76 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>G(网络流)H/Ex(分块,讨论)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-07-11-ac_abc259/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="G-Groups"><a href="#G-Groups" class="headerlink" title="G - Groups"></a>G - Groups</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc217/tasks/abc217_g">https://atcoder.jp/contests/abc217/tasks/abc217_g</a></p>
+<p>有数字1..N</p>
+<p>把它们分成k组(每组至少一个数)</p>
+<p>要求, 每组中没有两个数 mod M 是相等的</p>
+<p>问对于k&#x3D;1…n 分别有多少方案</p>
+<p>答案 模 998244353</p>
+<p>方案: 如果两方案不同,至少有一个(x,y) 在一个中同组,另一个是不同组</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 5000</p>
+<p>2 &lt;&#x3D; m &lt;&#x3D; n</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然 (n - 1) &#x2F; m + 1 个 mod m &#x3D; 1 的</p>
+<p>我们也容易计算mod m &#x3D; r 的有多少个</p>
+<p>然后 计算这个方案数无非是两个方向, 正向算和逆向算</p>
+<p>正向算, 则需要对每个方案唯一标识, 那么考虑用每组中( (value - 1 )mod m, value) 最小的作为组标识</p>
+<p>似乎相互依赖很多, 不知道怎么算</p>
+<p>反向算, 则就是同 mod的放在同一个位置了</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>我感觉自己已经傻掉了, 看到n 5000 竟然没有想一下n方的算法</p>
+<p><code>dp[i][j]</code> 表示前i个数,分成了j组方案</p>
+<p>如果没有同余限制</p>
+<p><code>dp[i][j] = dp[i-1][j-1](单独放在j) + j * dp[i-1][j] (前面i-1已经放了j)</code> 个</p>
+<p>注意到同余的限制</p>
+<p>那么j的放法就是 和它不同余的位置</p>
+<p>已经有 ((i-1) &#x2F; m)个和它同余了</p>
+<p><code>dp[i][j] = dp[i-1][j-1](单独放在j) + (j-(i-1)/m)保证非负 * dp[i-1][j] (前面i-1已经放了j)</code> 个</p>
+<hr>
+<p>就没了</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc217/submissions/33750183">https://atcoder.jp/contests/abc217/submissions/33750183</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  vector&lt;vector&lt;mint&gt;&gt; <span class="built_in">dp</span>(n + <span class="number">1</span>, <span class="built_in">vector</span>&lt;mint&gt; (n + <span class="number">1</span>));</span><br><span class="line">  dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">1</span>,i+<span class="number">1</span>) &#123; <span class="comment">// j-(i-1)/m &gt;= 0</span></span><br><span class="line">      dp[i][j] = dp[i<span class="number">-1</span>][j<span class="number">-1</span>];</span><br><span class="line">      <span class="keyword">if</span>(j-(i<span class="number">-1</span>)/m &gt;= <span class="number">0</span>) dp[i][j] += dp[i<span class="number">-1</span>][j] * (j-(i<span class="number">-1</span>)/m);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,dp[n][i].<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="H-Snuketoon"><a href="#H-Snuketoon" class="headerlink" title="H - Snuketoon"></a>H - Snuketoon</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc217/tasks/abc217_h">https://atcoder.jp/contests/abc217/tasks/abc217_h</a></p>
+<p>初始在点0, 每秒可以-1,0,+1</p>
+<p>N次事件: 在ti时刻, 若在Xi左侧且Di &#x3D; 0,受到和Xi距离的伤害, 若在Xi右侧, 且Di &#x3D; 1,受到和Xi距离的伤害</p>
+<p>想要受到伤害最小化, 求最小值</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>N 2e5</p>
+<p>ti [1,1e9]</p>
+<p>di 0&#x2F;1</p>
+<p>Xi [-1e9,1e9]</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>看起来像dp</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>$dp_{i,x} &#x3D; $ 在Ti分钟 恰好在x 所需要受到的最小伤害, 为了方便认为T0 &#x3D; 0</p>
+<p>那么</p>
+<p><code>dp[0][0] = 0</code></p>
+<p><code>dp[0][!=0] = INF</code></p>
+<p>若Di &#x3D; 0, <code>dp[i][x] = min(dp[i-1][y]) + max(0,Xi - x)</code>, 且<code>|y-x| &lt;= T[i] - T[i-1]</code></p>
+<p>若Di &#x3D; 1, <code>dp[i][x] = min(dp[i-1][y]) + max(0,x - Xi)</code>, 且<code>|y-x| &lt;= T[i] - T[i-1]</code></p>
+<p>很明显直接算会TLE</p>
+<hr>
+<p>对于一个具体的i, 在二维平面上画点$(x,dp_{i,x})$, 其中横坐标范围是$[-T_i,T_i]$, 然后用线段连起来, 发现是个凸函数(下凸)</p>
+<p>证明: 若对于i-1是下凸函数, 注意到<code>min(dp[i-1][y])</code> 依然是凸函数, 而<code>max</code>部分也是凸函数,所以对于<code>i</code> 也是凸函数</p>
+<hr>
+<p>因此问题变成维护那些拐点</p>
+<p>每次min的操作,相当于把最小值的区间 向两侧 平移<code>T[i]-T[i-1]</code></p>
+<p>注意到 最初是[0,0], 其实就是把区间最左和最有移动到<code>-Ti</code>和正<code>Ti</code></p>
+<p>然后每次+max, 相当于一段不变, 一段 斜率+1, 还可能产生新的节点</p>
+<p>如何维护呢?</p>
+<p>注意到每次 min的过程核心等于向两侧平移, 如果以 和<code>-Ti</code>,<code>Ti</code>的距离来看, 甚至是没有变化</p>
+<p>每次 +max, 是区间内斜率增加1, 那不妨直接记录 斜率1的起始点,斜率2的起始点, 斜率3的起始点( 可能会有重合, 这些点和左侧的距离, 和右侧的距离</p>
+<hr>
+<p> -3 -2 -1 0 1 2 3 这样的斜率区间</p>
+<p> 如果加上 0 1 的</p>
+<p> 最终会变成  -3 -2 -1 0 1 2 3 4 这样的, 虽然可能有起点重合(斜率区间长度为0</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc217/submissions/33754555">https://atcoder.jp/contests/abc217/submissions/33754555</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"> </span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"> </span><br><span class="line">priority_queue&lt;ll&gt; ql; <span class="comment">//大根堆,左侧, 记录斜率-1的起点,-2的起点,-3的起点,...到 -Ti的距离</span></span><br><span class="line">priority_queue&lt;ll&gt; qr; <span class="comment">//大根堆,右侧, 记录斜率 1的起点, 2的起点, 3的起点,...到  Ti的距离</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">1</span>, n+<span class="number">1</span>) &#123;</span><br><span class="line">    ll t = <span class="built_in">read</span>();</span><br><span class="line">    ll d = <span class="built_in">read</span>();</span><br><span class="line">    ll x = <span class="built_in">read</span>();</span><br><span class="line">    <span class="comment">// 让下凸的最小值一直是0</span></span><br><span class="line">    <span class="keyword">if</span> (d == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (x &gt; t) &#123; <span class="comment">// 超出范围直接全部都加上</span></span><br><span class="line">        ans += x - t;</span><br><span class="line">        x = t;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (qr.<span class="built_in">empty</span>() || qr.<span class="built_in">top</span>() &lt;= t-x) &#123; <span class="comment">// 不影响右侧的</span></span><br><span class="line">        ql.<span class="built_in">push</span>(x + t);<span class="comment">// 原来-1变-2, -2变-3,... , 新的-1的起点</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123; <span class="comment">// ... -3 -2 -1  0 ... 0 1 2 3 ... 影响右侧的,</span></span><br><span class="line">        <span class="type">int</span> pos = t - qr.<span class="built_in">top</span>(); <span class="comment">// 最小值的位置 右侧1斜率的起点</span></span><br><span class="line">        qr.<span class="built_in">pop</span>();</span><br><span class="line">        ans += x - pos; <span class="comment">// 让下凸的最小值 = 0</span></span><br><span class="line">        ql.<span class="built_in">push</span>(pos-(-t)); <span class="comment">// 成为左侧新的 -1 斜率的起点</span></span><br><span class="line">        qr.<span class="built_in">push</span>(t - x); <span class="comment">// 插入新的 斜率变化分割(距离右侧Ti</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// d = 1</span></span><br><span class="line">      <span class="keyword">if</span> (x &lt; -t) &#123; <span class="comment">// 超出范围直接全部都加上</span></span><br><span class="line">        ans += -t - x;</span><br><span class="line">        x = -t;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (ql.<span class="built_in">empty</span>() || x - (-t) &gt;= ql.<span class="built_in">top</span>()) &#123; <span class="comment">// 不影响左侧</span></span><br><span class="line">        qr.<span class="built_in">push</span>(t - x); <span class="comment">// 右侧最大点</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="type">int</span> pos = ql.<span class="built_in">top</span>() - t; <span class="comment">// 最小值的位置, 左侧-1斜率的起点</span></span><br><span class="line">        ql.<span class="built_in">pop</span>();</span><br><span class="line">        ans += pos-x;</span><br><span class="line">        qr.<span class="built_in">push</span>(t-pos);</span><br><span class="line">        ql.<span class="built_in">push</span>(x-(-t));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>干啊, n方dp都想不到了,我</p>
+<p>据说有数学的 N log N 的方法</p>
+<p>H</p>
+<p>知识点就是凸函数, 但是变化点较少时, 只需要维护这些点即可</p>
+<p>然后维护的时候, 想办法保持尽可能多的不变量, 让变化记录是常数级别</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc217/editorial">官方题解</a></p>
+
       
     </div>
 
@@ -349,7 +411,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-07-05-CF1699/">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-08-02-poj3169/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
@@ -367,7 +429,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-07-05-CF1699/" class="post-title-link" itemprop="url">Codeforces 1699</a>
+          <a href="/Blog/2022-08-02-poj3169/" class="post-title-link" itemprop="url">POJ 3169</a>
         </h2>
 
         <div class="post-meta-container">
@@ -378,14 +440,14 @@
       </span>
       <span class="post-meta-item-text">發表於</span>
 
-      <time title="創建時間：2022-07-05 22:24:00" itemprop="dateCreated datePublished" datetime="2022-07-05T22:24:00+08:00">2022-07-05</time>
+      <time title="創建時間：2022-08-02 04:25:14" itemprop="dateCreated datePublished" datetime="2022-08-02T04:25:14+08:00">2022-08-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -393,7 +455,7 @@
       </span>
       <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+          <a href="/Blog/categories/poj/" itemprop="url" rel="index"><span itemprop="name">poj</span></a>
         </span>
     </span>
 
@@ -406,8 +468,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/Blog/2022-07-05-CF1699/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-07-05-CF1699/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Blog/2022-08-02-poj3169/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-08-02-poj3169/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -418,7 +480,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>3.8k</span>
+      <span>3.2k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
@@ -429,6 +491,7 @@
     </span>
 </div>
 
+            <div class="post-description">cow game, 差分约束</div>
         </div>
       </header>
 
@@ -436,15 +499,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>D(dp)E(双指针,部分更新,线性筛1/2+1/3+1/4+...)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-07-05-CF1699/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h1><p><a target="_blank" rel="noopener" href="http://poj.org/problem?id=3169">http://poj.org/problem?id=3169</a></p>
+<p>数轴上放N个点(按照i的顺序坐标非严格单调递增</p>
+<p>10000 个大于限制, 点i和点j距离不超过 di (1e6)</p>
+<p>10000 个小于限制, 点i和点j距离不小于 di (1e6)</p>
+<p>1s</p>
+<p>64MB</p>
+<p>求点1 和 点N的最大距离</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>传说中日本众所周知的的cow game</p>
+<p>也就是 全部小于号, (大于号同乘-1)</p>
+<p>注意到上面要保证i的顺序( 所以 大-小 &lt;&#x3D; Di 或者 大减小 &gt;&#x3D; Di</p>
+<p>然后说 差分约束本质上还是 最短路 只是需要建图</p>
+<p>b-a &lt;&#x3D; d</p>
+<p>转化成 a + d &gt;&#x3D; b, 所以 a -&gt; b如果有边长d的话, 那么b的距离最小就是 a+d 还可能更小</p>
+<p>b-a &gt;&#x3D; d的话</p>
+<p>转化成 b-d &gt;&#x3D; a, 也就是 b -&gt; a 如果有边长 (-d), 那么a的距离最小是 b-d, 还可能更小</p>
+<p>总而言之转化成</p>
+<p>点0 + ? &gt;&#x3D; 点1 的形式, 然后从点0 发一条长? 的边</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><h3 id="过不了编译版本"><a href="#过不了编译版本" class="headerlink" title="过不了编译版本"></a>过不了编译版本</h3><p>这poj g++版本太老了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">0x3f3f3f3f</span>; <span class="comment">// 1e9</span></span><br><span class="line"></span><br><span class="line">vector&lt;array&lt;<span class="type">int</span>,3&gt; &gt; e; <span class="comment">// 有向边 [u,v,weight/length]</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> N = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> ML = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> MD = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 建图</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N) e.<span class="built_in">push_back</span>(&#123;i+<span class="number">1</span>, i, <span class="number">0</span>&#125;); <span class="comment">// 从i+1-&gt;i权值为0的边 保证顺序i的距离不大于i+1</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ML)&#123; <span class="comment">//&#x27;喜欢&#x27;关系约束 &lt;= DL</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &lt;= DL[i]</span></span><br><span class="line">    <span class="comment">/* b-a&lt;=d, 即 a+d&gt;=b 从a到b权值为d的边 */</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(&#123;a,b,d&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,MD)&#123; <span class="comment">//&#x27;不喜欢&#x27;关系约束 &gt;= DD</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &gt;= DD[i]</span></span><br><span class="line">    <span class="comment">/* BD - AD &gt;= DD 即 BD - DD &gt;= AD,  从BD到AD权值-DD的边*/</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(&#123;b,a,-d&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Bellman_Ford</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">dist</span>(N+<span class="number">1</span>,INF);<span class="comment">// 最短距离</span></span><br><span class="line">  dist[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">//循环N-1次 对所有边进行松弛操作</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N<span class="number">-1</span>) <span class="keyword">for</span>(<span class="keyword">auto</span> [u,v,w]: e) <span class="keyword">if</span>(dist[u] != INF) dist[v] = <span class="built_in">min</span>(dist[v], dist[u] + w);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//再遍历一次所有边（第N次循环）如果本次有更新，则存在负环</span></span><br><span class="line">  <span class="type">bool</span> ngloop = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> [u,v,w]: e) <span class="keyword">if</span>(dist[u] != INF &amp;&amp; dist[u] + w &lt; dist[v] ) ngloop = <span class="literal">true</span>;</span><br><span class="line">  <span class="type">int</span> ans = dist[N];</span><br><span class="line">  <span class="keyword">if</span> (ngloop) ans = <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(ans == INF) ans = <span class="number">-2</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="AC-版本"><a href="#AC-版本" class="headerlink" title="AC 版本"></a>AC 版本</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mt make_tuple</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">0x3f3f3f3f</span>; <span class="comment">// 1e9</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 没有tuple</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">edge</span>&#123;</span><br><span class="line">  <span class="type">int</span> u;</span><br><span class="line">  <span class="type">int</span> v;</span><br><span class="line">  <span class="type">int</span> w;</span><br><span class="line">  <span class="comment">// 结构体直接赋值也没有</span></span><br><span class="line">  <span class="built_in">edge</span>(<span class="type">int</span> _u,<span class="type">int</span> _v,<span class="type">int</span> _w)&#123;</span><br><span class="line">    u = _u;</span><br><span class="line">    v = _v;</span><br><span class="line">    w = _w;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;edge&gt; e; <span class="comment">// 有向边 [u,v,weight/length]</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> N = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> ML = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> MD = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 建图</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N) e.<span class="built_in">push_back</span>(<span class="built_in">edge</span>(i+<span class="number">1</span>, i, <span class="number">0</span>)); <span class="comment">// 从i+1-&gt;i权值为0的边 保证顺序i的距离不大于i+1</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ML)&#123; <span class="comment">//&#x27;喜欢&#x27;关系约束 &lt;= DL</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &lt;= DL[i]</span></span><br><span class="line">    <span class="comment">/* b-a&lt;=d, 即 a+d&gt;=b 从a到b权值为d的边 */</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(<span class="built_in">edge</span>(a,b,d));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,MD)&#123; <span class="comment">//&#x27;不喜欢&#x27;关系约束 &gt;= DD</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &gt;= DD[i]</span></span><br><span class="line">    <span class="comment">/* BD - AD &gt;= DD 即 BD - DD &gt;= AD,  从BD到AD权值-DD的边*/</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(<span class="built_in">edge</span>(b,a,-d));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Bellman_Ford</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">dist</span>(N+<span class="number">1</span>,INF);<span class="comment">// 最短距离</span></span><br><span class="line">  dist[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">//循环N-1次 对所有边进行松弛操作</span></span><br><span class="line">  <span class="built_in">rep</span>(t,<span class="number">0</span>,N<span class="number">-1</span>) <span class="built_in">rep</span>(i,<span class="number">0</span>,e.<span class="built_in">size</span>())&#123;</span><br><span class="line">    edge &amp;uvw = e[i]; <span class="comment">// 不支持auto</span></span><br><span class="line">    <span class="type">int</span> u = uvw.u;</span><br><span class="line">    <span class="type">int</span> v = uvw.v;</span><br><span class="line">    <span class="type">int</span> w = uvw.w;</span><br><span class="line">    <span class="keyword">if</span>(dist[u] != INF) dist[v] = <span class="built_in">min</span>(dist[v], dist[u] + w);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//再遍历一次所有边（第N次循环）如果本次有更新，则存在负环</span></span><br><span class="line">  <span class="type">bool</span> ngloop = <span class="literal">false</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,e.<span class="built_in">size</span>())&#123;</span><br><span class="line">    edge &amp;uvw = e[i]; <span class="comment">// 不支持auto</span></span><br><span class="line">    <span class="type">int</span> u = uvw.u;</span><br><span class="line">    <span class="type">int</span> v = uvw.v;</span><br><span class="line">    <span class="type">int</span> w = uvw.w;</span><br><span class="line">    <span class="keyword">if</span>(dist[u] != INF &amp;&amp; dist[u] + w &lt; dist[v] ) ngloop = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> ans = dist[N];</span><br><span class="line">  <span class="keyword">if</span> (ngloop) ans = <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(ans == INF) ans = <span class="number">-2</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>就是如何对差分变成图</p>
+
       
     </div>
 
@@ -470,7 +548,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-07-03-ac_abc258/">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-08-01-ac_abc216/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
@@ -488,7 +566,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-07-03-ac_abc258/" class="post-title-link" itemprop="url">Atcoder abc258</a>
+          <a href="/Blog/2022-08-01-ac_abc216/" class="post-title-link" itemprop="url">Atcoder abc216</a>
         </h2>
 
         <div class="post-meta-container">
@@ -499,14 +577,14 @@
       </span>
       <span class="post-meta-item-text">發表於</span>
 
-      <time title="創建時間：2022-07-03 04:25:14" itemprop="dateCreated datePublished" datetime="2022-07-03T04:25:14+08:00">2022-07-03</time>
+      <time title="創建時間：2022-08-01 04:25:14" itemprop="dateCreated datePublished" datetime="2022-08-01T04:25:14+08:00">2022-08-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -531,8 +609,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/Blog/2022-07-03-ac_abc258/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-07-03-ac_abc258/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Blog/2022-08-01-ac_abc216/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-08-01-ac_abc216/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -543,7 +621,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>4.7k</span>
+      <span>3.9k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
@@ -554,6 +632,7 @@
     </span>
 </div>
 
+            <div class="post-description">G(贪心,差分约束,最短路)H(LGV引理,状压DP)</div>
         </div>
       </header>
 
@@ -561,15 +640,76 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>F(暴力)G(bitset)H/Ex(dp,矩阵快速幂)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-07-03-ac_abc258/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="G-01Sequence"><a href="#G-01Sequence" class="headerlink" title="G - 01Sequence"></a>G - 01Sequence</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc216/tasks/abc216_g">https://atcoder.jp/contests/abc216/tasks/abc216_g</a></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc216/submissions/33727628">https://atcoder.jp/contests/abc216/submissions/33727628</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">200000</span>;</span><br><span class="line"><span class="type">int</span> a[N+<span class="number">10</span>]; <span class="comment">// a[空白个数] = 到右侧点, 之间全是1</span></span><br><span class="line"><span class="type">int</span> r[N+<span class="number">10</span>]; <span class="comment">// 读入</span></span><br><span class="line"><span class="type">int</span> y[N+<span class="number">10</span>]; <span class="comment">// 左侧0个数</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; l2i[N+<span class="number">10</span>]; <span class="comment">// 左端点到第i个区间</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,m+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> l = <span class="built_in">read</span>();</span><br><span class="line">    r[i] = <span class="built_in">read</span>();</span><br><span class="line">    y[i] = (r[i]-l+<span class="number">1</span>) - <span class="built_in">read</span>(); <span class="comment">// 左侧0个数 [[....yi],1,1,1,1,1,1]</span></span><br><span class="line">    l2i[l].<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> cnt = <span class="number">0</span>; <span class="comment">// 遍历过程中 (&lt;l) 0 的个数</span></span><br><span class="line">  <span class="built_in">rep</span>(pos,<span class="number">1</span>,n+<span class="number">1</span>)&#123; <span class="comment">// 下标</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i:l2i[pos]) a[y[i]+cnt] = <span class="built_in">max</span>(a[y[i]+cnt],r[i]);<span class="comment">// [pos.....r[i]]</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, a[cnt] &gt;= pos); <span class="comment">// 这一段全是1, 1尽量向右,贪心塞0</span></span><br><span class="line">    cnt += (a[cnt] &lt; pos); <span class="comment">// 计数+1</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="H-Random-Robots"><a href="#H-Random-Robots" class="headerlink" title="H - Random Robots"></a>H - Random Robots</h1><p>数轴上k个机器人, 初始位置分别在xi</p>
+<p>每次 每个机器人独立选择 移动(正向+1)或不动 1&#x2F;2 概率</p>
+<p>问经过N次,过程中没有任何两个robot 同时在同位置的概率</p>
+<p>mod 998244353</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>k [2,10]</p>
+<p>n 1000</p>
+<p>xi [0,1000], 严格单增提供</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>一般来说 概率 &#x3D; 次&#x2F;总次数 可以互相转化</p>
+<p>不相遇 可以 和相遇的容斥互相转化</p>
+<p>k 10 的话可能和k的bitmask有关系</p>
+<p>如果进行一次</p>
+<p>而碰撞比不碰撞似乎好算一些</p>
+<p>而且一般是相邻碰撞</p>
+<p>pi 和pi+1 在t次时刻碰撞</p>
+<p>意味着 t-1 次时距离1, t时 1&#x2F;4 概率</p>
+<p>0~t-1 时刻每次 1&#x2F;4 +1, 1&#x2F;4 -1, 1&#x2F;2 不变</p>
+<p>设原来距离 为d</p>
+<p>那么 -1 次数 减去 +1 次数 &#x3D; d-1, 且中间不能有负数情况</p>
+<p>变成后缀个数统计问题</p>
+<p>似乎可以强行算出t时刻 的概率, 实在组合排列不行, <code>dp[时刻1000][距离2000]</code> 来算也可以</p>
+<hr>
+<p>那么无碰撞 &#x3D; 所有 - 碰撞</p>
+<p>所以想办法容斥掉碰撞</p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>用一下LGV引理相关的思路: 相交的路径 总有转化方法,成对的出现互为相反数的贡献,从而有相交的内容贡献和为0</p>
+<p>每一个路径组方案贡献1 乘上-1的最终位置的逆序列数量次方, 其实就像当于LGV中所有边权为1 的特殊情况</p>
+<p>$\sum_{Q} (-1)^{\sigma(Q)}\cdot(\frac{1}{2})^{NK}\cdot\prod_{i&#x3D;1}^K {\rm C}(N,Q_i-x_i)$</p>
+<p>也就是 方案 * (-1) 的幂次权, 再除以总方案数</p>
+<p>Qi 为初始第i个机器人最终的下标</p>
+<p>$\sigma(Q)$ 为逆序对个数</p>
+<p>那么对于一条具体的有交的路径, 找其编号最小交点, 其中最小的起始位置,做后置路径交换(和LGV一样), 那么将得到一个新的路径组,有同样的交点,最小交点的最小起始位置依然相同, 但逆序对数变化为1, 所以总贡献为0</p>
+<hr>
+<p><code>f[S][j] = </code> 选起点集合在S中, 最终节点最大值 &lt;&#x3D; j 的 带权 方案数和</p>
+<p><code>ans = f[&#123;1,...,k&#125;][x[k] + n]</code></p>
+<p>考虑状态转移</p>
+<p>最终最大节点 &lt; j, <code>f[S][j] += f[S][j-1]</code></p>
+<p>最终最大节点 &#x3D; j, <code>f[S][j] += lgv中的行列式值 展开最后一列</code></p>
+<p>所以有</p>
+<p>$f(S, j) &#x3D; f(S, j-1) + \sum_{i&#x3D;1}^{|S|} (-1)^{|S|+i} e(x_{s_i}, j) f(S\setminus{s_i}, j-1).$</p>
+<p>$f(S, j) &#x3D; f(S, j-1) + \sum_{i&#x3D;1}^{|S|} (-1)^{|S|+i} \binom{n}{j-x_{s_i}} f(S\setminus{s_i}, j-1).$</p>
+<p>状态$2^k(n + x_k - x_1)$, 转移倍数$k$</p>
+<p>总时间复杂度 $2^kk(n + x_k - x_1)$</p>
+<hr>
+<p>注意到j仅依赖于j-1, 所以可以滚动数组降低空间</p>
+<p>而S依赖于的都是S子集, 所以保证顺序即可</p>
+<p>$for(j) \\ f(S) &#x3D; f(S) + \sum_{i&#x3D;1}^{|S|} (-1)^{|S|+i} \binom{n}{j-x_{s_i}} f(S\setminus{s_i}).$</p>
+<p>注意到这里的i不是X数组的i而是X选出的x按照顺序组成的S中的i, 且是1-index</p>
+<p>也可以表示成$d(S,i) &#x3D; S$中比$i$大的的个数</p>
+<p>$for(j) \\ f(S) &#x3D; f(S) + \sum_{i&#x3D;1}^{|S|} (-1)^{d(S,i)} \binom{n}{j-x_{s_i}} f(S\setminus{s_i}).$</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc216/submissions/33737388">https://atcoder.jp/contests/abc216/submissions/33737388</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> x[<span class="number">2010</span>]; <span class="comment">// 初始位置</span></span><br><span class="line">mint f[<span class="number">2010</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// f[i] = binom(n,i)</span></span><br><span class="line"><span class="type">int</span> p[(<span class="number">1</span>&lt;&lt;<span class="number">10</span>)+<span class="number">10</span>]; <span class="comment">// p[mask] = (-1)^(mask中1的个数)</span></span><br><span class="line">mint dp[(<span class="number">1</span>&lt;&lt;<span class="number">10</span>)+<span class="number">10</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// 第二维滚动 f(S,pos) = f(S, pos-1) + \sum_&#123;i=1&#125;^&#123;|S|&#125; (-1)^&#123;count(S,&gt; i)&#125; \binom&#123;n&#125;&#123;pos-x_&#123;s_i&#125;&#125; f(S\setminus\&#123;s_i\&#125;, pos-1).$</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> k=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,k) x[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) f[i]=f[i<span class="number">-1</span>]*(n-i+<span class="number">1</span>)/i; <span class="comment">// binom(n,i-1) -&gt; binom(n,i)</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span>&lt;&lt;k) p[mask] = p[mask&gt;&gt;<span class="number">1</span>] * (mask&amp;<span class="number">1</span>?<span class="number">-1</span>:<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(pos,x[<span class="number">0</span>],x[k<span class="number">-1</span>]+n+<span class="number">1</span>)&#123; <span class="comment">// 第二维滚动</span></span><br><span class="line">    <span class="built_in">per</span>(mask,<span class="number">0</span>,<span class="number">1</span>&lt;&lt;k) &#123; <span class="comment">// 第一维 bitmask 注意顺序</span></span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,k) <span class="keyword">if</span>(mask&amp;(<span class="number">1</span>&lt;&lt;i)) &#123; <span class="comment">// 变成递推贡献, 要增加的bit位</span></span><br><span class="line">        <span class="keyword">if</span>(x[i]&lt;=pos &amp;&amp; pos&lt;=x[i]+n) &#123; <span class="comment">// 保证 binom 不为0</span></span><br><span class="line">          <span class="comment">// f(S) += f(S\i) * binom(n, pos - x[S_i]) * (-1)^count(S,&gt;i)</span></span><br><span class="line">          dp[mask] += dp[mask^(<span class="number">1</span>&lt;&lt;i)] * f[pos-x[i]] * p[mask&gt;&gt;(i+<span class="number">1</span>)];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(dp[(<span class="number">1</span>&lt;&lt;k)<span class="number">-1</span>] / ((mint)<span class="number">2</span>).<span class="built_in">pow</span>(k*n)).<span class="built_in">val</span>()); <span class="comment">// 频次/总次数 = 概率</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>贪心完全不会</p>
+<p>题解说有个cow game</p>
+<p>有一些 dj-di &lt;&#x3D; wij 的限制</p>
+<p>寻找最大的 dT-dS, 可以变成最短路问题</p>
+<p><a target="_blank" rel="noopener" href="http://poj.org/problem?id=3169">http://poj.org/problem?id=3169</a></p>
+<p>H</p>
+<p>学了一下LGV引理, 和其思路细节</p>
+<p>路径不相交问题首选逆序对容斥，那么可以套用 LGV 引理</p>
+<p>相关练习: <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7736">https://www.luogu.com.cn/problem/P7736</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc216/editorial">官方题解</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2022-07-22-LGVlemma/">LGV引理</a></p>
+
       
     </div>
 
@@ -595,7 +735,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-07-02-CF1698/">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-07-31-ac_abc215/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
@@ -613,7 +753,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-07-02-CF1698/" class="post-title-link" itemprop="url">Codeforces 1698</a>
+          <a href="/Blog/2022-07-31-ac_abc215/" class="post-title-link" itemprop="url">Atcoder abc215</a>
         </h2>
 
         <div class="post-meta-container">
@@ -624,14 +764,14 @@
       </span>
       <span class="post-meta-item-text">發表於</span>
 
-      <time title="創建時間：2022-07-02 22:24:00" itemprop="dateCreated datePublished" datetime="2022-07-02T22:24:00+08:00">2022-07-02</time>
+      <time title="創建時間：2022-07-31 04:25:14" itemprop="dateCreated datePublished" datetime="2022-07-31T04:25:14+08:00">2022-07-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -639,7 +779,11 @@
       </span>
       <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
         </span>
     </span>
 
@@ -652,8 +796,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/Blog/2022-07-02-CF1698/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-07-02-CF1698/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Blog/2022-07-31-ac_abc215/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-07-31-ac_abc215/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -664,7 +808,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>7.1k</span>
+      <span>6.2k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
@@ -675,6 +819,7 @@
     </span>
 </div>
 
+            <div class="post-description">G(概率论,组合数,期望,贡献统计)H(二分图,霍尔定理,SOSDP,子集反演)</div>
         </div>
       </header>
 
@@ -682,15 +827,112 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>F(数学,数组,相邻无序对)G(GF(2),meet in middle,不懂证明)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-07-02-CF1698/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="G-Colorful-Candies-2"><a href="#G-Colorful-Candies-2" class="headerlink" title="G - Colorful Candies 2"></a>G - Colorful Candies 2</h1><p>N 个 有色糖果,第i个颜色c[i]</p>
+<p>从中选K个有 binom(N,K)种方案</p>
+<p>等概率选一种方案</p>
+<p>价值&#x3D;所选的颜色的不同的数量</p>
+<p>对于每个 k&#x3D; 1…N 求期望价值</p>
+<p>mod 998244353</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>N 5e4</p>
+<p>c[i]  [1,1e9]</p>
+<p>4s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>首先只关心不同值,显然c[i]可以离散化到[1..N]</p>
+<p>答案 &#x3D; sum{价值} &#x2F; binom(N,K)</p>
+<p>不同颜色互不影响</p>
+<p>所以 选了j种颜色, 一共k个, 如果能算方案出来 f(j), 那么答案 &#x3D; sum j * f(j)</p>
+<p>指定的 c[…] 中选的话</p>
+<p>似乎可以卷积</p>
+<p>去表示每个颜色 选t个的方案数, 然后卷积意义是前 j 种颜色(可能有的不选) 选k个的方案数</p>
+<p>好像无法获得选了几个颜色</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>反过来, 也就是每个颜色出现一次的概率 的贡献和</p>
+<p>P(出现一次) &#x3D; 1-P(一次都不出现)</p>
+<p>binom(n-x,k) &#x2F; binom(n,k) , 也就是x 是这个颜色的个数</p>
+<p>其中 n-x &lt; k 的话, 必定出现p &#x3D; 1</p>
+<p>(binom(n,k) - binom(n-x,k))&#x2F;binom(n,k) , 也就是x 是这个颜色的个数</p>
+<p>可以减少计算</p>
+<p>注意到 可以统计个数为x的有多少个, 这样最多 $\sqrt(N)$个统计</p>
+<p>因此对于k来讲,是$O(\sqrt{N})$的</p>
+<p>总的便是$O(N^{\frac{3}{2}})$</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc215/submissions/33712411">https://atcoder.jp/contests/abc215/submissions/33712411</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/all&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD = <span class="number">998244353</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> c[<span class="number">50010</span>];</span><br><span class="line">mint fac[<span class="number">50010</span>] = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint invv[<span class="number">50010</span>] = &#123;<span class="number">0</span>,<span class="number">1</span>&#125;;</span><br><span class="line">mint invfac[<span class="number">50010</span>] = &#123;<span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(m &gt; n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> fac[n] * invfac[m] * invfac[n-m];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) c[i] = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) fac[i] = fac[i<span class="number">-1</span>] * i;</span><br><span class="line">  invv[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,n+<span class="number">1</span>) invv[i] = (MOD - MOD/i) * invv[MOD%i];</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) invfac[i] = invfac[i<span class="number">-1</span>] * invv[i];</span><br><span class="line"></span><br><span class="line">  <span class="built_in">sort</span>(c,c+n);</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; sz = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">    <span class="keyword">if</span>(c[i] != c[i<span class="number">-1</span>])&#123;</span><br><span class="line">      sz.<span class="built_in">push_back</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      sz.<span class="built_in">back</span>()++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(sz.<span class="built_in">begin</span>(),sz.<span class="built_in">end</span>());</span><br><span class="line">  vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt; sc; <span class="comment">// size count</span></span><br><span class="line">  <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,sz.<span class="built_in">size</span>())&#123;</span><br><span class="line">    cnt++;</span><br><span class="line">    <span class="keyword">if</span>(i+<span class="number">1</span> == (<span class="type">int</span>)sz.<span class="built_in">size</span>() || sz[i] != sz[i+<span class="number">1</span>])&#123;</span><br><span class="line">      sc.<span class="built_in">push_back</span>(&#123;sz[i],cnt&#125;);</span><br><span class="line">      cnt = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(k,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    mint bnk = <span class="built_in">binom</span>(n,k);</span><br><span class="line">    mint ans = bnk * sz.<span class="built_in">size</span>() ;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [s,t]:sc) &#123;</span><br><span class="line">      <span class="keyword">if</span>(n-s &lt; k) <span class="keyword">break</span>; <span class="comment">// n-s &lt; k 的话, 必定出现p = 1</span></span><br><span class="line">      ans -= <span class="built_in">binom</span>(n-s,k) * t; <span class="comment">// * 次数</span></span><br><span class="line">    &#125;</span><br><span class="line">    ans /= bnk;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="G-Cabbage-Master"><a href="#G-Cabbage-Master" class="headerlink" title="G - Cabbage Master"></a>G - Cabbage Master</h1><p>N种菜,每种 A[i] 个</p>
+<p>M个需求, 每个需求B[i] 个, 但是限制<code>c[i][j] = 0/1</code> 表示第i个需求 是否允许得到 第j种菜</p>
+<p>如果 能满足所有需求则 成功</p>
+<p>现在要尽量少的删除一些菜的个数, 让它无法成功</p>
+<p>并且求, 删除同样数量的方案数  mod 998244353</p>
+<h2 id="限制-1"><a href="#限制-1" class="headerlink" title="限制"></a>限制</h2><p>n 20</p>
+<p>m 1e4</p>
+<p>a[i] 1e5</p>
+<p>b[i] 1e5</p>
+<p>3s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>一眼感觉网络流, 但是看着这n这么少</p>
+<p>又觉得说 会不会是 maskdp</p>
+<p>2^20 &#x3D; 1048576, 大概1e6</p>
+<hr>
+<p>网络流思路</p>
+<p>就是 S -&gt; Ini 流量 A[i]</p>
+<p>Ini -&gt; Outj 流量无限 如果<code>c[i][j] == 1</code></p>
+<p>Outj -&gt; T 流量B[i]</p>
+<p>那么目标是让最小割(最大流) &lt;&#x3D; sum B[i] 即可</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>二分图</p>
+<p>左侧N个颜色, 右侧M个需求</p>
+<p>注意到 这里成功对应的是 匹配 &#x3D; sum 右侧</p>
+<p>所以是枚举右侧的的点集,看对应左侧的点集是否大于等于右侧</p>
+<p>左侧L, 右侧R</p>
+<p>要能完美匹配 $\forall S \subset R $</p>
+<p>左侧对应集合并的和 $\ge S$对应需求的和</p>
+<p>即 min (左侧对应集合并的和 - S对应需求的和) &gt;&#x3D; 0</p>
+<hr>
+<p>n&#x3D;20, 考虑枚举左侧的并,来找右侧的max</p>
+<p>但似乎通过枚举子集可能有m 2^n 复杂度</p>
+<p>但实际上我们要的是</p>
+<p>min {f(L0) - g(L0)} &gt;&#x3D; 0, 其中f 算的集合里左侧的和, g 算的映射到左侧包含于集合的右侧的值的和 (既然B[i] 都是正的,那就是所有的加起来让g达到最大</p>
+<p>g中计算 子集和可以sosdp 高维前缀和</p>
+<p>那么删除数量X &#x3D; min( f(L0) - g(L0)) + 1</p>
+<hr>
+<p>然后问题变成如何计算方案数</p>
+<p>ans &#x3D; 0 , 不操作1种</p>
+<p>对于ans &gt; 0</p>
+<p>设 左侧移除的X的值 来自的点集合恰好为S</p>
+<p>当存在 S1 满足 S 是 S1 的子集, 且 f(L0) - g(S1) + 1 &#x3D;&#x3D; X, 这时 S移除X的方案数h(S) 会有贡献</p>
+<p>binom(S的个数,X) &#x3D; sum h(T), T 是S的子集</p>
+<p>这就是 子集反演问题</p>
+<p>$h(S) &#x3D; \sum (-1)^{|S|-|T|} binom(T的个数,X)$, T是S的子集</p>
+<p>又是求子集的函数和, 那么这里把和原集合有关的移动一下</p>
+<p>$(-1)^{|S|} {h(S)} &#x3D; \sum (-1)^{|T|} \binom{f(T)}{X}$, T是S的子集</p>
+<p>同样FWT, SOSDP可以处理</p>
+<h2 id="霍尔-Hall-定理"><a href="#霍尔-Hall-定理" class="headerlink" title="霍尔(Hall)定理"></a>霍尔(Hall)定理</h2><p>二分图 左侧n点 右侧 m 点, n&lt;&#x3D; m</p>
+<p>二分图的最大匹配个数&#x3D;|n| 的充要条件, 左侧点n的任意大小(&#x3D;k)的子集连到右图的点的个数都满足&gt;&#x3D;k</p>
+<p>必要性, 因为最大匹配&#x3D;|n|,所以存在一个方案, 任意左侧子集(&#x3D;k)的方案对应右侧的点都是k, 所以连接的一定 &gt;&#x3D; k</p>
+<p>充分性, 归纳法, 显然 n &#x3D; 1时 成立</p>
+<p>如果n时成立</p>
+<p>对于n+1个点</p>
+<p>假设存在k(&lt;&#x3D;n)个左侧点对应可达右侧刚好是k个, 那么存在一组匹配</p>
+<p>注意到左侧 n+1对应 右侧&gt;&#x3D;n+1, 那么从左右分别去掉上面的k个</p>
+<p>那么左侧n+1-k, 右侧 &gt;&#x3D;n+1-k, 归纳有方案</p>
+<hr>
+<p>如果上述不存在, 则所有k(&lt;&#x3D;n)个左侧 对应的是 &gt;&#x3D; k+1个右侧</p>
+<p>那么 任意取一个匹配, 那么剩下的n个左点对应的右点 &gt;&#x3D; k 个, 所以归纳成立</p>
+<h2 id="子集反演"><a href="#子集反演" class="headerlink" title="子集反演"></a>子集反演</h2><p>$g(S) &#x3D; \sum f(T)$, T是S的子集合</p>
+<p>$f(S) &#x3D; \sum (-1)^{|S| - |T|} g(T)$ , T是S的子集合</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc215/submissions/33719233">https://atcoder.jp/contests/abc215/submissions/33719233</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/all&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> ll INF = <span class="number">0x3f3f3f3f</span>; <span class="comment">// &gt; 1e9</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">20</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MASK = ( <span class="number">1</span> &lt;&lt; N ) ;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = N * <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line">mint fac[M+<span class="number">10</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// 阶乘</span></span><br><span class="line">mint ifac[M+<span class="number">10</span>] =&#123;<span class="number">1</span>&#125;; <span class="comment">// 阶乘的逆向</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> f[MASK+<span class="number">10</span>]; <span class="comment">// f[1 &lt;&lt; i] = A[i], f[mask] = sum A</span></span><br><span class="line"><span class="type">int</span> g[MASK+<span class="number">10</span>]; <span class="comment">// g[左侧mask] = sum B , 通过sosdp 变成子集和</span></span><br><span class="line">mint h[MASK+<span class="number">10</span>]; <span class="comment">// h(S=bitmask) S中移除 X 个的方案数,(每个恰好一个)</span></span><br><span class="line"><span class="type">int</span> cnt[MASK+<span class="number">10</span>]; <span class="comment">// mask 中1的个数</span></span><br><span class="line"><span class="type">int</span> cont[MASK+<span class="number">10</span>]; <span class="comment">// cont[mask] = 多少个父集合 是满足 最小代价为X的 在mask中移除让Hall定理触发不满足</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> B[M+<span class="number">10</span>]; <span class="comment">// 读入</span></span><br><span class="line"><span class="type">int</span> adj[M+<span class="number">10</span>]; <span class="comment">// adj[右侧] = 左侧的bitmask</span></span><br><span class="line"></span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">( <span class="type">int</span> n, <span class="type">int</span> m )</span> </span>&#123; <span class="keyword">return</span> n &lt; m ? <span class="number">0</span> : fac[n] * ifac[m] * ifac[n - m]; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,M+<span class="number">1</span>) fac[i] = fac[i - <span class="number">1</span>]*i;</span><br><span class="line">  ifac[M] = fac[M].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,M) ifac[i] = ifac[i + <span class="number">1</span>]*(i + <span class="number">1</span>);</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)f[<span class="number">1</span> &lt;&lt; i]=<span class="built_in">read</span>();<span class="comment">//f[1 &lt;&lt; i]=A[i]</span></span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">0</span>,m)B[j]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)<span class="built_in">rep</span>(j,<span class="number">0</span>,m) <span class="keyword">if</span>(<span class="built_in">read</span>())adj[j]|=<span class="number">1</span> &lt;&lt; i; <span class="comment">// 转换成mask</span></span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">0</span>,m)g[adj[j]] += B[j]; <span class="comment">// g[对应左侧mask] += B[j]</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">1</span>,<span class="number">1</span> &lt;&lt; n) cnt[mask] = cnt[mask &gt;&gt; <span class="number">1</span>] + ( mask &amp; <span class="number">1</span> ); <span class="comment">// 计算1个数</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">1</span>,<span class="number">1</span> &lt;&lt; n) f[mask] = f[mask&amp;(-mask)] + f[mask&amp;(mask<span class="number">-1</span>)]; <span class="comment">// 去掉最后一个1 和最后一个1的mask之和</span></span><br><span class="line">  <span class="built_in">rep</span>(pwr,<span class="number">0</span>,n) <span class="built_in">rep</span>(mask,<span class="number">1</span>,<span class="number">1</span> &lt;&lt; n) <span class="keyword">if</span>(mask &amp; (<span class="number">1</span> &lt;&lt; pwr)) g[mask] += g[mask ^ (<span class="number">1</span> &lt;&lt; pwr)]; <span class="comment">// sosdp 高维前缀和</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; n) <span class="keyword">if</span>(!g[mask]) g[mask] = -INF; <span class="comment">// 右侧没有集合对应左侧集合是mask的子集合</span></span><br><span class="line">  <span class="type">int</span> X = INF; <span class="comment">// 答案第一部分 删除个数</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">1</span>,<span class="number">1</span> &lt;&lt; n) X = <span class="built_in">min</span>(X,f[mask]-g[mask]+<span class="number">1</span> ); <span class="comment">// Hall定理, min(左子集值和 - 右侧来源子集和)</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="built_in">max</span>(X,<span class="number">0</span>) == <span class="number">0</span>) &#123; <span class="comment">// 本来就不合法</span></span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;0 1\n&quot;</span> );</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// h&#x27;(S) = (-1)^|S| h(S) = sum (-1)^|T| binom(f[t], X) SOSDP</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">1</span>,<span class="number">1</span> &lt;&lt; n) h[mask] = <span class="built_in">binom</span>(f[mask], X) * (cnt[mask] &amp; <span class="number">1</span> ? <span class="number">-1</span> : <span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(pwr,<span class="number">0</span>,n) <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; n) <span class="keyword">if</span>(mask &amp; (<span class="number">1</span> &lt;&lt; pwr)) h[mask] += h[mask ^ (<span class="number">1</span> &lt;&lt; pwr)];</span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; n) h[mask] = h[mask] * ((cnt[mask] &amp; <span class="number">1</span>)?<span class="number">-1</span>:<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// SOSDP 父集合反演(本质上还是 子集反演, 你只是把每个mask 看成mask的取反即可, 最外层是pwr顺序, mask每次之间没有链式依赖,都是两两依赖, 所以mask不需要换顺序</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">1</span>,<span class="number">1</span> &lt;&lt; n) <span class="keyword">if</span>( f[mask] - g[mask] + <span class="number">1</span> == X ) cont[mask] = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(pwr,<span class="number">0</span>,n) <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; n) <span class="keyword">if</span>(mask &amp; (<span class="number">1</span> &lt;&lt; pwr)) cont[mask ^ (<span class="number">1</span> &lt;&lt; pwr)] += cont[mask]; <span class="comment">// 统计父集合可行的次数</span></span><br><span class="line"></span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; n) <span class="keyword">if</span>(cont[mask]) ans += h[mask];</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>,X, ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>其实还算基础知识点, 如何批量算模拟元,批量阶乘和阶乘模逆元,如何基于它们快速bionom</p>
+<p>然后就是概率统计变形状和相同次数统计变成$\sqrt{N}$</p>
+<p>评分 2267 也差不多</p>
+<p>H</p>
+<p>二分图,霍尔(Hall)定理</p>
+<p>二分图一定程度上, 就不在意初始设计的方向了,  因为是匹配, 内部是没有关系的</p>
+<p>霍尔定理对于这种大于1流量的也适用(因为从本质上看 左&#x2F;右侧最多k个, 无非是k个点, 有无穷大边, 无非是这些拆开后的左右侧按照原来的关系两两有边, 而这个思路是不是特殊题型还能反过来思考)</p>
+<p>这种”任意”的条件，可以考虑是在哪个部分将它破坏的</p>
+<p>还涉及到 子集反演(以及用子集反演完成父集合反演)</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc215/editorial">官方题解</a></p>
+
       
     </div>
 
@@ -716,7 +958,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-06-27-ac_arc143/">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-07-30-ac_abc214/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
@@ -734,7 +976,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-06-27-ac_arc143/" class="post-title-link" itemprop="url">Atcoder arc143</a>
+          <a href="/Blog/2022-07-30-ac_abc214/" class="post-title-link" itemprop="url">Atcoder abc214</a>
         </h2>
 
         <div class="post-meta-container">
@@ -745,260 +987,14 @@
       </span>
       <span class="post-meta-item-text">發表於</span>
 
-      <time title="創建時間：2022-06-27 04:25:14" itemprop="dateCreated datePublished" datetime="2022-06-27T04:25:14+08:00">2022-06-27</time>
+      <time title="創建時間：2022-07-30 04:25:14" itemprop="dateCreated datePublished" datetime="2022-07-30T04:25:14+08:00">2022-07-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/ARC/" itemprop="url" rel="index"><span itemprop="name">ARC</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2022-06-27-ac_arc143/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-06-27-ac_arc143/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>1.6k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>D(dfs,无向图无桥联通块,强连通分量)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-06-27-ac_arc143/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-06-26-CF1696/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-06-26-CF1696/" class="post-title-link" itemprop="url">Codeforces 1696</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-06-26 22:24:00" itemprop="dateCreated datePublished" datetime="2022-06-26T22:24:00+08:00">2022-06-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2022-06-26-CF1696/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-06-26-CF1696/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>4.8k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>4 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>G(线性规划,对偶,DP,矩阵乘法,segtree)H(TODO)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-06-26-CF1696/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-06-25-ac_abc257/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-06-25-ac_abc257/" class="post-title-link" itemprop="url">Atcoder abc257</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-06-25 04:25:14" itemprop="dateCreated datePublished" datetime="2022-06-25T04:25:14+08:00">2022-06-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1023,8 +1019,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/Blog/2022-06-25-ac_abc257/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-06-25-ac_abc257/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Blog/2022-07-30-ac_abc214/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-07-30-ac_abc214/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1035,17 +1031,18 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>2.5k</span>
+      <span>6.5k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>2 分鐘</span>
+      <span>6 分鐘</span>
     </span>
 </div>
 
+            <div class="post-description">G(排列,图,容斥,DP,环)H(scc,网络流,费用流)</div>
         </div>
       </header>
 
@@ -1053,382 +1050,142 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>D(正确读题就能做)G(kmp+DP)Ex(TODO)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-06-25-ac_abc257/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
+          <h1 id="G-Three-Permutations"><a href="#G-Three-Permutations" class="headerlink" title="G - Three Permutations"></a>G - Three Permutations</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc214/tasks/abc214_g">https://atcoder.jp/contests/abc214/tasks/abc214_g</a></p>
+<p>给[1..N]的排列p和q</p>
+<p>求多少个排列r 满足 r[i] !&#x3D; p[i] , r[i] !&#x3D; q[i], i &#x3D; [0..N]</p>
+<p>mod 1e9+7</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>n 3000</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h3><p>如果只是给一个排列p</p>
+<p>要找另一个排列r让每个位置对应不等(r[i] !&#x3D; p[i])</p>
+<p>一个想法是, 把它直接按照p[i]的1到n重新排序</p>
+<p>问题变成了 找r[i] !&#x3D; i的排列方案数</p>
+<p>考虑长度n的和n-1之间变化</p>
+<p>如果i放的n,而n放的i ,那么 去掉i和n, 方案数 为f(n-2)</p>
+<p>n 有 n-1中交替放的方案, (n-1) f(n-2)</p>
+<p>如果i放的n,而n放的不是i, 那么,交换i和n放的, 前n-1也合法, f(n-1)</p>
+<p>f(n-1) 每个方案每个位置和n换, 贡献(n-1)f(n-1)</p>
+<p>f(n) &#x3D; (n-1)(f(n-1) + f(n-2))</p>
+<p>f(1) &#x3D; 0</p>
+<p>f(2) &#x3D; 1</p>
+<p>f(3) &#x3D; 2(1+0) &#x3D; 2</p>
+<hr>
+<p>那么对于两个序列</p>
+<p>首先一样的思路按照p 来排序</p>
+<p>那么变成 r[i] !&#x3D; q[i], r[i] !&#x3D; i</p>
+<p>但因为q[i]的限制并不能 像上面那样转移</p>
+<h3 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h3><p>如果对于每个位置,计算ri&#x3D;pi或ri&#x3D;qi的排列方案数,可以考虑容斥</p>
+<p>假设 i1,i2,…ik, 对应的下标满足, ri&#x3D;pi 或 ri&#x3D;qi, 那么要计算所有r[i1],r[i2]..r[ik]的值方案</p>
+<p>对于每个 i in i[1..k],在图中,我们增加一个(pi,qi)的边, 只需计算每条边分配给其一个端点的总数，以便没有两条不同的边共享一个分配给它的顶点。(意思就是边即是i, 而给边分配的点,即是r[i]的值, 不能共享点,意味着值不重复</p>
+<p>(注意到 如果(pi,qi)链接的话, 只可能是 链 或 环,不可能出现分叉</p>
+<p>对于每个联通分量考虑(除去孤立点和自环)</p>
+<p>因为环之间两两不相关, 所以每一组i的选择答案 &#x3D; 不同环的方案的乘积</p>
+<p>我们对于一个K个点的环内, 选了k条边, 的方案数</p>
+<p>当所有边被选(所有的i都有相等关系), 那么有2种方案</p>
+<p>不是全部都选, 考虑把环剖成链讨论首尾是否选择</p>
+<hr>
+<p><code>dp[i][j][s0=0/1/2][si=0/1/2]</code> 表示前i条边,选择了j条, 且第一条是s0 状态,第i条是si状态的方案数</p>
+<p>0: 未选择</p>
+<p>1: 该边分配了左点</p>
+<p>2: 该边分配了右点</p>
+<p>状态转移</p>
+<p>不选 <code>dp[i][j][s0][0] = sum dp[i-1][j][s0][0..2]</code></p>
+<p>向左 <code>dp[i][j][s0][1] = sum dp[i-1][j-1][s0][0..1]</code></p>
+<p>向右 <code>dp[i][j][s0][2] = sum dp[i-1][j-1][s0][0..2]</code></p>
+<p>这样最后长n的环选了k条链的总方案数 就是<code>sum dp[n][k][s0][s1], 且 (s0 != 1 || s1 != 2)</code></p>
+<p>记为<code>circle[n][k]</code></p>
+<hr>
+<p>如果gi 表示 指定了i个不合法的选择, 剩余的n-i个任意选(可以合法也可以不合法,但始终满足是排列)</p>
+<p>那么 $ans &#x3D; \sum_{i&#x3D;0}^n (-1)^i(n-i)! g_i$</p>
+<hr>
+<p>而gi也可以通过上面环的结果, 去做dp</p>
+<p><code>f[i][k] = </code> 前i个环指定了k个边 的方案数</p>
+<p><code>f[i][k] = sum&#123;f[i-1][k-t] * circle[sz[i]][t]&#125;</code> 前i个环指定了k个边 的方案数</p>
+<hr>
+<p>于是把所有环剖成链连续放在数组上</p>
+<p><code>g[i][j][s0][s1]</code> &#x3D; 前i边,指定分配了j条, i所在环的起始是s0,结束是s1的方案数, 这里也是把s0也与i做相关意义了</p>
+<p>转移类似, 分别是跨环转移 和 环内转移</p>
+<hr>
+<p>感觉这题还可以改控制最大环长, 但增大总长度, 变成矩阵乘法</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc214/submissions/33643608">https://atcoder.jp/contests/abc214/submissions/33643608</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/all&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint1000000007;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">3000</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p[N+<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span> q[N+<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span> e[N+<span class="number">10</span>]; <span class="comment">// 单向边</span></span><br><span class="line"><span class="type">int</span> vis2[N+<span class="number">10</span>]; <span class="comment">// 每个环的结束位置 = 1, 例如环为 2 3 5, 那么 [2]=1,[2+3=5]=1,[5+5=10]=1, 自环结束位置=2</span></span><br><span class="line"><span class="comment">// 0 不分配, 1 分配左点, 2分配右点</span></span><br><span class="line">mint g[N+<span class="number">10</span>][N+<span class="number">10</span>][<span class="number">3</span>][<span class="number">3</span>]; <span class="comment">// [i][j][s0][si] 每个环剖成链以后,长度i的链 分配了j条, 当前环 首个点state 0, 最后一个点statei</span></span><br><span class="line">mint fac[N+<span class="number">10</span>]; <span class="comment">// n!</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  fac[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) fac[i]=fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) p[i] = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) e[p[i]] = q[i] = <span class="built_in">read</span>(); <span class="comment">// 建立边 p,q =&gt; e</span></span><br><span class="line">  &#123; <span class="comment">// e =&gt; vis2</span></span><br><span class="line">    <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">vis</span><span class="params">(n+<span class="number">1</span>,<span class="literal">false</span>)</span></span>; <span class="comment">// 点是否被访问</span></span><br><span class="line">    <span class="type">int</span> m = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="keyword">if</span>(!vis[i])&#123;</span><br><span class="line">      <span class="keyword">if</span>(e[i]==i) &#123; <span class="comment">// 自环</span></span><br><span class="line">        vis2[++m]=<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> j=i;!vis[j];j=e[j]) &#123;</span><br><span class="line">        vis[j]=<span class="number">1</span>;</span><br><span class="line">        m++;</span><br><span class="line">      &#125;</span><br><span class="line">      vis2[m]=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  g[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>; <span class="comment">// 初始状态</span></span><br><span class="line">  vis2[<span class="number">0</span>] = <span class="number">1</span>;       <span class="comment">// 初始状态</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(j,<span class="number">0</span>,i+<span class="number">1</span>)&#123; <span class="comment">// 剖成链, 前i个边, 指定j个不合法, 第i个点所在环首个点s0,第i个点s1状态</span></span><br><span class="line">    <span class="keyword">if</span>(vis2[i]) &#123; <span class="comment">// 环结束位置</span></span><br><span class="line">      g[i][j][<span class="number">1</span>][<span class="number">2</span>] = <span class="number">0</span>; <span class="comment">// 环首为向左环尾向右</span></span><br><span class="line">      <span class="keyword">if</span>(vis2[i]==<span class="number">2</span>) g[i][j][<span class="number">1</span>][<span class="number">1</span>]=<span class="number">0</span>; <span class="comment">// 自环, 不选是一种, 选左和选右相同, 去掉一个</span></span><br><span class="line">      <span class="built_in">rep</span>(k,<span class="number">0</span>,<span class="number">3</span>) <span class="built_in">rep</span>(l,<span class="number">0</span>,<span class="number">3</span>) &#123; <span class="comment">// i+1 是新的环</span></span><br><span class="line">        <span class="keyword">auto</span> v = g[i][j][k][l];</span><br><span class="line">        g[i+<span class="number">1</span>][j  ][<span class="number">0</span>][<span class="number">0</span>] += v; <span class="comment">// 新环 本身与i 无关, 应该是1,这里相当于全部乘上前面的倍数</span></span><br><span class="line">        g[i+<span class="number">1</span>][j+<span class="number">1</span>][<span class="number">1</span>][<span class="number">1</span>] += v;</span><br><span class="line">        g[i+<span class="number">1</span>][j+<span class="number">1</span>][<span class="number">2</span>][<span class="number">2</span>] += v;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 环内</span></span><br><span class="line">      <span class="built_in">rep</span>(k,<span class="number">0</span>,<span class="number">3</span>) <span class="built_in">rep</span>(l,<span class="number">0</span>,<span class="number">3</span>)&#123;</span><br><span class="line">        <span class="keyword">auto</span> v = g[i][j][k][l];</span><br><span class="line">        g[i+<span class="number">1</span>][j  ][k][<span class="number">0</span>] += v;</span><br><span class="line">        g[i+<span class="number">1</span>][j+<span class="number">1</span>][k][<span class="number">1</span>] += ((l == <span class="number">2</span>) ? <span class="number">0</span> : v); <span class="comment">// 不能下一个向左 这一个向右</span></span><br><span class="line">        g[i+<span class="number">1</span>][j+<span class="number">1</span>][k][<span class="number">2</span>] += v;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mint res = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>) &#123;</span><br><span class="line">    mint cnt = <span class="number">0</span>; <span class="comment">// 方案数</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,<span class="number">3</span>) <span class="built_in">rep</span>(k,<span class="number">0</span>,<span class="number">3</span>) cnt += g[n][i][j][k];</span><br><span class="line">    res += fac[n-i]*cnt*(i%<span class="number">2</span>?<span class="number">-1</span>:<span class="number">1</span>); <span class="comment">// 容斥</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,res.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    
-    
-    
+<h1 id="H-Collecting"><a href="#H-Collecting" class="headerlink" title="H - Collecting"></a>H - Collecting</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc214/tasks/abc214_h">https://atcoder.jp/contests/abc214/tasks/abc214_h</a></p>
+<p>有向图 N点, M边</p>
+<p>xi个东西在点i上</p>
+<p>k个人一个一个遍历graph</p>
+<p>1开始, 遍历有限长度, 找最大可被收集的东西个数</p>
+<h2 id="限制-1"><a href="#限制-1" class="headerlink" title="限制"></a>限制</h2><p>n2e5, m 2e5</p>
+<p>k 10</p>
+<p>xi [1..1e9]</p>
+<p>4s</p>
+<p>1024mb</p>
+<h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><h3 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h3><p>显然 可以scc缩点, 然后问题变成 一个有向无环图</p>
+<p>找k(&lt;&#x3D;10)条路径, 被经过的点的和最大</p>
+<p>这没啥想法了</p>
+<p>例如</p>
+<p>a-&gt;b-&gt;c</p>
+<p>a-&gt;b-&gt;d</p>
+<p>a-&gt;e-&gt;d</p>
+<p>a-&gt;e-&gt;f</p>
+<p>一次选择的贪心 是否对全局也是最好的?</p>
+<h3 id="题解-3"><a href="#题解-3" class="headerlink" title="题解"></a>题解</h3><p>果然也是先scc变成DAG</p>
+<p>然后这里是最小费用流问题</p>
+<ol>
+<li>DAG每个点拆成out,in, 增加源S和汇T</li>
+<li>DAG中每个u, 增加 in[u] -&gt; out[u], 流量1, 费用-val<a href="%E9%A6%96%E6%AC%A1%E7%BB%8F%E8%BF%87%E7%82%B9">u</a>, 以及无限(K)流量费用0</li>
+<li>DAG中(u,v)变成 out[u] -&gt; in[v] , 流量无限(K), 费用0</li>
+<li>S -&gt; in[1] 容量k, 费用0 ( 这里可以简化成去掉S, 1 作为S, 通过 in[1] -&gt; out[1] 总容量k 来保证最大流 &#x3D; K</li>
+<li>out[u] -&gt; T 容量无限(k), 费用0</li>
+</ol>
+<p>求min cost max flow , 答案乘上 -1</p>
+<p>我看atcoder的库是可以限制最大流的求 mincost</p>
+<hr>
+<p>然后这样做的话 代价有些是负的</p>
+<p>办法是</p>
+<ol>
+<li>DAG中每个u, in[u] -&gt; out[u], 流量1费用0, 流量无限(费用val[u])</li>
+<li>DAG中(u,v), out[u] -&gt; in[v], 无限流量, 费用sum X[u+1..v-1]</li>
+<li>out[u] -&gt; T, 无限流量, 代价sum X[u+1..N]</li>
+</ol>
+<p>ans &#x3D; s-&gt;t 流&#x3D;K 的最小代价 - K * sum X</p>
+<hr>
+<p>原理</p>
+<p>本质上希望每个流的代价增加 sum X</p>
+<p>那么整体形式就是 从 in[u0] -&gt; out[u0] -&gt; in[v1] -&gt; out[v1] -&gt; T</p>
+<p>希望  每次到out[u] 的时候, 费用和的增量是 前缀和X[0..u], 这样每个 out[u] -&gt; T, 只需要是X[0..n] - X[0..u] 即可</p>
+<p>那么自然 out[u]-&gt; in[v] -&gt; out[v]</p>
+<p>这一整段增加为 X[0..v] - X[0..u] &#x2F;&#x2F; 保证拓扑序 来让它非负? atcoder的scc返回保证了逆向拓扑序!!</p>
+<p>那么, 这里设计 in[v] -&gt; out[v] 增加X[v]</p>
+<p>所以 out[u] -&gt; in[v] 增加 X[0..v] - X[0..u] - X[v]</p>
+<hr>
+<p>它这个没有拓扑似乎也保证不了 cost非负?</p>
+<p>保证的是没有负环!?</p>
+<p>注意因为没有S所以 链增加的是 X[0..n] - X[0..start]</p>
+<h3 id="费用流-mcmf"><a href="#费用流-mcmf" class="headerlink" title="费用流 mcmf"></a>费用流 mcmf</h3><p>费用流, 每个边有流量限制和每单位费用</p>
+<p>最大流最小费 &#x3D; 最短路</p>
+<p>最大流最大费 &#x3D; 最长路</p>
+<p>满足正向单位费用的相反数 &#x3D; 逆向单位费用</p>
+<p>最小费用以流量的单价作为边权值跑最短路，注意因为不会有负环（否则费用是负无限大）所以用SPFA就可以了</p>
+<p>如果增广路中出现了负环，那么在上一次选择中一定有一条更短的路径。(如果开始就有负环呢？ 那么它说明你图建错了</p>
+<p>最小费用流, 就是在做最大流的时候, 把dfs改成 spfa, 而距离&#x3D; 路径上单位cost代价之和</p>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc214/submissions/33655383">https://atcoder.jp/contests/abc214/submissions/33655383</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/scc&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/mincostflow&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> N = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> M = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> K = <span class="built_in">read</span>();</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">A</span><span class="params">(M)</span>, <span class="title">B</span><span class="params">(M)</span></span>;</span><br><span class="line">  <span class="function">atcoder::scc_graph <span class="title">graph</span><span class="params">(N)</span></span>; <span class="comment">// 0-index 点</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,M)&#123;</span><br><span class="line">    A[i] = <span class="built_in">read</span>() - <span class="number">1</span>; <span class="comment">// 0-index</span></span><br><span class="line">    B[i] = <span class="built_in">read</span>() - <span class="number">1</span>;</span><br><span class="line">    graph.<span class="built_in">add_edge</span>(A[i], B[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">const</span> vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; scc = graph.<span class="built_in">scc</span>(); <span class="comment">// 连通块 atcoder的scc返回还保证了逆拓扑序</span></span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> V = scc.<span class="built_in">size</span>(); <span class="comment">// DAG节点个数</span></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">belongs</span><span class="params">(N)</span></span>; <span class="comment">// [节点] = 所在块</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,V) <span class="keyword">for</span>(<span class="type">int</span> u : scc[i]) belongs[u] = i;</span><br><span class="line">  <span class="function">vector&lt;ll&gt; <span class="title">X</span><span class="params">(V)</span></span>; <span class="comment">// 新图每个点上的值</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N) X[belongs[i]] += <span class="built_in">read</span>();</span><br><span class="line">  <span class="function">vector&lt;ll&gt; <span class="title">accum</span><span class="params">(V + <span class="number">1</span>, <span class="number">0</span>)</span></span>; <span class="comment">// 前缀和</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,V) accum[i + <span class="number">1</span>] = accum[i] + X[i];</span><br><span class="line"></span><br><span class="line">  <span class="function">atcoder::mcf_graph&lt;<span class="type">int</span>, ll&gt; <span class="title">network</span><span class="params">(<span class="number">2</span> * V + <span class="number">1</span>)</span></span>; <span class="comment">// in[1]变成 S, T = 2*V</span></span><br><span class="line">  <span class="type">int</span> S = <span class="number">2</span>*belongs[<span class="number">0</span>];</span><br><span class="line">  <span class="type">int</span> T = <span class="number">2</span>*V;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,V) &#123;</span><br><span class="line">    network.<span class="built_in">add_edge</span>(<span class="number">2</span> * i, <span class="number">2</span> * i + <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>); <span class="comment">// in[i] -&gt; out[i], 容量1, 费用 -X[i] + X[i]</span></span><br><span class="line">    network.<span class="built_in">add_edge</span>(<span class="number">2</span> * i, <span class="number">2</span> * i + <span class="number">1</span>, K, X[i]); <span class="comment">// in[i] -&gt; out[i], 容量K(无穷), 费用 0 + X[i]</span></span><br><span class="line">    network.<span class="built_in">add_edge</span>(<span class="number">2</span> * i + <span class="number">1</span>, <span class="number">2</span> * V, K, accum[V] - accum[i + <span class="number">1</span>]); <span class="comment">// out[i] -&gt; T 费用 0 + All - X[0..i]</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,M) &#123;</span><br><span class="line">    <span class="type">int</span> u = belongs[A[i]];</span><br><span class="line">    <span class="type">int</span> v = belongs[B[i]];</span><br><span class="line">    <span class="keyword">if</span> (u != v) network.<span class="built_in">add_edge</span>(<span class="number">2</span> * u + <span class="number">1</span>, <span class="number">2</span> * v, K, accum[v] - accum[u + <span class="number">1</span>]); <span class="comment">// out[u] -&gt; in[v] , 容量k, 费用 0 + X[0..v] - X[0..u]</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> [maxflow, mincost] = network.<span class="built_in">flow</span>(S,T,K<span class="comment">/* 限流 */</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,(accum[V] - accum[belongs[<span class="number">0</span>]]) * K - mincost);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>容斥还是不熟 感觉这个式子需要记忆 $ans &#x3D; \sum_{i&#x3D;0}^n (-1)^i c_i$</p>
+<p>然后这个排列会构成多个环感觉很常用虽然知道, 但是这里通过边表示i, 分配点表示取值还是没有想到, 感觉也是一种转化思路</p>
+<p>然后环拆成链+两头也是很经典的方法了</p>
+<p>实现上把 环变成链 再在数组上连续性, 去做dp的方法, 比多重再算g更神奇</p>
+<p>另外这里递推贡献更新时没有保证正确性, 有的在处理时才修复正确性 比如<code>[1][2]</code> 和自环</p>
+<p>H</p>
+<p>网络流完全不会, 学了一手费用流, 看起来就是正常最大流 变了spfa和 路径cost和</p>
+<p>atcoder 内置的scc 和mincostflow</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/scc&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/mincostflow&gt;</span></span></span><br></pre></td></tr></table></figure>
 
+<p>然后这个神奇的让 所有费用变正的 前缀和变化法 , 感觉其它地方似乎也能用</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc214/editorial">官方题解</a></p>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/graph/flow/min-cost/">oi wiki 费用流</a></p>
 
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-06-24-ac_arc142/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-06-24-ac_arc142/" class="post-title-link" itemprop="url">Atcoder arc142</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-06-24 04:25:14" itemprop="dateCreated datePublished" datetime="2022-06-24T04:25:14+08:00">2022-06-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/ARC/" itemprop="url" rel="index"><span itemprop="name">ARC</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2022-06-24-ac_arc142/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-06-24-ac_arc142/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>7.3k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>7 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>D(树,DP)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-06-24-ac_arc142/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-06-22-LTIME109A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-06-22-LTIME109A/" class="post-title-link" itemprop="url">June Lunchtime 2022 Division 1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-06-22 22:24:00" itemprop="dateCreated datePublished" datetime="2022-06-22T22:24:00+08:00">2022-06-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/CodeChef/" itemprop="url" rel="index"><span itemprop="name">CodeChef</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2022-06-22-LTIME109A/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-06-22-LTIME109A/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>2.2k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>2 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>P5.MINXORSEG(XOR,fenwick)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-06-22-LTIME109A/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-06-21-CF1700/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-06-21-CF1700/" class="post-title-link" itemprop="url">Codeforces 1700</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-06-21 22:24:00" itemprop="dateCreated datePublished" datetime="2022-06-21T22:24:00+08:00">2022-06-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2022-06-21-CF1700/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-06-21-CF1700/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>1k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>总体观察,数学,贪心</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-06-21-CF1700/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
@@ -1447,7 +1204,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/Blog/page/3/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/Blog/">1</a><a class="page-number" href="/Blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/Blog/page/5/">5</a><a class="page-number" href="/Blog/page/7/">7</a><a class="page-number" href="/Blog/page/11/">11</a><a class="page-number" href="/Blog/page/18/">18</a><a class="extend next" rel="next" href="/Blog/page/5/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/Blog/page/3/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/Blog/">1</a><a class="page-number" href="/Blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/Blog/page/5/">5</a><a class="page-number" href="/Blog/page/7/">7</a><a class="page-number" href="/Blog/page/11/">11</a><a class="page-number" href="/Blog/page/19/">19</a><a class="page-number" href="/Blog/page/35/">35</a><a class="extend next" rel="next" href="/Blog/page/5/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 </div>

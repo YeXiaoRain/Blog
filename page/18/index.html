@@ -224,7 +224,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2017-10-06-cfR438F/">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2021-07-27-stoer-wagner/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
@@ -242,7 +242,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2017-10-06-cfR438F/" class="post-title-link" itemprop="url">CF438F</a>
+          <a href="/Blog/2021-07-27-stoer-wagner/" class="post-title-link" itemprop="url">STOER-WAGNER 无源无汇最小割</a>
         </h2>
 
         <div class="post-meta-container">
@@ -253,14 +253,14 @@
       </span>
       <span class="post-meta-item-text">發表於</span>
 
-      <time title="創建時間：2017-10-06 13:33:12" itemprop="dateCreated datePublished" datetime="2017-10-06T13:33:12+08:00">2017-10-06</time>
+      <time title="創建時間：2021-07-27 10:37:14" itemprop="dateCreated datePublished" datetime="2021-07-27T10:37:14+08:00">2021-07-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -268,7 +268,7 @@
       </span>
       <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
         </span>
     </span>
 
@@ -281,8 +281,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/Blog/2017-10-06-cfR438F/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017-10-06-cfR438F/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Blog/2021-07-27-stoer-wagner/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021-07-27-stoer-wagner/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -293,14 +293,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>6.5k</span>
+      <span>2.2k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>6 分鐘</span>
+      <span>2 分鐘</span>
     </span>
 </div>
 
@@ -311,78 +311,712 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="F-Yet-Another-Minimization-Problem"><a href="#F-Yet-Another-Minimization-Problem" class="headerlink" title="F. Yet Another Minimization Problem"></a><a target="_blank" rel="noopener" href="http://codeforces.com/contest/868/problem/F">F. Yet Another Minimization Problem</a></h1><table>
-<thead>
-<tr>
-<th align="left">time limit per test</th>
-<th align="center">2 seconds</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">memory limit per test</td>
-<td align="center">256 megabytes</td>
-</tr>
-<tr>
-<td align="left">input</td>
-<td align="center">standard input</td>
-</tr>
-<tr>
-<td align="left">output</td>
-<td align="center">standard output</td>
-</tr>
-</tbody></table>
-<p>You are given an array of <code>n</code> integers $a_1$ <code>...</code> $a_n$. The cost of a subsegment is the number of unordered pairs of distinct indices within the subsegment that contain equal elements. Split the given array into <code>k</code> non-intersecting non-empty subsegments so that the sum of their costs is minimum possible. Each element should be present in exactly one subsegment.</p>
-<h3 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h3><p>The first line contains two integers <code>n</code> and <code>k</code> ($2$ ≤ n ≤ $10^5$, 2 ≤ k ≤ min (n, 20))  — the length of the array and the number of segments you need to split the array into.</p>
-<p>The next line contains <code>n</code> integers $a_1$, $a_2$, …, $a_n$ (1 ≤ $a_i$ ≤ n) — the elements of the array.</p>
-<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>Print single integer: the minimum possible total cost of resulting subsegments.</p>
-<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><h4 id="input"><a href="#input" class="headerlink" title="input"></a>input</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">7 3</span><br><span class="line">1 1 3 3 3 2 1</span><br></pre></td></tr></table></figure>
-
-<h4 id="output"><a href="#output" class="headerlink" title="output"></a>output</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<h4 id="input-1"><a href="#input-1" class="headerlink" title="input"></a>input</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">10 2</span><br><span class="line">1 2 1 2 1 2 1 2 1 2</span><br></pre></td></tr></table></figure>
-
-<h4 id="output-1"><a href="#output-1" class="headerlink" title="output"></a>output</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8</span><br></pre></td></tr></table></figure>
-
-<h4 id="input-2"><a href="#input-2" class="headerlink" title="input"></a>input</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">13 3</span><br><span class="line">1 2 2 2 1 2 1 1 1 2 2 1 1</span><br></pre></td></tr></table></figure>
-
-<h4 id="output-2"><a href="#output-2" class="headerlink" title="output"></a>output</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">9</span><br></pre></td></tr></table></figure>
-
-<h3 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h3><p>In the first example it’s optimal to split the sequence into the following three subsegments: [1], [1, 3], [3, 3, 2, 1]. The costs are 0, 0 and 1, thus the answer is 1.</p>
-<p>In the second example it’s optimal to split the sequence in two equal halves. The cost for each half is 4.</p>
-<p>In the third example it’s optimal to split the sequence in the following way: [1, 2, 2, 2, 1], [2, 1, 1, 1, 2], [2, 1, 1]. The costs are 4, 4, 1.</p>
+          <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>一个无向联通图,应该要正边权?，最小割分成两个子图</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><blockquote>
+<p>引理</p>
+</blockquote>
+<p>图G中的两个点s,t,</p>
+<p>如果最小割分割了它们，那么直接求s到t的最小割</p>
+<p>如果没有，那么合并s-t，得到的新图G1 和原图的最小割一致</p>
 <hr>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>我开始还以为我做出来了，然而第6个点就爆了。下面用<code>|</code>表示分割<code>_</code>表示数字</p>
-<p>我的最开始的想法是先随意将原数组随意分割为k组<code>______|____|_________|__________</code></p>
-<p>然后对每一个分割进行左右调整,直到不可调为止，<code>______←|→____|_________|__________</code>，但这样局部最优并不能达到全局最优</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">costn</span><span class="params">(<span class="type">long</span> <span class="type">long</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (n<span class="number">-1</span>)*n/<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> cost[<span class="number">100010</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;=<span class="number">100000</span>;i++)</span><br><span class="line">    cost[i]=<span class="built_in">costn</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n,k;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> ans = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">long</span> <span class="type">long</span> v[<span class="number">100010</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> cnt[<span class="number">100010</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> cntnow[<span class="number">100010</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> divk[<span class="number">30</span>]=&#123;<span class="number">0</span>&#125;; <span class="comment">// return index</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;=n;i++)&#123;</span><br><span class="line">    cnt[i]=<span class="number">0</span>;</span><br><span class="line">    cntnow[i]=<span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">doaj</span><span class="params">(<span class="type">int</span> index)</span></span>&#123;</span><br><span class="line">  <span class="built_in">clear</span>();</span><br><span class="line">  <span class="type">int</span> l = index == <span class="number">0</span>?<span class="number">0</span>:divk[index<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> r = index == k<span class="number">-1</span>?n<span class="number">-1</span>:divk[index+<span class="number">1</span>];</span><br><span class="line">  <span class="comment">// cout&lt;&lt;index&lt;&lt;&quot;:&quot;&lt;&lt;l&lt;&lt;&quot;,&quot;&lt;&lt;r&lt;&lt;endl;</span></span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="keyword">for</span>(i=l;i&lt;=r;i++)&#123;</span><br><span class="line">    cnt[v[i]]++;</span><br><span class="line">    <span class="comment">// cout&lt;&lt;v[i]&lt;&lt;&quot; &quot;&lt;&lt;cnt[v[i]]&lt;&lt;endl;</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> ansi = l;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> dermin = <span class="number">100000000000</span>;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> dernow = <span class="number">0</span>;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> derori = <span class="number">100000000000</span>;</span><br><span class="line">  <span class="keyword">for</span>(i=l;i&lt;r;i++)&#123;</span><br><span class="line">    cntnow[v[i]]++;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> oril = cntnow[v[i]]<span class="number">-1</span>;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> orir = cnt[v[i]] - oril;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> oriv = cost[oril]+cost[orir];</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> nowl = oril+<span class="number">1</span>;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> nowr = orir<span class="number">-1</span>;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> nowv = cost[nowl]+cost[nowr];</span><br><span class="line"></span><br><span class="line">    dernow += -oriv+nowv;</span><br><span class="line">    <span class="keyword">if</span>(i == divk[index])&#123;</span><br><span class="line">      derori = dernow;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(dernow &lt; dermin || (dernow==dermin &amp;&amp; i==divk[index]))&#123;</span><br><span class="line">      dermin = dernow;</span><br><span class="line">      ansi = i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(dermin &lt; derori)&#123;</span><br><span class="line">    <span class="keyword">if</span>(ansi != divk[index])&#123;</span><br><span class="line">      <span class="comment">// cout&lt;&lt;index&lt;&lt;&quot;: [&quot;&lt;&lt;l&lt;&lt;&quot;,&quot;&lt;&lt;r&lt;&lt;&quot;]&quot;&lt;&lt;&quot;der:&quot;&lt;&lt;dermin-derori&lt;&lt;&quot; | &quot;&lt;&lt;divk[index]&lt;&lt;&quot; -&gt; &quot;&lt;&lt;ansi&lt;&lt;endl;</span></span><br><span class="line">      divk[index] = ansi;</span><br><span class="line">      ans += dermin-derori;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">init</span>();</span><br><span class="line">  cin&gt;&gt;n&gt;&gt;k;</span><br><span class="line">  k--;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;v[i]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;k;i++)</span><br><span class="line">    divk[i]=i;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(i=k;i&lt;n;i++)&#123;</span><br><span class="line">    cnt[v[i]]++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">    ans += cost[cnt[i]];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">bool</span> adjust=<span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(adjust)&#123;</span><br><span class="line">    adjust=<span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;k;i++)&#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">doaj</span>(i))</span><br><span class="line">        adjust=<span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<p>因此有方法, 任意选择点a，加入集合A中</p>
+<p>每次选择和A距离和最大的点加入集合中，也就是上面的合并操作</p>
+<p>注意，这里每次都不是把图里的最大的边去掉，而是集合A距离最大的点加入A中</p>
+<p>这样反复操作，一直到剩下3个点A,b,c ，可以得到一个割的值, 除了A以外的两个点b,c在这次分割中一定是被分开了的</p>
+<p>我们也能得到一个b和c是被分割的值</p>
 <hr>
-<p>下一个想法是动态规划,<code>dp[p][k]</code>返回把<code>[0 , p-1]</code>分为<code>k</code>组的最小代价,则答案为<code>dp[n][k]</code></p>
-<p>其中再进行划分<code>k组[0 , p-1] -&gt; k-1组[0 , j-1] + 1组[j,p-1]</code></p>
-<p><code>dp[p][k] = min&#123;dp[j][k-1] + cost[j,p-1]&#125;</code></p>
-<p>有了这个 时间复杂度在接近 $O(n^3)$ , 对一个固定的<code>k</code>遍历<code>p</code>需要<code>n</code>，对一个<code>p</code>遍历<code>j</code>需要<code>n</code>，对一个<code>j</code>计算<code>cost[j,p-1]</code>需要<code>n</code></p>
-<h4 id="分析"><a href="#分析" class="headerlink" title="分析:"></a>分析:</h4><p><code>k</code>遍历<code>p</code> 最外层难优化</p>
-<p>考虑最里层<code>cost[j,p-1]</code> 因为相邻的j的访问 会使这个函数左右范围变化不大，所以如果能用全局或者静态变量来维护左、右指向以及和，就能对这里的时间复杂度降低到<code>O(1)</code></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> <span class="type">long</span> <span class="type">long</span> <span class="title">cost</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">  <span class="type">static</span> <span class="type">int</span> _l = <span class="number">0</span>;</span><br><span class="line">  <span class="type">static</span> <span class="type">int</span> _r = <span class="number">-1</span>;</span><br><span class="line">  <span class="type">static</span> <span class="type">long</span> <span class="type">long</span> _ans = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(_r &lt; r) _ans += cnt[v[++_r]]++;</span><br><span class="line">  <span class="keyword">while</span>(_l &gt; l) _ans += cnt[v[--_l]]++;</span><br><span class="line">  <span class="keyword">while</span>(_r &gt; r) _ans -= --cnt[v[_r--]];</span><br><span class="line">  <span class="keyword">while</span>(_l &lt; l) _ans -= --cnt[v[_l++]];</span><br><span class="line">  <span class="keyword">return</span> _ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重新初始的图</p>
+<p>合并 b和c成集合B</p>
+<p>重复上面所有操作，直到剩余3个点，B,d,e</p>
+<hr>
+<p>重新初始的图</p>
+<p>合并b,c成集合B, 合并d和e成集合D</p>
+<p>重复上面所有操作，直到剩余3个点，?a,?b,?c,</p>
+<p>我们能到到一个分割值，也能让下一轮的操作合并两个点</p>
+<hr>
+<p>这样我们最终所有操作中最小的分割就是答案</p>
+<h1 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h1><p>对于 每一轮剩余3个点的时候，我们有该轮的初始集合S，和另外两点$p_1,p_2$</p>
+<p>因为合并规则一直是与S距离最大的边，所以$p_1,p_2$ 一定是被分割的，</p>
+<p>虽然因为边的长度可能在操作过程中相等，也就意味着在每一轮操作开始时，甚至$p_1,p_2$ 是哪两个点，是不确定的,(当然我们可以给所有点提前编号，保持即使值相等的点也有一定的偏序关系，来让结果唯一)</p>
+<p>但是可以证明，对于每次计算到剩余3个点时，其中的$p_1,p_2$来说，当前图里面这是这两个点要切割的最小割</p>
+<hr>
+<p>我们把这轮的$(p_1,p_2)$ 命作$(s,t)$</p>
+<p>对于给定图$G$，和通过上述步骤得到的$s,t$</p>
+<blockquote>
+<p>如果两个点之间没有相连，我们在数值上可以看做有一条相连权重为0的边,在下面的计算上没有影响(因为每次取得是最大的), 连通的判断时权重为0视为不连通</p>
+</blockquote>
+<p>割: 把原图分成两个联通块的边集</p>
+<p>$C$是$G$上$s-t$的一个任意的割,即$s,t$在不同连通块</p>
+<p>$CP$是按照上述步骤得到的$s-t$的割</p>
+<p>$W(边集)$ &#x3D; 边集的权重和</p>
+<p>$W(点集A，点v)$ &#x3D; $点v$到$点集A$中所有点的边权和</p>
+<p>要证:$W(C) \ge W(CP)$</p>
+<hr>
+<p>对于上述给定流程$CP$，根据点加入的顺序，命名为$a_1,a_2,a_3…a_{n-1},a_n$, 其中$s &#x3D; a_{n-1},t &#x3D; a_n$</p>
+<p>对于 $i$,如果$a_{&lt; i-1}$和$a_{i}$ 位于 割C的两侧,那么称为$i$为$active$的(简化后面描述)</p>
+<ul>
+<li>我们不用讨论$CP$，因为序列就是$CP$产生的，所有操作都是位于$CP$割的同一连通块</li>
+</ul>
+<p>点集 $A_i &#x3D; 集合(a_1…a_{i-1}) $</p>
+<blockquote>
+<p>也就是$a_i$前面的点</p>
+</blockquote>
+<p>边集 $C_i &#x3D; 集合(边|边的两端均属于集合(a_1…a_i)) ∩ C$ </p>
+<blockquote>
+<p>也就是割边中，端点都在前面$a_1..a_i$ 中</p>
+</blockquote>
+<p>我们要证明对于每一个$active$的$i$, $W(A_i, a_i) \le W(C_i)$, </p>
+<blockquote>
+<p>也就是$a_i$和它之前的点的边权和 小于 割$C$中的两端来自前$a_1 … a_i$的边权和</p>
+</blockquote>
+<p>接下来归纳开始 (归纳的目标和总目标一致)</p>
+<p>初始: 若$i$是最小使得$active$的，那么$W(A_i,a_i) &#x3D; W(C_i)$</p>
+<blockquote>
+<p>因为 说明 前面的边,按照割C，都在同一侧，所以$C_i$中所有的边，都一个顶点是$a_i$</p>
+</blockquote>
+<p>对于$i,j,(i &lt; j)$ 都是$active$相邻</p>
+<blockquote>
+<p>$i$和$j$是active, $i$和$j$之间没有其它$active$的,</p>
+</blockquote>
+<p>$W(A_j,a_j) &#x3D; W(A_i,a_j) + W(A_j - A_i, a_j) $ </p>
+<blockquote>
+<p>直接的拆分点集$A_j$</p>
+</blockquote>
+<p>$\le W(C_i) + W(A_j - A_i, a_j) $ </p>
+<blockquote>
+<p>根据初始条件和归纳,$W(A_i,a_j)\le W(A_i,a_i) \le W(C_i)$ , 前一半不等式是操作过程中每次选最大距离的连通，后一部分是归纳</p>
+</blockquote>
+<p>$&#x3D; W(C_j)$</p>
+<blockquote>
+<p>因为$i$和$j$之间没有其它$active$，所以也就是$i$和$j$之间的点不会与小于$j$的点构成属于$C_u$的边，<br>而对于$W(A_j-A_i,a_j)$的贡献，不会和$C_i$重复因为(不包含$a_j$),</p>
+</blockquote>
+<p>综上</p>
+<p>$W(A_n,a_n) \le W(C_n) &#x3D; W(C)$</p>
+<blockquote>
+<p>左边不等式是归纳的结果，右边是因为所有C中的边且两端的点在所有点中，就是$C$自己</p>
+</blockquote>
+<p>结论:</p>
+<p>也就是说，对于图$G$的$s-t$任何的割$C$，都不小于$t$单独划分出来的边权和</p>
+<p>所以这是一个最小分割</p>
+<hr>
+<p>回到操作过程</p>
+<p>也就是每一轮，都能产生$s-t$分割的最小割，之后的轮次，$s$和$t$就在同一个“连通块”里了</p>
+<p><strong>这里有一点</strong> 实际上再思考仔细一点，这个过程中其实并不满足题意(分成两个)，因为我们很可能把原图分割成了好几个连通块，也就是不止两个。但是因为如果能分割成多个，反向操作，每次最多把两个合成一个，必定最小割是分成两个的。所以得到的答案也一定是割, 保证了正确性</p>
+<p>也就是你合并的s和t可能，它们还并不连通，只不过你从划分上认为属于一块了</p>
+<hr>
+<p>综上，算法正确性证毕</p>
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://basics.sjtu.edu.cn/~dominik/teaching/2016-cs214/presentation-slides/2016-12-06-StoerWagner-BigNews.pdf">https://basics.sjtu.edu.cn/~dominik/teaching/2016-cs214/presentation-slides/2016-12-06-StoerWagner-BigNews.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Stoer%E2%80%93Wagner_algorithm">https://en.wikipedia.org/wiki/Stoer%E2%80%93Wagner_algorithm</a></p>
 
-<p>这样总的时间复杂度还是在<code>O(n^2)</code></p>
-<p>如果可以对一个<code>p</code> 我们的<code>j</code>的范围不再是<code>[1~p-1]</code>，而能更小，那么时间复杂度也就还能下降</p>
-<p>下面假设对给定<code>p</code>最小的分割为<code>m</code>，也就是<code>dp[p][k]</code>的最小值为<code>dp[m][k-1] + cost[m,p-1]</code></p>
-<p><code>_____________m-1|m_________p-1|p___________</code></p>
-<p><code>______n-1|n_____|__________p-1|p_____|_____</code></p>
-<p><code>______n-1|n_____|_____________|___q-1|q____</code></p>
-<p>对于一个<code>q&gt;p</code> 最小的分割为<code>n</code>，也就是<code>dp[q][k]</code>最小值为<code>dp[n][k-1] + cost[n,q-1]</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dp[n][k-1] + cost[n,q-1]</span><br><span class="line">= dp[n][k-1] + cost[n,p-1] + der[n-&gt;q)[p-&gt;q)</span><br><span class="line">&gt;= dp[p][k] + der[n-&gt;q)[p-&gt;q)</span><br><span class="line">= dp[m][k-1]+cost[m,p-1] + der[n-&gt;p)[p-&gt;q)</span><br><span class="line">&gt;= dp[m][k-1]+cost[m,p-1] + der[m-&gt;p)[p-&gt;q)</span><br></pre></td></tr></table></figure>
+      
+    </div>
 
-<p>以上,其中<code>der[base][add]</code>表示在<code>base</code>的基础上再增加<code>add</code>部分的 新增加的<code>cost</code></p>
-<p>即是 在m左侧的最终划分都<code>&gt;=</code>m处的划分，因此 如果在<code>p</code>计算出了<code>m</code>，之后再计算<code>q</code>的分割点时遍历只需要从<code>m-&gt;q</code></p>
-<p><strong>同理</strong>可证当<code>q&lt;p</code>时 更小的值只会在<code>m</code>左侧</p>
-<p>因此 有了这个关系 就可以进行二分搜索,时间复杂度也就降到了<code>O(n log n)</code> [好像也不完全是个这个 估计比这个大一点 因为这样二分以后cost函数的均摊就不是<code>O(1)</code>的样子了]</p>
-<p>实现如下</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX 10000000000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">minn</span><span class="params">(<span class="type">long</span> <span class="type">long</span> v1,<span class="type">long</span> <span class="type">long</span> v2)</span></span>&#123;<span class="keyword">return</span> v1&lt;v2?v1:v2;&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">maxx</span><span class="params">(<span class="type">long</span> <span class="type">long</span> v1,<span class="type">long</span> <span class="type">long</span> v2)</span></span>&#123;<span class="keyword">return</span> v1&gt;v2?v1:v2;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">long</span> <span class="type">long</span> v[<span class="number">100010</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> cnt[<span class="number">100010</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> dp[<span class="number">100010</span>][<span class="number">30</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n,k;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">long</span> <span class="type">long</span> <span class="title">cost</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">  <span class="type">static</span> <span class="type">int</span> _l = <span class="number">0</span>;</span><br><span class="line">  <span class="type">static</span> <span class="type">int</span> _r = <span class="number">-1</span>;</span><br><span class="line">  <span class="type">static</span> <span class="type">long</span> <span class="type">long</span> _ans = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(_r &lt; r) _ans += cnt[v[++_r]]++;</span><br><span class="line">  <span class="keyword">while</span>(_l &gt; l) _ans += cnt[v[--_l]]++;</span><br><span class="line">  <span class="keyword">while</span>(_r &gt; r) _ans -= --cnt[v[_r--]];</span><br><span class="line">  <span class="keyword">while</span>(_l &lt; l) _ans -= --cnt[v[_l++]];</span><br><span class="line">  <span class="comment">// cout&lt;&lt;&quot;[&quot;&lt;&lt;_l&lt;&lt;&quot;,&quot;&lt;&lt;_r&lt;&lt;&quot;]&quot;&lt;&lt;_ans&lt;&lt;endl;</span></span><br><span class="line">  <span class="keyword">return</span> _ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">(<span class="type">const</span> <span class="type">int</span> &amp; kk,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> mathl,<span class="type">int</span> mathr)</span></span>&#123;</span><br><span class="line">  <span class="comment">// cout&lt;&lt;&quot;---------------:&quot;&lt;&lt;l&lt;&lt;&quot; &quot;&lt;&lt;r&lt;&lt;&quot; &quot;&lt;&lt;mathl&lt;&lt;&quot; &quot;&lt;&lt;mathr&lt;&lt;&quot; &quot;&lt;&lt;endl;</span></span><br><span class="line">  <span class="keyword">if</span>(l &gt; r)</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  <span class="type">int</span> j = (l+r)/<span class="number">2</span>;</span><br><span class="line">  <span class="type">int</span> min_pos = mathl;</span><br><span class="line">  dp[j][kk] = MAX;</span><br><span class="line">  <span class="type">int</span> maxi = <span class="built_in">minn</span>(j,mathr);</span><br><span class="line">  <span class="type">int</span> starti = <span class="built_in">maxx</span>(kk<span class="number">-1</span>,mathl);</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="keyword">for</span>(i=starti;i&lt;=maxi;i++)&#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> newv = dp[i][kk<span class="number">-1</span>] + <span class="built_in">cost</span>(i,j<span class="number">-1</span>);</span><br><span class="line">    <span class="comment">// cout&lt;&lt;l&lt;&lt;&quot; &quot;&lt;&lt;r&lt;&lt;&quot; &quot;&lt;&lt;j&lt;&lt;&quot; &quot;&lt;&lt;i&lt;&lt;&quot; &quot;&lt;&lt;newv&lt;&lt;endl;</span></span><br><span class="line">    <span class="keyword">if</span>(newv &lt; dp[j][kk])&#123;</span><br><span class="line">      dp[j][kk] = newv;</span><br><span class="line">      min_pos = i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">solve</span>(kk, l  , j<span class="number">-1</span>, mathl  , min_pos);</span><br><span class="line">  <span class="built_in">solve</span>(kk, j+<span class="number">1</span>, r  , min_pos, mathr);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cin&gt;&gt;n&gt;&gt;k;</span><br><span class="line">  <span class="type">int</span> i,j,o;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;v[i]);</span><br><span class="line"></span><br><span class="line">  dp[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)dp[i][<span class="number">1</span>] = <span class="built_in">cost</span>(<span class="number">0</span>,i<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=k;i++)</span><br><span class="line">    <span class="built_in">solve</span>(i,<span class="number">1</span>,n,<span class="number">1</span>,n);</span><br><span class="line">  cout&lt;&lt;dp[n][k]&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    
+    
+    
 
-<p><a target="_blank" rel="noopener" href="http://codeforces.com/contest/868/submission/31040451">AC</a></p>
-<p><a target="_blank" rel="noopener" href="http://codeforces.com/blog/entry/8219">DP Optimizations</a></p>
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2021-07-20-project-euler218/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/Blog/2021-07-20-project-euler218/" class="post-title-link" itemprop="url">project euler 218 (别写代码用数学)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-07-20 10:37:14" itemprop="dateCreated datePublished" datetime="2021-07-20T10:37:14+08:00">2021-07-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Project-Euler/" itemprop="url" rel="index"><span itemprop="name">Project Euler</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2021-07-20-project-euler218/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021-07-20-project-euler218/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>1 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="http://projecteuler.net/index.php?section=problems&id=218">原题链接</a></p>
+<p>直角三角形$(a,b,c)$,其中$c$为斜边</p>
+<p>perfect定义</p>
+<ol>
+<li>边互质$gcd(a,b) &#x3D; 1$</li>
+<li>斜边是平方数$c &#x3D; x^2$</li>
+</ol>
+<p>super-perfect</p>
+<ol>
+<li>perfect</li>
+<li>直角三角形面积是6和28的倍数</li>
+</ol>
+<p>求</p>
+<p>$c \le 10^{16}$ 内,有多少perfect的不是super-perfect</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>前面的PE我们学习到，$gcd(a,b)&#x3D;1$ 的直角三角形可以唯一表示成</p>
+<p>$(a,b,c) &#x3D; (m^2-n^2,2mn,m^2+n^2)$</p>
+<p>其中两个直角边可以对换</p>
+<p>其中 $gcd(m,n) &#x3D; 1, (m+n) &#x3D; 1 (\bmod 2)$</p>
+<p>$lcm(6,28) &#x3D; 84$</p>
+<hr>
+<p>简化成</p>
+<p>$m^2+n^2 &#x3D; c &#x3D; x^2 \le 10^{16} $</p>
+<p>求 $mn(m^2-n^2) !&#x3D; 0 (\bmod 84)$ 的个数</p>
+<hr>
+<p>注意到 这里又是一个直角三角形公式</p>
+<p>$ordered(m,n,x) &#x3D; ordered(2uv,u^2-v^2,u^2+v^2)$</p>
+<hr>
+<p>即</p>
+<p>$u &gt; v, gcd(u,v) &#x3D; 1, u+v &#x3D; 1 (\bmod 2)$</p>
+<p>$u^2+v^2 \le 10^{8}$</p>
+<p>$ordered(m,n) &#x3D; ordered(2uv,u^2-v^2) $</p>
+<p>求 $mn(m^2-n^2) !&#x3D; 0 (\bmod 84)$ 的个数</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>直接翻译很好写了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">perfect_but_not_super_perfect = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gcd</span>(<span class="params">a,b</span>):</span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">return</span> gcd(b,a%b)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">10</span>**<span class="number">4</span>):</span><br><span class="line">    <span class="keyword">if</span> v % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;b:&quot;</span>, v)</span><br><span class="line">    <span class="keyword">for</span> u <span class="keyword">in</span> <span class="built_in">range</span>(v+<span class="number">1</span>,<span class="number">10</span>**<span class="number">4</span>,<span class="number">2</span>):</span><br><span class="line">        <span class="keyword">if</span> gcd(u,v) != <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> u**<span class="number">2</span>+v**<span class="number">2</span> &gt; <span class="number">10</span>**<span class="number">8</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        m,n = u**<span class="number">2</span>-v**<span class="number">2</span>,<span class="number">2</span>*u*v</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> n &gt; m:</span><br><span class="line">            m,n=n,m</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (m*n*(m**<span class="number">2</span>-n**<span class="number">2</span>)) % <span class="number">84</span> != <span class="number">0</span>:</span><br><span class="line">            perfect_but_not_super_perfect += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;ans&quot;</span>,perfect_but_not_super_perfect )</span><br></pre></td></tr></table></figure>
+
+<p>时间</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">real    0m30.195s</span><br><span class="line">user    0m30.195s</span><br><span class="line">sys     0m0.000s</span><br></pre></td></tr></table></figure>
+
+<h1 id="不要到此为止-上数学"><a href="#不要到此为止-上数学" class="headerlink" title="不要到此为止 上数学"></a>不要到此为止 上数学</h1><p>就完了吗</p>
+<p>它要是个长长的数字可能也没这篇文章了，因为PE的 one-minute rule 已经满足了</p>
+<p>但是它的答案是0那就激起了推导的兴趣</p>
+<h2 id="命题"><a href="#命题" class="headerlink" title="命题"></a>命题</h2><p>$u &gt; v, gcd(u,v) &#x3D; 1, u+v &#x3D; 1 (\bmod 2)$</p>
+<p>$(m,n) &#x3D; (2uv,u^2-v^2) $</p>
+<p>则 $mn(m^2-n^2) &#x3D; 0 (\bmod 84)$</p>
+<p>这里我们没有范围限制，考虑模运算的性质，没有了大小顺序正负</p>
+<h3 id="代入"><a href="#代入" class="headerlink" title="代入"></a>代入</h3><p>$2uv(u^2-v^2)(6u^2v^2-u^4-v^4) &#x3D; 0 (\bmod 84)$</p>
+<p>$uv(u^2-v^2)(6u^2v^2-u^4-v^4) &#x3D; 0 (\bmod 42)$</p>
+<p>$42 &#x3D; 2 \cdot 3 \cdot 7$</p>
+<h3 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h3><p>2 显然，因为$u+v&#x3D;1(\bmod 2)$ , u 和 v一奇一偶</p>
+<p>3 如果u和v其中有3的倍数，那么是3的倍数，如果均不是3的倍数,因为 $1^2&#x3D;2^2&#x3D;1 (\bmod 3)$ , 所以 $u^2-v^2 &#x3D; 0 (\bmod 3)$</p>
+<p>7 如果u和v其中有7的倍数，那么是7的倍数，否则都不是7的倍数，还是写一点代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> u <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">7</span>):</span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">7</span>):</span><br><span class="line">        <span class="built_in">print</span>(u,v,((u**<span class="number">2</span>-v**<span class="number">2</span>)*(<span class="number">6</span>*u*u*v*v-u**<span class="number">4</span>-v**<span class="number">4</span>))%<span class="number">7</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出都是0 得证</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2021-06-12-project-euler216/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/Blog/2021-06-12-project-euler216/" class="post-title-link" itemprop="url">project euler 216 (质数判别)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-06-12 10:37:14" itemprop="dateCreated datePublished" datetime="2021-06-12T10:37:14+08:00">2021-06-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Project-Euler/" itemprop="url" rel="index"><span itemprop="name">Project Euler</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2021-06-12-project-euler216/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021-06-12-project-euler216/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>3.4k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>3 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>1&lt;&#x3D; n &lt;&#x3D;50’000’000</p>
+<p>求让 $2n^2-1$ 为质数的有多少</p>
+<h1 id="尝试"><a href="#尝试" class="headerlink" title="尝试"></a>尝试</h1><h2 id="裸暴力"><a href="#裸暴力" class="headerlink" title="裸暴力"></a>裸暴力</h2><p>显然我们枚举n,然后每个计算到 $\sqrt{n}$, 时间复杂度$O(n^{1.5})$</p>
+<p>在n取这么大,要大概一个小时, 显然不满足pe的期望1min</p>
+<h2 id="优化1"><a href="#优化1" class="headerlink" title="优化1"></a>优化1</h2><p>显然如果 $ 2n^2-1 &#x3D; 0 (\bmod b)$</p>
+<p>那么有 $ 2(b+n)^2-1 &#x3D; 0 (\bmod b)$, 且这是充要的</p>
+<p>这有两个好的性质,并不要求$2n^2-1$是质数或者合数</p>
+<p>对于给定b总能找到一个小于b的n</p>
+<hr>
+<p>看上去很美好,而实际操作上,也能降低一定的复杂度,不过这个方法空间要求很大,而上面的暴力是O(1)空间</p>
+<p>其2每次进行筛的时候也不算快,也有不少重复筛的</p>
+<h2 id="优化2"><a href="#优化2" class="headerlink" title="优化2"></a>优化2</h2><p>我们存不下$2n^2-1$的质数,但是可以预运算$\sqrt{2n^2-1}$的质数 进行一定的提速</p>
+<h1 id="如何判断质数"><a href="#如何判断质数" class="headerlink" title="如何判断质数"></a>如何判断质数</h1><h2 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h2><p>裸暴力,从2到开根</p>
+<h2 id="Level-2"><a href="#Level-2" class="headerlink" title="Level 2"></a>Level 2</h2><p>众所周知 费马小定理$a^{p-1} &#x3D; 1 (\bmod p), gcd(a,p) &#x3D; 1$</p>
+<p>当然这个表达式 p是质数一定成立,但是成立并不一定是质数</p>
+<h2 id="Level-3"><a href="#Level-3" class="headerlink" title="Level 3"></a>Level 3</h2><p>尝试多个a的费马小定理,</p>
+<p>依然是”概率”运气的判断,</p>
+<p>依然可能表达式成立,但p不是质数</p>
+<h2 id="Level-4-Miller-Rabin"><a href="#Level-4-Miller-Rabin" class="headerlink" title="Level 4 Miller-Rabin"></a>Level 4 Miller-Rabin</h2><p>把费马小定理的$p-1$拆解成$p-1 &#x3D; 2^k (2m+1), m\ge 0$</p>
+<p>也就是 2幂次和奇数的乘积</p>
+<p>如果p是质数,我们有 $2^{2^k(2m+1)} &#x3D; 1 (\bmod p)$</p>
+<p>也就是 $2^{2^{k-1}(2m+1)} &#x3D; \pm 1 (\bmod p)$</p>
+<p>如果 $2^{2^{k-1}(2m+1)} &#x3D; 1 (\bmod p)$</p>
+<p>那么 $2^{2^{k-2}(2m+1)} &#x3D; \pm 1 (\bmod p)$</p>
+<p>同样,我们可以尝试多个a</p>
+<p>这样的话”运气”能好很多,本身还是概率的做法</p>
+<h2 id="Level-5"><a href="#Level-5" class="headerlink" title="Level 5"></a>Level 5</h2><p><a target="_blank" rel="noopener" href="http://miller-rabin.appspot.com/">http://miller-rabin.appspot.com/</a></p>
+<p>我们用别人的答案!</p>
+<p>Jim Sinclair证明了如果a的取值把下面都测试一遍,那么在 $p&lt;2^{64}$时,都是能判断质数的!</p>
+<p>2, 325, 9375, 28178, 450775, 9780504, 1795265022</p>
+<p>还是Miller-Rabin,不过我们使用了已有成果,(好奇是证明,还是暴力枚举,毕竟是2011-04-20的事情了</p>
+<h2 id="Level-6-AKS"><a href="#Level-6-AKS" class="headerlink" title="Level 6 AKS"></a>Level 6 AKS</h2><p>上面要么慢,要么基于概率(或有限范围的历史答案)</p>
+<p>$(x-a)^n &#x3D; x^n-a (\bmod n), gcd(\forall a,n) &#x3D; 1$,</p>
+<p>n是质数时,根据2项式定理显然,</p>
+<p>如果n 合数, $(X-a)^n - X^n-a $ 看成 $X$为变量, 其余部分为系数</p>
+<p>那么 $X^i$的系数为$C(n,i) a^{n-i}$</p>
+<p>把合数表示成其构成的质数相乘$n &#x3D; p_1^m \cdots$, 那么2项式中$C(n,p_1) \neq 0 (\bmod p_1^m )$,因为$C(n,p_1) &#x3D; \frac{n!}{p!(n-p)!}&#x3D; \frac{(n-p+1)…(n)}{1…p}$ 分子只有n是p的倍数,分母只有p是n的倍数</p>
+<p>所以$C(n,p_1)a^{n-p_1} \neq 0 (\bmod p_1^m)$ (因为a和n互质,不会包含因子$p_1$) 也说明 $C(n,p_1)a^{n-p_1} \neq 0 (\bmod n)$</p>
+<p>注意我们$(X-a)^n - X^n-a $ 看成 $X$为变量, 其余部分为系数,后就是一个 f(X)的表达式, 有系数非零</p>
+<p>例如 n &#x3D; 4</p>
+<p>$(x+a)^4 &#x3D; x^4+C(4,1)ax^3+C(4,2)a^2x^2+C(4,3)a^3x+a^4 &#x3D; x^4 + C(4,2)a^2x^2+a^4 (\bmod 4)$</p>
+<p>$(x+a)^4 -(x^4+a) &#x3D; 6a^2x^2+a^4-a (\bmod 4)$</p>
+<p>想存在$x,gcd(a,4) &#x3D; 1$,使得 $6a^2x^2+a^4-a \neq (\bmod 4)$, 我们的确能找到 a&#x3D;1,x&#x3D;1,有些地方说,</p>
+<p>既然是关于x有系数的表达式,或者项数差异,说明它在模意义下非恒为零??? 这是模运算的什么定理吗</p>
+<blockquote>
+<p>小证? 写成 系数乘上 x的从1取到n的范得Vandermonde 矩阵, 系数和结果都对n取mod,所以只能全是零才有解? 甚至如果希望陪结果,可以反向推?<strong>脑补证明的感觉可能有误</strong>. 比如如果要按mod算的话,那vandermonde矩阵的n列就全是0和部分 位置XD</p>
+</blockquote>
+<p>但是要中间的系数全是n的倍数上面已经证明</p>
+<p>有的地方说主要是等式而不是值?</p>
+<p>TODO</p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>$(n-1)! &#x3D; -1 (\bmod p)$ 当且仅当 p为质数,陶哲轩的书上也有这个</p>
+<p>效率更差, 在一些特定场景有用</p>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line">typedef uint64_t ull;</span><br><span class="line">#define rep(i,a,n) for (ll i=a;i&lt;n;i++)</span><br><span class="line"></span><br><span class="line">// overflow</span><br><span class="line">ll quick_p(__int128_t b, ll p,const ll mod)&#123;</span><br><span class="line">  __int128_t r = 1;</span><br><span class="line">  while(p)&#123;</span><br><span class="line">    if(p%2)(r*=b)%=mod;</span><br><span class="line">    (b*=b)%=mod;</span><br><span class="line">    p/=2;</span><br><span class="line">  &#125;</span><br><span class="line">  return r%mod;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ll mr(ll base,ll v)&#123;</span><br><span class="line">  if(base &gt; v)return true;</span><br><span class="line">  ll startp = v-1;</span><br><span class="line">  while(startp%2 == 0)startp&gt;&gt;=1;</span><br><span class="line">  ll p = startp;</span><br><span class="line">  __int128_t r = quick_p(base,p,v);</span><br><span class="line">  while(p != v-1)&#123;</span><br><span class="line">    if(r == v-1)return true;</span><br><span class="line">    if(r == 1)return p == startp;</span><br><span class="line">    p*=2;</span><br><span class="line">    // overflow</span><br><span class="line">    (r*=r)%=v;</span><br><span class="line">  &#125;</span><br><span class="line">  return false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool is_prime_64(ll v)&#123;</span><br><span class="line">  if(v &lt; 2)return false;</span><br><span class="line">  if(v &lt; 4)return true;</span><br><span class="line">  // %6 = 1 or 5</span><br><span class="line">  if((v % 6) % 4 != 1)return false;</span><br><span class="line">  ll test_g[] = &#123;2, 325, 9375, 28178, 450775, 9780504, 1795265022&#125;;</span><br><span class="line">  rep(i,0,7)&#123;</span><br><span class="line">    if(!(mr(test_g[i],v)))return false;</span><br><span class="line">  &#125;</span><br><span class="line">  return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool isp(ll v)&#123;</span><br><span class="line">  rep(i,2,v)&#123;</span><br><span class="line">    if(i*i&gt;v)return true;</span><br><span class="line">    if(v%i == 0)return false;</span><br><span class="line">  &#125;</span><br><span class="line">  return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">  ll ans = 0;</span><br><span class="line">  rep(i,2,50&#x27;000&#x27;000+1)&#123;</span><br><span class="line">    if(i % 500&#x27;000 == 0)&#123;</span><br><span class="line">      printf(&quot;i:%lld\n&quot;,i);</span><br><span class="line">    &#125;</span><br><span class="line">    ans += is_prime_64(2*i*i-1);</span><br><span class="line">  &#125;</span><br><span class="line">  printf(&quot;ans:%lld\n&quot;,ans);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://brilliant.org/wiki/prime-testing/">https://brilliant.org/wiki/prime-testing/</a></p>
+<p><a target="_blank" rel="noopener" href="https://primes.utm.edu/prove/prove2_3.html">https://primes.utm.edu/prove/prove2_3.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cse.iitk.ac.in/users/manindra/algebra/primality_v6.pdf">2002 primes is P</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cs.tau.ac.il/~amnon/Classes/2019-Derandomization/Lectures/Lecture7-AKS-All.pdf">http://www.cs.tau.ac.il/~amnon/Classes/2019-Derandomization/Lectures/Lecture7-AKS-All.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/AKS_primality_test">https://en.wikipedia.org/wiki/AKS_primality_test</a></p>
+<p><a target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/2155958/lemma-2-1-of-aks-algorithm">系数与完整表达式的疑问也有人问过</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.sciencenet.cn/blog-3224443-1115018.html">http://blog.sciencenet.cn/blog-3224443-1115018.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2021-05-31-project-euler798/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/Blog/2021-05-31-project-euler798/" class="post-title-link" itemprop="url">project euler 709 (OEIS A000111)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-05-31 10:37:14" itemprop="dateCreated datePublished" datetime="2021-05-31T10:37:14+08:00">2021-05-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Project-Euler/" itemprop="url" rel="index"><span itemprop="name">Project Euler</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2021-05-31-project-euler798/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021-05-31-project-euler798/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>787</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>1 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>每次新增一个塑料袋</p>
+<p>可以把偶数个之前的塑料袋放入这个新增的塑料袋</p>
+<p>求n次后 的状态数</p>
+<p>f(4)&#x3D;5</p>
+<p>f(8)&#x3D;1385</p>
+<p>求<code>f(24680)%1020202009</code></p>
+<h1 id="打表"><a href="#打表" class="headerlink" title="打表"></a>打表</h1><p>显然 OEIS A000111</p>
+<h1 id="DP-n-3"><a href="#DP-n-3" class="headerlink" title="DP(n^3)"></a>DP(n^3)</h1><p><code>dp[i][j] = </code> 第i步,剩余j个袋子</p>
+<p><code>dp[i][j] = dp[i-1][j-1+d] * c(j-1+d,d), d = 0..i-j, step = 2,(i-j)%2=0</code></p>
+<p>试图优化,内部运算也没有摆脱<code>O(n^3)</code>, n在2w 搞不了</p>
+<h1 id="DP-n-2"><a href="#DP-n-2" class="headerlink" title="DP(n^2)"></a>DP(n^2)</h1><p><code>f(n+1) = </code></p>
+<p>0个放袋子n+1里<code>c(n,0) * f(0) * f(n)</code></p>
+<p>2个放袋子n+1里<code>c(n,2) * f(2) * f(n-2)</code> ,我们 不关心 这2个 和 这n-2个 内部的关系,而只关心谁在n+1袋子里,谁在袋子外,有了<code>c(n,2)</code>, 于是 这2个和n-2互不干扰,各自的结构只与其内部相关,所以方案数也就是f(2)和f(n-2)</p>
+<p>2k个放袋子n+1里<code>c(n,2k) * f(2k) * f(n-2k)</code> ,我们 不关心 这2k个 和 这n-2k个 内部的关系,而只关心谁在n+1袋子里,谁在袋子外,有了<code>c(n,2k)</code>, 于是 这2k个和n-2k互不干扰,各自的结构只与其内部相关,所以方案数也就是f(2k)和f(n-2k)</p>
+<p><code>f(n+1) = sum( c(n,2k) * f(2k) * f(n-2k) ), k = 0..floor(n/2)</code></p>
+<p>令<code>g(n) = f(n)/(n!)</code>, 其实上面dp我也用了这个技巧,但是还是有剩余的阶乘,无法简化到递推</p>
+<p><code>g(n+1) * (n+1) = sum( g(2k) * g(n-2k)), k = 0..floor(n/2)</code></p>
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://hiragn.hatenablog.com/entry/2020/12/01/031135">https://hiragn.hatenablog.com/entry/2020/12/01/031135</a></p>
+<p><a target="_blank" rel="noopener" href="https://gist.github.com/hrgnz/10c4c3afb5a332c8ad3428327e6459c0#file-pe709a-nb">https://gist.github.com/hrgnz/10c4c3afb5a332c8ad3428327e6459c0#file-pe709a-nb</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2021-05-30-project-euler622/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/Blog/2021-05-30-project-euler622/" class="post-title-link" itemprop="url">project euler 622 (函数周期)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-05-30 10:37:14" itemprop="dateCreated datePublished" datetime="2021-05-30T10:37:14+08:00">2021-05-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Project-Euler/" itemprop="url" rel="index"><span itemprop="name">Project Euler</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2021-05-30-project-euler622/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021-05-30-project-euler622/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>497</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>1 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="完美洗牌"><a href="#完美洗牌" class="headerlink" title="完美洗牌"></a>完美洗牌</h1><p>AAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBB</p>
+<p>变为</p>
+<p>ABABABABABABABABABABABABABABABABAB</p>
+<h1 id="次数"><a href="#次数" class="headerlink" title="次数"></a>次数</h1><p>52张需要8次变回原型</p>
+<p>需要8次的方案的张数和为412</p>
+<p>问</p>
+<p>需要60次的方案的张数和是多少</p>
+<h1 id="解"><a href="#解" class="headerlink" title="解"></a>解</h1><p>首先 估计已经到2的60次方左右的搜索范围,暴力不可取</p>
+<p>递推</p>
+<p><code>f(i,n) = (i%n)*2+int(i&gt;=n)</code></p>
+<p>然后我们分开写</p>
+<p><code>f(i,n) = 2i</code> (i &lt; n)</p>
+<p><code>f(i,n) = 2(i-n)+1</code> (i &gt;&#x3D; n)</p>
+<p>变形</p>
+<p><code>f(i,n) = 2i - (2n-1)</code> (i &gt;&#x3D; n)</p>
+<p>合并</p>
+<p><code>f(i,n) = (2i)%(2n-1)</code> 这里就很神奇了</p>
+<p>相当于每个值的变化都是在乘2,又膜运算有合并性, 所以任何值a的k次后的值为 <code>(a * 2^k) % (2n-1)</code></p>
+<p>所以要所有都会到原位其实就是 任意 a, <code>a = (a * 2^k) % (2n-1)</code></p>
+<p>a取1,也是最大循环节</p>
+<p>题目变成 $(2^60-1)%(2n-1) &#x3D; 0$ 且 $(2^(&lt;60)-1)%(2n-1) !&#x3D; 0$</p>
+<p>质因数分解一下就好</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>关键在 int(i&gt;&#x3D;n)的那个表达式转换成纯的模运算表达式,后面都好做了</p>
 
       
     </div>
@@ -402,7 +1036,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/Blog/page/17/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/Blog/">1</a><a class="page-number" href="/Blog/page/3/">3</a><a class="page-number" href="/Blog/page/11/">11</a><a class="page-number" href="/Blog/page/15/">15</a><a class="page-number" href="/Blog/page/17/">17</a><span class="page-number current">18</span>
+    <a class="extend prev" rel="prev" href="/Blog/page/17/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/Blog/">1</a><a class="page-number" href="/Blog/page/3/">3</a><a class="page-number" href="/Blog/page/11/">11</a><a class="page-number" href="/Blog/page/15/">15</a><a class="page-number" href="/Blog/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/Blog/page/19/">19</a><a class="page-number" href="/Blog/page/21/">21</a><a class="page-number" href="/Blog/page/25/">25</a><a class="page-number" href="/Blog/page/33/">33</a><a class="page-number" href="/Blog/page/35/">35</a><a class="extend next" rel="next" href="/Blog/page/19/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 </div>

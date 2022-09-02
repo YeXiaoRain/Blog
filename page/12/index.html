@@ -224,7 +224,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2020-04-25-cf1340c/">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-05-24-CF1679E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
@@ -242,7 +242,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2020-04-25-cf1340c/" class="post-title-link" itemprop="url">Codeforces 1340 C, 入门bfs</a>
+          <a href="/Blog/2022-05-24-CF1679E/" class="post-title-link" itemprop="url">Codeforces 1679E(sosDP,子集和DP,动态规划,贡献统计)</a>
         </h2>
 
         <div class="post-meta-container">
@@ -253,14 +253,14 @@
       </span>
       <span class="post-meta-item-text">發表於</span>
 
-      <time title="創建時間：2020-04-25 10:37:14" itemprop="dateCreated datePublished" datetime="2020-04-25T10:37:14+08:00">2020-04-25</time>
+      <time title="創建時間：2022-05-24 10:24:00" itemprop="dateCreated datePublished" datetime="2022-05-24T10:24:00+08:00">2022-05-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -281,8 +281,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/Blog/2020-04-25-cf1340c/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-04-25-cf1340c/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Blog/2022-05-24-CF1679E/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-05-24-CF1679E/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -293,7 +293,192 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>2.2k</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>4 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1679/problem/E">https://codeforces.com/contest/1679/problem/E</a></p>
+<p>长度n,前17个小写字母组成的字符串s,其中有?表示t中任意字符</p>
+<p>q次询问,每次给17个字母中的一个子集,问把?所有填子集的填法中,原串的回文子串个数和, 答案mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e3</p>
+<p>t 17</p>
+<p>q 2e5</p>
+<p>2s</p>
+<p>256MB</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>首先看到q 2e5, 和 t 17, 因为2^17 &#x3D;&#x3D; 131072,其实可以变成求所有方案的答案</p>
+<p>统计所有回文子串 的效率最好就是选取中心,再枚举长度</p>
+<p>那么这个题也是这样做, 枚举中心向两边搜索</p>
+<p>其中注意到的是,当选定中心后,如果对称位置上有一个问号一个确定字符,那么这个问号必定填这个字符</p>
+<p>如果两个都是问号,那么自由度+1, 它</p>
+<p>如果对称都填了但是不一样,那么到此结束</p>
+<p>也就是n方可以统计 <code>cnt[必要字符bitmask][自由度] = 次数</code></p>
+<p>那么 每次询问bitmask 是 M 的话</p>
+<p><code>ans[M] = sum &#123; cnt[m 是M的子集][i = 0..] * size(M)^i &#125;</code></p>
+<p>那么问题来了, 朴素计算我必定超时, 但是我不知道如何dp, 看Codeforces的群里有人说sosdp</p>
+<h2 id="SOSDP-子集和DP"><a href="#SOSDP-子集和DP" class="headerlink" title="SOSDP 子集和DP"></a>SOSDP 子集和DP</h2><p>$F[mask] &#x3D;\sum_{i \in mask}A[i]$</p>
+<h3 id="暴力枚举-O-4-n"><a href="#暴力枚举-O-4-n" class="headerlink" title="暴力枚举 $O(4^n)$"></a>暴力枚举 $O(4^n)$</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; N)&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; N)&#123; <span class="comment">// 枚举 mask, 检测是否是它的子集</span></span><br><span class="line">    <span class="keyword">if</span>((i&amp;mask) == i) F[mask] += A[i];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="枚举子集和-O-3-n"><a href="#枚举子集和-O-3-n" class="headerlink" title="枚举子集和$O(3^n)$"></a>枚举子集和$O(3^n)$</h3><p>子集遍历</p>
+<p>也可以dfs,当然dfs会多函数调用和堆栈 比如mask &#x3D; 111, i依次为 111,110,101,100,011,010,001,000, 注意到的是mask中间穿插0对应的就是i对应位置穿插0,看起来就像每次<code>-1</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; N)&#123;</span><br><span class="line">  F[mask] = A[<span class="number">0</span>]; <span class="comment">// 所有集合包含空集 空集合也作为停止条件</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = mask;i;i = (i<span class="number">-1</span>)&amp;mask)&#123; <span class="comment">// 这就是传说中的二进制枚举子集 , </span></span><br><span class="line">    F[mask] += A[i];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SOSdp-O-n2-n"><a href="#SOSdp-O-n2-n" class="headerlink" title="SOSdp $O(n2^n)$"></a>SOSdp $O(n2^n)$</h3><p><code>dp[mask][i]</code> 表示 高位和mask一致, 低<code>[0..i]</code>位所有方案的和</p>
+<p><code>dp[10110][2] = A[10000]+A[10010]+A[10100]+A[10110]</code></p>
+<p>状态转移</p>
+<p>第i位为0时,<code>dp[mask][i] = dp[mask][i-1]</code></p>
+<p>第i位为1时,<code>dp[mask][i] = dp[mask][i-1] + dp[mask xor (1 &lt;&lt; i)][i-1]</code></p>
+<p>这样变成递推 或者记忆化搜索,可以 $O(n2^n)$ 完成</p>
+<p>上面合并一下变成,<code>dp[mask][i] = dp[mask][i-1] + (mask &amp; (1 &lt;&lt; i)?dp[mask xor (1 &lt;&lt; i)][i-1]:0)</code></p>
+<p>注意到<code>i</code>依赖于<code>i-1</code>还可以滚动数组降低空间</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span>&lt;&lt;N) f[mask] = A[mask];</span><br><span class="line"><span class="built_in">rep</span>(i,<span class="number">0</span>,N)&#123;</span><br><span class="line">  <span class="comment">// 这里不需要从大到小, 因为dp[mask]已经初始化了,只会更新1 &lt;&lt; i上为1的,而更新的来源是1 &lt;&lt; i上不是1的</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; N)&#123;</span><br><span class="line">    <span class="keyword">if</span>(mask &amp; (<span class="number">1</span> &lt;&lt; i)) f[mask]+=f[mask ^ (<span class="number">1</span> &lt;&lt; i)];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>我的暴力的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ans[mask] = <span class="number">0</span>;</span><br><span class="line">sz = <span class="built_in">bitcount</span>(mask)</span><br><span class="line"><span class="built_in">rep</span>(qmark,<span class="number">0</span>,<span class="number">501</span>)&#123; <span class="comment">// 自由的问号个数</span></span><br><span class="line">  ti = <span class="built_in">pow</span>(sz,qmark)</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = mask;i;i = (i<span class="number">-1</span>)&amp;mask)&#123;</span><br><span class="line">    ans[mask] += cnt[i][qmark] * ti</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是$O(n 3^{|t|})$ 的复杂度 肯定过不了</p>
+<p>通过sosdp降低到$O(n t 2^{|t|})$ 虽然降低了不少,但是依然过不了</p>
+<p>这里<code>dp</code> 改一个方式设计, 变成贡献统计</p>
+<p>先交换一下循环层级</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ans[mask] = <span class="number">0</span>;</span><br><span class="line">sz = <span class="built_in">bitcount</span>(mask)</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = mask;i;i = (i<span class="number">-1</span>)&amp;mask)&#123;</span><br><span class="line">  <span class="built_in">rep</span>(qmark,<span class="number">0</span>,<span class="number">501</span>)&#123;</span><br><span class="line">    ans[mask] += cnt[i][qmark] * <span class="built_in">pow</span>(sz,qmark)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为<code>&#123;i,qmark&#125;</code>中i是mask的子集,而<code>&#123;i,qmark&#125;</code>对mask 的贡献来讲 只与<code>bitcount(mask)</code> 有关,与<code>mask</code> 具体无关</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">rep(i,0,(1 &lt;&lt; N))&#123;</span><br><span class="line">  rep(sz,1,17+1)&#123;</span><br><span class="line">    rep(qmark,0,501)&#123;</span><br><span class="line">      cost[i][sz] += cnt[i][qmark] * pow(sz,qmark);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">ans[mask] = 0;</span><br><span class="line">sz = bitcount(mask)</span><br><span class="line">// sosdp 优化掉</span><br><span class="line">for(int i = mask;i;i = (i-1)&amp;mask)&#123;</span><br><span class="line">  ans[mask] += cost[i][sz];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面得到优化了, 但上面看起来复杂度并没有变好</p>
+<p>但既然都说道贡献统计了,就去看贡献来源</p>
+<p>在我们初始找回文时<code>[i...j]</code> 如果是一个回文,它的必须字符集为mask,自由度为qmark</p>
+<p>那么</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rep</span>(sz,<span class="number">1</span>,<span class="number">17</span>+<span class="number">1</span>)&#123;</span><br><span class="line">  cost[mask][sz] += <span class="built_in">pow</span>(sz,qmark);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样 初始化就变成$O(|t| n^2)$</p>
+<hr>
+<p>综上 $O(初始化幂次 |t|n + 初始化贡献 |t| n^2 + 初始化答案 |t|^2 2^{|t|} + 查询 |t|q )$</p>
+<p>注意到 题目要统计 所有字符串个数,也就是说 同一个位置的回文串 在不同字符串中出现,要多次统计</p>
+<p>所以</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rep</span>(sz,<span class="number">1</span>,<span class="number">17</span>+<span class="number">1</span>)&#123;</span><br><span class="line">  cost[mask][sz] += <span class="built_in">pow</span>(sz,qmark) * <span class="built_in">pow</span>(sz,total qmark - used qmark);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1679/submission/158244316">https://codeforces.com/contest/1679/submission/158244316</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> t = <span class="number">17</span>;</span><br><span class="line"><span class="type">char</span> s[<span class="number">1010</span>]; <span class="comment">// 读入</span></span><br><span class="line"><span class="type">char</span> s2[<span class="number">2010</span>]; <span class="comment">// 插入井号简化搜索</span></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line">ll p[t+<span class="number">10</span>][<span class="number">1010</span>]; <span class="comment">// 幂次预处理</span></span><br><span class="line">ll cost[(<span class="number">1</span>&lt;&lt;t)+<span class="number">10</span>][t+<span class="number">10</span>]; <span class="comment">// 具体的值</span></span><br><span class="line">ll ans[(<span class="number">1</span>&lt;&lt;t)+<span class="number">10</span>][t+<span class="number">10</span>]; <span class="comment">// 由具体值的子集和的答案</span></span><br><span class="line"><span class="type">char</span> query[t+<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,t+<span class="number">1</span>)&#123;</span><br><span class="line">    p[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(pwr,<span class="number">1</span>,<span class="number">1000</span>+<span class="number">1</span>)&#123;</span><br><span class="line">      p[i][pwr] = p[i][pwr<span class="number">-1</span>]*i%MOD;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s);</span><br><span class="line">  <span class="type">int</span> qtotal = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) qtotal += s[i] == <span class="string">&#x27;?&#x27;</span>;</span><br><span class="line">  <span class="comment">// 字符两两间插入井号方便处理奇偶</span></span><br><span class="line">  s2[<span class="number">0</span>] = s[<span class="number">0</span>];</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">    s2[i*<span class="number">2</span><span class="number">-1</span>] = <span class="string">&#x27;#&#x27;</span>;</span><br><span class="line">    s2[i*<span class="number">2</span>] = s[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 中心</span></span><br><span class="line">  <span class="built_in">rep</span>(c,<span class="number">0</span>,n*<span class="number">2</span><span class="number">-1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> mask = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> qmark = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> qcnt = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(l,<span class="number">0</span>,n*<span class="number">2</span><span class="number">-1</span>)&#123; <span class="comment">// 长度</span></span><br><span class="line">      <span class="type">int</span> il = c-l;</span><br><span class="line">      <span class="type">int</span> ir = c+l;</span><br><span class="line">      <span class="keyword">if</span>(il &lt; <span class="number">0</span> || ir &gt;= n*<span class="number">2</span><span class="number">-1</span>)<span class="keyword">break</span>;</span><br><span class="line">      qcnt += s2[il] == <span class="string">&#x27;?&#x27;</span>;</span><br><span class="line">      qcnt += il != ir &amp;&amp; s2[ir] == <span class="string">&#x27;?&#x27;</span>;</span><br><span class="line">      <span class="keyword">if</span>(s2[il] == <span class="string">&#x27;#&#x27;</span>)<span class="keyword">continue</span>; <span class="comment">// 不贡献的</span></span><br><span class="line">      <span class="keyword">if</span>(s2[il] == s2[ir])&#123;</span><br><span class="line">        <span class="keyword">if</span>(s2[il] == <span class="string">&#x27;?&#x27;</span>)&#123;</span><br><span class="line">          qmark++;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123; <span class="comment">// 不等</span></span><br><span class="line">        <span class="keyword">if</span>(s2[il] == <span class="string">&#x27;?&#x27;</span>)&#123;</span><br><span class="line">          mask |= (<span class="number">1</span> &lt;&lt; (s2[ir] - <span class="string">&#x27;a&#x27;</span>));</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(s2[ir] == <span class="string">&#x27;?&#x27;</span>)&#123;</span><br><span class="line">          mask |= (<span class="number">1</span> &lt;&lt; (s2[il] - <span class="string">&#x27;a&#x27;</span>));</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123; <span class="comment">// 不同的字符</span></span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 贡献统计</span></span><br><span class="line">      <span class="built_in">rep</span>(sz,<span class="number">1</span>,<span class="number">17</span>+<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="comment">// 不同字符串 同一个位置回文串的贡献要多次统计 所以要乘上 其余位置是问号的所有放入方案 让此处的贡献倍数 sz**(qtotal - qcnt)</span></span><br><span class="line">        (cost[mask][sz] += p[sz][qmark] * p[sz][qtotal - qcnt] % MOD )%=MOD;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// sosdp</span></span><br><span class="line">  <span class="built_in">rep</span>(sz,<span class="number">1</span>,t+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; t)&#123;</span><br><span class="line">      ans[mask][sz] = cost[mask][sz];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,t)&#123;</span><br><span class="line">      <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span> &lt;&lt; t)&#123;</span><br><span class="line">        <span class="keyword">if</span>(mask &amp; (<span class="number">1</span> &lt;&lt; i)) (ans[mask][sz] += ans[mask ^ (<span class="number">1</span> &lt;&lt; i)][sz])%=MOD;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// query</span></span><br><span class="line">  <span class="type">int</span> q; <span class="comment">// 2e5</span></span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;q);</span><br><span class="line">  <span class="keyword">while</span>(q--)&#123;</span><br><span class="line">    <span class="comment">// string to mask</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,query);</span><br><span class="line">    <span class="type">int</span> sz = <span class="built_in">strlen</span>(query);</span><br><span class="line">    <span class="type">int</span> mask = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,sz)&#123;</span><br><span class="line">      mask |= (<span class="number">1</span>&lt;&lt;(query[i]-<span class="string">&#x27;a&#x27;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ans[mask][sz]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>回文的奇偶处理,可以用两两间插入不会出现的字符,如井号,方便枚举中心</p>
+<p>学了一手sosdp</p>
+<p>看ssr的twitter说有快速zeta变换, 搜下来看转移方程似乎就是sosdp, <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/33328788?ivk_sa=1024320u">https://zhuanlan.zhihu.com/p/33328788?ivk_sa=1024320u</a></p>
+<p>顺便这里的dp转化过程中 通过贡献和来优化效率</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/102859">官方</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-05-23-ac_arc140D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/Blog/2022-05-23-ac_arc140D/" class="post-title-link" itemprop="url">Atcoder arc140 D(树的边与点,贡献统计,DP,特殊题目条件)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-05-23 10:37:14" itemprop="dateCreated datePublished" datetime="2022-05-23T10:37:14+08:00">2022-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ARC/" itemprop="url" rel="index"><span itemprop="name">ARC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2022-05-23-ac_arc140D/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-05-23-ac_arc140D/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.4k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
@@ -311,260 +496,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1340/problem/C">https://codeforces.com/contest/1340/problem/C</a></p>
-<h1 id="状态设计"><a href="#状态设计" class="headerlink" title="状态设计"></a>状态设计</h1><p>应该算bfs+dp?</p>
-<p>状态设计 <code>dist[第i个检查点][剩余步数j] = 到达的最小轮数 或 不可达</code></p>
-<p>转移从数轴上看，只有左右关系相邻的两个点能在dist中转换，每个点最多被更新一次。</p>
-<p>所以 O(nm)时间空间</p>
-<p>注意的是 不能跨过g，每次转移前是<code>j&lt;g</code>,转以后的<code>j&lt;=g</code></p>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><p>托爷代码：<a target="_blank" rel="noopener" href="https://codeforces.com/contest/1340/submission/77808028">https://codeforces.com/contest/1340/submission/77808028</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 0x3f3f3f3f3f3f3f3f</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 1000000007</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> foreach(i, v) for (__typeof((v).begin()) i = (v).begin(); i != (v).end(); ++ i)</span></span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi = <span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">  cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="type">int</span> n, m;</span><br><span class="line">  cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">d</span><span class="params">(m)</span></span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">    cin &gt;&gt; d[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(d.<span class="built_in">begin</span>(), d.<span class="built_in">end</span>());</span><br><span class="line">  <span class="type">int</span> g, r;</span><br><span class="line">  cin &gt;&gt; g &gt;&gt; r;</span><br><span class="line">  <span class="comment">// dist[0-&gt;m-1][0-&gt;g] = -1; 不可达</span></span><br><span class="line">  <span class="comment">// dist[第i个停靠点][还要走j步为g的整数倍] = 最小的完整轮数</span></span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dist</span>(m, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(g + <span class="number">1</span>, <span class="number">-1</span>));</span><br><span class="line">  dist[<span class="number">0</span>][g] = <span class="number">0</span>; <span class="comment">// 可达的轮数为0</span></span><br><span class="line">  vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; que;</span><br><span class="line">  que.<span class="built_in">emplace_back</span>(<span class="number">0</span>, g);</span><br><span class="line">  <span class="keyword">while</span> (!que.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">    <span class="comment">// 步数少于等于g的广搜</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> b = <span class="number">0</span>; b &lt; (<span class="type">int</span>) que.<span class="built_in">size</span>(); b++) &#123;</span><br><span class="line">      <span class="type">int</span> i = que[b].first; <span class="comment">// 位置</span></span><br><span class="line">      <span class="type">int</span> j = que[b].second; <span class="comment">// 剩余步数</span></span><br><span class="line">      <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123; <span class="comment">//</span></span><br><span class="line">        <span class="type">int</span> go = d[i] - d[i - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (j &gt;= go) &#123;</span><br><span class="line">          <span class="keyword">if</span> (dist[i - <span class="number">1</span>][j - go] == <span class="number">-1</span>) &#123;</span><br><span class="line">            que.<span class="built_in">emplace_back</span>(i - <span class="number">1</span>, j - go);</span><br><span class="line">            dist[i - <span class="number">1</span>][j - go] = dist[i][j];</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (i &lt; m - <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="type">int</span> go = d[i + <span class="number">1</span>] - d[i];</span><br><span class="line">        <span class="keyword">if</span> (j &gt;= go) &#123;</span><br><span class="line">          <span class="keyword">if</span> (dist[i + <span class="number">1</span>][j - go] == <span class="number">-1</span>) &#123;</span><br><span class="line">            que.<span class="built_in">emplace_back</span>(i + <span class="number">1</span>, j - go);</span><br><span class="line">            dist[i + <span class="number">1</span>][j - go] = dist[i][j];</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; new_que;</span><br><span class="line">    <span class="comment">// 利用g表示 上一层节点，0表示新走到的节点， 产生新的一层</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> b = <span class="number">0</span>; b &lt; (<span class="type">int</span>) que.<span class="built_in">size</span>(); b++) &#123;</span><br><span class="line">      <span class="type">int</span> j = que[b].second;</span><br><span class="line">      <span class="keyword">if</span> (j == <span class="number">0</span>) &#123; <span class="comment">// 新走道德合法点</span></span><br><span class="line">        <span class="type">int</span> i = que[b].first;</span><br><span class="line">        <span class="keyword">if</span> (dist[i][g] == <span class="number">-1</span>) &#123;</span><br><span class="line">          dist[i][g] = dist[i][<span class="number">0</span>] + <span class="number">1</span>; <span class="comment">// 轮次+1</span></span><br><span class="line">          new_que.<span class="built_in">emplace_back</span>(i, g);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">swap</span>(que, new_que);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">const</span> <span class="type">long</span> <span class="type">long</span> inf = (<span class="type">long</span> <span class="type">long</span>) <span class="number">1e18</span>;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> ans = inf;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= g; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (dist[m - <span class="number">1</span>][i] != <span class="number">-1</span>) &#123; <span class="comment">// 可达到 最后一个点一定是终点</span></span><br><span class="line">      <span class="type">long</span> <span class="type">long</span> cur = (<span class="type">long</span> <span class="type">long</span>) dist[m - <span class="number">1</span>][i] * (g + r) + (g - i); <span class="comment">//计算总时间</span></span><br><span class="line">      ans = <span class="built_in">min</span>(ans, cur);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; (ans == inf ? <span class="number">-1</span> : ans) &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc140/tasks/arc140_d">https://atcoder.jp/contests/arc140/tasks/arc140_d</a></p>
+<p>初始有 n 个点，给定一个长度为 n 的数组 ai，若 ai≠−1，则有无向边 (i,ai)，若 ai&#x3D;−1，则点 i 可以连向 1∼n 任意点，求所有图的联通块个数之和</p>
+<p>n 2e3</p>
+<p>答案mod 998244353</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>考虑G中一个联通分量</p>
+<p>如果它有N点,N个边,那么它恰好有一个环</p>
+<p>这关键就在题目的特殊性上,因为(i-&gt;ai),即每个点连出一条边,所以n个点组成的联通分量一定恰好N个边, 题目条件特点!</p>
+<p>因此 题目变成统计环的 而不是统计联通分量</p>
+<p>然后先考虑 非-1的部分已经构成的环, 这部分如果再和其它相连,那么额外连的部分一定不会再有环,是个树,所以其它和它连的部分一定不会再贡献,</p>
+<p>所以在考虑-1构成环的话不会考虑已经初始有环的联通分量</p>
+<p>对于目前剩余没有环的联通分量是树,把这些树标号从1到k,并且b[i]表示这些树的点的个数, 注意到它一定只有一条未连接的边</p>
+<p>现在考虑一个环的构成, 一定是由一些树连成的</p>
+<p>树1-&gt;树2-&gt;树3-&gt;树k-&gt;树1</p>
+<p>我们不考虑没有参与到环中的其它树,即使它从联通分量角度连进来了, 我们之考虑对环的构成直接有贡献的树</p>
+<p>那么 如果是由 k个构成的,每一个的树的出点是固定的,但是入点的选择是上一个树的点的个数, 而它们排成环的方案是(k-1)! </p>
+<p>所以环的构成是$(k-1)! \times \prod_{i&#x3D;1}^{k} B_{x_i}$</p>
+<p>n 很小 n方 可以接受可以DP</p>
+<p>说是分治计算$\prod_{i&#x3D;1}^{K} (1 + B_ix)$可以做到 n log(n)</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc140/submissions/31923069">https://atcoder.jp/contests/arc140/submissions/31923069</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> a[<span class="number">2010</span>];<span class="comment">// 读入</span></span><br><span class="line"><span class="type">int</span> fa[<span class="number">2010</span>]; <span class="comment">// 并查集父节点</span></span><br><span class="line"><span class="type">int</span> sz[<span class="number">2010</span>]; <span class="comment">// 点个数</span></span><br><span class="line"><span class="type">bool</span> cir[<span class="number">2010</span>]; <span class="comment">// 是否有环</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getfa</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x == fa[x]?x:(fa[x] = <span class="built_in">getfa</span>(fa[x]));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">link</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> fu = <span class="built_in">getfa</span>(u);</span><br><span class="line">  <span class="type">int</span> fv = <span class="built_in">getfa</span>(v);</span><br><span class="line">  <span class="keyword">if</span>(fu == fv)&#123;</span><br><span class="line">    cir[fu] = <span class="literal">true</span>; <span class="comment">// 有环</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  sz[fv] += sz[fu]; <span class="comment">// 大小</span></span><br><span class="line">  cir[fv] |= cir[fu]; <span class="comment">// 环</span></span><br><span class="line">  fa[fu] = fv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">mypow</span><span class="params">(ll v,<span class="type">int</span> pwr)</span></span>&#123;</span><br><span class="line">  ll r = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span>(pwr)&#123;</span><br><span class="line">    <span class="keyword">if</span>(pwr%<span class="number">2</span>)(r*=v)%=MOD;</span><br><span class="line">    (v*=v)%=MOD;</span><br><span class="line">    pwr/=<span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line">ll fac[<span class="number">2010</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// 阶乘</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  <span class="type">int</span> freecnt = <span class="number">0</span>; <span class="comment">// 自由度 -1 个数</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    fa[i] = i;</span><br><span class="line">    sz[i] = <span class="number">1</span>;</span><br><span class="line">    fac[i] = fac[i<span class="number">-1</span>]*i%MOD;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,a+i);</span><br><span class="line">    freecnt += a[i] == <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[i] == <span class="number">-1</span>)<span class="keyword">continue</span>;</span><br><span class="line">    <span class="built_in">link</span>(i,a[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; arr ;</span><br><span class="line">  <span class="type">int</span> circnt = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(fa[i] != i)<span class="keyword">continue</span>; <span class="comment">// 非联通块根</span></span><br><span class="line">    <span class="keyword">if</span>(cir[i])&#123; <span class="comment">// 环</span></span><br><span class="line">      circnt++;</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    arr.<span class="built_in">push_back</span>(sz[i]); <span class="comment">// 树 有一个自由度</span></span><br><span class="line">  &#125;</span><br><span class="line">  ll ans = circnt * <span class="built_in">mypow</span>(n,freecnt) % MOD; <span class="comment">// 本身就是环的贡献</span></span><br><span class="line">  <span class="function">vector&lt;ll&gt; <span class="title">mulsum</span><span class="params">(n+<span class="number">10</span>,<span class="number">0</span>)</span></span>; <span class="comment">// dp mulsum[树的个数] = sz乘积和</span></span><br><span class="line">  mulsum[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,(<span class="type">int</span>)arr.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="built_in">rep</span>(k,<span class="number">0</span>,i+<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="comment">// 注意前面一半只是 k+1个构成环的方案数, 对于环以外的 freecnt-k-1的自由度任意搭配 才是这些环对总答案的贡献值</span></span><br><span class="line">      (ans += fac[k] * mulsum[k] % MOD * arr[i] % MOD * <span class="built_in">mypow</span>(n,freecnt-k<span class="number">-1</span>) % MOD)%=MOD;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">per</span>(k,<span class="number">0</span>,i+<span class="number">1</span>)&#123;</span><br><span class="line">      (mulsum[k+<span class="number">1</span>] += mulsum[k]*arr[i])%=MOD;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>还真是个大水题 放在1C</p>
-<p>自己也在想dp，状态，还有dijs,看推有人还真的过了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2020-04-18-sam/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2020-04-18-sam/" class="post-title-link" itemprop="url">后缀自动机器 SAM</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2020-04-18 10:37:14" itemprop="dateCreated datePublished" datetime="2020-04-18T10:37:14+08:00">2020-04-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2020-04-18-sam/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-04-18-sam/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>5.2k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>5 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="最终产物"><a href="#最终产物" class="headerlink" title="最终产物"></a>最终产物</h1><p>输入一个原始字符串，产生一个自动机，能识别一个给的新字符串是否是原始字符串的后缀。</p>
-<p>给一个初始State，每次接受一个字符，进行状态转移到新的State或失败</p>
-<p>每个State有标记是否为后缀</p>
-<h1 id="详细内容建议直接看oi-wiki"><a href="#详细内容建议直接看oi-wiki" class="headerlink" title="详细内容建议直接看oi-wiki"></a>详细内容建议直接看oi-wiki</h1><p>本文是，理清一些东西，和一些举例</p>
-<p>对于一个给定的原始字符串，它所产生的自动机</p>
-<table>
-<thead>
-<tr>
-<th>描述</th>
-<th>自己设计符号</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>自动机的各个状态</td>
-<td>State</td>
-</tr>
-<tr>
-<td>一个字符</td>
-<td>char</td>
-</tr>
-<tr>
-<td>字符串</td>
-<td>String</td>
-</tr>
-<tr>
-<td>原始字符串的一个位置</td>
-<td>Pos &#x2F; typedef Pos int</td>
-</tr>
-<tr>
-<td>自动机状态之间的转移边(接受一个字符)</td>
-<td>next(State st,char ch) -&gt; State</td>
-</tr>
-<tr>
-<td>状态的后缀链接</td>
-<td>link(State st) -&gt; State</td>
-</tr>
-<tr>
-<td>字符串结尾位置</td>
-<td>endposString(String s) -&gt; Pos数组</td>
-</tr>
-<tr>
-<td>状态结尾位置</td>
-<td>endposState(State st) -&gt; Pos数组</td>
-</tr>
-<tr>
-<td>字符串对应的状态</td>
-<td>str2State(String s)-&gt; State</td>
-</tr>
-<tr>
-<td>状态对应的字符串数组</td>
-<td>state2St(State st)-&gt; String数组</td>
-</tr>
-</tbody></table>
-<h2 id="性质和证明思路-不是详细证明"><a href="#性质和证明思路-不是详细证明" class="headerlink" title="性质和证明思路(不是详细证明)"></a>性质和证明思路(不是详细证明)</h2><p>给定一个字符串s，endposString(s)表示这个字符串在原始字符串中出现的结尾位置的数组</p>
-<p>定义State:</p>
-<p>如果两个不同的字符串s1和s2,它们的 endposString输出的数组 完全相同，则它们属于同一个State,否则它们属于不同的State</p>
-<p>因此每个字符串对应一个State,一个State对应一个数组的字符串。（也可以把State 看作一些字符串的集合）</p>
-<p>如果不同字符串能够结尾位置相同，那么其中一个是另一个的后缀，所以一个State中的所有字符串两两成后缀关系</p>
-<p>因此State中最短的字符串只要在原串的任意位置出现，则State最长的也出现，所以 长度介于最短和最长之间的必定出现</p>
-<p>所以一个State包含的是 长度递增1的,相互为后缀的一系列数组</p>
-<p>两个State之间，如果有重复的结束位置，那么对应位置各自的两个字符串 也一定是后缀关系。注意到上面结论 一个State包含的是一个递增一的连续整数区间。所以两个State之间的关系是 max(其中一个区间) &lt; min(另一个区间)</p>
-<p>也有了其中一个State的所有字符串是另一个区间的字符串的后缀，所以结束位置的关系一定是包含，（长的字符串出现的位置短的一定出现，长的字符串结束位置 包含于 短的)</p>
-<p>如果两个State 的位置是包含关系，且其中一个State1最短字符串长度 + 1 &#x3D; 另一个State2最长字符串长度，那么</p>
-<p><code>link(State1) = State2</code>, 说明State1 更短,State2更长和State1相邻</p>
-<p>满足 link(State1)&#x3D;State2 的所有state1 对应的endposState 两两交集为空，它们的并集 为 endposState(State2)</p>
-<p>注意State会表示原始字符串子串所有能达到的状态，link以树的形式连接了所有State,从结束位置数组的角度看，每一个link分支都表示把数组拆分，数组中n个元素，所以总状态O(n)</p>
-<p>准确点是&lt;&#x3D; 2n-1, 初始状态空字符串,包含所有n个下标, 每次拆分最多多出两个新集合, 最多n-1次拆分,所以最多1+2(n-1)&#x3D;2n-1个节点</p>
-<h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><p>在完全完成以前一直不会标记终止状态</p>
-<p>每个State记录三个信息</p>
-<ol>
-<li>所对应的字符串最长的长度</li>
-<li>增加一个char以后转移到的目标状态</li>
-<li>后缀关系link指向的相邻状态</li>
-</ol>
-<p>具体构建过程看wiki 和下面代码及注释，这里讲一点自己的理解</p>
-<p>首先这是一个“归纳”性质的构建过程，所以其实考虑的是 “对于字符串构建好的自动机，在该字符串右侧末尾增加一个字符所带来的变动”</p>
-<p>以 abcbc为例</p>
-<p><img data-src="https://oi-wiki.org/string/images/SAM/SA_suffix_links.svg"></p>
-<p>左是next,右侧是link, 蓝色空状态, 绿色终止条件</p>
-<h2 id="link-维护理解"><a href="#link-维护理解" class="headerlink" title="link 维护理解"></a>link 维护理解</h2><p>单独看link构成的树，考虑画一个完整的每个字符串一个节点的树和link做比较，你会发现link构成的树其实是把那些没有分支的节点的部分(存在单字符没有分叉但是单独的State)路径合并成一个节点了而已</p>
-<p>所以从这个角度，考虑一个每个字符串一个节点的link树，新增一个字符 意味着增加了一串后缀的链到原来的树上，而接到原来的树上的位置可能是叶子&#x2F;根&#x2F;一个已经有分叉的节点，也可能是某个节点分叉出来。（一定不会完全重合，因为一个字符串一个节点，新增的全长字符串一定不在原始的link树中。 所以上面描述的情形再考虑缩成目标的state link树。</p>
-<p>就会和wiki中描述的操作对应了理解。1.一定会增加一个新的节点。可能找不到和-1 state连接，也可能找到已有可用的“转移”，不在操作，也可能之前会合并成一个状态的点，现在因为多了分叉需要拆成两个,同时也能理解为什么是从last开始沿着link去找是否有 char的转移</p>
-<p>例如考虑abcb &#x3D;&gt; abcbc</p>
-<p>原来链 c-bc-abc 是一个state</p>
-<p>现在新插入链 c-bc-cbc-bcbc-abcbc</p>
-<p>就会变成</p>
-<ol>
-<li>(c-bc)新拆出的state, 下面代码中qClone</li>
-<li>abc(修改老的c-bc-abc得到的state), 下面代码中q变化</li>
-<li>(cbc-bcbc-abcbc新增的state), 下面代码中newState</li>
-</ol>
-<h2 id="next维护理解"><a href="#next维护理解" class="headerlink" title="next维护理解"></a>next维护理解</h2><p>next 比link复杂一些，但是实际也是可以用上面的 link树来看</p>
-<p>先考虑未进行合并的状态的影响,其实就是对所有last后缀 增加char建立边</p>
-<p>考虑<code>abcb=&gt;abcbc</code></p>
-<p>也就是要有边</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;-&gt;&quot;c&quot;</span><br><span class="line">&quot;b&quot;-&gt;&quot;bc&quot;</span><br><span class="line">&quot;cb&quot;-&gt;&quot;cbc&quot;</span><br><span class="line">&quot;bcb&quot;-&gt;&quot;bcbc&quot;</span><br><span class="line">&quot;abcb&quot;-&gt;&quot;abcbc&quot;</span><br></pre></td></tr></table></figure>
-
-<p>左侧出现的, 全在last的link链上</p>
-<p>重复处理，例如”b”-&gt;”bc”其实已经有了，所以比它更短的也全有了，所以就能理解为什么wiki上的操作是last的link链上找到首个有char的边, 相当于从长到短找找最长的有的</p>
-<p>原来link树上路径可合并的点 缩成一个state</p>
-<p>两个有next关系的state意味着，其中一个state的所有字符串增加字符char后 的到字符串是 另一个state的子集</p>
-<p>比如,这里之前是 state(“b”).next[“c”] &#x3D; state(“bc”) &#x3D;&#x3D; state(“c”,”bc”,”abc”)</p>
-<p>但是 对于我们新增的state，不会有比它长的(“abc” 不期望的</p>
-<p>但是next不像link，对结束位置并不友好，其意义是 选其中一部分下一位置是char的，在目标state中增加这些位置</p>
-<p>但观察长度关系 也是有友好性。虽然说是集合，但是目标state中的每一个字符串 只有唯一的“上一个”字符串（也就是去掉最后一个字符的字符串），其对应的也就是唯一的state。</p>
-<p>所以不同的相同的state中是没有重复元素的数组</p>
-<p>next的作用就是把原来的字符串 下一个是char的部分抽出来，push到目标state的数组中</p>
-<p>而注意到state是长度递增1的 后缀偏序数组</p>
-<p>那么减去最后一个字符依然是长度递增1的 后缀偏序数组</p>
-<p>state : [xxxxxxxx]c, 长度<code>l-&gt;r</code></p>
-<p>那么它的next来源</p>
-<p>state : [xxxxxxxx], 长度<code>l-1-&gt;len1-1</code>,<code>len1-&gt;len2-1</code>,….,<code>leni-&gt;r-1</code></p>
-<p>每组就是一个state</p>
-<p>所以如果wiki中描述的状态转移<code>p-&gt;q</code> 刚好最大长度差1,也就是 原来的划分很完美，只需要新建&gt;&#x3D;len(q)+1的</p>
-<p>也就是说 原来的<code>p-&gt;q</code> 转移的划分是否和 期望的划分点一致。如果不一致就拆分</p>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>很显然上面甚至连标记结束状态都没说，而实际上标记结束状态无非是给每个state多个字段，在完全构建以后，走一遍 link</p>
-<p>其实这个自动机构建了以后，不只是简单的后缀判断，还能做很多字符串的事情</p>
-<ol>
-<li>判断是否包含子串, 从root开始沿着next指针走</li>
-<li>不同子串个数, 相当于不同路径数, dfs, 一个节点有 len(i) - len(link(i))个子串, <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3804">luogu P3804</a></li>
-<li>所有不同子串总长度, 同理, 在每个节点可以得到路径个数 和 对应长度 和 子串数量</li>
-<li>字典序第k大子串, 就是字典序第k大的路径, 也可以后缀数组做</li>
-<li>某个子串出现次数</li>
-</ol>
-<p>…</p>
-<p>见 wiki</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">State</span> &#123;</span><br><span class="line">  State * link; <span class="comment">// 后缀父状态 指向比它短的后缀状态</span></span><br><span class="line">  unordered_map&lt;<span class="type">int</span>, State *&gt; next; <span class="comment">// 状态转移, 指向string尾部增加int后得到的State</span></span><br><span class="line">  <span class="type">int</span> maxLen; <span class="comment">// maxlen in this state</span></span><br><span class="line">  <span class="built_in">State</span>(<span class="type">int</span> _maxLen):</span><br><span class="line">    <span class="built_in">link</span>(<span class="literal">NULL</span>),<span class="built_in">maxLen</span>(_maxLen)&#123;</span><br><span class="line">      next = &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SAM</span>&#123;</span><br><span class="line">  State *root , *lastState;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">SAM</span>()&#123;</span><br><span class="line">    root = lastState = <span class="keyword">new</span> <span class="built_in">State</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">extend</span><span class="params">(<span class="type">int</span> w)</span></span>&#123; <span class="comment">// ???? =&gt; ????w</span></span><br><span class="line">    State *p = lastState;</span><br><span class="line">    State *newState = <span class="keyword">new</span> <span class="built_in">State</span>(p-&gt;maxLen + <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// find first p in lastState-&gt;link-&gt;link-&gt;link...-&gt;link</span></span><br><span class="line">    <span class="comment">//  satisfy p-&gt;next[w] exist</span></span><br><span class="line">    <span class="comment">//  let q = p-&gt;next[w]</span></span><br><span class="line">    <span class="comment">//  找到有 w 转移的, 或者增加w转移</span></span><br><span class="line">    <span class="keyword">for</span>(;p &amp;&amp; !p-&gt;next[w];p=p-&gt;link) p-&gt;next[w] = newState;</span><br><span class="line">    <span class="keyword">for</span>(;;)&#123; <span class="comment">// 降低层级</span></span><br><span class="line">      <span class="keyword">if</span>(!p)&#123; <span class="comment">// 全部原来都没有w转移, 也就是 [...??w] 唯一存在</span></span><br><span class="line">        newState -&gt; link = root;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// state p + char w -&gt; state q</span></span><br><span class="line">      State *q = p-&gt;next[w]; <span class="comment">// 说明 [p w] 至少两处存在</span></span><br><span class="line">      <span class="keyword">if</span>(p-&gt;maxLen+<span class="number">1</span> == q-&gt;maxLen)&#123; <span class="comment">// 单独状态</span></span><br><span class="line">        newState-&gt;link = q; <span class="comment">// newState 一定比 q 长, q是比它短的最长后缀</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// clone q next &amp; link</span></span><br><span class="line">      State * qClone = <span class="keyword">new</span> <span class="built_in">State</span>(p-&gt;maxLen+<span class="number">1</span>); <span class="comment">// 相当于从State q中拆出不大于p-&gt;next[w]转移的部分</span></span><br><span class="line">      qClone-&gt;next = q-&gt;next; <span class="comment">// copy</span></span><br><span class="line">      qClone-&gt;link = q-&gt;link;</span><br><span class="line">      <span class="comment">// change q &amp; newState link</span></span><br><span class="line">      <span class="keyword">for</span>(;p &amp;&amp; p-&gt;next[w] == q;p=p-&gt;link) p-&gt;next[w] = qClone; <span class="comment">// 更新所有单独</span></span><br><span class="line">      q-&gt;link = newState-&gt;link = qClone;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    lastState = newState;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">bool</span> <span class="title">has</span><span class="params">(string s)</span></span>&#123;</span><br><span class="line">    State *p = root;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> ch:s)&#123;</span><br><span class="line">      <span class="keyword">if</span>(!p-&gt;next[ch])<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      p = p-&gt;next[ch];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">auto</span> sam = <span class="built_in">SAM</span>();</span><br><span class="line">  string s = <span class="string">&quot;aabab&quot;</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> ch: s)&#123;</span><br><span class="line">    sam.<span class="built_in">extend</span>(ch);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(<span class="type">int</span>)sam.<span class="built_in">has</span>(<span class="string">&quot;aba&quot;</span>));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="refs"><a href="#refs" class="headerlink" title="refs"></a>refs</h1><p><a target="_blank" rel="noopener" href="https://oi-wiki.org/string/sam/">https://oi-wiki.org/string/sam/</a></p>
-<p>陈立杰 的 ppt</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我想了很久,都没有注意到题目条件特殊性带给联通分量的特殊性, 这还是不应该,应该加强这方面的反应</p>
+<p>其实也算是树的知识没有警醒我, 边&#x3D;点-1,那么就会反应到这里连通分量的边 &lt;&#x3D; 点 且 &gt;&#x3D; 点-1</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc140/editorial/3971">官方</a></p>
 
       
     </div>
@@ -591,7 +546,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2020-04-11-nowcoder5026E/">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-05-20-CF1680F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
@@ -609,7 +564,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2020-04-11-nowcoder5026E/" class="post-title-link" itemprop="url">字符串hash Eowcoder 5026 E</a>
+          <a href="/Blog/2022-05-20-CF1680F/" class="post-title-link" itemprop="url">Codeforces 1680F(无向图,奇数环,偶数环,树上差分)</a>
         </h2>
 
         <div class="post-meta-container">
@@ -620,144 +575,14 @@
       </span>
       <span class="post-meta-item-text">發表於</span>
 
-      <time title="創建時間：2020-04-11 10:37:14" itemprop="dateCreated datePublished" datetime="2020-04-11T10:37:14+08:00">2020-04-11</time>
+      <time title="創建時間：2022-05-20 20:24:00" itemprop="dateCreated datePublished" datetime="2022-05-20T20:24:00+08:00">2022-05-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/NowCoder/" itemprop="url" rel="index"><span itemprop="name">NowCoder</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2020-04-11-nowcoder5026E/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-04-11-nowcoder5026E/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>553</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="题"><a href="#题" class="headerlink" title="题"></a>题</h1><p><a target="_blank" rel="noopener" href="https://ac.nowcoder.com/acm/contest/5026/E">https://ac.nowcoder.com/acm/contest/5026/E</a></p>
-<h1 id="字符串hash"><a href="#字符串hash" class="headerlink" title="字符串hash"></a>字符串hash</h1><p>遇到了无数遍了</p>
-<p>来讲一种常见的字符串hash吧</p>
-<p>首先给一个字符串s，假设它只有小写英文字母</p>
-<p>根据万物皆是数的想法</p>
-<p>我们可以把它每一位通过 <code>s[i]-&#39;a&#39;</code>变成数字</p>
-<p>这样原字符串就变成了一个数列，因为全是字母</p>
-<p>所以可以26为进制 <code>sum((s[i]-&#39;a&#39;)*26^i)</code>的形式把原来的数变成大的整数</p>
-<p>如果两个字符串相等，那么这个大整数，相等，否则大整数不等。</p>
-<p>通过取mod可以让它比较可以操作，和支持更长的长度</p>
-<p>变成<code>sum((s[i]-&#39;a&#39;)*26^i) %p</code>的形式</p>
-<p>当我们有一个字符串<code>s0s1...sn</code>时</p>
-<p>增删首尾都是 可以通过考虑计算大整数的方式去处理，预处理26的幂次模p即可</p>
-<p>这样 长度为n的字符串的所有长度为m的连续子串的hash值，我们可以只用O(n)的时间就可完成</p>
-<h1 id="关于冲突"><a href="#关于冲突" class="headerlink" title="关于冲突"></a>关于冲突</h1><p>注意到上面的26是对于字母的情况，实际上,只要这个幂次的<code>基</code>大于<code>每一位上的最大值</code>即可，所以考虑单个字符的最大ascii</p>
-<p>可以变成 <code>sum(s[i] * b^i) %p</code> 的形式， b 取质数重要吗迷? 然后p取尽量大的质数就行</p>
-<p>$Hash(S) &#x3D; \sum_{i&#x3D;0-&gt;n-1} s[i] * b^i \mod p$</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2020-04-09-cf1333D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2020-04-09-cf1333D/" class="post-title-link" itemprop="url">Codeforces 1333D</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2020-04-09 10:37:14" itemprop="dateCreated datePublished" datetime="2020-04-09T10:37:14+08:00">2020-04-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -778,8 +603,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/Blog/2020-04-09-cf1333D/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-04-09-cf1333D/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Blog/2022-05-20-CF1680F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-05-20-CF1680F/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -790,17 +615,18 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>192</span>
+      <span>4.5k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
+      <span>4 分鐘</span>
     </span>
 </div>
 
+            <div class="post-description">无向图,图,奇数环,偶数环,树上差分</div>
         </div>
       </header>
 
@@ -808,579 +634,73 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="题"><a href="#题" class="headerlink" title="题"></a>题</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1333/problem/D">https://codeforces.com/contest/1333/problem/D</a></p>
-<p>n个人 向左或右</p>
-<p>每次，可以 选若干(&gt;&#x3D;1) 组人，它们相向的变为相反，即 RL 变成 LR</p>
-<p>要正好k轮，最后所有人都不相向</p>
-<p>求方案</p>
-<h1 id="显然"><a href="#显然" class="headerlink" title="显然"></a>显然</h1><p>每轮能转就转，轮数最少（不知道怎么证明）</p>
-<p>看成0，1对，每次是把10变成01,也就是 每轮只转一个，最多轮是逆序对个数</p>
-<p>中间情况 考虑最快情况，从后向前 拆分操作即可</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2020-04-07-nowcoder5086C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2020-04-07-nowcoder5086C/" class="post-title-link" itemprop="url">LCA / Nowcoder 5086 C</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2020-04-07 10:37:14" itemprop="dateCreated datePublished" datetime="2020-04-07T10:37:14+08:00">2020-04-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/NowCoder/" itemprop="url" rel="index"><span itemprop="name">NowCoder</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2020-04-07-nowcoder5086C/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-04-07-nowcoder5086C/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>396</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="水题"><a href="#水题" class="headerlink" title="水题"></a>水题</h1><p>调一万年，第一次就差三个地方</p>
-<ol>
-<li><p>忘记了<code>for work()</code></p>
-</li>
-<li><p>assert()里面忘记双等号，写了个单个等号…</p>
-</li>
-<li><p>LCA 写错了</p>
-</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">r</span><span class="params">(<span class="type">int</span> i,<span class="type">int</span> j)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(d[i] &gt; d[j])<span class="built_in">swap</span>(i,j);</span><br><span class="line">  <span class="built_in">per</span>(off,<span class="number">0</span>,<span class="number">20</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(d[j]-d[i] &gt;= (<span class="number">1</span>&lt;&lt;off) )&#123;</span><br><span class="line">      j=f[j][off];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(i == j)<span class="keyword">return</span> i;</span><br><span class="line">  <span class="built_in">per</span>(off,<span class="number">0</span>,<span class="number">20</span>)&#123; <span class="comment">// &lt;---------------------------- 写成 per(off,1,20) 了</span></span><br><span class="line">    <span class="keyword">if</span>(f[i][off] != f[j][off])&#123;</span><br><span class="line">      i=f[i][off];</span><br><span class="line">      j=f[j][off];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> f[i][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="不过"><a href="#不过" class="headerlink" title="不过"></a>不过</h1><p>感觉LCA写得比原来熟很多了</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2020-03-20-cfP1326D2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2020-03-20-cfP1326D2/" class="post-title-link" itemprop="url">Codeforces 1326D1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2020-03-20 10:37:14" itemprop="dateCreated datePublished" datetime="2020-03-20T10:37:14+08:00">2020-03-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2020-03-20-cfP1326D2/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-03-20-cfP1326D2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>2.9k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>3 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="http://codeforces.com/contest/1326/problem/D2">http://codeforces.com/contest/1326/problem/D2</a></p>
-<p>字符串s 去掉其中连续一段，使得剩余的部分构成回文，求最长的方案</p>
-<h1 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h1><p>|s| &lt;&#x3D; 10^6</p>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>这个题有两个版本，easy的版本<code>|s|&lt;=5000</code></p>
-<p>对于那个版本，先建立<code>r[i][j]</code>表示<code>s[i..j]</code>是否是回文 空间和时间都是<code>O(n^2)</code></p>
-<p>然后枚举 首尾的 长度，和中间循环节的长度,时间复杂度<code>O(n^2)</code></p>
-<p>对于hard版本(当前版本)这样做显然会超时。</p>
-<hr>
-<p>竟然是贪心。。。</p>
-<p>果然单调性质</p>
-<p>假设前后缀<code>最长</code>的对称部分为k，则有两种情况</p>
-<p><code>[0...k][回文].....[k...0]</code></p>
-<p><code>[0...k].....[回文][k...0]</code></p>
-<p>如果有一个更优的方案<code>(t&lt;k)</code>,则它的样式为</p>
-<p><code>[0..t][回文]....[t..0]</code></p>
-<p><code>[0..t]....[回文][t..0]</code></p>
-<p>因为对称关系，我们只讨论一种剩余回文在左侧的</p>
-<p><code>[0..t][回文]...[t..0]</code></p>
-<p>因为<code>t&lt;k</code></p>
-<p>所以我们可以把回文部分左右减少1个，而把<code>[0..t]</code>变为<code>[0..t+1]</code>,它依然是合法的</p>
-<p><code>[0..t+1][回文去首尾]..[t+1..0]</code></p>
-<p>这样新的合法的依然是长度不变</p>
-<p>反复操作，最后能得到一个<code>[0...k][回文].....[k...0]</code></p>
-<p>所以任何<code>更优方案</code>能转换成<code>[0...k][回文].....[k...0]</code></p>
-<p>综上,实现变为 移除首位最长对称串，再在剩余的内容中找最长前缀回文或最长后缀回文</p>
-<p>最后在中间的找前后缀回文用点kmp之类或者hash之类的就行了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line">#define INF 0x3f3f3f3f3f3f3f3f</span><br><span class="line">#define MOD 1000000007</span><br><span class="line">#define rep(i,a,n) for (int i=a;i&lt;n;i++)</span><br><span class="line">#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span><br><span class="line">#define pb push_back</span><br><span class="line">#define foreach(i, v) for (__typeof((v).begin()) i = (v).begin(); i != (v).end(); ++ i)</span><br><span class="line">const double pi = acos(-1.0);</span><br><span class="line"></span><br><span class="line">// t = a+b</span><br><span class="line">// t = s[pre] + s[suffix]</span><br><span class="line">// len(t) &lt;= len(s)</span><br><span class="line">// ==&gt;</span><br><span class="line">//</span><br><span class="line">// [preA][...]...[~preA]</span><br><span class="line">// [preA]...[...][~preA]</span><br><span class="line">//</span><br><span class="line">//</span><br><span class="line">// = s 移除连续一段 使得结果变成回文</span><br><span class="line">// s[....]</span><br><span class="line">// ~s[....]</span><br><span class="line"></span><br><span class="line">// dp[i][j] [0/1/2][0/1/2]</span><br><span class="line">// n^2 ?</span><br><span class="line">//</span><br><span class="line">// s[...i[ ]i...]</span><br><span class="line">// = max(2*i+ [i+1...]回文 ])</span><br><span class="line">// = max(2*i+ [ ...[...?]回文] )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">char s[1&#x27;000&#x27;010];</span><br><span class="line"></span><br><span class="line">char t1[1&#x27;000&#x27;010];</span><br><span class="line">char t2[1&#x27;000&#x27;010];</span><br><span class="line">int pre[1&#x27;000&#x27;010];</span><br><span class="line"></span><br><span class="line">int r(char * ch,int sz)&#123;</span><br><span class="line">  pre[0] = -1;</span><br><span class="line">  rep(i,1,sz)&#123;</span><br><span class="line">    int pos = i-1;</span><br><span class="line">    while(true)&#123;</span><br><span class="line">      pos = pre[pos];</span><br><span class="line">      if(ch[pos+1] == ch[i])&#123;</span><br><span class="line">        pre[i] = pos+1;</span><br><span class="line">        break;</span><br><span class="line">      &#125;</span><br><span class="line">      if(pos == -1)&#123;</span><br><span class="line">        pre[i] = -1;</span><br><span class="line">        break;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  // rep(i,0,sz)&#123;</span><br><span class="line">  //   printf(&quot;%d &quot;,pre[i]);</span><br><span class="line">  // &#125;</span><br><span class="line"></span><br><span class="line">  int lastans = -1;</span><br><span class="line">  per(i,0,sz)&#123;</span><br><span class="line">    // [[0..lastans]..i[..0]...]</span><br><span class="line">    while(true)&#123;</span><br><span class="line">      if(ch[i] == ch[lastans+1])&#123;</span><br><span class="line">        if(lastans + 2 &gt;= i)&#123;</span><br><span class="line">          return lastans*2+3+ (i!=lastans+1);</span><br><span class="line">        &#125;</span><br><span class="line">        lastans++;</span><br><span class="line">        break;</span><br><span class="line">      &#125;</span><br><span class="line">      if(lastans == -1)&#123;</span><br><span class="line">        break;</span><br><span class="line">      &#125;</span><br><span class="line">      lastans = pre[lastans];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">  int t;</span><br><span class="line">  cin&gt;&gt;t;</span><br><span class="line">  while(t--)&#123;</span><br><span class="line">    scanf(&quot;%s&quot;,s);</span><br><span class="line">    int n = strlen(s);</span><br><span class="line">    int k = -1;</span><br><span class="line">    rep(i,0,n)&#123;</span><br><span class="line">      if(i&lt;n-1-i)&#123;</span><br><span class="line">        if(s[i]==s[n-i-1])&#123;</span><br><span class="line">          k = i;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">          break;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    rep(i,k+1,n-k-1)&#123;</span><br><span class="line">      t1[i-k-1]=s[i];</span><br><span class="line">    &#125;</span><br><span class="line">    int len1 = r(t1,n-2-2*k);</span><br><span class="line">    rep(i,k+1,n-k-1)&#123;</span><br><span class="line">      t2[n-k-2-i]=s[i];</span><br><span class="line">    &#125;</span><br><span class="line">    int len2 = r(t2,n-2-2*k);</span><br><span class="line">    // cout&lt;&lt;&quot;?&quot;&lt;&lt;len1&lt;&lt;endl;</span><br><span class="line">    // cout&lt;&lt;&quot;!&quot;&lt;&lt;len2&lt;&lt;endl;</span><br><span class="line">    rep(i,0,k+1)&#123;</span><br><span class="line">      printf(&quot;%c&quot;,s[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    if(len1 &gt; len2)&#123;</span><br><span class="line">      rep(i,0,len1)&#123;</span><br><span class="line">        printf(&quot;%c&quot;,t1[i]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">      rep(i,0,len2)&#123;</span><br><span class="line">        printf(&quot;%c&quot;,t2[i]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    rep(i,n-k-1,n)&#123;</span><br><span class="line">      printf(&quot;%c&quot;,s[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>官方题解 <a target="_blank" rel="noopener" href="http://codeforces.com/blog/entry/74961">http://codeforces.com/blog/entry/74961</a></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>估计还是估计到了 O(n)或者O(nlog n)范围的算法，但赛内没有推出更优的性质</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2020-02-13-cfP1303E/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2020-02-13-cfP1303E/" class="post-title-link" itemprop="url">Codeforces 1303E(DP)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2020-02-13 10:37:14" itemprop="dateCreated datePublished" datetime="2020-02-13T10:37:14+08:00">2020-02-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2020-02-13-cfP1303E/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-02-13-cfP1303E/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>308</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1303/problem/E">https://codeforces.com/contest/1303/problem/E</a></p>
-<p>T组测试</p>
-<p>t和s是字符串</p>
-<p>s中能否找两个不共用下标的子序列(不要求连续)，t&#x3D;concat(s1,s2)</p>
-<h1 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h1><p>T&lt;&#x3D;100</p>
-<p>|s|,|t| &lt;&#x3D; 400</p>
-<h1 id="提解"><a href="#提解" class="headerlink" title="提解"></a>提解</h1><p>枚举t的分割位置</p>
-<p>dfs(s中当前匹配位置i,t前段匹配位置j,t后半匹配位置k)</p>
-<p>很明显超时。</p>
-<p>注意到上面dfs仅返回true&#x2F;false</p>
-<p>也就是dfs(i,j,k)&#x3D;1&#x2F;0这种</p>
-<p>可以改为（也有贪心关系）,<code>dp[i][j]=最多匹配的k</code></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><code>dfs(i,j,k)=1/0</code>可以考虑 <code>dp[i][j]=max/min(k)</code></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2020-01-20-1292C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2020-01-20-1292C/" class="post-title-link" itemprop="url">1292C - Xenon_s Attack on the Gangs(树上区间DP,mex)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2020-01-20 10:37:14" itemprop="dateCreated datePublished" datetime="2020-01-20T10:37:14+08:00">2020-01-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2020-01-20-1292C/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-01-20-1292C/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>3.7k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>3 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1292/problem/C">https://codeforces.com/contest/1292/problem/C</a></p>
-<p>2300评分</p>
-<h1 id="大意"><a href="#大意" class="headerlink" title="大意"></a>大意</h1><p>给树的形状，你需要把0到n-2分别填在边上。</p>
-<p>求 sum{mex{所有简单边}}的最大期望值</p>
-<h1 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h1><p>节点数小于3000</p>
-<p>3s</p>
+          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1680/problem/F">https://codeforces.com/contest/1680/problem/F</a></p>
+<p>给一个连通无向图,n点,m 边</p>
+<p>点覆盖: (所有边至少一个点属于点集</p>
+<p>lenient点覆盖: 是点覆盖,且至多一条边两个点都在点集中</p>
+<p>找出一个 lenient点覆盖</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>t 1e4</p>
+<p>n 1e6</p>
+<p>5s</p>
 <p>512MB</p>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/73051">官方题解</a></p>
-<p>感觉对mex的题始终不会</p>
-<p>$S &#x3D; \sum_{1 \leq u &lt; v \leq n} mex(u, v) &#x3D; \sum_{1 \leq x \leq n} \left( \sum_{mex(u, v) &#x3D; x} mex(u,v) \right) &#x3D; \sum_{1 \leq x \leq n} \left( \sum_{mex(u, v) &#x3D; x} x \right) &#x3D; \sum_{1 \leq x \leq n} \left( \sum_{mex(u, v) \geq x} 1 \right) &#x3D; \sum_{1 \leq x \leq n} f(x)$</p>
-<p>直接解读这个公式。</p>
-<p>第一个等式是定义</p>
-<p>第二个第三个等式是按照mex的值进行拆分，</p>
-<p>第四个等式的转换是 $x &#x3D; \sum_{1\leq y \leq x} 1$,也就是原来在x时增加 $sum mex$ 倍 $x$,改为 从1 到x，各增加 sum mex倍 1</p>
-<p>最后一个等式是定义 f(x)函数</p>
-<p>$f(x) &#x3D; count(mex(u,v) \ge x) &#x3D;$ 包含 [0 -&gt;x-1]的简单路径数量</p>
+<h1 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h1><p>首先 如果能黑白染色,成功,那么也就是每个边一端黑一端白, 全选黑或全选白都是一个答案</p>
+<p>如果 黑白染色出现冲突,那么这两个点一定在一个奇环上</p>
+<p>也就是这个奇环上存在两个点都是黑色, 最可以先把这个环上的边全部当作不存在,重新做染色,如果能成功, 计算这个环上同一个并查集点的颜色关系,</p>
+<p>如果两两都不在同一个集合中那么说明拆了环都是独立的部分,那么任意染黑白即可</p>
+<p>如果存在 a—–b 同集合中</p>
+<p>a,b 同色 , [a..b]个数奇数的一半一定是黑白间隔</p>
+<p>a,b 异色 , [a..b]个数偶数的一半一定是黑白间隔</p>
+<p>换句话说, 其实原图去掉那个两个点都在集合中的边, 剩下的满足黑白染色,现在则是看哪些确定可以连起来</p>
+<p>过程中检查冲突</p>
+<p>如果剩余还有没连的 任选一个作为分割即可</p>
 <hr>
+<p>但是 实现上能找环但如何找奇环</p>
+<p>独立染色可以写,但合并时如何实现?</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>前面几段和我想的一样, 奇偶黑白染色, 也就是需要在奇数环上剪断一条边,让整个染色合法</p>
+<p>这里主要是 对无向图做dfs建立树</p>
+<p>那么出现环的时候就是子节点指向父节点的时候</p>
+<p>我们在dfs过程中黑白染色,那么出现回边时根据染色就可以知道它是奇环还是偶环,</p>
+<p>如果我们统计了每条边出现在我们找到的奇环上的次数,和偶环上的次数,那么 如果一条边出现在奇数环上次数等于所有奇环次数,偶数环次数为零,那么删除这条边即可(可能有多个满足,任意删除一条)</p>
+<p>&#x2F;&#x2F; 必要性proof见下面, 充分显然</p>
+<p>所以接下来就是当发生回环时,如何统计边在奇环偶环上出现次数了,如果直接对边计数,那么复杂度就过不了</p>
+<p>树上差分, cnt[id]表示边id到根的所有边都 进行了+cnt[id],这样 当有点u到点v的回边时,就 cnt[faedge[u]]++,cnt[faedge[v]]–, 对于不在树上的回边<code>edge[id] = &#123;u,v&#125;</code>不需要差分直接统计, cnt[id]++</p>
+<p>最后统计完后整理具体次数</p>
+<p>然后找满足的边拆掉,再染色即可(注意拆掉边两端需要是黑色</p>
+<h2 id="性质证明"><a href="#性质证明" class="headerlink" title="性质证明"></a>性质证明</h2><p>这里 显然的是 如果是两端同色的点, 那么它一定在所有奇环中,不在所有偶环中</p>
+<p>也就是必要性显然</p>
+<p>如果我们枚举了所有的环,那么拆掉它,所有奇数环也被拆掉了, 所以充分性也成立</p>
+<p>问题是上面的实现 并没有枚举所有的环,枚举的只是树边+一条回边的所有环, 而环可能是由多条回边构成的</p>
+<p>引理1: 如果环A和环B的一部分拼成环C,那么ABC中要么全是偶环,要么其中两个是奇环,</p>
+<p>(这里拼成的意思是 A 和 B 有共用的一条链, C&#x3D; (A-共用链)+(B-共用链)</p>
+<p>那么要证明的是两部分, 这个两端同色的边也在未统计到的多回边的奇数环中,不在未统计到的多回边偶数环中</p>
 <blockquote>
-<p>证明叶子到叶子包含0到len-1</p>
+<p>如果它(两端同色的边)不在未统计到的多回边奇数环中</p>
 </blockquote>
-<p>考虑一个树的形成过程如果是从0到n-2的放置，如果当前0到x-1已经固定，准备放x，那么只有把它放在0到x-1所有都在的路径上（如果可能），才能产生更大的mex，如果不这样，那么x以及所有大于x的最后的mex都已经固定。</p>
-<p>因此放置时如果能够放到0到x-1的路径上，则一定是放在路径上。</p>
-<p>也就意为这 一定有一条从叶子到叶子的简单路径 放了 0到length-1, 并且剩余的无论怎么放(因为已经叶子到叶子，不可能再集齐0到i了，mex也就不会变了) 对结果都没有影响</p>
-<hr>
+<p>那么这个环H(奇,回边&#x3D;n) 可以拆成一个H1(奇,回边n-1) + H(偶,回边1)</p>
+<p>因为H(偶,回边1) 我们一定计算到了, 只能递归下降, 且不会在 它们两的重复边上,因为它不在偶环上</p>
+<p>那么这个环H(奇,回边&#x3D;n) 可以拆成一个H1(偶,回边n-1) + H(奇,回边1)</p>
+<p>因为H(奇,回边1) 我们一定计算到了 所以它在奇数环中</p>
+<p>综上它一定在 未统计到的多回边奇数环中</p>
 <blockquote>
-<p>证明这条路径上赋值山谷形状</p>
+<p>如果它在未统计到的多回边偶数环中</p>
 </blockquote>
-<p>现在假设固定了简单路径的位置，下面要证明最优值的放置 是山谷形状，也就是 a1&gt;a2&gt;…&gt;ap&lt;…&lt;al−1&lt;al.</p>
-<p>假设，[0-&gt;x-1]是连续的一段，x和这一段不连续 不妨设x在这一段的右侧（否则就左侧）</p>
-<p><code>? ? ? ? [0到x-1连续的一段] vali ? ? ? ? ? x ? ? ? ?</code></p>
-<p>我们交换 vali和x的位置</p>
-<p>显然，对于f(0-&gt;x-1)不会变 因为 连续段的位置没有改动，也就是包含[0-&gt;x-1]的简单路径数量不变</p>
-<p>对于f(x)变大，因为包含[0-&gt;x]的 简单路径数量 &#x3D; <code>连续段</code>左侧分支数量 * <code>x</code>右侧分支数量，乘法第一个值不变，第二个值变大，总的值一定变大</p>
-<p>对于f(&gt;x) 不减， 对于左侧点位置不变，对于右侧点不变或者有更进的右侧点，所以包含[0-&gt;(&gt;x)]的 简单路径数量 &#x3D; <code>连续段</code>左侧分支数量 * <code>x</code>右侧分支数量，乘法第一个值不变，第二个值不减，总的值一定不减</p>
-<p>总的来说，如果不满足上述状态，则一定有一个更优的摆放方法。综上，一定是山谷形</p>
-<hr>
-<p>然后就有了dp[u][v]  &#x3D; $\sum_{1 \leq x \leq l} f(x)$的最大值，且u到v 填写的是0到l-1</p>
-<p>定义(方便描述)</p>
-<p>par(r,u): 以r为树的根节点，u的父节点</p>
-<p>sub(r,u), 以r为树的根节点，u的子树的节点个数</p>
-<p>官方题解的解释图</p>
-<p><img data-src="https://espresso.codeforces.com/5e845e83910666767bba5505c6859ae17f68e48b.png" alt="官方题解解释图"></p>
-<hr>
-<p>计算<code>dp[u][v]</code>,根据我们的山谷原理，和dp的定义，<code>dp[u][v]</code>的最大值一定在两端的某一端</p>
-<p>所以 剩余的部分为<code>dp[u][par(u,v)]</code> 或者 <code>dp[par(v,u)][v]</code>,又dp只关心<code>f(&lt;=l)</code>,所以剩余只有<code>f(l)</code>要计算</p>
-<p>这显然 <code>f(l) = sub(u,v) * sub(v,u)</code></p>
-<p>$dp[u][v] &#x3D; sub(u, v) \times sub(v, u) + \max(dp[par(v, u)][v], dp[u][par(u, v)])$</p>
-<p>一个点的所有分支子节点 直接dfs，对于父方向的&#x3D; 总量-1-子分支即可，也就是每个点各个分支子节点数O(n)计算完，要计算一个具体sub时可以O(1)计算</p>
-<p>对于par，我们可以把dp改为递推即可，</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1292/submission/69184244">TLE14</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1292/submission/69184419">去掉map WA17</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1292/submission/69184602">int 改 long long Accept</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line">#define INF 0x3f3f3f3f3f3f3f3f</span><br><span class="line">#define MOD 1000000007</span><br><span class="line">#define rep(i,a,n) for (int i=a;i&lt;n;i++)</span><br><span class="line">#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span><br><span class="line">#define pb push_back</span><br><span class="line">#define foreach(i, v) for (__typeof((v).begin()) i = (v).begin(); i != (v).end(); ++ i)</span><br><span class="line">const double pi = acos(-1.0);</span><br><span class="line"></span><br><span class="line">// 树,边被赋值[0,n-2]</span><br><span class="line">// 输入n 3000</span><br><span class="line">// 树状</span><br><span class="line"></span><br><span class="line">int n;</span><br><span class="line">vector&lt;int&gt;p2[3010];</span><br><span class="line"></span><br><span class="line">map&lt;int,int&gt;chcnt[3010];// child cnt [idx][p2] = childcnt</span><br><span class="line"></span><br><span class="line">vector&lt;pair&lt;int,int&gt; &gt; cur; // [u&lt;v] = [par,par,sum]</span><br><span class="line">tuple&lt;int,int,ll&gt;cost[3010][3010]; // [u&lt;v] = [par,par,sum]</span><br><span class="line"></span><br><span class="line">int initchcnt(int idx,int fa)&#123;</span><br><span class="line">  int cnt = 1;</span><br><span class="line">  for(auto item:p2[idx])&#123;</span><br><span class="line">    if(item == fa)continue;</span><br><span class="line">    cnt+= (chcnt[idx][item] = initchcnt(item,idx));</span><br><span class="line">  &#125;</span><br><span class="line">  if(fa)&#123;</span><br><span class="line">    chcnt[idx][fa] = n - cnt;</span><br><span class="line">  &#125;</span><br><span class="line">  return cnt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ll cnt(int u,int paru)&#123;</span><br><span class="line">  return n-chcnt[u][paru];</span><br><span class="line">&#125;</span><br><span class="line">ll ans = 0;</span><br><span class="line"></span><br><span class="line">// u pvu .... puv v</span><br><span class="line">void addrel(int u,int v,int pvu,int puv,ll count)&#123;</span><br><span class="line">  if(u &gt; v)&#123;</span><br><span class="line">    swap(u,v);</span><br><span class="line">    swap(pvu,puv);</span><br><span class="line">  &#125;</span><br><span class="line">  ll newcount = count + cnt(u,pvu)*cnt(v,puv);</span><br><span class="line">  ans=max(ans,newcount);</span><br><span class="line">  if(get&lt;2&gt;(cost[u][v])==0)&#123;</span><br><span class="line">    cur.pb(&#123;u,v&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  if(get&lt;2&gt;(cost[u][v]) &lt; newcount )&#123;</span><br><span class="line">    cost[u][v] = &#123;pvu,puv,newcount&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  rep(i,0,n-1)&#123;</span><br><span class="line">    int u,v;</span><br><span class="line">    scanf(&quot;%d %d&quot;,&amp;u,&amp;v);</span><br><span class="line">    p2[u].pb(v);</span><br><span class="line">    p2[v].pb(u);</span><br><span class="line">  &#125;</span><br><span class="line">  initchcnt(1,0);</span><br><span class="line">  // 减少重复运算u&lt;v</span><br><span class="line">  // 按照length递增 广搜</span><br><span class="line">  rep(i,1,n+1)&#123;</span><br><span class="line">    for(auto item:p2[i])&#123;</span><br><span class="line">      if(item &lt; i)continue;</span><br><span class="line">      addrel(i,item,item,i,0);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  rep(i,0,cur.size())&#123;</span><br><span class="line">    auto [u,v] = cur[i];</span><br><span class="line">    auto [pvu,puv,count] = cost[u][v];</span><br><span class="line">    // u pvu .... puv v</span><br><span class="line">    // 扩展u</span><br><span class="line">    for(auto nu:p2[u])&#123;</span><br><span class="line">      if(nu == pvu)continue;</span><br><span class="line">      addrel(nu,v,u,puv,count);</span><br><span class="line">    &#125;</span><br><span class="line">    // 扩展v</span><br><span class="line">    for(auto nv:p2[v])&#123;</span><br><span class="line">      if(nv == puv)continue;</span><br><span class="line">      addrel(u,nv,pvu,v,count);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  printf(&quot;%lld\n&quot;,ans);</span><br><span class="line"></span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么这个环H(奇,回边&#x3D;n) 可以拆成一个H1(偶,回边n-1) + H(偶,回边1) </p>
+<p>它一定不在 H(偶,回边1) 中, 所以递归下降,且它也不在 两个环共用的边上</p>
+<p>那么这个环H(偶,回边&#x3D;n) 可以拆成一个H1(奇,回边n-1) + H(奇,回边1)</p>
+<p>注意到上述结论, 这个边一定在这两个环里都有,因此这个边在它们重复的边上而不在偶环里</p>
+<p>因此 得证</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1680/submission/158000410">https://codeforces.com/contest/1680/submission/158000410</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ll long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,b) for(int i = (a);i&lt;(b);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> all(v) (v).begin(),(v).end()</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1000000</span>;</span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="type">int</span> odd; <span class="comment">// 奇环个数</span></span><br><span class="line"><span class="type">int</span> cnt0[N+<span class="number">10</span>]; <span class="comment">// cnt0[边]偶环个数，</span></span><br><span class="line"><span class="type">int</span> cnt1[N+<span class="number">10</span>]; <span class="comment">// cnt1[边]奇环个数，</span></span><br><span class="line"><span class="type">int</span> c[N+<span class="number">10</span>]; <span class="comment">//c节点颜色，</span></span><br><span class="line"><span class="type">bool</span> vis[N+<span class="number">10</span>]; <span class="comment">// dfs中访问过, 多次复用</span></span><br><span class="line"><span class="type">int</span> fe[N+<span class="number">10</span>]; <span class="comment">//fe父边</span></span><br><span class="line"><span class="comment">// 读入</span></span><br><span class="line">pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; e[N+<span class="number">10</span>]; <span class="comment">// [边] = &#123;点id,点id&#125;</span></span><br><span class="line">vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt; G[N+<span class="number">10</span>]; <span class="comment">// [点] = 数组 &#123;点id,边id&#125;</span></span><br><span class="line"><span class="comment">//二分图染色同时找环</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> p<span class="comment">/*父边*/</span>,<span class="type">int</span> cl <span class="comment">/*颜色*/</span> )</span> </span>&#123;</span><br><span class="line">  c[u]=cl;</span><br><span class="line">  vis[u]=<span class="number">1</span>; <span class="comment">// 管的当前到根的链上是否有, 减少重复计算 简化差分统计</span></span><br><span class="line">  fe[u]=p;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> [v,id]:G[u])&#123;</span><br><span class="line">    <span class="keyword">if</span> (id==p)<span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">if</span> (c[v]==<span class="number">-1</span>)&#123; <span class="comment">// 未访问过</span></span><br><span class="line">      <span class="built_in">dfs</span>(v,id,cl^<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(!vis[v])&#123; <span class="comment">// 非父节点</span></span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (c[v]==(cl^<span class="number">1</span>)) &#123; <span class="comment">//偶环</span></span><br><span class="line">      cnt0[id]++; <span class="comment">// 不在树上的回边</span></span><br><span class="line">      cnt0[p]++; <span class="comment">// 树上边 差分统计 表示这个边到根的次数都+1</span></span><br><span class="line">      <span class="keyword">if</span>(~fe[v])cnt0[fe[v]]--; <span class="comment">// 这个边到根的次数都-1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// if (c[v]==cl) &#123;//奇环</span></span><br><span class="line">      odd++; <span class="comment">// 奇环个数</span></span><br><span class="line">      cnt1[id]++;</span><br><span class="line">      cnt1[p]++;</span><br><span class="line">      <span class="keyword">if</span>(~fe[v])cnt1[fe[v]]--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  vis[u]=<span class="number">0</span>;<span class="comment">//回溯时撤销访问标记</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 整理差分数组，得到每条边的计数, 只用处理树边,递归, 不用处理非树的回边</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs2</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123;</span><br><span class="line">  vis[u]=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> [v,_]:G[u])&#123;</span><br><span class="line">    <span class="keyword">if</span> (vis[v]) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="built_in">dfs2</span>(v);</span><br><span class="line">    <span class="keyword">if</span> (fe[u]!=<span class="number">-1</span>&amp;&amp;fe[v]!=<span class="number">-1</span>)&#123;</span><br><span class="line">      cnt0[fe[u]]+=cnt0[fe[v]];</span><br><span class="line">      cnt1[fe[u]]+=cnt1[fe[v]];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs3</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> cl)</span> </span>&#123; <span class="comment">//二分图染色</span></span><br><span class="line">  c[u]=cl;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> [v,_]:G[u])&#123;</span><br><span class="line">    <span class="keyword">if</span> (c[v]!=<span class="number">-1</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="built_in">dfs3</span>(v,cl^<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// 一系列初始化</span></span><br><span class="line">  odd=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) G[i].<span class="built_in">clear</span>();</span><br><span class="line">  <span class="built_in">fill</span>(cnt0,cnt0+m+<span class="number">3</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">fill</span>(cnt1,cnt1+m+<span class="number">3</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">fill</span>(c,c+n+<span class="number">3</span>,<span class="number">-1</span>);</span><br><span class="line">  <span class="built_in">fill</span>(vis,vis+n+<span class="number">3</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="comment">// 读入</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m)&#123;</span><br><span class="line">    <span class="type">int</span> u,v;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;u,&amp;v);</span><br><span class="line">    e[i]=&#123;--u,--v&#125;;</span><br><span class="line">    G[u].<span class="built_in">pb</span>(&#123;v,i&#125;);</span><br><span class="line">    G[v].<span class="built_in">pb</span>(&#123;u,i&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">dfs</span>(<span class="number">0</span>,<span class="number">-1</span>,<span class="number">0</span>); <span class="comment">// 以0 为根染色0搜索</span></span><br><span class="line">  <span class="comment">// 整理树上差分数组 变成每个边的统计</span></span><br><span class="line">  <span class="built_in">fill</span>(vis,vis+n+<span class="number">3</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">dfs2</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="type">int</span> id=<span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">if</span> (odd) &#123;<span class="comment">//存在奇环</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,m)&#123;</span><br><span class="line">      <span class="comment">// 需要完全相等 所有已知奇环都覆盖了它, 且没有偶环覆盖了它, proof? 必要性显然, 充分性呢?</span></span><br><span class="line">      <span class="keyword">if</span> (cnt1[i]==odd &amp;&amp; cnt0[i]==<span class="number">0</span>) &#123;</span><br><span class="line">        id = i; <span class="comment">// 任选一条</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (id == <span class="number">-1</span>) &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;NO\n&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//删边</span></span><br><span class="line">    <span class="keyword">auto</span> [u,v] = e[id];</span><br><span class="line">    <span class="built_in">sort</span>(<span class="built_in">all</span>(G[v]));</span><br><span class="line">    <span class="built_in">sort</span>(<span class="built_in">all</span>(G[u]));</span><br><span class="line">    G[u].<span class="built_in">erase</span>(<span class="built_in">lower_bound</span>(<span class="built_in">all</span>(G[u]),<span class="built_in">make_pair</span>(v,<span class="number">-1</span>)));</span><br><span class="line">    G[v].<span class="built_in">erase</span>(<span class="built_in">lower_bound</span>(<span class="built_in">all</span>(G[v]),<span class="built_in">make_pair</span>(u,<span class="number">-1</span>)));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 再次染色</span></span><br><span class="line">  <span class="built_in">fill</span>(c,c+n+<span class="number">3</span>,<span class="number">-1</span>);</span><br><span class="line">  <span class="built_in">dfs3</span>(<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">  <span class="type">int</span> f=(id==<span class="number">-1</span>?<span class="number">0</span>:c[e[id].first]^<span class="number">1</span>); <span class="comment">//保证被删边的端点颜色为1</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;YES\n&quot;</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,c[i]^f);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> T;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;T);</span><br><span class="line">  <span class="keyword">while</span>(T--)<span class="built_in">run</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1-2-3-4,3-1,4-1</span></span><br><span class="line"><span class="comment">// 奇边切 3-1在回边上</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// 1-2-3-4-5, 3-1, 5-1</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// 奇边切 1-2或2-3,在树边上</span></span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
 
 
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>看到max，min有可能去考虑贪心或者说局部最优，比如这里的 山谷形状</p>
-<p>mex是真的自闭</p>
-<p>n看到了3000就算想到了n方dp，没想到上面这些证明也没卵用</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>知识点</p>
+<p>无向图 &#x3D; dfs -&gt; 树+回边</p>
+<p>而一部分无向图的环 &#x3D; 多个树边+一条回边? 也可能由回边组成的环</p>
+<p>树上差分 &#x3D; 记录当前点到根的所有边的统一操作,如+1&#x2F;-1</p>
+<p>学了一手<code>fill()</code>函数,看起来很好用啊</p>
+<p>然后 无向图 树上dfs, 的父边而不是父点 <code>dfs(int u,int fe /*father edge*/)</code></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/102852">官方</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/FelFa_1414666/article/details/124790751">csdn</a> 修复了一些越界和等式操作, 修改了部分变量和包裹逻辑,整体</p>
 
       
     </div>
@@ -1407,7 +727,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2020-01-10-nim-game/">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-05-15-leetcode-weekly-contest-293-D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
@@ -1425,7 +745,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2020-01-10-nim-game/" class="post-title-link" itemprop="url">NIM's GAME</a>
+          <a href="/Blog/2022-05-15-leetcode-weekly-contest-293-D/" class="post-title-link" itemprop="url">leetcode周赛293D (lower_bound,set, 动态开点线段树)</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1436,14 +756,14 @@
       </span>
       <span class="post-meta-item-text">發表於</span>
 
-      <time title="創建時間：2020-01-10 10:37:14" itemprop="dateCreated datePublished" datetime="2020-01-10T10:37:14+08:00">2020-01-10</time>
+      <time title="創建時間：2022-05-15 10:37:14" itemprop="dateCreated datePublished" datetime="2022-05-15T10:37:14+08:00">2022-05-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1451,7 +771,7 @@
       </span>
       <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+          <a href="/Blog/categories/NowCoder/" itemprop="url" rel="index"><span itemprop="name">NowCoder</span></a>
         </span>
     </span>
 
@@ -1464,8 +784,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/Blog/2020-01-10-nim-game/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-01-10-nim-game/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Blog/2022-05-15-leetcode-weekly-contest-293-D/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-05-15-leetcode-weekly-contest-293-D/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1476,14 +796,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>2.2k</span>
+      <span>901</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>2 分鐘</span>
+      <span>1 分鐘</span>
     </span>
 </div>
 
@@ -1494,46 +814,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="入门题目-Bash-Game"><a href="#入门题目-Bash-Game" class="headerlink" title="入门题目(Bash Game)"></a>入门题目(Bash Game)</h1><p>有一堆物品，两人轮流取,每次只能$[1,a]$个，最后取空的赢&#x2F;输，求对策</p>
-<p>假设你的对手取$x$个，有$1\le x \le a$,也就有$1 \le a+1-x \le a$,保证不论对手怎么取$x$，只要你取对应的$a+1-x$个就能保证剩余的个数 对$a+1$ 取模不变</p>
-<p>控制到了不变量(对$a+1$取模不变)也就找到了解题的关键</p>
-<h1 id="NIM-Nim-Game"><a href="#NIM-Nim-Game" class="headerlink" title="NIM(Nim Game)"></a>NIM(Nim Game)</h1><h2 id="NIM-1"><a href="#NIM-1" class="headerlink" title="NIM 1"></a>NIM 1</h2><p>现在是两堆石头（可能相同个数，可能不同），每轮任选一堆，从该堆取任意正数个，最后取空的人赢&#x2F;输</p>
-<p>如果两堆相等，则对方任意取多少，你取相同的，总能维持一个不变<code>两堆的差值为0</code></p>
-<h2 id="NIM-2"><a href="#NIM-2" class="headerlink" title="NIM 2"></a>NIM 2</h2><p>变为n堆石头（每堆数量独立），取法和上题一致，最后取空的人赢&#x2F;输</p>
-<p>假设有偶数堆，且成对的相等，那么用上题的结论，然而，这里我们发现，上题无论初始状态如何，我们都能通过0步或者1步达到我们的平衡的状态&#x2F;不变的状态，而这里如果假设是偶数堆和成对的相等，这样的状态并不是任意可达的。</p>
-<p>对于数据小，又想不到“数学”方法去找平衡态，可以用递归搜索去做，不过不是本文要讲的内容。</p>
-<p>然后是枚举，发现并不是只有上面的状态是必胜&#x2F;必败</p>
-<p>例如有石堆$1 2 3$，也是能做到最后取空的控制，说明 偶数堆且成对相等 和 必胜必败没 不全等只有被包含关系。</p>
-<p>先直接上结论</p>
-<p>所有石头堆的异或值为$0$，显然如果当前为$0$,那么任意操作会使异或值变成非0</p>
-<p>假设异或值为$k \neq 0$，从数量为$a$的堆中取走，最后剩下$b$个，</p>
-<p>那么取走的个数为$a-b \ge 0$,$k \oplus a \oplus b &#x3D; 0$(原来的异或 去掉a 新增b)</p>
-<p>所以$b &#x3D; a \oplus k$也就是要证明存在a使得$a \ge a \oplus k$</p>
-<p>$k$是所有数量的异或结果，所以$k$的最高位$1$一定存在于某个$v[i]$中</p>
-<p>$v[i]$ 和 $v[i]\oplus k$在高于$k$的最高位的位,值是相等的，在$k$的最高位$v[i]$为1,而$v[i]\oplus k$为$0$，所以存在$a &#x3D; v[i]$使得$a \ge a \oplus k$,所以任意异或非$0$的$k$可以一步操作转化为$0$。</p>
-<p>综上任意状态，能够通过0步或者1步转化为异或和为0。并且异或和为0是一个可以交替进行并被控制的平衡态。</p>
-<p>至于为什么是想到异或和，我说不出，这个结论我也是从其它地方拿来，只会证明。</p>
-<p>反过来再看NIM 1,会发现，虽然说是控制值相等，同时也就是控制异或和相等。</p>
-<h1 id="SG-函数"><a href="#SG-函数" class="headerlink" title="SG 函数"></a>SG 函数</h1><p>有向无环图上</p>
-<p>$ \operatorname{mex}(S)&#x3D;\min(\{x\}) \quad (x \notin S, x \in N) $</p>
-<p>$\operatorname{mex}(S) &#x3D; $集合$S$中不包含的最小非负整数</p>
-<p>$ \operatorname{SG}(x)&#x3D;\operatorname{mex}( \{ \operatorname{SG}(y) | y是x的后继 \} ) $</p>
-<p>边界也就是没有出度的点，$\operatorname{SG}(\emptyset)&#x3D;0$</p>
-<p>显然如果$SG(x) &#x3D; 0$，那么它的所有后继$\ne 0$,如果$SG(x) \ne 0$, 那么一定存在一个后继$SG(y) &#x3D; 0$</p>
-<p>换句话说$SG(x) &#x3D; 0$的任意操作走向一个$SG(y) \ne 0$ , 而$SG(x) \ne 0$ 你总可以找到一个操作$SG(y) &#x3D; 0$</p>
-<p>所以一定能控制$SG(x) &#x3D; 0$ 的平衡态，也一定能通过0步，或1步达到这个平衡态。</p>
-<p>所以如果我们用$SG(失败状态) &#x3D; 0$, 然后状态之间加上有向边, 那么以此计算$SG$ 就可以知道每个状态是成功还是失败了</p>
-<h2 id="应用在NIM-2中"><a href="#应用在NIM-2中" class="headerlink" title="应用在NIM 2中"></a>应用在NIM 2中</h2><p>考虑单个石堆游戏</p>
-<p>有 $SG(个数) &#x3D; 个数$</p>
-<p>于是$SG(state(c_1,c_2,c_3,\cdots)) &#x3D; c_1 \oplus c_2 \oplus c_3 \oplus \cdots&#x3D; SG(c_1) \oplus SG(c_2) \oplus SG(c_3) \oplus \cdots$</p>
-<h2 id="对于多个游戏的组合-n个有向图"><a href="#对于多个游戏的组合-n个有向图" class="headerlink" title="对于多个游戏的组合(n个有向图)"></a>对于多个游戏的组合(n个有向图)</h2><p>结论, 一个游戏的$SG$函数值等于各个游戏的$SG$函数值的$Nim$ 和(异或和)</p>
-<p>$\operatorname{SG}(s_1) \oplus \operatorname{SG}(s_2) \oplus \ldots \oplus \operatorname{SG}(s_n)$</p>
-<p>同上面证明NIM 2的过程，假设所有异或和为$k$ (总状态)，我们能得到</p>
-<p>存在至少一个$i$满足$SG(s_i) &gt; SG(s_i)\oplus k$,对于第$i$个游戏，$SG(s_i)\oplus k$是$SG(s_i)$ 的后继状态</p>
-<p>因为注意到$SG$ 是通过$\operatorname{mex}$定义的意味着, 如果$SG(x) &#x3D; w$, 那么 它一步是可以走到$0..w-1$的任意$SG$状态的, 这就是NIM二中的一堆里面任意取个数的意义一样</p>
-<p>所以 $SG(state(s_1,s_2,s_3, \cdots)) &#x3D; SG(s_1)\oplus SG(s_2)\oplus SG(s_3)\oplus \cdots $</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://oi-wiki.org/math/game-theory/">game theory</a></p>
-<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Sprague%E2%80%93Grundy_theorem">Sprague–Grundy_theorem</a></p>
+          <h1 id="set-lower-bound"><a href="#set-lower-bound" class="headerlink" title="set+lower_bound"></a>set+lower_bound</h1><p><a target="_blank" rel="noopener" href="http://www.cplusplus.com/reference/algorithm/lower_bound/">http://www.cplusplus.com/reference/algorithm/lower_bound/</a></p>
+<p>On non-random-access iterators, the iterator advances produce themselves an additional linear complexity in N on average.</p>
+<p>set不支持随机访问,所以std::lower_bound 用在set上就不再是log级别了, 而是均摊n级别了,所以要用set::lower_bound而不是std::lower_bound</p>
+<h1 id="动态开点线段树"><a href="#动态开点线段树" class="headerlink" title="动态开点线段树"></a>动态开点线段树</h1><p>一般来说 空间够常见是开4N大小</p>
+<p>但是如果空间很大但是点是离散的又需要在线处理(不能离线离散化)的情况</p>
+<p>每个点记录左右节点+lazytag+没有节点要访问时,动态开点idx, 查询时对于没有开点的直接返回空,而不是开点</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> idx = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// N 按照预估点数而不是 l r 的范围了</span></span><br><span class="line"><span class="type">int</span> lc[N]; <span class="comment">// 点的左子点</span></span><br><span class="line"><span class="type">int</span> rc[N]; <span class="comment">// 点的右子点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> &amp;o,<span class="type">int</span> l,<span class="type">int</span> r,...)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!o) o = ++idx; <span class="comment">// 动态开点</span></span><br><span class="line">  <span class="keyword">if</span>(l == r)&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">update</span>(lc[o],l,mid,...);</span><br><span class="line">  <span class="built_in">update</span>(rc[o],mid+<span class="number">1</span>,r,...);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">... <span class="built_in">query</span>(<span class="type">int</span> o,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> ql,<span class="type">int</span> qr)&#123;</span><br><span class="line">  <span class="keyword">if</span>(!o)&#123; <span class="comment">// 查询不用创建点</span></span><br><span class="line">    <span class="comment">//....</span></span><br><span class="line">    <span class="keyword">return</span> 空状态;<span class="comment">// </span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(ql &lt;= l &amp;&amp; r &lt;= qr)&#123; <span class="comment">// [ql.. [l..r].. qr]</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="comment">//;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> resl = <span class="built_in">query</span>(lc[o],l,mid,ql,qr);</span><br><span class="line">  <span class="keyword">auto</span> resr = <span class="built_in">query</span>(lr[o],mid+<span class="number">1</span>,r,ql,qr);</span><br><span class="line">  <span class="keyword">return</span> ...;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
 
       
     </div>
@@ -1560,7 +850,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2020-01-09-cf1284E/">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-05-14-nowcoder-11200/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
@@ -1578,7 +868,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2020-01-09-cf1284E/" class="post-title-link" itemprop="url">Codeforces 1284E (计算几何,浮点数)</a>
+          <a href="/Blog/2022-05-14-nowcoder-11200/" class="post-title-link" itemprop="url">nowcoder 牛客挑战赛60,CD+总结(竞赛图, 递推)</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1589,14 +879,14 @@
       </span>
       <span class="post-meta-item-text">發表於</span>
 
-      <time title="創建時間：2020-01-09 10:37:14" itemprop="dateCreated datePublished" datetime="2020-01-09T10:37:14+08:00">2020-01-09</time>
+      <time title="創建時間：2022-05-14 10:37:14" itemprop="dateCreated datePublished" datetime="2022-05-14T10:37:14+08:00">2022-05-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1604,7 +894,7 @@
       </span>
       <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+          <a href="/Blog/categories/NowCoder/" itemprop="url" rel="index"><span itemprop="name">NowCoder</span></a>
         </span>
     </span>
 
@@ -1617,8 +907,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/Blog/2020-01-09-cf1284E/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020-01-09-cf1284E/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Blog/2022-05-14-nowcoder-11200/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-05-14-nowcoder-11200/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1629,14 +919,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>2.6k</span>
+      <span>4k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>2 分鐘</span>
+      <span>4 分鐘</span>
     </span>
 </div>
 
@@ -1647,40 +937,35 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/problem/E">原题链接</a></p>
-<p>2500评分</p>
-<h1 id="大意"><a href="#大意" class="headerlink" title="大意"></a>大意</h1><p>平面上<code>n</code>个点，不存在3个共线,</p>
-<p>对于所有<code>(点p,另外四个点)</code>,如果另外四个点能包围点p则计数+1,对于同样的p和选中的4个点，不论有几种方式，只要能包围就计数+1</p>
-<p>求p依次取遍所有点的计数和</p>
-<h1 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h1><p><code>5&lt;=n&lt;=2500</code>,</p>
-<p><code>3s</code></p>
-<p><code>1024MB</code></p>
-<h1 id="官方题解"><a href="#官方题解" class="headerlink" title="官方题解"></a>官方题解</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/72804">https://codeforces.com/blog/entry/72804</a></p>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>计算几何我就开始自闭了</p>
-<p>最终要求的为<code>sum&#123;是否包围(p,另外四个点)&#125;</code>,反向问题为</p>
-<p><code>sum&#123;是否不包围(p,另外四个点)&#125;</code></p>
-<p>考虑选取总方案为</p>
-<p>$n*C_{n-1}^4$</p>
-<p>如果选取的4个点，对于点p在同一个半圆内，那么选取的4个点无法包围，如果不在同一个半圆内则能包围</p>
-<p>如果选取的4个点在同一个半圆内，则它们以p为顶点，构成的夹角小于180度，则这个夹角上存在顺时针的起始和结束点</p>
-<p>假设选取点p和起始点q1，那么剩余三个点q2,q3,q4,与p和q1构成的夹角应该在0 到180度之间(且保证方向，也就是-0到-180度是不可取的)</p>
-<p>这样对于每一个不包围的4个点，能做到不重不漏的计算</p>
-<p><code>O(p枚举 * 计算几何排序和遍历)</code></p>
-<p>然后 计算几何和浮点数和test9杀我,我浮点数+计算几何 就是过不了，然后换成纯整数处理过了，自闭</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/submission/68477822">accept</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/submission/68473398">68473398 Wrong answer on test 9</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/submission/68473313">68473313 Wrong answer on test 9</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/submission/68473215">68473215 Runtime error on test 9</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/submission/68473189">68473189 Runtime error on test 9</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/submission/68473103">68473103 Runtime error on test 9</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/submission/68473021">68473021 Runtime error on test 9</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/submission/68471693">68471693 Runtime error on test 9</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/submission/68471651">68471651 Runtime error on test 9</a></p>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1284/submission/68471600">68471600 Wrong answer on test 9</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 0x3f3f3f3f3f3f3f3f</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 1000000007</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> foreach(i, v) for (__typeof((v).begin()) i = (v).begin(); i != (v).end(); ++ i)</span></span><br><span class="line"><span class="type">const</span> <span class="type">long</span> <span class="type">double</span> pi = <span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"></span><br><span class="line">pair&lt;ll,ll&gt;xy[<span class="number">3010</span>];</span><br><span class="line">pair&lt;ll,ll&gt;xysort[<span class="number">3010</span>];</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T1</span>, <span class="keyword">class</span> <span class="title class_">T2</span>&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="type">const</span> pair&lt;T1, T2&gt; <span class="keyword">operator</span>-(<span class="type">const</span> pair&lt;T1, T2&gt;&amp;p1, <span class="type">const</span> pair&lt;T1, T2&gt;&amp;p2) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    p1.first - p2.first,</span><br><span class="line">      p1.second - p2.second</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">cross</span><span class="params">(pair&lt;ll,ll&gt; vec1,pair&lt;ll,ll&gt; vec2)</span></span>&#123;</span><br><span class="line">  <span class="keyword">auto</span> [x1,y1] = vec1;</span><br><span class="line">  <span class="keyword">auto</span> [x2,y2] = vec2;</span><br><span class="line">  <span class="keyword">return</span> x1*y2-x2*y1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  ll n;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;n);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    ll x,y;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lld %lld&quot;</span>,&amp;x,&amp;y);</span><br><span class="line">    xy[i] = &#123;x,y&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  ll res = n * ((n<span class="number">-1</span>) * (n<span class="number">-2</span>) * (n<span class="number">-3</span>) * (n<span class="number">-4</span>) / (<span class="number">1</span>*<span class="number">2</span>*<span class="number">3</span>*<span class="number">4</span>));</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,n)&#123;</span><br><span class="line">      <span class="keyword">if</span>(i == j)<span class="keyword">continue</span>;</span><br><span class="line">      xysort[j&gt;i?j<span class="number">-1</span>:j] = xy[j];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sort</span>(xysort+<span class="number">1</span>,xysort+n<span class="number">-1</span>,</span><br><span class="line">        [i](<span class="type">const</span> pair&lt;ll,ll&gt;p0,<span class="type">const</span> pair&lt;ll,ll&gt;p1) -&gt; <span class="type">bool</span>&#123;</span><br><span class="line">        ll cross0 = <span class="built_in">cross</span>(p0-xy[i],xysort[<span class="number">0</span>]-xy[i]);</span><br><span class="line">        ll cross1 = <span class="built_in">cross</span>(p1-xy[i],xysort[<span class="number">0</span>]-xy[i]);</span><br><span class="line">        <span class="keyword">if</span>(cross0 &gt;=<span class="number">0</span> &amp;&amp; cross1 &lt; <span class="number">0</span>)&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cross0 &lt; <span class="number">0</span> &amp;&amp; cross1 &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ll cross01=<span class="built_in">cross</span>(p0-xy[i],p1-xy[i]);</span><br><span class="line">        <span class="keyword">return</span> cross01 &lt;= <span class="number">0</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">    <span class="type">int</span> index = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 四个点的起始点,首尾游标</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,n<span class="number">-1</span>)&#123;</span><br><span class="line">      <span class="keyword">while</span>(index &lt; j + n<span class="number">-1</span>)&#123;</span><br><span class="line">        ll crossij = <span class="built_in">cross</span>(xysort[index%(n<span class="number">-1</span>)]-xy[i],xysort[j]-xy[i]);</span><br><span class="line">        <span class="keyword">if</span>(crossij &gt;= <span class="number">0</span> )&#123;</span><br><span class="line">          index++;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// C_cnt^3</span></span><br><span class="line">      ll cnt = index - j - <span class="number">1</span>;</span><br><span class="line">      res -= (cnt * (cnt - <span class="number">1</span>) * (cnt - <span class="number">2</span>)) / (<span class="number">1</span>*<span class="number">2</span>*<span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,res);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="比赛总结"><a href="#比赛总结" class="headerlink" title="比赛总结"></a>比赛总结</h1><p>比赛id 11200</p>
+<p>B:</p>
+<p>数组空间没开够等未定义行为,不会像Codeforces报overflow等,而是默认执行报WA.</p>
+<p>D:</p>
+<p>TLE+WA 只会报WA</p>
+<p>竞赛图不能创造大小为2的scc</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @author      : cromarmot (yexiaorain@gmail.com)</span></span><br><span class="line"><span class="comment"> * @file        : D</span></span><br><span class="line"><span class="comment"> * @created     : 星期五 5月 13, 2022 20:35:36 CST</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 竞赛图 任意不同两点间都有恰好一条单向边</span></span><br><span class="line"><span class="type">int</span> n,m; <span class="comment">// n 1e5, m 2e5</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt;p2[<span class="number">100010</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// scc -&gt; 成链?</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Tarjan</span>&#123;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; low;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; dfn;</span><br><span class="line">  stack&lt;<span class="type">int</span>&gt; stk;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">  <span class="type">int</span> n;</span><br><span class="line">  <span class="type">int</span> id = <span class="number">0</span>;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">scc</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">    low[v] = dfn[v] = ++id;</span><br><span class="line">    stk.<span class="built_in">push</span>(v);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> w:p2[v])&#123;</span><br><span class="line">      <span class="keyword">if</span>(!dfn[w])&#123; <span class="comment">// 未访问过</span></span><br><span class="line">        <span class="built_in">scc</span>(w);</span><br><span class="line">        low[v] = <span class="built_in">min</span>(low[v],low[w]);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span>(!res[w])&#123; <span class="comment">// 访问过但没有结果(在栈中)</span></span><br><span class="line">        low[v] = <span class="built_in">min</span>(low[v],dfn[w]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> u;</span><br><span class="line">    <span class="keyword">if</span>(low[v] == dfn[v])  &#123;</span><br><span class="line">      <span class="keyword">do</span>&#123;</span><br><span class="line">        res[u = stk.<span class="built_in">top</span>()] = v;</span><br><span class="line">        stk.<span class="built_in">pop</span>();</span><br><span class="line">      &#125;<span class="keyword">while</span>(u != v);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">Tarjan</span>(<span class="type">int</span> SZ):<span class="built_in">n</span>(SZ)&#123;</span><br><span class="line">    low = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    dfn = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    stk = &#123;&#125;;</span><br><span class="line">    res = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; (n+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">calc</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(!res[i])&#123;</span><br><span class="line">        <span class="built_in">scc</span>(i);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; p3[<span class="number">100010</span>];</span><br><span class="line"><span class="type">int</span> du[<span class="number">100010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">work</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">  <span class="function">Tarjan <span class="title">tarjan</span><span class="params">(n)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    p2[i] = &#123;&#125;;</span><br><span class="line">    p3[i] = &#123;&#125;;</span><br><span class="line">    du[i] = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m)&#123;</span><br><span class="line">    <span class="type">int</span> u,v;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;u,&amp;v);</span><br><span class="line">    p2[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// a-&gt;b / b-&gt;a 至少满足一条</span></span><br><span class="line">  <span class="comment">// scc 成链? 唯一拓扑顺序</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; num = tarjan.<span class="built_in">calc</span>(); <span class="comment">// scc 联通分量 标识</span></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">sccsz</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    sccsz[num[i]]   ++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(sccsz[i] == <span class="number">2</span>)&#123;</span><br><span class="line">      <span class="comment">// 竞赛图不能创造大小为2的scc!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span></span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;NO\n&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// rep(i,1,n+1)&#123;</span></span><br><span class="line">  <span class="comment">//   printf(&quot;scc: %lld: %d\n&quot;,i,num[i]);</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">  <span class="comment">// 转化为联通分量关系</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> item:p2[i])&#123;</span><br><span class="line">      <span class="keyword">if</span>(num[i] == num[item])<span class="keyword">continue</span>;</span><br><span class="line">      p3[num[i]].<span class="built_in">push_back</span>(num[item]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(num[i] != i)<span class="keyword">continue</span>;</span><br><span class="line">    <span class="built_in">sort</span>(p3[i].<span class="built_in">begin</span>(),p3[i].<span class="built_in">end</span>());</span><br><span class="line">    <span class="type">int</span> itr = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,(<span class="type">int</span>)p3[i].<span class="built_in">size</span>())&#123;</span><br><span class="line">      <span class="keyword">if</span>(j==<span class="number">0</span> || p3[i][j] != p3[i][j<span class="number">-1</span>])&#123; <span class="comment">// 去重</span></span><br><span class="line">        p3[i][itr++] = p3[i][j];</span><br><span class="line">        <span class="comment">// i -&gt; p3[i][j]</span></span><br><span class="line">        du[p3[i][j]]++; <span class="comment">// 入度</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    p3[i].<span class="built_in">resize</span>(itr);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 拓扑 联通分量中 唯一顺序</span></span><br><span class="line">  <span class="comment">// 入度为0</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; d0;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(num[i] != i)<span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">if</span>(du[i] == <span class="number">0</span>)d0.<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>(d0.<span class="built_in">size</span>()) &#123; <span class="comment">// == 1</span></span><br><span class="line">    <span class="keyword">if</span>(d0.<span class="built_in">size</span>() &gt; <span class="number">1</span>)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;NO\n&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> i = d0[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">// printf(&quot;D0:%d\n&quot;,i);</span></span><br><span class="line">    d0.<span class="built_in">pop_back</span>();</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,(<span class="type">int</span>)p3[i].<span class="built_in">size</span>())&#123;</span><br><span class="line">      <span class="comment">// i -&gt; p3[i][j]</span></span><br><span class="line">      du[p3[i][j]]--;</span><br><span class="line">      <span class="keyword">if</span>(du[p3[i][j]] == <span class="number">0</span>)&#123;</span><br><span class="line">        d0.<span class="built_in">push_back</span>(p3[i][j]);</span><br><span class="line">        <span class="keyword">if</span>(d0.<span class="built_in">size</span>() &gt; <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;NO\n&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;YES\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> t;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;t);</span><br><span class="line">  <span class="keyword">while</span>(t--)&#123;</span><br><span class="line">    <span class="built_in">work</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>1是想到反向计算，我一直在想算三角形然后带其它点，再容斥，就没想出来</p>
-<p>2是浮点数精度，哎自闭，还是整数香</p>
+<h1 id="C题目"><a href="#C题目" class="headerlink" title="C题目"></a>C题目</h1><p><a target="_blank" rel="noopener" href="https://ac.nowcoder.com/acm/contest/11200/C">https://ac.nowcoder.com/acm/contest/11200/C</a></p>
+<h1 id="大意"><a href="#大意" class="headerlink" title="大意"></a>大意</h1><p>从1开始</p>
+<ol>
+<li>每次可以移动 x &#x3D; x+1</li>
+<li>如果当前格子未被染色, 则染色当前格子并且设置 x &#x3D; a[x]</li>
+</ol>
+<p>a[x]保证非严格单调递增</p>
+<p>n&lt;&#x3D;1e6</p>
+<p>输出把所有格子都染色的方案数</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>设 f(x)把前x个格子全部染色的方案数, 注意到虽然顺序上可能 在染前x个格子过程中,已经把后面的格子染色了,但是后面这个被染色的不计入方案统计</p>
+<ul>
+<li>x 如果是最后一个被染色的,那么方案数为f(x-1)</li>
+<li>x 如果不是最后一个被染色的, 那么对于f(x-1)中, 相当于 <code>? -&gt; x -&gt; y</code>, $y \in [a_x,x-1]$, 所以它可以放在$x-a_x$个位置的前面</li>
+</ul>
+<p>所以方案数 &#x3D; $\prod_{i&#x3D;1}^n(i-a_i+1)$</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 1000000007</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi = <span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> a[<span class="number">1000010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ll ans = <span class="number">1</span>;</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,a+i);</span><br><span class="line">    <span class="keyword">if</span>(i-a[i]+<span class="number">1</span> &lt;= <span class="number">0</span>)&#123;</span><br><span class="line">      ans = <span class="number">0</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      (ans*=i-a[i]+<span class="number">1</span>)%=MOD;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>状态转移的过程中, 对于上面这种,实际上也可以和方案描述不一致, 统计的时候不会包含超过当前位置的移动方案,而后面的移动方案是可以等价的插入到前面的方案中的(才可以乘法)</p>
+<p>不过现在好的是,我能判断这个类型算是数学和转移的题了,也想到这样设计状态,但是没有细想</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://ac.nowcoder.com/discuss/952589">https://ac.nowcoder.com/discuss/952589</a></p>
 
       
     </div>
@@ -1700,7 +985,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/Blog/page/11/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/Blog/">1</a><a class="page-number" href="/Blog/page/5/">5</a><a class="page-number" href="/Blog/page/9/">9</a><a class="page-number" href="/Blog/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/Blog/page/13/">13</a><a class="page-number" href="/Blog/page/15/">15</a><a class="page-number" href="/Blog/page/18/">18</a><a class="extend next" rel="next" href="/Blog/page/13/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/Blog/page/11/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/Blog/">1</a><a class="page-number" href="/Blog/page/5/">5</a><a class="page-number" href="/Blog/page/9/">9</a><a class="page-number" href="/Blog/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/Blog/page/13/">13</a><a class="page-number" href="/Blog/page/15/">15</a><a class="page-number" href="/Blog/page/19/">19</a><a class="page-number" href="/Blog/page/27/">27</a><a class="page-number" href="/Blog/page/35/">35</a><a class="extend next" rel="next" href="/Blog/page/13/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 </div>

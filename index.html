@@ -260,7 +260,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -308,6 +308,7 @@
     </span>
 </div>
 
+            <div class="post-description">G(Möbius函数)H()</div>
         </div>
       </header>
 
@@ -315,10 +316,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>G(Möbius函数)H()</p>
+          <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc230/tasks">https://atcoder.jp/contests/abc230/tasks</a></p>
+<h1 id="G-GCD-Permutation"><a href="#G-GCD-Permutation" class="headerlink" title="G - GCD Permutation"></a>G - GCD Permutation</h1><p>给一个1~N的排列p</p>
+<p>问有多少个有序对 (i,j), (i&lt;&#x3D;j), 满足 gcd(i,j) !&#x3D; 1, gcd(p[i],p[j]) !&#x3D; 1</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>5s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>有点想暴力 然后证明复杂度?</p>
+<p>对于 (i,Pi), 取两个中较小的一个, 找所有包含它下标的, 用较大的去验证gcd</p>
+<p>最多有6个不同质数因子, 最坏情况 1&#x2F;2+1&#x2F;3+1&#x2F;5+1&#x2F;7+1&#x2F;11+1&#x2F;13 &#x3D; 1.3左右</p>
+<p>所以最坏情况是 找n个坐标</p>
+<p>先写个代码再说</p>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc230/submissions/34500571">https://atcoder.jp/contests/abc230/submissions/34500571</a></p>
+<hr>
+<p>显然 有很多是2 的倍数的,它们如果每个都会去访问n&#x2F;2, 那么已经就是n^2了, 肯定会超时</p>
+<hr>
+<p>想法就是 如果 (2的倍数,3的倍数) 之类做容斥? 但是我容斥完全不会</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2022-09-01-ac-abc230/">
+              <a class="btn" href="/Blog/2022-09-01-ac-abc230/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -385,7 +401,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -433,6 +449,7 @@
     </span>
 </div>
 
+            <div class="post-description">G(二分)H(博弈论,非公平博弈论, surreal number)</div>
         </div>
       </header>
 
@@ -440,10 +457,37 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>G(二分)H(博弈论,非公平博弈论, surreal number)</p>
+          <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc229/tasks">https://atcoder.jp/contests/abc229/tasks</a></p>
+<h1 id="G-Longest-Y"><a href="#G-Longest-Y" class="headerlink" title="G - Longest Y"></a>G - Longest Y</h1><p>一个包含字符’Y’和’.’的长n字符串S,</p>
+<p>可以操作[0,k] 次,交换S中的两个相邻字符</p>
+<p>问可以得到的最终S的内部最长的连续Y的长度</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>k 1e12</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>考虑移动</p>
+<p>最终假设是[l..r]</p>
+<p>那么对于初始这些y的位置的大范围是[l0..r0]</p>
+<p>那么一定可以分成两部分</p>
+<p><code>[l0..m0][m0+1..r0]</code></p>
+<p>一部分向右,一部分向左</p>
+<p>显然有个点不需要动</p>
+<p>如果选定了第i个点p[i]和期望个数c那么,移动代价为<code>min( 左侧k0, 右侧k1个), k0+k1+1=c</code></p>
+<p><code> = min(sum(p[i]-k0..p[i]-1) - sum(p[i-k0]..p[i-1]) + sum(p[i+1]..p[i+k1]) - sum(p[i]+1..p[i]+k1))</code></p>
+<hr>
+<p>换个角度</p>
+<p>所有值变成<code>p[i]-cnt1[i]</code></p>
+<p>那么就是找一个值,  尽量多的数变成它, 且代价和 &lt;&#x3D; K</p>
+<p>显然每多一个,代价的增量是非严格递增的</p>
+<p>是个凸函数(下凹)</p>
+<hr>
+<p>但感觉, 这样看起来, 其实左侧右侧影响不大,而是距离影响更大,</p>
+<p>所以直接枚举中点,二分距离(选定的点的最大距离) &#x3D;&gt; 去计算距离和范围,以及点数范围</p>
+<p>这里 &lt; 距离的必选, &gt;距离必定不选, &#x3D;距离可选可不选</p>
+<p>似乎就没了?</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2022-08-31-ac-abc229/">
+              <a class="btn" href="/Blog/2022-08-31-ac-abc229/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -510,7 +554,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -558,6 +602,7 @@
     </span>
 </div>
 
+            <div class="post-description">F(博弈论,矩阵,二维前缀和,st表)G(DP,bitmask)H(DP,斜率优化)</div>
         </div>
       </header>
 
@@ -565,10 +610,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>F(博弈论,矩阵,二维前缀和,st表)G(DP,bitmask)H(DP,斜率优化)</p>
+          <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc228/tasks">https://atcoder.jp/contests/abc228/tasks</a></p>
+<h1 id="F-Stamp-Game"><a href="#F-Stamp-Game" class="headerlink" title="F - Stamp Game"></a>F - Stamp Game</h1><p>w乘h的矩阵初始全白色,每个有数字aij</p>
+<p>T 可以染黑 h1 w1</p>
+<p>A 可以染白 h2 w2</p>
+<p>T 操作一次, S操作一次</p>
+<p>分数&#x3D; 黑色块之和</p>
+<p>T 让尽可能大, A让T尽可能小, 求答案</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>h,w 1000</p>
+<p>aij [1,1e9]</p>
+<p>2s 1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>感觉就是二维常见运算</p>
+<p>因为长度如果超了长度, 可以贪心把对应位置全覆盖,可以取min, h2&#x3D;min(h2,h1), w2&#x3D;min(w2,w1)</p>
+<p>ans &#x3D; max(f(i,j))</p>
+<p>f(i,j) &#x3D; sum(i,j) - max(g((range))</p>
+<p>应该就过了吧</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2022-08-30-ac-abc228/">
+              <a class="btn" href="/Blog/2022-08-30-ac-abc228/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -635,7 +694,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -683,6 +742,7 @@
     </span>
 </div>
 
+            <div class="post-description">D(数学)E(DP)F(DP,第k大)G(数筛)H(欧拉回路,网络流)</div>
         </div>
       </header>
 
@@ -690,10 +750,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>D(数学)E(DP)F(DP,第k大)G(数筛)H(欧拉回路,网络流)</p>
+          <p>这场UI还有红色特效</p>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc227/tasks">https://atcoder.jp/contests/abc227/tasks</a></p>
+<h1 id="D-Project-Planning"><a href="#D-Project-Planning" class="headerlink" title="D - Project Planning"></a>D - Project Planning</h1><p>长n数组a</p>
+<p>每次选k个不同的下标, 让值减1,(保证所有值非负), 求多减的次数</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>ai [1..1e12]</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>感觉如果数据量小,每次最大k个下标减1</p>
+<p>但这样每次要排序, 而且ai很大</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2022-08-28-ac-abc227/">
+              <a class="btn" href="/Blog/2022-08-28-ac-abc227/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -760,7 +829,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
+      <time title="修改時間：2022-09-02 12:56:32" itemprop="dateModified" datetime="2022-09-02T12:56:32+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -808,6 +877,7 @@
     </span>
 </div>
 
+            <div class="post-description">C(数学,组合数,集合,DP)</div>
         </div>
       </header>
 
@@ -815,631 +885,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>C(数学,组合数,集合,DP)</p>
+          <h1 id="C-Even-XOR"><a href="#C-Even-XOR" class="headerlink" title="C - Even XOR"></a>C - Even XOR</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc146/tasks/arc146_c">https://atcoder.jp/contests/arc146/tasks/arc146_c</a></p>
+<p>求多少个 元素值范围在[0,2^N)的集合满足</p>
+<p>集合的任意偶数个数的非空子集合,元素xor均不为0</p>
+<p>mod 998244353</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>先是在想 线性基, 但实际上 1 2 3 4, 也是合法的, 因为, 虽然3可以由2线性表出,但是它们是3个不是偶数个</p>
+<hr>
+<p>然后想转移 n -&gt; n+1</p>
+<p>显然集合合法,它的子集也是合法</p>
+<p>如果n 合法的方案, 拆一部分 高位填,0 另一部分高位填1, 这样的方案一定是合法, 那么 <code>ans[n][len]</code> 乘<code>2^len</code>, 贡献到<code>a[n+1][len]</code></p>
+<p>如果对于n合法,必定不存在 a,a+高位,b,b+高位 同时存在的情况, 因此至多有一个 自身和自身+高位同时存在</p>
+<p>那么考虑 合法的选定一个 做这种自身和高位都存在, 剩下的依然拆分, 这样依然是合法的, <code>ans[n][len] * len * 2^&#123;len-1&#125;</code> 贡献到<code>a[n+1][len+1]</code></p>
+<hr>
+<p>然后这样似乎能多次做路径计算+组合数可以做</p>
+<p>但是问题是 这样算出来 n&#x3D;3时答案&#x3D;141, 而正确的是149</p>
+<p>也就是漏情况了</p>
+<p>可能存在 不合法的n的方案 但是赋予高位0,1 以后变成n+1的方案 就合法了?</p>
+<p>那么就是任意在n中 的 xor(A)^xor(B) &#x3D; 0, </p>
+<p>在n+1中 &#x3D; xor(A)^xor(B+高位) &#x3D; 高位</p>
+<p>也就是n+1 中所有低位产生xor &#x3D; 0 的必然对应的高位个数是奇数</p>
+<p>不会推了</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/Blog/2022-08-21-ac_arc146/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-08-13-ac_abc226/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-08-13-ac_abc226/" class="post-title-link" itemprop="url">Atcoder abc226</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-08-13 04:25:14" itemprop="dateCreated datePublished" datetime="2022-08-13T04:25:14+08:00">2022-08-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2022-08-13-ac_abc226/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-08-13-ac_abc226/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>8.4k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>8 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>F(DP,组合数,gcd)G(贪心)H(概率论,微积分)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-08-13-ac_abc226/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-08-12-generate_function/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-08-12-generate_function/" class="post-title-link" itemprop="url">maspy 生成方程与问题解决</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-08-12 22:24:00" itemprop="dateCreated datePublished" datetime="2022-08-12T22:24:00+08:00">2022-08-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2022-08-12-generate_function/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-08-12-generate_function/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>6.7k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>6 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>生成方程</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-08-12-generate_function/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-08-11-ac_abc225/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-08-11-ac_abc225/" class="post-title-link" itemprop="url">Atcoder abc225</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-08-11 04:25:14" itemprop="dateCreated datePublished" datetime="2022-08-11T04:25:14+08:00">2022-08-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2022-08-11-ac_abc225/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-08-11-ac_abc225/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>12k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>11 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>F(字符串,偏序,DP,倒着DP,局部性)G(题意转化,最小割,最大流)H(NTT,FFT,生成方程,分治,归并)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-08-11-ac_abc225/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-08-10-ac_abc224/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-08-10-ac_abc224/" class="post-title-link" itemprop="url">Atcoder abc224</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-08-10 04:25:14" itemprop="dateCreated datePublished" datetime="2022-08-10T04:25:14+08:00">2022-08-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2022-08-10-ac_abc224/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-08-10-ac_abc224/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>3.5k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>3 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>G(概率论,二分)H(线性规划,对偶问题,费用流,MCMF)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-08-10-ac_abc224/">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-08-09-ac_abc223/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
-      <meta itemprop="name" content="Xiao Ye">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/Blog/2022-08-09-ac_abc223/" class="post-title-link" itemprop="url">Atcoder abc223</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-08-09 04:25:14" itemprop="dateCreated datePublished" datetime="2022-08-09T04:25:14+08:00">2022-08-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-02 11:53:44" itemprop="dateModified" datetime="2022-09-02T11:53:44+08:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/Blog/2022-08-09-ac_abc223/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-08-09-ac_abc223/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>3.1k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>3 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>G(树,dp,换根dp)H(线性基)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Blog/2022-08-09-ac_abc223/">
+              <a class="btn" href="/Blog/2022-08-21-ac_arc146/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1463,7 +931,7 @@
 
 
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/Blog/page/2/">2</a><a class="page-number" href="/Blog/page/4/">4</a><a class="page-number" href="/Blog/page/8/">8</a><a class="page-number" href="/Blog/page/16/">16</a><a class="page-number" href="/Blog/page/18/">18</a><a class="extend next" rel="next" href="/Blog/page/2/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/Blog/page/2/">2</a><a class="page-number" href="/Blog/page/4/">4</a><a class="page-number" href="/Blog/page/8/">8</a><a class="page-number" href="/Blog/page/16/">16</a><a class="page-number" href="/Blog/page/32/">32</a><a class="page-number" href="/Blog/page/35/">35</a><a class="extend next" rel="next" href="/Blog/page/2/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 </div>
