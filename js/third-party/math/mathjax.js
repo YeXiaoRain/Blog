@@ -16,6 +16,8 @@ document.addEventListener('page:loaded', () => {
               const target = node.parentNode;
               if (target.nodeName.toLowerCase() === 'li') {
                 target.parentNode.classList.add('has-jax');
+              }else{
+                target.classList.add('has-jax');
               }
             });
           }, '', false]
