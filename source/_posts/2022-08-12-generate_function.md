@@ -29,6 +29,8 @@ description: 生成方程
 
 $\lbrack x^n \rbrack (x^2+x^3)(x^2+x^4)(x^3+x^5+x^7)$, 就是乘开后$n$次项的系数
 
+<!--more-->
+
 > 问题2. $a \le 2,b\le 3,c\le 4, a+b+c = n$ 有多少种
 
 $\lbrack x^n \rbrack (1+x+x^2)(1+x+x^2+x^3)(1+x+x^2+x^3+x^4)$

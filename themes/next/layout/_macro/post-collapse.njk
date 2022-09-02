@@ -29,7 +29,18 @@
         {% else %}
           <a class="post-title-link" href="{{ url_for(post.path) }}" itemprop="url">
             <span itemprop="name">{{ post.title or __('post.untitled') }}</span>
+            {%- if post.description %}
+              <span itemprop="description" class="desc">{{ post.description or '' }}</span>
+            {%- endif %}
           </a>
+        {%- endif %}
+        {%- if post.tags and post.tags.length %}
+          {%- set tag_indicate = '<i class="fa fa-tag"></i>' if theme.tag_icon else '#' %}
+          <div class="post-title-tags">
+            {%- for tag in post.tags.toArray() %}
+              <a href="{{ url_for(tag.path) }}" rel="tag">{{ tag_indicate }} {{ tag.name }}</a>
+            {%- endfor %}
+          </div>
         {%- endif %}
       </div>
 
