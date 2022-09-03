@@ -12922,14 +12922,14 @@
         <tag>网络流</tag>
         <tag>FFT</tag>
         <tag>字符串</tag>
+        <tag>生成函数</tag>
         <tag>分治</tag>
         <tag>NTT</tag>
-        <tag>生成方程</tag>
         <tag>归并</tag>
       </tags>
   </entry>
   <entry>
-    <title>maspy 生成方程与问题解决</title>
+    <title>maspy 生成函数与问题解决</title>
     <url>/Blog/2022-08-12-generate_function/</url>
     <content><![CDATA[<h1 id="生成方程"><a href="#生成方程" class="headerlink" title="生成方程"></a>生成方程</h1><p>感谢google翻译和maspy大佬的几篇博客, 见下方链接</p>
 <p>用很多例子来实例如何使用 多项式乘积</p>
@@ -13124,7 +13124,7 @@
         <category>algorithm</category>
       </categories>
       <tags>
-        <tag>生成方程</tag>
+        <tag>生成函数</tag>
       </tags>
   </entry>
   <entry>
@@ -13810,6 +13810,7 @@
     <title>Atcoder abc230</title>
     <url>/Blog/2022-09-01-ac-abc230/</url>
     <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc230/tasks">https://atcoder.jp/contests/abc230/tasks</a></p>
+<p>$\alpha_ t&#x3D;f_ {\alpha}(x_t)$</p>
 <h1 id="G-GCD-Permutation"><a href="#G-GCD-Permutation" class="headerlink" title="G - GCD Permutation"></a>G - GCD Permutation</h1><p>给一个1~N的排列p</p>
 <p>问有多少个有序对 (i,j), (i&lt;&#x3D;j), 满足 gcd(i,j) !&#x3D; 1, gcd(p[i],p[j]) !&#x3D; 1</p>
 <h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
@@ -13884,16 +13885,160 @@
 <p>h(x) &#x3D; 多个块总重量为x的方案数</p>
 <p>像生成函数, 但不会了</p>
 <h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>这里也提到了上次的222H</p>
+<p>上次讲了些技术向的, 这次讲一些直觉向的</p>
+<hr>
+<p>上次写了生成方程, 希望an是它的系数, 但没明白讲, 如何用生成方程统计个数</p>
+<p>它这用三种区别</p>
+<p>序列 小写字母</p>
+<p>生成方程 大写字母</p>
+<p>集合 书法体大写字母</p>
+<hr>
+<p>简单例子, A每种ai个,每个i元,B卖bj个每个j元</p>
+<ol>
+<li><p>只从A或只从B买一个,可能的方案</p>
+</li>
+<li><p>从A和B买各买一个,可能的方案</p>
+</li>
+</ol>
+<p>更具体</p>
+<p>A, 1元的一个,2元的一个</p>
+<p>B, 1元的一个,3元的一个</p>
+<p>看成两个集合$\mathcal{A} &#x3D; \lbrace 1, 2 \rbrace ,\mathcal{B} &#x3D; \lbrace 1^\ast , 3^\ast \rbrace.$</p>
+<p>对于 1) 就是 $\mathcal{A} +\mathcal{B} &#x3D; \lbrace 1, 2 , 1^\ast , 3^\ast \rbrace $</p>
+<p>对于 2) 就是 $\mathcal{A} \times \mathcal{B} &#x3D; \lbrace 1, 2 \rbrace \times \lbrace 1^\ast , 3^\ast \rbrace &#x3D; \lbrace (1,1^\ast), (1,3^\ast), (2,1^\ast), (2,3^\ast) \rbrace$</p>
+<p>这是直接从集合角度的方案</p>
+<p>考虑, 用生成方程</p>
+<p>$A(x) &#x3D; \sum_{i} a_i x^i &#x3D; x^1+x^2 $</p>
+<p>$B(x) &#x3D; \sum_{j} b_j x^j &#x3D; x^1+x^3 $</p>
+<p>对于 1) 也是 $C &#x3D; A+B$, 幂次对应系数相加</p>
+<p>对于 2) 也是 $D &#x3D; A\times B$, 幂次对应系数 的乘积组成新的 和幂次 的系数</p>
+<p>这里也就是 集合的操作 和 生成函数操作之间是对应的</p>
+<hr>
+<p>例子2</p>
+<p>爬山,每次1步或者2步, 问爬到n步的方案数</p>
+<p>设集合$\mathcal{F} $ 表示任意步数的序列</p>
+<p>那么有$\mathcal{F} &#x3D; \lbrace \emptyset \rbrace + \lbrace (1) \rbrace \times \mathcal{F}+ \lbrace (2) \rbrace \times \mathcal{F}$, 表示不走, 第一次走一步以后的所有情况,第一次走两步以后的所有情况</p>
+<p>对应的生成方程$F(x) &#x3D; 1x^0 + F(x)x^1 + F(x)x^2$</p>
+<p>提取有$F(x) \frac{1}{1-x-x^2}$</p>
+<p>实际上也就是 $F(x) &#x3D; 1 + x + 2x^2 + 3x^3 + 5x^4 + 8x^5 + \dots$, ( 这里生成方程的转换好像需要点啥知识? 不会)</p>
+<p>其实就是系数是fibonacci数列</p>
+<p>这里说 生成方程 其实是一个 最小的必要信息容器,</p>
+<p>但不要过于依赖, 因为有时问题就算靠生成方程得到了系数表达式, 也难以计算</p>
+<h3 id="组合结构与函数组合Combinatorial-“structure”-and-function-composition"><a href="#组合结构与函数组合Combinatorial-“structure”-and-function-composition" class="headerlink" title="组合结构与函数组合Combinatorial “structure” and function composition"></a>组合结构与函数组合Combinatorial “structure” and function composition</h3><p>前面讲了 $+$ 和 $\times$ 的操作, 现在讲<code>build block</code></p>
+<p>要被计数的通常是组合的样子, 可以看成 C(集合) &#x3D; 方案数</p>
+<p>如果能得到C的表达式,那么把要求的传进去就能有答案</p>
+<p>然后就是 decompose的想法</p>
+<p>例如$SEQ(\mathcal{A})$ 表示 一个包含任意个 元素取自A中 的 序列</p>
+<p>$\mathrm{SEQ}(\mathcal{A}) &#x3D; \mathcal{E} + \mathcal{A} + \mathcal{A} \times \mathcal{A} + \mathcal{A} \times \mathcal{A} \times \mathcal{A} + \dots &#x3D; \sum_{i&#x3D;0}^\infty \mathcal{A}^i.$</p>
+<p>因此对应的生成方程为</p>
+<p>$S(x) &#x3D; 1 + A(x) + A(x)^2 + \dots &#x3D; \sum_{i&#x3D;0}^\infty A(x) &#x3D; \frac{1}{1 - A(x)}$</p>
+<p>例如上面的 爬山 ,就是$\mathcal{A} &#x3D; \lbrace 1,2 \rbrace, A(x) &#x3D; x^1+x^2$, 带入也能得到上面的式子</p>
+<hr>
+<p>现在考虑另外一个例子</p>
+<p>2维,从$(0,0)$出发 每次选择非0,$a,b\ge 0$ 的整值, 做 $(x,y) \to (x+a,x+y)$的移动, 问移动到$(N,N)$的方案数</p>
+<p>但如果从结构上去看</p>
+<p>对于每一步, 对应的集合是$\mathcal{A} &#x3D; (\mathcal{E} + \mathcal{H} + \mathcal{H}^2 + \dots) \times (\mathcal{E} + \mathcal{W} + \mathcal{W}^2 + \dots) - \mathcal{E}$, 分别一个表示横向一个纵向走一步,走非0的正整距离</p>
+<p>$&#x3D; \mathrm{SEQ}(\mathcal{H}) \times \mathrm{SEQ}(\mathcal{W}) - \mathcal{E}.$ (这里减的定义就是 加 逆元意义</p>
+<p>注意到$\mathcal{H} &#x3D; \lbrace 1 \rbrace$, 其 对应生成方程$H(x) &#x3D; x^1$</p>
+<p>因此$\mathcal{A}$对应生成方程$A(x,y) &#x3D; \frac{1}{(1-x)(1-y)} - 1$, 这是每一步的生成方程(如何解读1步的生成方程? 其实和集合对应 就是如果方程展开成非负幂次, 不同加项之间选且只能选一个, 展开后x的幂次与纵向步数相关,y的幂次和横向步数相关, 有一点就是永远不要想去带入x和y什么值 得到A的运算结果, 应该把x,y 看成无法和系数,幂次合并的特殊符号)</p>
+<p>而 走任意步的集合是$SEQ(\mathcal{A})$</p>
+<p>所以任意步的生成方程是</p>
+<p>$F(x,y) &#x3D; \frac{1}{1-A(x,y)} &#x3D; \frac{(1-x)(1-y)}{1-2x-2y+2xy}$</p>
+<p>要求的就是它的$\lbrack x^Ny^N \rbrack$</p>
+<p>技巧是拆掉分子, 分母还原成无穷等比的和, 再套二项式</p>
+<h3 id="可重集合的结构"><a href="#可重集合的结构" class="headerlink" title="可重集合的结构"></a>可重集合的结构</h3><p>令$MULTISET(\mathcal{A})$ 表示元素都取自$\mathcal{A}$ 的可重集合</p>
+<p>$A(x)$ 为原集合的生成方程</p>
+<p>那么有可重集合的生成方程为$B(x) &#x3D; exp \left( \sum_{0 &lt; k} \frac{A(x^k)}{k}\right)$</p>
+<hr>
+<p>证明:</p>
+<p>考虑问题, 很多球, 重$w$的球有$a_w$种, 同一种球无法区分</p>
+<p>考虑选一些球, $b_w$ &#x3D;重量和为$w$的方案数量</p>
+<p>$A,B$分别是$a,b$的生成方程</p>
+<hr>
+<p>考虑简单情况, 全部的重量都是1, 那么选一个的生成方程是$a_1x^1$</p>
+<p>令$r&#x3D;a_1$, 表示种数</p>
+<p>那么其实选的方案用集合表示是</p>
+<p>$\begin{aligned} &amp;(\mathcal{E}+\mathcal{C}_ 1+\mathcal{C}_ 1^2 + \dots) \times (\mathcal{E}+\mathcal{C}_ 2+\mathcal{C}_ 2^2 + \dots) \dots \times (\mathcal{E}+\mathcal{C}_ r+\mathcal{C}_ r^2 + \dots) &#x3D;\prod_ { i&#x3D;1 }^r \sum_ {j&#x3D;0}^\infty \mathcal{C}_ i^j.\end{aligned}$</p>
+<p>上面求过$SEQ$了,  这里每个集合也只包含$1$,所以生成方程为</p>
+<p>$ \frac{1}{(1-x)^r} &#x3D; \sum_{i&#x3D;0}^\infty \binom{r + i - 1}{r - 1} x^i.$</p>
+<hr>
+<p>对于全部重量是$k$的不同种球,有$a_k$个</p>
+<p>其集合结构为$\mathcal{B} &#x3D; \prod \left( \sum_{i&#x3D;0}^\infty \mathcal{D}_k \right)^{a_k}.$</p>
+<p>而这与上面全是1的区别在于 集合的元素是$k$, 上面的是$1$, 因此区别只是生成方程上面的$x^1$, 现在$x^k$</p>
+<p>因此显然生成方程为 $ B(x) &#x3D; \prod \left(\frac{1}{1-x^k}\right)^{a_k}.$</p>
+<hr>
+<p>那么对于不同重量之间的选择是互不影响的, 因此从结构上乘起来</p>
+<p>$\mathcal{B} &#x3D; \prod_{0 \lt k} \left( \sum_{i&#x3D;0}^\infty \mathcal{D}_k \right)^{a_k}.$</p>
+<p>同样的生成方程为 $ B(x) &#x3D; \prod_{0 \lt k} \left(\frac{1}{1-x^k}\right)^{a_k}.$</p>
+<p>最后就是$exp$ 和 $log$</p>
+<p>$B(x) &#x3D; \exp \log B(x) $ 注: a&#x3D;e^ln(a)</p>
+<p>$&#x3D; \exp \sum_{0 \lt k} -a_k \log (1 - x^k)$  注: ln(prod(a^i)) &#x3D; sum i ln(a)</p>
+<p>$&#x3D; \exp \sum_{0 \lt k} a_k \sum_{0 \lt i}  \frac{x^{ik}}{i}$ 幂级展开 ln(1-x) &#x3D; - sum x^i&#x2F;i</p>
+<p>$&#x3D; \exp \sum_{0 \lt i} \frac{1}{i} \sum_{0 \lt k}  a_k (x^i)^k$ 交换sum顺序</p>
+<p>$&#x3D; \exp \left(\sum_{0 \lt i} \frac{A(x^i)}{i} \right)$ 根据A的生成函数</p>
+<p>因此多重集合 与 原集合的生成函数关系得证</p>
+<blockquote>
+<p>这里还给了一个用 <code>Pólya’s enumeration theorem</code> 证明的办法 orz 见原文</p>
+</blockquote>
+<hr>
+<p>有一点问题是 exp 在实际得到后如何计算呢</p>
+<h3 id="回到题目"><a href="#回到题目" class="headerlink" title="回到题目"></a>回到题目</h3><p>定义集合符号</p>
+<p>非空包 $\mathcal{F}$</p>
+<p>一个块 $\mathcal{G}$</p>
+<p>一个包 $\mathcal{B}$</p>
+<p>一个空 $\mathcal{E}$</p>
+<p>那么显然关系是</p>
+<p>$\mathcal{F} &#x3D; \mathcal{B} \times (MULTISET(\mathcal{F}+\mathcal{G}) - \mathcal{E})$</p>
+<hr>
+<p>考虑它们4个的生成函数</p>
+<p>显然$F(x)$ 也是答案序列的生成函数</p>
+<p>$G(x) &#x3D; \sum_{1 \leq i \leq K} x^{w_i} $ 表示块,把重量相同 但是种类不同的通过系数加起来</p>
+<p>边界 $\lbrace x^0 \rbrace F(x) &#x3D; \lbrace x^1 \rbrace F(x) &#x3D; 0$</p>
+<p>剩下两个显然 $B(x) &#x3D; x$, $E(x) &#x3D; 1$</p>
+<p>令$H &#x3D; F+G$</p>
+<p>$F(x) &#x3D; x \left( \exp \left(\sum_{0 \lt k} \frac{H(x^k)}{k} \right) - 1\right)$</p>
+<hr>
+<p>接下来是算了</p>
+<p>微分后同时乘x 有</p>
+<p>$xF’(x) &#x3D; F(x) + (F(x) + x) \sum_{0 \lt k} x^{k} H’(x^k).$</p>
+<p>这正好是之前不知道如何处理exp, 现在看来, 通过微分&#x2F;积分 的形式 再创建出 同样表达式,再用F(x)替换掉即可</p>
+<p>令$J(x) &#x3D; \sum_{0 \lt k} x^{k} H’(x^k)$</p>
+<p>考虑n次项系数$(n \ge 2)$</p>
+<p>$nf_n &#x3D; f_n+\sum_{0 &lt; k &lt; n} f_k j_{n-k} + j_{n-1}$</p>
+<p>移项得到递推表达式</p>
+<p>$f_n &#x3D; \frac{1}{n - 1} \left(j_{n-1} + \sum_{0 \lt k \lt n} f_k j_{n-k}\right)$</p>
+<p>对于边界$f_0 &#x3D; f_1 &#x3D; j_0 &#x3D; 0$</p>
+<p>$j_n &#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} H’(x^k)$</p>
+<p>$&#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} H’(x^k)$</p>
+<p>$&#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} \sum_{i&#x3D;0} (i+1) h_{i+1} (x^k)^i$</p>
+<p>$&#x3D; \sum_{k | n} \lbrack x^n \rbrack \sum_{i&#x3D;1} i h_{i} (x^k)^i$</p>
+<p>$&#x3D; \sum_{k | n} \frac{n}{k} h_{\frac{n}{k}}$</p>
+<p>$&#x3D; \sum_{d | n} d h_d $</p>
+<p>$&#x3D; \sum_{d | n} d \cdot (f_d + j_d) $</p>
+<p>如果$f$知道, 那么$j$ 能快速计算</p>
+<p>而f这 很显示需要 分治FFT了</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc230/submissions/34519255">https://atcoder.jp/contests/abc230/submissions/34519255</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;atcoder/convolution.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;atcoder/modint.hpp&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">int</span> SZ;</span><br><span class="line">mint inv[<span class="number">500010</span>] = &#123;<span class="number">0</span>,<span class="number">1</span>&#125;;</span><br><span class="line">std::vector&lt;mint&gt; f, g, j;</span><br><span class="line"><span class="comment">// 提取数组一段 [L..R)</span></span><br><span class="line"><span class="function">std::vector&lt;mint&gt; <span class="title">get</span><span class="params">(std::vector&lt;mint&gt;&amp; v, <span class="type">int</span> L, <span class="type">int</span> R)</span> </span>&#123;<span class="keyword">return</span> &#123;v.<span class="built_in">begin</span>() + L, v.<span class="built_in">begin</span>() + R&#125;;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// f[n] = 1/(n-1) (j[n-1] + f * j), fft f * j</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dc</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123; <span class="comment">// 对于f做分治 fft, 每次调用前内部贡献都来自于[0..l),每次只完成[l..r)的计算,不在此函数中对[r,..)产生贡献, 每次先[l..mid) 再 [mid..r), 对于j做简单分治</span></span><br><span class="line">  <span class="keyword">if</span> (l + <span class="number">1</span> == r) &#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= <span class="number">2</span>) f[l] = (f[l] + j[l<span class="number">-1</span>]) * inv[l<span class="number">-1</span>]; <span class="comment">// 处理之前 一直是由比它小的贡献 f * j</span></span><br><span class="line">    <span class="keyword">if</span> (l &gt;= <span class="number">1</span>) <span class="keyword">for</span> (<span class="type">int</span> i = l; i &lt; SZ; i += l) j[i] += (f[l] + g[l]) * l; <span class="comment">// j[n] = sum d|n, d * (f[d] + g[d])</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> mid = (l + r) / <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">dc</span>(l, mid); <span class="comment">// [0..mid) 都完成了, 把它们贡献散布到[mid, r)</span></span><br><span class="line">  <span class="keyword">if</span> (l == <span class="number">0</span>) &#123; <span class="comment">// 注意不要算重了</span></span><br><span class="line">    <span class="keyword">auto</span> fj = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, <span class="number">0</span>, mid), <span class="built_in">get</span>(j, <span class="number">0</span>, mid));</span><br><span class="line">    <span class="built_in">rep</span>(i,mid,r) f[i] += fj[i];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">auto</span> fj1 = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, l, mid), <span class="built_in">get</span>(j, <span class="number">0</span>, r - l)); <span class="comment">// 两段必定不重复</span></span><br><span class="line">    <span class="keyword">auto</span> fj2 = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, <span class="number">0</span>, r - l), <span class="built_in">get</span>(j, l, mid));</span><br><span class="line">    <span class="built_in">rep</span>(i,mid,r) f[i] += fj1[i - l] + fj2[i - l];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">dc</span>(mid, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> W = <span class="built_in">read</span>(); <span class="comment">// 求 [2..W]</span></span><br><span class="line">  <span class="type">int</span> K = <span class="built_in">read</span>();</span><br><span class="line">  SZ = <span class="number">1</span>; <span class="comment">// &gt;= n+1, 方便分治 不会重复计算</span></span><br><span class="line">  <span class="keyword">while</span> (SZ &lt;= W) SZ *= <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,SZ) inv[i] = (MOD-MOD/i) * inv[MOD%i];</span><br><span class="line">  f = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  g = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  j = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">while</span>(K--) g[<span class="built_in">read</span>()] += <span class="number">1</span>; <span class="comment">// g[n] = count(val == n)</span></span><br><span class="line">  <span class="built_in">dc</span>(<span class="number">0</span>, SZ); <span class="comment">// 分治fft</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,W+<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, f[i].<span class="built_in">val</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
 <p>感觉还是莫比乌斯反演相关的知识点</p>
 <p>这个S的定义 感觉凭空出现啊, 这题解有一点搞</p>
 <p>但如果不知道这种定义, 还是可以从莫比乌斯函数推导出的</p>
 <p>H</p>
+<p>不会啊</p>
+<p>虽然之前几场的生成函数题目学了, 但是都是说从最简单的选项,建立函数或方程, 然后运算,化简,提取系数</p>
+<p>这里通过集合和函数的关系, 感觉学了一点新的东西, 也就是 可以把一个集合操作变成另一个集合, 与 生成方程对应, 换句话说, 生成方程对应了操作,而操作对象是集合就好了, 这样一定程度上有”模块化”和”函数化”的感觉</p>
+<p>这个感觉和上次 列生成函数一样还有个好处,就是当结构不再只是层级的,而是会有可相互递归时, 集合就更直观感受</p>
+<p>以及exp消除这里办法是微分&#x2F;积分 同表达式 替换</p>
+<p>求解系数,没有直接表达式时, 用递推关系式+分治</p>
+<p>然后实现上之前213H也做了分治fft,但是自己依赖自己, 这里的话依赖两个, 要注意分治时不要重复计算, 所以一个办法是把长度做成2的幂次</p>
+<p>TODO Pólya’s enumeration theorem</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc230/editorial">官方题解</a></p>
 <p><a href="https://yexiaorain.github.io/Blog/2019-01-06-MobiusInversionFormula/">之前写的莫反笔记</a></p>
 <p><a href="https://yexiaorain.github.io/Blog/2019-03-23-cfP1139D/">莫反 CF 548 Div2 D</a></p>
 <p><a href="https://yexiaorain.github.io/Blog/2020-11-07-nowcoder8282D/">莫反NowCoder 8282 D</a></p>
-<p><a href="http://localhost:4000/Blog/2022-08-08-ac_abc222/">222H</a></p>
+<p><a href="http://localhost:4000/Blog/2022-08-08-ac_abc222/">222H 生成函数</a></p>
 ]]></content>
       <categories>
         <category>Atcoder</category>
@@ -13901,6 +14046,8 @@
       </categories>
       <tags>
         <tag>Möbius function</tag>
+        <tag>生成函数</tag>
+        <tag>分治FFT</tag>
       </tags>
   </entry>
 </search>
