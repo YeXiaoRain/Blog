@@ -1,7 +1,7 @@
 ---
-title: maspy 生成方程与问题解决
+title: maspy 生成函数与问题解决
 date: 2022-08-12 22:24:00
-tags: [生成方程]
+tags: [生成函数]
 category: [algorithm]
 description: 生成方程
 ---
