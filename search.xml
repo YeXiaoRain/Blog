@@ -1389,6 +1389,61 @@
       </tags>
   </entry>
   <entry>
+    <title>CF Round 530 Div1 B 数学题 简单反证</title>
+    <url>/Blog/2019-01-08-cf1099E/</url>
+    <content><![CDATA[<h1 id="题目HERE"><a href="#题目HERE" class="headerlink" title="题目HERE"></a><a href="https://codeforces.com/contest/1098/problem/B">题目HERE</a></h1><p>求一个<code>n x m &lt;= 300 000</code>的二维字符数组</p>
+<p>满足任何<code>2x2</code>的字符都包含A T G C</p>
+<p>并且和给你的 数组不同的字符尽量少</p>
+<h1 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h1><p>我有发现如果已经有</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AG</span><br><span class="line">TC</span><br></pre></td></tr></table></figure>
+
+<p>那么右侧一列,一定是AT,顺序不定</p>
+<p>下面两个一定是AG顺序不定,</p>
+<hr>
+<p>又发现如果对于任意<code>2*3</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XYZ</span><br><span class="line">???</span><br></pre></td></tr></table></figure>
+
+<p>如果XYZ出现了3个字母</p>
+<p>那么???下方的一定是XYZ且顺序不变</p>
+<p>因为如果Y不在中间,那么会变成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XYZ</span><br><span class="line">???</span><br><span class="line">Y?Y</span><br></pre></td></tr></table></figure>
+
+<p>第3行填X 或 Z都是不行的</p>
+<hr>
+<p>又发现<code>2x3</code>如果XYZ 3个字母不同,具有性质,</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XYZ</span><br><span class="line">???</span><br></pre></td></tr></table></figure>
+
+<p>下面的??? 是确定的,因为X列和Z列是相等的,所以一定是,其中O表示第4个字母</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XYZ</span><br><span class="line">ZOX</span><br></pre></td></tr></table></figure>
+
+<p>然后我就现在想如何构造 去找,因为找到3个不同,那么整列都确定了</p>
+<hr>
+<p><strong>然后就自闭了</strong></p>
+<p>其实可以把上面的事实展开</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XYZ</span><br><span class="line">ZOX</span><br><span class="line">XYZ</span><br><span class="line">ZOX</span><br><span class="line">XYZ</span><br><span class="line">ZOX</span><br><span class="line">XYZ</span><br><span class="line">ZOX</span><br></pre></td></tr></table></figure>
+
+<p>有结论,如果 某<code>行</code>中出现连续3个不同字符,那么这3个字符对应的<code>列</code>,每<code>列</code>包含且仅包含两个字符,且任意行 包含连续这3个不同字符</p>
+<p>交换行列有,如果 某<code>列</code>中出现连续3个不同字符,那么这3个字符对应的<code>行</code>,每<code>行</code>包含且仅包含两个字符,且任意列 包含连续这3个不同字符</p>
+<p>注意到上面两条是事实,但是是互斥的</p>
+<p>那么 目前有3种情况</p>
+<ol>
+<li>所有行列,的每一个行列,仅仅包含两个字符[且两两交替.废话]</li>
+<li>存在一列 包含3个不同字符,那么所有列都包含这3个不同字符,所有行的每一行仅仅包含两个字符,</li>
+<li>和2把 行列换一下</li>
+</ol>
+<p>综上↓</p>
+<h1 id="以下是一句话题解"><a href="#以下是一句话题解" class="headerlink" title="以下是一句话题解"></a>以下是一句话题解</h1><p>如果你发现了事实:</p>
+<p>要么每一行 只有两种字母</p>
+<p>或</p>
+<p>要么每一列 只有两种字母</p>
+<hr>
+<p>没了 然后暴力枚举就完了 这个题评分果然有2300,感觉这种题又是需要多枚举几个比如能枚举到<code>5*5</code>的能看出规律就好了</p>
+]]></content>
+      <categories>
+        <category>Codeforces</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Möbius inversion formula</title>
     <url>/Blog/2019-01-06-MobiusInversionFormula/</url>
     <content><![CDATA[<h1 id="Mobius-function"><a href="#Mobius-function" class="headerlink" title="Möbius function"></a>Möbius function</h1><p>${\displaystyle \mu (n)&#x3D;\delta _{\omega (n)}^{\Omega (n)}\lambda (n)}$</p>
@@ -1445,61 +1500,6 @@
         <tag>Möbius function</tag>
         <tag>莫比乌斯反演</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>CF Round 530 Div1 B 数学题 简单反证</title>
-    <url>/Blog/2019-01-08-cf1099E/</url>
-    <content><![CDATA[<h1 id="题目HERE"><a href="#题目HERE" class="headerlink" title="题目HERE"></a><a href="https://codeforces.com/contest/1098/problem/B">题目HERE</a></h1><p>求一个<code>n x m &lt;= 300 000</code>的二维字符数组</p>
-<p>满足任何<code>2x2</code>的字符都包含A T G C</p>
-<p>并且和给你的 数组不同的字符尽量少</p>
-<h1 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h1><p>我有发现如果已经有</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AG</span><br><span class="line">TC</span><br></pre></td></tr></table></figure>
-
-<p>那么右侧一列,一定是AT,顺序不定</p>
-<p>下面两个一定是AG顺序不定,</p>
-<hr>
-<p>又发现如果对于任意<code>2*3</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XYZ</span><br><span class="line">???</span><br></pre></td></tr></table></figure>
-
-<p>如果XYZ出现了3个字母</p>
-<p>那么???下方的一定是XYZ且顺序不变</p>
-<p>因为如果Y不在中间,那么会变成</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XYZ</span><br><span class="line">???</span><br><span class="line">Y?Y</span><br></pre></td></tr></table></figure>
-
-<p>第3行填X 或 Z都是不行的</p>
-<hr>
-<p>又发现<code>2x3</code>如果XYZ 3个字母不同,具有性质,</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XYZ</span><br><span class="line">???</span><br></pre></td></tr></table></figure>
-
-<p>下面的??? 是确定的,因为X列和Z列是相等的,所以一定是,其中O表示第4个字母</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XYZ</span><br><span class="line">ZOX</span><br></pre></td></tr></table></figure>
-
-<p>然后我就现在想如何构造 去找,因为找到3个不同,那么整列都确定了</p>
-<hr>
-<p><strong>然后就自闭了</strong></p>
-<p>其实可以把上面的事实展开</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XYZ</span><br><span class="line">ZOX</span><br><span class="line">XYZ</span><br><span class="line">ZOX</span><br><span class="line">XYZ</span><br><span class="line">ZOX</span><br><span class="line">XYZ</span><br><span class="line">ZOX</span><br></pre></td></tr></table></figure>
-
-<p>有结论,如果 某<code>行</code>中出现连续3个不同字符,那么这3个字符对应的<code>列</code>,每<code>列</code>包含且仅包含两个字符,且任意行 包含连续这3个不同字符</p>
-<p>交换行列有,如果 某<code>列</code>中出现连续3个不同字符,那么这3个字符对应的<code>行</code>,每<code>行</code>包含且仅包含两个字符,且任意列 包含连续这3个不同字符</p>
-<p>注意到上面两条是事实,但是是互斥的</p>
-<p>那么 目前有3种情况</p>
-<ol>
-<li>所有行列,的每一个行列,仅仅包含两个字符[且两两交替.废话]</li>
-<li>存在一列 包含3个不同字符,那么所有列都包含这3个不同字符,所有行的每一行仅仅包含两个字符,</li>
-<li>和2把 行列换一下</li>
-</ol>
-<p>综上↓</p>
-<h1 id="以下是一句话题解"><a href="#以下是一句话题解" class="headerlink" title="以下是一句话题解"></a>以下是一句话题解</h1><p>如果你发现了事实:</p>
-<p>要么每一行 只有两种字母</p>
-<p>或</p>
-<p>要么每一列 只有两种字母</p>
-<hr>
-<p>没了 然后暴力枚举就完了 这个题评分果然有2300,感觉这种题又是需要多枚举几个比如能枚举到<code>5*5</code>的能看出规律就好了</p>
-]]></content>
-      <categories>
-        <category>Codeforces</category>
-      </categories>
   </entry>
   <entry>
     <title>CF EDU 59 E 看似n方，实则O(n)的三分dp</title>
@@ -13802,6 +13802,7 @@
       <tags>
         <tag>二分</tag>
         <tag>博弈论</tag>
+        <tag>TODO</tag>
         <tag>非公平博弈论</tag>
         <tag>surreal number</tag>
       </tags>
@@ -13810,7 +13811,6 @@
     <title>Atcoder abc230</title>
     <url>/Blog/2022-09-01-ac-abc230/</url>
     <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc230/tasks">https://atcoder.jp/contests/abc230/tasks</a></p>
-<p>$\alpha_ t&#x3D;f_ {\alpha}(x_t)$</p>
 <h1 id="G-GCD-Permutation"><a href="#G-GCD-Permutation" class="headerlink" title="G - GCD Permutation"></a>G - GCD Permutation</h1><p>给一个1~N的排列p</p>
 <p>问有多少个有序对 (i,j), (i&lt;&#x3D;j), 满足 gcd(i,j) !&#x3D; 1, gcd(p[i],p[j]) !&#x3D; 1</p>
 <h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
@@ -14048,6 +14048,118 @@
         <tag>Möbius function</tag>
         <tag>生成函数</tag>
         <tag>分治卷积</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder abc231</title>
+    <url>/Blog/2022-09-02-ac-abc231/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc231/tasks">https://atcoder.jp/contests/abc231/tasks</a></p>
+<h1 id="G-Balls-in-Boxes"><a href="#G-Balls-in-Boxes" class="headerlink" title="G - Balls in Boxes"></a>G - Balls in Boxes</h1><p>n个盒子, 初始第i个盒子有ai个球</p>
+<p>k次操作</p>
+<p>每次 等概率选一个盒子, 增加1个球</p>
+<p>分数 &#x3D; 最终每个盒子的球的个数之乘积</p>
+<p>求分数期望 mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1000</p>
+<p>k 1e9</p>
+<p>ai [0, 1e9]</p>
+<p>2s</p>
+<p>1024 mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>感觉上可以 做n和n-1的关系, 然后直接算频次, 最后除总次数 转成概率</p>
+<p>F(n,k) &#x3D; 前n个所有方案的乘积和, Ans &#x3D; F(n,k) &#x2F; n^k</p>
+<p>对于最后一个盒子, 选择了j次, 对应的方案乘积和为 C(k,j) * F(n-1,k-j) * (a[n]+j)</p>
+<p>F(n,k) &#x3D; sum  (a[n]+j) * F(n-1,k-j) * C(k,j), j&#x3D;0..k</p>
+<p>这里n虽然小, 但是k很大, 上面这个显然TLE, 如果能搞到n^2 左右的就好了</p>
+<p>C(k,j) 的部分拆出来 分配给F的分母可以简化,但是依然没有去掉k的维度</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>$E\lbrack \prod_i(A_i+X_i) \rbrack$</p>
+<p>$E\lbrack(A_1+X_1)(A_2+X_2)\rbrack &#x3D; E\lbrack A_1A_2\rbrack + E\lbrack A_1X_2\rbrack + E\lbrack X_1A_2\rbrack+ E\lbrack X_1X_2\rbrack$</p>
+<p>$E\left[\prod_{i&#x3D;1}^{N} (A_i+X_i)\right]&#x3D;\sum_{n&#x3D;0}^{N}S_{N,n}(A_1,\ldots,A_N)E\left[\prod_{i&#x3D;1}^{N-n}X_i\right],$</p>
+<p>$S_{N,n} $是从传入的$N$个中取n个的所有方案</p>
+<hr>
+<p>$dp[i][j] &#x3D; S_{i,j} (A_1\cdots A_i)$</p>
+<p>考虑第$i+1$个是否选择有转义 $dp[i+1][j] &#x3D; dp[i][j] + dp[i][j-1]A_{i+1}$</p>
+<p>暴力n^2就好</p>
+<hr>
+<p>当第j次操作选择第i个盒子 $X_{i,j} &#x3D; 1$, 否则$X_{i,j} &#x3D; 0$</p>
+<p>$E\left[\prod_{i&#x3D;1}^{n}X_i\right] &#x3D; E\left[\prod_{i&#x3D;1}^{n} \sum_{j&#x3D;1}^{K}X_{i,j} \right]&#x3D;\sum_{j_1,\ldots,j_n}E\left[\prod_{i&#x3D;1}^{n}X_{i,j_i}\right].$, 先展开$X_i$ , 再像上面乘法分配展开,和期望展开</p>
+<p>对于右侧$j_i$ 要两两不同则期望为$(\frac{1}{N})^n$, 否则为$0$(不能第j次 选多个盒子)</p>
+<p>因此为排列数, $A(K,n)$,</p>
+<p>暴力算</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc231/submissions/34624129">https://atcoder.jp/contests/abc231/submissions/34624129</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int )n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line">mint a[<span class="number">1010</span>];</span><br><span class="line">mint f[<span class="number">1010</span>][<span class="number">1010</span>]; <span class="comment">// [0~n个][选0~n个] = 乘积的和, 可以滚动优化掉一维但没必要</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> k = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i] = <span class="built_in">read</span>();</span><br><span class="line">  f[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(j,<span class="number">0</span>,i+<span class="number">1</span>) f[i][j] = f[i<span class="number">-1</span>][j] + (j?f[i<span class="number">-1</span>][j<span class="number">-1</span>]*a[i<span class="number">-1</span>]:<span class="number">0</span>);</span><br><span class="line">  mint c=<span class="number">0</span>;</span><br><span class="line">  mint x=<span class="built_in">mint</span>(<span class="number">1</span>)/n;</span><br><span class="line">  mint fac=<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">0</span>,std::<span class="built_in">min</span>(n,k)+<span class="number">1</span>) &#123;</span><br><span class="line">    c+=f[n][n-j]*fac;</span><br><span class="line">    fac*=x*(k-j);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,c.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="H-Minimum-Coloring"><a href="#H-Minimum-Coloring" class="headerlink" title="H - Minimum Coloring"></a>H - Minimum Coloring</h1><p>h行,w列 矩阵</p>
+<p>N个白色格子, 坐标分别(Ai,Bi), 需要代价Ci 让第i个变成黑色</p>
+<p>求 让每行每列至少一个黑色的最小代价</p>
+<p>保证至少有方案</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>h,w 1e3</p>
+<p>n 1e3</p>
+<p>ci [1,1e9]</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>感觉之前做过类似的, 像是网络流 最小割</p>
+<p>整体思路是 把所有贡献变成正, 然后对源和汇分别定义 选还是不选, 然后用最小割对图的划分 有意义 选的代价 和 不选的代价</p>
+<p>但是这里, 选的代价很好表示, 但不选的代价(全部不选则无限大代价) 不知道如何用点表示</p>
+<p>即使拖出一个行节点, 倒是可以表示和S,T的边关系了, 却不知道怎么表示Pi,j和Rowi的关系</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>图G</p>
+<p>点, X_i 对应行 Y_j 对应列</p>
+<p>边就是$(X_i,Y_j)$, 代价是$C_{i,j}$</p>
+<p>求最小加权边覆盖(选边, 让所有点至少被选择一次)</p>
+<p>直观地考虑“我们可以减少多少成本，而不是‘在每一行和每个顶点中选择成本最低的一块</p>
+<ol>
+<li>随机选择边集E的子集$E_1$</li>
+<li>对于每个不被$E_1$覆盖的点v, 选择一个v相连的最小代价的边, 允许重复选重复代价, E2 &#x3D; E1 + 这些边, (注意到这些边又E_1唯一决定</li>
+</ol>
+<p>虽然说可能 答案的边集不包含任何最小代价边,(1-3(2),1-4(1),2-4(2)) 但是第一步可能直接就得到答案</p>
+<p>同时,在最优解中, 第一步的边不会有两边选了同一个点!!!</p>
+<p>证明: 比如 a-b, a-c, 那么如果a-b 是b的最小边, 删掉a-b 结果不会更小,如果a-b不是b的最小边, 那么去掉a-b, 去选b的最小边, 得到更小的值 但是不小的点集, 因此去选都可以先不选, 得证</p>
+<p>令$V_1$ 为$E_1$覆盖了的点集</p>
+<p>令$v$的最小代价边权为$C_v$, 那么对于</p>
+<p>$cost(E_2) &#x3D; cost(E1) + \sum_{v \in V\setminus V_1} C_v$</p>
+<p>$cost(E_2) &#x3D; cost(E1) + \sum_{v \in V} C_v - \sum_{v \in V_1} C_v$</p>
+<p>定义$c(e) &#x3D; cost(e) - C_{e_u} - C_{e_v}$, $c(e)&#x3D;$ 边代价 减去两点的最小权</p>
+<p>$cost(E_2) &#x3D; cost(E1) + \sum_{v \in V} c(e)$</p>
+<p>而 第一个是定值, 那么就是要最小化第二个值</p>
+<hr>
+<p>然后用 最小费用流</p>
+<p>建图</p>
+<p>$S \to X_i$ 容量1,单位代价0</p>
+<p>对于每个$(X_i,Y_j)$, 边$X_i \to Y_j$ 容量1,单位代价 $c((X_i,Y_j)$, 因为不选就是0, 因此非负的边不要加</p>
+<p>$Y_i \to T$ 容量1,单位代价0</p>
+<p>任意流量的最小费用就是答案</p>
+<hr>
+<p>注意MCMF不要负边权, 因此, 让所有流的单位费用增加 BIG &#x3D; MAX(-c)</p>
+<p>$S \to X_i$ 容量1,单位代价0</p>
+<p>对于每个$(X_i,Y_j)$, 边$X_i \to Y_j$ 容量1,单位代价 $c((X_i,Y_j) + $</p>
+<p>$Y_i \to T$ 容量1,单位代价0</p>
+<p>变成 $&#x3D; min(Cost_i - i*BIG)$, 其中i为流量</p>
+<hr>
+<p>还可以用atcoder的库mcf_graph 的<code>slope(S,T) -&gt; std::vector&lt;std::pair&lt;Cap, Cost&gt;&gt;</code></p>
+<p>得到 不同流量(注意到这里只需要关注斜率变化的点)对应的最小代价, 相当于一个凹函数被一个一次函数切</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc231/submissions/34624860">https://atcoder.jp/contests/abc231/submissions/34624860</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/all&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">const</span> ll BIG=<span class="number">2e9</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> h = <span class="built_in">read</span>(); <span class="comment">// height</span></span><br><span class="line">  <span class="type">int</span> w = <span class="built_in">read</span>(); <span class="comment">// width</span></span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>(); <span class="comment">// 点</span></span><br><span class="line">  std::vector&lt;<span class="type">int</span>&gt;<span class="built_in">hmin</span>(h+<span class="number">1</span>,<span class="number">1e9</span>),<span class="built_in">wmin</span>(w+<span class="number">1</span>,<span class="number">1e9</span>);</span><br><span class="line">  std::vector&lt;std::tuple&lt;<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>&gt;&gt;p;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>(); <span class="comment">// 行 1-index</span></span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 列 1-index</span></span><br><span class="line">    <span class="type">int</span> c = <span class="built_in">read</span>(); <span class="comment">// 代价</span></span><br><span class="line">    hmin[a]=std::<span class="built_in">min</span>(hmin[a],c);</span><br><span class="line">    wmin[b]=std::<span class="built_in">min</span>(wmin[b],c);</span><br><span class="line">    p.<span class="built_in">push_back</span>(&#123;a,b,c&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> S = <span class="number">0</span>; <span class="comment">// source</span></span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> T = h+w+<span class="number">1</span>; <span class="comment">// sink</span></span><br><span class="line">  atcoder::mcf_graph&lt;<span class="type">int</span>,ll&gt;<span class="built_in">g</span>(T+<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,h+<span class="number">1</span>) g.<span class="built_in">add_edge</span>(S  ,i,<span class="number">1</span>,<span class="number">0</span>); <span class="comment">// S-&gt;Xi(行) [1..h]</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,w+<span class="number">1</span>) g.<span class="built_in">add_edge</span>(h+i,T,<span class="number">1</span>,<span class="number">0</span>); <span class="comment">// Y_i(列)[h+1..h+w] -&gt; T</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> [a,b,c]:p) <span class="keyword">if</span>(c &lt; hmin[a]+wmin[b]<span class="comment">/*非负的不会选*/</span>) g.<span class="built_in">add_edge</span>(a,h+b,<span class="number">1</span>,c-hmin[a]-wmin[b]+BIG);</span><br><span class="line">  ll ans=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span>[cap,cost]:g.<span class="built_in">slope</span>(S,T)) ans=std::<span class="built_in">min</span>(ans,cost-BIG*cap);<span class="comment">// 斜率优化, 只用关心斜率变化的点</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,h+<span class="number">1</span>) ans+=hmin[i]; <span class="comment">// 常数的部分 sum C_v</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,w+<span class="number">1</span>) ans+=wmin[i];</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>概率论完全不会.. 忘记了哪些可以乘法加法, 啥变化规律 都忘了, </p>
+<p>但其实也可以从积分&#x2F;离散的期望定义来看, 不就是  int p(f(x)+g(x)) dx, &#x3D; int p f(x) dx + int p g(x) dx, 所以加法是可拆的</p>
+<p>这里虽然加了以后每个位置互不相同,但是如果把加的部分单独拎出来看, 就没有不同, 所以其实这里第一步做的期望拆分, 也就是把原来就有的ai和操作中对第i个增加的xi拆开来算</p>
+<p>H</p>
+<p>网络流会了一点, 但一点不会, 图论完全不会</p>
+<p>这个神奇的边覆盖,图匹配 &#x3D; min(随机(不重点的边) + 未选点的最小边集)</p>
+<p>然后就是费用流的一种使用吧, 以及atcoder 提供的mcf和slope方法</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc231/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>概率论</tag>
+        <tag>图论</tag>
+        <tag>排列</tag>
+        <tag>费用流</tag>
+        <tag>组合</tag>
+        <tag>边覆盖</tag>
       </tags>
   </entry>
 </search>
