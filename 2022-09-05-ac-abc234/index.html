@@ -19,16 +19,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="G()Ex()">
+    <meta name="description" content="G(单调栈)Ex(分块)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Atcoder abc234">
 <meta property="og:url" content="https://yexiaorain.github.io/Blog/2022-09-05-ac-abc234/index.html">
 <meta property="og:site_name" content="YeXiaoRain Blog">
-<meta property="og:description" content="G()Ex()">
+<meta property="og:description" content="G(单调栈)Ex(分块)">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2022-09-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-06T00:48:51.091Z">
+<meta property="article:modified_time" content="2022-09-06T19:53:00.203Z">
 <meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="分块">
+<meta property="article:tag" content="单调队列">
 <meta name="twitter:card" content="summary">
 
 
@@ -244,7 +246,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="Atcoder abc234 | YeXiaoRain Blog">
-      <meta itemprop="description" content="G()Ex()">
+      <meta itemprop="description" content="G(单调栈)Ex(分块)">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -266,7 +268,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-06 08:48:51" itemprop="dateModified" datetime="2022-09-06T08:48:51+08:00">2022-09-06</time>
+      <time title="修改時間：2022-09-07 03:53:00" itemprop="dateModified" datetime="2022-09-07T03:53:00+08:00">2022-09-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -303,18 +305,18 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>103</span>
+      <span>3.2k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
+      <span>3 分鐘</span>
     </span>
 </div>
 
-            <div class="post-description">G()Ex()</div>
+            <div class="post-description">G(单调栈)Ex(分块)</div>
         </div>
       </header>
 
@@ -323,10 +325,62 @@
     
     <div class="post-body" itemprop="articleBody">
         <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc234/tasks">https://atcoder.jp/contests/abc234/tasks</a></p>
-<h1 id="G-Divide-a-Sequence"><a href="#G-Divide-a-Sequence" class="headerlink" title="G - Divide a Sequence"></a>G - Divide a Sequence</h1><h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><span id="more"></span>
+<h1 id="G-Divide-a-Sequence"><a href="#G-Divide-a-Sequence" class="headerlink" title="G - Divide a Sequence"></a>G - Divide a Sequence</h1><p>长n数组A</p>
+<p>2^{n-1}种方式切割成非空顺序数字</p>
+<p>f(切割) &#x3D; $\prod$每个子数组的 (max-min)</p>
+<p>求 $\sum$ f(所有切割)</p>
+<p>mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>2s 1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>dp搞一搞</p>
+<p>考虑最后一个数组长度<br>dp[i] &#x3D; dp[i-len] * ((max-min)([i-len+1..i]))</p>
+<p>但这样就O(n) 状态, n^2转移了</p>
+<p>然后,算的时候,max和min可以拆开, 但是如果 两两不等的话, 即使用了 区间sum dp * max, 也可能max需要一个一个枚举,也是n^2</p>
+<hr>
+<p>问题变成说</p>
+<p><code>dp[i] = sum max(a[i-len+1..i]) * dp[i-len] - min(a[i-len+1..i]) * dp[i-len]</code></p>
+<p>考虑相邻转移</p>
+<p><code>i-1: sum max(a[j+1..i-1]) * dp[j]</code></p>
+<ol>
+<li><code>a[i]是[j+1..i]的最大值</code>, 那么找最小的<code>j</code>, 这之家你的贡献 &#x3D; a[i] * sum dp[j..i-1]</li>
+<li><code>a[i]不是[j+1..i]</code>的最大值, 那么这贡献 <code>= sum max(a[j+1..i])*dp[j] = sum max(a[j+1..i-1])*dp[j]</code></li>
+</ol>
+<p>因此相邻的dp虽然没有直接关系, 但是可以利用上次的计算</p>
+<p><code>dp[i] = a[i] * sum(dp[j..i-1]) + sum f(0..j)</code></p>
+<p>min同理</p>
+<hr>
+<p>似乎就没了</p>
+<span id="more"></span>
 
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><h1 id="Ex-Enumerate-Pairs"><a href="#Ex-Enumerate-Pairs" class="headerlink" title="Ex - Enumerate Pairs"></a>Ex - Enumerate Pairs</h1><h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc234/submissions/34662212">https://atcoder.jp/contests/abc234/submissions/34662212</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[<span class="number">300010</span>];</span><br><span class="line">mint pdp[<span class="number">300010</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// 未选择, 乘积和 = 1 presum dp</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) a[i] = <span class="built_in">read</span>(); <span class="comment">// 需要前缀和 1-index</span></span><br><span class="line">  std::vector&lt;std::pair&lt;<span class="type">int</span>,mint&gt; &gt; maxi = &#123;&#125;;</span><br><span class="line">  std::vector&lt;std::pair&lt;<span class="type">int</span>,mint&gt; &gt; mini = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">while</span>(maxi.<span class="built_in">size</span>() &amp;&amp; a[maxi.<span class="built_in">back</span>().first] &lt;= a[i]) maxi.<span class="built_in">pop_back</span>();</span><br><span class="line">    maxi.<span class="built_in">push_back</span>(&#123;i,(maxi.<span class="built_in">size</span>()?maxi.<span class="built_in">back</span>().second:<span class="number">0</span>) + a[i] * (pdp[i<span class="number">-1</span>]  - (maxi.<span class="built_in">size</span>()?pdp[maxi.<span class="built_in">back</span>().first<span class="number">-1</span>]:<span class="number">0</span>))&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(mini.<span class="built_in">size</span>() &amp;&amp; a[mini.<span class="built_in">back</span>().first] &gt;= a[i]) mini.<span class="built_in">pop_back</span>();</span><br><span class="line">    mini.<span class="built_in">push_back</span>(&#123;i,(mini.<span class="built_in">size</span>()?mini.<span class="built_in">back</span>().second:<span class="number">0</span>) + a[i] * (pdp[i<span class="number">-1</span>]  - (mini.<span class="built_in">size</span>()?pdp[mini.<span class="built_in">back</span>().first<span class="number">-1</span>]:<span class="number">0</span>))&#125;);</span><br><span class="line">    pdp[i] = pdp[i<span class="number">-1</span>] + (maxi.<span class="built_in">back</span>().second - mini.<span class="built_in">back</span>().second);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(pdp[n] - pdp[n<span class="number">-1</span>]).<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Enumerate-Pairs"><a href="#Ex-Enumerate-Pairs" class="headerlink" title="Ex - Enumerate Pairs"></a>Ex - Enumerate Pairs</h1><p>平面N个点, 整数k</p>
+<p>输出所有几何距离&lt;&#x3D;k的点对, 按字典序</p>
+<p>保证结果 &lt;&#x3D; 4e5</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>k 1.5e9</p>
+<p>xi,yi [0,1e9]</p>
+<p>4s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>最无脑就是n^2暴力, 除了会TLE就是对的</p>
+<p>如果是长方形还好, 可以 二维线段树, 但是圆形并不会</p>
+<p>剩下想法分块和二分?</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>每个点分配到(xi&#x2F;k,yi&#x2F;k) 中</p>
+<p>这样每个点在它的块 的8临块 中找可匹配点</p>
+<p>暴力即可, 充分性显然</p>
+<hr>
+<p>复杂度证明! O(N+M)</p>
+<p>对于块有x个点, 显然其内部距离小于k的点对是 x^2级别的,(证明,4等分成4个正方形子块, 至少一个块的数量级是x,而其内部两两距离小于k)</p>
+<p>因此 所有块的 x^2 和的级别 &lt;&#x3D; M</p>
+<p>因此块间 x1x2 &lt;&#x3D; max(x1,x2)^2 &lt;&#x3D; M</p>
+<p>得证</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc234/submissions/34662441">https://atcoder.jp/contests/abc234/submissions/34662441</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="type">const</span> ll MAXY = <span class="number">2e9</span>;</span><br><span class="line"><span class="type">int</span> dx[] = &#123;<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>&#125;;</span><br><span class="line"><span class="type">int</span> dy[] = &#123;<span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>,<span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>,<span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>&#125;;</span><br><span class="line"><span class="function">ll <span class="title">enc</span><span class="params">(ll x,ll y)</span></span>&#123; <span class="keyword">return</span> x*MAXY+y;&#125; <span class="comment">// 编码</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  ll k = <span class="built_in">read</span>();</span><br><span class="line">  vector&lt;pair&lt;ll,ll&gt;&gt; <span class="built_in">pts</span>(n+<span class="number">1</span>);</span><br><span class="line">  map&lt;ll,vector&lt;<span class="type">int</span>&gt;&gt; mp;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    ll x = <span class="built_in">read</span>() + k; <span class="comment">// 平移 保证8邻的坐标也是非负, 题解这里有问题?x,y可能为负数?</span></span><br><span class="line">    ll y = <span class="built_in">read</span>() + k;</span><br><span class="line">    pts[i] = &#123;x,y&#125;;</span><br><span class="line">    mp[<span class="built_in">enc</span>(x/k,y/k)].<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt; res;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">auto</span> [x,y] = pts[i];</span><br><span class="line">    <span class="built_in">rep</span>(t,<span class="number">0</span>,<span class="number">9</span>) <span class="keyword">for</span>(<span class="type">int</span> j: mp[<span class="built_in">enc</span>(x/k+dx[t],y/k+dy[t])]) <span class="keyword">if</span>(i&lt;j) &#123; <span class="comment">// 自己和八邻块</span></span><br><span class="line">      <span class="keyword">auto</span> [xj,yj] = pts[j];</span><br><span class="line">      <span class="keyword">if</span>((x-xj)*(x-xj) + (y-yj)*(y-yj) &lt;= k*k) res.<span class="built_in">push_back</span>(&#123;i,j&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(res.<span class="built_in">begin</span>(),res.<span class="built_in">end</span>());</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(<span class="type">int</span>)res.<span class="built_in">size</span>());</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> [i,j]: res) <span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>,i,j);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>dp,前缀和,单调栈,没啥难的</p>
 <p>Ex</p>
+<p>分块, 神奇的分块, 不会证明,</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc234/editorial">官方题解</a></p>
 
     </div>
@@ -355,6 +409,10 @@
 </ul>
 </div>
 
+          <div class="post-tags">
+              <a href="/Blog/tags/%E5%88%86%E5%9D%97/" rel="tag"><i class="fa fa-tag"></i> 分块</a>
+              <a href="/Blog/tags/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/" rel="tag"><i class="fa fa-tag"></i> 单调队列</a>
+          </div>
 
         
 
@@ -401,13 +459,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="總字數">748k</span>
+    <span title="總字數">752k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">11:20</span>
+    <span title="所需總閱讀時間">11:23</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動

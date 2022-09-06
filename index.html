@@ -260,7 +260,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-06 08:48:51" itemprop="dateModified" datetime="2022-09-06T08:48:51+08:00">2022-09-06</time>
+      <time title="修改時間：2022-09-07 03:53:00" itemprop="dateModified" datetime="2022-09-07T03:53:00+08:00">2022-09-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -297,18 +297,18 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>103</span>
+      <span>3.2k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
+      <span>3 分鐘</span>
     </span>
 </div>
 
-            <div class="post-description">G()Ex()</div>
+            <div class="post-description">G(单调栈)Ex(分块)</div>
         </div>
       </header>
 
@@ -317,7 +317,30 @@
     
     <div class="post-body" itemprop="articleBody">
           <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc234/tasks">https://atcoder.jp/contests/abc234/tasks</a></p>
-<h1 id="G-Divide-a-Sequence"><a href="#G-Divide-a-Sequence" class="headerlink" title="G - Divide a Sequence"></a>G - Divide a Sequence</h1><h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2>
+<h1 id="G-Divide-a-Sequence"><a href="#G-Divide-a-Sequence" class="headerlink" title="G - Divide a Sequence"></a>G - Divide a Sequence</h1><p>长n数组A</p>
+<p>2^{n-1}种方式切割成非空顺序数字</p>
+<p>f(切割) &#x3D; $\prod$每个子数组的 (max-min)</p>
+<p>求 $\sum$ f(所有切割)</p>
+<p>mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>2s 1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>dp搞一搞</p>
+<p>考虑最后一个数组长度<br>dp[i] &#x3D; dp[i-len] * ((max-min)([i-len+1..i]))</p>
+<p>但这样就O(n) 状态, n^2转移了</p>
+<p>然后,算的时候,max和min可以拆开, 但是如果 两两不等的话, 即使用了 区间sum dp * max, 也可能max需要一个一个枚举,也是n^2</p>
+<hr>
+<p>问题变成说</p>
+<p><code>dp[i] = sum max(a[i-len+1..i]) * dp[i-len] - min(a[i-len+1..i]) * dp[i-len]</code></p>
+<p>考虑相邻转移</p>
+<p><code>i-1: sum max(a[j+1..i-1]) * dp[j]</code></p>
+<ol>
+<li><code>a[i]是[j+1..i]的最大值</code>, 那么找最小的<code>j</code>, 这之家你的贡献 &#x3D; a[i] * sum dp[j..i-1]</li>
+<li><code>a[i]不是[j+1..i]</code>的最大值, 那么这贡献 <code>= sum max(a[j+1..i])*dp[j] = sum max(a[j+1..i-1])*dp[j]</code></li>
+</ol>
+<p>因此相邻的dp虽然没有直接关系, 但是可以利用上次的计算</p>
+<p><code>dp[i] = a[i] * sum(dp[j..i-1]) + sum f(0..j)</code></p>
+<p>min同理</p>
+<hr>
+<p>似乎就没了</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/Blog/2022-09-05-ac-abc234/#more" rel="contents">
@@ -387,7 +410,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-06 08:48:51" itemprop="dateModified" datetime="2022-09-06T08:48:51+08:00">2022-09-06</time>
+      <time title="修改時間：2022-09-07 03:53:00" itemprop="dateModified" datetime="2022-09-07T03:53:00+08:00">2022-09-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -545,7 +568,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-06 08:48:51" itemprop="dateModified" datetime="2022-09-06T08:48:51+08:00">2022-09-06</time>
+      <time title="修改時間：2022-09-07 03:53:00" itemprop="dateModified" datetime="2022-09-07T03:53:00+08:00">2022-09-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -707,7 +730,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-06 08:48:51" itemprop="dateModified" datetime="2022-09-06T08:48:51+08:00">2022-09-06</time>
+      <time title="修改時間：2022-09-07 03:53:00" itemprop="dateModified" datetime="2022-09-07T03:53:00+08:00">2022-09-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -849,7 +872,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-06 08:48:51" itemprop="dateModified" datetime="2022-09-06T08:48:51+08:00">2022-09-06</time>
+      <time title="修改時間：2022-09-07 03:53:00" itemprop="dateModified" datetime="2022-09-07T03:53:00+08:00">2022-09-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -970,13 +993,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="總字數">748k</span>
+    <span title="總字數">752k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">11:20</span>
+    <span title="所需總閱讀時間">11:23</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
