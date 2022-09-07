@@ -209,39 +209,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2017-11-20-CF_R446_D2_E(MST + Disjoint Set)</title>
-    <url>/Blog/2017-11-20-cf-R446-D2-E-cpp/</url>
-    <content><![CDATA[<h1 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h1><p>给一个有权无向图。进行q次询问，第i次询问ki个边，问所提到的ki个边能否同时出现在图的最小生成树上，返回YES或NO。</p>
-<h1 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h1><p>图的边和点<code>&lt;=500&#39;000</code></p>
-<p>询问数<code>q&lt;=500&#39;000</code>,所有询问的边数的和<code>sum(ki)&lt;=500&#39;000</code></p>
-<p>时间空间(2s&#x2F;256MB)</p>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>  不知道如果当时继续想下去，会不会想出解法，当时已经想到 并查集 和 边+未选取的边形成的环，已选取的 不能 大于max(未选取的)。感觉和正解的具体实现还差很远，但基础结论已经有了</p>
-<p>  标答说成那样，我也是没啥办法，我也想到了，没想到下一步。然后观摩了moejy0viiiiiv大佬的代码。 下面用举例来说明</p>
-<p>  首先，不要用官方的样例来想，想象图有且只有一个环，环上的边长是1,1,2,2,2</p>
-<p>  很直接可以知道只要不是选了所有的2，那么 都是可以同时存在于一个MST上的，那么选三个2的情况发生了什么，也就是上面说的选了三个2以后，在这个环上，未选取的最大只是1了。然后换一个角度看，如果我们已经先把图上所有的长度为1的链接好了，那么在新增加2的时候，就不应该形成环。</p>
-<p>  同样可以想象环上是1,1,2,2,2,3的情况，现在 尝试添加2的时候，就算全添加了，也不会直接形成环，和结论全选了2也能同时存在于一个MST是一样的。</p>
-<p>  其中要注意的是对于第一种情况，就算 询问中没有1 1，也不能选取 所有的2</p>
-<p>  因此把上述方法转化为伪代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">首先读入,所有边和询问，将询问 每个拆分，按长度第一序，询问号第二序 排序</span><br><span class="line"></span><br><span class="line">从空开始，分别处理每一个询问中的1，将它们连接(并查集) 检验是否成环，如果成环该询问不可行</span><br><span class="line"></span><br><span class="line">将所有的1相连接(并查集)不论在不在查询中，分别处理每一个询问中的2，将它们连接(并查集) 检验是否成环，如果成环该询问不可行</span><br><span class="line">将所有的1 2相连接(并查集)不论在不在查询中，分别处理每一个询问中的3，将它们连接(并查集) 检验是否成环，如果成环该询问不可行</span><br><span class="line">...</span><br><span class="line">将所有的1 2...499&#x27;999相连接(并查集)不论在不在查询中，分别处理每一个询问中的500&#x27;000，将它们连接(并查集) 检验是否成环，如果成环该询问不可行</span><br></pre></td></tr></table></figure>
-
-<p>整理上面成循环就是</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">i=0</span><br><span class="line">S(i) 表示连接完小于等于i的边的并查集</span><br><span class="line">for(length=1~500&#x27;000):</span><br><span class="line">  遍历每一查询</span><br><span class="line">    选中一个包含该length的一个查询Q</span><br><span class="line">    将Q中所有长length的边 和 S(length-1)相连 检查是否成环</span><br><span class="line">  将所有长为length的边连入S(length-1)也就变成了S(length)</span><br></pre></td></tr></table></figure>
-
-<p>上面代码中 一个是既要利用已经连接的小于length的并查集，又要在每次 进行成环检测时 并查集能够复用，具体实现见下面moejy0viiiiiv大佬的代码，他用f来实现 可以逐渐增加利用的并查集，用p和mt来实现可复用 的每次检测。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>  <a href="http://codeforces.com/contest/891/submission/32396218">moejy0viiiiiv 的代码</a></p>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">#include &lt;set&gt;</span><br><span class="line">#include &lt;cassert&gt;</span><br><span class="line">  using namespace std;</span><br><span class="line">#define rep(i,a,n) for (int i=a;i&lt;n;i++)</span><br><span class="line">#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span><br><span class="line">#define pb push_back</span><br><span class="line">#define mp make_pair</span><br><span class="line">#define all(x) (x).begin(),(x).end()</span><br><span class="line">#define fi first</span><br><span class="line">#define se second</span><br><span class="line">#define SZ(x) ((int)(x).size())</span><br><span class="line">typedef vector&lt;int&gt; VI;</span><br><span class="line">typedef long long ll;</span><br><span class="line">typedef pair&lt;int,int&gt; PII;</span><br><span class="line">const ll mod=1000000007;</span><br><span class="line">ll powmod(ll a,ll b) &#123;ll res=1;a%=mod; assert(b&gt;=0); for(;b;b&gt;&gt;=1)&#123;if(b&amp;1)res=res*a%mod;a=a*a%mod;&#125;return res;&#125;</span><br><span class="line">// head</span><br><span class="line"></span><br><span class="line">const int N=501000;</span><br><span class="line"></span><br><span class="line">int n,m,u[N],v[N],w[N],f[N],p[N],mt[N],T,wa[N];</span><br><span class="line">int Q,k,id;</span><br><span class="line">vector&lt;int&gt; eg[N];</span><br><span class="line">vector&lt;PII&gt; qw[N];</span><br><span class="line"></span><br><span class="line">int find(int x) &#123;</span><br><span class="line">  if (f[x]!=x) return f[x]=find(f[x]); else return x;</span><br><span class="line">&#125;</span><br><span class="line">int find2(int x) &#123;</span><br><span class="line">  if (mt[x]!=T) mt[x]=T,p[x]=f[x];</span><br><span class="line">  if (p[x]!=x) return p[x]=find2(p[x]); else return x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  scanf(&quot;%d%d&quot;,&amp;n,&amp;m);</span><br><span class="line">  rep(i,0,m) &#123;</span><br><span class="line">    scanf(&quot;%d%d%d&quot;,u+i,v+i,w+i);</span><br><span class="line">    eg[w[i]].pb(i);</span><br><span class="line">  &#125;</span><br><span class="line">  rep(i,1,n+1) f[i]=i;</span><br><span class="line">  scanf(&quot;%d&quot;,&amp;Q);</span><br><span class="line">  rep(i,0,Q) &#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;k);</span><br><span class="line">    rep(j,0,k) &#123;</span><br><span class="line">      scanf(&quot;%d&quot;,&amp;id);</span><br><span class="line">      --id;</span><br><span class="line">      qw[w[id]].pb(mp(i,id));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  rep(i,1,500001) &#123;</span><br><span class="line">    sort(all(qw[i]));</span><br><span class="line">    rep(j,0,SZ(qw[i])) &#123;</span><br><span class="line">      int x=u[qw[i][j].se],y=v[qw[i][j].se];</span><br><span class="line">      find(x); find(y);</span><br><span class="line">    &#125;</span><br><span class="line">    rep(j,0,SZ(qw[i])) &#123;</span><br><span class="line">      if (j==0||qw[i][j].fi!=qw[i][j-1].fi) T++;</span><br><span class="line">      int x=u[qw[i][j].se],y=v[qw[i][j].se];</span><br><span class="line">      if (find2(x)==find2(y))	wa[qw[i][j].fi]=1;</span><br><span class="line">      p[find2(x)]=find2(y);</span><br><span class="line">    &#125;</span><br><span class="line">    for (auto id:eg[i]) &#123;</span><br><span class="line">      int x=u[id],y=v[id];</span><br><span class="line">      f[find(x)]=find(y);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  rep(i,0,Q) puts(wa[i]?&quot;NO&quot;:&quot;YES&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://codeforces.com/contest/892/problem/E">题目</a></p>
-<p><a href="http://codeforces.com/blog/entry/55841">官方题解</a></p>
-]]></content>
-      <categories>
-        <category>Codeforces</category>
-      </categories>
-      <tags>
-        <tag>图</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CF Goodbye2017 D(math:series + extended Euclidean + dp)</title>
     <url>/Blog/2017-12-30-Goodbye2017D/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a><a href="http://codeforces.com/contest/908/problem/D">题目</a></h1><h1 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h1><p>输入 k pa pb</p>
@@ -6302,8 +6269,8 @@
       </categories>
       <tags>
         <tag>数学</tag>
-        <tag>图</tag>
         <tag>概率论</tag>
+        <tag>图</tag>
         <tag>互斥拆分</tag>
         <tag>bitset</tag>
         <tag>子集遍历</tag>
@@ -11159,9 +11126,9 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>图</tag>
         <tag>DP</tag>
         <tag>FFT</tag>
+        <tag>图</tag>
         <tag>bitset</tag>
         <tag>子集遍历</tag>
         <tag>集合论</tag>
@@ -11260,9 +11227,9 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>图</tag>
         <tag>DP</tag>
         <tag>字符串</tag>
+        <tag>图</tag>
         <tag>拓扑排序</tag>
         <tag>dijkstra</tag>
         <tag>拆点</tag>
@@ -11412,11 +11379,11 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>图</tag>
         <tag>DP</tag>
         <tag>容斥</tag>
         <tag>网络流</tag>
         <tag>scc</tag>
+        <tag>图</tag>
         <tag>排列</tag>
         <tag>环</tag>
         <tag>费用流</tag>
@@ -11536,11 +11503,11 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>图</tag>
         <tag>DP</tag>
         <tag>容斥</tag>
         <tag>网络流</tag>
         <tag>scc</tag>
+        <tag>图</tag>
         <tag>SOSDP</tag>
         <tag>二分图</tag>
         <tag>排列</tag>
@@ -14429,6 +14396,116 @@
       <tags>
         <tag>分块</tag>
         <tag>单调队列</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder abc235</title>
+    <url>/Blog/2022-09-06-ac-abc235/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc235/tasks">https://atcoder.jp/contests/abc235/tasks</a></p>
+<h1 id="G-Gardens"><a href="#G-Gardens" class="headerlink" title="G - Gardens"></a>G - Gardens</h1><p>A个种子1</p>
+<p>B个种子2</p>
+<p>C个种子3</p>
+<p>N个花园</p>
+<p>要满足条件, 任何花园都有种种子</p>
+<p>每个花园每种的个数[0,1]</p>
+<p>不需要把所有都种植</p>
+<p>求方案数mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 5e6</p>
+<p>3s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>R(i,j) 表示,i个花园,种完其中j个花园的方案数</p>
+<p>T(n) 表示,n个花园,恰好种满这n个花园的方案数, T(n) &#x3D; R(n,n)</p>
+<p>ans &#x3D; T(n)</p>
+<p>S(n) &#x3D; R(n,n) + R(n,n-1) + R(n,n-2) + … + R(n,0);</p>
+<p>S(n) &#x3D; R(n,n) * binom(n,n) + R(n-1,n-1) * binom(n,n-1) + .. + R(0,0) * binom(n,0)</p>
+<p>S(n) &#x3D; T(n) * binom(n,n) + T(n-1) * binom(n,n-1) + .. + T(0) * binom(n,0)</p>
+<p>S(n) 很容易算, 相当于A,B,C互不影响, &#x3D; prod (sum binom(n,0..X)), X&#x3D;A,B,C, 问题是这个依赖于n需要O(n),</p>
+<p>如果能反过来得到T(n) 就好了</p>
+<p>T(n) &#x3D; S(n) - (T(n-1) * binom(n,n-1) + … + T(0) * binom(n,0))</p>
+<p>T(n)&#x2F;n! &#x3D; S(n)&#x2F;n! - sum T(i)&#x2F;i!&#x2F;(n-i)!</p>
+<hr>
+<p>考虑花园状态只有2^3-1&#x3D;7 种,那么就是 七种中,总个数小于a,b,c的</p>
+<p>生成方程?</p>
+<p>$\sum \lbrack pwr_x\le a,pwr_y\le b,pwr_z\le c \rbrack ((1+x)(1+y)(1+z)-1)^n$</p>
+<p>$&#x3D; \sum_{i\in[0, n],i_x\le a,,i_y\le b,i_z\le c} (-1)^{n-i} \binom{n}{i} \binom{i}{i_x}\binom{i}{i_y}\binom{i}{i_z} $</p>
+<p>$&#x3D; \sum_{i\in[0, n],i_x\le a,,i_y\le b,i_z\le c} (-1)^{n-i} \binom{n}{i} \binom{i}{min(i,i_x)}\binom{i}{min(i,i_y)}\binom{i}{min(i,i_z)} $</p>
+<p>并没法算</p>
+<hr>
+<p>再就是, 假设 a&lt;&#x3D;b&lt;&#x3D;c</p>
+<p>ans(a,b,c) 通过 ans(b,b,b) 让每次头-1,或者尾+1,多次得到</p>
+<p>去考虑之间的变化</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>看来我容斥原理完全不会了, 题目是容斥得到了 我通过生成方程得到的表达式</p>
+<p>然后 也是, 如果暴力, 枚举i,总的是O(n^2) 时间</p>
+<p>$f(M,N) &#x3D; \sum_{i&#x3D;0}^{min(N,M)} \binom{N}{i}$</p>
+<p>哦 我好蠢, 这相当于M取值只会是a,b,c, 所以针对性的 只有N变化!!</p>
+<p>因此可以O(1)算出 $f(M,N+1) &#x3D; \sum_{i&#x3D;0}^{min(N+1,M)} \binom{N+1}{i}$</p>
+<p>对于$N\le M$显然 $ f(M,N) &#x3D; 2^N$</p>
+<hr>
+<p>直接定义无效的binom&#x3D;0</p>
+<p>考虑sum(i,0..X) 到 sum(i+1,0..X)的增量</p>
+<p><img data-src="https://img.atcoder.jp/ghi/d93c643497867d310c6255fb673d9682.png" alt="grid"></p>
+<p>显然$f(M,N) &#x3D; 2f(M,N-1) + binom{N,M}$</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc235/submissions/34663174">https://atcoder.jp/contests/abc235/submissions/34663174</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n;i--&gt;(int)a;)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line">mint fac[<span class="number">5000010</span>] = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint ifac[<span class="number">5000010</span>] = &#123;<span class="number">1</span>&#125;;</span><br><span class="line"><span class="type">int</span> a[<span class="number">3</span>];</span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n &lt; <span class="number">0</span> || m &gt; n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> fac[n]*ifac[m]*ifac[n-m];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">3</span>) a[i] = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) fac[i]=fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  ifac[n] = fac[n].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,n) ifac[i]=ifac[i+<span class="number">1</span>]*(i+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  mint f[] = &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;;</span><br><span class="line">  mint sgn = n%<span class="number">2</span>?<span class="number">-1</span>:<span class="number">1</span>;</span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    ans += <span class="built_in">binom</span>(n, i) * f[<span class="number">0</span>] * f[<span class="number">1</span>] * f[<span class="number">2</span>] * sgn;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,<span class="number">3</span>) f[j] = f[j]*<span class="number">2</span> - <span class="built_in">binom</span>(i,a[j]);</span><br><span class="line">    sgn = -sgn;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Enumerate-Pairs"><a href="#Ex-Enumerate-Pairs" class="headerlink" title="Ex - Enumerate Pairs"></a>Ex - Enumerate Pairs</h1><p>n点m边无向有边权图, </p>
+<p>初始所有点黑色,你可以做最多k次操作</p>
+<p>每次操作: 任选点v和数x, 把所有从v出发只经过&lt;&#x3D;x的边可达的所有点染红</p>
+<p>问最终染红的点的集合 有多少种集合, mod 998244353</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 1e5</p>
+<p>m 1e5</p>
+<p>k 500</p>
+<p>ci [1,1e9]</p>
+<p>3s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>组合数, 虽然看起来 &#x3D; sum binom(i,0..min(a,i)), 是上面不动,下面动, 但实际上把下面提出来,以及定义无效的binom&#x3D;0, 就变成了只于上面有关的binom和了,且可递推</p>
+<p>有道理, 在公式上推半天,不如在二维平面看binom 推得很显然</p>
+<p>Ex</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc235/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>容斥</tag>
+        <tag>组合数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2017-11-20-CF_R446_D2_E(MST + Disjoint Set)</title>
+    <url>/Blog/2017-11-20-cf-R446-D2-E-cpp/</url>
+    <content><![CDATA[<h1 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h1><p>给一个有权无向图。进行q次询问，第i次询问ki个边，问所提到的ki个边能否同时出现在图的最小生成树上，返回YES或NO。</p>
+<h1 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h1><p>图的边和点<code>&lt;=500&#39;000</code></p>
+<p>询问数<code>q&lt;=500&#39;000</code>,所有询问的边数的和<code>sum(ki)&lt;=500&#39;000</code></p>
+<p>时间空间(2s&#x2F;256MB)</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>  不知道如果当时继续想下去，会不会想出解法，当时已经想到 并查集 和 边+未选取的边形成的环，已选取的 不能 大于max(未选取的)。感觉和正解的具体实现还差很远，但基础结论已经有了</p>
+<p>  标答说成那样，我也是没啥办法，我也想到了，没想到下一步。然后观摩了moejy0viiiiiv大佬的代码。 下面用举例来说明</p>
+<p>  首先，不要用官方的样例来想，想象图有且只有一个环，环上的边长是1,1,2,2,2</p>
+<p>  很直接可以知道只要不是选了所有的2，那么 都是可以同时存在于一个MST上的，那么选三个2的情况发生了什么，也就是上面说的选了三个2以后，在这个环上，未选取的最大只是1了。然后换一个角度看，如果我们已经先把图上所有的长度为1的链接好了，那么在新增加2的时候，就不应该形成环。</p>
+<p>  同样可以想象环上是1,1,2,2,2,3的情况，现在 尝试添加2的时候，就算全添加了，也不会直接形成环，和结论全选了2也能同时存在于一个MST是一样的。</p>
+<p>  其中要注意的是对于第一种情况，就算 询问中没有1 1，也不能选取 所有的2</p>
+<p>  因此把上述方法转化为伪代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">首先读入,所有边和询问，将询问 每个拆分，按长度第一序，询问号第二序 排序</span><br><span class="line"></span><br><span class="line">从空开始，分别处理每一个询问中的1，将它们连接(并查集) 检验是否成环，如果成环该询问不可行</span><br><span class="line"></span><br><span class="line">将所有的1相连接(并查集)不论在不在查询中，分别处理每一个询问中的2，将它们连接(并查集) 检验是否成环，如果成环该询问不可行</span><br><span class="line">将所有的1 2相连接(并查集)不论在不在查询中，分别处理每一个询问中的3，将它们连接(并查集) 检验是否成环，如果成环该询问不可行</span><br><span class="line">...</span><br><span class="line">将所有的1 2...499&#x27;999相连接(并查集)不论在不在查询中，分别处理每一个询问中的500&#x27;000，将它们连接(并查集) 检验是否成环，如果成环该询问不可行</span><br></pre></td></tr></table></figure>
+
+<p>整理上面成循环就是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">i=0</span><br><span class="line">S(i) 表示连接完小于等于i的边的并查集</span><br><span class="line">for(length=1~500&#x27;000):</span><br><span class="line">  遍历每一查询</span><br><span class="line">    选中一个包含该length的一个查询Q</span><br><span class="line">    将Q中所有长length的边 和 S(length-1)相连 检查是否成环</span><br><span class="line">  将所有长为length的边连入S(length-1)也就变成了S(length)</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中 一个是既要利用已经连接的小于length的并查集，又要在每次 进行成环检测时 并查集能够复用，具体实现见下面moejy0viiiiiv大佬的代码，他用f来实现 可以逐渐增加利用的并查集，用p和mt来实现可复用 的每次检测。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>  <a href="http://codeforces.com/contest/891/submission/32396218">moejy0viiiiiv 的代码</a></p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">#include &lt;set&gt;</span><br><span class="line">#include &lt;cassert&gt;</span><br><span class="line">  using namespace std;</span><br><span class="line">#define rep(i,a,n) for (int i=a;i&lt;n;i++)</span><br><span class="line">#define per(i,a,n) for (int i=n-1;i&gt;=a;i--)</span><br><span class="line">#define pb push_back</span><br><span class="line">#define mp make_pair</span><br><span class="line">#define all(x) (x).begin(),(x).end()</span><br><span class="line">#define fi first</span><br><span class="line">#define se second</span><br><span class="line">#define SZ(x) ((int)(x).size())</span><br><span class="line">typedef vector&lt;int&gt; VI;</span><br><span class="line">typedef long long ll;</span><br><span class="line">typedef pair&lt;int,int&gt; PII;</span><br><span class="line">const ll mod=1000000007;</span><br><span class="line">ll powmod(ll a,ll b) &#123;ll res=1;a%=mod; assert(b&gt;=0); for(;b;b&gt;&gt;=1)&#123;if(b&amp;1)res=res*a%mod;a=a*a%mod;&#125;return res;&#125;</span><br><span class="line">// head</span><br><span class="line"></span><br><span class="line">const int N=501000;</span><br><span class="line"></span><br><span class="line">int n,m,u[N],v[N],w[N],f[N],p[N],mt[N],T,wa[N];</span><br><span class="line">int Q,k,id;</span><br><span class="line">vector&lt;int&gt; eg[N];</span><br><span class="line">vector&lt;PII&gt; qw[N];</span><br><span class="line"></span><br><span class="line">int find(int x) &#123;</span><br><span class="line">  if (f[x]!=x) return f[x]=find(f[x]); else return x;</span><br><span class="line">&#125;</span><br><span class="line">int find2(int x) &#123;</span><br><span class="line">  if (mt[x]!=T) mt[x]=T,p[x]=f[x];</span><br><span class="line">  if (p[x]!=x) return p[x]=find2(p[x]); else return x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  scanf(&quot;%d%d&quot;,&amp;n,&amp;m);</span><br><span class="line">  rep(i,0,m) &#123;</span><br><span class="line">    scanf(&quot;%d%d%d&quot;,u+i,v+i,w+i);</span><br><span class="line">    eg[w[i]].pb(i);</span><br><span class="line">  &#125;</span><br><span class="line">  rep(i,1,n+1) f[i]=i;</span><br><span class="line">  scanf(&quot;%d&quot;,&amp;Q);</span><br><span class="line">  rep(i,0,Q) &#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;k);</span><br><span class="line">    rep(j,0,k) &#123;</span><br><span class="line">      scanf(&quot;%d&quot;,&amp;id);</span><br><span class="line">      --id;</span><br><span class="line">      qw[w[id]].pb(mp(i,id));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  rep(i,1,500001) &#123;</span><br><span class="line">    sort(all(qw[i]));</span><br><span class="line">    rep(j,0,SZ(qw[i])) &#123;</span><br><span class="line">      int x=u[qw[i][j].se],y=v[qw[i][j].se];</span><br><span class="line">      find(x); find(y);</span><br><span class="line">    &#125;</span><br><span class="line">    rep(j,0,SZ(qw[i])) &#123;</span><br><span class="line">      if (j==0||qw[i][j].fi!=qw[i][j-1].fi) T++;</span><br><span class="line">      int x=u[qw[i][j].se],y=v[qw[i][j].se];</span><br><span class="line">      if (find2(x)==find2(y))	wa[qw[i][j].fi]=1;</span><br><span class="line">      p[find2(x)]=find2(y);</span><br><span class="line">    &#125;</span><br><span class="line">    for (auto id:eg[i]) &#123;</span><br><span class="line">      int x=u[id],y=v[id];</span><br><span class="line">      f[find(x)]=find(y);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  rep(i,0,Q) puts(wa[i]?&quot;NO&quot;:&quot;YES&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://codeforces.com/contest/892/problem/E">题目</a></p>
+<p><a href="http://codeforces.com/blog/entry/55841">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Codeforces</category>
+      </categories>
+      <tags>
+        <tag>图</tag>
       </tags>
   </entry>
 </search>
