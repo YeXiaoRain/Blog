@@ -14708,7 +14708,7 @@
 <p>这样属性的个数才是-1的幂次, 保证容斥后并集每个的贡献为1次, 贡献为 元素的函数的结果</p>
 <p>所以我那样的公式是不对的, 把相等点集作为属性意味着属性之间没有相互独立, 或者从中文上来讲, 两个属性对应集合的并就是两个共有的属性, 而bitmask无法表示这个意思, 011 | 101 &#x3D; 111 , 但是第一个表示的是0和1相等, 第二个表示的是0和2相等,但是 后面表示的是012相等, 所以题解中的单个属性就是两个相等</p>
 <p>而属性,一个是想每个值作为属性,</p>
-<p>这里是建立图的关系, 每条边作为作为属性</p>
+<p> 这里是建立图的关系, 每条边作为作为属性</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc236/editorial">官方题解</a></p>
 ]]></content>
       <categories>
@@ -14721,6 +14721,136 @@
         <tag>矩阵</tag>
         <tag>线性基</tag>
         <tag>bitdp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder abc237</title>
+    <url>/Blog/2022-09-13-ac-abc237/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc237/tasks">https://atcoder.jp/contests/abc237/tasks</a></p>
+<h1 id="G-Range-Sort-Query"><a href="#G-Range-Sort-Query" class="headerlink" title="G - Range Sort Query"></a>G - Range Sort Query</h1><p>给你一个1-N的排列</p>
+<p>Q次操作, 每次指定区间排成指定升序&#x2F;降序</p>
+<p>问所有操作结束后,X的位置</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>q 2e5</p>
+<p>8s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>先考虑特殊情况</p>
+<p>X&#x3D;1</p>
+<p>那么只用持续跟踪它的位置就好了, 每次有覆盖的区间,计算新位置</p>
+<p>而如果X&#x3D;2</p>
+<p>会发现, 每次排序与,1是否在其中有关, 维护量变成2个位置</p>
+<p>这样下去3,就是3个位置</p>
+<p>x就是x个位置</p>
+<hr>
+<p>但其实一想, 整个排序,对X位置有影响的可以只考虑&lt; X的个数, 或者说只考虑&gt; x的个数</p>
+<p>那么每次对含X的排序 &#x3D; [l…r] 变成 <code>&lt; x的个数</code>,X,<code>&gt; x的个数</code></p>
+<p>啊不就是区间查询和连续区间修改</p>
+<p>segment tree + lazy tag 就可以了?</p>
+<span id="more"></span>
+
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc237/submissions/34842993">https://atcoder.jp/contests/abc237/submissions/34842993</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_ROOT 1,0,n-1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_L (o&lt;&lt;1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_R (o&lt;&lt;1|1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mid (l+r)/2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_L_CHILD SEG_L,l,mid</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_R_CHILD SEG_R,mid+1,r</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[<span class="number">200010</span>];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">  <span class="type">int</span> lazy = <span class="number">0</span>; <span class="comment">// 0 no lazy, 1lazy 1, 2lazy2</span></span><br><span class="line">  array&lt;<span class="type">int</span>,3&gt; c = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">node seg[<span class="number">800010</span>]; <span class="comment">// seg[o] = []</span></span><br><span class="line"></span><br><span class="line"><span class="function">array&lt;<span class="type">int</span>,3&gt; <span class="title">add</span><span class="params">(<span class="type">const</span> array&lt;<span class="type">int</span>,<span class="number">3</span>&gt; &amp;a0,<span class="type">const</span> array&lt;<span class="type">int</span>,<span class="number">3</span>&gt; &amp;a1)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;a0[<span class="number">0</span>]+a1[<span class="number">0</span>],a0[<span class="number">1</span>]+a1[<span class="number">1</span>],a0[<span class="number">2</span>]+a1[<span class="number">2</span>]&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> o,<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(l == r)&#123;</span><br><span class="line">    seg[o].c[a[l]]++;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">build</span>(SEG_L_CHILD);</span><br><span class="line">  <span class="built_in">build</span>(SEG_R_CHILD);</span><br><span class="line">  seg[o].c = <span class="built_in">add</span>(seg[SEG_L].c,seg[SEG_R].c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">down</span><span class="params">(<span class="type">int</span> o,<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(seg[o].lazy == <span class="number">0</span>)<span class="keyword">return</span> ;</span><br><span class="line">  <span class="type">int</span> v = seg[o].lazy;</span><br><span class="line">  seg[SEG_L].lazy = v;</span><br><span class="line">  seg[SEG_L].c = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">  seg[SEG_L].c[v] = (mid-l+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  seg[SEG_R].lazy = v;</span><br><span class="line">  seg[SEG_R].c = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">  seg[SEG_R].c[v] = (r-mid);</span><br><span class="line">  seg[o].lazy = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">array&lt;<span class="type">int</span>,3&gt; <span class="title">query</span><span class="params">(<span class="type">int</span> o,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> ql,<span class="type">int</span> qr)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ql &lt;= l &amp;&amp; r &lt;= qr) <span class="keyword">return</span> seg[o].c;</span><br><span class="line">  <span class="built_in">down</span>(o,l,r);</span><br><span class="line">  array&lt;<span class="type">int</span>,3&gt; res = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">  <span class="keyword">if</span>(ql &lt;= mid) res = <span class="built_in">add</span>(res,<span class="built_in">query</span>(SEG_L_CHILD,ql,qr));</span><br><span class="line">  <span class="keyword">if</span>(qr &gt;  mid) res = <span class="built_in">add</span>(res,<span class="built_in">query</span>(SEG_R_CHILD,ql,qr));</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setRange</span><span class="params">(<span class="type">int</span> o,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> ql,<span class="type">int</span> qr,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ql &lt;= l &amp;&amp; r &lt;= qr) &#123;</span><br><span class="line">    seg[o].lazy = v;</span><br><span class="line">    seg[o].c = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">    seg[o].c[v] = r-l+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">down</span>(o,l,r);</span><br><span class="line">  <span class="keyword">if</span>(ql &lt;= mid) <span class="built_in">setRange</span>(SEG_L_CHILD,ql,qr,v);</span><br><span class="line">  <span class="keyword">if</span>(qr &gt;  mid) <span class="built_in">setRange</span>(SEG_R_CHILD,ql,qr,v);</span><br><span class="line">  seg[o].c = <span class="built_in">add</span>(seg[SEG_L].c,seg[SEG_R].c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find0</span><span class="params">(<span class="type">int</span> o,<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(l == r) <span class="keyword">return</span> l;</span><br><span class="line">  <span class="built_in">down</span>(o,l,r);</span><br><span class="line">  <span class="keyword">return</span> seg[SEG_L].c[<span class="number">0</span>]?<span class="built_in">find0</span>(SEG_L_CHILD):<span class="built_in">find0</span>(SEG_R_CHILD);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> q = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> x = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i] = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i] = a[i]==x?<span class="number">0</span>: (a[i]&lt;x?<span class="number">1</span>:<span class="number">2</span>); <span class="comment">// &lt;x:1,=x:0,&gt;x:2</span></span><br><span class="line">  <span class="built_in">build</span>(SEG_ROOT);</span><br><span class="line">  <span class="keyword">while</span>(q--)&#123;</span><br><span class="line">    <span class="type">int</span> o = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> l = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> r = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">auto</span> res = <span class="built_in">query</span>(SEG_ROOT,l,r);</span><br><span class="line">    <span class="keyword">if</span>(o == <span class="number">1</span>)&#123; <span class="comment">// 1 0 2</span></span><br><span class="line">      <span class="keyword">if</span>(res[<span class="number">0</span>]) <span class="built_in">setRange</span>(SEG_ROOT,l+res[<span class="number">1</span>]  ,l+res[<span class="number">1</span>]  ,<span class="number">0</span>);</span><br><span class="line">      <span class="keyword">if</span>(res[<span class="number">1</span>]) <span class="built_in">setRange</span>(SEG_ROOT,l         ,l+res[<span class="number">1</span>]<span class="number">-1</span>,<span class="number">1</span>);</span><br><span class="line">      <span class="keyword">if</span>(res[<span class="number">2</span>]) <span class="built_in">setRange</span>(SEG_ROOT,r-res[<span class="number">2</span>]+<span class="number">1</span>,r         ,<span class="number">2</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123; <span class="comment">// 2 0 1</span></span><br><span class="line">      <span class="keyword">if</span>(res[<span class="number">0</span>]) <span class="built_in">setRange</span>(SEG_ROOT,l+res[<span class="number">2</span>]  ,l+res[<span class="number">2</span>]  ,<span class="number">0</span>);</span><br><span class="line">      <span class="keyword">if</span>(res[<span class="number">1</span>]) <span class="built_in">setRange</span>(SEG_ROOT,r-res[<span class="number">1</span>]+<span class="number">1</span>,r         ,<span class="number">1</span>);</span><br><span class="line">      <span class="keyword">if</span>(res[<span class="number">2</span>]) <span class="built_in">setRange</span>(SEG_ROOT,l         ,l+res[<span class="number">2</span>]<span class="number">-1</span>,<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">find0</span>(SEG_ROOT)+<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Hakata"><a href="#Ex-Hakata" class="headerlink" title="Ex - Hakata"></a>Ex - Hakata</h1><p>小写字母的字符串S</p>
+<p>连续子串 是回文串,且不是其它的连续子串的回文串的子串</p>
+<p>问有多少种</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>|S| 200</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然可以先插入#号来不用分类奇偶,以每个点为中心的最长串才有可能是答案</p>
+<p>这样我们可以暴力n^2 得到n个候选回文串</p>
+<p>问题变成说其中一个是否是另一个的子串</p>
+<p>暴力+kmp &#x3D; n^3 ?</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>因为每次考虑 S如果能有n个不同子串, 那么每次末尾增加一个字符,至多产生一个之前不存在的回文串</p>
+<p>若未出现过, 则多了它自己</p>
+<p>若该字符出现过, 那么本身不会是新的, 那么产生的是 [i0….n+1], [i1…..n+1], 这些回文串</p>
+<p>注意到 最小的i,对应的[i….n+1] 包含了其余的[i…n+1]所以其余的都不会是新产生的,</p>
+<p>因此一个字符串的不同回文串个数 &lt;&#x3D; |S| 得证</p>
+<hr>
+<p>比如 A,B 都是C的子串,你可以选A,B不选C达到更多</p>
+<p>所以看成把 N个回文看成点,建立DAG,问选最多的点,让任意两点之间没有直接路径</p>
+<p>而对于这个DAG,如果有 i-&gt;j,j-&gt;k,那么必然存在i-&gt;k,(传递闭包), 所以根据Dilworth定理, 问题变成最小路径覆盖(选最少的路径, 覆盖所有点)</p>
+<p>DAG的选点互斥需要满足 i-&gt;j,j-&gt;k 则i-&gt;k也可以比较大小(存在偏需)</p>
+<p>然后可以用二分图最大匹配来做</p>
+<hr>
+<p>具体操作</p>
+<ol>
+<li>求传递闭包就是如果i-&gt;j,j-&gt;k那么就要有i-&gt;k的边,(本题目本身处理时就有不需要额外求)</li>
+<li>拆点成入点 出点, 变成二分图</li>
+</ol>
+<p>因为每个点的出入度在二分图最大匹配中为1或0, 所以对应原拓扑图一定是多个链</p>
+<p>又因为可以看成原图每个点是一个链,每次连接就让链数量减一, 要尽可能多的减1</p>
+<p>而这正好一个连接对应二分图的一个匹配, 所以</p>
+<p>最小覆盖 &#x3D; 点数 - 二分图最大匹配数</p>
+<h2 id="Dilworth-定理-偏序集分解定理"><a href="#Dilworth-定理-偏序集分解定理" class="headerlink" title="Dilworth 定理(偏序集分解定理)"></a>Dilworth 定理(偏序集分解定理)</h2><p>关于偏序集的极大极小的定理，该定理断言：对于任意有限偏序集，其最大反链中元素的数目必等于最小链划分中链的数目。</p>
+<p>偏序集能划分成的最少的全序集个数等于最大反链的元素个数。</p>
+<p>对偶也是真: 任意有限偏序集,最长链元素的数目必等于最小反链划分中反链的数目</p>
+<hr>
+<p>一些定义</p>
+<p>原点集 &#x3D; V</p>
+<p>偏序: 集合中一些元素可以比较大小</p>
+<p>全序: 集合中元素两两可以比较大小</p>
+<p>链: V的子集,是全序集</p>
+<p>反链(antichain): V的子集,其任意元素之间都不可以比较大小</p>
+<p>链覆盖: 若干个链的并 &#x3D; V, 且任意两个链不包含重复点</p>
+<p>反链覆盖: 若干个反链的并 &#x3D; V, 且任意两个反链不包含重复点</p>
+<p>最长链: 所有链中点个数最多的链</p>
+<p>最长反链: 所有反链中点个数最多的链</p>
+<p>偏序集高度 &#x3D; 最长链的点的个数</p>
+<p>偏序集宽度 &#x3D; 最长反链的点的个数</p>
+<hr>
+<p>定理: 最小(链的数量最少)链覆盖个数 &#x3D; 最长反链点的个数 &#x3D; 偏序集宽度</p>
+<p>最小(反链的数量最少)反链覆盖 &#x3D; 最长链的元素个数 &#x3D; 偏序集的深度</p>
+<hr>
+<p>证明:</p>
+<p>归纳法</p>
+<p>对于点集V, 最大反链集合A</p>
+<p>d &#x3D; |A|</p>
+<p>显然A的最小链覆盖 &gt;&#x3D; d, (因为A中每个点覆盖的链一定两两不同, 其实要证的是等号</p>
+<p>若任何V的真子集都满足 其最大反链集合大小&#x3D;最小链覆盖</p>
+<p>如果V中两两不可比较, 则 d &#x3D; |V|, 正确性显然</p>
+<hr>
+<p>如果 存在A !&#x3D; max(V), V中的最大元素构成的集合, 同时A !&#x3D; min(V), V中最小元素构成的集合</p>
+<p>拆分V为 A和&gt;&#x3D;A的集合 V1, A和&lt;&#x3D;A的集合V2</p>
+<p>显然V1,V2的元素个数都比V小</p>
+<p>A依然是V1,V2 的最大反链集合, 因为首先不可能超过A, 否则同样的方案可以用在V上, 因此A是一个可达的上界</p>
+<p>那么有V1,V2 都是最小d个链覆盖, 且每个A中的被一条链覆盖, 这样靠着把V1,V2的链通过A中的点一一对应拼接上, 则依然是d条链覆盖, 所以是存在&#x3D;d的方案</p>
+<hr>
+<p>如果 A &#x3D;&#x3D; max(V), 如果A中存在一个独立的不能和其它点比较的点u, 则V\u的最大反链 &#x3D; A\u, 归纳得证</p>
+<p>否则A中 每个点都存在更小的点和它能比较的点</p>
+<p>如果V\u 的最大反链集合的A0元素个数依然是d, 则这个方案 也可以用在V中, 满足A0 !&#x3D; max(V);</p>
+<p>如果A0 !&#x3D; min(V), 则满足第一种情况可证</p>
+<p>如果A0 &#x3D;&#x3D; min(V), 则考虑A0中取一个能和u比较的点v, (V\u)\v , 如果这个最大反链集合A1 如果|A1|&#x3D;d, 则A1 !&#x3D; max(V), A1 !&#x3D; min(V), 满足第一种情况,可证, 否则|A1| &#x3D; d-1</p>
+<hr>
+<p>|A0| &#x3D; d-1 时, A\u 是一个A0的方案, 说明d-1链能覆盖 V\u, 多加一个u 能覆盖V,得证</p>
+<p>A0 &#x3D; min(V), |A1| &#x3D; d-1 时, 说明 A0\v 是 A1的一个方案, 说明 d-1链能覆盖 V\u\v, 增加链{u,v},就是d能覆盖V</p>
+<p>证毕</p>
+<p>综上,归纳法有 最大反链集合的个数 &#x3D; 最小链覆盖条数</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc237/submissions/34871954">https://atcoder.jp/contests/abc237/submissions/34871954</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i, a, n) for (int i = a; i &lt; (int)n; i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> vis[<span class="number">210</span>]; <span class="comment">// vis[右侧点]</span></span><br><span class="line"><span class="type">int</span> from[<span class="number">210</span>]; <span class="comment">// from[右侧点] = 左侧点</span></span><br><span class="line">vector&lt;string&gt; a;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; p2[<span class="number">210</span>];</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> now)</span></span>&#123; <span class="comment">// bool 返回 0/1</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:p2[u]) <span class="keyword">if</span>(vis[v]!=now)&#123; <span class="comment">// 左侧u -&gt; 右侧v</span></span><br><span class="line">    vis[v]=now;</span><br><span class="line">    <span class="keyword">if</span>(from[v]==<span class="number">0</span> || <span class="built_in">dfs</span>(from[v],now)) <span class="keyword">return</span> from[v]=u;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">char</span> s[<span class="number">210</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s);</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">strlen</span>(s);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123; <span class="comment">// 暴力n^3</span></span><br><span class="line">    string t;</span><br><span class="line">    <span class="built_in">rep</span>(j,i,n)&#123;</span><br><span class="line">      string t_ = t+=s[j];</span><br><span class="line">      <span class="built_in">reverse</span>(t_.<span class="built_in">begin</span>(),t_.<span class="built_in">end</span>());</span><br><span class="line">      <span class="keyword">if</span>(t==t_) a.<span class="built_in">push_back</span>(t);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(a.<span class="built_in">begin</span>(),a.<span class="built_in">end</span>(),[](<span class="type">const</span> string&amp;x,<span class="type">const</span> string&amp;y)&#123;<span class="keyword">return</span> x.<span class="built_in">size</span>()==y.<span class="built_in">size</span>()?x&lt;y:x.<span class="built_in">size</span>()&gt;y.<span class="built_in">size</span>();&#125;);</span><br><span class="line">  a.<span class="built_in">resize</span>(<span class="built_in">unique</span>(a.<span class="built_in">begin</span>(),a.<span class="built_in">end</span>()) - a.<span class="built_in">begin</span>()); <span class="comment">// 排序去重, 长度从大到小</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,a.<span class="built_in">size</span>()) <span class="built_in">rep</span>(j,i+<span class="number">1</span>,a.<span class="built_in">size</span>()) <span class="keyword">if</span>(a[i].<span class="built_in">find</span>(a[j]) != string::npos) p2[i+<span class="number">1</span>].<span class="built_in">push_back</span>(j+<span class="number">1</span>);<span class="comment">// 暴力 n^3</span></span><br><span class="line">  <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,a.<span class="built_in">size</span>()+<span class="number">1</span>) ans+=<span class="built_in">dfs</span>(i,i);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(<span class="type">int</span>)a.<span class="built_in">size</span>()-ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>线段树数据结构,没啥难的</p>
+<p>Ex</p>
+<ol>
+<li>字符串与其不同回文串的个数关系 &lt;&#x3D; |S|</li>
+<li>偏序图中选两两无无法比较的点的最大点集的Dilworth定理</li>
+<li>偏序图的最小链覆盖和二分图的关系</li>
+</ol>
+<p>emmmmm 二分图可以只做一侧点的vis吗?</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc237/editorial">官方题解</a></p>
+<p>repub.eur.nl&#x2F;pub&#x2F;23112&#x2F;EI2011-13.pdf</p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/0012365X79901572">https://www.sciencedirect.com/science/article/pii/0012365X79901572</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>线段树</tag>
+        <tag>二分图</tag>
+        <tag>回文串</tag>
+        <tag>Dilworth定理</tag>
       </tags>
   </entry>
 </search>
