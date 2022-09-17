@@ -14964,4 +14964,142 @@
         <tag>莫队</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Atcoder abc239</title>
+    <url>/Blog/2022-09-16-ac-abc239/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc239/tasks">https://atcoder.jp/contests/abc239/tasks</a></p>
+<h1 id="F-Construct-Highway"><a href="#F-Construct-Highway" class="headerlink" title="F - Construct Highway"></a>F - Construct Highway</h1><p>n 点, m边</p>
+<p>问是否有方案 点i的连边数 &#x3D; Di</p>
+<p>所有点连成树</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><ol>
+<li>不成环</li>
+<li>每个联通块-&gt;得到需要额外的度</li>
+<li>贪心大的到小的连?</li>
+</ol>
+<p>显然并查集先搞一搞</p>
+<p>但不会实现如何后续的合并</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>每次把节点大于1的和&#x3D;1的连 !!!!!!!</p>
+<p>直到剩余两个需求为1的块</p>
+<hr>
+<p>证明 显然度需求1的肯定是和&gt;1的连</p>
+<p>那么假设 一个合法方案中1连的A, 任选一个度大于1的B</p>
+<p>因为B度大于1,除了A…B路径外,肯定还连了一个块, 1-A-…-B-?,  那么 ?-A-…-B-1, 肯定也是一个合法方案</p>
+<p>因此有合法方案, 任选的一个 &gt;1的块, 依然有合法方案</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc239/submissions/34897350">https://atcoder.jp/contests/abc239/submissions/34897350</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> fa[<span class="number">200010</span>];</span><br><span class="line"><span class="type">int</span> d[<span class="number">200010</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getfa</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123; <span class="keyword">return</span> v == fa[v]?v:(fa[v] = <span class="built_in">getfa</span>(fa[v]));&#125;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; arr[<span class="number">200010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) d[i] = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">iota</span>(fa+<span class="number">1</span>,fa+n+<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m)&#123;</span><br><span class="line">    <span class="type">int</span> u = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>();</span><br><span class="line">    d[u]--;</span><br><span class="line">    d[v]--;</span><br><span class="line">    <span class="type">int</span> fu = <span class="built_in">getfa</span>(u);</span><br><span class="line">    <span class="type">int</span> fv = <span class="built_in">getfa</span>(v);</span><br><span class="line">    <span class="keyword">if</span>(fu == fv)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;-1\n&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    fa[fu] = fv;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(d[i] &lt; <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;-1\n&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> fi = <span class="built_in">getfa</span>(i);</span><br><span class="line">    <span class="built_in">rep</span>(t,<span class="number">0</span>,d[i]) arr[fi].<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; e1; <span class="comment">// equal 1</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; g1; <span class="comment">// greater than 1</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="keyword">if</span>(i == <span class="built_in">getfa</span>(i)) &#123;</span><br><span class="line">    <span class="keyword">if</span>(!arr[i].<span class="built_in">size</span>())&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;-1\n&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    (arr[i].<span class="built_in">size</span>() == <span class="number">1</span>?e1:g1).<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt;ans;</span><br><span class="line">  <span class="keyword">while</span>(e1.<span class="built_in">size</span>() &amp;&amp; g1.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="type">int</span> pj = g1.<span class="built_in">back</span>();</span><br><span class="line">    ans.<span class="built_in">push_back</span>(&#123;arr[e1.<span class="built_in">back</span>()].<span class="built_in">back</span>(),arr[pj].<span class="built_in">back</span>()&#125;);</span><br><span class="line">    e1.<span class="built_in">pop_back</span>();</span><br><span class="line">    arr[pj].<span class="built_in">pop_back</span>();</span><br><span class="line">    <span class="keyword">if</span>(arr[pj].<span class="built_in">size</span>() == <span class="number">1</span>)&#123; <span class="comment">// 大于1变成等于1</span></span><br><span class="line">      g1.<span class="built_in">pop_back</span>();</span><br><span class="line">      e1.<span class="built_in">push_back</span>(pj);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(g1.<span class="built_in">size</span>() || <span class="number">2</span> != (<span class="type">int</span>)e1.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;-1\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  ans.<span class="built_in">push_back</span>(&#123;arr[e1[<span class="number">0</span>]].<span class="built_in">back</span>(),arr[e1[<span class="number">1</span>]].<span class="built_in">back</span>()&#125;);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span>[u,v]:ans) <span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>,u,v);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="G-Builder-Takahashi"><a href="#G-Builder-Takahashi" class="headerlink" title="G - Builder Takahashi"></a>G - Builder Takahashi</h1><p>连通 无向 n点,m边</p>
+<p>没有直接的1-n的边</p>
+<p>点可能 空&#x2F;有障碍, 初始都是空</p>
+<p>A要从1走到n</p>
+<p>而T要选择一些点建立障碍(A不可经过障碍),让A无法走到n</p>
+<p>不能选1和n建立障碍, 每个点建立的代价ci</p>
+<p>求最小建立代价,和具体方案</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 100</p>
+<p>无重边自环</p>
+<p>ci [1,1e9]</p>
+<p>c1&#x3D;cn&#x3D;0</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>有点网络流求最小割的味道</p>
+<p>感觉 每个点拆成in&#x2F;out, 然后 点内就是代价, 点间就是无限大代价?</p>
+<p>这样就可以了?</p>
+<hr>
+<p>问题是这样,是能算出代价, 但如何求一组割边?</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>和我想的一样 也是 拆点做</p>
+<p>显然割边流量跑满</p>
+<p>但是是通过残量网络里, 从源可达的点选出来作为割断边</p>
+<p>1-&gt;2-&gt;3, 这种 1-&gt;2,2-&gt;3都可以是割边时, 那么只有1可达</p>
+<p>而对于 1-&gt;2-&gt;3-&gt;4, 1-&gt;3 这种,跑满1,2,3,4的来说, 2-&gt;3是不能成为割边的, 所以需要满足的是 a可达而b不可达,则a-&gt;b是割边</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc239/submissions/34897775">https://atcoder.jp/contests/abc239/submissions/34897775</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/maxflow&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line">ll INF = <span class="number">0x3f3f3f3f3f3f3f3f</span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">auto</span> g = atcoder::<span class="built_in">mf_graph</span>&lt;ll&gt;(n*<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m)&#123; <span class="comment">// edge id = [0..2*m-1]</span></span><br><span class="line">    <span class="type">int</span> u = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    g.<span class="built_in">add_edge</span>(u*<span class="number">2</span>+<span class="number">1</span>,v*<span class="number">2</span>,INF);</span><br><span class="line">    g.<span class="built_in">add_edge</span>(v*<span class="number">2</span>+<span class="number">1</span>,u*<span class="number">2</span>,INF);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) g.<span class="built_in">add_edge</span>(i*<span class="number">2</span>,i*<span class="number">2</span>+<span class="number">1</span>,<span class="built_in">read</span>());<span class="comment">// edge id = 2*m + i = [2*m..2*m+n-1]</span></span><br><span class="line">  <span class="type">int</span> S = <span class="number">0</span>*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> T = (n<span class="number">-1</span>)*<span class="number">2</span>;</span><br><span class="line">  ll c = g.<span class="built_in">flow</span>(S,T);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,c);</span><br><span class="line">  <span class="keyword">auto</span> cut = g.<span class="built_in">min_cut</span>(S);</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n<span class="number">-1</span>) <span class="keyword">if</span>(cut[i*<span class="number">2</span>] &amp;&amp; !cut[i*<span class="number">2</span>+<span class="number">1</span>]) ans.<span class="built_in">push_back</span>(i+<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(<span class="type">int</span>)ans.<span class="built_in">size</span>());</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> u:ans) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,u);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Dice-Product-2"><a href="#Ex-Dice-Product-2" class="headerlink" title="Ex - Dice Product 2"></a>Ex - Dice Product 2</h1><p>snuke 有个骰子,上面1-n等概率</p>
+<p>初始v&#x3D;1</p>
+<p>当v &lt;&#x3D; M时, 1~n等概率被选 v 乘上被选的值</p>
+<p>求停止的期望次数</p>
+<p>mod 1e9+7</p>
+<h2 id="范围-2"><a href="#范围-2" class="headerlink" title="范围"></a>范围</h2><p>n,1e9</p>
+<p>m,1e9</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路-2"><a href="#我的思路-2" class="headerlink" title="我的思路"></a>我的思路</h2><p>惊了 atcoder竟然也有1e9+7</p>
+<p>f(v) 表示从v开始,需要的期望次数</p>
+<p>f(&gt;m) &#x3D; 0</p>
+<p>f(v) &#x3D; 1 + 1&#x2F;n (f(v) + f(2v) + f(3v) + … + f(nv))</p>
+<p>f(v) &#x3D; n&#x2F;(n-1) + 1&#x2F;(n-1) (f(2v)+f(3v)+f(4v) +…+f(nv))</p>
+<p>答案是f(1)</p>
+<p>暴力似乎需要 O(m log(n)) 以上</p>
+<hr>
+<p>但是注意到 (m&#x2F;2,…,m] 都 &#x3D; n&#x2F;(n-1)</p>
+<p>(m&#x2F;3…m&#x2F;2] 都 &#x3D; n&#x2F;(n-1) + 1&#x2F;(n-1) * (n&#x2F;(n-1))</p>
+<p>(m&#x2F;4…m&#x2F;3] 都 &#x3D; n&#x2F;(n-1) + 1&#x2F;(n-1) * (2n&#x2F;(n-1))</p>
+<p>似乎可以按照 (m&#x2F;(i+1),m&#x2F;i] 来分段</p>
+<h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><p>emmm, 感觉概率论还是不会, 上面我这样也是对的吗?</p>
+<p>g(x) &#x3D; 当前值乘上 x 后 小于等于m 的期望次数</p>
+<p>g(0) &#x3D; 0</p>
+<p>g(x) &#x3D; 1+ 1&#x2F;n(f(x&#x2F;1)+f(x&#x2F;2)+…+f(x&#x2F;n))</p>
+<p>g(x) &#x3D; (n&#x2F;(n-1)) (1+1&#x2F;n(f(x&#x2F;2)+f(x&#x2F;3)+…+f(x&#x2F;n)))</p>
+<p>答案是 g(M)</p>
+<hr>
+<p>啊 我看着好别扭啊</p>
+<p>这里表达的应该是 g(x) &#x3D; (v * x &lt;&#x3D;m )且(v * (x+1) &gt; m) 的 v的期望次数</p>
+<p>相当于我的f(1) &#x3D; g(M), f(&gt;M) &#x3D; g(0)</p>
+<p>v * x &lt;&#x3D; m, v * (x+1) &gt; m</p>
+<p>v * i * x &lt;&#x3D; m * i, v * i * (x+1) &gt; m * i</p>
+<p>v * i * (x&#x2F;i) &lt;&#x3D; m , v * i * (x&#x2F;i+1) &gt; m (因为 a + 1 &gt; b 则 a&#x2F;b + 1 &gt; 1</p>
+<hr>
+<p>观察1</p>
+<p>m&#x2F;i 只有 O(sqrt(M)) 种, 易证(i&#x3D;1..sqrt(M) 时 假设每个不一样, i&#x3D;sqrt(M)..M  时 结果在[1..sqrt(M)]中, 因此 是sqrt M的量级</p>
+<p><code>g(x) = (n/(n-1)) (1+ sum ( t(x,v) * g(v) )</code></p>
+<p>其中v是 所有 m&#x2F;i 的结果, t(x,v) 是它出现的次数</p>
+<p>这样如果 子的计算完成了, 那么 g(x) 就可以再花sqrt(M)的完成计算了</p>
+<hr>
+<p>观察2</p>
+<p>m&#x2F;i&#x2F;j &#x3D; m&#x2F;(i * j)</p>
+<p>这个也容易证明</p>
+<p>可以想 i * j 的对整数分块, 后面的m&#x2F;(ij) 就是问是在哪一块</p>
+<p>而前面就是 i * j 的对整数分块,每块内再每i个一块, 后面的m&#x2F;i 得到的就是 块号 * j + 块内的小块号, 再除j就只剩 块号了</p>
+<p>这个还可以2推3 , m&#x2F;i&#x2F;j&#x2F;k &#x3D; m&#x2F;(ijk)</p>
+<p>因此 递归话只会有O(sqrt M) 个需要计算</p>
+<p>观察3</p>
+<p>f(M) 只需要 O(M^{3&#x2F;4}) 即可算出 </p>
+<p>首先每个 一共需要算O(sqrt(M)) 个</p>
+<p>f(x) 需要 O(sqrt(x))</p>
+<p>sum (sqrt(M&#x2F;[1..sqrt{M}]) ) (&gt; sqrt M 部分) + sqrt{sqrt{M}} * sqrt{M} , (&lt; sqrt M 部分)</p>
+<p>int sqrt{M} 1&#x2F;sqrt{x} dx ,  x&#x3D; 1..sqrt{M}</p>
+<p>&#x3D; sqrt{M} 2(sqrt{sqrt{M}} - 1)</p>
+<p>&#x3D; M ^ {3&#x2F;4}</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc239/submissions/34960041">https://atcoder.jp/contests/abc239/submissions/34960041</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint1000000007;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line">mint low[<span class="number">40000</span>]; <span class="comment">// low[x] = f(x), // sqrt(1e9)</span></span><br><span class="line">mint high[<span class="number">40000</span>]; <span class="comment">// high[x] = f(M/x)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> N = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> M = <span class="built_in">read</span>();</span><br><span class="line">  ll L = <span class="built_in">llround</span>(<span class="built_in">sqrt</span>(M));</span><br><span class="line">  ll K = M / (L + <span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,L+K+<span class="number">1</span>)&#123; <span class="comment">// [1..L]:1..L,  [L+1...L+K] : M/K .. M/1</span></span><br><span class="line">    <span class="type">int</span> x = i &lt;= L ? i : M / (L + K + <span class="number">1</span> - i);</span><br><span class="line">    mint sum = N;</span><br><span class="line">    <span class="type">int</span> l = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(l &lt;= <span class="built_in">min</span>(N,x))&#123; <span class="comment">// 暴力 f(x) = (n + f(x/2)+..+f(x/n))/(n-1)</span></span><br><span class="line">      <span class="type">int</span> q = x / l;</span><br><span class="line">      <span class="type">int</span> r = <span class="built_in">min</span>(N, x / q) + <span class="number">1</span>; <span class="comment">// x/[l..r) = q</span></span><br><span class="line">      mint cur = q &lt;= L ? low[q] : high[M / q];</span><br><span class="line">      sum += cur * (r - l);</span><br><span class="line">      l = r;</span><br><span class="line">    &#125;</span><br><span class="line">    (i &lt;= L ? low[i] : high[L + K + <span class="number">1</span> - i]) = sum / (N - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(M &lt;= L ? low[M] : high[<span class="number">1</span>]).<span class="built_in">val</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F</p>
+<p>又卡蓝题,不会数学,没有智慧</p>
+<p>G</p>
+<p>这个好像很久很久很久以前做USACO做过, 但好久都没求过割边集了, 现在拆点这些是会了, 这算又复习一下如何求割边集</p>
+<p>Ex</p>
+<p>概率论 每日自闭</p>
+<p>学了收这样把乘和除法的转化(通过倒数? x &#x3D;&gt; v&#x2F;x), 没有悟到, 这样转化后, 似乎依赖的值不再像我的那样需要手工去判断 相同的是哪一段了, 鹅妹子嘤</p>
+<p>数学完全不会</p>
+<p><a href="https://cplusplus.com/reference/cmath/llround/">https://cplusplus.com/reference/cmath/llround/</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc239/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>并查集</tag>
+        <tag>概率论</tag>
+        <tag>网络流</tag>
+        <tag>树</tag>
+      </tags>
+  </entry>
 </search>
