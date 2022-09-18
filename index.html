@@ -260,7 +260,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-18 08:20:29" itemprop="dateModified" datetime="2022-09-18T08:20:29+08:00">2022-09-18</time>
+      <time title="修改時間：2022-09-18 19:19:32" itemprop="dateModified" datetime="2022-09-18T19:19:32+08:00">2022-09-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -297,18 +297,18 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>3.2k</span>
+      <span>4.5k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>3 分鐘</span>
+      <span>4 分鐘</span>
     </span>
 </div>
 
-            <div class="post-description">G(排列组合)Ex(TODO)</div>
+            <div class="post-description">G(排列组合)Ex(字典树,字符串,DP,单调队列)</div>
         </div>
       </header>
 
@@ -386,10 +386,26 @@
 <p>当前S有方案, 那么比它大的长度在 [1..|S|+1]</p>
 <p>并且根据上面的截断性质, 只会是把原来的0变成1 然后截断, 或末尾补0&#x2F;1</p>
 <p>虽然可减少一些无效的状态, 但数量级还是下不来</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>题意转换 一样的</p>
+<p>构建一个含有所有后缀的trie, 直接做的话,需要N^2</p>
+<p>也是和我上面一样的观察, 只用构建长度为sqrt N的后缀数组</p>
+<p><code>dp[0] = 0</code></p>
+<p><code>dp[i] = map&#123;dp[i],max&#123;dp[0],...,dp[l-1]&#125; + 1&#125;</code></p>
+<p>答案是 max{dp[1..N]}</p>
+<p>这里 <code>dp[i] = </code>以i结尾的最大长度, 在trie上比<code>[i-len+1..i]</code> 小, 且坐标比<code>i-len+1</code>小的最大dp结果</p>
+<p>上面推的也是 len不会超过sqrt N</p>
+<hr>
+<p>因此直接优先队列+延迟更新</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p>1.5s, 要再快,可以用trie把子串映射成数值, 或者简单的减少字符串操作, 用下标做中间记录</p>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc240/submissions/34974635">https://atcoder.jp/contests/abc240/submissions/34974635</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> s_[<span class="number">25010</span>];</span><br><span class="line">vector&lt;string&gt;dp; <span class="comment">// 单调递增的子字符串, 长度越大字典序越大!!!!!, dp[len-1] = substr</span></span><br><span class="line">vector&lt;pair&lt;<span class="type">int</span>,string&gt; &gt;q[<span class="number">25010</span>]; <span class="comment">// q[end pos] = &#123;在dp中的index, substr&#125;</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s_);</span><br><span class="line">  string s = s_;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    string t;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,<span class="number">250</span>)<span class="keyword">if</span>(i+j&lt;n)&#123; <span class="comment">// maxj(maxj+1)/2 &gt; 25000</span></span><br><span class="line">      t+=s[i+j]; <span class="comment">// t = s[i...i+j]</span></span><br><span class="line">      <span class="type">int</span> p=<span class="built_in">lower_bound</span>(dp.<span class="built_in">begin</span>(),dp.<span class="built_in">end</span>(),t)-dp.<span class="built_in">begin</span>(); <span class="comment">// 单调队列, dp 中存的全是 &lt; i 的结果, </span></span><br><span class="line">      <span class="keyword">if</span>(p==(<span class="type">int</span>)dp.<span class="built_in">size</span>()) dp.<span class="built_in">push_back</span>(<span class="string">&quot;2&quot;</span>); <span class="comment">// 占位</span></span><br><span class="line">      q[i+j].<span class="built_in">push_back</span>(&#123;p,t&#125;); <span class="comment">// dp[p] = s[i...i+j], 在遍历到i+j时再插入, 这里的p也不会变, 因为相对于直接更新,只是延时而已</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [p,s1]:q[i]) dp[p] = <span class="built_in">min</span>(dp[p],s1); <span class="comment">// 延时更新, 子串结束右侧 到i时 才把左侧起始p加入优先队列</span></span><br><span class="line">    q[i] = &#123;&#125;; <span class="comment">// fix MLE</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(<span class="type">int</span>)dp.<span class="built_in">size</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
 <p>另外一个,很简单但是有效的处理是,先让x,y,z都非负, 这样的话,也不至于我推的里面还有各种min&#x2F;max</p>
 <p>先处理2维也会简单很多, 最后插入3维</p>
 <p>Ex</p>
+<p>k越大, 字典序越大!!!!!, 连长度的性质都推出了,不知道为啥没观察到这么显然的性质</p>
+<p>艹 怎么感觉我是 单调队列不熟悉</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc240/editorial">官方题解</a></p>
 
       
@@ -453,7 +469,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-18 08:20:29" itemprop="dateModified" datetime="2022-09-18T08:20:29+08:00">2022-09-18</time>
+      <time title="修改時間：2022-09-18 19:19:32" itemprop="dateModified" datetime="2022-09-18T19:19:32+08:00">2022-09-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -592,7 +608,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-18 08:20:29" itemprop="dateModified" datetime="2022-09-18T08:20:29+08:00">2022-09-18</time>
+      <time title="修改時間：2022-09-18 19:19:32" itemprop="dateModified" datetime="2022-09-18T19:19:32+08:00">2022-09-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -728,7 +744,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-18 08:20:29" itemprop="dateModified" datetime="2022-09-18T08:20:29+08:00">2022-09-18</time>
+      <time title="修改時間：2022-09-18 19:19:32" itemprop="dateModified" datetime="2022-09-18T19:19:32+08:00">2022-09-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -873,7 +889,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-09-18 08:20:29" itemprop="dateModified" datetime="2022-09-18T08:20:29+08:00">2022-09-18</time>
+      <time title="修改時間：2022-09-18 19:19:32" itemprop="dateModified" datetime="2022-09-18T19:19:32+08:00">2022-09-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -999,13 +1015,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="總字數">786k</span>
+    <span title="總字數">787k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">11:54</span>
+    <span title="所需總閱讀時間">11:56</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
