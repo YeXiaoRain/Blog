@@ -15102,4 +15102,86 @@
         <tag>树</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Atcoder abc240</title>
+    <url>/Blog/2022-09-17-ac-abc240/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc240/tasks">https://atcoder.jp/contests/abc240/tasks</a></p>
+<h1 id="G-Teleporting-Takahashi"><a href="#G-Teleporting-Takahashi" class="headerlink" title="G - Teleporting Takahashi"></a>G - Teleporting Takahashi</h1><p>从(0,0,0)开始,可以6邻移动1个单位, 不能不动</p>
+<p>问 N次后恰好在(x,y,z)的方案数 mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e7</p>
+<p>x,y,z [-1e7,1e7]</p>
+<p>3s</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>感觉有点生成方程 $( x+x^{-1} +y+y^{-1}+z+z^{-1})^n$</p>
+<p>然后求$x^Xy^Yz^Z$的系数</p>
+<p>如果x选了i 次, 那么x^{-1}选了 i-X 次</p>
+<p>$\binom{n}{i}\binom{n-i}{i-X}$</p>
+<p>如果y选了j 次, 那么y^{-1}选了 j-Y 次</p>
+<p>$\binom{n-2i+X}{j} \binom{n-2i+X-j}{j-Y}$</p>
+<p>那么z选了k次, 且z^{-1}选了k-Z次</p>
+<p>有 2i-X+2j-Y+2k-Z &#x3D; n</p>
+<p>k &#x3D; (n+X+Y+Z)&#x2F;2 -i -j</p>
+<p>$\binom{n-2i-2j+X+Y}{k} \binom{n-2i-2j+X+Y-k}{k-Z}$</p>
+<p>所以合起来</p>
+<p>$&#x3D; \sum \binom{n}{i}\binom{n-i}{i-X}\binom{n-2i+X}{j}\binom{n-2i+X-j}{j-Y}\binom{n-2i-2j+X+Y}{k}\binom{n-2i-2j+X+Y-k}{k-Z}$</p>
+<p>$&#x3D; \sum \frac{n!}{i!(i-X)!j!(j-Y)!k!(k-Z)!}$</p>
+<p>$&#x3D; \sum \frac{n!}{i!(i-X)!j!(j-Y)!(\frac{n+X+Y+Z}{2}-i-j)!(\frac{n+X+Y-Z}{2}-i-j)!}$</p>
+<p>$i \ge max(0,X)$</p>
+<p>$j \ge max(0,Y)$</p>
+<p>$\frac{n+X+Y+Z}{2} - i - j &#x3D; k \ge max(0,Z)$</p>
+<p>$i+j \le \frac{n+X+Y+Z}{2} - max(0,Z)$</p>
+<p>直接算,得n^2会TLE</p>
+<p>但如果给定i, 看能不能把j相关的变成一个表达式</p>
+<p>$\sum_{j&#x3D;max(0,Y)}^{\frac{n+X+Y+Z}{2}-max(0,Z)-i} \frac{1}{j!(j-Y)!(\frac{n+X+Y+Z}{2}-i-j)!(\frac{n+X+Y-Z}{2}-i-j)!} $</p>
+<p>右侧看起来 是$\frac{1}{j!(j-Y)!}$ 与剩余部分的卷积</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>先推二维的表达式, 假设x,y,z &gt;&#x3D; 0</p>
+<p>f(k) &#x3D; 走x+y+2k步,从(0,0)到(x,y)的方案数</p>
+<p>$&#x3D;\sum_{i&#x3D;0}^k \frac{(x+y+2k)!}{(x+i)!i!(y+k-i)!(k-i)!} $</p>
+<p>$&#x3D;\sum_{i&#x3D;0}^k \binom{x+y+2k}{k}\binom{x+y+k}{x+i}\binom{k}{i} $, 分离与i无关的和与i有关的</p>
+<p>$&#x3D;\binom{x+y+2k}{k}\sum_{i&#x3D;0}^k \binom{x+y+k}{x+i}\binom{k}{i} $ 范德蒙德卷积,小球法,看成一共选y+k个, 最后k个中选i个分类的讨论的和</p>
+<p>$&#x3D;\binom{x+y+2k}{k}\binom{x+y+2k}{y+k}$</p>
+<hr>
+<p>最后把z维加进来</p>
+<p>走X+Y+Z+2d &#x3D; n步 , 走到(X,Y,Z)</p>
+<p>其中x,y方向一共X+Y+2k步</p>
+<p>那么Z方向一共Z+2(d-k) 步, 穿插进去即可, z的正方向走了Z+(d-k) 步,负方向走了d-k步</p>
+<p>$ans &#x3D; \sum_{k&#x3D;0}^{d} \binom{N}{Z+2(d-k)}\binom{Z+2(d-k)}{d-k}\binom{X+Y+2k}{k}\binom{X+Y+2k}{Y+k}$</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc240/submissions/34962261">https://atcoder.jp/contests/abc240/submissions/34962261</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line">mint fac[<span class="number">10000010</span>] = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint ifac[<span class="number">10000010</span>];</span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m)</span></span>&#123; <span class="keyword">return</span> fac[n]*ifac[m]*ifac[n-m];&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>(); <span class="comment">// 1e7</span></span><br><span class="line">  <span class="type">int</span> x = <span class="built_in">abs</span>(<span class="built_in">read</span>());</span><br><span class="line">  <span class="type">int</span> y = <span class="built_in">abs</span>(<span class="built_in">read</span>());</span><br><span class="line">  <span class="type">int</span> z = <span class="built_in">abs</span>(<span class="built_in">read</span>());</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) fac[i] = fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  ifac[n] = fac[n].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,n) ifac[i] = ifac[i+<span class="number">1</span>]*(i+<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">if</span>(n &lt; x+y+z || (n-x-y-z)%<span class="number">2</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;0\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> d = (n-x-y-z)/<span class="number">2</span>;</span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,d+<span class="number">1</span>) ans += <span class="built_in">binom</span>(n,z+<span class="number">2</span>*(d-i)) * <span class="built_in">binom</span>(z+<span class="number">2</span>*(d-i),d-i) * <span class="built_in">binom</span>(x+y+<span class="number">2</span>*i,i) * <span class="built_in">binom</span>(x+y+<span class="number">2</span>*i,y+i);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Sequence-of-Substrings"><a href="#Ex-Sequence-of-Substrings" class="headerlink" title="Ex - Sequence of Substrings"></a>Ex - Sequence of Substrings</h1><p>给定一个01串s</p>
+<p>求最大的k, 能从s中选出k个不重叠的连续子字符串, 且字符串间字典序严格递增</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0101010</span><br><span class="line">0</span><br><span class="line">  010</span><br><span class="line">     10</span><br></pre></td></tr></table></figure>
+
+<p>可切分成3个</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>5s</p>
+<p>1024mb</p>
+<p>|S| 2.5e4</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>之所以叫做字典序,就是和数值有区别, 比如上面010 比10小,</p>
+<p>考虑一个合法的方案中</p>
+<p>t[i-1] &lt; t[i] &lt; t[i+1]</p>
+<p><code>t[i-1][0..j-1] == t[i][0..j-1], t[i-1][j] &lt; t[i][j]</code></p>
+<p>那么 <code>t[i][0...j]</code> 是一个<code>t[i]</code>的方案</p>
+<p>也就是说一个最优的方案中,总是可以调整成, 当 当前字符串开始出现比前面的大 时,从此处截断即可</p>
+<p>因为这是至少要到j,同时到j也满足</p>
+<p>所以len[i] &lt;&#x3D; len[i-1]+1</p>
+<p>所以最大长度是 sqrt N</p>
+<hr>
+<p>然而 似乎没有太大帮助, 因为如果想dp的方向</p>
+<p>需要记录 到i位置,划分了j段 最小字典序的 s 是什么, 是个 n^2状态, n^2.5 方空间的玩意儿</p>
+<p>另一个就是, <code>dp[i][len] = </code> 最后一个选出的是 s[i-len+1..i] 的最长划分次数</p>
+<p>这样状态就是n^1.5, 而<code>dp[i][len]</code> 需要考察<code>dp[j&lt;=i-len][&gt;=len-1]</code>转移代价似乎爆炸了?</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>另外一个,很简单但是有效的处理是,先让x,y,z都非负, 这样的话,也不至于我推的里面还有各种min&#x2F;max</p>
+<p>先处理2维也会简单很多, 最后插入3维</p>
+<p>Ex</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc240/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>排列组合</tag>
+      </tags>
+  </entry>
 </search>
