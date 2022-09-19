@@ -4544,87 +4544,6 @@
       </tags>
   </entry>
   <entry>
-    <title>project euler 106(阅读理解)</title>
-    <url>/Blog/2020-11-13-pe106/</url>
-    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://projecteuler.net/problem=106">https://projecteuler.net/problem=106</a></p>
-<p>题目说，S(集合)表示集合元素的和</p>
-<p>集合A如果它任何不相交的两个子集B和C，同时满足</p>
-<ol>
-<li>S(B) !&#x3D; S(C)</li>
-<li>如果 B的元素个数比 C多，那么 S(B)&gt;S(C)</li>
-</ol>
-<p>那么A是满足题意的</p>
-<p>问 现在 给了一个集合，元素个数是n且满足第二条，要测试多少对 子集， 才能判定它是满足题意的</p>
-<p>然后举例</p>
-<p>n&#x3D;4 是25中的 1对</p>
-<p>n&#x3D;7 是 966中的70对</p>
-<p>求 n&#x3D;12 时 需要判断的是261625中的多少对</p>
-<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>我是没想到，还能在ProjectEuler练习语文</p>
-<p>注意到 一对不相交子集 如果元素个数不同，那么满足2一定不满足1,所以，如果“可能”满足1,那么元素个数相等</p>
-<p>那么首先说 n&#x3D;4时25怎么来的</p>
-<p>假设四个元素 且排序了的 {A,B,C,D}</p>
-<p>一个元素的比对就是 3+2+1&#x3D;6, </p>
-<p>两个元素的比对 3 种</p>
-<p>因为不相交 所以 3个以上元素的不比对</p>
-<p>所以哪里来的 25呢？？？？？？？？？？？？</p>
-<hr>
-<p>换个思路</p>
-<p>假设比对是有序的也就是 x和y比，y和x比 算两种，那么方案数一定是2的倍数？也不会25？</p>
-<hr>
-<p>再说先放弃不相交的性质，只要不相等就计数？</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1个元素 3+2+1=6</span><br><span class="line">2个元素 5+4+3+2+1 = 15</span><br><span class="line">3个元素 3+2+1=6</span><br></pre></td></tr></table></figure>
-
-<p>就是出不来25啊</p>
-<hr>
-<p>一个办法是结束吧，放弃吧，只去关心1是怎么来的</p>
-<p>然后我甚至想到了勾股定理4x4+3x3&#x3D;25 然而也不是</p>
-<hr>
-<p>难道是没考虑2的时候，之考虑了不相交</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1对比1 3+2+1=6</span><br><span class="line">1对比2 4x3 = 12</span><br><span class="line">1对比3 4x1 = 4</span><br><span class="line">2对比2 3</span><br></pre></td></tr></table></figure>
-
-<p>还真的是25</p>
-<hr>
-<p>按照这个思路，尝试一下n&#x3D;7,是不是966</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1v1:6+5+4+3+2+1 = 21</span><br><span class="line">1v2:7x15=105</span><br><span class="line">1v3:7x20=140</span><br><span class="line">1v4:7x15=105</span><br><span class="line">1v5:7x6=42</span><br><span class="line">1v6:7x1=7</span><br><span class="line">2v2:6x(5x4/2)+5x(4x3/2)+4x(3x2/2)+3x(2x1/2) = 105</span><br><span class="line">2v3:21x10=210</span><br><span class="line">2v4:21x5=105</span><br><span class="line">2v5:21x1=21</span><br><span class="line">3v3:15x4+10*1=70</span><br><span class="line">3v4:35x1=35</span><br><span class="line"></span><br><span class="line">21+105+140+105+42+7+105+210+105+21+70+35=966</span><br></pre></td></tr></table></figure>
-
-<p>那么这样说真的就是这个值了，不过n&#x3D;12时这个值并不需要我们求</p>
-<h1 id="解"><a href="#解" class="headerlink" title="解"></a>解</h1><p>然后我们来看看 什么是可能</p>
-<p>n&#x3D;4, {A,B,C,D}</p>
-<p>个数不相等的两个子集 一定不等</p>
-<p>1v1 一定不等</p>
-<p>2v2有 AB vs CD , AC vs BD, AD vs BC, 而只有<code>AD vs BC</code>是“可能”的，前面两组根据大小偏序关系一定不等</p>
-<p>没有3v3以及以上</p>
-<hr>
-<p>那么对于任意n呢</p>
-<hr>
-<p>先看看n&#x3D;7，{ABCDEFG}</p>
-<p>1v1老样子一定不等</p>
-<p>还剩下2v2和3v3</p>
-<p>对于 2v2，一定是 一个的最小到最大构成的区间，包含另一个，</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BC为中间:1x4=4</span><br><span class="line">BD为中间:1x3=3</span><br><span class="line">BE为中间:1x2=2</span><br><span class="line">BF为中间:1x1=1</span><br><span class="line">CD为中间:2x3=6</span><br><span class="line">CE为中间:2x2=4</span><br><span class="line">CF为中间:2x1=2</span><br><span class="line">DE为中间:3x2=6</span><br><span class="line">DF为中间:3x1=3</span><br><span class="line">EF为中间:4x1=4</span><br><span class="line"></span><br><span class="line">4+3+2+1+6+4+2+6+3+4=35</span><br></pre></td></tr></table></figure>
-
-<p>对于3v3,</p>
-<p><code>X1&lt;Y1&lt;X2&lt;Y2&lt;X3&lt;Y3</code>一定不行， 7个</p>
-<p><code>X1&lt;X2&lt;X3&lt;Y1&lt;Y2&lt;Y3</code>一定不行， 7个</p>
-<p><code>X1&lt;X2&lt;Y1&lt;X3&lt;Y2&lt;Y3</code>一定不行， 7个</p>
-<p><code>X1&lt;X2&lt;Y1&lt;Y2&lt;X3&lt;Y3</code>一定不行， 7个</p>
-<p><code>X1&lt;Y1&lt;X2&lt;X3&lt;Y2&lt;Y3</code>一定不行， 7个</p>
-<p>所以可行的3v3是 70-5x7&#x3D;35 个</p>
-<p>总共 35+35是70个</p>
-<hr>
-<p>那么根据上面看到 实际上，不可能就是</p>
-<p>两个子集排序后，对应下标位置偏序一致</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>还需要代码吗，这题核心是语文的阅读理解，猜作者的意图</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> ia = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> a[<span class="number">20</span>];</span><br><span class="line"><span class="type">int</span> ib = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> b[<span class="number">20</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> possible = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> N = <span class="number">12</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">test_possible</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ia != ib)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="type">int</span> gcnt=<span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> lcnt=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ia)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[i]&lt; b[i])&#123;</span><br><span class="line">      lcnt++;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      gcnt++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> lcnt != <span class="number">0</span> &amp;&amp; gcnt != <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">tryidx</span><span class="params">(<span class="type">int</span> index)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(index == N)&#123;</span><br><span class="line">    possible += <span class="built_in">test_possible</span>();</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  a[ia++] = index;</span><br><span class="line">  <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">  ia--;</span><br><span class="line">  <span class="keyword">if</span>(ia != <span class="number">0</span>)&#123;</span><br><span class="line">    b[ib++] = index;</span><br><span class="line">    <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">    ib--;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cin&gt;&gt;N;</span><br><span class="line">  <span class="built_in">tryidx</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,possible);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Project Euler</category>
-      </categories>
-      <tags>
-        <tag>语文</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>project euler 122(阅读理解)</title>
     <url>/Blog/2020-11-19-pe122/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://projecteuler.net/problem=122">https://projecteuler.net/problem=122</a></p>
@@ -4822,6 +4741,87 @@
       </categories>
       <tags>
         <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>project euler 106(阅读理解)</title>
+    <url>/Blog/2020-11-13-pe106/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://projecteuler.net/problem=106">https://projecteuler.net/problem=106</a></p>
+<p>题目说，S(集合)表示集合元素的和</p>
+<p>集合A如果它任何不相交的两个子集B和C，同时满足</p>
+<ol>
+<li>S(B) !&#x3D; S(C)</li>
+<li>如果 B的元素个数比 C多，那么 S(B)&gt;S(C)</li>
+</ol>
+<p>那么A是满足题意的</p>
+<p>问 现在 给了一个集合，元素个数是n且满足第二条，要测试多少对 子集， 才能判定它是满足题意的</p>
+<p>然后举例</p>
+<p>n&#x3D;4 是25中的 1对</p>
+<p>n&#x3D;7 是 966中的70对</p>
+<p>求 n&#x3D;12 时 需要判断的是261625中的多少对</p>
+<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>我是没想到，还能在ProjectEuler练习语文</p>
+<p>注意到 一对不相交子集 如果元素个数不同，那么满足2一定不满足1,所以，如果“可能”满足1,那么元素个数相等</p>
+<p>那么首先说 n&#x3D;4时25怎么来的</p>
+<p>假设四个元素 且排序了的 {A,B,C,D}</p>
+<p>一个元素的比对就是 3+2+1&#x3D;6, </p>
+<p>两个元素的比对 3 种</p>
+<p>因为不相交 所以 3个以上元素的不比对</p>
+<p>所以哪里来的 25呢？？？？？？？？？？？？</p>
+<hr>
+<p>换个思路</p>
+<p>假设比对是有序的也就是 x和y比，y和x比 算两种，那么方案数一定是2的倍数？也不会25？</p>
+<hr>
+<p>再说先放弃不相交的性质，只要不相等就计数？</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1个元素 3+2+1=6</span><br><span class="line">2个元素 5+4+3+2+1 = 15</span><br><span class="line">3个元素 3+2+1=6</span><br></pre></td></tr></table></figure>
+
+<p>就是出不来25啊</p>
+<hr>
+<p>一个办法是结束吧，放弃吧，只去关心1是怎么来的</p>
+<p>然后我甚至想到了勾股定理4x4+3x3&#x3D;25 然而也不是</p>
+<hr>
+<p>难道是没考虑2的时候，之考虑了不相交</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1对比1 3+2+1=6</span><br><span class="line">1对比2 4x3 = 12</span><br><span class="line">1对比3 4x1 = 4</span><br><span class="line">2对比2 3</span><br></pre></td></tr></table></figure>
+
+<p>还真的是25</p>
+<hr>
+<p>按照这个思路，尝试一下n&#x3D;7,是不是966</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1v1:6+5+4+3+2+1 = 21</span><br><span class="line">1v2:7x15=105</span><br><span class="line">1v3:7x20=140</span><br><span class="line">1v4:7x15=105</span><br><span class="line">1v5:7x6=42</span><br><span class="line">1v6:7x1=7</span><br><span class="line">2v2:6x(5x4/2)+5x(4x3/2)+4x(3x2/2)+3x(2x1/2) = 105</span><br><span class="line">2v3:21x10=210</span><br><span class="line">2v4:21x5=105</span><br><span class="line">2v5:21x1=21</span><br><span class="line">3v3:15x4+10*1=70</span><br><span class="line">3v4:35x1=35</span><br><span class="line"></span><br><span class="line">21+105+140+105+42+7+105+210+105+21+70+35=966</span><br></pre></td></tr></table></figure>
+
+<p>那么这样说真的就是这个值了，不过n&#x3D;12时这个值并不需要我们求</p>
+<h1 id="解"><a href="#解" class="headerlink" title="解"></a>解</h1><p>然后我们来看看 什么是可能</p>
+<p>n&#x3D;4, {A,B,C,D}</p>
+<p>个数不相等的两个子集 一定不等</p>
+<p>1v1 一定不等</p>
+<p>2v2有 AB vs CD , AC vs BD, AD vs BC, 而只有<code>AD vs BC</code>是“可能”的，前面两组根据大小偏序关系一定不等</p>
+<p>没有3v3以及以上</p>
+<hr>
+<p>那么对于任意n呢</p>
+<hr>
+<p>先看看n&#x3D;7，{ABCDEFG}</p>
+<p>1v1老样子一定不等</p>
+<p>还剩下2v2和3v3</p>
+<p>对于 2v2，一定是 一个的最小到最大构成的区间，包含另一个，</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BC为中间:1x4=4</span><br><span class="line">BD为中间:1x3=3</span><br><span class="line">BE为中间:1x2=2</span><br><span class="line">BF为中间:1x1=1</span><br><span class="line">CD为中间:2x3=6</span><br><span class="line">CE为中间:2x2=4</span><br><span class="line">CF为中间:2x1=2</span><br><span class="line">DE为中间:3x2=6</span><br><span class="line">DF为中间:3x1=3</span><br><span class="line">EF为中间:4x1=4</span><br><span class="line"></span><br><span class="line">4+3+2+1+6+4+2+6+3+4=35</span><br></pre></td></tr></table></figure>
+
+<p>对于3v3,</p>
+<p><code>X1&lt;Y1&lt;X2&lt;Y2&lt;X3&lt;Y3</code>一定不行， 7个</p>
+<p><code>X1&lt;X2&lt;X3&lt;Y1&lt;Y2&lt;Y3</code>一定不行， 7个</p>
+<p><code>X1&lt;X2&lt;Y1&lt;X3&lt;Y2&lt;Y3</code>一定不行， 7个</p>
+<p><code>X1&lt;X2&lt;Y1&lt;Y2&lt;X3&lt;Y3</code>一定不行， 7个</p>
+<p><code>X1&lt;Y1&lt;X2&lt;X3&lt;Y2&lt;Y3</code>一定不行， 7个</p>
+<p>所以可行的3v3是 70-5x7&#x3D;35 个</p>
+<p>总共 35+35是70个</p>
+<hr>
+<p>那么根据上面看到 实际上，不可能就是</p>
+<p>两个子集排序后，对应下标位置偏序一致</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>还需要代码吗，这题核心是语文的阅读理解，猜作者的意图</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> ia = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> a[<span class="number">20</span>];</span><br><span class="line"><span class="type">int</span> ib = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> b[<span class="number">20</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> possible = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> N = <span class="number">12</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">test_possible</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ia != ib)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="type">int</span> gcnt=<span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> lcnt=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ia)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[i]&lt; b[i])&#123;</span><br><span class="line">      lcnt++;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      gcnt++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> lcnt != <span class="number">0</span> &amp;&amp; gcnt != <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">tryidx</span><span class="params">(<span class="type">int</span> index)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(index == N)&#123;</span><br><span class="line">    possible += <span class="built_in">test_possible</span>();</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  a[ia++] = index;</span><br><span class="line">  <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">  ia--;</span><br><span class="line">  <span class="keyword">if</span>(ia != <span class="number">0</span>)&#123;</span><br><span class="line">    b[ib++] = index;</span><br><span class="line">    <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">    ib--;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cin&gt;&gt;N;</span><br><span class="line">  <span class="built_in">tryidx</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,possible);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Project Euler</category>
+      </categories>
+      <tags>
+        <tag>语文</tag>
       </tags>
   </entry>
   <entry>
@@ -15133,6 +15133,8 @@
 <p>但如果给定i, 看能不能把j相关的变成一个表达式</p>
 <p>$\sum_{j&#x3D;max(0,Y)}^{\frac{n+X+Y+Z}{2}-max(0,Z)-i} \frac{1}{j!(j-Y)!(\frac{n+X+Y+Z}{2}-i-j)!(\frac{n+X+Y-Z}{2}-i-j)!} $</p>
 <p>右侧看起来 是$\frac{1}{j!(j-Y)!}$ 与剩余部分的卷积</p>
+<span id="more"></span>
+
 <h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>先推二维的表达式, 假设x,y,z &gt;&#x3D; 0</p>
 <p>f(k) &#x3D; 走x+y+2k步,从(0,0)到(x,y)的方案数</p>
 <p>$&#x3D;\sum_{i&#x3D;0}^k \frac{(x+y+2k)!}{(x+i)!i!(y+k-i)!(k-i)!} $</p>
@@ -15325,5 +15327,19 @@
         <tag>网络流</tag>
         <tag>生成函数</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Atcoder abc242</title>
+    <url>/Blog/2022-09-19-ac-abc242/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc242/tasks">https://atcoder.jp/contests/abc242/tasks</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F</p>
+<p>G</p>
+<p>Ex</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc242/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
   </entry>
 </search>
