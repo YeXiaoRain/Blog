@@ -4544,6 +4544,87 @@
       </tags>
   </entry>
   <entry>
+    <title>project euler 106(阅读理解)</title>
+    <url>/Blog/2020-11-13-pe106/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://projecteuler.net/problem=106">https://projecteuler.net/problem=106</a></p>
+<p>题目说，S(集合)表示集合元素的和</p>
+<p>集合A如果它任何不相交的两个子集B和C，同时满足</p>
+<ol>
+<li>S(B) !&#x3D; S(C)</li>
+<li>如果 B的元素个数比 C多，那么 S(B)&gt;S(C)</li>
+</ol>
+<p>那么A是满足题意的</p>
+<p>问 现在 给了一个集合，元素个数是n且满足第二条，要测试多少对 子集， 才能判定它是满足题意的</p>
+<p>然后举例</p>
+<p>n&#x3D;4 是25中的 1对</p>
+<p>n&#x3D;7 是 966中的70对</p>
+<p>求 n&#x3D;12 时 需要判断的是261625中的多少对</p>
+<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>我是没想到，还能在ProjectEuler练习语文</p>
+<p>注意到 一对不相交子集 如果元素个数不同，那么满足2一定不满足1,所以，如果“可能”满足1,那么元素个数相等</p>
+<p>那么首先说 n&#x3D;4时25怎么来的</p>
+<p>假设四个元素 且排序了的 {A,B,C,D}</p>
+<p>一个元素的比对就是 3+2+1&#x3D;6, </p>
+<p>两个元素的比对 3 种</p>
+<p>因为不相交 所以 3个以上元素的不比对</p>
+<p>所以哪里来的 25呢？？？？？？？？？？？？</p>
+<hr>
+<p>换个思路</p>
+<p>假设比对是有序的也就是 x和y比，y和x比 算两种，那么方案数一定是2的倍数？也不会25？</p>
+<hr>
+<p>再说先放弃不相交的性质，只要不相等就计数？</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1个元素 3+2+1=6</span><br><span class="line">2个元素 5+4+3+2+1 = 15</span><br><span class="line">3个元素 3+2+1=6</span><br></pre></td></tr></table></figure>
+
+<p>就是出不来25啊</p>
+<hr>
+<p>一个办法是结束吧，放弃吧，只去关心1是怎么来的</p>
+<p>然后我甚至想到了勾股定理4x4+3x3&#x3D;25 然而也不是</p>
+<hr>
+<p>难道是没考虑2的时候，之考虑了不相交</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1对比1 3+2+1=6</span><br><span class="line">1对比2 4x3 = 12</span><br><span class="line">1对比3 4x1 = 4</span><br><span class="line">2对比2 3</span><br></pre></td></tr></table></figure>
+
+<p>还真的是25</p>
+<hr>
+<p>按照这个思路，尝试一下n&#x3D;7,是不是966</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1v1:6+5+4+3+2+1 = 21</span><br><span class="line">1v2:7x15=105</span><br><span class="line">1v3:7x20=140</span><br><span class="line">1v4:7x15=105</span><br><span class="line">1v5:7x6=42</span><br><span class="line">1v6:7x1=7</span><br><span class="line">2v2:6x(5x4/2)+5x(4x3/2)+4x(3x2/2)+3x(2x1/2) = 105</span><br><span class="line">2v3:21x10=210</span><br><span class="line">2v4:21x5=105</span><br><span class="line">2v5:21x1=21</span><br><span class="line">3v3:15x4+10*1=70</span><br><span class="line">3v4:35x1=35</span><br><span class="line"></span><br><span class="line">21+105+140+105+42+7+105+210+105+21+70+35=966</span><br></pre></td></tr></table></figure>
+
+<p>那么这样说真的就是这个值了，不过n&#x3D;12时这个值并不需要我们求</p>
+<h1 id="解"><a href="#解" class="headerlink" title="解"></a>解</h1><p>然后我们来看看 什么是可能</p>
+<p>n&#x3D;4, {A,B,C,D}</p>
+<p>个数不相等的两个子集 一定不等</p>
+<p>1v1 一定不等</p>
+<p>2v2有 AB vs CD , AC vs BD, AD vs BC, 而只有<code>AD vs BC</code>是“可能”的，前面两组根据大小偏序关系一定不等</p>
+<p>没有3v3以及以上</p>
+<hr>
+<p>那么对于任意n呢</p>
+<hr>
+<p>先看看n&#x3D;7，{ABCDEFG}</p>
+<p>1v1老样子一定不等</p>
+<p>还剩下2v2和3v3</p>
+<p>对于 2v2，一定是 一个的最小到最大构成的区间，包含另一个，</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BC为中间:1x4=4</span><br><span class="line">BD为中间:1x3=3</span><br><span class="line">BE为中间:1x2=2</span><br><span class="line">BF为中间:1x1=1</span><br><span class="line">CD为中间:2x3=6</span><br><span class="line">CE为中间:2x2=4</span><br><span class="line">CF为中间:2x1=2</span><br><span class="line">DE为中间:3x2=6</span><br><span class="line">DF为中间:3x1=3</span><br><span class="line">EF为中间:4x1=4</span><br><span class="line"></span><br><span class="line">4+3+2+1+6+4+2+6+3+4=35</span><br></pre></td></tr></table></figure>
+
+<p>对于3v3,</p>
+<p><code>X1&lt;Y1&lt;X2&lt;Y2&lt;X3&lt;Y3</code>一定不行， 7个</p>
+<p><code>X1&lt;X2&lt;X3&lt;Y1&lt;Y2&lt;Y3</code>一定不行， 7个</p>
+<p><code>X1&lt;X2&lt;Y1&lt;X3&lt;Y2&lt;Y3</code>一定不行， 7个</p>
+<p><code>X1&lt;X2&lt;Y1&lt;Y2&lt;X3&lt;Y3</code>一定不行， 7个</p>
+<p><code>X1&lt;Y1&lt;X2&lt;X3&lt;Y2&lt;Y3</code>一定不行， 7个</p>
+<p>所以可行的3v3是 70-5x7&#x3D;35 个</p>
+<p>总共 35+35是70个</p>
+<hr>
+<p>那么根据上面看到 实际上，不可能就是</p>
+<p>两个子集排序后，对应下标位置偏序一致</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>还需要代码吗，这题核心是语文的阅读理解，猜作者的意图</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> ia = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> a[<span class="number">20</span>];</span><br><span class="line"><span class="type">int</span> ib = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> b[<span class="number">20</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> possible = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> N = <span class="number">12</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">test_possible</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ia != ib)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="type">int</span> gcnt=<span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> lcnt=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ia)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[i]&lt; b[i])&#123;</span><br><span class="line">      lcnt++;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      gcnt++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> lcnt != <span class="number">0</span> &amp;&amp; gcnt != <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">tryidx</span><span class="params">(<span class="type">int</span> index)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(index == N)&#123;</span><br><span class="line">    possible += <span class="built_in">test_possible</span>();</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  a[ia++] = index;</span><br><span class="line">  <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">  ia--;</span><br><span class="line">  <span class="keyword">if</span>(ia != <span class="number">0</span>)&#123;</span><br><span class="line">    b[ib++] = index;</span><br><span class="line">    <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">    ib--;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cin&gt;&gt;N;</span><br><span class="line">  <span class="built_in">tryidx</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,possible);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Project Euler</category>
+      </categories>
+      <tags>
+        <tag>语文</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>project euler 122(阅读理解)</title>
     <url>/Blog/2020-11-19-pe122/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://projecteuler.net/problem=122">https://projecteuler.net/problem=122</a></p>
@@ -4741,87 +4822,6 @@
       </categories>
       <tags>
         <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>project euler 106(阅读理解)</title>
-    <url>/Blog/2020-11-13-pe106/</url>
-    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://projecteuler.net/problem=106">https://projecteuler.net/problem=106</a></p>
-<p>题目说，S(集合)表示集合元素的和</p>
-<p>集合A如果它任何不相交的两个子集B和C，同时满足</p>
-<ol>
-<li>S(B) !&#x3D; S(C)</li>
-<li>如果 B的元素个数比 C多，那么 S(B)&gt;S(C)</li>
-</ol>
-<p>那么A是满足题意的</p>
-<p>问 现在 给了一个集合，元素个数是n且满足第二条，要测试多少对 子集， 才能判定它是满足题意的</p>
-<p>然后举例</p>
-<p>n&#x3D;4 是25中的 1对</p>
-<p>n&#x3D;7 是 966中的70对</p>
-<p>求 n&#x3D;12 时 需要判断的是261625中的多少对</p>
-<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>我是没想到，还能在ProjectEuler练习语文</p>
-<p>注意到 一对不相交子集 如果元素个数不同，那么满足2一定不满足1,所以，如果“可能”满足1,那么元素个数相等</p>
-<p>那么首先说 n&#x3D;4时25怎么来的</p>
-<p>假设四个元素 且排序了的 {A,B,C,D}</p>
-<p>一个元素的比对就是 3+2+1&#x3D;6, </p>
-<p>两个元素的比对 3 种</p>
-<p>因为不相交 所以 3个以上元素的不比对</p>
-<p>所以哪里来的 25呢？？？？？？？？？？？？</p>
-<hr>
-<p>换个思路</p>
-<p>假设比对是有序的也就是 x和y比，y和x比 算两种，那么方案数一定是2的倍数？也不会25？</p>
-<hr>
-<p>再说先放弃不相交的性质，只要不相等就计数？</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1个元素 3+2+1=6</span><br><span class="line">2个元素 5+4+3+2+1 = 15</span><br><span class="line">3个元素 3+2+1=6</span><br></pre></td></tr></table></figure>
-
-<p>就是出不来25啊</p>
-<hr>
-<p>一个办法是结束吧，放弃吧，只去关心1是怎么来的</p>
-<p>然后我甚至想到了勾股定理4x4+3x3&#x3D;25 然而也不是</p>
-<hr>
-<p>难道是没考虑2的时候，之考虑了不相交</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1对比1 3+2+1=6</span><br><span class="line">1对比2 4x3 = 12</span><br><span class="line">1对比3 4x1 = 4</span><br><span class="line">2对比2 3</span><br></pre></td></tr></table></figure>
-
-<p>还真的是25</p>
-<hr>
-<p>按照这个思路，尝试一下n&#x3D;7,是不是966</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1v1:6+5+4+3+2+1 = 21</span><br><span class="line">1v2:7x15=105</span><br><span class="line">1v3:7x20=140</span><br><span class="line">1v4:7x15=105</span><br><span class="line">1v5:7x6=42</span><br><span class="line">1v6:7x1=7</span><br><span class="line">2v2:6x(5x4/2)+5x(4x3/2)+4x(3x2/2)+3x(2x1/2) = 105</span><br><span class="line">2v3:21x10=210</span><br><span class="line">2v4:21x5=105</span><br><span class="line">2v5:21x1=21</span><br><span class="line">3v3:15x4+10*1=70</span><br><span class="line">3v4:35x1=35</span><br><span class="line"></span><br><span class="line">21+105+140+105+42+7+105+210+105+21+70+35=966</span><br></pre></td></tr></table></figure>
-
-<p>那么这样说真的就是这个值了，不过n&#x3D;12时这个值并不需要我们求</p>
-<h1 id="解"><a href="#解" class="headerlink" title="解"></a>解</h1><p>然后我们来看看 什么是可能</p>
-<p>n&#x3D;4, {A,B,C,D}</p>
-<p>个数不相等的两个子集 一定不等</p>
-<p>1v1 一定不等</p>
-<p>2v2有 AB vs CD , AC vs BD, AD vs BC, 而只有<code>AD vs BC</code>是“可能”的，前面两组根据大小偏序关系一定不等</p>
-<p>没有3v3以及以上</p>
-<hr>
-<p>那么对于任意n呢</p>
-<hr>
-<p>先看看n&#x3D;7，{ABCDEFG}</p>
-<p>1v1老样子一定不等</p>
-<p>还剩下2v2和3v3</p>
-<p>对于 2v2，一定是 一个的最小到最大构成的区间，包含另一个，</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BC为中间:1x4=4</span><br><span class="line">BD为中间:1x3=3</span><br><span class="line">BE为中间:1x2=2</span><br><span class="line">BF为中间:1x1=1</span><br><span class="line">CD为中间:2x3=6</span><br><span class="line">CE为中间:2x2=4</span><br><span class="line">CF为中间:2x1=2</span><br><span class="line">DE为中间:3x2=6</span><br><span class="line">DF为中间:3x1=3</span><br><span class="line">EF为中间:4x1=4</span><br><span class="line"></span><br><span class="line">4+3+2+1+6+4+2+6+3+4=35</span><br></pre></td></tr></table></figure>
-
-<p>对于3v3,</p>
-<p><code>X1&lt;Y1&lt;X2&lt;Y2&lt;X3&lt;Y3</code>一定不行， 7个</p>
-<p><code>X1&lt;X2&lt;X3&lt;Y1&lt;Y2&lt;Y3</code>一定不行， 7个</p>
-<p><code>X1&lt;X2&lt;Y1&lt;X3&lt;Y2&lt;Y3</code>一定不行， 7个</p>
-<p><code>X1&lt;X2&lt;Y1&lt;Y2&lt;X3&lt;Y3</code>一定不行， 7个</p>
-<p><code>X1&lt;Y1&lt;X2&lt;X3&lt;Y2&lt;Y3</code>一定不行， 7个</p>
-<p>所以可行的3v3是 70-5x7&#x3D;35 个</p>
-<p>总共 35+35是70个</p>
-<hr>
-<p>那么根据上面看到 实际上，不可能就是</p>
-<p>两个子集排序后，对应下标位置偏序一致</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>还需要代码吗，这题核心是语文的阅读理解，猜作者的意图</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> ia = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> a[<span class="number">20</span>];</span><br><span class="line"><span class="type">int</span> ib = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> b[<span class="number">20</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> possible = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> N = <span class="number">12</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">test_possible</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ia != ib)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="type">int</span> gcnt=<span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> lcnt=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ia)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[i]&lt; b[i])&#123;</span><br><span class="line">      lcnt++;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      gcnt++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> lcnt != <span class="number">0</span> &amp;&amp; gcnt != <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">tryidx</span><span class="params">(<span class="type">int</span> index)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(index == N)&#123;</span><br><span class="line">    possible += <span class="built_in">test_possible</span>();</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  a[ia++] = index;</span><br><span class="line">  <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">  ia--;</span><br><span class="line">  <span class="keyword">if</span>(ia != <span class="number">0</span>)&#123;</span><br><span class="line">    b[ib++] = index;</span><br><span class="line">    <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">    ib--;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">tryidx</span>(index+<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cin&gt;&gt;N;</span><br><span class="line">  <span class="built_in">tryidx</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,possible);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Project Euler</category>
-      </categories>
-      <tags>
-        <tag>语文</tag>
       </tags>
   </entry>
   <entry>
@@ -8734,6 +8734,8 @@
 <h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>先做点数学变形</p>
 <p>易知对于任意$x&#x3D;a_i$, 如果$\exists w, x \in [w^2,w^2+w]$ 那么$x$是好的</p>
 <p>然后 真不会了</p>
+<span id="more"></span>
+
 <h2 id="官方"><a href="#官方" class="headerlink" title="官方"></a>官方</h2><p>显然 $k \le a_n^2$, 因为 $[a_n^2,a_n^2+a_n]$ 的长度都是 $a_n$ 一定能放下所有数</p>
 <p>根据上面的令$f(x) &#x3D; w$, $w$由$x$唯一得到,也可能不存在, 且有$max(w) \le a_n$, </p>
 <p>枚举$f(a_1 + k)$的结果$w_1$, 因为$w_1 \le a_n$ 得到$\le a_n$个初始的$k$取值范围区间</p>
@@ -8937,7 +8939,9 @@
       </categories>
       <tags>
         <tag>数学</tag>
+        <tag>构造</tag>
         <tag>跳点</tag>
+        <tag>min-max容斥</tag>
       </tags>
   </entry>
   <entry>
@@ -14250,7 +14254,7 @@
 <p>这感觉有方案不难想,但难写,写吐了</p>
 <h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p>TL;DR;</p>
 <p><a href="https://atcoder.jp/contests/abc232/submissions/34627109">https://atcoder.jp/contests/abc232/submissions/34627109</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define rep(i,a,n) for (int i=a;i&lt;n;i++)</span><br><span class="line">int read()&#123;int r;scanf(&quot;%d&quot;,&amp;r);return r;&#125;</span><br><span class="line"></span><br><span class="line">pair&lt;int,int&gt; col(const array&lt;int,4&gt; &amp;M,const pair&lt;int,int&gt; &amp;p)&#123;// 列对面点</span><br><span class="line">  return &#123;p.first^M[0]^M[2],p.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array&lt;int,4&gt; rmcol(const array&lt;int,4&gt; &amp;M,int j)&#123; // 删掉s所在列</span><br><span class="line">  auto [i0,j0,i1,j1] = M;</span><br><span class="line">  if(j == j0) return &#123;i0,j0+1,i1,j1&#125;;</span><br><span class="line">  else return &#123;i0,j0,i1,j1-1&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void o(pair&lt;int,int&gt; p, int rev) &#123; // 输出</span><br><span class="line">  auto [i,j] = p;</span><br><span class="line">  if(rev) o(&#123;j,i&#125;,0);</span><br><span class="line">  else printf(&quot;%d %d\n&quot;,i,j);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void line(pair&lt;int,int&gt; s,pair&lt;int,int&gt;t,int rev)&#123; // 画线段</span><br><span class="line">  auto [si,sj] = s;</span><br><span class="line">  auto [ti,tj] = t;</span><br><span class="line">  int dj = tj &gt; sj?1:-1;</span><br><span class="line">  if(si == ti) for(int j = sj;j!=tj+dj;j+=dj) o(&#123;si,j&#125;,rev);</span><br><span class="line">  else line(&#123;sj,si&#125;,&#123;tj,ti&#125;,rev^1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void f(array&lt;int,4&gt; M,pair&lt;int,int&gt; s,pair&lt;int,int&gt; t,int rev/*ij翻转*/)&#123;</span><br><span class="line">  auto [i0,j0,i1,j1] = M; // (i0,j0) &lt;= (i1,j1)</span><br><span class="line">  auto [si,sj] = s;</span><br><span class="line">  auto [ti,tj] = t;</span><br><span class="line">  int di = ti &gt; si?1:-1;</span><br><span class="line">  int dj = tj &gt; sj?1:-1;</span><br><span class="line">  if(i0 == i1 || j0 == j1) &#123; // 1xn, nx1</span><br><span class="line">    line(s,t,rev);</span><br><span class="line">  &#125; else if(sj == tj) &#123; // 保持不同列</span><br><span class="line">    f(&#123;j0,i0,j1,i1&#125;,&#123;sj,si&#125;,&#123;tj,ti&#125;,rev^1);</span><br><span class="line">  &#125; else if(abs(j0-j1) == 1)&#123; // nx2, sj != tj</span><br><span class="line">    if(si == ti)&#123; // U形</span><br><span class="line">      line(s,col(M,s),rev);</span><br><span class="line">      line(col(M,t),t,rev);</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">      for(int i = si;i!=ti;i+=di) line(&#123;i,sj&#125;,&#123;i,tj&#125;,rev); // Z形</span><br><span class="line">      o(&#123;ti,sj&#125;,rev);</span><br><span class="line">      if(ti != (si^i0^i1))&#123; // U形</span><br><span class="line">        line(&#123;ti+di,sj&#125;    ,col(M,s)  ,rev);</span><br><span class="line">        line(col(M,&#123;si,tj&#125;),&#123;ti+di,tj&#125;,rev);</span><br><span class="line">      &#125;</span><br><span class="line">      o(t,rev);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; else if(abs(sj-tj) == 1 &amp;&amp; si != ti &amp;&amp; (ti == i0 || ti == i1))&#123; // 特殊 col &gt; 2, t 在第2列对称方向, sj != tj</span><br><span class="line">    line(s,col(M,s),rev);</span><br><span class="line">    line(&#123;ti-di,tj&#125;,&#123;si,tj&#125;,rev);</span><br><span class="line">    f(rmcol(rmcol(M,sj),tj), &#123;si,tj+dj&#125;,&#123;ti,tj+dj&#125;,rev);</span><br><span class="line">    o(t,rev);</span><br><span class="line">  &#125; else &#123; // 一般 消耗掉s所在列, sj != tj</span><br><span class="line">    line(s,col(M,s),rev);</span><br><span class="line">    f(rmcol(M,sj),col(M,&#123;si,sj+dj&#125;),t,rev);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">  int h = read();</span><br><span class="line">  int w = read();</span><br><span class="line">  int a = read();</span><br><span class="line">  int b = read();</span><br><span class="line">  f(&#123;1,1,h,w&#125;,&#123;1,1&#125;,&#123;a,b&#125;,false);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; <span class="title">col</span><span class="params">(<span class="type">const</span> array&lt;<span class="type">int</span>,<span class="number">4</span>&gt; &amp;M,<span class="type">const</span> pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; &amp;p)</span></span>&#123;<span class="comment">// 列对面点</span></span><br><span class="line">  <span class="keyword">return</span> &#123;p.first^M[<span class="number">0</span>]^M[<span class="number">2</span>],p.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">array&lt;<span class="type">int</span>,4&gt; <span class="title">rmcol</span><span class="params">(<span class="type">const</span> array&lt;<span class="type">int</span>,<span class="number">4</span>&gt; &amp;M,<span class="type">int</span> j)</span></span>&#123; <span class="comment">// 删掉s所在列</span></span><br><span class="line">  <span class="keyword">auto</span> [i0,j0,i1,j1] = M;</span><br><span class="line">  <span class="keyword">if</span>(j == j0) <span class="keyword">return</span> &#123;i0,j0+<span class="number">1</span>,i1,j1&#125;;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> &#123;i0,j0,i1,j1<span class="number">-1</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">o</span><span class="params">(pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; p, <span class="type">int</span> rev)</span> </span>&#123; <span class="comment">// 输出</span></span><br><span class="line">  <span class="keyword">auto</span> [i,j] = p;</span><br><span class="line">  <span class="keyword">if</span>(rev) <span class="built_in">o</span>(&#123;j,i&#125;,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>,i,j);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">line</span><span class="params">(pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; s,pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;t,<span class="type">int</span> rev)</span></span>&#123; <span class="comment">// 画线段</span></span><br><span class="line">  <span class="keyword">auto</span> [si,sj] = s;</span><br><span class="line">  <span class="keyword">auto</span> [ti,tj] = t;</span><br><span class="line">  <span class="type">int</span> dj = tj &gt; sj?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">if</span>(si == ti) <span class="keyword">for</span>(<span class="type">int</span> j = sj;j!=tj+dj;j+=dj) <span class="built_in">o</span>(&#123;si,j&#125;,rev);</span><br><span class="line">  <span class="keyword">else</span> <span class="built_in">line</span>(&#123;sj,si&#125;,&#123;tj,ti&#125;,rev^<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(array&lt;<span class="type">int</span>,<span class="number">4</span>&gt; M,pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; s,pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; t,<span class="type">int</span> rev<span class="comment">/*ij翻转*/</span>)</span></span>&#123;</span><br><span class="line">  <span class="keyword">auto</span> [i0,j0,i1,j1] = M; <span class="comment">// (i0,j0) &lt;= (i1,j1)</span></span><br><span class="line">  <span class="keyword">auto</span> [si,sj] = s;</span><br><span class="line">  <span class="keyword">auto</span> [ti,tj] = t;</span><br><span class="line">  <span class="type">int</span> di = ti &gt; si?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">  <span class="type">int</span> dj = tj &gt; sj?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">if</span>(i0 == i1 || j0 == j1) &#123; <span class="comment">// 1xn, nx1</span></span><br><span class="line">    <span class="built_in">line</span>(s,t,rev);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span>(sj == tj) &#123; <span class="comment">// 保持不同列</span></span><br><span class="line">    <span class="built_in">f</span>(&#123;j0,i0,j1,i1&#125;,&#123;sj,si&#125;,&#123;tj,ti&#125;,rev^<span class="number">1</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">abs</span>(j0-j1) == <span class="number">1</span>)&#123; <span class="comment">// nx2, sj != tj</span></span><br><span class="line">    <span class="keyword">if</span>(si == ti)&#123; <span class="comment">// U形</span></span><br><span class="line">      <span class="built_in">line</span>(s,<span class="built_in">col</span>(M,s),rev);</span><br><span class="line">      <span class="built_in">line</span>(<span class="built_in">col</span>(M,t),t,rev);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> i = si;i!=ti;i+=di) <span class="built_in">line</span>(&#123;i,sj&#125;,&#123;i,tj&#125;,rev); <span class="comment">// Z形</span></span><br><span class="line">      <span class="built_in">o</span>(&#123;ti,sj&#125;,rev);</span><br><span class="line">      <span class="keyword">if</span>(ti != (si^i0^i1))&#123; <span class="comment">// U形</span></span><br><span class="line">        <span class="built_in">line</span>(&#123;ti+di,sj&#125;    ,<span class="built_in">col</span>(M,s)  ,rev);</span><br><span class="line">        <span class="built_in">line</span>(<span class="built_in">col</span>(M,&#123;si,tj&#125;),&#123;ti+di,tj&#125;,rev);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">o</span>(t,rev);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">abs</span>(sj-tj) == <span class="number">1</span> &amp;&amp; si != ti &amp;&amp; (ti == i0 || ti == i1))&#123; <span class="comment">// 特殊 col &gt; 2, t 在第2列对称方向, sj != tj</span></span><br><span class="line">    <span class="built_in">line</span>(s,<span class="built_in">col</span>(M,s),rev);</span><br><span class="line">    <span class="built_in">line</span>(&#123;ti-di,tj&#125;,&#123;si,tj&#125;,rev);</span><br><span class="line">    <span class="built_in">f</span>(<span class="built_in">rmcol</span>(<span class="built_in">rmcol</span>(M,sj),tj), &#123;si,tj+dj&#125;,&#123;ti,tj+dj&#125;,rev);</span><br><span class="line">    <span class="built_in">o</span>(t,rev);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; <span class="comment">// 一般 消耗掉s所在列, sj != tj</span></span><br><span class="line">    <span class="built_in">line</span>(s,<span class="built_in">col</span>(M,s),rev);</span><br><span class="line">    <span class="built_in">f</span>(<span class="built_in">rmcol</span>(M,sj),<span class="built_in">col</span>(M,&#123;si,sj+dj&#125;),t,rev);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> h = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> w = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> b = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">f</span>(&#123;<span class="number">1</span>,<span class="number">1</span>,h,w&#125;,&#123;<span class="number">1</span>,<span class="number">1</span>&#125;,&#123;a,b&#125;,<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
 <p>感觉dij倒是没啥, 主要还是数学智慧没有</p>
@@ -15310,6 +15314,15 @@
 <h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc241/submissions/34985025">https://atcoder.jp/contests/abc241/submissions/34985025</a></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 16</span></span><br><span class="line">mint a[N];</span><br><span class="line">ll b[N];</span><br><span class="line">mint c[N];</span><br><span class="line">mint d[(<span class="number">1</span> &lt;&lt; N)] = &#123;<span class="number">1</span>&#125;; <span class="comment">// d[mask] = prod -a[i]^(b[i]+1)</span></span><br><span class="line">ll p[(<span class="number">1</span> &lt;&lt; N)]; <span class="comment">// p[mask] = sum b[...mask] + 1), 记录对应的幂次</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>(); <span class="comment">// 16</span></span><br><span class="line">  ll m = <span class="built_in">read</span>(); <span class="comment">// 1e18</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) &#123;</span><br><span class="line">    a[i] = <span class="built_in">read</span>();</span><br><span class="line">    b[i] = <span class="built_in">read</span>()+<span class="number">1</span>; <span class="comment">// 分子是prod (1-a[i]^(b[i]+1))...</span></span><br><span class="line">    mint x = -a[i].<span class="built_in">pow</span>(b[i]);</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,(<span class="number">1</span> &lt;&lt; i)) &#123; <span class="comment">// 高位到低位 对应 0 ~ N-1</span></span><br><span class="line">      d[(<span class="number">1</span> &lt;&lt; i) + j] = d[j] * x;</span><br><span class="line">      p[(<span class="number">1</span> &lt;&lt; i) + j] = p[j] + b[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) &#123; <span class="comment">// 拉格朗日插值 算 拆分出来的常数倍数ci</span></span><br><span class="line">    mint x = a[i].<span class="built_in">inv</span>();</span><br><span class="line">    c[i] = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,n) <span class="keyword">if</span> (j!=i) c[i] *= (<span class="number">1</span> - a[j]*x);</span><br><span class="line">    c[i] = c[i].<span class="built_in">inv</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// d[i]x^p[i] * c[j](a[j]x)^&#123;m-p[i]&#125;</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,(<span class="number">1</span>&lt;&lt;n))<span class="keyword">if</span>(p[i]&lt;=m) <span class="built_in">rep</span>(j,<span class="number">0</span>,n) ans += a[j].<span class="built_in">pow</span>(m-p[i])*c[j]*d[i];</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="基于矩阵优化的多项式除法"><a href="#基于矩阵优化的多项式除法" class="headerlink" title="基于矩阵优化的多项式除法"></a>基于矩阵优化的多项式除法</h2><p>在得到$&#x3D; \frac{(1-(a_0x)^{B_0+1})(1-(a_1x)^{B_1+1})\cdots}{(1-a_0x)(1-a_1x)\cdots}$后也可以分子分母展开继续</p>
+<p>这样分母是n次多项式,而分子直接拆开每个幂次单独处理</p>
+<p>$t a^i &#x3D; ? \cdot (1+k_1x^1+k_2x^2+\cdots+k_nx^n) $</p>
+<p>要求?中$m-i$的系数</p>
+<p>长度 n 的向量 $ v_i &#x3D; (t,0,0,\cdots) $, 可以得到?中i次方系数是 $v_i[0]$</p>
+<p>$v_{i+1} &#x3D; v_i \cdot \left( \begin{array}{l} -k_1 &amp; -k_2 &amp; -k_3 &amp; \cdots &amp; -k_n \\ 1 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; \cdots &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; \cdots &amp; 0  \\ \cdots \\ 0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 \end{array} \right) $</p>
+<p>n^3 log m-i 快速幂搞一搞 就行</p>
+<h2 id="Nero"><a href="#Nero" class="headerlink" title="Nero"></a>Nero</h2><p><a href="https://atcoder.jp/contests/abc241/submissions/29706099">https://atcoder.jp/contests/abc241/submissions/29706099</a></p>
+<p>容斥完全不会</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
 <p>网络流还是不熟, 虽然能感觉到分点讨论和贪心胜场和复杂度估计, 但是完全没看出是网络流的方向</p>
 <p>感觉要过橙色的坎,网络流要足够熟练才行</p>
@@ -15317,6 +15330,7 @@
 <p>生成方程完全不会, 生成方程又会一点</p>
 <p>如何处理分母是一堆玩意儿的乘积</p>
 <p>好消息是,似乎就缺这个 分式乘积拆分的想法这个题我就搞出来了</p>
+<p>矩阵加速多项式除法</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc241/editorial">官方题解</a></p>
 ]]></content>
       <categories>
@@ -15332,14 +15346,117 @@
     <title>Atcoder abc242</title>
     <url>/Blog/2022-09-19-ac-abc242/</url>
     <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc242/tasks">https://atcoder.jp/contests/abc242/tasks</a></p>
+<h1 id="F-Black-and-White-Rooks"><a href="#F-Black-and-White-Rooks" class="headerlink" title="F - Black and White Rooks"></a>F - Black and White Rooks</h1><p>n行,m列</p>
+<p>放b 个黑色,w个白色, 求任意黑 不与 白同行&#x2F;同列 的 放法 mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n,m 50</p>
+<p>b,w 2500</p>
+<p>2s 1024</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>emmm 如果能算出 放b个黑色后, 还有x位置可以放白色, 那么就是 binom(x,w)</p>
+<p>然后当然不能枚举</p>
+<p>所以考虑说 放了b个后, 剩余有x个位置可以放白色 有多少种方案</p>
+<hr>
+<p>一个想法是插头dp, 做一个横切折线, <code>dp[折线][已放黑色个数][折线以上的可放白色位置数] = 方案数</code></p>
+<p>每个状态 O(1) 转移</p>
+<p>但问题是 2^n n n^2, 显然没法搞</p>
+<hr>
+<p>考虑交换行列, 把 黑色的平移交换到一块</p>
+<p>则考虑黑色铺的占了 i0行j0列, 白色占了i1行j1列 的方案, 并且注意到行列看似有关系,但行与行交换不影响列的个数</p>
+<p>最后乘上 binom(n,i0,i1) * binom(m,j0,j1)</p>
+<p>问题是 直接行列的个数描述也可能多种</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x0</span><br><span class="line">0x</span><br></pre></td></tr></table></figure>
+
+<p>和</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0x</span><br><span class="line">x0</span><br></pre></td></tr></table></figure>
+
+<p>行列 都是(1,1)</p>
+<p><code>dp[i][mask][j] = </code> 前i行用了j个, 列占用情况是mask 的方案数, 依然状态就 n^3 2^n, </p>
+<p>f(i,j,c) &#x3D; 一共铺了(&lt;&#x3D;i,&lt;&#x3D;j) 的方案数 &#x3D; binom(i * j, c)</p>
+<p>有办法容斥出来吗?</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>看起来主体思路方向一样</p>
+<p>还是落到求 x个放来n行m列的 每行每列至少有一个的方案数</p>
+<h3 id="方案1-DP"><a href="#方案1-DP" class="headerlink" title="方案1 DP"></a>方案1 DP</h3><p>f(n,m,x) &#x3D; binom(n * m,x) - n行m列中 选i行,j列填满</p>
+<p>f(n,m,x) &#x3D; binom(nm,x) - sum binom(n,i)binom(m,j)f(i,j,x)</p>
+<p>还真是这样减的</p>
+<h3 id="方案2-容斥"><a href="#方案2-容斥" class="headerlink" title="方案2 容斥"></a>方案2 容斥</h3><p>属性: 第?行放了其它行任意, 第?列放了其它列任意</p>
+<p>属性的补集: 第?行没有放其它行任意, 第?列没有放其它列任意</p>
+<p>属性的交 &#x3D; 全集 - 属性的补的并</p>
+<p>&#x3D; sum (-1)^{i+j} * 1, 每个的贡献函数都是1</p>
+<p>&#x3D; sum (-1)^{i+j} binom(n,i) binom(m,j) binom((n-i)(m-j),x)</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc242/submissions/35002886">https://atcoder.jp/contests/abc242/submissions/35002886</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n;i--&gt;(int)a;)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line">mint fac[<span class="number">2510</span>] = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint ifac[<span class="number">2510</span>];</span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(m &gt; n || m &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> fac[n] * ifac[m] * ifac[n-m];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m0,<span class="type">int</span> m1)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(m0+m1 &gt; n || m0 &lt; <span class="number">0</span> || m1 &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> fac[n] * ifac[m0] * ifac[m1] * ifac[n-m0-m1];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mint memf[<span class="number">2</span>][<span class="number">60</span>][<span class="number">60</span>];</span><br><span class="line"><span class="type">bool</span> visf[<span class="number">2</span>][<span class="number">60</span>][<span class="number">60</span>];</span><br><span class="line"></span><br><span class="line"><span class="function">mint <span class="title">f</span><span class="params">(<span class="type">int</span> o,<span class="type">int</span> n,<span class="type">int</span> m,<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">auto</span> &amp; r = memf[o][n][m];</span><br><span class="line">  <span class="keyword">if</span>(visf[o][n][m]) <span class="keyword">return</span> r;</span><br><span class="line">  visf[o][n][m] = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">if</span>(x &gt; n*m) <span class="keyword">return</span> r=<span class="number">0</span>;</span><br><span class="line">  r = <span class="built_in">binom</span>(n*m, x);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)<span class="built_in">rep</span>(j,<span class="number">1</span>,m+<span class="number">1</span>)<span class="keyword">if</span>(i!=n||j!=m)r-=<span class="built_in">binom</span>(n,i)*<span class="built_in">binom</span>(m,j)*<span class="built_in">f</span>(o,i,j,x);</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">2500</span>+<span class="number">1</span>) fac[i] = fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  ifac[<span class="number">2500</span>] = fac[<span class="number">2500</span>].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,<span class="number">2500</span>) ifac[i] = ifac[i+<span class="number">1</span>]*(i+<span class="number">1</span>);</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> w = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> b = <span class="built_in">read</span>();</span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i0,<span class="number">1</span>,n+<span class="number">1</span>)<span class="built_in">rep</span>(j0,<span class="number">1</span>,m+<span class="number">1</span>)<span class="built_in">rep</span>(i1,<span class="number">1</span>,n+<span class="number">1</span>-i0)<span class="built_in">rep</span>(j1,<span class="number">1</span>,m+<span class="number">1</span>-j0) ans+=<span class="built_in">binom</span>(n,i0,i1)*<span class="built_in">binom</span>(m,j0,j1)*<span class="built_in">f</span>(<span class="number">0</span>,i0,j0,w)*<span class="built_in">f</span>(<span class="number">1</span>,i1,j1,b);</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Random-Painting"><a href="#Ex-Random-Painting" class="headerlink" title="Ex - Random Painting"></a>Ex - Random Painting</h1><p>n个白色格子</p>
+<p>m个球 上面写了li,ri</p>
+<p>重复直到所有格子变黑</p>
+<p>每次 等概率随机选一个球, 把对应[li..ri]涂黑, 放回去</p>
+<p>求全部涂黑的期望次数, mod 998244353</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n,m 400</p>
+<p>3s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>这个n影响不大,如果n很大你需要手动离散一下</p>
+<p>也就是 给你m个线段,每次等概率选一个涂黑, 把整个区间涂黑和期望次数</p>
+<p>想一些排序,dp感觉都没想法, n,m这么大 也不太能bitdp</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>第一次遇到min-max容斥 是cf 1687 E, 也没有彻底学会,只是暴力推了公式,有个大概的印象, 这是第二次</p>
+<p>那么就是集合的够建</p>
+<p>s_i &#x3D; 位置i被涂黑的次数(推导见下)</p>
+<p>$E(\max(S)) &#x3D; E(\sum_{T\subseteq S} (-1)^{|T|+1} \min(T)) &#x3D; \sum_{T\subseteq S} (-1)^{|T|+1} E(\min(T))$</p>
+<p>注意到 E(min(T)) 的取值范围是 $\frac{1}{1\cdots n}$</p>
+<p>因此变成贡献统计</p>
+<p><code>dp[i][j]</code> &#x3D; 前i个位置中,第i个必定选择, 与j个区间相交 的个数</p>
+<p><code>dp[0][0] = -1</code></p>
+<p><code>dp[i][j] += (-1) dp[k][j - 覆盖了i没有覆盖k的区间数], (k&lt;i)</code></p>
+<p><code>ans = sum dp[i][j] 1/p = sum dp[i][j] 1/(j/m) = sum dp[i][j] m / j</code></p>
+<h2 id="min-max-容斥"><a href="#min-max-容斥" class="headerlink" title="min-max 容斥"></a>min-max 容斥</h2><p>先上公式,$S$为集合</p>
+<p>$\max(S) &#x3D; \sum_{T\subseteq S} (-1)^{|T|+1} \min(T)$</p>
+<p>对称的显然,相当于所有数字乘上负号 $min(S) &#x3D; \sum_{T\subseteq S} (-1)^{|T|+1} max(T)$</p>
+<p>用途: 当min容易求 而max难求时</p>
+<p>证明</p>
+<p>从思路角度上和 之前容斥的思路很像, 通过-1的幂次 反复乘做抵消</p>
+<p>值两两不同, 对于第i小的值$a_i$是最小值的 所有S的子集T($a_i \in T$), 如果S中有比它大的,那么比它大的值通过选或不选 能让所在集合的T的元素为奇数个数和为偶数个数的一样多, 那么-1^集合大小 去作为倍数, 再相加, 就抵消了</p>
+<p>而对于最大的来说, 它只出现一次</p>
+<p>得证</p>
+<h3 id="min-max-容斥-期望"><a href="#min-max-容斥-期望" class="headerlink" title="min-max 容斥+期望"></a>min-max 容斥+期望</h3><p>然后 注意到期望本质是 int p(x) dx, 是可以相加,有分配率的, 因此</p>
+<p>$E(\max(S)) &#x3D; E(\sum_{T\subseteq S} (-1)^{|T|+1} \min(T)) &#x3D; \sum_{T\subseteq S} (-1)^{|T|+1} E(\min(T))$</p>
+<hr>
+<p>使用</p>
+<p>n个元素, 每次有概率p_i选其中一些元素set_i</p>
+<p>S中S_i 表示第i个元素首次被选的发生的次数, (不是期望次数, 而是每个具体的结果中的次数)</p>
+<p>E(max(S)) &#x3D; sum ( S中元素被选的次数的最大值 * 这种情况发生的概率) &#x3D; sum ( S中所有被选 * 这种情况发生的概率) &#x3D; S所有被选的期望次数</p>
+<p>E(min(T)) &#x3D; sum ( T中元素被选的次数的最小值 * 这种情况发生的概率) &#x3D; sum ( T中有&gt;&#x3D;1个被选 * 这种情况发生的概率) &#x3D; T中&gt;&#x3D;1个被选的期望次数</p>
+<hr>
+<p>如何计算E(min(T))</p>
+<p>考虑 min(T) &#x3D; t 的概率, 那么就是 t-1次都没有选中T中任何一个, 在t次选中了</p>
+<p>那么令单次 选中的区间和T重叠的概率为p(T) &#x3D; 覆盖了T中任意一个点的线段数&#x2F;总线段数</p>
+<p>$E(min(T)) &#x3D; \sum_{t&#x3D;1}^{\infty} t p (1-p)^{t-1} &#x3D; -p(\sum_{t&#x3D;1}^{\infty} (1-p)^t)’ &#x3D; -p ((1-p)\frac{1}{1-(1-p)})’ &#x3D; -p(\frac{1}{p}-1)’ &#x3D; \frac{1}{p}$</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc242/submissions/35019791">https://atcoder.jp/contests/abc242/submissions/35019791</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line">mint f[<span class="number">410</span>][<span class="number">410</span>]; <span class="comment">// f[i][j] = 前i个,第i个必选, 所选的下标被j个线段覆盖过 的 (方案数 * (-1)^(选点数+1)) 的和</span></span><br><span class="line"><span class="type">int</span> c[<span class="number">410</span>][<span class="number">410</span>]; <span class="comment">// c[i][j] = 覆盖了下标i,但是没有覆盖下标j的区间, (i&gt;j)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>(); <span class="comment">// 400</span></span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>(); <span class="comment">// 400</span></span><br><span class="line">  <span class="built_in">rep</span>(k,<span class="number">0</span>,m) &#123;</span><br><span class="line">    <span class="type">int</span> l = <span class="built_in">read</span>(); <span class="comment">// 下标1-index, 方便直接表示个数 和 0个的表示</span></span><br><span class="line">    <span class="type">int</span> r = <span class="built_in">read</span>();</span><br><span class="line">    <span class="built_in">rep</span>(i,l,r+<span class="number">1</span>) <span class="built_in">rep</span>(j,<span class="number">0</span>,l) c[i][j]++;</span><br><span class="line">  &#125;</span><br><span class="line">  f[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">-1</span>; <span class="comment">// (-1)^(点数+1) = (-1)^(0+1) = -1;</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(j,<span class="number">0</span>,i) <span class="built_in">rep</span>(k,<span class="number">0</span>,m+<span class="number">1</span>) <span class="keyword">if</span>(k+c[i][j] &lt;= m) f[i][k+c[i][j]]-=f[j][k]; <span class="comment">// i选择,j到i之间都没有选,j是上一个选的位置, 增加覆盖i 而未覆盖j的线段数 c[i][j]</span></span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(k,<span class="number">1</span>,m+<span class="number">1</span>) ans+= f[i][k] * m/k; <span class="comment">// E(max(S)) = (-1)^&#123;点数+1&#125; 总线段数/被覆盖数</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F</p>
-<p>G</p>
+<p>dp 应该再多推一下能想到的</p>
+<p>容斥还是不熟, 总是把属性以外的是任意 而不是不选 这一点想错, 另外因为通过容斥, 最后出来的每个元素 都是”需要的”, 所以不要再去判断是否”合法”,而直接是每个的贡献就是了, 感觉又熟悉了一点</p>
 <p>Ex</p>
+<p>感觉最近看了好几个这种 -1 幂次玩抵消的</p>
+<p>算拉通证明了一下min-max容斥,以及在期望中的使用,</p>
+<p>然后这个题, 这里的连续区间似乎并不必要, 可以看 洛谷 P3175 HAOI2015 的那个题目, 就是每次给一组点也是一样的</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc242/editorial">官方题解</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2022-06-05-CF1687/">https://yexiaorain.github.io/Blog/2022-06-05-CF1687/</a></p>
+<p><a href="https://www.luogu.com.cn/blog/command-block/min-max-rong-chi-xiao-ji">luogu command_block min-max 容斥</a></p>
+<p><a href="https://www.luogu.com.cn/problem/solution/P3175">洛谷 P3175</a></p>
 ]]></content>
       <categories>
         <category>Atcoder</category>
         <category>ABC</category>
       </categories>
+      <tags>
+        <tag>概率论</tag>
+        <tag>DP</tag>
+        <tag>贡献统计</tag>
+        <tag>min-max容斥</tag>
+        <tag>排列组合</tag>
+        <tag>容斥原理</tag>
+      </tags>
   </entry>
 </search>

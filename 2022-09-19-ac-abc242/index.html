@@ -19,16 +19,22 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="F()G()Ex()">
+    <meta name="description" content="F(DP,容斥原理,排列组合)Ex(min-max容斥,概率论,贡献统计,DP)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Atcoder abc242">
 <meta property="og:url" content="https://yexiaorain.github.io/Blog/2022-09-19-ac-abc242/index.html">
 <meta property="og:site_name" content="YeXiaoRain Blog">
-<meta property="og:description" content="F()G()Ex()">
+<meta property="og:description" content="F(DP,容斥原理,排列组合)Ex(min-max容斥,概率论,贡献统计,DP)">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2022-09-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-19T01:09:12.527Z">
+<meta property="article:modified_time" content="2022-09-20T16:58:11.333Z">
 <meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="概率论">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="贡献统计">
+<meta property="article:tag" content="min-max容斥">
+<meta property="article:tag" content="排列组合">
+<meta property="article:tag" content="容斥原理">
 <meta name="twitter:card" content="summary">
 
 
@@ -85,7 +91,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">183</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">172</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">183</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">174</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
         </a>
@@ -142,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#F-Black-and-White-Rooks"><span class="nav-number">1.</span> <span class="nav-text">F - Black and White Rooks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-number">1.1.</span> <span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">1.3.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%881-DP"><span class="nav-number">1.3.1.</span> <span class="nav-text">方案1 DP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%882-%E5%AE%B9%E6%96%A5"><span class="nav-number">1.3.2.</span> <span class="nav-text">方案2 容斥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-Random-Painting"><span class="nav-number">2.</span> <span class="nav-text">Ex - Random Painting</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-number">2.1.</span> <span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-number">2.2.</span> <span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-number">2.3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#min-max-%E5%AE%B9%E6%96%A5"><span class="nav-number">2.4.</span> <span class="nav-text">min-max 容斥</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#min-max-%E5%AE%B9%E6%96%A5-%E6%9C%9F%E6%9C%9B"><span class="nav-number">2.4.1.</span> <span class="nav-text">min-max 容斥+期望</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">2.5.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -168,7 +174,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/Blog/tags/">
-        <span class="site-state-item-count">172</span>
+        <span class="site-state-item-count">174</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -244,7 +250,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="Atcoder abc242 | YeXiaoRain Blog">
-      <meta itemprop="description" content="F()G()Ex()">
+      <meta itemprop="description" content="F(DP,容斥原理,排列组合)Ex(min-max容斥,概率论,贡献统计,DP)">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -258,9 +264,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">發表於</span>
-      
 
-      <time title="創建時間：2022-09-19 00:00:00 / 修改時間：09:09:12" itemprop="dateCreated datePublished" datetime="2022-09-19T00:00:00+08:00">2022-09-19</time>
+      <time title="創建時間：2022-09-19 00:00:00" itemprop="dateCreated datePublished" datetime="2022-09-19T00:00:00+08:00">2022-09-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-21 00:58:11" itemprop="dateModified" datetime="2022-09-21T00:58:11+08:00">2022-09-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -297,18 +309,18 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>52</span>
+      <span>4.9k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
+      <span>4 分鐘</span>
     </span>
 </div>
 
-            <div class="post-description">F()G()Ex()</div>
+            <div class="post-description">F(DP,容斥原理,排列组合)Ex(min-max容斥,概率论,贡献统计,DP)</div>
         </div>
       </header>
 
@@ -317,10 +329,105 @@
     
     <div class="post-body" itemprop="articleBody">
         <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc242/tasks">https://atcoder.jp/contests/abc242/tasks</a></p>
+<h1 id="F-Black-and-White-Rooks"><a href="#F-Black-and-White-Rooks" class="headerlink" title="F - Black and White Rooks"></a>F - Black and White Rooks</h1><p>n行,m列</p>
+<p>放b 个黑色,w个白色, 求任意黑 不与 白同行&#x2F;同列 的 放法 mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n,m 50</p>
+<p>b,w 2500</p>
+<p>2s 1024</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>emmm 如果能算出 放b个黑色后, 还有x位置可以放白色, 那么就是 binom(x,w)</p>
+<p>然后当然不能枚举</p>
+<p>所以考虑说 放了b个后, 剩余有x个位置可以放白色 有多少种方案</p>
+<hr>
+<p>一个想法是插头dp, 做一个横切折线, <code>dp[折线][已放黑色个数][折线以上的可放白色位置数] = 方案数</code></p>
+<p>每个状态 O(1) 转移</p>
+<p>但问题是 2^n n n^2, 显然没法搞</p>
+<hr>
+<p>考虑交换行列, 把 黑色的平移交换到一块</p>
+<p>则考虑黑色铺的占了 i0行j0列, 白色占了i1行j1列 的方案, 并且注意到行列看似有关系,但行与行交换不影响列的个数</p>
+<p>最后乘上 binom(n,i0,i1) * binom(m,j0,j1)</p>
+<p>问题是 直接行列的个数描述也可能多种</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x0</span><br><span class="line">0x</span><br></pre></td></tr></table></figure>
+
+<p>和</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0x</span><br><span class="line">x0</span><br></pre></td></tr></table></figure>
+
+<p>行列 都是(1,1)</p>
+<p><code>dp[i][mask][j] = </code> 前i行用了j个, 列占用情况是mask 的方案数, 依然状态就 n^3 2^n, </p>
+<p>f(i,j,c) &#x3D; 一共铺了(&lt;&#x3D;i,&lt;&#x3D;j) 的方案数 &#x3D; binom(i * j, c)</p>
+<p>有办法容斥出来吗?</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>看起来主体思路方向一样</p>
+<p>还是落到求 x个放来n行m列的 每行每列至少有一个的方案数</p>
+<h3 id="方案1-DP"><a href="#方案1-DP" class="headerlink" title="方案1 DP"></a>方案1 DP</h3><p>f(n,m,x) &#x3D; binom(n * m,x) - n行m列中 选i行,j列填满</p>
+<p>f(n,m,x) &#x3D; binom(nm,x) - sum binom(n,i)binom(m,j)f(i,j,x)</p>
+<p>还真是这样减的</p>
+<h3 id="方案2-容斥"><a href="#方案2-容斥" class="headerlink" title="方案2 容斥"></a>方案2 容斥</h3><p>属性: 第?行放了其它行任意, 第?列放了其它列任意</p>
+<p>属性的补集: 第?行没有放其它行任意, 第?列没有放其它列任意</p>
+<p>属性的交 &#x3D; 全集 - 属性的补的并</p>
+<p>&#x3D; sum (-1)^{i+j} * 1, 每个的贡献函数都是1</p>
+<p>&#x3D; sum (-1)^{i+j} binom(n,i) binom(m,j) binom((n-i)(m-j),x)</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc242/submissions/35002886">https://atcoder.jp/contests/abc242/submissions/35002886</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n;i--&gt;(int)a;)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line">mint fac[<span class="number">2510</span>] = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint ifac[<span class="number">2510</span>];</span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(m &gt; n || m &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> fac[n] * ifac[m] * ifac[n-m];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m0,<span class="type">int</span> m1)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(m0+m1 &gt; n || m0 &lt; <span class="number">0</span> || m1 &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> fac[n] * ifac[m0] * ifac[m1] * ifac[n-m0-m1];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mint memf[<span class="number">2</span>][<span class="number">60</span>][<span class="number">60</span>];</span><br><span class="line"><span class="type">bool</span> visf[<span class="number">2</span>][<span class="number">60</span>][<span class="number">60</span>];</span><br><span class="line"></span><br><span class="line"><span class="function">mint <span class="title">f</span><span class="params">(<span class="type">int</span> o,<span class="type">int</span> n,<span class="type">int</span> m,<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">auto</span> &amp; r = memf[o][n][m];</span><br><span class="line">  <span class="keyword">if</span>(visf[o][n][m]) <span class="keyword">return</span> r;</span><br><span class="line">  visf[o][n][m] = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">if</span>(x &gt; n*m) <span class="keyword">return</span> r=<span class="number">0</span>;</span><br><span class="line">  r = <span class="built_in">binom</span>(n*m, x);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)<span class="built_in">rep</span>(j,<span class="number">1</span>,m+<span class="number">1</span>)<span class="keyword">if</span>(i!=n||j!=m)r-=<span class="built_in">binom</span>(n,i)*<span class="built_in">binom</span>(m,j)*<span class="built_in">f</span>(o,i,j,x);</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">2500</span>+<span class="number">1</span>) fac[i] = fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  ifac[<span class="number">2500</span>] = fac[<span class="number">2500</span>].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,<span class="number">2500</span>) ifac[i] = ifac[i+<span class="number">1</span>]*(i+<span class="number">1</span>);</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> w = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> b = <span class="built_in">read</span>();</span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i0,<span class="number">1</span>,n+<span class="number">1</span>)<span class="built_in">rep</span>(j0,<span class="number">1</span>,m+<span class="number">1</span>)<span class="built_in">rep</span>(i1,<span class="number">1</span>,n+<span class="number">1</span>-i0)<span class="built_in">rep</span>(j1,<span class="number">1</span>,m+<span class="number">1</span>-j0) ans+=<span class="built_in">binom</span>(n,i0,i1)*<span class="built_in">binom</span>(m,j0,j1)*<span class="built_in">f</span>(<span class="number">0</span>,i0,j0,w)*<span class="built_in">f</span>(<span class="number">1</span>,i1,j1,b);</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Random-Painting"><a href="#Ex-Random-Painting" class="headerlink" title="Ex - Random Painting"></a>Ex - Random Painting</h1><p>n个白色格子</p>
+<p>m个球 上面写了li,ri</p>
+<p>重复直到所有格子变黑</p>
+<p>每次 等概率随机选一个球, 把对应[li..ri]涂黑, 放回去</p>
+<p>求全部涂黑的期望次数, mod 998244353</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n,m 400</p>
+<p>3s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>这个n影响不大,如果n很大你需要手动离散一下</p>
+<p>也就是 给你m个线段,每次等概率选一个涂黑, 把整个区间涂黑和期望次数</p>
+<p>想一些排序,dp感觉都没想法, n,m这么大 也不太能bitdp</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>第一次遇到min-max容斥 是cf 1687 E, 也没有彻底学会,只是暴力推了公式,有个大概的印象, 这是第二次</p>
+<p>那么就是集合的够建</p>
+<p>s_i &#x3D; 位置i被涂黑的次数(推导见下)</p>
+<p>$E(\max(S)) &#x3D; E(\sum_{T\subseteq S} (-1)^{|T|+1} \min(T)) &#x3D; \sum_{T\subseteq S} (-1)^{|T|+1} E(\min(T))$</p>
+<p>注意到 E(min(T)) 的取值范围是 $\frac{1}{1\cdots n}$</p>
+<p>因此变成贡献统计</p>
+<p><code>dp[i][j]</code> &#x3D; 前i个位置中,第i个必定选择, 与j个区间相交 的个数</p>
+<p><code>dp[0][0] = -1</code></p>
+<p><code>dp[i][j] += (-1) dp[k][j - 覆盖了i没有覆盖k的区间数], (k&lt;i)</code></p>
+<p><code>ans = sum dp[i][j] 1/p = sum dp[i][j] 1/(j/m) = sum dp[i][j] m / j</code></p>
+<h2 id="min-max-容斥"><a href="#min-max-容斥" class="headerlink" title="min-max 容斥"></a>min-max 容斥</h2><p>先上公式,$S$为集合</p>
+<p>$\max(S) &#x3D; \sum_{T\subseteq S} (-1)^{|T|+1} \min(T)$</p>
+<p>对称的显然,相当于所有数字乘上负号 $min(S) &#x3D; \sum_{T\subseteq S} (-1)^{|T|+1} max(T)$</p>
+<p>用途: 当min容易求 而max难求时</p>
+<p>证明</p>
+<p>从思路角度上和 之前容斥的思路很像, 通过-1的幂次 反复乘做抵消</p>
+<p>值两两不同, 对于第i小的值$a_i$是最小值的 所有S的子集T($a_i \in T$), 如果S中有比它大的,那么比它大的值通过选或不选 能让所在集合的T的元素为奇数个数和为偶数个数的一样多, 那么-1^集合大小 去作为倍数, 再相加, 就抵消了</p>
+<p>而对于最大的来说, 它只出现一次</p>
+<p>得证</p>
+<h3 id="min-max-容斥-期望"><a href="#min-max-容斥-期望" class="headerlink" title="min-max 容斥+期望"></a>min-max 容斥+期望</h3><p>然后 注意到期望本质是 int p(x) dx, 是可以相加,有分配率的, 因此</p>
+<p>$E(\max(S)) &#x3D; E(\sum_{T\subseteq S} (-1)^{|T|+1} \min(T)) &#x3D; \sum_{T\subseteq S} (-1)^{|T|+1} E(\min(T))$</p>
+<hr>
+<p>使用</p>
+<p>n个元素, 每次有概率p_i选其中一些元素set_i</p>
+<p>S中S_i 表示第i个元素首次被选的发生的次数, (不是期望次数, 而是每个具体的结果中的次数)</p>
+<p>E(max(S)) &#x3D; sum ( S中元素被选的次数的最大值 * 这种情况发生的概率) &#x3D; sum ( S中所有被选 * 这种情况发生的概率) &#x3D; S所有被选的期望次数</p>
+<p>E(min(T)) &#x3D; sum ( T中元素被选的次数的最小值 * 这种情况发生的概率) &#x3D; sum ( T中有&gt;&#x3D;1个被选 * 这种情况发生的概率) &#x3D; T中&gt;&#x3D;1个被选的期望次数</p>
+<hr>
+<p>如何计算E(min(T))</p>
+<p>考虑 min(T) &#x3D; t 的概率, 那么就是 t-1次都没有选中T中任何一个, 在t次选中了</p>
+<p>那么令单次 选中的区间和T重叠的概率为p(T) &#x3D; 覆盖了T中任意一个点的线段数&#x2F;总线段数</p>
+<p>$E(min(T)) &#x3D; \sum_{t&#x3D;1}^{\infty} t p (1-p)^{t-1} &#x3D; -p(\sum_{t&#x3D;1}^{\infty} (1-p)^t)’ &#x3D; -p ((1-p)\frac{1}{1-(1-p)})’ &#x3D; -p(\frac{1}{p}-1)’ &#x3D; \frac{1}{p}$</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc242/submissions/35019791">https://atcoder.jp/contests/abc242/submissions/35019791</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line">mint f[<span class="number">410</span>][<span class="number">410</span>]; <span class="comment">// f[i][j] = 前i个,第i个必选, 所选的下标被j个线段覆盖过 的 (方案数 * (-1)^(选点数+1)) 的和</span></span><br><span class="line"><span class="type">int</span> c[<span class="number">410</span>][<span class="number">410</span>]; <span class="comment">// c[i][j] = 覆盖了下标i,但是没有覆盖下标j的区间, (i&gt;j)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>(); <span class="comment">// 400</span></span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>(); <span class="comment">// 400</span></span><br><span class="line">  <span class="built_in">rep</span>(k,<span class="number">0</span>,m) &#123;</span><br><span class="line">    <span class="type">int</span> l = <span class="built_in">read</span>(); <span class="comment">// 下标1-index, 方便直接表示个数 和 0个的表示</span></span><br><span class="line">    <span class="type">int</span> r = <span class="built_in">read</span>();</span><br><span class="line">    <span class="built_in">rep</span>(i,l,r+<span class="number">1</span>) <span class="built_in">rep</span>(j,<span class="number">0</span>,l) c[i][j]++;</span><br><span class="line">  &#125;</span><br><span class="line">  f[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">-1</span>; <span class="comment">// (-1)^(点数+1) = (-1)^(0+1) = -1;</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(j,<span class="number">0</span>,i) <span class="built_in">rep</span>(k,<span class="number">0</span>,m+<span class="number">1</span>) <span class="keyword">if</span>(k+c[i][j] &lt;= m) f[i][k+c[i][j]]-=f[j][k]; <span class="comment">// i选择,j到i之间都没有选,j是上一个选的位置, 增加覆盖i 而未覆盖j的线段数 c[i][j]</span></span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(k,<span class="number">1</span>,m+<span class="number">1</span>) ans+= f[i][k] * m/k; <span class="comment">// E(max(S)) = (-1)^&#123;点数+1&#125; 总线段数/被覆盖数</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F</p>
-<p>G</p>
+<p>dp 应该再多推一下能想到的</p>
+<p>容斥还是不熟, 总是把属性以外的是任意 而不是不选 这一点想错, 另外因为通过容斥, 最后出来的每个元素 都是”需要的”, 所以不要再去判断是否”合法”,而直接是每个的贡献就是了, 感觉又熟悉了一点</p>
 <p>Ex</p>
+<p>感觉最近看了好几个这种 -1 幂次玩抵消的</p>
+<p>算拉通证明了一下min-max容斥,以及在期望中的使用,</p>
+<p>然后这个题, 这里的连续区间似乎并不必要, 可以看 洛谷 P3175 HAOI2015 的那个题目, 就是每次给一组点也是一样的</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc242/editorial">官方题解</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2022-06-05-CF1687/">https://yexiaorain.github.io/Blog/2022-06-05-CF1687/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/command-block/min-max-rong-chi-xiao-ji">luogu command_block min-max 容斥</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/solution/P3175">洛谷 P3175</a></p>
 
     </div>
 
@@ -348,6 +455,14 @@
 </ul>
 </div>
 
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%A6%82%E7%8E%87%E8%AE%BA/" rel="tag"><i class="fa fa-tag"></i> 概率论</a>
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E8%B4%A1%E7%8C%AE%E7%BB%9F%E8%AE%A1/" rel="tag"><i class="fa fa-tag"></i> 贡献统计</a>
+              <a href="/Blog/tags/min-max%E5%AE%B9%E6%96%A5/" rel="tag"><i class="fa fa-tag"></i> min-max容斥</a>
+              <a href="/Blog/tags/%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88/" rel="tag"><i class="fa fa-tag"></i> 排列组合</a>
+              <a href="/Blog/tags/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 容斥原理</a>
+          </div>
 
         
 
@@ -394,13 +509,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="總字數">792k</span>
+    <span title="總字數">797k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">12:01</span>
+    <span title="所需總閱讀時間">12:05</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
