@@ -15459,4 +15459,125 @@
         <tag>容斥原理</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Atcoder abc243</title>
+    <url>/Blog/2022-09-20-ac-abc243/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc243/tasks">https://atcoder.jp/contests/abc243/tasks</a></p>
+<h1 id="Ex-Builder-Takahashi-Enhanced-version"><a href="#Ex-Builder-Takahashi-Enhanced-version" class="headerlink" title="Ex - Builder Takahashi (Enhanced version)"></a>Ex - Builder Takahashi (Enhanced version)</h1><p>3884评分,先跳过</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Ex</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc243/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>TODO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder abc244</title>
+    <url>/Blog/2022-09-21-ac-abc244/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc244/tasks">https://atcoder.jp/contests/abc244/tasks</a></p>
+<h1 id="G-Construct-Good-Path"><a href="#G-Construct-Good-Path" class="headerlink" title="G - Construct Good Path"></a>G - Construct Good Path</h1><p>n点m边 简单无向连通图.</p>
+<p>边长&#x3D;点数</p>
+<p>构造一条 长度小于4N的边, 让点i出现次数%2 &#x3D;&#x3D; s[i]</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e5</p>
+<p>m 1e5</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>说是图, 但是树也是图, 所以树应该也可以, 所以 先从图中随便提出个树再在树上做</p>
+<p>显然树上有个不满足个数的方案</p>
+<p>根到点再返回根, 这样走完所有再决定 根需要奇数次还是偶数次</p>
+<p>但这样搞次数肯定超了</p>
+<p>考虑树上两种,一个是成链,一个是分叉</p>
+<p>链上 a-b-c-d-e-f-g-h</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">abcdefgh</span><br><span class="line">xxxxxxxx</span><br><span class="line">      x</span><br><span class="line">     x</span><br><span class="line">      x</span><br><span class="line">     x</span><br><span class="line">    x  </span><br><span class="line">   x</span><br><span class="line">    x</span><br><span class="line">   x</span><br><span class="line">  x</span><br><span class="line"> x</span><br><span class="line">  x</span><br><span class="line"> x</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
+
+<p>然后是分叉, 考虑分叉&#x3D; 多个链合并起来, 主要关注一下合并处的奇偶</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> a</span><br><span class="line"> b</span><br><span class="line"> c</span><br><span class="line">d f </span><br><span class="line">e g</span><br></pre></td></tr></table></figure>
+
+<p>可以看成<code>a b c d e</code> 和 <code>c f g</code> 两条链</p>
+<p>c的奇偶性 &#x3D; 原来c的奇偶性 + 1(额外链数)</p>
+<p>似乎就没了, 因为新增的链 对 链头的重复可以看成链尾上多一次,这样每个点次数不超过4, 最后判断根要奇还是偶即可</p>
+<p>但是感觉好难写啊</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>反复横跳!!!!</p>
+<p>dfs(u):</p>
+<p><code>u -&gt; dfs(子节点1) -&gt; u -&gt; (如果字节点1不满足奇偶增加 (子节点1-&gt;u) ) -&gt; dfs(子节点2) -&gt; u -&gt; (如果字节点1不满足奇偶增加 (子节点2-&gt;u) ) -&gt; dfs(子节点3) -&gt; u -&gt; (如果字节点1不满足奇偶增加 (子节点3-&gt;u) ) -&gt;</code></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc244/submissions/35031281">https://atcoder.jp/contests/abc244/submissions/35031281</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; G[<span class="number">100010</span>];</span><br><span class="line"><span class="type">char</span> s[<span class="number">100010</span>];</span><br><span class="line"><span class="type">bool</span> vis[<span class="number">100010</span>];</span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> u)</span></span>&#123;</span><br><span class="line">  ans.<span class="built_in">push_back</span>(u);</span><br><span class="line">  s[u]^=<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">  vis[v] = <span class="literal">true</span>;</span><br><span class="line">  <span class="built_in">add</span>(v);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> u : G[v]) <span class="keyword">if</span>(!vis[u]) &#123;</span><br><span class="line">    <span class="built_in">dfs</span>(u);</span><br><span class="line">    <span class="built_in">add</span>(v);</span><br><span class="line">    <span class="keyword">if</span>(s[u] == <span class="number">1</span>)&#123;</span><br><span class="line">      <span class="built_in">add</span>(u);</span><br><span class="line">      <span class="built_in">add</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,m+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> u = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>();</span><br><span class="line">    G[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">    G[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s+<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) s[i] -= <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">dfs</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="comment">// 处理根的奇偶</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(<span class="type">int</span>)ans.<span class="built_in">size</span>() - s[<span class="number">1</span>]);</span><br><span class="line">  <span class="built_in">rep</span>(i,s[<span class="number">1</span>],ans.<span class="built_in">size</span>()) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,ans[i]);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Ex-Linear-Maximization"><a href="#Ex-Linear-Maximization" class="headerlink" title="Ex - Linear Maximization"></a>Ex - Linear Maximization</h1><p>二维平面点集S, 初始空</p>
+<p>q次操作</p>
+<p>每次集合中增加点 (xi,yi), 然后查询S中最大的 (aix+biy)</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>Q 2e5</p>
+<p>xi,yi,ai,bi [-1e9,1e9]</p>
+<p>5s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>什么概念呢, ax+by 最大, 若 b&gt;0, 就是 (a&#x2F;b)x+y 最大 </p>
+<p>就是斜率(a&#x2F;b) 的切线去切这个点, 所以需要维护的是一个所有点的凸包, 再根据斜率需求,决定在哪一段二分乱搞一下? set + lower_bound ?</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">   --</span><br><span class="line">  /  \</span><br><span class="line"> /    \</span><br><span class="line">|      \</span><br><span class="line">|      /</span><br><span class="line"> \    /</span><br><span class="line">  \__/</span><br></pre></td></tr></table></figure>
+
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>这里用 inner product 来解释的, 就是 (A,B) 方向上最远的</p>
+<blockquote>
+<p>如果所有点都不是动态加的,而是固定以后,来求q询问</p>
+</blockquote>
+<p>可见最大值 一定在凸包顶点上, 可以考虑三分</p>
+<blockquote>
+<p>如果点是动态加的</p>
+</blockquote>
+<p>那么就是需要动态维护S的凸包</p>
+<p>需要用平衡二叉搜索树, 比如 <a href="https://gcc.gnu.org/onlinedocs/libstdc++/ext/pb_ds/tree_based_containers.html">__gnu_pbds::tree</a> 可以快速查询第n个是什么</p>
+<blockquote>
+<p>但有不少语言并不像C++ 有这样的库</p>
+</blockquote>
+<p>可以看成 区间查询, 也就是没有点插入, 而是每次查询一个点下标区间中的凸包的一个切线</p>
+<p>而查询的区间, 可以划分成log级别个维护好的区间去做查询</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc244/submissions/35053588">https://atcoder.jp/contests/abc244/submissions/35053588</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> Point = std::pair&lt;ll, ll&gt;;</span><br><span class="line"><span class="type">const</span> ll INF = <span class="number">0x3f3f3f3f3f3f3f3f</span>;</span><br><span class="line"><span class="function">Point <span class="title">sub</span><span class="params">(Point a,Point b)</span></span>&#123; <span class="comment">// return a-b</span></span><br><span class="line">  <span class="keyword">return</span> &#123;a.first-b.first,a.second-b.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">cross</span><span class="params">(Point a, Point b, Point c)</span></span>&#123; <span class="comment">// (a-b) x (c-b)</span></span><br><span class="line">  <span class="keyword">auto</span> [x0,y0] = <span class="built_in">sub</span>(a,b);</span><br><span class="line">  <span class="keyword">auto</span> [x1,y1] = <span class="built_in">sub</span>(c,b);</span><br><span class="line">  <span class="keyword">return</span> x1*y0 -x0*y1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ConvexHull</span>&#123;</span><br><span class="line">  std::vector&lt;Point&gt; lower;</span><br><span class="line">  std::vector&lt;Point&gt; upper;</span><br><span class="line">  <span class="built_in">ConvexHull</span>(Point p): lower&#123;p&#125;, upper&#123;p&#125;&#123;&#125;</span><br><span class="line">  <span class="built_in">ConvexHull</span>(<span class="type">const</span> ConvexHull&amp; a, <span class="type">const</span> ConvexHull&amp; b)&#123; <span class="comment">// 两个凸包合并</span></span><br><span class="line">    &#123;</span><br><span class="line">      std::vector&lt;Point&gt; v; <span class="comment">// 逆时针弧 下凸</span></span><br><span class="line">      std::<span class="built_in">merge</span>(a.lower.<span class="built_in">begin</span>(), a.lower.<span class="built_in">end</span>(), b.lower.<span class="built_in">begin</span>(), b.lower.<span class="built_in">end</span>(), <span class="built_in">back_inserter</span>(v)); <span class="comment">// 本身a,b下标有序, merge 会按pair的比较的排序</span></span><br><span class="line">      <span class="keyword">for</span>(Point p : v)&#123;</span><br><span class="line">        <span class="keyword">while</span>(lower.<span class="built_in">size</span>() &gt;= <span class="number">2</span> &amp;&amp; <span class="built_in">cross</span>(lower.<span class="built_in">rbegin</span>()[<span class="number">1</span>], lower.<span class="built_in">back</span>(), p) &lt;= <span class="number">0</span>) lower.<span class="built_in">pop_back</span>();</span><br><span class="line">        lower.<span class="built_in">push_back</span>(p);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">      std::vector&lt;Point&gt; v; <span class="comment">// 顺时针弧 上凸</span></span><br><span class="line">      std::<span class="built_in">merge</span>(a.upper.<span class="built_in">begin</span>(), a.upper.<span class="built_in">end</span>(), b.upper.<span class="built_in">begin</span>(), b.upper.<span class="built_in">end</span>(), <span class="built_in">back_inserter</span>(v)); <span class="comment">// 本身a,b下标有序, merge 会按pair的比较的排序</span></span><br><span class="line">      <span class="keyword">for</span>(Point p : v)&#123;</span><br><span class="line">        <span class="keyword">while</span>(upper.<span class="built_in">size</span>() &gt;= <span class="number">2</span> &amp;&amp; <span class="built_in">cross</span>(upper.<span class="built_in">rbegin</span>()[<span class="number">1</span>], upper.<span class="built_in">back</span>(), p) &gt;= <span class="number">0</span>) upper.<span class="built_in">pop_back</span>();</span><br><span class="line">        upper.<span class="built_in">push_back</span>(p);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">ll <span class="title">get</span><span class="params">(ll A, ll B)</span> <span class="type">const</span> </span>&#123; <span class="comment">// 凸包中 求 Ax+By 的最大值,  B &gt; 0, max(a/bx+y) 顺时针 上凸, B &lt; 0 min(a/bx+y) 逆时针下凸</span></span><br><span class="line">    <span class="keyword">auto</span>&amp; s = B &lt; <span class="number">0</span> ? lower : upper;</span><br><span class="line">    <span class="keyword">auto</span> f = [&amp;](ll i)&#123; <span class="keyword">return</span> A * s[i].first + B * s[i].second; &#125;;</span><br><span class="line">    ll l = <span class="number">0</span>;</span><br><span class="line">    ll r = s.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(r-l &gt;= <span class="number">3</span>)&#123; <span class="comment">// 3分</span></span><br><span class="line">      ll x1 = (<span class="number">2</span>*l+r)/<span class="number">3</span>;</span><br><span class="line">      ll x2 = (l+<span class="number">2</span>*r)/<span class="number">3</span>;</span><br><span class="line">      ll f1 = <span class="built_in">f</span>(x1);</span><br><span class="line">      ll f2 = <span class="built_in">f</span>(x2);</span><br><span class="line">      <span class="keyword">if</span>(f1 &lt; f2) l = x1;</span><br><span class="line">      <span class="keyword">else</span> r = x2;</span><br><span class="line">    &#125;</span><br><span class="line">    ll ans = -INF;</span><br><span class="line">    <span class="built_in">rep</span>(i,l,r+<span class="number">1</span>) ans = std::<span class="built_in">max</span>(ans, <span class="built_in">f</span>(i));</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ll Q = <span class="built_in">read</span>(); <span class="comment">// 2e5</span></span><br><span class="line">  std::vector&lt;ConvexHull&gt; S;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,Q+<span class="number">1</span>)&#123;</span><br><span class="line">    ll X = <span class="built_in">read</span>();</span><br><span class="line">    ll Y = <span class="built_in">read</span>(); <span class="comment">// + (X,Y)</span></span><br><span class="line">    ll A = <span class="built_in">read</span>(); <span class="comment">//</span></span><br><span class="line">    ll B = <span class="built_in">read</span>(); <span class="comment">// 查询(A,B)</span></span><br><span class="line">    S.<span class="built_in">emplace_back</span>(std::pair&#123;X, Y&#125;);</span><br><span class="line">    <span class="comment">// 最低位 2的幂次 次处理, 其实就是树状数组的想法, 每个位置表示 二进制最低位对应的一断内容,现在直接收集起来</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = i; j%<span class="number">2</span>==<span class="number">0</span>; j/=<span class="number">2</span>)&#123;</span><br><span class="line">      S.<span class="built_in">rbegin</span>()[<span class="number">1</span>] = <span class="built_in">ConvexHull</span>(S.<span class="built_in">rbegin</span>()[<span class="number">1</span>], S.<span class="built_in">back</span>());</span><br><span class="line">      S.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    ll ans = -INF;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; s : S) ans = std::<span class="built_in">max</span>(ans, s.<span class="built_in">get</span>(A, B));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>不会编码.. 不会构造</p>
+<p>Ex</p>
+<p>计算几何没几个会的, 感觉核心问题还是计算集合没写熟悉吧</p>
+<p>哦 原来维护这样的凸包不用去分什么 分割点或者上下部分</p>
+<p>而是直接一个vector维护 一圈凹,一个vector维护一圈凸</p>
+<p>然后两个合并的时候, 就是 先拼起来, 然后凹与凹合并, 凸与凸合并, 也没有去维护头部与后续的关系, 就是虽然每个都不严格, 但是它们的最优 &#x3D; 所求的最优, </p>
+<p>然后因为本身凸包就可能达到n个点, 所以依靠的是树状数组的思想而不是凸包本身,来让复杂度 是 n log n 级别,</p>
+<hr>
+<p>一个更复杂的题 <a href="https://www.luogu.com.cn/problem/P3309">洛谷 P3309 SDOI2014</a></p>
+<p>动态插入点, </p>
+<p>强制在线 动态询问 区间下标[l..r]中的点,中给定斜率下最大值</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc244/editorial">官方题解</a></p>
+<p>pbds(<del>平板电视</del>)</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/extc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> __gnu_pbds;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://en.cppreference.com/w/cpp/iterator/back_inserter">https://en.cppreference.com/w/cpp/iterator/back_inserter</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>树状数组</tag>
+        <tag>计算几何</tag>
+        <tag>构造</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder abc245</title>
+    <url>/Blog/2022-09-22-ac-abc245/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc245/tasks">https://atcoder.jp/contests/abc245/tasks</a></p>
+<h1 id="G"><a href="#G" class="headerlink" title="G -"></a>G -</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>Ex</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc245/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+  </entry>
 </search>

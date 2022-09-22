@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(构造)Ex(计算几何,树状数组)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc244">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/2022-09-21-ac-abc244/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(构造)Ex(计算几何,树状数组)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-09-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-22T17:33:46.287Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="树状数组">
+<meta property="article:tag" content="计算几何">
+<meta property="article:tag" content="构造">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/2022-09-21-ac-abc244/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/2022-09-21-ac-abc244/","path":"2022-09-21-ac-abc244/","title":"Atcoder abc244"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc244 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">186</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">174</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Construct-Good-Path"><span class="nav-number">1.</span> <span class="nav-text">G - Construct Good Path</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-number">1.1.</span> <span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">1.3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-Linear-Maximization"><span class="nav-number">2.</span> <span class="nav-text">Ex - Linear Maximization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-number">2.1.</span> <span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-number">2.2.</span> <span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-number">2.3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">2.4.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">186</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">174</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-09-21-ac-abc244/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc244 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(构造)Ex(计算几何,树状数组)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc244
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-09-21 00:00:00" itemprop="dateCreated datePublished" datetime="2022-09-21T00:00:00+08:00">2022-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-09-23 01:33:46" itemprop="dateModified" datetime="2022-09-23T01:33:46+08:00">2022-09-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2022-09-21-ac-abc244/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-09-21-ac-abc244/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>4.7k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>12 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(构造)Ex(计算几何,树状数组)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc244/tasks">https://atcoder.jp/contests/abc244/tasks</a></p>
+<h1 id="G-Construct-Good-Path"><a href="#G-Construct-Good-Path" class="headerlink" title="G - Construct Good Path"></a>G - Construct Good Path</h1><p>n点m边 简单无向连通图.</p>
+<p>边长&#x3D;点数</p>
+<p>构造一条 长度小于4N的边, 让点i出现次数%2 &#x3D;&#x3D; s[i]</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e5</p>
+<p>m 1e5</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>说是图, 但是树也是图, 所以树应该也可以, 所以 先从图中随便提出个树再在树上做</p>
+<p>显然树上有个不满足个数的方案</p>
+<p>根到点再返回根, 这样走完所有再决定 根需要奇数次还是偶数次</p>
+<p>但这样搞次数肯定超了</p>
+<p>考虑树上两种,一个是成链,一个是分叉</p>
+<p>链上 a-b-c-d-e-f-g-h</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">abcdefgh</span><br><span class="line">xxxxxxxx</span><br><span class="line">      x</span><br><span class="line">     x</span><br><span class="line">      x</span><br><span class="line">     x</span><br><span class="line">    x  </span><br><span class="line">   x</span><br><span class="line">    x</span><br><span class="line">   x</span><br><span class="line">  x</span><br><span class="line"> x</span><br><span class="line">  x</span><br><span class="line"> x</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
+
+<p>然后是分叉, 考虑分叉&#x3D; 多个链合并起来, 主要关注一下合并处的奇偶</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> a</span><br><span class="line"> b</span><br><span class="line"> c</span><br><span class="line">d f </span><br><span class="line">e g</span><br></pre></td></tr></table></figure>
+
+<p>可以看成<code>a b c d e</code> 和 <code>c f g</code> 两条链</p>
+<p>c的奇偶性 &#x3D; 原来c的奇偶性 + 1(额外链数)</p>
+<p>似乎就没了, 因为新增的链 对 链头的重复可以看成链尾上多一次,这样每个点次数不超过4, 最后判断根要奇还是偶即可</p>
+<p>但是感觉好难写啊</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>反复横跳!!!!</p>
+<p>dfs(u):</p>
+<p><code>u -&gt; dfs(子节点1) -&gt; u -&gt; (如果字节点1不满足奇偶增加 (子节点1-&gt;u) ) -&gt; dfs(子节点2) -&gt; u -&gt; (如果字节点1不满足奇偶增加 (子节点2-&gt;u) ) -&gt; dfs(子节点3) -&gt; u -&gt; (如果字节点1不满足奇偶增加 (子节点3-&gt;u) ) -&gt;</code></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc244/submissions/35031281">https://atcoder.jp/contests/abc244/submissions/35031281</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; G[<span class="number">100010</span>];</span><br><span class="line"><span class="type">char</span> s[<span class="number">100010</span>];</span><br><span class="line"><span class="type">bool</span> vis[<span class="number">100010</span>];</span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> u)</span></span>&#123;</span><br><span class="line">  ans.<span class="built_in">push_back</span>(u);</span><br><span class="line">  s[u]^=<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">  vis[v] = <span class="literal">true</span>;</span><br><span class="line">  <span class="built_in">add</span>(v);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> u : G[v]) <span class="keyword">if</span>(!vis[u]) &#123;</span><br><span class="line">    <span class="built_in">dfs</span>(u);</span><br><span class="line">    <span class="built_in">add</span>(v);</span><br><span class="line">    <span class="keyword">if</span>(s[u] == <span class="number">1</span>)&#123;</span><br><span class="line">      <span class="built_in">add</span>(u);</span><br><span class="line">      <span class="built_in">add</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,m+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> u = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>();</span><br><span class="line">    G[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">    G[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s+<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) s[i] -= <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">dfs</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="comment">// 处理根的奇偶</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(<span class="type">int</span>)ans.<span class="built_in">size</span>() - s[<span class="number">1</span>]);</span><br><span class="line">  <span class="built_in">rep</span>(i,s[<span class="number">1</span>],ans.<span class="built_in">size</span>()) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,ans[i]);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Ex-Linear-Maximization"><a href="#Ex-Linear-Maximization" class="headerlink" title="Ex - Linear Maximization"></a>Ex - Linear Maximization</h1><p>二维平面点集S, 初始空</p>
+<p>q次操作</p>
+<p>每次集合中增加点 (xi,yi), 然后查询S中最大的 (aix+biy)</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>Q 2e5</p>
+<p>xi,yi,ai,bi [-1e9,1e9]</p>
+<p>5s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>什么概念呢, ax+by 最大, 若 b&gt;0, 就是 (a&#x2F;b)x+y 最大 </p>
+<p>就是斜率(a&#x2F;b) 的切线去切这个点, 所以需要维护的是一个所有点的凸包, 再根据斜率需求,决定在哪一段二分乱搞一下? set + lower_bound ?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">   --</span><br><span class="line">  /  \</span><br><span class="line"> /    \</span><br><span class="line">|      \</span><br><span class="line">|      /</span><br><span class="line"> \    /</span><br><span class="line">  \__/</span><br></pre></td></tr></table></figure>
+
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>这里用 inner product 来解释的, 就是 (A,B) 方向上最远的</p>
+<blockquote>
+<p>如果所有点都不是动态加的,而是固定以后,来求q询问</p>
+</blockquote>
+<p>可见最大值 一定在凸包顶点上, 可以考虑三分</p>
+<blockquote>
+<p>如果点是动态加的</p>
+</blockquote>
+<p>那么就是需要动态维护S的凸包</p>
+<p>需要用平衡二叉搜索树, 比如 <a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/libstdc++/ext/pb_ds/tree_based_containers.html">__gnu_pbds::tree</a> 可以快速查询第n个是什么</p>
+<blockquote>
+<p>但有不少语言并不像C++ 有这样的库</p>
+</blockquote>
+<p>可以看成 区间查询, 也就是没有点插入, 而是每次查询一个点下标区间中的凸包的一个切线</p>
+<p>而查询的区间, 可以划分成log级别个维护好的区间去做查询</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc244/submissions/35053588">https://atcoder.jp/contests/abc244/submissions/35053588</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> Point = std::pair&lt;ll, ll&gt;;</span><br><span class="line"><span class="type">const</span> ll INF = <span class="number">0x3f3f3f3f3f3f3f3f</span>;</span><br><span class="line"><span class="function">Point <span class="title">sub</span><span class="params">(Point a,Point b)</span></span>&#123; <span class="comment">// return a-b</span></span><br><span class="line">  <span class="keyword">return</span> &#123;a.first-b.first,a.second-b.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">cross</span><span class="params">(Point a, Point b, Point c)</span></span>&#123; <span class="comment">// (a-b) x (c-b)</span></span><br><span class="line">  <span class="keyword">auto</span> [x0,y0] = <span class="built_in">sub</span>(a,b);</span><br><span class="line">  <span class="keyword">auto</span> [x1,y1] = <span class="built_in">sub</span>(c,b);</span><br><span class="line">  <span class="keyword">return</span> x1*y0 -x0*y1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ConvexHull</span>&#123;</span><br><span class="line">  std::vector&lt;Point&gt; lower;</span><br><span class="line">  std::vector&lt;Point&gt; upper;</span><br><span class="line">  <span class="built_in">ConvexHull</span>(Point p): lower&#123;p&#125;, upper&#123;p&#125;&#123;&#125;</span><br><span class="line">  <span class="built_in">ConvexHull</span>(<span class="type">const</span> ConvexHull&amp; a, <span class="type">const</span> ConvexHull&amp; b)&#123; <span class="comment">// 两个凸包合并</span></span><br><span class="line">    &#123;</span><br><span class="line">      std::vector&lt;Point&gt; v; <span class="comment">// 逆时针弧 下凸</span></span><br><span class="line">      std::<span class="built_in">merge</span>(a.lower.<span class="built_in">begin</span>(), a.lower.<span class="built_in">end</span>(), b.lower.<span class="built_in">begin</span>(), b.lower.<span class="built_in">end</span>(), <span class="built_in">back_inserter</span>(v)); <span class="comment">// 本身a,b下标有序, merge 会按pair的比较的排序</span></span><br><span class="line">      <span class="keyword">for</span>(Point p : v)&#123;</span><br><span class="line">        <span class="keyword">while</span>(lower.<span class="built_in">size</span>() &gt;= <span class="number">2</span> &amp;&amp; <span class="built_in">cross</span>(lower.<span class="built_in">rbegin</span>()[<span class="number">1</span>], lower.<span class="built_in">back</span>(), p) &lt;= <span class="number">0</span>) lower.<span class="built_in">pop_back</span>();</span><br><span class="line">        lower.<span class="built_in">push_back</span>(p);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">      std::vector&lt;Point&gt; v; <span class="comment">// 顺时针弧 上凸</span></span><br><span class="line">      std::<span class="built_in">merge</span>(a.upper.<span class="built_in">begin</span>(), a.upper.<span class="built_in">end</span>(), b.upper.<span class="built_in">begin</span>(), b.upper.<span class="built_in">end</span>(), <span class="built_in">back_inserter</span>(v)); <span class="comment">// 本身a,b下标有序, merge 会按pair的比较的排序</span></span><br><span class="line">      <span class="keyword">for</span>(Point p : v)&#123;</span><br><span class="line">        <span class="keyword">while</span>(upper.<span class="built_in">size</span>() &gt;= <span class="number">2</span> &amp;&amp; <span class="built_in">cross</span>(upper.<span class="built_in">rbegin</span>()[<span class="number">1</span>], upper.<span class="built_in">back</span>(), p) &gt;= <span class="number">0</span>) upper.<span class="built_in">pop_back</span>();</span><br><span class="line">        upper.<span class="built_in">push_back</span>(p);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">ll <span class="title">get</span><span class="params">(ll A, ll B)</span> <span class="type">const</span> </span>&#123; <span class="comment">// 凸包中 求 Ax+By 的最大值,  B &gt; 0, max(a/bx+y) 顺时针 上凸, B &lt; 0 min(a/bx+y) 逆时针下凸</span></span><br><span class="line">    <span class="keyword">auto</span>&amp; s = B &lt; <span class="number">0</span> ? lower : upper;</span><br><span class="line">    <span class="keyword">auto</span> f = [&amp;](ll i)&#123; <span class="keyword">return</span> A * s[i].first + B * s[i].second; &#125;;</span><br><span class="line">    ll l = <span class="number">0</span>;</span><br><span class="line">    ll r = s.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(r-l &gt;= <span class="number">3</span>)&#123; <span class="comment">// 3分</span></span><br><span class="line">      ll x1 = (<span class="number">2</span>*l+r)/<span class="number">3</span>;</span><br><span class="line">      ll x2 = (l+<span class="number">2</span>*r)/<span class="number">3</span>;</span><br><span class="line">      ll f1 = <span class="built_in">f</span>(x1);</span><br><span class="line">      ll f2 = <span class="built_in">f</span>(x2);</span><br><span class="line">      <span class="keyword">if</span>(f1 &lt; f2) l = x1;</span><br><span class="line">      <span class="keyword">else</span> r = x2;</span><br><span class="line">    &#125;</span><br><span class="line">    ll ans = -INF;</span><br><span class="line">    <span class="built_in">rep</span>(i,l,r+<span class="number">1</span>) ans = std::<span class="built_in">max</span>(ans, <span class="built_in">f</span>(i));</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ll Q = <span class="built_in">read</span>(); <span class="comment">// 2e5</span></span><br><span class="line">  std::vector&lt;ConvexHull&gt; S;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,Q+<span class="number">1</span>)&#123;</span><br><span class="line">    ll X = <span class="built_in">read</span>();</span><br><span class="line">    ll Y = <span class="built_in">read</span>(); <span class="comment">// + (X,Y)</span></span><br><span class="line">    ll A = <span class="built_in">read</span>(); <span class="comment">//</span></span><br><span class="line">    ll B = <span class="built_in">read</span>(); <span class="comment">// 查询(A,B)</span></span><br><span class="line">    S.<span class="built_in">emplace_back</span>(std::pair&#123;X, Y&#125;);</span><br><span class="line">    <span class="comment">// 最低位 2的幂次 次处理, 其实就是树状数组的想法, 每个位置表示 二进制最低位对应的一断内容,现在直接收集起来</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = i; j%<span class="number">2</span>==<span class="number">0</span>; j/=<span class="number">2</span>)&#123;</span><br><span class="line">      S.<span class="built_in">rbegin</span>()[<span class="number">1</span>] = <span class="built_in">ConvexHull</span>(S.<span class="built_in">rbegin</span>()[<span class="number">1</span>], S.<span class="built_in">back</span>());</span><br><span class="line">      S.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    ll ans = -INF;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; s : S) ans = std::<span class="built_in">max</span>(ans, s.<span class="built_in">get</span>(A, B));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>不会编码.. 不会构造</p>
+<p>Ex</p>
+<p>计算几何没几个会的, 感觉核心问题还是计算集合没写熟悉吧</p>
+<p>哦 原来维护这样的凸包不用去分什么 分割点或者上下部分</p>
+<p>而是直接一个vector维护 一圈凹,一个vector维护一圈凸</p>
+<p>然后两个合并的时候, 就是 先拼起来, 然后凹与凹合并, 凸与凸合并, 也没有去维护头部与后续的关系, 就是虽然每个都不严格, 但是它们的最优 &#x3D; 所求的最优, </p>
+<p>然后因为本身凸包就可能达到n个点, 所以依靠的是树状数组的思想而不是凸包本身,来让复杂度 是 n log n 级别,</p>
+<hr>
+<p>一个更复杂的题 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3309">洛谷 P3309 SDOI2014</a></p>
+<p>动态插入点, </p>
+<p>强制在线 动态询问 区间下标[l..r]中的点,中给定斜率下最大值</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc244/editorial">官方题解</a></p>
+<p>pbds(<del>平板电视</del>)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/extc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> __gnu_pbds;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/iterator/back_inserter">https://en.cppreference.com/w/cpp/iterator/back_inserter</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/2022-09-21-ac-abc244/" title="Atcoder abc244">https://yexiaorain.github.io/Blog/2022-09-21-ac-abc244/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 树状数组</a>
+              <a href="/Blog/tags/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/" rel="tag"><i class="fa fa-tag"></i> 计算几何</a>
+              <a href="/Blog/tags/%E6%9E%84%E9%80%A0/" rel="tag"><i class="fa fa-tag"></i> 构造</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2022-09-20-ac-abc243/" rel="prev" title="Atcoder abc243">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc243
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/2022-09-22-ac-abc245/" rel="next" title="Atcoder abc245">
+                  Atcoder abc245 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">802k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">33:25</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/2022-09-21-ac-abc244/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
