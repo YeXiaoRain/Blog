@@ -1898,6 +1898,7 @@
       </categories>
       <tags>
         <tag>DP</tag>
+        <tag>dijkstra</tag>
       </tags>
   </entry>
   <entry>
@@ -3727,6 +3728,7 @@
         <category>Codeforces</category>
       </categories>
       <tags>
+        <tag>dijkstra</tag>
         <tag>bfs</tag>
       </tags>
   </entry>
@@ -9348,6 +9350,7 @@
         <tag>数学</tag>
         <tag>树状数组</tag>
         <tag>DP</tag>
+        <tag>dijkstra</tag>
         <tag>贪心</tag>
         <tag>贡献统计</tag>
         <tag>0/1串</tag>
@@ -11266,9 +11269,9 @@
       <tags>
         <tag>图</tag>
         <tag>DP</tag>
+        <tag>dijkstra</tag>
         <tag>字符串</tag>
         <tag>拓扑排序</tag>
-        <tag>dijkstra</tag>
         <tag>拆点</tag>
       </tags>
   </entry>
@@ -14274,6 +14277,7 @@
       </categories>
       <tags>
         <tag>数学</tag>
+        <tag>dijkstra</tag>
         <tag>图论</tag>
         <tag>构造</tag>
       </tags>
@@ -15571,7 +15575,30 @@
     <title>Atcoder abc245</title>
     <url>/Blog/2022-09-22-ac-abc245/</url>
     <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc245/tasks">https://atcoder.jp/contests/abc245/tasks</a></p>
-<h1 id="G"><a href="#G" class="headerlink" title="G -"></a>G -</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<h1 id="G-Foreign-Friends"><a href="#G-Foreign-Friends" class="headerlink" title="G - Foreign Friends"></a>G - Foreign Friends</h1><p>N个点, 第i个人颜色是Ki</p>
+<p>其中一些点是好的点</p>
+<p>初始没有边</p>
+<p>有m个可选边, 第i个可以花费 Ci 让ui和vi连一条边(无重边自环)</p>
+<p>对于每个点, 独立的求最小代价 让它和一个异色好点连通, 或报告不可能</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>N 1e5</p>
+<p>M 1e5</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>既然是每个到异色好点最短距离, 那么路径上一定都是同色或非好点</p>
+<p>目前思路是 按一个颜色的个数能不能根号分治</p>
+<p>另一个是记录到每个点最小代价不同色的两个最近点</p>
+<p>考虑用Floyd+提前退出? 问题是 时间复杂度怎么估计和保证</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>如果 忽略颜色</p>
+<p>多源的好点做dij, 然后 每个点取最小, 然而这个肯定TLE</p>
+<p>但如果增加一个点S, 然后它到所有好点距离都是0(单向边!), 那么就可以单源最短路在范围内了</p>
+<hr>
+<p>再考虑颜色不同的限制</p>
+<p>如果暴力,就是把上面的最短距离多一个维度 [首个好点的颜色], 然而这样也是复杂度超了</p>
+<p>注意到, 第三小的颜色的距离永远不对答案有贡献, 所以只用记录最小的两个不同, (这个我倒是想到了)</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc245/submissions/35054327">https://atcoder.jp/contests/abc245/submissions/35054327</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="type">const</span> ll INF = <span class="number">0x3f3f3f3f3f3f3f3f</span>;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">using</span> minPQ = priority_queue&lt;T,vector&lt;T&gt;, greater&lt;T&gt;&gt;; <span class="comment">// 小根堆</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>(); <span class="comment">// 1e5, 0-index</span></span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> k = <span class="built_in">read</span>(); <span class="comment">// 颜色</span></span><br><span class="line">  <span class="type">int</span> l = <span class="built_in">read</span>(); <span class="comment">// 好点</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">a</span>(n); <span class="comment">// 颜色</span></span><br><span class="line">  vector&lt;vector&lt;pair&lt;<span class="type">int</span>, ll&gt; &gt; &gt;<span class="built_in">e</span>(n); <span class="comment">// e[u] = &#123;v, cost&#125;</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">used</span>(n, <span class="number">0</span>); <span class="comment">// 0 未访问, &gt; 0 上一个访问的颜色, =-1 已经两个颜色访问了</span></span><br><span class="line">  <span class="keyword">auto</span> d2 = <span class="built_in">vector</span>(n,<span class="built_in">map</span>&lt;<span class="type">int</span>,ll&gt;()); <span class="comment">// [u][color] = dis;</span></span><br><span class="line">  minPQ&lt;tuple&lt;ll, <span class="type">int</span>, <span class="type">int</span>&gt; &gt;pq; <span class="comment">// 小根堆 &#123; 距离, 点, 起始好点的颜色 &#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i] = <span class="built_in">read</span>(); <span class="comment">// 颜色</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,l) &#123; <span class="comment">// 好点</span></span><br><span class="line">    <span class="type">int</span> u = <span class="built_in">read</span>() - <span class="number">1</span>;</span><br><span class="line">    pq.<span class="built_in">push</span>(&#123;<span class="number">0</span>,u,a[u]&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m) &#123;</span><br><span class="line">    <span class="type">int</span> u = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> c = <span class="built_in">read</span>(); <span class="comment">// 颜色1-index, 0 表示未确定</span></span><br><span class="line">    e[u].<span class="built_in">push_back</span>(&#123;v,c&#125;);</span><br><span class="line">    e[v].<span class="built_in">push_back</span>(&#123;u,c&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (!pq.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">    <span class="keyword">auto</span> [dis,u,c] = pq.<span class="built_in">top</span>();</span><br><span class="line">    pq.<span class="built_in">pop</span>();</span><br><span class="line">    <span class="keyword">if</span>(d2[u].<span class="built_in">count</span>(c) || d2[u].<span class="built_in">size</span>() == <span class="number">2</span>)<span class="keyword">continue</span>; <span class="comment">// 没有更新</span></span><br><span class="line">    d2[u][c] = dis;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [v,len]:e[u]) pq.<span class="built_in">push</span>(&#123;dis+len, v, c&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(u,<span class="number">0</span>,n) &#123;</span><br><span class="line">    ll dis = INF;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [c,d]:d2[u]) <span class="keyword">if</span>(c != a[u]) dis=<span class="built_in">min</span>(dis,d);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld%c&quot;</span>,dis == INF?<span class="number">-1</span>:dis,<span class="string">&quot; \n&quot;</span>[u==n<span class="number">-1</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Product-Modulo-2"><a href="#Ex-Product-Modulo-2" class="headerlink" title="Ex - Product Modulo 2"></a>Ex - Product Modulo 2</h1><p>长k的序列, 求满足要求的序列的个数mod 998244353</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>第二次遇到 dij 中使用长0的边!!!, 第三大的颜色不会贡献 倒是我自己能想到</p>
 <p>Ex</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc245/editorial">官方题解</a></p>
 ]]></content>
@@ -15579,5 +15606,8 @@
         <category>Atcoder</category>
         <category>ABC</category>
       </categories>
+      <tags>
+        <tag>dijkstra</tag>
+      </tags>
   </entry>
 </search>
