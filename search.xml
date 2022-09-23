@@ -15586,6 +15586,8 @@
 <p>目前思路是 按一个颜色的个数能不能根号分治</p>
 <p>另一个是记录到每个点最小代价不同色的两个最近点</p>
 <p>考虑用Floyd+提前退出? 问题是 时间复杂度怎么估计和保证</p>
+<span id="more"></span>
+
 <h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>如果 忽略颜色</p>
 <p>多源的好点做dij, 然后 每个点取最小, 然而这个肯定TLE</p>
 <p>但如果增加一个点S, 然后它到所有好点距离都是0(单向边!), 那么就可以单源最短路在范围内了</p>
@@ -15692,6 +15694,129 @@
         <tag>数论</tag>
         <tag>矩阵快速幂</tag>
         <tag>中国剩余定理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder abc246</title>
+    <url>/Blog/2022-09-23-ac-abc246/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc246/tasks">https://atcoder.jp/contests/abc246/tasks</a></p>
+<h1 id="G-Game-on-Tree-3"><a href="#G-Game-on-Tree-3" class="headerlink" title="G - Game on Tree 3"></a>G - Game on Tree 3</h1><p>n点,1为根的树</p>
+<p>除了根,点i上面还有值Ai</p>
+<p>棋子初始在1</p>
+<ol>
+<li>乙 选一个非根点,修改值Ai &#x3D; 0</li>
+<li>甲 把棋子移动到当前所在的一个子节点上, 随时可以结束游戏</li>
+</ol>
+<p>移动到叶子后结束</p>
+<p>分数&#x3D;结束游戏时棋子所在位置的值</p>
+<p>甲要让分尽量大, 乙要让分尽量小</p>
+<p>求分</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>ai 1e9</p>
+<p>6s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>一眼感觉树上dp, 因为乙要让分尽量小, 所以每次乙一定操作的是当前所在的剩余树上的点</p>
+<p>但感觉不一定操作最近的</p>
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">         0</span><br><span class="line">   1         1 </span><br><span class="line">100 100     100</span><br></pre></td></tr></table></figure>
+
+<p>那么,最大答案是1, 乙第一次移动的是左边某个叶子的100, 因为如果不是这样, 那么甲向左走,可以得到&gt;&#x3D;100 &gt; 1</p>
+<hr>
+<p>没啥想法对于局部性, <code>dp[i][j] = </code>点i为根的树已经删了j个点后剩余能得到的最大值, 但转移和范围 感觉都没想法</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>如果能判断 T能否得分 &gt;&#x3D; X, 那么就可以二分</p>
+<p>(我有想过这样二分, 但是感觉上, 判大于 我的思路也和直接算的思路一样, 没有啥额外想法)</p>
+<p>对于给定X, 考虑把树上 $\ge X$染黑, $&lt; X$染白, </p>
+<ol>
+<li>如果走到黑色,则甲胜利</li>
+<li>乙把一个黑涂白</li>
+<li>甲移动一次</li>
+</ol>
+<p>然后证明, 和总和是等价的</p>
+<p>???, 下面这样最大不是101吗?</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">   1         1</span><br><span class="line">100  100 100   100</span><br></pre></td></tr></table></figure>
+
+<p>艹 我读错题目了, 分数&#x3D;最后停留位置的分数,不是和, 甲可以在中途结束游戏</p>
+<hr>
+<p>那么 其实这个二分+染色就显然了</p>
+<p>然后就树上DP</p>
+<p><code>dp[u]</code> &#x3D; 以<code>u</code>为根, 最少需要<code>预先删除</code>的点的个数, 能让<code>乙</code>赢!</p>
+<p>所以<code>乙</code>胜利的条件就是<code>dp[1] = 0</code></p>
+<p>假设k 有k个子节点v1,v2,…,vk</p>
+<p>推<code>dp[u]</code> 和子节点<code>dp[vi]</code>的关系</p>
+<p>显然 <code>dp[u] = max(0, sum(dp[vi]) - 1) + color[u]</code></p>
+<p>首先u是黑色,则一定要删除</p>
+<p>然后如果有多于1个子节点预删除的个数不满足,那么这次处理后,一定有一个不满足的路径去走, 所以至多有一个子树的预删除少1个,</p>
+<p>然后就没了</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc246/submissions/35075031">https://atcoder.jp/contests/abc246/submissions/35075031</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n)for(int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">2e5</span>;</span><br><span class="line"><span class="type">int</span> a[N+<span class="number">10</span>];</span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt;g[N+<span class="number">10</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> fa,<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> s=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:g[u])<span class="keyword">if</span>(v!=fa)s+=<span class="built_in">dfs</span>(v,u,x);</span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">max</span>(s<span class="number">-1</span>,<span class="number">0</span>)+(a[u]&gt;=x);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)a[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(_,<span class="number">1</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> u=<span class="built_in">read</span>()<span class="number">-1</span>;<span class="comment">//0-index</span></span><br><span class="line">    <span class="type">int</span> v=<span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    g[u ].<span class="built_in">push_back</span>(v);</span><br><span class="line">    g[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> l=<span class="number">0</span>,r=<span class="number">1000000001</span>; <span class="comment">// l Takahashi win, r lose</span></span><br><span class="line">  <span class="keyword">while</span>(r-l&gt;<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> mid=(l+r)/<span class="number">2</span>;</span><br><span class="line">    (<span class="built_in">dfs</span>(<span class="number">0</span>,<span class="number">-1</span>,mid)?l:r)=mid;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,l);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-01-Queries"><a href="#Ex-01-Queries" class="headerlink" title="Ex - 01? Queries"></a>Ex - 01? Queries</h1><p>长N的<code>01</code>字符串S, 包含<code>?</code></p>
+<p>Q个询问,</p>
+<ol>
+<li>赋值 S[xi] &#x3D; ci</li>
+<li>S能形成的非连续子序列的种数,(所有<code>?</code>独立的考虑替换成0或1), mod 998244353</li>
+</ol>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n,q 1e5</p>
+<p>ci, <code>0</code>,<code>1</code>,<code>?</code></p>
+<p>6s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然不考虑动态变化</p>
+<p>先考虑如果一个给定的s,如何计算</p>
+<p>如果<code>?</code>  有k个,那么长k的所有串都能得到, 但是这样和0,1不好组合</p>
+<p>从dp角度</p>
+<p><code>dp[i][0/1]</code> 表示 以i结尾,且<code>s[i]==0/1</code>的方案数</p>
+<p>注意去重, 任意一个字符串能表示, 如果它结尾是1, 那么它的被统计次数应该被记录在当前最后一个1出现的位置, 如果结尾是0,也是被统计在最后一个0出现的位置, 所以</p>
+<p><code>ans = dp[最后一个1][1] + dp[最后一个0][0]</code></p>
+<p>转移<code>dp[i][1] = ???</code></p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>还是先考虑固定的字符串</p>
+<p><code>f[i][0/1]</code>  表示前i个, 结尾是<code>0/1</code>的子序列数量, <code>ans = f[n][1]+f[n][0]</code></p>
+<p><code>s[i] != 1</code> : <code>f[i][0] = f[i-1][0] + (f[i-1][1]+1)</code></p>
+<p><code>s[i] == 1</code> : <code>f[i][0] = f[i-1][0]</code></p>
+<p><code>s[i] != 0</code>:<code>f[i][1] = f[i-1][1] + (f[i-1][0]+1)</code></p>
+<p><code>s[i] == 0</code>:<code>f[i][1] = f[i-1][1]</code></p>
+<hr>
+<p>1 时的0转移,和0时的1转移很好解释, 因为不会产生新的对应结尾的</p>
+<p>但是<code>0</code>时的<code>0</code>转移没有那么显然</p>
+<p>比如<code>100</code></p>
+<p><code>dp[1][1] = 1</code>, 有<code>1</code></p>
+<p><code>dp[1][0] = 2</code> 有<code>10</code>,<code>0</code></p>
+<p><code>dp[2][0] = 2 + (1+1) = 4</code>, 有<code>0</code>,<code>00</code>,<code>10</code>,<code>100</code>,</p>
+<p>问题在于, 那些 前<code>i</code>个不能产生,但是拼上<code>0</code>以后可以产生的字符串</p>
+<p>考虑计数: 前i个产生字符串,再拼接上一个0 , <code>= (dp[i][0]+dp[i][1])+1</code>, 这个1表示空字符串拼上0</p>
+<p>去掉已经出现的<code>dp[i][0]</code> 个</p>
+<p>剩下的就是没有出现过的,<code>((dp[i][0]+dp[i][1])+1 - dp[i][0]) = (dp[i][1]+1) </code></p>
+<p>得证</p>
+<hr>
+<p>因此问题变成 线性转移, 啊不就是矩阵</p>
+<p><code>(dp[i][0] &amp; dp[i][1] &amp; 1)</code> * 转移矩阵</p>
+<p>不就是区间查询,区间修改,</p>
+<p>线段树之类维护一下就好了</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc246/submissions/35076203">https://atcoder.jp/contests/abc246/submissions/35076203</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_ROOT 1,0,n-1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_L (o&lt;&lt;1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_R (o&lt;&lt;1|1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mid (l+r)/2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_L_CHILD SEG_L,l,mid</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_R_CHILD SEG_R,mid+1,r</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function">T <span class="title">mul</span><span class="params">(<span class="type">const</span> T&amp;a,<span class="type">const</span> T&amp;b)</span></span>&#123;</span><br><span class="line">  T r = <span class="built_in">vector</span>(a.<span class="built_in">size</span>(),<span class="built_in">vector</span>&lt;mint&gt;(b[<span class="number">0</span>].<span class="built_in">size</span>(),<span class="number">0</span>));</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,a.<span class="built_in">size</span>())<span class="built_in">rep</span>(j,<span class="number">0</span>,b[<span class="number">0</span>].<span class="built_in">size</span>())<span class="built_in">rep</span>(k,<span class="number">0</span>,a[<span class="number">0</span>].<span class="built_in">size</span>()) r[i][j]+=a[i][k]*b[k][j];</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span>;</span><br><span class="line">vector&lt;vector&lt;mint&gt; &gt; t[N*<span class="number">4</span>+<span class="number">10</span>];</span><br><span class="line"><span class="type">char</span> s[N+<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span> c2i[<span class="number">256</span>];</span><br><span class="line">vector&lt;vector&lt;mint&gt; &gt; m[<span class="number">3</span>] = &#123;</span><br><span class="line">  &#123; <span class="comment">// 0</span></span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>&#125;</span><br><span class="line">  &#125;,&#123; <span class="comment">// 1</span></span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>&#125;</span><br><span class="line">  &#125;,&#123; <span class="comment">// ?</span></span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;vector&lt;mint&gt;&gt; <span class="built_in">build</span>(<span class="type">int</span> o,<span class="type">int</span> l, <span class="type">int</span> r) &#123;</span><br><span class="line">  <span class="keyword">if</span> (l == r) <span class="keyword">return</span> t[o] = m[c2i[(<span class="type">int</span>)s[l]]];</span><br><span class="line">  <span class="keyword">return</span> t[o] = <span class="built_in">mul</span>(<span class="built_in">build</span>(SEG_L_CHILD),<span class="built_in">build</span>(SEG_R_CHILD));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;vector&lt;mint&gt;&gt; <span class="built_in">update</span>(<span class="type">int</span> o, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> x, <span class="type">char</span> c) &#123;</span><br><span class="line">  <span class="keyword">if</span> (l == r) <span class="keyword">return</span> t[o] = m[c2i[(<span class="type">int</span>)c]];</span><br><span class="line">  <span class="keyword">if</span> (x &lt;= mid) <span class="keyword">return</span> t[o] = <span class="built_in">mul</span>(<span class="built_in">update</span>(SEG_L_CHILD,x,c),t[SEG_R]);</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> t[o] = <span class="built_in">mul</span>(t[SEG_L],<span class="built_in">update</span>(SEG_R_CHILD,x,c));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  vector&lt;vector&lt;mint&gt;&gt; pre = &#123;&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;&#125;;</span><br><span class="line">  vector&lt;vector&lt;mint&gt;&gt; suf = &#123;&#123;<span class="number">1</span>&#125;,&#123;<span class="number">1</span>&#125;,&#123;<span class="number">0</span>&#125;&#125;;</span><br><span class="line">  c2i[(<span class="type">int</span>)<span class="string">&#x27;0&#x27;</span>] = <span class="number">0</span>;</span><br><span class="line">  c2i[(<span class="type">int</span>)<span class="string">&#x27;1&#x27;</span>] = <span class="number">1</span>;</span><br><span class="line">  c2i[(<span class="type">int</span>)<span class="string">&#x27;?&#x27;</span>] = <span class="number">2</span>;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> q = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s);</span><br><span class="line">  <span class="built_in">build</span>(SEG_ROOT);</span><br><span class="line">  <span class="keyword">while</span> (q--) &#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">char</span> ch[<span class="number">3</span>];</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,ch);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">mul</span>(<span class="built_in">mul</span>(pre,<span class="built_in">update</span>(SEG_ROOT,x,ch[<span class="number">0</span>])),suf)[<span class="number">0</span>][<span class="number">0</span>].<span class="built_in">val</span>());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>读错题了</p>
+<p>但这样的话二分变黑白就很明显了, 然后就是树形dp, 但这个状态我是没想到的</p>
+<p>Ex</p>
+<p>我的dp还是 菜,完全不会, 这个递推表达式把我看楞了, 就是不知道怎么计算非重复的部分的个数</p>
+<p>反而后面线段树+矩阵倒是很熟了</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc246/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>线段树</tag>
+        <tag>DP</tag>
+        <tag>矩阵</tag>
+        <tag>二分</tag>
+        <tag>博弈论</tag>
+        <tag>树形DP</tag>
       </tags>
   </entry>
 </search>
