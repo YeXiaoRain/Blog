@@ -13815,6 +13815,249 @@
       </tags>
   </entry>
   <entry>
+    <title>Atcoder abc230</title>
+    <url>/Blog/2022-09-01-ac-abc230/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc230/tasks">https://atcoder.jp/contests/abc230/tasks</a></p>
+<h1 id="G-GCD-Permutation"><a href="#G-GCD-Permutation" class="headerlink" title="G - GCD Permutation"></a>G - GCD Permutation</h1><p>给一个1~N的排列p</p>
+<p>问有多少个有序对 (i,j), (i&lt;&#x3D;j), 满足 gcd(i,j) !&#x3D; 1, gcd(p[i],p[j]) !&#x3D; 1</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>5s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>有点想暴力 然后证明复杂度?</p>
+<p>对于 (i,Pi), 取两个中较小的一个, 找所有包含它下标的, 用较大的去验证gcd</p>
+<p>最多有6个不同质数因子, 最坏情况 1&#x2F;2+1&#x2F;3+1&#x2F;5+1&#x2F;7+1&#x2F;11+1&#x2F;13 &#x3D; 1.3左右</p>
+<p>所以最坏情况是 找n个坐标</p>
+<p>先写个代码再说</p>
+<p><a href="https://atcoder.jp/contests/abc230/submissions/34500571">https://atcoder.jp/contests/abc230/submissions/34500571</a></p>
+<hr>
+<p>显然 有很多是2 的倍数的,它们如果每个都会去访问n&#x2F;2, 那么已经就是n^2了, 肯定会超时</p>
+<hr>
+<p>想法就是 如果 (2的倍数,3的倍数) 之类做容斥? 但是我容斥完全不会</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>$\tilde{\mu}(n)&#x3D; 1,-1,0$</p>
+<p>1: 当n为奇数个不同的质数乘积</p>
+<p>-1: 当n为偶数个不同的质数乘积</p>
+<p>0: 其它</p>
+<p>相当于 Möbius函数 取相反数,且 $\mu(1) &#x3D; 0$</p>
+<p>那么满足 $\sum_{d|n} \tilde{\mu}(d)&#x3D;<br>\begin{cases}<br>0 &amp; (\text{if }n&#x3D;1)  \\<br>1 &amp; (\text{if }n\geq 2)<br>\end{cases}$</p>
+<p>这和Möbius函数 很像, <code>和= 1-Möbius的和</code></p>
+<hr>
+<p>定义函数</p>
+<p>$f(a,b;i,j) &#x3D; 1&#x2F;0$, 表示 i,j是a的倍数且 pi,pj 是b的倍数</p>
+<p>对于和$S&#x3D;\sum_{1\leq i\leq j\leq N} \sum_{a&#x3D;1}^N \sum_{b&#x3D;1}^N  \tilde{\mu}(a) \tilde{\mu}(b)f(a,b;i,j).$</p>
+<p>对于给定的$(i,j)$ 令$g&#x3D;GCD(i,j),g’&#x3D;GCD(p_i,p_j)$</p>
+<p>考虑右侧f要为1, 那么需要同时a是g的约数,b是g’的约数</p>
+<p>$\sum_{1\leq i\leq j\leq N} \sum_{a&#x3D;1}^N \sum_{b&#x3D;1}^N  \tilde{\mu}(a) \tilde{\mu}(b)f(a,b;i,j) &#x3D; \sum_{1\leq i\leq j\leq N} \sum_{a|g} \sum_{b|g’}  \tilde{\mu}(a) \tilde{\mu}(b)$</p>
+<p>$&#x3D; \sum_{1\leq i\leq j\leq N} \sum_{a|g} \tilde{\mu}(a) \sum_{b|g’}  \tilde{\mu}(b)$</p>
+<p>所以考虑右侧, 只要g,g’ 同时大于等于2,则为1, 否则为0</p>
+<p>$&#x3D; \sum_{1\leq i\leq j\leq N} (g \ge 2 , g’ \ge 2)$, 这里证明了和原题意等价, 因此S就是要求的答案</p>
+<hr>
+<p>令$num(a,b) &#x3D; (a|i,b|p_i)$ 的个数</p>
+<p>对于给定$(a,b)$ 有 $\sum_{1\le i\le j\le N}f(a,b;i,j)&#x3D;\frac{num(a,b)(num(a,b)+1)}{2}$, 相当于找出所有满足$(a|i,b|p_i)$ 的然后组成顺序对</p>
+<p>因此又有$S&#x3D;\sum_{a&#x3D;1}^N \sum_{b&#x3D;1}^N  \tilde{\mu}(a) \tilde{\mu}(b)<br>\frac{num(a,b)(num(a,b)+1)}{2}.$</p>
+<p>这样你可以计算S了, 虽然是N^2<br>但是实际上, 对于a, 因为有$(a|i,b|p_i)$, 所以 b 的可选值很小</p>
+<h3 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h3><p>讲了一下Möbius function 函数的定义,和约数和的结果, 提到了$\displaystyle\sum_{d|n} \tilde{\mu}(d)&#x3D;1-\sum_{d|n}\mu(d)$</p>
+<p>因此每个都可以被快速计算</p>
+<h2 id="正向思路"><a href="#正向思路" class="headerlink" title="正向思路?"></a>正向思路?</h2><p>其实从上面过程中还是能看见一点</p>
+<p>本身是要求 $&#x3D; \sum_{1\leq i\leq j\leq N} (GCD(i,j) \ge 2 , GCD(p_i,p_j) \ge 2)$</p>
+<p>有莫比乌斯函数知识有 $[x &#x3D; 1] &#x3D; \sum_{i|x} \mu(i)$, 这里$\mu$是莫比乌斯函数</p>
+<p>因此可以变形为</p>
+<p>$&#x3D; \sum_{1\leq i\leq j\leq N} (1-\sum_{t_0|GCD(i,j)} \mu(t_0))\cdot (1-\sum_{t_1|GCD(p_i,p_j)} \mu(t_1))$</p>
+<p>$&#x3D; \sum_{1\leq i\leq j\leq N} 1-(\sum_{1\leq i\leq j\leq N}\sum_{t_0|GCD(i,j)} \mu(t_0) + \sum_{1\leq i\leq j\leq N}\sum_{t_1|GCD(p_i,p_j)} \mu(t_1)) + \sum_{1\leq i\leq j\leq N}\sum_{t_0|GCD(i,j)} \mu(t_0) \sum_{t_1|GCD(p_i,p_j)} \mu(t_1)$</p>
+<p>3部分</p>
+<p>第一部分就是$i\le j$的个数</p>
+<p>第二部分,对于$t_0,t_1$ 分别考虑,都是类似的,找都是$t_0 &#x2F; t_1$的倍数</p>
+<p>第三部分,从$t_0,t_1$ 的角度看, 就是上面所谓的num(a,b) 一样的想法</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>map 850ms <a href="https://atcoder.jp/contests/abc230/submissions/34500944">https://atcoder.jp/contests/abc230/submissions/34500944</a></p>
+<p>vector+vis 270ms <a href="https://atcoder.jp/contests/abc230/submissions/34500900">https://atcoder.jp/contests/abc230/submissions/34500900</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 200000</span></span><br><span class="line"><span class="type">int</span> p[N+<span class="number">10</span>]; <span class="comment">// 读入,排列</span></span><br><span class="line"><span class="type">bool</span> pr[N+<span class="number">10</span>]; <span class="comment">// prime[i] = true/false</span></span><br><span class="line"><span class="type">int</span> mu[N+<span class="number">10</span>]; <span class="comment">// mu, 新定义的mu, mu(1) = 0, mu(i) = -莫比乌斯函数(i), i&gt; 1</span></span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt;d[N+<span class="number">10</span>]; <span class="comment">// d[v] = `v的mu不为0的因子`</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();;</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) p[i] = <span class="built_in">read</span>();</span><br><span class="line">  std::<span class="built_in">fill</span>(pr+<span class="number">2</span>,pr+n+<span class="number">1</span>,<span class="literal">true</span>);</span><br><span class="line">  std::<span class="built_in">fill</span>(mu+<span class="number">2</span>,mu+n+<span class="number">1</span>,<span class="number">-1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (pr[i]) &#123;</span><br><span class="line">      mu[i] *= <span class="number">-1</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">2</span>*i; j &lt;= n; j+=i) &#123;</span><br><span class="line">        pr[j] = <span class="literal">false</span>;</span><br><span class="line">        mu[j] *= ((j/i)%i) ? <span class="number">-1</span> :<span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mu[i] != <span class="number">0</span>) <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= n; j += i) d[j].<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(a,<span class="number">2</span>,n+<span class="number">1</span>) <span class="keyword">if</span>(mu[a] != <span class="number">0</span>) &#123; <span class="comment">// mu(a) * mu(b) * (num(a,b)(num(a,b)+1))/2</span></span><br><span class="line">    std::unordered_map&lt;<span class="type">int</span>, ll&gt; b2c; <span class="comment">// 对于给定a, 的b2c[b] = num(a,b)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = a; i &lt;= n; i += a) <span class="keyword">for</span> (<span class="type">int</span> b : d[p[i]]) b2c[b]++;<span class="comment">// a|i, b|p[i]</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> [b,c]: b2c) ans += mu[a] * mu[b] * (c * (c + <span class="number">1</span>)) / <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="H-Bullion"><a href="#H-Bullion" class="headerlink" title="H - Bullion"></a>H - Bullion</h1><p>无限数量的块分别重w1,w2,…,wk, 每个两两不同</p>
+<p>无限数量包,重量1</p>
+<p>包可以容纳 任意个非空包 和 任意个块</p>
+<p>安排一辆卡车, 运载力W,</p>
+<p>考虑 w&#x3D;2..W 的每个情况</p>
+<p>你需要 让最终外层包重量为w的打包方案数, 包可以嵌套,不能有空包</p>
+<p>物品重量相同视为相同, 包内没有顺序,看成可重集合</p>
+<p>输出对于每个w的方案数 mod 998244353</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>w 2.5e5</p>
+<p>8s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>先考虑给定w</p>
+<p>那么它的内容重量和&#x3D;w-1</p>
+<p>假设包的部分是重k, 那么剩余直接的块重量和为w-k-1</p>
+<p>所以f(w) &#x3D; sum g(k) h(w-k-1)</p>
+<p>g(x) &#x3D; 多个包裹总重量为x的方案数</p>
+<p>h(x) &#x3D; 多个块总重量为x的方案数</p>
+<p>像生成函数, 但不会了</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>这里也提到了上次的222H</p>
+<p>上次讲了些技术向的, 这次讲一些直觉向的</p>
+<hr>
+<p>上次写了生成方程, 希望an是它的系数, 但没明白讲, 如何用生成方程统计个数</p>
+<p>它这用三种区别</p>
+<p>序列 小写字母</p>
+<p>生成方程 大写字母</p>
+<p>集合 书法体大写字母</p>
+<hr>
+<p>简单例子, A每种ai个,每个i元,B卖bj个每个j元</p>
+<ol>
+<li><p>只从A或只从B买一个,可能的方案</p>
+</li>
+<li><p>从A和B买各买一个,可能的方案</p>
+</li>
+</ol>
+<p>更具体</p>
+<p>A, 1元的一个,2元的一个</p>
+<p>B, 1元的一个,3元的一个</p>
+<p>看成两个集合$\mathcal{A} &#x3D; \lbrace 1, 2 \rbrace ,\mathcal{B} &#x3D; \lbrace 1^\ast , 3^\ast \rbrace.$</p>
+<p>对于 1) 就是 $\mathcal{A} +\mathcal{B} &#x3D; \lbrace 1, 2 , 1^\ast , 3^\ast \rbrace $</p>
+<p>对于 2) 就是 $\mathcal{A} \times \mathcal{B} &#x3D; \lbrace 1, 2 \rbrace \times \lbrace 1^\ast , 3^\ast \rbrace &#x3D; \lbrace (1,1^\ast), (1,3^\ast), (2,1^\ast), (2,3^\ast) \rbrace$</p>
+<p>这是直接从集合角度的方案</p>
+<p>考虑, 用生成方程</p>
+<p>$A(x) &#x3D; \sum_{i} a_i x^i &#x3D; x^1+x^2 $</p>
+<p>$B(x) &#x3D; \sum_{j} b_j x^j &#x3D; x^1+x^3 $</p>
+<p>对于 1) 也是 $C &#x3D; A+B$, 幂次对应系数相加</p>
+<p>对于 2) 也是 $D &#x3D; A\times B$, 幂次对应系数 的乘积组成新的 和幂次 的系数</p>
+<p>这里也就是 集合的操作 和 生成函数操作之间是对应的</p>
+<hr>
+<p>例子2</p>
+<p>爬山,每次1步或者2步, 问爬到n步的方案数</p>
+<p>设集合$\mathcal{F} $ 表示任意步数的序列</p>
+<p>那么有$\mathcal{F} &#x3D; \lbrace \emptyset \rbrace + \lbrace (1) \rbrace \times \mathcal{F}+ \lbrace (2) \rbrace \times \mathcal{F}$, 表示不走, 第一次走一步以后的所有情况,第一次走两步以后的所有情况</p>
+<p>对应的生成方程$F(x) &#x3D; 1x^0 + F(x)x^1 + F(x)x^2$</p>
+<p>提取有$F(x) \frac{1}{1-x-x^2}$</p>
+<p>实际上也就是 $F(x) &#x3D; 1 + x + 2x^2 + 3x^3 + 5x^4 + 8x^5 + \dots$, ( 这里生成方程的转换好像需要点啥知识? 不会)</p>
+<p>其实就是系数是fibonacci数列</p>
+<p>这里说 生成方程 其实是一个 最小的必要信息容器,</p>
+<p>但不要过于依赖, 因为有时问题就算靠生成方程得到了系数表达式, 也难以计算</p>
+<h3 id="组合结构与函数组合Combinatorial-“structure”-and-function-composition"><a href="#组合结构与函数组合Combinatorial-“structure”-and-function-composition" class="headerlink" title="组合结构与函数组合Combinatorial “structure” and function composition"></a>组合结构与函数组合Combinatorial “structure” and function composition</h3><p>前面讲了 $+$ 和 $\times$ 的操作, 现在讲<code>build block</code></p>
+<p>要被计数的通常是组合的样子, 可以看成 C(集合) &#x3D; 方案数</p>
+<p>如果能得到C的表达式,那么把要求的传进去就能有答案</p>
+<p>然后就是 decompose的想法</p>
+<p>例如$SEQ(\mathcal{A})$ 表示 一个包含任意个 元素取自A中 的 序列</p>
+<p>$\mathrm{SEQ}(\mathcal{A}) &#x3D; \mathcal{E} + \mathcal{A} + \mathcal{A} \times \mathcal{A} + \mathcal{A} \times \mathcal{A} \times \mathcal{A} + \dots &#x3D; \sum_{i&#x3D;0}^\infty \mathcal{A}^i.$</p>
+<p>因此对应的生成方程为</p>
+<p>$S(x) &#x3D; 1 + A(x) + A(x)^2 + \dots &#x3D; \sum_{i&#x3D;0}^\infty A(x) &#x3D; \frac{1}{1 - A(x)}$</p>
+<p>例如上面的 爬山 ,就是$\mathcal{A} &#x3D; \lbrace 1,2 \rbrace, A(x) &#x3D; x^1+x^2$, 带入也能得到上面的式子</p>
+<hr>
+<p>现在考虑另外一个例子</p>
+<p>2维,从$(0,0)$出发 每次选择非0,$a,b\ge 0$ 的整值, 做 $(x,y) \to (x+a,x+y)$的移动, 问移动到$(N,N)$的方案数</p>
+<p>但如果从结构上去看</p>
+<p>对于每一步, 对应的集合是$\mathcal{A} &#x3D; (\mathcal{E} + \mathcal{H} + \mathcal{H}^2 + \dots) \times (\mathcal{E} + \mathcal{W} + \mathcal{W}^2 + \dots) - \mathcal{E}$, 分别一个表示横向一个纵向走一步,走非0的正整距离</p>
+<p>$&#x3D; \mathrm{SEQ}(\mathcal{H}) \times \mathrm{SEQ}(\mathcal{W}) - \mathcal{E}.$ (这里减的定义就是 加 逆元意义</p>
+<p>注意到$\mathcal{H} &#x3D; \lbrace 1 \rbrace$, 其 对应生成方程$H(x) &#x3D; x^1$</p>
+<p>因此$\mathcal{A}$对应生成方程$A(x,y) &#x3D; \frac{1}{(1-x)(1-y)} - 1$, 这是每一步的生成方程(如何解读1步的生成方程? 其实和集合对应 就是如果方程展开成非负幂次, 不同加项之间选且只能选一个, 展开后x的幂次与纵向步数相关,y的幂次和横向步数相关, 有一点就是永远不要想去带入x和y什么值 得到A的运算结果, 应该把x,y 看成无法和系数,幂次合并的特殊符号)</p>
+<p>而 走任意步的集合是$SEQ(\mathcal{A})$</p>
+<p>所以任意步的生成方程是</p>
+<p>$F(x,y) &#x3D; \frac{1}{1-A(x,y)} &#x3D; \frac{(1-x)(1-y)}{1-2x-2y+2xy}$</p>
+<p>要求的就是它的$\lbrack x^Ny^N \rbrack$</p>
+<p>技巧是拆掉分子, 分母还原成无穷等比的和, 再套二项式</p>
+<h3 id="可重集合的结构"><a href="#可重集合的结构" class="headerlink" title="可重集合的结构"></a>可重集合的结构</h3><p>令$MULTISET(\mathcal{A})$ 表示元素都取自$\mathcal{A}$ 的可重集合</p>
+<p>$A(x)$ 为原集合的生成方程</p>
+<p>那么有可重集合的生成方程为$B(x) &#x3D; exp \left( \sum_{0 &lt; k} \frac{A(x^k)}{k}\right)$</p>
+<hr>
+<p>证明:</p>
+<p>考虑问题, 很多球, 重$w$的球有$a_w$种, 同一种球无法区分</p>
+<p>考虑选一些球, $b_w$ &#x3D;重量和为$w$的方案数量</p>
+<p>$A,B$分别是$a,b$的生成方程</p>
+<hr>
+<p>考虑简单情况, 全部的重量都是1, 那么选一个的生成方程是$a_1x^1$</p>
+<p>令$r&#x3D;a_1$, 表示种数</p>
+<p>那么其实选的方案用集合表示是</p>
+<p>$\begin{aligned} &amp;(\mathcal{E}+\mathcal{C}_ 1+\mathcal{C}_ 1^2 + \dots) \times (\mathcal{E}+\mathcal{C}_ 2+\mathcal{C}_ 2^2 + \dots) \dots \times (\mathcal{E}+\mathcal{C}_ r+\mathcal{C}_ r^2 + \dots) &#x3D;\prod_ { i&#x3D;1 }^r \sum_ {j&#x3D;0}^\infty \mathcal{C}_ i^j.\end{aligned}$</p>
+<p>上面求过$SEQ$了,  这里每个集合也只包含$1$,所以生成方程为</p>
+<p>$ \frac{1}{(1-x)^r} &#x3D; \sum_{i&#x3D;0}^\infty \binom{r + i - 1}{r - 1} x^i.$</p>
+<hr>
+<p>对于全部重量是$k$的不同种球,有$a_k$个</p>
+<p>其集合结构为$\mathcal{B} &#x3D; \prod \left( \sum_{i&#x3D;0}^\infty \mathcal{D}_k \right)^{a_k}.$</p>
+<p>而这与上面全是1的区别在于 集合的元素是$k$, 上面的是$1$, 因此区别只是生成方程上面的$x^1$, 现在$x^k$</p>
+<p>因此显然生成方程为 $ B(x) &#x3D; \prod \left(\frac{1}{1-x^k}\right)^{a_k}.$</p>
+<hr>
+<p>那么对于不同重量之间的选择是互不影响的, 因此从结构上乘起来</p>
+<p>$\mathcal{B} &#x3D; \prod_{0 \lt k} \left( \sum_{i&#x3D;0}^\infty \mathcal{D}_k \right)^{a_k}.$</p>
+<p>同样的生成方程为 $ B(x) &#x3D; \prod_{0 \lt k} \left(\frac{1}{1-x^k}\right)^{a_k}.$</p>
+<p>最后就是$exp$ 和 $log$</p>
+<p>$B(x) &#x3D; \exp \log B(x) $ 注: a&#x3D;e^ln(a)</p>
+<p>$&#x3D; \exp \sum_{0 \lt k} -a_k \log (1 - x^k)$  注: ln(prod(a^i)) &#x3D; sum i ln(a)</p>
+<p>$&#x3D; \exp \sum_{0 \lt k} a_k \sum_{0 \lt i}  \frac{x^{ik}}{i}$ 幂级展开 ln(1-x) &#x3D; - sum x^i&#x2F;i</p>
+<p>$&#x3D; \exp \sum_{0 \lt i} \frac{1}{i} \sum_{0 \lt k}  a_k (x^i)^k$ 交换sum顺序</p>
+<p>$&#x3D; \exp \left(\sum_{0 \lt i} \frac{A(x^i)}{i} \right)$ 根据A的生成函数</p>
+<p>因此多重集合 与 原集合的生成函数关系得证</p>
+<blockquote>
+<p>这里还给了一个用 <code>Pólya’s enumeration theorem</code> 证明的办法 orz 见原文</p>
+</blockquote>
+<hr>
+<p>有一点问题是 exp 在实际得到后如何计算呢</p>
+<h3 id="回到题目"><a href="#回到题目" class="headerlink" title="回到题目"></a>回到题目</h3><p>定义集合符号</p>
+<p>非空包 $\mathcal{F}$</p>
+<p>一个块 $\mathcal{G}$</p>
+<p>一个包 $\mathcal{B}$</p>
+<p>一个空 $\mathcal{E}$</p>
+<p>那么显然关系是</p>
+<p>$\mathcal{F} &#x3D; \mathcal{B} \times (MULTISET(\mathcal{F}+\mathcal{G}) - \mathcal{E})$</p>
+<hr>
+<p>考虑它们4个的生成函数</p>
+<p>显然$F(x)$ 也是答案序列的生成函数</p>
+<p>$G(x) &#x3D; \sum_{1 \leq i \leq K} x^{w_i} $ 表示块,把重量相同 但是种类不同的通过系数加起来</p>
+<p>边界 $\lbrace x^0 \rbrace F(x) &#x3D; \lbrace x^1 \rbrace F(x) &#x3D; 0$</p>
+<p>剩下两个显然 $B(x) &#x3D; x$, $E(x) &#x3D; 1$</p>
+<p>令$H &#x3D; F+G$</p>
+<p>$F(x) &#x3D; x \left( \exp \left(\sum_{0 \lt k} \frac{H(x^k)}{k} \right) - 1\right)$</p>
+<hr>
+<p>接下来是算了</p>
+<p>微分后同时乘x 有</p>
+<p>$xF’(x) &#x3D; F(x) + (F(x) + x) \sum_{0 \lt k} x^{k} H’(x^k).$</p>
+<p>这正好是之前不知道如何处理exp, 现在看来, 通过微分&#x2F;积分 的形式 再创建出 同样表达式,再用F(x)替换掉即可</p>
+<p>令$J(x) &#x3D; \sum_{0 \lt k} x^{k} H’(x^k)$</p>
+<p>考虑n次项系数$(n \ge 2)$</p>
+<p>$nf_n &#x3D; f_n+\sum_{0 &lt; k &lt; n} f_k j_{n-k} + j_{n-1}$</p>
+<p>移项得到递推表达式</p>
+<p>$f_n &#x3D; \frac{1}{n - 1} \left(j_{n-1} + \sum_{0 \lt k \lt n} f_k j_{n-k}\right)$</p>
+<p>对于边界$f_0 &#x3D; f_1 &#x3D; j_0 &#x3D; 0$</p>
+<p>$j_n &#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} H’(x^k)$</p>
+<p>$&#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} H’(x^k)$</p>
+<p>$&#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} \sum_{i&#x3D;0} (i+1) h_{i+1} (x^k)^i$</p>
+<p>$&#x3D; \sum_{k | n} \lbrack x^n \rbrack \sum_{i&#x3D;1} i h_{i} (x^k)^i$</p>
+<p>$&#x3D; \sum_{k | n} \frac{n}{k} h_{\frac{n}{k}}$</p>
+<p>$&#x3D; \sum_{d | n} d h_d $</p>
+<p>$&#x3D; \sum_{d | n} d \cdot (f_d + j_d) $</p>
+<p>如果$f$知道, 那么$j$ 能快速计算</p>
+<p>而f这 很显示需要 分治FFT了</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc230/submissions/34519255">https://atcoder.jp/contests/abc230/submissions/34519255</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;atcoder/convolution.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;atcoder/modint.hpp&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">int</span> SZ;</span><br><span class="line">mint inv[<span class="number">500010</span>] = &#123;<span class="number">0</span>,<span class="number">1</span>&#125;;</span><br><span class="line">std::vector&lt;mint&gt; f, g, j;</span><br><span class="line"><span class="comment">// 提取数组一段 [L..R)</span></span><br><span class="line"><span class="function">std::vector&lt;mint&gt; <span class="title">get</span><span class="params">(std::vector&lt;mint&gt;&amp; v, <span class="type">int</span> L, <span class="type">int</span> R)</span> </span>&#123;<span class="keyword">return</span> &#123;v.<span class="built_in">begin</span>() + L, v.<span class="built_in">begin</span>() + R&#125;;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// f[n] = 1/(n-1) (j[n-1] + f * j), fft f * j</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dc</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123; <span class="comment">// 对于f做分治 fft, 每次调用前内部贡献都来自于[0..l),每次只完成[l..r)的计算,不在此函数中对[r,..)产生贡献, 每次先[l..mid) 再 [mid..r), 对于j做简单分治</span></span><br><span class="line">  <span class="keyword">if</span> (l + <span class="number">1</span> == r) &#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= <span class="number">2</span>) f[l] = (f[l] + j[l<span class="number">-1</span>]) * inv[l<span class="number">-1</span>]; <span class="comment">// 处理之前 一直是由比它小的贡献 f * j</span></span><br><span class="line">    <span class="keyword">if</span> (l &gt;= <span class="number">1</span>) <span class="keyword">for</span> (<span class="type">int</span> i = l; i &lt; SZ; i += l) j[i] += (f[l] + g[l]) * l; <span class="comment">// j[n] = sum d|n, d * (f[d] + g[d])</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> mid = (l + r) / <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">dc</span>(l, mid); <span class="comment">// [0..mid) 都完成了, 把它们贡献散布到[mid, r)</span></span><br><span class="line">  <span class="keyword">if</span> (l == <span class="number">0</span>) &#123; <span class="comment">// 注意不要算重了</span></span><br><span class="line">    <span class="keyword">auto</span> fj = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, <span class="number">0</span>, mid), <span class="built_in">get</span>(j, <span class="number">0</span>, mid));</span><br><span class="line">    <span class="built_in">rep</span>(i,mid,r) f[i] += fj[i];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">auto</span> fj1 = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, l, mid), <span class="built_in">get</span>(j, <span class="number">0</span>, r - l)); <span class="comment">// 两段必定不重复</span></span><br><span class="line">    <span class="keyword">auto</span> fj2 = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, <span class="number">0</span>, r - l), <span class="built_in">get</span>(j, l, mid));</span><br><span class="line">    <span class="built_in">rep</span>(i,mid,r) f[i] += fj1[i - l] + fj2[i - l];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">dc</span>(mid, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> W = <span class="built_in">read</span>(); <span class="comment">// 求 [2..W]</span></span><br><span class="line">  <span class="type">int</span> K = <span class="built_in">read</span>();</span><br><span class="line">  SZ = <span class="number">1</span>; <span class="comment">// &gt;= n+1, 方便分治 不会重复计算</span></span><br><span class="line">  <span class="keyword">while</span> (SZ &lt;= W) SZ *= <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,SZ) inv[i] = (MOD-MOD/i) * inv[MOD%i];</span><br><span class="line">  f = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  g = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  j = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">while</span>(K--) g[<span class="built_in">read</span>()] += <span class="number">1</span>; <span class="comment">// g[n] = count(val == n)</span></span><br><span class="line">  <span class="built_in">dc</span>(<span class="number">0</span>, SZ); <span class="comment">// 分治fft</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,W+<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, f[i].<span class="built_in">val</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>感觉还是莫比乌斯反演相关的知识点</p>
+<p>这个S的定义 感觉凭空出现啊, 这题解有一点搞</p>
+<p>但如果不知道这种定义, 还是可以从莫比乌斯函数推导出的</p>
+<p>H</p>
+<p>不会啊</p>
+<p>虽然之前几场的生成函数题目学了, 但是都是说从最简单的选项,建立函数或方程, 然后运算,化简,提取系数</p>
+<p>这里通过集合和函数的关系, 感觉学了一点新的东西, 也就是 可以把一个集合操作变成另一个集合, 与 生成方程对应, 换句话说, 生成方程对应了操作,而操作对象是集合就好了, 这样一定程度上有”模块化”和”函数化”的感觉</p>
+<p>这个感觉和上次 列生成函数一样还有个好处,就是当结构不再只是层级的,而是会有可相互递归时, 集合就更直观感受</p>
+<p>以及exp消除这里办法是微分&#x2F;积分 同表达式 替换</p>
+<p>求解系数,没有直接表达式时, 用递推关系式+分治</p>
+<p>然后实现上之前213H也做了分治fft,但是自己依赖自己, 这里的话依赖两个, 要注意分治时不要重复计算, 所以一个办法是把长度做成2的幂次</p>
+<p>TODO Pólya’s enumeration theorem</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc230/editorial">官方题解</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2019-01-06-MobiusInversionFormula/">之前写的莫反笔记</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2019-03-23-cfP1139D/">莫反 CF 548 Div2 D</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2020-11-07-nowcoder8282D/">莫反NowCoder 8282 D</a></p>
+<p><a href="http://localhost:4000/Blog/2022-08-08-ac_abc222/">222H 生成函数</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>Möbius function</tag>
+        <tag>生成函数</tag>
+        <tag>分治卷积</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Atcoder abc231</title>
     <url>/Blog/2022-09-02-ac-abc231/</url>
     <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc231/tasks">https://atcoder.jp/contests/abc231/tasks</a></p>
@@ -14126,249 +14369,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Atcoder abc230</title>
-    <url>/Blog/2022-09-01-ac-abc230/</url>
-    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc230/tasks">https://atcoder.jp/contests/abc230/tasks</a></p>
-<h1 id="G-GCD-Permutation"><a href="#G-GCD-Permutation" class="headerlink" title="G - GCD Permutation"></a>G - GCD Permutation</h1><p>给一个1~N的排列p</p>
-<p>问有多少个有序对 (i,j), (i&lt;&#x3D;j), 满足 gcd(i,j) !&#x3D; 1, gcd(p[i],p[j]) !&#x3D; 1</p>
-<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
-<p>5s</p>
-<p>1024mb</p>
-<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>有点想暴力 然后证明复杂度?</p>
-<p>对于 (i,Pi), 取两个中较小的一个, 找所有包含它下标的, 用较大的去验证gcd</p>
-<p>最多有6个不同质数因子, 最坏情况 1&#x2F;2+1&#x2F;3+1&#x2F;5+1&#x2F;7+1&#x2F;11+1&#x2F;13 &#x3D; 1.3左右</p>
-<p>所以最坏情况是 找n个坐标</p>
-<p>先写个代码再说</p>
-<p><a href="https://atcoder.jp/contests/abc230/submissions/34500571">https://atcoder.jp/contests/abc230/submissions/34500571</a></p>
-<hr>
-<p>显然 有很多是2 的倍数的,它们如果每个都会去访问n&#x2F;2, 那么已经就是n^2了, 肯定会超时</p>
-<hr>
-<p>想法就是 如果 (2的倍数,3的倍数) 之类做容斥? 但是我容斥完全不会</p>
-<span id="more"></span>
-
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>$\tilde{\mu}(n)&#x3D; 1,-1,0$</p>
-<p>1: 当n为奇数个不同的质数乘积</p>
-<p>-1: 当n为偶数个不同的质数乘积</p>
-<p>0: 其它</p>
-<p>相当于 Möbius函数 取相反数,且 $\mu(1) &#x3D; 0$</p>
-<p>那么满足 $\sum_{d|n} \tilde{\mu}(d)&#x3D;<br>\begin{cases}<br>0 &amp; (\text{if }n&#x3D;1)  \\<br>1 &amp; (\text{if }n\geq 2)<br>\end{cases}$</p>
-<p>这和Möbius函数 很像, <code>和= 1-Möbius的和</code></p>
-<hr>
-<p>定义函数</p>
-<p>$f(a,b;i,j) &#x3D; 1&#x2F;0$, 表示 i,j是a的倍数且 pi,pj 是b的倍数</p>
-<p>对于和$S&#x3D;\sum_{1\leq i\leq j\leq N} \sum_{a&#x3D;1}^N \sum_{b&#x3D;1}^N  \tilde{\mu}(a) \tilde{\mu}(b)f(a,b;i,j).$</p>
-<p>对于给定的$(i,j)$ 令$g&#x3D;GCD(i,j),g’&#x3D;GCD(p_i,p_j)$</p>
-<p>考虑右侧f要为1, 那么需要同时a是g的约数,b是g’的约数</p>
-<p>$\sum_{1\leq i\leq j\leq N} \sum_{a&#x3D;1}^N \sum_{b&#x3D;1}^N  \tilde{\mu}(a) \tilde{\mu}(b)f(a,b;i,j) &#x3D; \sum_{1\leq i\leq j\leq N} \sum_{a|g} \sum_{b|g’}  \tilde{\mu}(a) \tilde{\mu}(b)$</p>
-<p>$&#x3D; \sum_{1\leq i\leq j\leq N} \sum_{a|g} \tilde{\mu}(a) \sum_{b|g’}  \tilde{\mu}(b)$</p>
-<p>所以考虑右侧, 只要g,g’ 同时大于等于2,则为1, 否则为0</p>
-<p>$&#x3D; \sum_{1\leq i\leq j\leq N} (g \ge 2 , g’ \ge 2)$, 这里证明了和原题意等价, 因此S就是要求的答案</p>
-<hr>
-<p>令$num(a,b) &#x3D; (a|i,b|p_i)$ 的个数</p>
-<p>对于给定$(a,b)$ 有 $\sum_{1\le i\le j\le N}f(a,b;i,j)&#x3D;\frac{num(a,b)(num(a,b)+1)}{2}$, 相当于找出所有满足$(a|i,b|p_i)$ 的然后组成顺序对</p>
-<p>因此又有$S&#x3D;\sum_{a&#x3D;1}^N \sum_{b&#x3D;1}^N  \tilde{\mu}(a) \tilde{\mu}(b)<br>\frac{num(a,b)(num(a,b)+1)}{2}.$</p>
-<p>这样你可以计算S了, 虽然是N^2<br>但是实际上, 对于a, 因为有$(a|i,b|p_i)$, 所以 b 的可选值很小</p>
-<h3 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h3><p>讲了一下Möbius function 函数的定义,和约数和的结果, 提到了$\displaystyle\sum_{d|n} \tilde{\mu}(d)&#x3D;1-\sum_{d|n}\mu(d)$</p>
-<p>因此每个都可以被快速计算</p>
-<h2 id="正向思路"><a href="#正向思路" class="headerlink" title="正向思路?"></a>正向思路?</h2><p>其实从上面过程中还是能看见一点</p>
-<p>本身是要求 $&#x3D; \sum_{1\leq i\leq j\leq N} (GCD(i,j) \ge 2 , GCD(p_i,p_j) \ge 2)$</p>
-<p>有莫比乌斯函数知识有 $[x &#x3D; 1] &#x3D; \sum_{i|x} \mu(i)$, 这里$\mu$是莫比乌斯函数</p>
-<p>因此可以变形为</p>
-<p>$&#x3D; \sum_{1\leq i\leq j\leq N} (1-\sum_{t_0|GCD(i,j)} \mu(t_0))\cdot (1-\sum_{t_1|GCD(p_i,p_j)} \mu(t_1))$</p>
-<p>$&#x3D; \sum_{1\leq i\leq j\leq N} 1-(\sum_{1\leq i\leq j\leq N}\sum_{t_0|GCD(i,j)} \mu(t_0) + \sum_{1\leq i\leq j\leq N}\sum_{t_1|GCD(p_i,p_j)} \mu(t_1)) + \sum_{1\leq i\leq j\leq N}\sum_{t_0|GCD(i,j)} \mu(t_0) \sum_{t_1|GCD(p_i,p_j)} \mu(t_1)$</p>
-<p>3部分</p>
-<p>第一部分就是$i\le j$的个数</p>
-<p>第二部分,对于$t_0,t_1$ 分别考虑,都是类似的,找都是$t_0 &#x2F; t_1$的倍数</p>
-<p>第三部分,从$t_0,t_1$ 的角度看, 就是上面所谓的num(a,b) 一样的想法</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>map 850ms <a href="https://atcoder.jp/contests/abc230/submissions/34500944">https://atcoder.jp/contests/abc230/submissions/34500944</a></p>
-<p>vector+vis 270ms <a href="https://atcoder.jp/contests/abc230/submissions/34500900">https://atcoder.jp/contests/abc230/submissions/34500900</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 200000</span></span><br><span class="line"><span class="type">int</span> p[N+<span class="number">10</span>]; <span class="comment">// 读入,排列</span></span><br><span class="line"><span class="type">bool</span> pr[N+<span class="number">10</span>]; <span class="comment">// prime[i] = true/false</span></span><br><span class="line"><span class="type">int</span> mu[N+<span class="number">10</span>]; <span class="comment">// mu, 新定义的mu, mu(1) = 0, mu(i) = -莫比乌斯函数(i), i&gt; 1</span></span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt;d[N+<span class="number">10</span>]; <span class="comment">// d[v] = `v的mu不为0的因子`</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();;</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) p[i] = <span class="built_in">read</span>();</span><br><span class="line">  std::<span class="built_in">fill</span>(pr+<span class="number">2</span>,pr+n+<span class="number">1</span>,<span class="literal">true</span>);</span><br><span class="line">  std::<span class="built_in">fill</span>(mu+<span class="number">2</span>,mu+n+<span class="number">1</span>,<span class="number">-1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (pr[i]) &#123;</span><br><span class="line">      mu[i] *= <span class="number">-1</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">2</span>*i; j &lt;= n; j+=i) &#123;</span><br><span class="line">        pr[j] = <span class="literal">false</span>;</span><br><span class="line">        mu[j] *= ((j/i)%i) ? <span class="number">-1</span> :<span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mu[i] != <span class="number">0</span>) <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= n; j += i) d[j].<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(a,<span class="number">2</span>,n+<span class="number">1</span>) <span class="keyword">if</span>(mu[a] != <span class="number">0</span>) &#123; <span class="comment">// mu(a) * mu(b) * (num(a,b)(num(a,b)+1))/2</span></span><br><span class="line">    std::unordered_map&lt;<span class="type">int</span>, ll&gt; b2c; <span class="comment">// 对于给定a, 的b2c[b] = num(a,b)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = a; i &lt;= n; i += a) <span class="keyword">for</span> (<span class="type">int</span> b : d[p[i]]) b2c[b]++;<span class="comment">// a|i, b|p[i]</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> [b,c]: b2c) ans += mu[a] * mu[b] * (c * (c + <span class="number">1</span>)) / <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="H-Bullion"><a href="#H-Bullion" class="headerlink" title="H - Bullion"></a>H - Bullion</h1><p>无限数量的块分别重w1,w2,…,wk, 每个两两不同</p>
-<p>无限数量包,重量1</p>
-<p>包可以容纳 任意个非空包 和 任意个块</p>
-<p>安排一辆卡车, 运载力W,</p>
-<p>考虑 w&#x3D;2..W 的每个情况</p>
-<p>你需要 让最终外层包重量为w的打包方案数, 包可以嵌套,不能有空包</p>
-<p>物品重量相同视为相同, 包内没有顺序,看成可重集合</p>
-<p>输出对于每个w的方案数 mod 998244353</p>
-<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>w 2.5e5</p>
-<p>8s</p>
-<p>1024mb</p>
-<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>先考虑给定w</p>
-<p>那么它的内容重量和&#x3D;w-1</p>
-<p>假设包的部分是重k, 那么剩余直接的块重量和为w-k-1</p>
-<p>所以f(w) &#x3D; sum g(k) h(w-k-1)</p>
-<p>g(x) &#x3D; 多个包裹总重量为x的方案数</p>
-<p>h(x) &#x3D; 多个块总重量为x的方案数</p>
-<p>像生成函数, 但不会了</p>
-<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>这里也提到了上次的222H</p>
-<p>上次讲了些技术向的, 这次讲一些直觉向的</p>
-<hr>
-<p>上次写了生成方程, 希望an是它的系数, 但没明白讲, 如何用生成方程统计个数</p>
-<p>它这用三种区别</p>
-<p>序列 小写字母</p>
-<p>生成方程 大写字母</p>
-<p>集合 书法体大写字母</p>
-<hr>
-<p>简单例子, A每种ai个,每个i元,B卖bj个每个j元</p>
-<ol>
-<li><p>只从A或只从B买一个,可能的方案</p>
-</li>
-<li><p>从A和B买各买一个,可能的方案</p>
-</li>
-</ol>
-<p>更具体</p>
-<p>A, 1元的一个,2元的一个</p>
-<p>B, 1元的一个,3元的一个</p>
-<p>看成两个集合$\mathcal{A} &#x3D; \lbrace 1, 2 \rbrace ,\mathcal{B} &#x3D; \lbrace 1^\ast , 3^\ast \rbrace.$</p>
-<p>对于 1) 就是 $\mathcal{A} +\mathcal{B} &#x3D; \lbrace 1, 2 , 1^\ast , 3^\ast \rbrace $</p>
-<p>对于 2) 就是 $\mathcal{A} \times \mathcal{B} &#x3D; \lbrace 1, 2 \rbrace \times \lbrace 1^\ast , 3^\ast \rbrace &#x3D; \lbrace (1,1^\ast), (1,3^\ast), (2,1^\ast), (2,3^\ast) \rbrace$</p>
-<p>这是直接从集合角度的方案</p>
-<p>考虑, 用生成方程</p>
-<p>$A(x) &#x3D; \sum_{i} a_i x^i &#x3D; x^1+x^2 $</p>
-<p>$B(x) &#x3D; \sum_{j} b_j x^j &#x3D; x^1+x^3 $</p>
-<p>对于 1) 也是 $C &#x3D; A+B$, 幂次对应系数相加</p>
-<p>对于 2) 也是 $D &#x3D; A\times B$, 幂次对应系数 的乘积组成新的 和幂次 的系数</p>
-<p>这里也就是 集合的操作 和 生成函数操作之间是对应的</p>
-<hr>
-<p>例子2</p>
-<p>爬山,每次1步或者2步, 问爬到n步的方案数</p>
-<p>设集合$\mathcal{F} $ 表示任意步数的序列</p>
-<p>那么有$\mathcal{F} &#x3D; \lbrace \emptyset \rbrace + \lbrace (1) \rbrace \times \mathcal{F}+ \lbrace (2) \rbrace \times \mathcal{F}$, 表示不走, 第一次走一步以后的所有情况,第一次走两步以后的所有情况</p>
-<p>对应的生成方程$F(x) &#x3D; 1x^0 + F(x)x^1 + F(x)x^2$</p>
-<p>提取有$F(x) \frac{1}{1-x-x^2}$</p>
-<p>实际上也就是 $F(x) &#x3D; 1 + x + 2x^2 + 3x^3 + 5x^4 + 8x^5 + \dots$, ( 这里生成方程的转换好像需要点啥知识? 不会)</p>
-<p>其实就是系数是fibonacci数列</p>
-<p>这里说 生成方程 其实是一个 最小的必要信息容器,</p>
-<p>但不要过于依赖, 因为有时问题就算靠生成方程得到了系数表达式, 也难以计算</p>
-<h3 id="组合结构与函数组合Combinatorial-“structure”-and-function-composition"><a href="#组合结构与函数组合Combinatorial-“structure”-and-function-composition" class="headerlink" title="组合结构与函数组合Combinatorial “structure” and function composition"></a>组合结构与函数组合Combinatorial “structure” and function composition</h3><p>前面讲了 $+$ 和 $\times$ 的操作, 现在讲<code>build block</code></p>
-<p>要被计数的通常是组合的样子, 可以看成 C(集合) &#x3D; 方案数</p>
-<p>如果能得到C的表达式,那么把要求的传进去就能有答案</p>
-<p>然后就是 decompose的想法</p>
-<p>例如$SEQ(\mathcal{A})$ 表示 一个包含任意个 元素取自A中 的 序列</p>
-<p>$\mathrm{SEQ}(\mathcal{A}) &#x3D; \mathcal{E} + \mathcal{A} + \mathcal{A} \times \mathcal{A} + \mathcal{A} \times \mathcal{A} \times \mathcal{A} + \dots &#x3D; \sum_{i&#x3D;0}^\infty \mathcal{A}^i.$</p>
-<p>因此对应的生成方程为</p>
-<p>$S(x) &#x3D; 1 + A(x) + A(x)^2 + \dots &#x3D; \sum_{i&#x3D;0}^\infty A(x) &#x3D; \frac{1}{1 - A(x)}$</p>
-<p>例如上面的 爬山 ,就是$\mathcal{A} &#x3D; \lbrace 1,2 \rbrace, A(x) &#x3D; x^1+x^2$, 带入也能得到上面的式子</p>
-<hr>
-<p>现在考虑另外一个例子</p>
-<p>2维,从$(0,0)$出发 每次选择非0,$a,b\ge 0$ 的整值, 做 $(x,y) \to (x+a,x+y)$的移动, 问移动到$(N,N)$的方案数</p>
-<p>但如果从结构上去看</p>
-<p>对于每一步, 对应的集合是$\mathcal{A} &#x3D; (\mathcal{E} + \mathcal{H} + \mathcal{H}^2 + \dots) \times (\mathcal{E} + \mathcal{W} + \mathcal{W}^2 + \dots) - \mathcal{E}$, 分别一个表示横向一个纵向走一步,走非0的正整距离</p>
-<p>$&#x3D; \mathrm{SEQ}(\mathcal{H}) \times \mathrm{SEQ}(\mathcal{W}) - \mathcal{E}.$ (这里减的定义就是 加 逆元意义</p>
-<p>注意到$\mathcal{H} &#x3D; \lbrace 1 \rbrace$, 其 对应生成方程$H(x) &#x3D; x^1$</p>
-<p>因此$\mathcal{A}$对应生成方程$A(x,y) &#x3D; \frac{1}{(1-x)(1-y)} - 1$, 这是每一步的生成方程(如何解读1步的生成方程? 其实和集合对应 就是如果方程展开成非负幂次, 不同加项之间选且只能选一个, 展开后x的幂次与纵向步数相关,y的幂次和横向步数相关, 有一点就是永远不要想去带入x和y什么值 得到A的运算结果, 应该把x,y 看成无法和系数,幂次合并的特殊符号)</p>
-<p>而 走任意步的集合是$SEQ(\mathcal{A})$</p>
-<p>所以任意步的生成方程是</p>
-<p>$F(x,y) &#x3D; \frac{1}{1-A(x,y)} &#x3D; \frac{(1-x)(1-y)}{1-2x-2y+2xy}$</p>
-<p>要求的就是它的$\lbrack x^Ny^N \rbrack$</p>
-<p>技巧是拆掉分子, 分母还原成无穷等比的和, 再套二项式</p>
-<h3 id="可重集合的结构"><a href="#可重集合的结构" class="headerlink" title="可重集合的结构"></a>可重集合的结构</h3><p>令$MULTISET(\mathcal{A})$ 表示元素都取自$\mathcal{A}$ 的可重集合</p>
-<p>$A(x)$ 为原集合的生成方程</p>
-<p>那么有可重集合的生成方程为$B(x) &#x3D; exp \left( \sum_{0 &lt; k} \frac{A(x^k)}{k}\right)$</p>
-<hr>
-<p>证明:</p>
-<p>考虑问题, 很多球, 重$w$的球有$a_w$种, 同一种球无法区分</p>
-<p>考虑选一些球, $b_w$ &#x3D;重量和为$w$的方案数量</p>
-<p>$A,B$分别是$a,b$的生成方程</p>
-<hr>
-<p>考虑简单情况, 全部的重量都是1, 那么选一个的生成方程是$a_1x^1$</p>
-<p>令$r&#x3D;a_1$, 表示种数</p>
-<p>那么其实选的方案用集合表示是</p>
-<p>$\begin{aligned} &amp;(\mathcal{E}+\mathcal{C}_ 1+\mathcal{C}_ 1^2 + \dots) \times (\mathcal{E}+\mathcal{C}_ 2+\mathcal{C}_ 2^2 + \dots) \dots \times (\mathcal{E}+\mathcal{C}_ r+\mathcal{C}_ r^2 + \dots) &#x3D;\prod_ { i&#x3D;1 }^r \sum_ {j&#x3D;0}^\infty \mathcal{C}_ i^j.\end{aligned}$</p>
-<p>上面求过$SEQ$了,  这里每个集合也只包含$1$,所以生成方程为</p>
-<p>$ \frac{1}{(1-x)^r} &#x3D; \sum_{i&#x3D;0}^\infty \binom{r + i - 1}{r - 1} x^i.$</p>
-<hr>
-<p>对于全部重量是$k$的不同种球,有$a_k$个</p>
-<p>其集合结构为$\mathcal{B} &#x3D; \prod \left( \sum_{i&#x3D;0}^\infty \mathcal{D}_k \right)^{a_k}.$</p>
-<p>而这与上面全是1的区别在于 集合的元素是$k$, 上面的是$1$, 因此区别只是生成方程上面的$x^1$, 现在$x^k$</p>
-<p>因此显然生成方程为 $ B(x) &#x3D; \prod \left(\frac{1}{1-x^k}\right)^{a_k}.$</p>
-<hr>
-<p>那么对于不同重量之间的选择是互不影响的, 因此从结构上乘起来</p>
-<p>$\mathcal{B} &#x3D; \prod_{0 \lt k} \left( \sum_{i&#x3D;0}^\infty \mathcal{D}_k \right)^{a_k}.$</p>
-<p>同样的生成方程为 $ B(x) &#x3D; \prod_{0 \lt k} \left(\frac{1}{1-x^k}\right)^{a_k}.$</p>
-<p>最后就是$exp$ 和 $log$</p>
-<p>$B(x) &#x3D; \exp \log B(x) $ 注: a&#x3D;e^ln(a)</p>
-<p>$&#x3D; \exp \sum_{0 \lt k} -a_k \log (1 - x^k)$  注: ln(prod(a^i)) &#x3D; sum i ln(a)</p>
-<p>$&#x3D; \exp \sum_{0 \lt k} a_k \sum_{0 \lt i}  \frac{x^{ik}}{i}$ 幂级展开 ln(1-x) &#x3D; - sum x^i&#x2F;i</p>
-<p>$&#x3D; \exp \sum_{0 \lt i} \frac{1}{i} \sum_{0 \lt k}  a_k (x^i)^k$ 交换sum顺序</p>
-<p>$&#x3D; \exp \left(\sum_{0 \lt i} \frac{A(x^i)}{i} \right)$ 根据A的生成函数</p>
-<p>因此多重集合 与 原集合的生成函数关系得证</p>
-<blockquote>
-<p>这里还给了一个用 <code>Pólya’s enumeration theorem</code> 证明的办法 orz 见原文</p>
-</blockquote>
-<hr>
-<p>有一点问题是 exp 在实际得到后如何计算呢</p>
-<h3 id="回到题目"><a href="#回到题目" class="headerlink" title="回到题目"></a>回到题目</h3><p>定义集合符号</p>
-<p>非空包 $\mathcal{F}$</p>
-<p>一个块 $\mathcal{G}$</p>
-<p>一个包 $\mathcal{B}$</p>
-<p>一个空 $\mathcal{E}$</p>
-<p>那么显然关系是</p>
-<p>$\mathcal{F} &#x3D; \mathcal{B} \times (MULTISET(\mathcal{F}+\mathcal{G}) - \mathcal{E})$</p>
-<hr>
-<p>考虑它们4个的生成函数</p>
-<p>显然$F(x)$ 也是答案序列的生成函数</p>
-<p>$G(x) &#x3D; \sum_{1 \leq i \leq K} x^{w_i} $ 表示块,把重量相同 但是种类不同的通过系数加起来</p>
-<p>边界 $\lbrace x^0 \rbrace F(x) &#x3D; \lbrace x^1 \rbrace F(x) &#x3D; 0$</p>
-<p>剩下两个显然 $B(x) &#x3D; x$, $E(x) &#x3D; 1$</p>
-<p>令$H &#x3D; F+G$</p>
-<p>$F(x) &#x3D; x \left( \exp \left(\sum_{0 \lt k} \frac{H(x^k)}{k} \right) - 1\right)$</p>
-<hr>
-<p>接下来是算了</p>
-<p>微分后同时乘x 有</p>
-<p>$xF’(x) &#x3D; F(x) + (F(x) + x) \sum_{0 \lt k} x^{k} H’(x^k).$</p>
-<p>这正好是之前不知道如何处理exp, 现在看来, 通过微分&#x2F;积分 的形式 再创建出 同样表达式,再用F(x)替换掉即可</p>
-<p>令$J(x) &#x3D; \sum_{0 \lt k} x^{k} H’(x^k)$</p>
-<p>考虑n次项系数$(n \ge 2)$</p>
-<p>$nf_n &#x3D; f_n+\sum_{0 &lt; k &lt; n} f_k j_{n-k} + j_{n-1}$</p>
-<p>移项得到递推表达式</p>
-<p>$f_n &#x3D; \frac{1}{n - 1} \left(j_{n-1} + \sum_{0 \lt k \lt n} f_k j_{n-k}\right)$</p>
-<p>对于边界$f_0 &#x3D; f_1 &#x3D; j_0 &#x3D; 0$</p>
-<p>$j_n &#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} H’(x^k)$</p>
-<p>$&#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} H’(x^k)$</p>
-<p>$&#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} \sum_{i&#x3D;0} (i+1) h_{i+1} (x^k)^i$</p>
-<p>$&#x3D; \sum_{k | n} \lbrack x^n \rbrack \sum_{i&#x3D;1} i h_{i} (x^k)^i$</p>
-<p>$&#x3D; \sum_{k | n} \frac{n}{k} h_{\frac{n}{k}}$</p>
-<p>$&#x3D; \sum_{d | n} d h_d $</p>
-<p>$&#x3D; \sum_{d | n} d \cdot (f_d + j_d) $</p>
-<p>如果$f$知道, 那么$j$ 能快速计算</p>
-<p>而f这 很显示需要 分治FFT了</p>
-<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc230/submissions/34519255">https://atcoder.jp/contests/abc230/submissions/34519255</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;atcoder/convolution.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;atcoder/modint.hpp&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">int</span> SZ;</span><br><span class="line">mint inv[<span class="number">500010</span>] = &#123;<span class="number">0</span>,<span class="number">1</span>&#125;;</span><br><span class="line">std::vector&lt;mint&gt; f, g, j;</span><br><span class="line"><span class="comment">// 提取数组一段 [L..R)</span></span><br><span class="line"><span class="function">std::vector&lt;mint&gt; <span class="title">get</span><span class="params">(std::vector&lt;mint&gt;&amp; v, <span class="type">int</span> L, <span class="type">int</span> R)</span> </span>&#123;<span class="keyword">return</span> &#123;v.<span class="built_in">begin</span>() + L, v.<span class="built_in">begin</span>() + R&#125;;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// f[n] = 1/(n-1) (j[n-1] + f * j), fft f * j</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dc</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123; <span class="comment">// 对于f做分治 fft, 每次调用前内部贡献都来自于[0..l),每次只完成[l..r)的计算,不在此函数中对[r,..)产生贡献, 每次先[l..mid) 再 [mid..r), 对于j做简单分治</span></span><br><span class="line">  <span class="keyword">if</span> (l + <span class="number">1</span> == r) &#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= <span class="number">2</span>) f[l] = (f[l] + j[l<span class="number">-1</span>]) * inv[l<span class="number">-1</span>]; <span class="comment">// 处理之前 一直是由比它小的贡献 f * j</span></span><br><span class="line">    <span class="keyword">if</span> (l &gt;= <span class="number">1</span>) <span class="keyword">for</span> (<span class="type">int</span> i = l; i &lt; SZ; i += l) j[i] += (f[l] + g[l]) * l; <span class="comment">// j[n] = sum d|n, d * (f[d] + g[d])</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> mid = (l + r) / <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">dc</span>(l, mid); <span class="comment">// [0..mid) 都完成了, 把它们贡献散布到[mid, r)</span></span><br><span class="line">  <span class="keyword">if</span> (l == <span class="number">0</span>) &#123; <span class="comment">// 注意不要算重了</span></span><br><span class="line">    <span class="keyword">auto</span> fj = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, <span class="number">0</span>, mid), <span class="built_in">get</span>(j, <span class="number">0</span>, mid));</span><br><span class="line">    <span class="built_in">rep</span>(i,mid,r) f[i] += fj[i];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">auto</span> fj1 = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, l, mid), <span class="built_in">get</span>(j, <span class="number">0</span>, r - l)); <span class="comment">// 两段必定不重复</span></span><br><span class="line">    <span class="keyword">auto</span> fj2 = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, <span class="number">0</span>, r - l), <span class="built_in">get</span>(j, l, mid));</span><br><span class="line">    <span class="built_in">rep</span>(i,mid,r) f[i] += fj1[i - l] + fj2[i - l];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">dc</span>(mid, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> W = <span class="built_in">read</span>(); <span class="comment">// 求 [2..W]</span></span><br><span class="line">  <span class="type">int</span> K = <span class="built_in">read</span>();</span><br><span class="line">  SZ = <span class="number">1</span>; <span class="comment">// &gt;= n+1, 方便分治 不会重复计算</span></span><br><span class="line">  <span class="keyword">while</span> (SZ &lt;= W) SZ *= <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,SZ) inv[i] = (MOD-MOD/i) * inv[MOD%i];</span><br><span class="line">  f = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  g = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  j = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">while</span>(K--) g[<span class="built_in">read</span>()] += <span class="number">1</span>; <span class="comment">// g[n] = count(val == n)</span></span><br><span class="line">  <span class="built_in">dc</span>(<span class="number">0</span>, SZ); <span class="comment">// 分治fft</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,W+<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, f[i].<span class="built_in">val</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
-<p>感觉还是莫比乌斯反演相关的知识点</p>
-<p>这个S的定义 感觉凭空出现啊, 这题解有一点搞</p>
-<p>但如果不知道这种定义, 还是可以从莫比乌斯函数推导出的</p>
-<p>H</p>
-<p>不会啊</p>
-<p>虽然之前几场的生成函数题目学了, 但是都是说从最简单的选项,建立函数或方程, 然后运算,化简,提取系数</p>
-<p>这里通过集合和函数的关系, 感觉学了一点新的东西, 也就是 可以把一个集合操作变成另一个集合, 与 生成方程对应, 换句话说, 生成方程对应了操作,而操作对象是集合就好了, 这样一定程度上有”模块化”和”函数化”的感觉</p>
-<p>这个感觉和上次 列生成函数一样还有个好处,就是当结构不再只是层级的,而是会有可相互递归时, 集合就更直观感受</p>
-<p>以及exp消除这里办法是微分&#x2F;积分 同表达式 替换</p>
-<p>求解系数,没有直接表达式时, 用递推关系式+分治</p>
-<p>然后实现上之前213H也做了分治fft,但是自己依赖自己, 这里的话依赖两个, 要注意分治时不要重复计算, 所以一个办法是把长度做成2的幂次</p>
-<p>TODO Pólya’s enumeration theorem</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc230/editorial">官方题解</a></p>
-<p><a href="https://yexiaorain.github.io/Blog/2019-01-06-MobiusInversionFormula/">之前写的莫反笔记</a></p>
-<p><a href="https://yexiaorain.github.io/Blog/2019-03-23-cfP1139D/">莫反 CF 548 Div2 D</a></p>
-<p><a href="https://yexiaorain.github.io/Blog/2020-11-07-nowcoder8282D/">莫反NowCoder 8282 D</a></p>
-<p><a href="http://localhost:4000/Blog/2022-08-08-ac_abc222/">222H 生成函数</a></p>
-]]></content>
-      <categories>
-        <category>Atcoder</category>
-        <category>ABC</category>
-      </categories>
-      <tags>
-        <tag>Möbius function</tag>
-        <tag>生成函数</tag>
-        <tag>分治卷积</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Atcoder abc234</title>
     <url>/Blog/2022-09-05-ac-abc234/</url>
     <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc234/tasks">https://atcoder.jp/contests/abc234/tasks</a></p>
@@ -14556,6 +14556,179 @@
         <tag>组合数</tag>
         <tag>树上DP</tag>
         <tag>图论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder abc236</title>
+    <url>/Blog/2022-09-07-ac-abc236/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc236/tasks">https://atcoder.jp/contests/abc236/tasks</a></p>
+<h1 id="E-Average-and-Median"><a href="#E-Average-and-Median" class="headerlink" title="E - Average and Median"></a>E - Average and Median</h1><p>给你一个数列</p>
+<p>从中选一些数,保证任意相邻的两个至少一个被选</p>
+<p>求 平均数的最大值</p>
+<p>求 中位数的最大值, 这里偶数个的时候, 取第 n&#x2F;2 个 而不是中间两个的平均数</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e5</p>
+<p>ai [1,1e9]</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>想dp吧, 但是如果是<code>dp[i][0/1]</code> 表示第i个是否选的最大平均值</p>
+<p>那么问题是, 前面更小的平均值可能让结果更大</p>
+<p>因为 (v0c0+a[i])&#x2F;(c0+1) &lt; (v1c1+a[i])&#x2F;(c1+1), 并不意味着 v0和v1的大小关系</p>
+<p>但如果把数量带上, 啊不就n^2空间</p>
+<hr>
+<p>然后思路二, 先任意选一些合法, 然后剩下的没选的中, 从大到小,只要比当前平均值大, 则选择, 否则不选</p>
+<p>这样最优 &#x3D; 最优</p>
+<p>问题是 如何枚举所有初步合法, 就算枚举了, 这样搞 至少还有个n倍</p>
+<hr>
+<p>再就是,直接从大到小选,选到合法为止, 但是看起来样例就是反例</p>
+<hr>
+<p>再就是 考虑二分答案, 答案是否小于 val, 如果小于, 则所有大于它的都必选, 因为如果不选,而答案小于val,则选了可以更大</p>
+<p>这样对于剩下的来说, 依然和数量和和有关比如 200 100 1 100 200,</p>
+<p>不会了</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>考虑答案是否超过k</p>
+<p>平均数 &gt; k 等价 (xi-k) 有方案和大于0, 这样就不关心个数了, 而是只用关心值</p>
+<p>中位数 &gt; k 等价 大于k的数量 大于 小于等于k的数量, 所以大于的变成1, 小于等于的变成-1, 同样求最大的和</p>
+<p>注意精度</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc236/submissions/34706816">https://atcoder.jp/contests/abc236/submissions/34706816</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n ;</span><br><span class="line"><span class="function">ll <span class="title">maximize</span><span class="params">(<span class="type">const</span> ll * a)</span> </span>&#123; <span class="comment">// 相邻至少一个选,最大和</span></span><br><span class="line">  ll c[<span class="number">2</span>] = &#123;<span class="number">0</span>,<span class="number">0</span>&#125;; <span class="comment">// 0:第i个不选, 1个选</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">tie</span>(c[<span class="number">0</span>],c[<span class="number">1</span>]) = <span class="built_in">make_pair</span>(c[<span class="number">1</span>],<span class="built_in">max</span>(c[<span class="number">0</span>],c[<span class="number">1</span>])+ a[i]);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">max</span>(c[<span class="number">0</span>],c[<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 左小于等于 右大于</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">F</span>&gt; <span class="function">ll <span class="title">binary_search_lambda</span><span class="params">(ll ok, ll ng, <span class="type">const</span> F&amp; check)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="built_in">abs</span>(ok - ng) &gt; <span class="number">1</span>) &#123;</span><br><span class="line">    ll md = (ok + ng) / <span class="number">2</span>;</span><br><span class="line">    (<span class="built_in">check</span>(md) &gt; <span class="number">0</span> ? ok : ng) = md;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ok;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> ll t12 = <span class="number">1000000000000</span>;</span><br><span class="line"><span class="type">const</span> ll t9 = <span class="number">1000000000</span>;</span><br><span class="line"><span class="type">const</span> ll t3 = <span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line">ll a[<span class="number">100010</span>];</span><br><span class="line">ll b[<span class="number">100010</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  n = <span class="built_in">read</span>();;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i] = <span class="built_in">read</span>();</span><br><span class="line">  ll average = <span class="built_in">binary_search_lambda</span>(<span class="number">0</span>, t12 + <span class="number">1</span>, [&amp;](<span class="type">const</span> ll thres) &#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n) b[i] = a[i] * t3 - thres;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">maximize</span>(b) &gt;= <span class="number">0</span>;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  ll median = <span class="built_in">binary_search_lambda</span>(<span class="number">0</span>, t9 + <span class="number">1</span>, [&amp;](<span class="type">const</span> ll thres) &#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n) b[i] = a[i] &gt;= thres ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">maximize</span>(b) &gt; <span class="number">0</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld.%03lld\n&quot;</span>, average/t3,average%t3);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,median);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="F-Spices"><a href="#F-Spices" class="headerlink" title="F - Spices"></a>F - Spices</h1><p>给你 [1,2^n) 的每个数对应的代价c[i]</p>
+<p>求能表示[1,2^n) 的xor线性基, 的最小代价和</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 16</p>
+<p>ci [1,1e9]</p>
+<p>2s</p>
+<p>1024 mb</p>
+<h2 id="我的想法"><a href="#我的想法" class="headerlink" title="我的想法"></a>我的想法</h2><p>看一个值和前面选的是否线性相关可以做, 但也是求出一组线性基</p>
+<p>而如何保证最小呢???是否有局部性</p>
+<p>比如</p>
+<p>1,01,11, 可以3种选择</p>
+<p>并没有相关知识, 也不会推</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>先按照代价排序</p>
+<p>然后从小到大找就行了……………………………………………</p>
+<p>啊 我蠢了</p>
+<p>如果 A线性无关, A &amp; a 线性相关</p>
+<p>那么如果A\b &amp; a线性无关, 其实说明 A 和 A\b &amp; a 等价</p>
+<p>因为 A 等价 A &amp; a &#x3D; (A\b &amp; a) &amp; b &#x3D; (A\b &amp; a)</p>
+<hr>
+<p>这人均会线性代数的吗?</p>
+<hr>
+<p>求线性基</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">ll x = value;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> b:bases) x = <span class="built_in">min</span>(x, x^b); <span class="comment">// 意义是每个对应其最高位的1, 这样xor把对应最高位xor 1, 变成0</span></span><br><span class="line"><span class="keyword">if</span>(x) bases.<span class="built_in">push_back</span>(x);</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc236/submissions/34714903">https://atcoder.jp/contests/abc236/submissions/34714903</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt; ci; <span class="comment">// &lt;cost, x&gt;</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,(<span class="number">1</span>&lt;&lt;n)) ci.<span class="built_in">push_back</span>(&#123;<span class="built_in">read</span>(),i&#125;);</span><br><span class="line">  <span class="built_in">sort</span>(ci.<span class="built_in">begin</span>(), ci.<span class="built_in">end</span>());;</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; bases; <span class="comment">// 线性基的值</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span>[c, x]:ci)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> b:bases) x = <span class="built_in">min</span>(x, x^b);</span><br><span class="line">    <span class="keyword">if</span>(x) &#123;</span><br><span class="line">      bases.<span class="built_in">push_back</span>(x);</span><br><span class="line">      ans += c;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="G-Good-Vertices"><a href="#G-Good-Vertices" class="headerlink" title="G - Good Vertices"></a>G - Good Vertices</h1><p>N点,有向图</p>
+<p>时刻0, 无边</p>
+<p>时刻 t&#x3D;1..T, 增加边ut -&gt; vt,(可能自环)</p>
+<p>如果一个点, 能从1开始,恰好L次移动到达, 则称为好点</p>
+<p>对于每个点输出它首次变成好点的时刻</p>
+<h2 id="范围-2"><a href="#范围-2" class="headerlink" title="范围"></a>范围</h2><p>n 100</p>
+<p>L 1e9</p>
+<p>t &lt;&#x3D; n^2</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>看这n这么小,l这么大</p>
+<p>第一感觉就是矩阵快速幂,但是每次需要 n^3 log(l)</p>
+<p>一共n^5 log(l), 感觉过不了啊</p>
+<hr>
+<p>优化思路, 既然是每次增加, 那么答案的点集也是非严格增加点的</p>
+<p>那么, 可以考虑记录 初始矩阵2的幂次的矩阵幂的结果, 如果一样提前的到结果, 后面的可以减少一定计算, 但不会估计复杂度</p>
+<p>然后因为其实只需要是否大于0, 所以可以变成 &gt;&#x3D; 0 的矩阵运算状态</p>
+<h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><p>还是矩阵乘法</p>
+<p>但是不要每次计算而是一起算</p>
+<p>这样,边权变成时间, 而乘法变成<code>a[i][j] =min(max(a[i][k],a[k][j]))</code></p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc236/submissions/34765126">https://atcoder.jp/contests/abc236/submissions/34765126</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; T <span class="title">f</span><span class="params">(T &amp;A,T&amp;B)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = A.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">auto</span> C = <span class="built_in">vector</span>(n,<span class="built_in">vector</span>(n,INF));</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">rep</span>(j,<span class="number">0</span>,n) <span class="built_in">rep</span>(k,<span class="number">0</span>,n) C[i][j] =<span class="built_in">min</span>(C[i][j],<span class="built_in">max</span>(A[i][k],B[k][j]));</span><br><span class="line">  <span class="keyword">return</span> C;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> t = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> L = <span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">auto</span> A = <span class="built_in">vector</span>(n,<span class="built_in">vector</span>(n,INF));</span><br><span class="line">  A[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">auto</span> B = <span class="built_in">vector</span>(n,<span class="built_in">vector</span>(n,INF));</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,t+<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> y = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    B[x][y]=i;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>(L)&#123;</span><br><span class="line">    <span class="keyword">if</span>(L%<span class="number">2</span>) A=<span class="built_in">f</span>(A,B);</span><br><span class="line">    B=<span class="built_in">f</span>(B,B);</span><br><span class="line">    L/=<span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:A[<span class="number">0</span>]) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,v == INF?<span class="number">-1</span>:v);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Distinct-Multiples"><a href="#Ex-Distinct-Multiples" class="headerlink" title="Ex - Distinct Multiples"></a>Ex - Distinct Multiples</h1><p>给一个长N正整数序列D</p>
+<p>求的长N正整数序列A,且满足要求的个数 mod 998244353</p>
+<ol>
+<li>$A_i \in [1,M]$</li>
+<li>$A_i\ne A_j,(i\ne j)$</li>
+<li>$A_i \equiv 0 \pmod {D_i}$</li>
+</ol>
+<h2 id="范围-3"><a href="#范围-3" class="headerlink" title="范围"></a>范围</h2><p>N 16</p>
+<p>M 1e18</p>
+<h2 id="我的思路-2"><a href="#我的思路-2" class="headerlink" title="我的思路"></a>我的思路</h2><p>不妨先给D排序, 这样D从小到大</p>
+<p>这N很小, 难道是bitdp + 容斥</p>
+<p>2^16 &#x3D; 65536</p>
+<p>sum (-1)^cnt(bitmask) count(bitmask 全部相等)</p>
+<p>&#x3D; sum (-1)^cnt(mask) M&#x2F;lcm(a[mask])</p>
+<h2 id="题解-3"><a href="#题解-3" class="headerlink" title="题解"></a>题解</h2><p>N个点完全图</p>
+<p>E为边集</p>
+<p>S为E的子集</p>
+<p>f(S) &#x3D; 满足 范围和倍数, 且联通块中两两相等的方案数</p>
+<p>所以答案 &#x3D; sum f(S)(-1)^{|S|}, </p>
+<p>令g(T) &#x3D; M &#x2F; lcm(or a[T])</p>
+<p>h(n) &#x3D; n个点的图让所有点连通的边方案的$(-1)^{边数}$的和</p>
+<p>h(1) &#x3D; 1</p>
+<p>对于n&gt;&#x3D;2,如果不考虑连通性,显然奇数条边和偶数条边方案一样, 即和&#x3D;0,(每条边选和不选对应奇偶不同,所以数量一样)</p>
+<p>令每个方案中T是包含1的连通块, |T| &gt;&#x3D; 2 不为全部1..n,</p>
+<p>对于|T| &#x3D; [1..n-2] 来说, 未连的部分又是任意连, 因此代价和也是0</p>
+<p>对于|T| &#x3D; n-1 和 |T| &#x3D; n, h(n)+(n-1)h(n-1) &#x3D; 0</p>
+<p>因此h(n) &#x3D; -(n-1)h(n-1)</p>
+<p>即h(n) &#x3D; (-1)^{n-1} (n-1)!</p>
+<hr>
+<p>那么对于 $f(S)(-1)^|S|$ 对应的点的多个连通块 T1…Tk,的和 $&#x3D; \prod g(T_k)h(|T_k|)$</p>
+<p>因为相当于变成 指定了多个两两 不相交的 联通块, 每个连通块里的所有选边方案和的-1幂次权的和</p>
+<hr>
+<p>就变成bitdp了</p>
+<p>dp(mask) &#x3D; sum (g * h)(含1的mask0) * dp(mask \ mask0)</p>
+<p>把g,h展开一下</p>
+<p>$dp(mask) &#x3D; (-1)^{mask} sum ((n-1)! * ) dp_{mask&#x2F;mask0}$</p>
+<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc236/submissions/34841215">https://atcoder.jp/contests/abc236/submissions/34841215</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">16</span>;</span><br><span class="line">mint fac[<span class="number">20</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint f[<span class="number">1</span>&lt;&lt;N]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">ll a[<span class="number">20</span>];</span><br><span class="line">ll lcm[<span class="number">1</span>&lt;&lt;N] = &#123;<span class="number">1</span>&#125;; <span class="comment">// 如果过大 用 m+1表示</span></span><br><span class="line"><span class="function">ll <span class="title">gcd</span><span class="params">(ll a,ll b)</span></span>&#123; <span class="keyword">return</span> b==<span class="number">0</span>?a:<span class="built_in">gcd</span>(b,a%b);&#125;</span><br><span class="line"><span class="type">int</span> c[<span class="number">1</span>&lt;&lt;N] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  ll m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) fac[i]=fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n) c[i]=c[i&amp;(i<span class="number">-1</span>)]+<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n)&#123;</span><br><span class="line">    <span class="type">int</span> p=__builtin_ctz(mask); <span class="comment">// 最低位1的二的幂次</span></span><br><span class="line">    <span class="type">int</span> b=<span class="number">1</span>&lt;&lt;p;</span><br><span class="line">    ll u=lcm[mask^b];</span><br><span class="line">    ll v=a[p];</span><br><span class="line">    ll w=<span class="built_in">gcd</span>(u,v);</span><br><span class="line">    lcm[mask] = (u/w&lt;=m/v)? u/w*v : (m+<span class="number">1</span>); <span class="comment">// 注意overflow 这里直接设置m+1 来避免overflow 而让结果 = 0</span></span><br><span class="line">    <span class="comment">// 非空子集遍历 包含最低位 dp[mask] = dp[mask0 not contain lowbit] * (g*h)(mask\mask0)</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=mask;j;j=(j<span class="number">-1</span>)&amp;mask) <span class="keyword">if</span>(j&amp;b) f[mask]+=f[mask^j]*fac[c[j]<span class="number">-1</span>]*(m/lcm[j])*(c[j]&amp;<span class="number">1</span>?<span class="number">1</span>:<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(f[(<span class="number">1</span>&lt;&lt;n)<span class="number">-1</span>]).<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="容斥"><a href="#容斥" class="headerlink" title="容斥"></a>容斥</h1><p>从零再学一次容斥</p>
+<p>有U中元素有n种不同属性,有第i种属性的元素构成集合$S_i$</p>
+<p>$\left|\bigcup_{i&#x3D;1}^{n}S_i\right|&#x3D;\sum_{m&#x3D;1}^n(-1)^{m-1}\sum_{a_i &lt; a_{i+1} }\left|\bigcap_{i&#x3D;1}^mS_{a_i}\right|$</p>
+<p>相当于 每个元素出现次数 &#x3D; 1</p>
+<hr>
+<p>集合的交 &#x3D; 全集 - 补集的并</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>$\sum x_i &#x3D; m$</p>
+<p>$x_i \le b_i$</p>
+<p>求非负整数解的个数</p>
+<p>容斥模型</p>
+<ol>
+<li>全集 方程的非负整数解</li>
+<li>元素$x_i$</li>
+<li>属性$x_i \le b_i$</li>
+</ol>
+<p>求的就是 所有对应的交 &#x3D; 全集 - 补集的并</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>E</p>
+<p>难受啊 卡蓝题了</p>
+<p>感觉这里的思路是变成和0比较, 因为和0比较的话, 个数就不在关心了, 这样就简单dp ! , 感觉这是干掉”个数”维度的一个思路</p>
+<p>然后这里中位数把数量的比较,变成+1&#x2F;-1,算最大和</p>
+<p>F</p>
+<p>还是蓝题,还是不会</p>
+<p>不过我没怎么遇到这种 先排序代价, 再按顺序贪心的了, 算也依赖于线性基选择的局部性质选中不会被替换保证等价的局部性</p>
+<p>G</p>
+<p>把时间变成 权, 然后区min (max())</p>
+<p>Ex</p>
+<p>完全不会容斥, 问题应该是变成</p>
+<ol>
+<li>确定全集</li>
+<li>每个属性对应集合</li>
+<li>每个元素的函数</li>
+</ol>
+<p>这样做容斥</p>
+<p>这样属性的个数才是-1的幂次, 保证容斥后并集每个的贡献为1次, 贡献为 元素的函数的结果</p>
+<p>所以我那样的公式是不对的, 把相等点集作为属性意味着属性之间没有相互独立, 或者从中文上来讲, 两个属性对应集合的并就是两个共有的属性, 而bitmask无法表示这个意思, 011 | 101 &#x3D; 111 , 但是第一个表示的是0和1相等, 第二个表示的是0和2相等,但是 后面表示的是012相等, 所以题解中的单个属性就是两个相等</p>
+<p>而属性,一个是想每个值作为属性,</p>
+<p> 这里是建立图的关系, 每条边作为作为属性</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc236/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>容斥</tag>
+        <tag>矩阵</tag>
+        <tag>线性基</tag>
+        <tag>bitdp</tag>
       </tags>
   </entry>
   <entry>
@@ -14797,179 +14970,6 @@
         <tag>概率论</tag>
         <tag>DP</tag>
         <tag>莫队</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Atcoder abc236</title>
-    <url>/Blog/2022-09-07-ac-abc236/</url>
-    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc236/tasks">https://atcoder.jp/contests/abc236/tasks</a></p>
-<h1 id="E-Average-and-Median"><a href="#E-Average-and-Median" class="headerlink" title="E - Average and Median"></a>E - Average and Median</h1><p>给你一个数列</p>
-<p>从中选一些数,保证任意相邻的两个至少一个被选</p>
-<p>求 平均数的最大值</p>
-<p>求 中位数的最大值, 这里偶数个的时候, 取第 n&#x2F;2 个 而不是中间两个的平均数</p>
-<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e5</p>
-<p>ai [1,1e9]</p>
-<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>想dp吧, 但是如果是<code>dp[i][0/1]</code> 表示第i个是否选的最大平均值</p>
-<p>那么问题是, 前面更小的平均值可能让结果更大</p>
-<p>因为 (v0c0+a[i])&#x2F;(c0+1) &lt; (v1c1+a[i])&#x2F;(c1+1), 并不意味着 v0和v1的大小关系</p>
-<p>但如果把数量带上, 啊不就n^2空间</p>
-<hr>
-<p>然后思路二, 先任意选一些合法, 然后剩下的没选的中, 从大到小,只要比当前平均值大, 则选择, 否则不选</p>
-<p>这样最优 &#x3D; 最优</p>
-<p>问题是 如何枚举所有初步合法, 就算枚举了, 这样搞 至少还有个n倍</p>
-<hr>
-<p>再就是,直接从大到小选,选到合法为止, 但是看起来样例就是反例</p>
-<hr>
-<p>再就是 考虑二分答案, 答案是否小于 val, 如果小于, 则所有大于它的都必选, 因为如果不选,而答案小于val,则选了可以更大</p>
-<p>这样对于剩下的来说, 依然和数量和和有关比如 200 100 1 100 200,</p>
-<p>不会了</p>
-<span id="more"></span>
-
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>考虑答案是否超过k</p>
-<p>平均数 &gt; k 等价 (xi-k) 有方案和大于0, 这样就不关心个数了, 而是只用关心值</p>
-<p>中位数 &gt; k 等价 大于k的数量 大于 小于等于k的数量, 所以大于的变成1, 小于等于的变成-1, 同样求最大的和</p>
-<p>注意精度</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc236/submissions/34706816">https://atcoder.jp/contests/abc236/submissions/34706816</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n ;</span><br><span class="line"><span class="function">ll <span class="title">maximize</span><span class="params">(<span class="type">const</span> ll * a)</span> </span>&#123; <span class="comment">// 相邻至少一个选,最大和</span></span><br><span class="line">  ll c[<span class="number">2</span>] = &#123;<span class="number">0</span>,<span class="number">0</span>&#125;; <span class="comment">// 0:第i个不选, 1个选</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">tie</span>(c[<span class="number">0</span>],c[<span class="number">1</span>]) = <span class="built_in">make_pair</span>(c[<span class="number">1</span>],<span class="built_in">max</span>(c[<span class="number">0</span>],c[<span class="number">1</span>])+ a[i]);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">max</span>(c[<span class="number">0</span>],c[<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 左小于等于 右大于</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">F</span>&gt; <span class="function">ll <span class="title">binary_search_lambda</span><span class="params">(ll ok, ll ng, <span class="type">const</span> F&amp; check)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="built_in">abs</span>(ok - ng) &gt; <span class="number">1</span>) &#123;</span><br><span class="line">    ll md = (ok + ng) / <span class="number">2</span>;</span><br><span class="line">    (<span class="built_in">check</span>(md) &gt; <span class="number">0</span> ? ok : ng) = md;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ok;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> ll t12 = <span class="number">1000000000000</span>;</span><br><span class="line"><span class="type">const</span> ll t9 = <span class="number">1000000000</span>;</span><br><span class="line"><span class="type">const</span> ll t3 = <span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line">ll a[<span class="number">100010</span>];</span><br><span class="line">ll b[<span class="number">100010</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  n = <span class="built_in">read</span>();;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i] = <span class="built_in">read</span>();</span><br><span class="line">  ll average = <span class="built_in">binary_search_lambda</span>(<span class="number">0</span>, t12 + <span class="number">1</span>, [&amp;](<span class="type">const</span> ll thres) &#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n) b[i] = a[i] * t3 - thres;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">maximize</span>(b) &gt;= <span class="number">0</span>;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  ll median = <span class="built_in">binary_search_lambda</span>(<span class="number">0</span>, t9 + <span class="number">1</span>, [&amp;](<span class="type">const</span> ll thres) &#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n) b[i] = a[i] &gt;= thres ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">maximize</span>(b) &gt; <span class="number">0</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld.%03lld\n&quot;</span>, average/t3,average%t3);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,median);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="F-Spices"><a href="#F-Spices" class="headerlink" title="F - Spices"></a>F - Spices</h1><p>给你 [1,2^n) 的每个数对应的代价c[i]</p>
-<p>求能表示[1,2^n) 的xor线性基, 的最小代价和</p>
-<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 16</p>
-<p>ci [1,1e9]</p>
-<p>2s</p>
-<p>1024 mb</p>
-<h2 id="我的想法"><a href="#我的想法" class="headerlink" title="我的想法"></a>我的想法</h2><p>看一个值和前面选的是否线性相关可以做, 但也是求出一组线性基</p>
-<p>而如何保证最小呢???是否有局部性</p>
-<p>比如</p>
-<p>1,01,11, 可以3种选择</p>
-<p>并没有相关知识, 也不会推</p>
-<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>先按照代价排序</p>
-<p>然后从小到大找就行了……………………………………………</p>
-<p>啊 我蠢了</p>
-<p>如果 A线性无关, A &amp; a 线性相关</p>
-<p>那么如果A\b &amp; a线性无关, 其实说明 A 和 A\b &amp; a 等价</p>
-<p>因为 A 等价 A &amp; a &#x3D; (A\b &amp; a) &amp; b &#x3D; (A\b &amp; a)</p>
-<hr>
-<p>这人均会线性代数的吗?</p>
-<hr>
-<p>求线性基</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">ll x = value;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> b:bases) x = <span class="built_in">min</span>(x, x^b); <span class="comment">// 意义是每个对应其最高位的1, 这样xor把对应最高位xor 1, 变成0</span></span><br><span class="line"><span class="keyword">if</span>(x) bases.<span class="built_in">push_back</span>(x);</span><br></pre></td></tr></table></figure>
-
-<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc236/submissions/34714903">https://atcoder.jp/contests/abc236/submissions/34714903</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt; ci; <span class="comment">// &lt;cost, x&gt;</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,(<span class="number">1</span>&lt;&lt;n)) ci.<span class="built_in">push_back</span>(&#123;<span class="built_in">read</span>(),i&#125;);</span><br><span class="line">  <span class="built_in">sort</span>(ci.<span class="built_in">begin</span>(), ci.<span class="built_in">end</span>());;</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; bases; <span class="comment">// 线性基的值</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span>[c, x]:ci)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> b:bases) x = <span class="built_in">min</span>(x, x^b);</span><br><span class="line">    <span class="keyword">if</span>(x) &#123;</span><br><span class="line">      bases.<span class="built_in">push_back</span>(x);</span><br><span class="line">      ans += c;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="G-Good-Vertices"><a href="#G-Good-Vertices" class="headerlink" title="G - Good Vertices"></a>G - Good Vertices</h1><p>N点,有向图</p>
-<p>时刻0, 无边</p>
-<p>时刻 t&#x3D;1..T, 增加边ut -&gt; vt,(可能自环)</p>
-<p>如果一个点, 能从1开始,恰好L次移动到达, 则称为好点</p>
-<p>对于每个点输出它首次变成好点的时刻</p>
-<h2 id="范围-2"><a href="#范围-2" class="headerlink" title="范围"></a>范围</h2><p>n 100</p>
-<p>L 1e9</p>
-<p>t &lt;&#x3D; n^2</p>
-<p>2s</p>
-<p>1024mb</p>
-<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>看这n这么小,l这么大</p>
-<p>第一感觉就是矩阵快速幂,但是每次需要 n^3 log(l)</p>
-<p>一共n^5 log(l), 感觉过不了啊</p>
-<hr>
-<p>优化思路, 既然是每次增加, 那么答案的点集也是非严格增加点的</p>
-<p>那么, 可以考虑记录 初始矩阵2的幂次的矩阵幂的结果, 如果一样提前的到结果, 后面的可以减少一定计算, 但不会估计复杂度</p>
-<p>然后因为其实只需要是否大于0, 所以可以变成 &gt;&#x3D; 0 的矩阵运算状态</p>
-<h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><p>还是矩阵乘法</p>
-<p>但是不要每次计算而是一起算</p>
-<p>这样,边权变成时间, 而乘法变成<code>a[i][j] =min(max(a[i][k],a[k][j]))</code></p>
-<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc236/submissions/34765126">https://atcoder.jp/contests/abc236/submissions/34765126</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; T <span class="title">f</span><span class="params">(T &amp;A,T&amp;B)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = A.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">auto</span> C = <span class="built_in">vector</span>(n,<span class="built_in">vector</span>(n,INF));</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">rep</span>(j,<span class="number">0</span>,n) <span class="built_in">rep</span>(k,<span class="number">0</span>,n) C[i][j] =<span class="built_in">min</span>(C[i][j],<span class="built_in">max</span>(A[i][k],B[k][j]));</span><br><span class="line">  <span class="keyword">return</span> C;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> t = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> L = <span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">auto</span> A = <span class="built_in">vector</span>(n,<span class="built_in">vector</span>(n,INF));</span><br><span class="line">  A[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">auto</span> B = <span class="built_in">vector</span>(n,<span class="built_in">vector</span>(n,INF));</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,t+<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> y = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    B[x][y]=i;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>(L)&#123;</span><br><span class="line">    <span class="keyword">if</span>(L%<span class="number">2</span>) A=<span class="built_in">f</span>(A,B);</span><br><span class="line">    B=<span class="built_in">f</span>(B,B);</span><br><span class="line">    L/=<span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:A[<span class="number">0</span>]) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,v == INF?<span class="number">-1</span>:v);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Ex-Distinct-Multiples"><a href="#Ex-Distinct-Multiples" class="headerlink" title="Ex - Distinct Multiples"></a>Ex - Distinct Multiples</h1><p>给一个长N正整数序列D</p>
-<p>求的长N正整数序列A,且满足要求的个数 mod 998244353</p>
-<ol>
-<li>$A_i \in [1,M]$</li>
-<li>$A_i\ne A_j,(i\ne j)$</li>
-<li>$A_i \equiv 0 \pmod {D_i}$</li>
-</ol>
-<h2 id="范围-3"><a href="#范围-3" class="headerlink" title="范围"></a>范围</h2><p>N 16</p>
-<p>M 1e18</p>
-<h2 id="我的思路-2"><a href="#我的思路-2" class="headerlink" title="我的思路"></a>我的思路</h2><p>不妨先给D排序, 这样D从小到大</p>
-<p>这N很小, 难道是bitdp + 容斥</p>
-<p>2^16 &#x3D; 65536</p>
-<p>sum (-1)^cnt(bitmask) count(bitmask 全部相等)</p>
-<p>&#x3D; sum (-1)^cnt(mask) M&#x2F;lcm(a[mask])</p>
-<h2 id="题解-3"><a href="#题解-3" class="headerlink" title="题解"></a>题解</h2><p>N个点完全图</p>
-<p>E为边集</p>
-<p>S为E的子集</p>
-<p>f(S) &#x3D; 满足 范围和倍数, 且联通块中两两相等的方案数</p>
-<p>所以答案 &#x3D; sum f(S)(-1)^{|S|}, </p>
-<p>令g(T) &#x3D; M &#x2F; lcm(or a[T])</p>
-<p>h(n) &#x3D; n个点的图让所有点连通的边方案的$(-1)^{边数}$的和</p>
-<p>h(1) &#x3D; 1</p>
-<p>对于n&gt;&#x3D;2,如果不考虑连通性,显然奇数条边和偶数条边方案一样, 即和&#x3D;0,(每条边选和不选对应奇偶不同,所以数量一样)</p>
-<p>令每个方案中T是包含1的连通块, |T| &gt;&#x3D; 2 不为全部1..n,</p>
-<p>对于|T| &#x3D; [1..n-2] 来说, 未连的部分又是任意连, 因此代价和也是0</p>
-<p>对于|T| &#x3D; n-1 和 |T| &#x3D; n, h(n)+(n-1)h(n-1) &#x3D; 0</p>
-<p>因此h(n) &#x3D; -(n-1)h(n-1)</p>
-<p>即h(n) &#x3D; (-1)^{n-1} (n-1)!</p>
-<hr>
-<p>那么对于 $f(S)(-1)^|S|$ 对应的点的多个连通块 T1…Tk,的和 $&#x3D; \prod g(T_k)h(|T_k|)$</p>
-<p>因为相当于变成 指定了多个两两 不相交的 联通块, 每个连通块里的所有选边方案和的-1幂次权的和</p>
-<hr>
-<p>就变成bitdp了</p>
-<p>dp(mask) &#x3D; sum (g * h)(含1的mask0) * dp(mask \ mask0)</p>
-<p>把g,h展开一下</p>
-<p>$dp(mask) &#x3D; (-1)^{mask} sum ((n-1)! * ) dp_{mask&#x2F;mask0}$</p>
-<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc236/submissions/34841215">https://atcoder.jp/contests/abc236/submissions/34841215</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">16</span>;</span><br><span class="line">mint fac[<span class="number">20</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint f[<span class="number">1</span>&lt;&lt;N]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">ll a[<span class="number">20</span>];</span><br><span class="line">ll lcm[<span class="number">1</span>&lt;&lt;N] = &#123;<span class="number">1</span>&#125;; <span class="comment">// 如果过大 用 m+1表示</span></span><br><span class="line"><span class="function">ll <span class="title">gcd</span><span class="params">(ll a,ll b)</span></span>&#123; <span class="keyword">return</span> b==<span class="number">0</span>?a:<span class="built_in">gcd</span>(b,a%b);&#125;</span><br><span class="line"><span class="type">int</span> c[<span class="number">1</span>&lt;&lt;N] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  ll m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) fac[i]=fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n) c[i]=c[i&amp;(i<span class="number">-1</span>)]+<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n)&#123;</span><br><span class="line">    <span class="type">int</span> p=__builtin_ctz(mask); <span class="comment">// 最低位1的二的幂次</span></span><br><span class="line">    <span class="type">int</span> b=<span class="number">1</span>&lt;&lt;p;</span><br><span class="line">    ll u=lcm[mask^b];</span><br><span class="line">    ll v=a[p];</span><br><span class="line">    ll w=<span class="built_in">gcd</span>(u,v);</span><br><span class="line">    lcm[mask] = (u/w&lt;=m/v)? u/w*v : (m+<span class="number">1</span>); <span class="comment">// 注意overflow 这里直接设置m+1 来避免overflow 而让结果 = 0</span></span><br><span class="line">    <span class="comment">// 非空子集遍历 包含最低位 dp[mask] = dp[mask0 not contain lowbit] * (g*h)(mask\mask0)</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=mask;j;j=(j<span class="number">-1</span>)&amp;mask) <span class="keyword">if</span>(j&amp;b) f[mask]+=f[mask^j]*fac[c[j]<span class="number">-1</span>]*(m/lcm[j])*(c[j]&amp;<span class="number">1</span>?<span class="number">1</span>:<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(f[(<span class="number">1</span>&lt;&lt;n)<span class="number">-1</span>]).<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h1 id="容斥"><a href="#容斥" class="headerlink" title="容斥"></a>容斥</h1><p>从零再学一次容斥</p>
-<p>有U中元素有n种不同属性,有第i种属性的元素构成集合$S_i$</p>
-<p>$\left|\bigcup_{i&#x3D;1}^{n}S_i\right|&#x3D;\sum_{m&#x3D;1}^n(-1)^{m-1}\sum_{a_i &lt; a_{i+1} }\left|\bigcap_{i&#x3D;1}^mS_{a_i}\right|$</p>
-<p>相当于 每个元素出现次数 &#x3D; 1</p>
-<hr>
-<p>集合的交 &#x3D; 全集 - 补集的并</p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>$\sum x_i &#x3D; m$</p>
-<p>$x_i \le b_i$</p>
-<p>求非负整数解的个数</p>
-<p>容斥模型</p>
-<ol>
-<li>全集 方程的非负整数解</li>
-<li>元素$x_i$</li>
-<li>属性$x_i \le b_i$</li>
-</ol>
-<p>求的就是 所有对应的交 &#x3D; 全集 - 补集的并</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>E</p>
-<p>难受啊 卡蓝题了</p>
-<p>感觉这里的思路是变成和0比较, 因为和0比较的话, 个数就不在关心了, 这样就简单dp ! , 感觉这是干掉”个数”维度的一个思路</p>
-<p>然后这里中位数把数量的比较,变成+1&#x2F;-1,算最大和</p>
-<p>F</p>
-<p>还是蓝题,还是不会</p>
-<p>不过我没怎么遇到这种 先排序代价, 再按顺序贪心的了, 算也依赖于线性基选择的局部性质选中不会被替换保证等价的局部性</p>
-<p>G</p>
-<p>把时间变成 权, 然后区min (max())</p>
-<p>Ex</p>
-<p>完全不会容斥, 问题应该是变成</p>
-<ol>
-<li>确定全集</li>
-<li>每个属性对应集合</li>
-<li>每个元素的函数</li>
-</ol>
-<p>这样做容斥</p>
-<p>这样属性的个数才是-1的幂次, 保证容斥后并集每个的贡献为1次, 贡献为 元素的函数的结果</p>
-<p>所以我那样的公式是不对的, 把相等点集作为属性意味着属性之间没有相互独立, 或者从中文上来讲, 两个属性对应集合的并就是两个共有的属性, 而bitmask无法表示这个意思, 011 | 101 &#x3D; 111 , 但是第一个表示的是0和1相等, 第二个表示的是0和2相等,但是 后面表示的是012相等, 所以题解中的单个属性就是两个相等</p>
-<p>而属性,一个是想每个值作为属性,</p>
-<p> 这里是建立图的关系, 每条边作为作为属性</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc236/editorial">官方题解</a></p>
-]]></content>
-      <categories>
-        <category>Atcoder</category>
-        <category>ABC</category>
-      </categories>
-      <tags>
-        <tag>DP</tag>
-        <tag>容斥</tag>
-        <tag>矩阵</tag>
-        <tag>线性基</tag>
-        <tag>bitdp</tag>
       </tags>
   </entry>
   <entry>
@@ -16153,7 +16153,7 @@
 <p>Ex</p>
 <p>这 期望表达式, 倒着拆 去凑 函数g, 有点神奇, 学不会啊</p>
 <p>然后这矩阵, 特别是这种接近于下三角矩阵的话, 就不需要再高斯消元什么的, 直接上就是了, 另外就是注意 mod 998244353 的除法</p>
-<p>所以矩阵方向,也可以按照n^2 估计</p>
+<p>所以矩阵方向,也可以按照O(n^2)估计</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc249/editorial">官方题解</a></p>
 ]]></content>
       <categories>
@@ -16165,6 +16165,193 @@
         <tag>线性基</tag>
         <tag>排列组合</tag>
         <tag>线性代数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder abc250</title>
+    <url>/Blog/2022-09-27-ac-abc250/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc250/tasks">https://atcoder.jp/contests/abc250/tasks</a></p>
+<h1 id="F-One-Fourth"><a href="#F-One-Fourth" class="headerlink" title="F - One Fourth"></a>F - One Fourth</h1><p>平面凸n边形</p>
+<p>选非相邻点切割</p>
+<p>求min( 8 abs(size&#x2F;4 - eated))</p>
+<p>就是选一些点, 围成的凸多边形 min(8abs(size * 3&#x2F;4 - 选定凸多边形 ))</p>
+<hr>
+<p>只切一次!!!!!!!!!!!!!!!!!!!!</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e5</p>
+<p>x,y [-4e8,4e8]</p>
+<p>2s</p>
+<p>1024 mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>没做过多少计算几何相关的题目</p>
+<p>一个想法是, 假设一个点会被保留, 想做前i个点, 第i个点保留的 最大, 小于目标的面积, 但似乎没有局部性</p>
+<p>因为看起来像有相互冲突的背包</p>
+<p>如果不是1&#x2F;4, 是1&#x2F;2呢, 我似乎1&#x2F;2也不会做</p>
+<hr>
+<p>干,读错题, 只切一次………….</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>一个n^2 的方法</p>
+<p>选点i, 移动j&#x3D;i+1…</p>
+<p>然后算大小, 每次增加被切三角形的面积</p>
+<hr>
+<p>加个滑窗双指针就没了</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc250/submissions/35189253">https://atcoder.jp/contests/abc250/submissions/35189253</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line">vector&lt;pair&lt;ll,ll&gt; &gt; p;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">cross</span><span class="params">(<span class="type">const</span> pair&lt;ll,ll&gt;&amp; a0,<span class="type">const</span> pair&lt;ll,ll&gt;&amp;a1)</span></span>&#123; <span class="comment">// = area * 2</span></span><br><span class="line">  <span class="keyword">return</span> a0.first*a1.second - a1.first * a0.second;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// p0 - p1</span></span><br><span class="line"><span class="function">pair&lt;ll,ll&gt; <span class="title">sub</span><span class="params">(<span class="type">const</span> pair&lt;ll,ll&gt; &amp;p0,<span class="type">const</span> pair&lt;ll,ll&gt;&amp;p1)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;p0.first - p1.first,p0.second-p1.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">S</span><span class="params">(<span class="type">const</span> pair&lt;ll,ll&gt; &amp;p0,<span class="type">const</span> pair&lt;ll,ll&gt;&amp;p1,<span class="type">const</span> pair&lt;ll,ll&gt;&amp;p2)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">cross</span>(<span class="built_in">sub</span>(p1,p0),<span class="built_in">sub</span>(p2,p0));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>(); <span class="comment">// N 1e5</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) p.<span class="built_in">push_back</span>(&#123;<span class="built_in">read</span>(),<span class="built_in">read</span>()&#125;);</span><br><span class="line">  <span class="keyword">auto</span> o = p[<span class="number">0</span>];</span><br><span class="line">  <span class="built_in">sort</span>(p.<span class="built_in">begin</span>()+<span class="number">1</span>,p.<span class="built_in">end</span>(),[=](<span class="keyword">auto</span> p0,<span class="keyword">auto</span> p1)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">cross</span>(<span class="built_in">sub</span>(p0,o),<span class="built_in">sub</span>(p1,o)) &gt; <span class="number">0</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  ll s = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n<span class="number">-1</span>) s += <span class="built_in">S</span>(o,p[i],p[i+<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> j = i+<span class="number">1</span>;</span><br><span class="line">  ll ans = <span class="number">0x3f3f3f3f3f3f3f3f</span>;</span><br><span class="line">  ll area = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">do</span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(area*<span class="number">4</span> &lt; s &amp;&amp; (j+<span class="number">1</span>)%n != i)&#123;</span><br><span class="line">      area += <span class="built_in">S</span>(p[i],p[j],p[(j+<span class="number">1</span>)%n]);</span><br><span class="line">      ans = <span class="built_in">min</span>(ans, <span class="built_in">abs</span>(s<span class="number">-4</span>*area));</span><br><span class="line">      (j+=<span class="number">1</span>)%=n;</span><br><span class="line">    &#125;</span><br><span class="line">    area -= <span class="built_in">S</span>(p[i],p[(i+<span class="number">1</span>)%n],p[j]);</span><br><span class="line">    ans = <span class="built_in">min</span>(ans, <span class="built_in">abs</span>(s<span class="number">-4</span>*area));</span><br><span class="line">    (i+=<span class="number">1</span>)%=n;</span><br><span class="line">  &#125;<span class="keyword">while</span>(i!=<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="G-Stonks"><a href="#G-Stonks" class="headerlink" title="G - Stonks"></a>G - Stonks</h1><p>n天, 第i天 pi</p>
+<p>每天 可以 买1单位&#x2F;卖1单位</p>
+<p>足够多初始金钱</p>
+<p>求最大赚的数量</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>pi [1,1e9]</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然买的次数&#x3D;卖的次数</p>
+<p>如果只有一买卖次, 那么就是维护前缀最低, ans&#x3D;max(ans, 当前-前缀min)</p>
+<p>考虑两次</p>
+<p>如果两次的操作与第一次最优的方案都没有重叠</p>
+<p>那么其中一组用第一次的替换不会更差</p>
+<p>所以两次的方案, 中出现一次的操作相关的也可以得到最优答案</p>
+<p>但是并不好拆</p>
+<hr>
+<p>一个复杂度明显会超的dp是</p>
+<p><code>dp[i][j]</code> &#x3D; 前i个, 持有j个</p>
+<p>转移<code>dp[i][j] = max(dp[i-1][j], j&gt;0 &amp;&amp; dp[i-1][j-1]-a[i],dp[i-1][j+1]+a[i])</code></p>
+<p>最后答案 &#x3D; <code>dp[i][0]</code></p>
+<hr>
+<p>再就是, 作为卖的价格, 都是尽量选大的, 而买的价格都是尽量小的</p>
+<p>有没有可能 从值考虑去看范围</p>
+<p>但是例如 <code>3 4 1 2</code>, 就会出现有的买比卖还大</p>
+<hr>
+<p>然后就是能不能贪心</p>
+<p>每次获得最大的</p>
+<p>然后在这个前面中找最小的, 做成一对产生收益, 都删掉</p>
+<p>如此重复?</p>
+<p>这样的话, 线段树一类可以维护+查询</p>
+<p>问题是是否有正确性</p>
+<p><code>1 3 2 4</code>, 显然能产生代价为4, 而不是3</p>
+<hr>
+<p>考虑剩下的未被选的</p>
+<p>显然是一个单调递减的序列</p>
+<hr>
+<p>考虑说前i-1个如果通过了两两配对达到了最大, 那么剩余的就是一个单调递减序列</p>
+<p>现在多一个a[i] 对答案会有什么影响</p>
+<p><code>3 1 2 4</code>, 最大是3</p>
+<hr>
+<p>再一个就是 上面可以看到 就是给一个前缀和 &gt;&#x3D; 0 的 1&#x2F;0&#x2F;-1序列和 a[i]的乘积最大</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>也是上来, 和我一样的一个n^2 dp</p>
+<p>然后说把dp看成二维表, 考虑 做一些列上的处理</p>
+<p>例如输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">8</span><br><span class="line">2 5 4 3 7 1 8 6</span><br></pre></td></tr></table></figure>
+
+<p>会有</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 0  -2</span><br><span class="line"> 3  -2  -7</span><br><span class="line"> 3  -1  -6 -11</span><br><span class="line"> 3   0  -4  -9 -14</span><br><span class="line"> 7   3  -2  -7 -14 -21</span><br><span class="line"> 7   6   2  -3  -8 -15 -22</span><br><span class="line">14  10   5   0  -7 -14 -22 -30</span><br><span class="line">16  11   6   0  -6 -13 -20 -28 -36</span><br></pre></td></tr></table></figure>
+
+<p>做<code>dp[i][j-1]-dp[i][j]</code>, 有</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">5 5</span><br><span class="line">4 5 5</span><br><span class="line">3 4 5 5</span><br><span class="line">4 5 5 7 7</span><br><span class="line">1 4 5 5 7 7</span><br><span class="line">4 5 5 7 7 8 8</span><br><span class="line">5 5 6 6 7 7 8 8</span><br></pre></td></tr></table></figure>
+
+<p>题解要我<strong>观察</strong>, 我啥都没观察出, 只看出这些数都是来自 输入的元素</p>
+<hr>
+<p>记录所有可以贡献的点</p>
+<p>那么增加a[i],找最小的小于a[i] 可连接的, 如果前面</p>
+<p>如果是没匹配的,y &lt; a[i], 则(y,a[i]) 构成一对</p>
+<p>x &lt; y &lt; a[i]</p>
+<p>那么, (x,a[i]) 成一组, y单独 拎出来 等待匹配, 而两种做法, a[i] 都是未来可以匹配的</p>
+<p>所以如果一个点z成为卖出, 那它还可以成为<code>两次</code>买入, (x,y) + z &#x3D; (x,z) + y &#x3D;&gt; (x,?) +z &#x3D;&gt; (z,!)</p>
+<p>如果一个点没有成为卖出,那它还可以成为 一次 买入</p>
+<hr>
+<p>proof</p>
+<p>横坐标j, 纵坐标<code>dp[i][j]</code> 画曲线</p>
+<p>考虑<code>dp[i]</code>的曲线 如何变到<code>dp[i+1]</code>的曲线</p>
+<p>注意到上面的转移方程<code>dp[i][j] = max(dp[i-1][j],dp[i-1][j-1]-A[i],dp[i-1][j+1]+A[i])</code></p>
+<p>黑色为dp[6], 蓝色为 max第二项, 红色为max第三项</p>
+<p><img data-src="https://img.atcoder.jp/abc250/d83fb52518b3da6423b16e47185891ca.png"></p>
+<p>然后证明, dp和dp+, 一部分是dp大一部分是dp+大, dp和dp-也是, 且结果还是上凸</p>
+<p>并且分割的位置,就是 斜率 -a[i] 处</p>
+<p>???????? 没看懂这说的和上面的操作之间的关系, 怎么就证明了</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc250/submissions/35191923">https://atcoder.jp/contests/abc250/submissions/35191923</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line">priority_queue&lt;ll,vector&lt;ll&gt;,greater&lt;ll&gt;&gt;q; <span class="comment">// 小根堆</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  ll ans=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(n--)&#123;</span><br><span class="line">    ll x=<span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">if</span>(!q.<span class="built_in">empty</span>()&amp;&amp;q.<span class="built_in">top</span>()&lt;x)&#123;</span><br><span class="line">      ans+=x-q.<span class="built_in">top</span>();</span><br><span class="line">      q.<span class="built_in">pop</span>();</span><br><span class="line">      q.<span class="built_in">push</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line">    q.<span class="built_in">push</span>(x);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Trespassing-Takahashi"><a href="#Ex-Trespassing-Takahashi" class="headerlink" title="Ex - Trespassing Takahashi"></a>Ex - Trespassing Takahashi</h1><p>n 个点, m 边的路, 第i条需要ci分钟, 连通图</p>
+<p>其中k个点是可以休息的</p>
+<p>对于q个询问,ti从小到大</p>
+<p>从任意可休息点移动时间不能超过ti, 到达任意一个休息点后把累计移动时间清零, 问他能否从休息点xi开始走到达休息点yi</p>
+<h2 id="范围-2"><a href="#范围-2" class="headerlink" title="范围"></a>范围</h2><p>k,n 2e5</p>
+<p>m 2e5</p>
+<p>ci [1,1e9]</p>
+<p>q 2e5</p>
+<p>ti 1e15</p>
+<p>7s</p>
+<p>1024mb</p>
+<h2 id="我的思路-2"><a href="#我的思路-2" class="headerlink" title="我的思路"></a>我的思路</h2><p>对于不同的Q来说, 有xi,yi,ti 3个变量</p>
+<p>ti既然给的就是从小到大,那么休息点之间的并查集关系也是逐渐合并的</p>
+<p>一个TLE的方法是</p>
+<p>求休息点之间的距离建立并查集, 然后看xi和yi是否同一个并查集</p>
+<p>问题是, 难以低复杂度求两两之间的最短距离,</p>
+<h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><p>也是一样考虑k个点的图G,两两之间是距离, 然后上并查集 需要 O(k^2)</p>
+<hr>
+<p>优化</p>
+<p>假设T是G的最小生成树, 那么T的答案和G等价</p>
+<p>proof</p>
+<p>显然最小生成树过程中 都是将两个不同的连通块连在一起,用当前可用的最短边, 所以现在问题是&lt;&#x3D;ti的边能否把一些点连成同一个连通块, </p>
+<p>当&lt;&#x3D;ti让u和v不在同一个连通块时, 显然最小生成树上u到v的路径也有&gt; ti的边,</p>
+<p>而当&lt;&#x3D;ti让u和v在同一连通块时,</p>
+<p>对&lt;&#x3D;ti的边染色为黑色, &gt; ti的边染色为白色</p>
+<p>重新考虑T的生成过程, 如果有任意黑色边能让两个不连通的块连通之前,不会选任何白色, 因此在选白色之前, u和v就已经连通了,所以最小生成树上问题等价</p>
+<hr>
+<p>以上证明了只需要k-1条边, 但如何找呢</p>
+<p>Borůvka 算法, 相当于 多源Prim</p>
+<p>对于现在的每个连通块，找到从这个连通块出发，不在最小生成树中的、到达别的连通块的最短边。(相等的边增加额外顺序, 避免A-1-B-1-C-1-A这种形成环,也可以并查集保护)</p>
+<p>把这些边全部加入最小生成树中</p>
+<p><img data-src="https://i.loli.net/2018/11/05/5be0585a128cb.png"></p>
+<p>每次O(M) 但是每次联通块个数减半, 所以O(ElogV)</p>
+<hr>
+<p>另一个方法</p>
+<p>u-a-b-v</p>
+<p>&#x3D; (u-a-b)-(v)</p>
+<p>可以由 (u-..-a)的最短 +(a-b) + (b-..-v)的最短</p>
+<p>然后所有休息点做多源 dij</p>
+<p>计算每个点 到 最近的休息点的 距离和是哪个点</p>
+<p><code>a-1-?-2-b, ?-3-c</code> 的话,不会计算b-c的距离, 只会计算</p>
+<p>a-b: (a-?)+(?-b)+(b-b)</p>
+<p>a-c: (a-?)+(?-c)+(c-c)</p>
+<p>proof</p>
+<p>这个相当于是从边是否经过的角度考虑</p>
+<p>如果经过边i, 当前限制为t, 如果 ci+ d[a_i]+d[b_i] &gt; t (也就是经过这个边的最近的两个点都超过t) 那么这个边一定不经过</p>
+<p>否则 链接 最近的两个点</p>
+<p>又两个d至少一个小于t&#x2F;2</p>
+<p>所以对于一侧来讲,归纳显然相当于一侧全连通(因为只关心并查集关系,不关系具体边)</p>
+<p>例如t&#x3D;15, 那么a的一侧一定全连通</p>
+<p><code>a&#39;-1-a-1-b-10-b&#39;</code></p>
+<p>而对于右侧 <code>a&#39;-1-a-1-b-11-b&#39;&#39;</code></p>
+<p>向这种, 那么就是取b-…-b’’ 路径上的边 b-?</p>
+<p>要么是(a’-b) + (b-?) + (?-b’’)</p>
+<p>要么是(b’-b) + (b-?) + (?-b’’)</p>
+<p>因为b的最近点只可能是a’或者b’, 所以如果合法依然连通</p>
+<p>得证</p>
+<p>这样找的距离 产生的图, 的&lt;&#x3D;t的联通性不变</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc250/submissions/35205404">https://atcoder.jp/contests/abc250/submissions/35205404</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">using</span> minPQ = priority_queue&lt;T,vector&lt;T&gt;, greater&lt;T&gt;&gt;;</span><br><span class="line"></span><br><span class="line">vector&lt;pair&lt;<span class="type">int</span>,ll&gt; &gt; g[<span class="number">200010</span>]; <span class="comment">// g[u] = &#123;v,w&#125;;</span></span><br><span class="line"><span class="type">int</span> fa[<span class="number">200010</span>]; <span class="comment">// DSU</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> v)</span></span>&#123;<span class="keyword">return</span> v==fa[v]?v:(fa[v]=<span class="built_in">find</span>(fa[v]));&#125;</span><br><span class="line"><span class="type">const</span> ll INF = <span class="number">0x3f3f3f3f3f3f3f3f</span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> k = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  vector&lt;tuple&lt;ll,<span class="type">int</span>,<span class="type">int</span>&gt; &gt; e; <span class="comment">// w,u,v 原图的边</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m)&#123;</span><br><span class="line">    <span class="type">int</span> u = <span class="built_in">read</span>()<span class="number">-1</span>; <span class="comment">// 0-index</span></span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    ll w = <span class="built_in">read</span>();</span><br><span class="line">    e.<span class="built_in">push_back</span>(&#123;w,u,v&#125;);</span><br><span class="line">    g[u].<span class="built_in">push_back</span>(&#123;v, w&#125;);</span><br><span class="line">    g[v].<span class="built_in">push_back</span>(&#123;u, w&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">vector&lt;ll&gt; <span class="title">h</span><span class="params">(n)</span></span>;     <span class="comment">// 最近休息点</span></span><br><span class="line">  <span class="function">vector&lt;ll&gt; <span class="title">d</span><span class="params">(n,INF)</span></span>; <span class="comment">// 到最近休息点的距离</span></span><br><span class="line">  minPQ&lt;tuple&lt;ll,<span class="type">int</span>,<span class="type">int</span>&gt; &gt; pq; <span class="comment">// &#123;dis, u, 休息点&#125;</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,k) pq.<span class="built_in">push</span>(&#123;<span class="number">0</span>,i,i&#125;);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> cnt = n;!pq.<span class="built_in">empty</span>() &amp;&amp; cnt &gt; <span class="number">0</span>;) &#123;</span><br><span class="line">    <span class="keyword">auto</span> [c,u,x] = pq.<span class="built_in">top</span>();</span><br><span class="line">    pq.<span class="built_in">pop</span>();</span><br><span class="line">    <span class="keyword">if</span> (d[u]!=INF) <span class="keyword">continue</span>;</span><br><span class="line">    d[u] = c;</span><br><span class="line">    h[u] = x;</span><br><span class="line">    cnt --;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [v,w]:g[u])<span class="keyword">if</span>(d[v]==INF)pq.<span class="built_in">push</span>(&#123;c+w,v,x&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  vector&lt;tuple&lt;ll,<span class="type">int</span>,<span class="type">int</span>&gt; &gt; e2; <span class="comment">// w u v, 只有k个点的图的边</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> [w,u,v]:e) <span class="keyword">if</span>(h[u] != h[v]) e2.<span class="built_in">push_back</span>(&#123;d[u]+d[v]+w,h[u], h[v]&#125;); <span class="comment">// h[u]..u..v..h[v]</span></span><br><span class="line">  <span class="built_in">sort</span>(e2.<span class="built_in">begin</span>(), e2.<span class="built_in">end</span>());</span><br><span class="line">  <span class="built_in">iota</span>(fa,fa+k,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> q = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(q--)&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> y = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    ll t = <span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">while</span>(i&lt;(<span class="type">int</span>)e2.<span class="built_in">size</span>())&#123;</span><br><span class="line">      <span class="keyword">auto</span> [w,u,v] = e2[i];</span><br><span class="line">      <span class="keyword">if</span>(w &gt; t)<span class="keyword">break</span>;</span><br><span class="line">      fa[<span class="built_in">find</span>(u)] = <span class="built_in">find</span>(v);</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,<span class="built_in">find</span>(x)==<span class="built_in">find</span>(y) ? <span class="string">&quot;Yes&quot;</span> : <span class="string">&quot;No&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F</p>
+<p>不要读错题,不要读错题,不要读错题,不要读错题,不要读错题</p>
+<p>还是先考虑多项式暴力方法再转换, 然后就滑窗呗</p>
+<p>G</p>
+<p>贪心也感觉没证明, 证明也没看懂有啥关系</p>
+<p>Ex</p>
+<p>最小生成树 一般都写的Kursukal,基本没写过Prim(一个点开始不断贪心扩最短边), 更不要说 Borůvka’s</p>
+<p>这个 u-a-b-v 的想法, 感觉有点像找直径时候的中间的点的想法, 这&lt;&#x3D; t的连通性 等价证明</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc250/editorial">官方题解</a></p>
+<p><a href="https://www.luogu.com.cn/blog/Tweetuzki/solution-p3366">洛谷 Borůvka</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>计算几何</tag>
+        <tag>贪心</tag>
+        <tag>滑窗</tag>
+        <tag>最小生成树</tag>
       </tags>
   </entry>
 </search>
