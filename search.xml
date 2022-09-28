@@ -11276,6 +11276,91 @@
       </tags>
   </entry>
   <entry>
+    <title>Atcoder abc216</title>
+    <url>/Blog/2022-08-01-ac_abc216/</url>
+    <content><![CDATA[<h1 id="G-01Sequence"><a href="#G-01Sequence" class="headerlink" title="G - 01Sequence"></a>G - 01Sequence</h1><p><a href="https://atcoder.jp/contests/abc216/tasks/abc216_g">https://atcoder.jp/contests/abc216/tasks/abc216_g</a></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc216/submissions/33727628">https://atcoder.jp/contests/abc216/submissions/33727628</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">200000</span>;</span><br><span class="line"><span class="type">int</span> a[N+<span class="number">10</span>]; <span class="comment">// a[空白个数] = 到右侧点, 之间全是1</span></span><br><span class="line"><span class="type">int</span> r[N+<span class="number">10</span>]; <span class="comment">// 读入</span></span><br><span class="line"><span class="type">int</span> y[N+<span class="number">10</span>]; <span class="comment">// 左侧0个数</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; l2i[N+<span class="number">10</span>]; <span class="comment">// 左端点到第i个区间</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,m+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> l = <span class="built_in">read</span>();</span><br><span class="line">    r[i] = <span class="built_in">read</span>();</span><br><span class="line">    y[i] = (r[i]-l+<span class="number">1</span>) - <span class="built_in">read</span>(); <span class="comment">// 左侧0个数 [[....yi],1,1,1,1,1,1]</span></span><br><span class="line">    l2i[l].<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> cnt = <span class="number">0</span>; <span class="comment">// 遍历过程中 (&lt;l) 0 的个数</span></span><br><span class="line">  <span class="built_in">rep</span>(pos,<span class="number">1</span>,n+<span class="number">1</span>)&#123; <span class="comment">// 下标</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i:l2i[pos]) a[y[i]+cnt] = <span class="built_in">max</span>(a[y[i]+cnt],r[i]);<span class="comment">// [pos.....r[i]]</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, a[cnt] &gt;= pos); <span class="comment">// 这一段全是1, 1尽量向右,贪心塞0</span></span><br><span class="line">    cnt += (a[cnt] &lt; pos); <span class="comment">// 计数+1</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="H-Random-Robots"><a href="#H-Random-Robots" class="headerlink" title="H - Random Robots"></a>H - Random Robots</h1><p>数轴上k个机器人, 初始位置分别在xi</p>
+<p>每次 每个机器人独立选择 移动(正向+1)或不动 1&#x2F;2 概率</p>
+<p>问经过N次,过程中没有任何两个robot 同时在同位置的概率</p>
+<p>mod 998244353</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>k [2,10]</p>
+<p>n 1000</p>
+<p>xi [0,1000], 严格单增提供</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>一般来说 概率 &#x3D; 次&#x2F;总次数 可以互相转化</p>
+<p>不相遇 可以 和相遇的容斥互相转化</p>
+<p>k 10 的话可能和k的bitmask有关系</p>
+<p>如果进行一次</p>
+<p>而碰撞比不碰撞似乎好算一些</p>
+<p>而且一般是相邻碰撞</p>
+<p>pi 和pi+1 在t次时刻碰撞</p>
+<p>意味着 t-1 次时距离1, t时 1&#x2F;4 概率</p>
+<p>0~t-1 时刻每次 1&#x2F;4 +1, 1&#x2F;4 -1, 1&#x2F;2 不变</p>
+<p>设原来距离 为d</p>
+<p>那么 -1 次数 减去 +1 次数 &#x3D; d-1, 且中间不能有负数情况</p>
+<p>变成后缀个数统计问题</p>
+<p>似乎可以强行算出t时刻 的概率, 实在组合排列不行, <code>dp[时刻1000][距离2000]</code> 来算也可以</p>
+<hr>
+<p>那么无碰撞 &#x3D; 所有 - 碰撞</p>
+<p>所以想办法容斥掉碰撞</p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>用一下LGV引理相关的思路: 相交的路径 总有转化方法,成对的出现互为相反数的贡献,从而有相交的内容贡献和为0</p>
+<p>每一个路径组方案贡献1 乘上-1的最终位置的逆序列数量次方, 其实就像当于LGV中所有边权为1 的特殊情况</p>
+<p>$\sum_{Q} (-1)^{\sigma(Q)}\cdot(\frac{1}{2})^{NK}\cdot\prod_{i&#x3D;1}^K {\rm C}(N,Q_i-x_i)$</p>
+<p>也就是 方案 * (-1) 的幂次权, 再除以总方案数</p>
+<p>Qi 为初始第i个机器人最终的下标</p>
+<p>$\sigma(Q)$ 为逆序对个数</p>
+<p>那么对于一条具体的有交的路径, 找其编号最小交点, 其中最小的起始位置,做后置路径交换(和LGV一样), 那么将得到一个新的路径组,有同样的交点,最小交点的最小起始位置依然相同, 但逆序对数变化为1, 所以总贡献为0</p>
+<hr>
+<p><code>f[S][j] = </code> 选起点集合在S中, 最终节点最大值 &lt;&#x3D; j 的 带权 方案数和</p>
+<p><code>ans = f[&#123;1,...,k&#125;][x[k] + n]</code></p>
+<p>考虑状态转移</p>
+<p>最终最大节点 &lt; j, <code>f[S][j] += f[S][j-1]</code></p>
+<p>最终最大节点 &#x3D; j, <code>f[S][j] += lgv中的行列式值 展开最后一列</code></p>
+<p>所以有</p>
+<p>$f(S, j) &#x3D; f(S, j-1) + \sum_{i&#x3D;1}^{|S|} (-1)^{|S|+i} e(x_{s_i}, j) f(S\setminus{s_i}, j-1).$</p>
+<p>$f(S, j) &#x3D; f(S, j-1) + \sum_{i&#x3D;1}^{|S|} (-1)^{|S|+i} \binom{n}{j-x_{s_i}} f(S\setminus{s_i}, j-1).$</p>
+<p>状态$2^k(n + x_k - x_1)$, 转移倍数$k$</p>
+<p>总时间复杂度 $2^kk(n + x_k - x_1)$</p>
+<hr>
+<p>注意到j仅依赖于j-1, 所以可以滚动数组降低空间</p>
+<p>而S依赖于的都是S子集, 所以保证顺序即可</p>
+<p>$for(j) \\ f(S) &#x3D; f(S) + \sum_{i&#x3D;1}^{|S|} (-1)^{|S|+i} \binom{n}{j-x_{s_i}} f(S\setminus{s_i}).$</p>
+<p>注意到这里的i不是X数组的i而是X选出的x按照顺序组成的S中的i, 且是1-index</p>
+<p>也可以表示成$d(S,i) &#x3D; S$中比$i$大的的个数</p>
+<p>$for(j) \\ f(S) &#x3D; f(S) + \sum_{i&#x3D;1}^{|S|} (-1)^{d(S,i)} \binom{n}{j-x_{s_i}} f(S\setminus{s_i}).$</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc216/submissions/33737388">https://atcoder.jp/contests/abc216/submissions/33737388</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> x[<span class="number">2010</span>]; <span class="comment">// 初始位置</span></span><br><span class="line">mint f[<span class="number">2010</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// f[i] = binom(n,i)</span></span><br><span class="line"><span class="type">int</span> p[(<span class="number">1</span>&lt;&lt;<span class="number">10</span>)+<span class="number">10</span>]; <span class="comment">// p[mask] = (-1)^(mask中1的个数)</span></span><br><span class="line">mint dp[(<span class="number">1</span>&lt;&lt;<span class="number">10</span>)+<span class="number">10</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// 第二维滚动 f(S,pos) = f(S, pos-1) + \sum_&#123;i=1&#125;^&#123;|S|&#125; (-1)^&#123;count(S,&gt; i)&#125; \binom&#123;n&#125;&#123;pos-x_&#123;s_i&#125;&#125; f(S\setminus\&#123;s_i\&#125;, pos-1).$</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> k=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,k) x[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) f[i]=f[i<span class="number">-1</span>]*(n-i+<span class="number">1</span>)/i; <span class="comment">// binom(n,i-1) -&gt; binom(n,i)</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span>&lt;&lt;k) p[mask] = p[mask&gt;&gt;<span class="number">1</span>] * (mask&amp;<span class="number">1</span>?<span class="number">-1</span>:<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(pos,x[<span class="number">0</span>],x[k<span class="number">-1</span>]+n+<span class="number">1</span>)&#123; <span class="comment">// 第二维滚动</span></span><br><span class="line">    <span class="built_in">per</span>(mask,<span class="number">0</span>,<span class="number">1</span>&lt;&lt;k) &#123; <span class="comment">// 第一维 bitmask 注意顺序</span></span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,k) <span class="keyword">if</span>(mask&amp;(<span class="number">1</span>&lt;&lt;i)) &#123; <span class="comment">// 变成递推贡献, 要增加的bit位</span></span><br><span class="line">        <span class="keyword">if</span>(x[i]&lt;=pos &amp;&amp; pos&lt;=x[i]+n) &#123; <span class="comment">// 保证 binom 不为0</span></span><br><span class="line">          <span class="comment">// f(S) += f(S\i) * binom(n, pos - x[S_i]) * (-1)^count(S,&gt;i)</span></span><br><span class="line">          dp[mask] += dp[mask^(<span class="number">1</span>&lt;&lt;i)] * f[pos-x[i]] * p[mask&gt;&gt;(i+<span class="number">1</span>)];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(dp[(<span class="number">1</span>&lt;&lt;k)<span class="number">-1</span>] / ((mint)<span class="number">2</span>).<span class="built_in">pow</span>(k*n)).<span class="built_in">val</span>()); <span class="comment">// 频次/总次数 = 概率</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>贪心完全不会</p>
+<p>题解说有个cow game</p>
+<p>有一些 dj-di &lt;&#x3D; wij 的限制</p>
+<p>寻找最大的 dT-dS, 可以变成最短路问题</p>
+<p><a href="http://poj.org/problem?id=3169">http://poj.org/problem?id=3169</a></p>
+<p>H</p>
+<p>学了一下LGV引理, 和其思路细节</p>
+<p>路径不相交问题首选逆序对容斥，那么可以套用 LGV 引理</p>
+<p>相关练习: <a href="https://www.luogu.com.cn/problem/P7736">https://www.luogu.com.cn/problem/P7736</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc216/editorial">官方题解</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2022-07-22-LGVlemma/">LGV引理</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>状压DP</tag>
+        <tag>贪心</tag>
+        <tag>LGV引理</tag>
+        <tag>差分约束</tag>
+        <tag>最短路</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Atcoder abc214</title>
     <url>/Blog/2022-07-30-ac_abc214/</url>
     <content><![CDATA[<h1 id="G-Three-Permutations"><a href="#G-Three-Permutations" class="headerlink" title="G - Three Permutations"></a>G - Three Permutations</h1><p><a href="https://atcoder.jp/contests/abc214/tasks/abc214_g">https://atcoder.jp/contests/abc214/tasks/abc214_g</a></p>
@@ -11430,6 +11515,41 @@
       </tags>
   </entry>
   <entry>
+    <title>POJ 3169</title>
+    <url>/Blog/2022-08-02-poj3169/</url>
+    <content><![CDATA[<h1 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h1><p><a href="http://poj.org/problem?id=3169">http://poj.org/problem?id=3169</a></p>
+<p>数轴上放N个点(按照i的顺序坐标非严格单调递增</p>
+<p>10000 个大于限制, 点i和点j距离不超过 di (1e6)</p>
+<p>10000 个小于限制, 点i和点j距离不小于 di (1e6)</p>
+<p>1s</p>
+<p>64MB</p>
+<p>求点1 和 点N的最大距离</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>传说中日本众所周知的的cow game</p>
+<p>也就是 全部小于号, (大于号同乘-1)</p>
+<p>注意到上面要保证i的顺序( 所以 大-小 &lt;&#x3D; Di 或者 大减小 &gt;&#x3D; Di</p>
+<p>然后说 差分约束本质上还是 最短路 只是需要建图</p>
+<p>b-a &lt;&#x3D; d</p>
+<p>转化成 a + d &gt;&#x3D; b, 所以 a -&gt; b如果有边长d的话, 那么b的距离最小就是 a+d 还可能更小</p>
+<p>b-a &gt;&#x3D; d的话</p>
+<p>转化成 b-d &gt;&#x3D; a, 也就是 b -&gt; a 如果有边长 (-d), 那么a的距离最小是 b-d, 还可能更小</p>
+<p>总而言之转化成</p>
+<p>点0 + ? &gt;&#x3D; 点1 的形式, 然后从点0 发一条长? 的边</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><h3 id="过不了编译版本"><a href="#过不了编译版本" class="headerlink" title="过不了编译版本"></a>过不了编译版本</h3><p>这poj g++版本太老了</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">0x3f3f3f3f</span>; <span class="comment">// 1e9</span></span><br><span class="line"></span><br><span class="line">vector&lt;array&lt;<span class="type">int</span>,3&gt; &gt; e; <span class="comment">// 有向边 [u,v,weight/length]</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> N = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> ML = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> MD = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 建图</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N) e.<span class="built_in">push_back</span>(&#123;i+<span class="number">1</span>, i, <span class="number">0</span>&#125;); <span class="comment">// 从i+1-&gt;i权值为0的边 保证顺序i的距离不大于i+1</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ML)&#123; <span class="comment">//&#x27;喜欢&#x27;关系约束 &lt;= DL</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &lt;= DL[i]</span></span><br><span class="line">    <span class="comment">/* b-a&lt;=d, 即 a+d&gt;=b 从a到b权值为d的边 */</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(&#123;a,b,d&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,MD)&#123; <span class="comment">//&#x27;不喜欢&#x27;关系约束 &gt;= DD</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &gt;= DD[i]</span></span><br><span class="line">    <span class="comment">/* BD - AD &gt;= DD 即 BD - DD &gt;= AD,  从BD到AD权值-DD的边*/</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(&#123;b,a,-d&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Bellman_Ford</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">dist</span>(N+<span class="number">1</span>,INF);<span class="comment">// 最短距离</span></span><br><span class="line">  dist[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">//循环N-1次 对所有边进行松弛操作</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N<span class="number">-1</span>) <span class="keyword">for</span>(<span class="keyword">auto</span> [u,v,w]: e) <span class="keyword">if</span>(dist[u] != INF) dist[v] = <span class="built_in">min</span>(dist[v], dist[u] + w);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//再遍历一次所有边（第N次循环）如果本次有更新，则存在负环</span></span><br><span class="line">  <span class="type">bool</span> ngloop = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> [u,v,w]: e) <span class="keyword">if</span>(dist[u] != INF &amp;&amp; dist[u] + w &lt; dist[v] ) ngloop = <span class="literal">true</span>;</span><br><span class="line">  <span class="type">int</span> ans = dist[N];</span><br><span class="line">  <span class="keyword">if</span> (ngloop) ans = <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(ans == INF) ans = <span class="number">-2</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="AC-版本"><a href="#AC-版本" class="headerlink" title="AC 版本"></a>AC 版本</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mt make_tuple</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">0x3f3f3f3f</span>; <span class="comment">// 1e9</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 没有tuple</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">edge</span>&#123;</span><br><span class="line">  <span class="type">int</span> u;</span><br><span class="line">  <span class="type">int</span> v;</span><br><span class="line">  <span class="type">int</span> w;</span><br><span class="line">  <span class="comment">// 结构体直接赋值也没有</span></span><br><span class="line">  <span class="built_in">edge</span>(<span class="type">int</span> _u,<span class="type">int</span> _v,<span class="type">int</span> _w)&#123;</span><br><span class="line">    u = _u;</span><br><span class="line">    v = _v;</span><br><span class="line">    w = _w;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;edge&gt; e; <span class="comment">// 有向边 [u,v,weight/length]</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> N = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> ML = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> MD = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 建图</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N) e.<span class="built_in">push_back</span>(<span class="built_in">edge</span>(i+<span class="number">1</span>, i, <span class="number">0</span>)); <span class="comment">// 从i+1-&gt;i权值为0的边 保证顺序i的距离不大于i+1</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ML)&#123; <span class="comment">//&#x27;喜欢&#x27;关系约束 &lt;= DL</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &lt;= DL[i]</span></span><br><span class="line">    <span class="comment">/* b-a&lt;=d, 即 a+d&gt;=b 从a到b权值为d的边 */</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(<span class="built_in">edge</span>(a,b,d));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,MD)&#123; <span class="comment">//&#x27;不喜欢&#x27;关系约束 &gt;= DD</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &gt;= DD[i]</span></span><br><span class="line">    <span class="comment">/* BD - AD &gt;= DD 即 BD - DD &gt;= AD,  从BD到AD权值-DD的边*/</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(<span class="built_in">edge</span>(b,a,-d));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Bellman_Ford</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">dist</span>(N+<span class="number">1</span>,INF);<span class="comment">// 最短距离</span></span><br><span class="line">  dist[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">//循环N-1次 对所有边进行松弛操作</span></span><br><span class="line">  <span class="built_in">rep</span>(t,<span class="number">0</span>,N<span class="number">-1</span>) <span class="built_in">rep</span>(i,<span class="number">0</span>,e.<span class="built_in">size</span>())&#123;</span><br><span class="line">    edge &amp;uvw = e[i]; <span class="comment">// 不支持auto</span></span><br><span class="line">    <span class="type">int</span> u = uvw.u;</span><br><span class="line">    <span class="type">int</span> v = uvw.v;</span><br><span class="line">    <span class="type">int</span> w = uvw.w;</span><br><span class="line">    <span class="keyword">if</span>(dist[u] != INF) dist[v] = <span class="built_in">min</span>(dist[v], dist[u] + w);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//再遍历一次所有边（第N次循环）如果本次有更新，则存在负环</span></span><br><span class="line">  <span class="type">bool</span> ngloop = <span class="literal">false</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,e.<span class="built_in">size</span>())&#123;</span><br><span class="line">    edge &amp;uvw = e[i]; <span class="comment">// 不支持auto</span></span><br><span class="line">    <span class="type">int</span> u = uvw.u;</span><br><span class="line">    <span class="type">int</span> v = uvw.v;</span><br><span class="line">    <span class="type">int</span> w = uvw.w;</span><br><span class="line">    <span class="keyword">if</span>(dist[u] != INF &amp;&amp; dist[u] + w &lt; dist[v] ) ngloop = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> ans = dist[N];</span><br><span class="line">  <span class="keyword">if</span> (ngloop) ans = <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(ans == INF) ans = <span class="number">-2</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>就是如何对差分变成图</p>
+]]></content>
+      <categories>
+        <category>poj</category>
+      </categories>
+      <tags>
+        <tag>差分约束</tag>
+        <tag>cow game</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Atcoder abc215</title>
     <url>/Blog/2022-07-31-ac_abc215/</url>
     <content><![CDATA[<h1 id="G-Colorful-Candies-2"><a href="#G-Colorful-Candies-2" class="headerlink" title="G - Colorful Candies 2"></a>G - Colorful Candies 2</h1><p>N 个 有色糖果,第i个颜色c[i]</p>
@@ -11555,126 +11675,6 @@
         <tag>费用流</tag>
         <tag>霍尔定理</tag>
         <tag>子集反演</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Atcoder abc216</title>
-    <url>/Blog/2022-08-01-ac_abc216/</url>
-    <content><![CDATA[<h1 id="G-01Sequence"><a href="#G-01Sequence" class="headerlink" title="G - 01Sequence"></a>G - 01Sequence</h1><p><a href="https://atcoder.jp/contests/abc216/tasks/abc216_g">https://atcoder.jp/contests/abc216/tasks/abc216_g</a></p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc216/submissions/33727628">https://atcoder.jp/contests/abc216/submissions/33727628</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">200000</span>;</span><br><span class="line"><span class="type">int</span> a[N+<span class="number">10</span>]; <span class="comment">// a[空白个数] = 到右侧点, 之间全是1</span></span><br><span class="line"><span class="type">int</span> r[N+<span class="number">10</span>]; <span class="comment">// 读入</span></span><br><span class="line"><span class="type">int</span> y[N+<span class="number">10</span>]; <span class="comment">// 左侧0个数</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; l2i[N+<span class="number">10</span>]; <span class="comment">// 左端点到第i个区间</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,m+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> l = <span class="built_in">read</span>();</span><br><span class="line">    r[i] = <span class="built_in">read</span>();</span><br><span class="line">    y[i] = (r[i]-l+<span class="number">1</span>) - <span class="built_in">read</span>(); <span class="comment">// 左侧0个数 [[....yi],1,1,1,1,1,1]</span></span><br><span class="line">    l2i[l].<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> cnt = <span class="number">0</span>; <span class="comment">// 遍历过程中 (&lt;l) 0 的个数</span></span><br><span class="line">  <span class="built_in">rep</span>(pos,<span class="number">1</span>,n+<span class="number">1</span>)&#123; <span class="comment">// 下标</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i:l2i[pos]) a[y[i]+cnt] = <span class="built_in">max</span>(a[y[i]+cnt],r[i]);<span class="comment">// [pos.....r[i]]</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, a[cnt] &gt;= pos); <span class="comment">// 这一段全是1, 1尽量向右,贪心塞0</span></span><br><span class="line">    cnt += (a[cnt] &lt; pos); <span class="comment">// 计数+1</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="H-Random-Robots"><a href="#H-Random-Robots" class="headerlink" title="H - Random Robots"></a>H - Random Robots</h1><p>数轴上k个机器人, 初始位置分别在xi</p>
-<p>每次 每个机器人独立选择 移动(正向+1)或不动 1&#x2F;2 概率</p>
-<p>问经过N次,过程中没有任何两个robot 同时在同位置的概率</p>
-<p>mod 998244353</p>
-<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>k [2,10]</p>
-<p>n 1000</p>
-<p>xi [0,1000], 严格单增提供</p>
-<p>2s</p>
-<p>1024mb</p>
-<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>一般来说 概率 &#x3D; 次&#x2F;总次数 可以互相转化</p>
-<p>不相遇 可以 和相遇的容斥互相转化</p>
-<p>k 10 的话可能和k的bitmask有关系</p>
-<p>如果进行一次</p>
-<p>而碰撞比不碰撞似乎好算一些</p>
-<p>而且一般是相邻碰撞</p>
-<p>pi 和pi+1 在t次时刻碰撞</p>
-<p>意味着 t-1 次时距离1, t时 1&#x2F;4 概率</p>
-<p>0~t-1 时刻每次 1&#x2F;4 +1, 1&#x2F;4 -1, 1&#x2F;2 不变</p>
-<p>设原来距离 为d</p>
-<p>那么 -1 次数 减去 +1 次数 &#x3D; d-1, 且中间不能有负数情况</p>
-<p>变成后缀个数统计问题</p>
-<p>似乎可以强行算出t时刻 的概率, 实在组合排列不行, <code>dp[时刻1000][距离2000]</code> 来算也可以</p>
-<hr>
-<p>那么无碰撞 &#x3D; 所有 - 碰撞</p>
-<p>所以想办法容斥掉碰撞</p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>用一下LGV引理相关的思路: 相交的路径 总有转化方法,成对的出现互为相反数的贡献,从而有相交的内容贡献和为0</p>
-<p>每一个路径组方案贡献1 乘上-1的最终位置的逆序列数量次方, 其实就像当于LGV中所有边权为1 的特殊情况</p>
-<p>$\sum_{Q} (-1)^{\sigma(Q)}\cdot(\frac{1}{2})^{NK}\cdot\prod_{i&#x3D;1}^K {\rm C}(N,Q_i-x_i)$</p>
-<p>也就是 方案 * (-1) 的幂次权, 再除以总方案数</p>
-<p>Qi 为初始第i个机器人最终的下标</p>
-<p>$\sigma(Q)$ 为逆序对个数</p>
-<p>那么对于一条具体的有交的路径, 找其编号最小交点, 其中最小的起始位置,做后置路径交换(和LGV一样), 那么将得到一个新的路径组,有同样的交点,最小交点的最小起始位置依然相同, 但逆序对数变化为1, 所以总贡献为0</p>
-<hr>
-<p><code>f[S][j] = </code> 选起点集合在S中, 最终节点最大值 &lt;&#x3D; j 的 带权 方案数和</p>
-<p><code>ans = f[&#123;1,...,k&#125;][x[k] + n]</code></p>
-<p>考虑状态转移</p>
-<p>最终最大节点 &lt; j, <code>f[S][j] += f[S][j-1]</code></p>
-<p>最终最大节点 &#x3D; j, <code>f[S][j] += lgv中的行列式值 展开最后一列</code></p>
-<p>所以有</p>
-<p>$f(S, j) &#x3D; f(S, j-1) + \sum_{i&#x3D;1}^{|S|} (-1)^{|S|+i} e(x_{s_i}, j) f(S\setminus{s_i}, j-1).$</p>
-<p>$f(S, j) &#x3D; f(S, j-1) + \sum_{i&#x3D;1}^{|S|} (-1)^{|S|+i} \binom{n}{j-x_{s_i}} f(S\setminus{s_i}, j-1).$</p>
-<p>状态$2^k(n + x_k - x_1)$, 转移倍数$k$</p>
-<p>总时间复杂度 $2^kk(n + x_k - x_1)$</p>
-<hr>
-<p>注意到j仅依赖于j-1, 所以可以滚动数组降低空间</p>
-<p>而S依赖于的都是S子集, 所以保证顺序即可</p>
-<p>$for(j) \\ f(S) &#x3D; f(S) + \sum_{i&#x3D;1}^{|S|} (-1)^{|S|+i} \binom{n}{j-x_{s_i}} f(S\setminus{s_i}).$</p>
-<p>注意到这里的i不是X数组的i而是X选出的x按照顺序组成的S中的i, 且是1-index</p>
-<p>也可以表示成$d(S,i) &#x3D; S$中比$i$大的的个数</p>
-<p>$for(j) \\ f(S) &#x3D; f(S) + \sum_{i&#x3D;1}^{|S|} (-1)^{d(S,i)} \binom{n}{j-x_{s_i}} f(S\setminus{s_i}).$</p>
-<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc216/submissions/33737388">https://atcoder.jp/contests/abc216/submissions/33737388</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> x[<span class="number">2010</span>]; <span class="comment">// 初始位置</span></span><br><span class="line">mint f[<span class="number">2010</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// f[i] = binom(n,i)</span></span><br><span class="line"><span class="type">int</span> p[(<span class="number">1</span>&lt;&lt;<span class="number">10</span>)+<span class="number">10</span>]; <span class="comment">// p[mask] = (-1)^(mask中1的个数)</span></span><br><span class="line">mint dp[(<span class="number">1</span>&lt;&lt;<span class="number">10</span>)+<span class="number">10</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// 第二维滚动 f(S,pos) = f(S, pos-1) + \sum_&#123;i=1&#125;^&#123;|S|&#125; (-1)^&#123;count(S,&gt; i)&#125; \binom&#123;n&#125;&#123;pos-x_&#123;s_i&#125;&#125; f(S\setminus\&#123;s_i\&#125;, pos-1).$</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> k=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,k) x[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) f[i]=f[i<span class="number">-1</span>]*(n-i+<span class="number">1</span>)/i; <span class="comment">// binom(n,i-1) -&gt; binom(n,i)</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">0</span>,<span class="number">1</span>&lt;&lt;k) p[mask] = p[mask&gt;&gt;<span class="number">1</span>] * (mask&amp;<span class="number">1</span>?<span class="number">-1</span>:<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(pos,x[<span class="number">0</span>],x[k<span class="number">-1</span>]+n+<span class="number">1</span>)&#123; <span class="comment">// 第二维滚动</span></span><br><span class="line">    <span class="built_in">per</span>(mask,<span class="number">0</span>,<span class="number">1</span>&lt;&lt;k) &#123; <span class="comment">// 第一维 bitmask 注意顺序</span></span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,k) <span class="keyword">if</span>(mask&amp;(<span class="number">1</span>&lt;&lt;i)) &#123; <span class="comment">// 变成递推贡献, 要增加的bit位</span></span><br><span class="line">        <span class="keyword">if</span>(x[i]&lt;=pos &amp;&amp; pos&lt;=x[i]+n) &#123; <span class="comment">// 保证 binom 不为0</span></span><br><span class="line">          <span class="comment">// f(S) += f(S\i) * binom(n, pos - x[S_i]) * (-1)^count(S,&gt;i)</span></span><br><span class="line">          dp[mask] += dp[mask^(<span class="number">1</span>&lt;&lt;i)] * f[pos-x[i]] * p[mask&gt;&gt;(i+<span class="number">1</span>)];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(dp[(<span class="number">1</span>&lt;&lt;k)<span class="number">-1</span>] / ((mint)<span class="number">2</span>).<span class="built_in">pow</span>(k*n)).<span class="built_in">val</span>()); <span class="comment">// 频次/总次数 = 概率</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
-<p>贪心完全不会</p>
-<p>题解说有个cow game</p>
-<p>有一些 dj-di &lt;&#x3D; wij 的限制</p>
-<p>寻找最大的 dT-dS, 可以变成最短路问题</p>
-<p><a href="http://poj.org/problem?id=3169">http://poj.org/problem?id=3169</a></p>
-<p>H</p>
-<p>学了一下LGV引理, 和其思路细节</p>
-<p>路径不相交问题首选逆序对容斥，那么可以套用 LGV 引理</p>
-<p>相关练习: <a href="https://www.luogu.com.cn/problem/P7736">https://www.luogu.com.cn/problem/P7736</a></p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc216/editorial">官方题解</a></p>
-<p><a href="https://yexiaorain.github.io/Blog/2022-07-22-LGVlemma/">LGV引理</a></p>
-]]></content>
-      <categories>
-        <category>Atcoder</category>
-        <category>ABC</category>
-      </categories>
-      <tags>
-        <tag>状压DP</tag>
-        <tag>贪心</tag>
-        <tag>LGV引理</tag>
-        <tag>差分约束</tag>
-        <tag>最短路</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>POJ 3169</title>
-    <url>/Blog/2022-08-02-poj3169/</url>
-    <content><![CDATA[<h1 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h1><p><a href="http://poj.org/problem?id=3169">http://poj.org/problem?id=3169</a></p>
-<p>数轴上放N个点(按照i的顺序坐标非严格单调递增</p>
-<p>10000 个大于限制, 点i和点j距离不超过 di (1e6)</p>
-<p>10000 个小于限制, 点i和点j距离不小于 di (1e6)</p>
-<p>1s</p>
-<p>64MB</p>
-<p>求点1 和 点N的最大距离</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>传说中日本众所周知的的cow game</p>
-<p>也就是 全部小于号, (大于号同乘-1)</p>
-<p>注意到上面要保证i的顺序( 所以 大-小 &lt;&#x3D; Di 或者 大减小 &gt;&#x3D; Di</p>
-<p>然后说 差分约束本质上还是 最短路 只是需要建图</p>
-<p>b-a &lt;&#x3D; d</p>
-<p>转化成 a + d &gt;&#x3D; b, 所以 a -&gt; b如果有边长d的话, 那么b的距离最小就是 a+d 还可能更小</p>
-<p>b-a &gt;&#x3D; d的话</p>
-<p>转化成 b-d &gt;&#x3D; a, 也就是 b -&gt; a 如果有边长 (-d), 那么a的距离最小是 b-d, 还可能更小</p>
-<p>总而言之转化成</p>
-<p>点0 + ? &gt;&#x3D; 点1 的形式, 然后从点0 发一条长? 的边</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><h3 id="过不了编译版本"><a href="#过不了编译版本" class="headerlink" title="过不了编译版本"></a>过不了编译版本</h3><p>这poj g++版本太老了</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">0x3f3f3f3f</span>; <span class="comment">// 1e9</span></span><br><span class="line"></span><br><span class="line">vector&lt;array&lt;<span class="type">int</span>,3&gt; &gt; e; <span class="comment">// 有向边 [u,v,weight/length]</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> N = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> ML = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> MD = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 建图</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N) e.<span class="built_in">push_back</span>(&#123;i+<span class="number">1</span>, i, <span class="number">0</span>&#125;); <span class="comment">// 从i+1-&gt;i权值为0的边 保证顺序i的距离不大于i+1</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ML)&#123; <span class="comment">//&#x27;喜欢&#x27;关系约束 &lt;= DL</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &lt;= DL[i]</span></span><br><span class="line">    <span class="comment">/* b-a&lt;=d, 即 a+d&gt;=b 从a到b权值为d的边 */</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(&#123;a,b,d&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,MD)&#123; <span class="comment">//&#x27;不喜欢&#x27;关系约束 &gt;= DD</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &gt;= DD[i]</span></span><br><span class="line">    <span class="comment">/* BD - AD &gt;= DD 即 BD - DD &gt;= AD,  从BD到AD权值-DD的边*/</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(&#123;b,a,-d&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Bellman_Ford</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">dist</span>(N+<span class="number">1</span>,INF);<span class="comment">// 最短距离</span></span><br><span class="line">  dist[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">//循环N-1次 对所有边进行松弛操作</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N<span class="number">-1</span>) <span class="keyword">for</span>(<span class="keyword">auto</span> [u,v,w]: e) <span class="keyword">if</span>(dist[u] != INF) dist[v] = <span class="built_in">min</span>(dist[v], dist[u] + w);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//再遍历一次所有边（第N次循环）如果本次有更新，则存在负环</span></span><br><span class="line">  <span class="type">bool</span> ngloop = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> [u,v,w]: e) <span class="keyword">if</span>(dist[u] != INF &amp;&amp; dist[u] + w &lt; dist[v] ) ngloop = <span class="literal">true</span>;</span><br><span class="line">  <span class="type">int</span> ans = dist[N];</span><br><span class="line">  <span class="keyword">if</span> (ngloop) ans = <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(ans == INF) ans = <span class="number">-2</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="AC-版本"><a href="#AC-版本" class="headerlink" title="AC 版本"></a>AC 版本</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mt make_tuple</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">0x3f3f3f3f</span>; <span class="comment">// 1e9</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 没有tuple</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">edge</span>&#123;</span><br><span class="line">  <span class="type">int</span> u;</span><br><span class="line">  <span class="type">int</span> v;</span><br><span class="line">  <span class="type">int</span> w;</span><br><span class="line">  <span class="comment">// 结构体直接赋值也没有</span></span><br><span class="line">  <span class="built_in">edge</span>(<span class="type">int</span> _u,<span class="type">int</span> _v,<span class="type">int</span> _w)&#123;</span><br><span class="line">    u = _u;</span><br><span class="line">    v = _v;</span><br><span class="line">    w = _w;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;edge&gt; e; <span class="comment">// 有向边 [u,v,weight/length]</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> N = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> ML = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> MD = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 建图</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N) e.<span class="built_in">push_back</span>(<span class="built_in">edge</span>(i+<span class="number">1</span>, i, <span class="number">0</span>)); <span class="comment">// 从i+1-&gt;i权值为0的边 保证顺序i的距离不大于i+1</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,ML)&#123; <span class="comment">//&#x27;喜欢&#x27;关系约束 &lt;= DL</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &lt;= DL[i]</span></span><br><span class="line">    <span class="comment">/* b-a&lt;=d, 即 a+d&gt;=b 从a到b权值为d的边 */</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(<span class="built_in">edge</span>(a,b,d));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,MD)&#123; <span class="comment">//&#x27;不喜欢&#x27;关系约束 &gt;= DD</span></span><br><span class="line">    <span class="type">int</span> a = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> b = <span class="built_in">read</span>(); <span class="comment">// 保证 b&gt;a</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">read</span>(); <span class="comment">// |距离| &gt;= DD[i]</span></span><br><span class="line">    <span class="comment">/* BD - AD &gt;= DD 即 BD - DD &gt;= AD,  从BD到AD权值-DD的边*/</span></span><br><span class="line">    e.<span class="built_in">push_back</span>(<span class="built_in">edge</span>(b,a,-d));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Bellman_Ford</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">dist</span>(N+<span class="number">1</span>,INF);<span class="comment">// 最短距离</span></span><br><span class="line">  dist[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">//循环N-1次 对所有边进行松弛操作</span></span><br><span class="line">  <span class="built_in">rep</span>(t,<span class="number">0</span>,N<span class="number">-1</span>) <span class="built_in">rep</span>(i,<span class="number">0</span>,e.<span class="built_in">size</span>())&#123;</span><br><span class="line">    edge &amp;uvw = e[i]; <span class="comment">// 不支持auto</span></span><br><span class="line">    <span class="type">int</span> u = uvw.u;</span><br><span class="line">    <span class="type">int</span> v = uvw.v;</span><br><span class="line">    <span class="type">int</span> w = uvw.w;</span><br><span class="line">    <span class="keyword">if</span>(dist[u] != INF) dist[v] = <span class="built_in">min</span>(dist[v], dist[u] + w);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//再遍历一次所有边（第N次循环）如果本次有更新，则存在负环</span></span><br><span class="line">  <span class="type">bool</span> ngloop = <span class="literal">false</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,e.<span class="built_in">size</span>())&#123;</span><br><span class="line">    edge &amp;uvw = e[i]; <span class="comment">// 不支持auto</span></span><br><span class="line">    <span class="type">int</span> u = uvw.u;</span><br><span class="line">    <span class="type">int</span> v = uvw.v;</span><br><span class="line">    <span class="type">int</span> w = uvw.w;</span><br><span class="line">    <span class="keyword">if</span>(dist[u] != INF &amp;&amp; dist[u] + w &lt; dist[v] ) ngloop = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> ans = dist[N];</span><br><span class="line">  <span class="keyword">if</span> (ngloop) ans = <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(ans == INF) ans = <span class="number">-2</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>就是如何对差分变成图</p>
-]]></content>
-      <categories>
-        <category>poj</category>
-      </categories>
-      <tags>
-        <tag>差分约束</tag>
-        <tag>cow game</tag>
       </tags>
   </entry>
   <entry>
@@ -16479,6 +16479,94 @@
         <tag>计算几何</tag>
         <tag>数论</tag>
         <tag>排列组合</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder abc252</title>
+    <url>/Blog/2022-09-29-ac-abc252/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc252/tasks">https://atcoder.jp/contests/abc252/tasks</a></p>
+<h1 id="G-Pre-Order"><a href="#G-Pre-Order" class="headerlink" title="G - Pre-Order"></a>G - Pre-Order</h1><p>给一个n点多叉树的前序遍历结果, 问有多少个树满足, mod 998244353</p>
+<p>其中子节点多个时, 按子节点数字从小到大遍历</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 500</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>当成父子结构时候, 顺序显然</p>
+<p>所以感觉主要在兄弟结构</p>
+<p>也就是现在 f(序列a)的方案数</p>
+<p>f(a) &#x3D; a[0]为根, a[1]为第一个树的根, a[i]为第二个树的根</p>
+<p>f(a) &#x3D; g(a[1…])</p>
+<p>g(a) &#x3D; sum f(a[0…i-1]) * g(a[i..])</p>
+<p>其中<code>a[0] &lt; a[i]</code></p>
+<p>整合一下 g(a) &#x3D; sum g(a[1…i-1]) * g(a[i..]), <code>a[0] &lt; a[i]</code></p>
+<p>似乎就没了</p>
+<span id="more"></span>
+
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc252/submissions/35211784">https://atcoder.jp/contests/abc252/submissions/35211784</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// g(a) = sum g(a[1...i-1]) * g(a[i..]), `a[0] &lt; a[i]`</span></span><br><span class="line"><span class="type">int</span> a[<span class="number">510</span>];</span><br><span class="line">mint mem[<span class="number">510</span>][<span class="number">510</span>];</span><br><span class="line"><span class="type">bool</span> vis[<span class="number">510</span>][<span class="number">510</span>];</span><br><span class="line"><span class="function">mint <span class="title">g</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123; <span class="comment">// [l..r] 构成多个兄弟子树</span></span><br><span class="line">  <span class="keyword">if</span>(l&gt;=r)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  mint &amp;v=mem[l][r];</span><br><span class="line">  <span class="keyword">if</span>(vis[l][r]) <span class="keyword">return</span> v;</span><br><span class="line">  vis[l][r] = <span class="literal">true</span>;</span><br><span class="line">  v = <span class="built_in">g</span>(l+<span class="number">1</span>,r); <span class="comment">// 1个子树</span></span><br><span class="line">  <span class="comment">// [l...i-1] 第一个子树, 后面[i...r]构成多个子树</span></span><br><span class="line">  <span class="built_in">rep</span>(i,l+<span class="number">1</span>,r+<span class="number">1</span>) <span class="keyword">if</span>(a[l] &lt; a[i]) v += <span class="built_in">g</span>(l+<span class="number">1</span>,i<span class="number">-1</span>)*<span class="built_in">g</span>(i,r);</span><br><span class="line">  <span class="keyword">return</span> v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i] = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">g</span>(<span class="number">1</span>,n<span class="number">-1</span>).<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ex-K-th-beautiful-Necklace"><a href="#Ex-K-th-beautiful-Necklace" class="headerlink" title="Ex - K-th beautiful Necklace"></a>Ex - K-th beautiful Necklace</h2><p>n个宝石</p>
+<p>第i个颜色Di, 美丽值Vi</p>
+<p>一共c个颜色, 每个颜色至少一个</p>
+<p>要选C个两两不同颜色的宝石(顺序无关,顺序元素相同看作一种)</p>
+<p>美丽值 &#x3D; 它们的Vi的xor值</p>
+<p>在所有有效的方案中对美丽值排序, 求第k大的美丽值</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>1 &lt;&#x3D; c &lt;&#x3D; n &lt;&#x3D; 70</p>
+<p>vi [0,2^60)</p>
+<p>k [1,1e18]</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>我好像, 连max都不会,怎么求k-th max</p>
+<hr>
+<p>如果一个颜色只有一个,那么显然它被选,</p>
+<p>显然 总方案数 &#x3D; 每个颜色的个数 的乘积</p>
+<p>问题是70能得到的最大乘积是啥?</p>
+<p>2个一组的话</p>
+<p>34359738368 &#x3D; 2^35</p>
+<p>125524238436 &#x3D; 3^22 * 4</p>
+<p>1000000000000000000 &#x3D; 10^18</p>
+<p>虽然没k上限那么大,但也不小</p>
+<hr>
+<p>然后 还是从max开始考虑</p>
+<p>xor + max</p>
+<p>感觉只能从高到低贪心</p>
+<p>可以容易计算出最高位, 为1的个数和0的个数</p>
+<p>考虑为1的来源, 问题是</p>
+<p>比如V为<code>2 4</code>和<code>5 3</code> 交叉</p>
+<p>那么得到 <code>7 1 1 7</code>, 而并不能就划分成两块</p>
+<p>因为 高位1 &#x3D; 2x5, 4x3</p>
+<p>按照高位划分, 会让记录的内容翻倍…</p>
+<hr>
+<p>特别是当组不只两个的时候, 要按照高位为1&#x2F;0 做切分</p>
+<hr>
+<p>一个想法就是干脆不切分</p>
+<p>直接统计 xor 高位是1和0的个数</p>
+<p>如果确定要找的在1里面</p>
+<p>再统计高位是10和高位是11的个数</p>
+<p>假设在10里面,再100和101的个数</p>
+<p>这样下降?</p>
+<p>问题是 位多了以后,说是只统计10&#x2F;11的个数,但在xor过程中依然需要记录01和00的个数</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>Step1: 估计上限, 跟我上面做得一样 O(3^{N&#x2F;3})</p>
+<p>Step2: meet-in-the-middle</p>
+<p>这… 1.3x1e11 叫faily small??????</p>
+<p>哦 !!!!! 有道理</p>
+<p>尽可能的对半分成 每个只需要O(3^{n&#x2F;6}) 这样就大概,每个是1e5~1e6 个结果</p>
+<p>Step3: 就是上面想的从高到低位做切割了, 这下只有两部分其实就好切割了</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc252/submissions/35213984">https://atcoder.jp/contests/abc252/submissions/35213984</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> sz(o) ((ll)(o).size())</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  vector&lt;vector&lt;ll&gt; &gt; <span class="built_in">V</span>(<span class="built_in">read</span>()); <span class="comment">//</span></span><br><span class="line">  ll K = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> c=<span class="built_in">read</span>()<span class="number">-1</span>; <span class="comment">// 0-index</span></span><br><span class="line">    V[c].<span class="built_in">push_back</span>(<span class="built_in">read</span>());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(V.<span class="built_in">begin</span>(),V.<span class="built_in">end</span>(),[](<span class="type">const</span> <span class="keyword">auto</span>&amp;v0,<span class="type">const</span> <span class="keyword">auto</span>&amp;v1)&#123;<span class="keyword">return</span> <span class="built_in">sz</span>(v0)&gt;<span class="built_in">sz</span>(v1);&#125;);</span><br><span class="line">  array&lt;vector&lt;ll&gt;,2&gt; P&#123;&#123; &#123;<span class="number">0</span>&#125;,&#123;<span class="number">0</span>&#125; &#125;&#125;; <span class="comment">// 尽量分成相等的两组, P 中是每组的xor结果</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">sz</span>(V))&#123;</span><br><span class="line">    <span class="type">int</span> flag=(<span class="built_in">sz</span>(P[<span class="number">0</span>])&gt;<span class="built_in">sz</span>(P[<span class="number">1</span>]));</span><br><span class="line">    vector&lt;ll&gt; arr=&#123;&#125;;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> v:V[i])<span class="keyword">for</span>(<span class="keyword">auto</span> x:P[flag]) arr.<span class="built_in">push_back</span>(v^x);</span><br><span class="line">    P[flag]=arr;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ll ans=<span class="number">0</span>;</span><br><span class="line">  vector&lt;array&lt;vector&lt;ll&gt;,2&gt; &gt; A = &#123;&#123; P[<span class="number">0</span>],P[<span class="number">1</span>] &#125;&#125;; <span class="comment">// 每次从高位到低位拆分</span></span><br><span class="line">  <span class="built_in">per</span>(B,<span class="number">0</span>,<span class="number">60</span>)&#123;</span><br><span class="line">    vector&lt;array&lt;array&lt;vector&lt;ll&gt;,2&gt;,2&gt; &gt; arr=&#123;&#125;; <span class="comment">// [左侧/右侧][B位为0/1] = &#123;值数组&#125;</span></span><br><span class="line">    ll cnt=<span class="number">0</span>; <span class="comment">// B位为1的个数</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> ab:A)&#123;</span><br><span class="line">      array&lt;array&lt;vector&lt;ll&gt;,2&gt;,2&gt; nab = &#123;&#123; &#123;&#123; &#123;&#125;,&#123;&#125; &#125;&#125;,&#123;&#123; &#123;&#125;,&#123;&#125; &#125;&#125; &#125;&#125;; <span class="comment">// 按照B位分成 [0] 和 [1] 的两组</span></span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">2</span>)<span class="keyword">for</span>(ll x:ab[i]) nab[i][(x&gt;&gt;B)&amp;<span class="number">1</span>].<span class="built_in">push_back</span>(x); <span class="comment">// [左侧/右侧][B位为0/1] = &#123;值数组&#125;</span></span><br><span class="line">      arr.<span class="built_in">push_back</span>(nab);</span><br><span class="line">      <span class="built_in">rep</span>(d,<span class="number">0</span>,<span class="number">2</span>)cnt+=<span class="built_in">sz</span>(nab[<span class="number">0</span>][d])*<span class="built_in">sz</span>(nab[<span class="number">1</span>][d^<span class="number">1</span>]); <span class="comment">// 计算B位乘法后为1的个数</span></span><br><span class="line">    &#125;</span><br><span class="line">    A=&#123;&#125;;</span><br><span class="line">    <span class="type">int</span> bit;</span><br><span class="line">    <span class="keyword">if</span>(cnt&lt;K)&#123; <span class="comment">// 高位为0</span></span><br><span class="line">      K-=cnt;</span><br><span class="line">      bit=<span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;   <span class="comment">// 高位为1</span></span><br><span class="line">      ans+=(ll)<span class="number">1</span>&lt;&lt;B;</span><br><span class="line">      bit=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;[a,b]:arr)<span class="built_in">rep</span>(d,<span class="number">0</span>,<span class="number">2</span>)<span class="keyword">if</span>(<span class="built_in">sz</span>(a[d]) <span class="keyword">and</span> <span class="built_in">sz</span>(b[d^bit]))A.<span class="built_in">push_back</span>(&#123;a[d],b[d^bit]&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>没卡黄题</p>
+<p>Ex</p>
+<p>meet-in-middle , 我都试出了1.3e11 了 却没想到meet-in-middle 真是太菜了</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc252/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>树</tag>
+        <tag>meet-in-middle</tag>
       </tags>
   </entry>
 </search>
