@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="Ex(基尔霍夫定律,DP)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc253">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/2022-09-30-ac-abc253/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="Ex(基尔霍夫定律,DP)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-09-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-08T20:04:04.059Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="状压DP">
+<meta property="article:tag" content="TODO">
+<meta property="article:tag" content="基尔霍夫定律">
+<meta property="article:tag" content="矩阵树定理">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/2022-09-30-ac-abc253/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/2022-09-30-ac-abc253/","path":"2022-09-30-ac-abc253/","title":"Atcoder abc253"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc253 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">194</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">182</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-We-Love-Forest"><span class="nav-text">Ex - We Love Forest</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E5%BE%8B"><span class="nav-text">基尔霍夫定律</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E7%9F%A9%E9%98%B5"><span class="nav-text">关联矩阵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%B4%A81-%E6%AF%8F%E8%A1%8C-%E6%AF%8F%E5%88%97-%E5%85%83%E7%B4%A0%E5%92%8C%E9%83%BD%E6%98%AF0"><span class="nav-text">性质1 每行 每列 元素和都是0</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%B4%A82-%E8%A1%8C%E5%88%97%E5%BC%8F-%E4%B8%BA0"><span class="nav-text">性质2 行列式 为0</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%B4%A83-%E4%BB%BB%E4%BD%95n-1%E9%98%B6-%E4%BD%99%E5%AD%90%E5%BC%8F%E7%9A%84%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9B%B8%E7%AD%89"><span class="nav-text">性质3 任何n-1阶 余子式的行列式相等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%B4%A84-n-1%E4%BD%99%E5%AD%90%E5%BC%8F%E7%9A%84%E8%A1%8C%E5%88%97%E5%BC%8F-x3D-%E5%89%A9%E4%BD%99%E9%9D%9E0%E7%89%B9%E5%BE%81%E5%80%BC%E7%9A%84%E4%B9%98%E7%A7%AF-%E9%99%A4%E4%BB%A5n"><span class="nav-text">性质4 n-1余子式的行列式 &#x3D; 剩余非0特征值的乘积 除以n</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E7%94%A8%E8%84%91%E6%B4%9E"><span class="nav-text">无用脑洞</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">182</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-09-30-ac-abc253/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc253 | YeXiaoRain Blog">
+      <meta itemprop="description" content="Ex(基尔霍夫定律,DP)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc253
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-09-30 00:00:00" itemprop="dateCreated datePublished" datetime="2022-09-30T00:00:00+08:00">2022-09-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-10-09 04:04:04" itemprop="dateModified" datetime="2022-10-09T04:04:04+08:00">2022-10-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2022-09-30-ac-abc253/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-09-30-ac-abc253/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>5.3k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>13 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">Ex(基尔霍夫定律,DP)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc253/tasks">https://atcoder.jp/contests/abc253/tasks</a></p>
+<h1 id="Ex-We-Love-Forest"><a href="#Ex-We-Love-Forest" class="headerlink" title="Ex - We Love Forest"></a>Ex - We Love Forest</h1><p>一个n点0边的土 G</p>
+<p>给序列 u[1..m], v[1..m]</p>
+<p>做k次操作</p>
+<p>每次1~m中等概率选i, 连接ui,vi, (允许重边, 没有自环</p>
+<p>对于k &#x3D; 1…n-1</p>
+<p>计算 图是森林的概率</p>
+<p>mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 14</p>
+<p>m 500</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>n 这么小</p>
+<p>问题其实就是说k次选择没有出现重边, 也没有产生环的概率</p>
+<p>如果只是重边 还很好做, 但是问题是如何判断没有环的概率</p>
+<hr>
+<p>然后说 有没有把并查集状态 全部表示出来, 但这样看似乎n又很大</p>
+<p>f(x) &#x3D; <code>x个点的并查集状态的数</code></p>
+<p>考虑和其中最小点1在一起的点数</p>
+<p>f(x) &#x3D; sum binom(x,i) f(x-1-i), i &#x3D; 0..x-1</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">15</span></span><br><span class="line">a = [<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line">a[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">fac = [<span class="number">1</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,n):</span><br><span class="line">    fac[i] = fac[i-<span class="number">1</span>]*i</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binom</span>(<span class="params">n,m</span>):</span><br><span class="line">    <span class="keyword">return</span> fac[n]//fac[n-m]//fac[m]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i):</span><br><span class="line">        a[i] += binom(i-<span class="number">1</span>,j) * a[i-<span class="number">1</span>-j]</span><br><span class="line">    <span class="built_in">print</span>(i,a[i])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1 1</span><br><span class="line">2 2</span><br><span class="line">3 5</span><br><span class="line">4 15</span><br><span class="line">5 52</span><br><span class="line">6 203</span><br><span class="line">7 877</span><br><span class="line">8 4140</span><br><span class="line">9 21147</span><br><span class="line">10 115975</span><br><span class="line">11 678570</span><br><span class="line">12 4213597</span><br><span class="line">13 27644437</span><br><span class="line">14 190899322</span><br></pre></td></tr></table></figure>
+
+<p>状态数量接受不了, 更别提转移代价了</p>
+<hr>
+<p>但是如果 容斥看 指定一个mask中的点构成树, 其余任意的话, 能否容斥</p>
+<p>并想不出 容斥的单独属性</p>
+<p>除非是 每个mask中是森林, 但是既然都是森林了不如直接算出答案</p>
+<p>如果每个mask是树, 所有的并交没有意义?</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>基尔霍夫定律: 一个图G的生成树个数 &#x3D; G的n-1阶 代数余子式</p>
+<p>bit dp</p>
+<p>f(mask) &#x3D; 点集为mask的 生成树 的个数</p>
+<p>g(mask,i) &#x3D; 点集为mask的 森林(且 选中了 i条边) 的个数</p>
+<p>状态是 n2^n 的</p>
+<p>那么 ans[k] &#x3D; (g((1 &lt;&lt; n)-1,k) &#x2F; (m^k))</p>
+<hr>
+<p>f(mask) 可以 枚举子集(2^n) * 计算行列式(n^3) 算出</p>
+<p>g(mask,i) 类似于 abc213g 中dp的想法 通过讨论集合中和点1的属于同一个树(连通块)的情况来算转移</p>
+<p>令u(mask) &#x3D; mask中最小点</p>
+<p>$g(S,i) &#x3D; \sum_{u(S) \in T \subset S} f(T) * g(S-T,i-(|T|-1|))$</p>
+<p>即 &#x3D; 与点u的构成树 * 剩下的点构成森林</p>
+<h3 id="基尔霍夫定律"><a href="#基尔霍夫定律" class="headerlink" title="基尔霍夫定律"></a>基尔霍夫定律</h3><p>图的生成树个数 &#x3D; Laplacian 矩阵(基尔霍夫矩阵)的n-1阶余子式的行列式</p>
+<hr>
+<p>对于一个无向图G, 有N点,M边, 定义一个N x N的Laplacian 矩阵L</p>
+<p>$L_{i,j} &#x3D; $ i&#x3D;j时为点i的度, 否则为i到j的重边数的相反数, (实际上是点的度数矩阵 减去 临接矩阵</p>
+<h4 id="关联矩阵"><a href="#关联矩阵" class="headerlink" title="关联矩阵"></a>关联矩阵</h4><p>定义B为 关联矩阵Bij 表示 第i个点与第j条边(重边就拆成多条边)的关系, 0无关系,1是第j条边的小点,-1是第j条边的大点</p>
+<p>那么有 B 与 B的转置 的乘积为 基尔霍夫矩阵</p>
+<h4 id="性质1-每行-每列-元素和都是0"><a href="#性质1-每行-每列-元素和都是0" class="headerlink" title="性质1 每行 每列 元素和都是0"></a>性质1 每行 每列 元素和都是0</h4><p>因为 临接矩阵的每行每列元素和 都是对应行列点的度数</p>
+<h4 id="性质2-行列式-为0"><a href="#性质2-行列式-为0" class="headerlink" title="性质2 行列式 为0"></a>性质2 行列式 为0</h4><p>因为有特征向量(1,1,1,…1) 对应特征值0,</p>
+<h4 id="性质3-任何n-1阶-余子式的行列式相等"><a href="#性质3-任何n-1阶-余子式的行列式相等" class="headerlink" title="性质3 任何n-1阶 余子式的行列式相等"></a>性质3 任何n-1阶 余子式的行列式相等</h4><p>任何n-1阶<strong>主</strong>余子式的行列式相等</p>
+<p>proof</p>
+<p>根据Binet-Cauchy 定理</p>
+<p>基尔霍夫矩阵 相当于 (((在 关联矩阵中 选 n-1列, 和去掉指定第i行剩下的n-1行得到的矩阵C)与C^T乘积的 行列式)的平方) 的和</p>
+<p>选n-1列意味就是选了其中n-1条边,</p>
+<ul>
+<li><p>如果这n-1条边在图中有环, 那么这个环上的边 对应的列向量之间做加减运算能得到0向量, 即线性相关, 而列向量中去掉第i个元素, 依然线性相关, 所以这个行列式子为0</p>
+</li>
+<li><p>否则n点n-1条边无环 则只能是树</p>
+</li>
+</ul>
+<p>树的话, 考虑把第i个作为树的根看</p>
+<p>那么任何叶子到根i的路径, 沿着路径, 对应的列向量 做列变换, 行列式等价与把这个叶子节点作为直接i的子节点的行列式 乘上 -1 的某个幂次</p>
+<p>因此 行列式等于 所有点都是点i直接子节点的行列式</p>
+<p>因此 行列式等价于 每列有且只有一个1&#x2F;-1, 每行有且只有一个1&#x2F;-1的的行列式 &#x3D; 1&#x2F;-1</p>
+<p>因此贡献为1</p>
+<p>也就是 不论删去 哪个i行i列, 的余子式 &#x3D; 生成树个数</p>
+<p>3.1 有的地方说 任意n-1余子式</p>
+<p>例如</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A=[<span class="number">1</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">0</span>;<span class="number">-1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>;<span class="number">0</span>,<span class="number">1</span>,<span class="number">-1</span>,<span class="number">-1</span>]</span><br><span class="line">B=A*A&#x27;</span><br><span class="line">det(B([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">1</span>,<span class="number">2</span>]))</span><br><span class="line">det(B([<span class="number">1</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">3</span>]))</span><br><span class="line">det(B([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">3</span>]))</span><br></pre></td></tr></table></figure>
+
+<p>proof</p>
+<p>其实和 上面 n-1 主余子式是类似的, 通过Binet-Cauchy定理 和 树上意义 与 列向量关系</p>
+<p>B&#x3D;(A去掉第i行) * (A去掉第j行)^T</p>
+<p>那么n-1列依然对应选n-1条边</p>
+<p>因此当有成环时 行列式依然是0</p>
+<p>那么对于不成环时, 依然是行列式为1或-1</p>
+<p>那么只要证明了 若 其中一组n-1条边 (移除i对应行列式 与 移除j对应的行列式) 符号相同 则 任意n-1条边(…)符号相同</p>
+<p>先看 因为n-1点n-1边上面已经证明了行列式非0, 所以列向量线性无关</p>
+<p>因此对应的n点n-1边的列向量也线性无关</p>
+<p>两个树 对应的n点(行)n-1边(列)的矩阵T0,T1, 的列向量都是线性无关,</p>
+<p>且树之间可以转化, 也就是存在可逆矩阵M(行列式非0) 使得 T0 * M &#x3D; T1, 那么有</p>
+<p>(T0去掉行i) * M &#x3D; (T1去掉行i)</p>
+<p>(T0去掉行j) * M &#x3D; (T1去掉行j)</p>
+<p>即行列式有</p>
+<p>|T0去掉行i| * |M| &#x3D; |T1去掉行i|</p>
+<p>|T0去掉行j| * |M| &#x3D; |T1去掉行j|</p>
+<p>注意到 M 是与 i和j 无关的 只与 T0,T1的选取有关, 而且, |M| &#x3D; 1&#x2F;-1</p>
+<p>因此 |T0去掉行i| * |T0去掉行j| * |M|^2 &#x3D; |T1去掉行i| * |T1去掉行j|</p>
+<p>得到了对于给定的i和j, 每个图中的树 在 Binet-Cauchy 中 贡献的绝对值为1, 且符号一致</p>
+<p>综上</p>
+<p>任意n-1阶子矩阵的行列式 都是生成树的个数 * (-1)的某个次方</p>
+<p>TODO, 证明代数余子式 相等(即消掉-1)</p>
+<p>3.2 显然 根据 Binet-Cauchy 也能得到它显然是半正定矩阵</p>
+<p>因为 |(x’B)(x’B)^T| &gt;&#x3D; 0</p>
+<p>因此它的特征值 全非负</p>
+<h4 id="性质4-n-1余子式的行列式-x3D-剩余非0特征值的乘积-除以n"><a href="#性质4-n-1余子式的行列式-x3D-剩余非0特征值的乘积-除以n" class="headerlink" title="性质4 n-1余子式的行列式 &#x3D; 剩余非0特征值的乘积 除以n"></a>性质4 n-1余子式的行列式 &#x3D; 剩余非0特征值的乘积 除以n</h4><p>proof TODO, 似乎是线性代数的知识</p>
+<h4 id="无用脑洞"><a href="#无用脑洞" class="headerlink" title="无用脑洞"></a>无用脑洞</h4><p>我对三行四列行列式有点脑洞</p>
+<p>感觉跟着 Binet-Cauchy 定理的话</p>
+<p>其实可以发现它可以提出来binom(4,3)个数, 并不需要12个数表示, 所以记作 X_{3,4} (v0,v1,v2,v3) 里面的数有序,按照排列的顺序</p>
+<p>但是可能不少情况 binom(max(m,n),min(m,n)) 比 nm 还多</p>
+<p>n&gt;&#x3D;m时</p>
+<p>X_{m,n} * X_{n,m} &#x3D; X_{m,m} (对应位置乘积之和)</p>
+<p>n &lt; m时,</p>
+<p>X_{m,n} * X_{n,m} &#x3D; X_{n,n} (0)</p>
+<p>看起来很美好,但实际上</p>
+<p>[1,0;0,1] 和 [0,1;-1,0] 的上述表示一致</p>
+<p>但是 (1,2) 去乘一个得到(1,2) 一个得到(2,-1) 都不一样</p>
+<p>所以这个脑洞显然并没什么卵用</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc253/submissions/35519263">https://atcoder.jp/contests/abc253/submissions/35519263</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for(int i=a;i&lt;(int)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for(int i=n;i--&gt;(int)(a);)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function">T <span class="title">det</span><span class="params">(vector&lt;vector&lt;T&gt;&gt;&amp; a)</span></span>&#123; <span class="comment">// 高斯消元</span></span><br><span class="line">  <span class="keyword">auto</span> n=a.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">if</span>(n==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">assert</span>(n==a[<span class="number">0</span>].<span class="built_in">size</span>());</span><br><span class="line">  T ans=<span class="number">1</span>;</span><br><span class="line">  T neg=<span class="number">-1</span>; <span class="comment">// 除法慢 少用除法</span></span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,j,n)<span class="keyword">if</span>(a[i][j]!=<span class="number">0</span>)&#123; <span class="comment">// &gt;=j行中找j列首个非零值,做行交换</span></span><br><span class="line">      <span class="keyword">if</span>(i!=j)&#123;</span><br><span class="line">        std::<span class="built_in">swap</span>(a[i],a[j]);</span><br><span class="line">        ans*=neg;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ans*=a[j][j];<span class="comment">// 主元</span></span><br><span class="line">    <span class="keyword">if</span>(ans==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    T t=<span class="built_in">T</span>(<span class="number">1</span>)/a[j][j]; <span class="comment">// 少做除法</span></span><br><span class="line">    <span class="built_in">rep</span>(k,j,n)a[j][k]*=t;</span><br><span class="line">    <span class="built_in">rep</span>(i,j+<span class="number">1</span>,n)<span class="built_in">per</span>(k,j,n)a[i][k]-=a[i][j]*a[j][k]; <span class="comment">// 行变换, 注意per顺序</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Ex</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">14</span>;</span><br><span class="line">mint fac[N+<span class="number">1</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint f[<span class="number">1</span>&lt;&lt;N];<span class="comment">// f[mask]=mask中的点的生成树个数</span></span><br><span class="line">mint g[<span class="number">1</span>&lt;&lt;N][N]=&#123;&#123;<span class="number">1</span>&#125;&#125;; <span class="comment">// g[0][0]=1; f[mask][i]=mask中的点选了i条边的森林个数</span></span><br><span class="line"><span class="type">int</span> c[<span class="number">1</span>&lt;&lt;N];<span class="comment">// bit count</span></span><br><span class="line"><span class="type">int</span> e[N][N];</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)fac[i]=fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  <span class="built_in">rep</span>(S,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n)c[S]=c[S&amp;(S<span class="number">-1</span>)]+<span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(_,<span class="number">0</span>,m)&#123;</span><br><span class="line">    <span class="type">int</span> u = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    e[u][v]+=<span class="number">1</span>;</span><br><span class="line">    e[v][u]+=<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// f</span></span><br><span class="line">  <span class="built_in">rep</span>(S,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n)&#123;</span><br><span class="line">    <span class="keyword">auto</span> A=<span class="built_in">vector</span>(c[S]<span class="number">-1</span>,<span class="built_in">vector</span>&lt;mint&gt;(c[S]<span class="number">-1</span>,<span class="number">0</span>)); <span class="comment">// 忽略第一行第一列</span></span><br><span class="line">    <span class="type">int</span> ni=<span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n)<span class="keyword">if</span>(S&amp;(<span class="number">1</span>&lt;&lt;i))&#123;</span><br><span class="line">      <span class="type">int</span> nj=ni+<span class="number">1</span>;</span><br><span class="line">      <span class="built_in">rep</span>(j,i+<span class="number">1</span>,n)<span class="keyword">if</span>(S&amp;(<span class="number">1</span>&lt;&lt;j))&#123;</span><br><span class="line">        <span class="type">int</span> d=e[i][j];</span><br><span class="line">        <span class="keyword">if</span>(~ni)A[ni][ni]+=d;</span><br><span class="line">        <span class="keyword">if</span>(~nj)A[nj][nj]+=d;</span><br><span class="line">        <span class="keyword">if</span>(~ni&amp;&amp;~nj)A[ni][nj]=A[nj][ni]=-d;</span><br><span class="line">        nj++;</span><br><span class="line">      &#125;</span><br><span class="line">      ni++;</span><br><span class="line">    &#125;</span><br><span class="line">    f[S]=<span class="built_in">det</span>(A);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// g 子集遍历</span></span><br><span class="line">  <span class="built_in">rep</span>(S,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n)<span class="built_in">rep</span>(i,<span class="number">0</span>,c[S])<span class="keyword">for</span>(<span class="type">int</span> T=S;T;T=(T<span class="number">-1</span>)&amp;S)<span class="keyword">if</span>(T&amp;S&amp;-S <span class="keyword">and</span> i-(c[T]<span class="number">-1</span>)&gt;=<span class="number">0</span>)g[S][i]+=f[T]*g[S-T][i-(c[T]<span class="number">-1</span>)];</span><br><span class="line">  <span class="built_in">rep</span>(k,<span class="number">1</span>,n)<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(g[(<span class="number">1</span>&lt;&lt;n)<span class="number">-1</span>][k]*fac[k]/<span class="built_in">mint</span>(m).<span class="built_in">pow</span>(k)).<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Ex</p>
+<p>1847 年 基尔霍夫定律</p>
+<p>基尔霍夫矩阵树定理: 无向图的生成树个数等于其Laplacian matrix的任意一个代数余子式的值。</p>
+<p>Kirchhoff’s theorem</p>
+<p>Kirchhoff’s theorem for directed multigraphs</p>
+<p>Cauchy Binet formula</p>
+<p>A: n行m列,B: m行n列 (n&gt;&#x3D;m)</p>
+<p>s 为 一个m中选出的n个数的排列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">|AB| = (-1)^(nm+m) |AO| = sum |A[s列]| |B[s行]|</span><br><span class="line">                   |IB|</span><br></pre></td></tr></table></figure>
+
+<p>该重学一遍线性代数了</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc253/editorial">官方题解</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2022-07-28-ac_abc213/?highlight=213#G-Connectivity-2">abc 213 g</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem">https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem</a></p>
+<p>调和矩阵Laplacian matrix: <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Laplacian_matrix">https://en.wikipedia.org/wiki/Laplacian_matrix</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cauchy%E2%80%93Binet_formula">https://en.wikipedia.org/wiki/Cauchy%E2%80%93Binet_formula</a></p>
+<p>周冬: 生成树的计数及其应用(ppt+doc 两个版本)</p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/2022-09-30-ac-abc253/" title="Atcoder abc253">https://yexiaorain.github.io/Blog/2022-09-30-ac-abc253/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E7%8A%B6%E5%8E%8BDP/" rel="tag"><i class="fa fa-tag"></i> 状压DP</a>
+              <a href="/Blog/tags/TODO/" rel="tag"><i class="fa fa-tag"></i> TODO</a>
+              <a href="/Blog/tags/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E5%BE%8B/" rel="tag"><i class="fa fa-tag"></i> 基尔霍夫定律</a>
+              <a href="/Blog/tags/%E7%9F%A9%E9%98%B5%E6%A0%91%E5%AE%9A%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 矩阵树定理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2022-09-29-ac-abc252/" rel="prev" title="Atcoder abc252">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc252
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">855k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">35:37</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/2022-09-30-ac-abc253/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
