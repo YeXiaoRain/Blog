@@ -12220,86 +12220,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Atcoder abc223</title>
-    <url>/Blog/2022-08-09-ac_abc223/</url>
-    <content><![CDATA[<h1 id="G-Vertex-Deletion"><a href="#G-Vertex-Deletion" class="headerlink" title="G - Vertex Deletion"></a>G - Vertex Deletion</h1><p><a href="https://atcoder.jp/contests/abc223/tasks/abc223_g">https://atcoder.jp/contests/abc223/tasks/abc223_g</a></p>
-<p>N 点, 标号1到N, 的树</p>
-<p>找有几个点满足, 删了它和它直接相连的边以后, 最大匹配个数 &#x3D; 原图最大匹配个数</p>
-<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>N 2e5</p>
-<p>2 s</p>
-<p>1024 mb</p>
-<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然如果删了u以后最大匹配个数不变, 那么在原图中u所直接连的点,在删除以后的图中都被选了</p>
-<p>否则的话, 其中一个和u可以让匹配数+1</p>
-<p>并且这些和u直接相连的点在最大匹配中是<code>必选</code>, 也就是不存在方案让它不被选</p>
-<p>又因为结构是树</p>
-<p>假设断开u-v的连接</p>
-<p>以v为根的连通块为根做树</p>
-<p>v必选(和子节点匹配)的条件是,任何一个子树的根未被选</p>
-<p>v不被选(不和子节点匹配,可能和父节点匹配)的条件是,所有子树的根被选</p>
-<hr>
-<p>感觉像是换根dp</p>
-<p>也就是求u作为根 f(u) 为不和子节点匹配的 u的个数</p>
-<p>f(u) &#x3D; !(f(v1) &amp; f(v2) &amp; f(v3))</p>
-<p>为了减少枚举,可以变成 子点0的个数统计</p>
-<p>f(u) &#x3D; count(f(v) &#x3D;&#x3D; 0) &gt; 0</p>
-<hr>
-<p>u 交换 v</p>
-<p>u 的子节点里没有了v, 更新u</p>
-<p>v 的子节点里没有了u, 更新v</p>
-<p>顺序就dfs顺序就完了</p>
-<p>好像就AC了</p>
-<span id="more"></span>
-
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc223/submissions/33887853">https://atcoder.jp/contests/abc223/submissions/33887853</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt;p2[<span class="number">200010</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> c[<span class="number">200010</span>]; <span class="comment">// count 0</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">x</span><span class="params">(<span class="type">int</span> u)</span></span>&#123; <span class="keyword">return</span> c[u] &gt; <span class="number">0</span>;&#125; <span class="comment">// 根据子节点0的个数 推断是否和子节点匹配</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> f)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:p2[u]) <span class="keyword">if</span>(v != f) &#123;</span><br><span class="line">    <span class="built_in">dfs</span>(v,u);</span><br><span class="line">    c[u] += !<span class="built_in">x</span>(v);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swaproot</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  c[u] -= !<span class="built_in">x</span>(v);</span><br><span class="line">  c[v] += !<span class="built_in">x</span>(u);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dfs2</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> f)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> r = !<span class="built_in">x</span>(u);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:p2[u]) <span class="keyword">if</span>(v != f) &#123;</span><br><span class="line">    <span class="built_in">swaproot</span>(u,v);</span><br><span class="line">    r += <span class="built_in">dfs2</span>(v,u);</span><br><span class="line">    <span class="built_in">swaproot</span>(v,u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> u = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>();</span><br><span class="line">    p2[u].<span class="built_in">pb</span>(v);</span><br><span class="line">    p2[v].<span class="built_in">pb</span>(u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">dfs</span>(<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">dfs2</span>(<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="H-Xor-Query"><a href="#H-Xor-Query" class="headerlink" title="H - Xor Query"></a>H - Xor Query</h1><p><a href="https://atcoder.jp/contests/abc223/tasks/abc223_h">https://atcoder.jp/contests/abc223/tasks/abc223_h</a></p>
-<p>N个整数数组A[1…N]</p>
-<p>做Q次询问, 每次询问[L..R]区间,是能选出一些数 使得它们的xor &#x3D; Xi</p>
-<p>不用给方案,只用输出Yes&#x2F;No</p>
-<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>N 4e5</p>
-<p>Q 2e5</p>
-<p>Ai [1,2^60]</p>
-<p>Xi [1,2^60]</p>
-<p>3s</p>
-<p>1024 mb</p>
-<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>无</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>线性代数的一点基础知识</p>
-<p>每个数字可以表示成60个维度的向量</p>
-<p>xor &#x3D; 每个维度和 %2</p>
-<p>选一些数 xor &#x3D; x</p>
-<p>等同于 选一些数,做向量各维度和 % 2</p>
-<p>对x的集合$X$, span(X)表示 集合中能构成所有xor的结果的集合</p>
-<hr>
-<p>本身是在一个 2^{60} 的空间里</p>
-<p>如果区间[L..R] 中能选出一些让xor的值 &#x3D; X</p>
-<p>那么 span({a[k..R]}) 能产生向量X, 其中k &gt;&#x3D; L</p>
-<p>对于给定R</p>
-<p>如果 span{a[k..R]} 不等于 span{a[k+1..R]}</p>
-<p>那么说明 a[k] 是 a[k..R]的一个线性基</p>
-<p>那么对L 来说, a{L..R} 的能生成的 只和中间这些满足 的k有关</p>
-<hr>
-<p>那么枚举右端点, 维护的每次如果不增加基,更新掉最前面一个和它冲突的</p>
-<p>这样每个右端点都记录了最近的一些到它的线性基的下标了</p>
-<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc223/submissions/33888843">https://atcoder.jp/contests/abc223/submissions/33888843</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 400000</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">pair&lt;ll,<span class="type">int</span>&gt; a[N+<span class="number">10</span>][<span class="number">100</span>]; <span class="comment">// [区间右端点 i][pwr] = pwr对应修改bit的 距离最近的 &#123;线性基,下标&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">query</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> l = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> r = <span class="built_in">read</span>();</span><br><span class="line">  ll x = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">61</span>) <span class="keyword">if</span> ((x&gt;&gt;i)&amp;<span class="number">1</span>) &#123; <span class="comment">// x 的 i 位bit 是1</span></span><br><span class="line">    <span class="keyword">auto</span> [base,idx] = a[r][i];</span><br><span class="line">    <span class="keyword">if</span> (!base || idx &lt; l) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 找不到, 或者最近的修改 超出范围</span></span><br><span class="line">    x ^= base;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> q = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(pos,<span class="number">1</span>,n+<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="type">int</span> i = pos;</span><br><span class="line">    ll x = <span class="built_in">read</span>();</span><br><span class="line">    <span class="built_in">rep</span>(pwr,<span class="number">0</span>,<span class="number">61</span>) a[pos][pwr] = a[pos<span class="number">-1</span>][pwr];<span class="comment">// 拷贝一份</span></span><br><span class="line">    <span class="built_in">rep</span>(pwr,<span class="number">0</span>,<span class="number">61</span>) <span class="keyword">if</span> ( (x&gt;&gt;pwr) &amp; <span class="number">1</span>) &#123; <span class="comment">// x 位是1 , 这里和query的 位顺序一致即可, 可以从小到大,也可以从大到小</span></span><br><span class="line">      <span class="keyword">auto</span> [base,idx] = a[pos][pwr];</span><br><span class="line">      <span class="keyword">if</span> (!base) &#123; <span class="comment">// 新增基</span></span><br><span class="line">        a[pos][pwr] = &#123;x,i&#125;; <span class="comment">// 基,下标</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i &gt; idx) &#123; <span class="comment">// 换离pos更近的基</span></span><br><span class="line">        <span class="built_in">swap</span>(a[pos][pwr].first, x);</span><br><span class="line">        <span class="built_in">swap</span>(a[pos][pwr].second, i);</span><br><span class="line">      &#125;</span><br><span class="line">      x ^= a[pos][pwr].first; <span class="comment">// 把pwr位的1删掉, 变换基</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (q--) <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,<span class="built_in">query</span>()?<span class="string">&quot;Yes&quot;</span>:<span class="string">&quot;No&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
-<p>没啥难的</p>
-<p>H</p>
-<p>线性基的知识点</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc223/editorial">官方题解</a></p>
-]]></content>
-      <categories>
-        <category>Atcoder</category>
-        <category>ABC</category>
-      </categories>
-      <tags>
-        <tag>线性基</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Atcoder abc222</title>
     <url>/Blog/2022-08-08-ac_abc222/</url>
     <content><![CDATA[<h1 id="G-222"><a href="#G-222" class="headerlink" title="G - 222"></a>G - 222</h1><p><a href="https://atcoder.jp/contests/abc222/tasks/abc222_g">https://atcoder.jp/contests/abc222/tasks/abc222_g</a></p>
@@ -12532,6 +12452,86 @@
       </tags>
   </entry>
   <entry>
+    <title>Atcoder abc223</title>
+    <url>/Blog/2022-08-09-ac_abc223/</url>
+    <content><![CDATA[<h1 id="G-Vertex-Deletion"><a href="#G-Vertex-Deletion" class="headerlink" title="G - Vertex Deletion"></a>G - Vertex Deletion</h1><p><a href="https://atcoder.jp/contests/abc223/tasks/abc223_g">https://atcoder.jp/contests/abc223/tasks/abc223_g</a></p>
+<p>N 点, 标号1到N, 的树</p>
+<p>找有几个点满足, 删了它和它直接相连的边以后, 最大匹配个数 &#x3D; 原图最大匹配个数</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>N 2e5</p>
+<p>2 s</p>
+<p>1024 mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然如果删了u以后最大匹配个数不变, 那么在原图中u所直接连的点,在删除以后的图中都被选了</p>
+<p>否则的话, 其中一个和u可以让匹配数+1</p>
+<p>并且这些和u直接相连的点在最大匹配中是<code>必选</code>, 也就是不存在方案让它不被选</p>
+<p>又因为结构是树</p>
+<p>假设断开u-v的连接</p>
+<p>以v为根的连通块为根做树</p>
+<p>v必选(和子节点匹配)的条件是,任何一个子树的根未被选</p>
+<p>v不被选(不和子节点匹配,可能和父节点匹配)的条件是,所有子树的根被选</p>
+<hr>
+<p>感觉像是换根dp</p>
+<p>也就是求u作为根 f(u) 为不和子节点匹配的 u的个数</p>
+<p>f(u) &#x3D; !(f(v1) &amp; f(v2) &amp; f(v3))</p>
+<p>为了减少枚举,可以变成 子点0的个数统计</p>
+<p>f(u) &#x3D; count(f(v) &#x3D;&#x3D; 0) &gt; 0</p>
+<hr>
+<p>u 交换 v</p>
+<p>u 的子节点里没有了v, 更新u</p>
+<p>v 的子节点里没有了u, 更新v</p>
+<p>顺序就dfs顺序就完了</p>
+<p>好像就AC了</p>
+<span id="more"></span>
+
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc223/submissions/33887853">https://atcoder.jp/contests/abc223/submissions/33887853</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt;p2[<span class="number">200010</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> c[<span class="number">200010</span>]; <span class="comment">// count 0</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">x</span><span class="params">(<span class="type">int</span> u)</span></span>&#123; <span class="keyword">return</span> c[u] &gt; <span class="number">0</span>;&#125; <span class="comment">// 根据子节点0的个数 推断是否和子节点匹配</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> f)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:p2[u]) <span class="keyword">if</span>(v != f) &#123;</span><br><span class="line">    <span class="built_in">dfs</span>(v,u);</span><br><span class="line">    c[u] += !<span class="built_in">x</span>(v);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swaproot</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  c[u] -= !<span class="built_in">x</span>(v);</span><br><span class="line">  c[v] += !<span class="built_in">x</span>(u);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dfs2</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> f)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> r = !<span class="built_in">x</span>(u);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:p2[u]) <span class="keyword">if</span>(v != f) &#123;</span><br><span class="line">    <span class="built_in">swaproot</span>(u,v);</span><br><span class="line">    r += <span class="built_in">dfs2</span>(v,u);</span><br><span class="line">    <span class="built_in">swaproot</span>(v,u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> u = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>();</span><br><span class="line">    p2[u].<span class="built_in">pb</span>(v);</span><br><span class="line">    p2[v].<span class="built_in">pb</span>(u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">dfs</span>(<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">dfs2</span>(<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="H-Xor-Query"><a href="#H-Xor-Query" class="headerlink" title="H - Xor Query"></a>H - Xor Query</h1><p><a href="https://atcoder.jp/contests/abc223/tasks/abc223_h">https://atcoder.jp/contests/abc223/tasks/abc223_h</a></p>
+<p>N个整数数组A[1…N]</p>
+<p>做Q次询问, 每次询问[L..R]区间,是能选出一些数 使得它们的xor &#x3D; Xi</p>
+<p>不用给方案,只用输出Yes&#x2F;No</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>N 4e5</p>
+<p>Q 2e5</p>
+<p>Ai [1,2^60]</p>
+<p>Xi [1,2^60]</p>
+<p>3s</p>
+<p>1024 mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>无</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>线性代数的一点基础知识</p>
+<p>每个数字可以表示成60个维度的向量</p>
+<p>xor &#x3D; 每个维度和 %2</p>
+<p>选一些数 xor &#x3D; x</p>
+<p>等同于 选一些数,做向量各维度和 % 2</p>
+<p>对x的集合$X$, span(X)表示 集合中能构成所有xor的结果的集合</p>
+<hr>
+<p>本身是在一个 2^{60} 的空间里</p>
+<p>如果区间[L..R] 中能选出一些让xor的值 &#x3D; X</p>
+<p>那么 span({a[k..R]}) 能产生向量X, 其中k &gt;&#x3D; L</p>
+<p>对于给定R</p>
+<p>如果 span{a[k..R]} 不等于 span{a[k+1..R]}</p>
+<p>那么说明 a[k] 是 a[k..R]的一个线性基</p>
+<p>那么对L 来说, a{L..R} 的能生成的 只和中间这些满足 的k有关</p>
+<hr>
+<p>那么枚举右端点, 维护的每次如果不增加基,更新掉最前面一个和它冲突的</p>
+<p>这样每个右端点都记录了最近的一些到它的线性基的下标了</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc223/submissions/33888843">https://atcoder.jp/contests/abc223/submissions/33888843</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 400000</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">pair&lt;ll,<span class="type">int</span>&gt; a[N+<span class="number">10</span>][<span class="number">100</span>]; <span class="comment">// [区间右端点 i][pwr] = pwr对应修改bit的 距离最近的 &#123;线性基,下标&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">query</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> l = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> r = <span class="built_in">read</span>();</span><br><span class="line">  ll x = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">61</span>) <span class="keyword">if</span> ((x&gt;&gt;i)&amp;<span class="number">1</span>) &#123; <span class="comment">// x 的 i 位bit 是1</span></span><br><span class="line">    <span class="keyword">auto</span> [base,idx] = a[r][i];</span><br><span class="line">    <span class="keyword">if</span> (!base || idx &lt; l) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 找不到, 或者最近的修改 超出范围</span></span><br><span class="line">    x ^= base;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> q = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(pos,<span class="number">1</span>,n+<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="type">int</span> i = pos;</span><br><span class="line">    ll x = <span class="built_in">read</span>();</span><br><span class="line">    <span class="built_in">rep</span>(pwr,<span class="number">0</span>,<span class="number">61</span>) a[pos][pwr] = a[pos<span class="number">-1</span>][pwr];<span class="comment">// 拷贝一份</span></span><br><span class="line">    <span class="built_in">rep</span>(pwr,<span class="number">0</span>,<span class="number">61</span>) <span class="keyword">if</span> ( (x&gt;&gt;pwr) &amp; <span class="number">1</span>) &#123; <span class="comment">// x 位是1 , 这里和query的 位顺序一致即可, 可以从小到大,也可以从大到小</span></span><br><span class="line">      <span class="keyword">auto</span> [base,idx] = a[pos][pwr];</span><br><span class="line">      <span class="keyword">if</span> (!base) &#123; <span class="comment">// 新增基</span></span><br><span class="line">        a[pos][pwr] = &#123;x,i&#125;; <span class="comment">// 基,下标</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i &gt; idx) &#123; <span class="comment">// 换离pos更近的基</span></span><br><span class="line">        <span class="built_in">swap</span>(a[pos][pwr].first, x);</span><br><span class="line">        <span class="built_in">swap</span>(a[pos][pwr].second, i);</span><br><span class="line">      &#125;</span><br><span class="line">      x ^= a[pos][pwr].first; <span class="comment">// 把pwr位的1删掉, 变换基</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (q--) <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,<span class="built_in">query</span>()?<span class="string">&quot;Yes&quot;</span>:<span class="string">&quot;No&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>没啥难的</p>
+<p>H</p>
+<p>线性基的知识点</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc223/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>线性基</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Atcoder abc224</title>
     <url>/Blog/2022-08-10-ac_abc224/</url>
     <content><![CDATA[<h1 id="G-Roll-or-Increment"><a href="#G-Roll-or-Increment" class="headerlink" title="G - Roll or Increment"></a>G - Roll or Increment</h1><p><a href="https://atcoder.jp/contests/abc224/tasks/abc224_g">https://atcoder.jp/contests/abc224/tasks/abc224_g</a></p>
@@ -12641,205 +12641,6 @@
         <tag>线性规划</tag>
         <tag>对偶问题</tag>
         <tag>费用流</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>maspy 生成函数与问题解决</title>
-    <url>/Blog/2022-08-12-generate_function/</url>
-    <content><![CDATA[<h1 id="生成方程"><a href="#生成方程" class="headerlink" title="生成方程"></a>生成方程</h1><p>感谢google翻译和maspy大佬的几篇博客, 见下方链接</p>
-<p>用很多例子来实例如何使用 多项式乘积</p>
-<p>状態ごとに何らかの値が計算されているときに、その計算結果を多項式の形で持ちます。この際、 「多項式の次数」が「考えている状態」、「係数」が状態ごとの「計算した値」（多くの場合、数え上げ）を表すように多項式を持つのが原則です。</p>
-<p>括号内是或关系, 括号间幂次是加和关系,系数是代价倍数一般是1</p>
-<p>翻译了一下, 统一了一下格式,增加了一些步骤</p>
-<p>以下未强调的都是非负整数</p>
-<p>注意的是有不少都可以写成无限次方的上限,因为超过n不会影响n,看具体情况哪个更好用用哪个</p>
-<h2 id="maspy-1-如何把问题转化"><a href="#maspy-1-如何把问题转化" class="headerlink" title="maspy 1 如何把问题转化"></a>maspy 1 如何把问题转化</h2><blockquote>
-<p>问题1, $A&#x3D;\{2,3\},B&#x3D;\{2,4\},C&#x3D;\{3,5,7\} , a+b+c&#x3D;n$ 有多少种方法可以</p>
-</blockquote>
-<p>$\lbrack x^n \rbrack (x^2+x^3)(x^2+x^4)(x^3+x^5+x^7)$, 就是乘开后$n$次项的系数</p>
-<span id="more"></span>
-
-<blockquote>
-<p>问题2. $a \le 2,b\le 3,c\le 4, a+b+c &#x3D; n$ 有多少种</p>
-</blockquote>
-<p>$\lbrack x^n \rbrack (1+x+x^2)(1+x+x^2+x^3)(1+x+x^2+x^3+x^4)$</p>
-<blockquote>
-<p>问题3. 无限制的$a,b,c \ge 0, a+b+c&#x3D;n$ 有多少种</p>
-</blockquote>
-<p>$\lbrack x^n \rbrack (1+x+x^2+\cdots)^3$</p>
-<p>$\lbrack x^n \rbrack (1+x+x^2+\cdots+x^n)^3$, (因为高次不影响n</p>
-<blockquote>
-<p>问题4(ABC149E), $A&#x3D;\{a_1,a_2,\cdots,a_k\}, n &#x3D; a_i + a_j$ 有多少种</p>
-</blockquote>
-<p>$\lbrack x^n \rbrack (x^{a_1}+x^{a_2}+\cdots+x^{a_k})^2$</p>
-<blockquote>
-<p>问题5, 从1开始,每次+2或+3, 恰好n次移动到N的方案数</p>
-</blockquote>
-<p>$\lbrack x^{N-1} \rbrack (x^2+x^3)^n$, 从增量的角度</p>
-<p>$\lbrack x^{N} \rbrack x(x^2+x^3)^n$, 从状态的角度</p>
-<blockquote>
-<p>问题6, 从1开始,每次+2或+3, 移动到N的方案数</p>
-</blockquote>
-<p>$\lbrack x^{N-1} \rbrack \sum_{n&#x3D;0}^{\infty}(x^2+x^3)^n$</p>
-<p>$\lbrack x^{N-1} \rbrack \sum_{n&#x3D;0}^{\frac{N}{2}}(x^2+x^3)^n$</p>
-<blockquote>
-<p>问题7, 1元,5元,10元有无限多, 组合成n元方案数</p>
-</blockquote>
-<p>$\lbrack x^{n} \rbrack (1+x^1+x^2+x^3+\cdots)(1+x^5+x^{10}+x^{15}+\cdots)(1+x^{10}+x^{20}+x^{30}+\cdots)$</p>
-<blockquote>
-<p>问题8, 重量分别$w_i$, 总重量不超过$W$ 有多少方案</p>
-</blockquote>
-<p>$\sum_{n&#x3D;0}^W \lbrack x^n \rbrack (1+x^{w_1})(1+x^{w_2})\cdots (1+x^{w_k})$</p>
-<p>$\sum_{n&#x3D;0}^{W}[x^n]\prod_{i&#x3D;1}^k$</p>
-<blockquote>
-<p>问题9, $0\le a_i \le N$, $a_1+\cdots+a_8&#x3D;6N$ $a_i$的方案数</p>
-</blockquote>
-<p>$\lbrack x^{6N} \rbrack (1+x^1+x^2+\cdots+x^N)^8$</p>
-<blockquote>
-<p>问题10, $0\le a,b,c \le N$且为素数,$a+b+c$ 也是素数方案数</p>
-</blockquote>
-<p>$\sum_{p&#x3D;2}^{3N} \lbrack x^{p} \rbrack (x^2+x^3+x^5+x^7+\cdots+x^{prime,\le N})^3$, 且$p$为素数</p>
-<blockquote>
-<p>问题11, $N$ 拆成正整数求和表达式(关心顺序)</p>
-</blockquote>
-<p>$\sum_{n&#x3D;1}^{\infty} \lbrack x^{N} \rbrack (x^1+x^2+x^3+\cdots+x^N)^n$</p>
-<p>$\sum_{n&#x3D;1}^{N} \lbrack x^{N} \rbrack (x^1+x^2+x^3+\cdots+x^N)^n$</p>
-<p>$\lbrack x^{N} \rbrack \sum_{n&#x3D;1}^{N} (x^1+x^2+x^3+\cdots+x^N)^n$</p>
-<blockquote>
-<p>问题12, $N$ 拆成正整数求和表达式, 但是数字从小到大(不关心顺序)</p>
-</blockquote>
-<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{\infty} (\sum_{i&#x3D;0}^{\infty} x^{ki})$, 相当于数字相同的视作一致,只有每个的数字的个数</p>
-<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{n} (\sum_{i&#x3D;0}^{n} x^{ki})$</p>
-<blockquote>
-<p>问题13, $N$ 拆成多个不同整数的和, 但是数字从小到大(不关心顺序)</p>
-</blockquote>
-<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{\infty} (1+x^k)$, 选或不选</p>
-<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{N} (1+x^k)$</p>
-<blockquote>
-<p>问题14, $N,M &gt; 0, 0 &lt; A_1 \le A_2 \le \cdots \le A_N &#x3D; M$, 相邻$A_i$的差在$[3,5]$, 求方案数</p>
-</blockquote>
-<p>$\lbrack x^M \rbrack (x^1+x^2+\cdots+x^M)(x^3+x^4+x^5)^{N-1}$, 相当于一个是$A_1$ 的选择,后面是增加到$A_N$的选择</p>
-<blockquote>
-<p>问题15, $N,M &gt; 0, 0 &lt; A_1 \le A_2 \le \cdots \le A_N &lt; M$, 相邻$A_i$的差在$[3,5]$, 求方案数, 和上面不同的是最后</p>
-</blockquote>
-<p>$\sum_{m&#x3D;0}^{M-1} \lbrack x^m \rbrack (x^1+x^2+\cdots+x^m)(x^3+x^4+x^5)^{N-1}$, 相当于枚举$A_N$的值</p>
-<p>$\lbrack x^M \rbrack (x^1+x^2+\cdots+x^M)(x^3+x^4+x^5)^{N-1}(x^1+x^2+\cdots+x^M)$, 相当于想象多一个$A_{N+1} &#x3D; M$</p>
-<blockquote>
-<p>问题16, $[1,6]$的骰子,扔100次, 总和为$n$的概率</p>
-</blockquote>
-<p>$\lbrack x^{n} \rbrack (\frac{x^1+x^2+x^3+x^4+x^5+x^6}{6})^{100}$ 这里系数终于不是1了,而是概率倍数的贡献</p>
-<blockquote>
-<p>问题17, $p+q &#x3D; 1,p,q\ge 0$是 实数概率, $p$概率$+1$,$q$概率$-1$, 总和$&#x3D;100$的概率</p>
-</blockquote>
-<p>$\lbrack x^{n} \rbrack (px+qx^{-1})^{100}$ , 这里一个是再次展示了系数,一个是出现了负数幂次, 称作 Laurent polynomial, 几乎没有区别 </p>
-<p>$\lbrack x^{n+100} \rbrack x^{100}(px+qx^{-1})^{100}$</p>
-<p>$\lbrack x^{n+100} \rbrack (px^2+q)^{100}$</p>
-<blockquote>
-<p>问题18(AGC013E), 对N划分成有序的正整数的和, 划分后 获得价值 &#x3D; 所有正整数的平方的乘积, 求所有方案的 价值和</p>
-</blockquote>
-<p>$\lbrack x^N \rbrack \sum_{n&#x3D;0}^{N} (x+4x^2+9x^3+16x^4+\cdots+N^2x^N)^n$, 代价拆散到每个选择上</p>
-<h3 id="高维"><a href="#高维" class="headerlink" title="高维"></a>高维</h3><blockquote>
-<p>问题19, A:3元,4克; B:5元,6克, 每个最多选2个, 构成n元,m克的方案数</p>
-</blockquote>
-<p>$\lbrack x^ny^m \rbrack (1+x^3y^4+x^6y^8)(1+x^5y^6+x^{10}y^{12})$</p>
-<blockquote>
-<p>问题20, 1元,5元,10元,无限个, 用n个,组成m元方案数</p>
-</blockquote>
-<p>$\lbrack x^my^n \rbrack (1+x^1y^1+x^2y^2+x^3y^3+\cdots)(1+x^5y^1+x^{10}y^2+x^{15}y^3+\cdots)(1+x^{10}y^1+x^{20}y^2+x^{30}y^3+\cdots)$</p>
-<blockquote>
-<p>问题21(ARC012D), 每次随机$x\pm 1$或$y\pm 1$, 问$(0,0)$在恰好$T$次走到$(a,b)$的概率</p>
-</blockquote>
-<p>$\lbrack x^ay^b \rbrack (\frac{x+x^{-1}+y+y^{-1}}{4})^T$</p>
-<blockquote>
-<p>问题22, $x,y,z$ 每次随机一个$\pm 1$或 全部一起$\pm 1$, 问$(0,0,0)$在恰好$T$次走到$(a,b,c)$的方案数</p>
-</blockquote>
-<p>$\lbrack x^ay^bz^c \rbrack (x+x^{-1}+y+y^{-1}+z+z^{-1}+xyz+(xyz)^{-1})^T$, 很能表达或关系</p>
-<p><a href="https://maspypy.com/atcoder-k-one-or-all%ef%bc%88kupc-2019%ef%bc%89">21,22, maspy 具体计算方案</a></p>
-<blockquote>
-<p>问题23, $(x,y,z)$ 每次任意非0正增量,任意维度变化$\ge 0$, 至少一个维度变化$ &gt; 0$, 求原点到$(a,b,c)$的方案数</p>
-</blockquote>
-<p>$\lbrack x^ay^bz^c \rbrack \sum_{n&#x3D;0}^{\infty} ((1+x+x^2+x^3+\cdots)(1+y+y^2+y^3+\cdots)(1+z+z^2+z^3+\cdots) - 1)^n$</p>
-<blockquote>
-<p>问题24, $(x,y,z)$ 每次随机一个方向随机$\pm 1$, T次,$3a+4b+5c&#x3D;n$的概率</p>
-</blockquote>
-<p>$\sum_{3a+4b+5c&#x3D;n} \lbrack x^ay^bz^c \rbrack (\frac{x+x^{-1}+y+y^{-1}+z+z^{-1}}{6})^T$</p>
-<p>$\lbrack t^n \rbrack (\frac{t^3+t^{-3}+t^4+t^{-4}+t^5+t^{-5}}{6})^T$, 其实对各个坐标没限制 只对总和限制,$3,4,5$看成贡献倍数</p>
-<h2 id="maspy-2-如何计算"><a href="#maspy-2-如何计算" class="headerlink" title="maspy 2 如何计算"></a>maspy 2 如何计算</h2><h3 id="二项式定理"><a href="#二项式定理" class="headerlink" title="二项式定理"></a>二项式定理</h3><p>$(x+y)^n &#x3D; \sum_{i&#x3D;0}^{n} \binom{n}{i} x^iy^{n-i}$</p>
-<p>其中$\binom{n}{i} &#x3D; \frac{n!}{i!(n-i)!}$是排列数, 为了方便当$ i &lt; 0 $或$ i &gt; n$ 时令它为$0$</p>
-<p>$(x+y)^n &#x3D; \sum_{i&#x3D;0}^{\infty} \binom{n}{i} x^iy^{n-i}$</p>
-<h3 id="等比数列求和"><a href="#等比数列求和" class="headerlink" title="等比数列求和"></a>等比数列求和</h3><p>$r\neq 1$时</p>
-<p>$\sum_{i&#x3D;0}^{n} r^i &#x3D; \frac{1-r^{n+1}}{1-r}$</p>
-<h3 id="形式幂级数-运算法则"><a href="#形式幂级数-运算法则" class="headerlink" title="形式幂级数 运算法则"></a>形式幂级数 运算法则</h3><p>形式幂级数 $F &#x3D; \sum_{n&#x3D;0}^{\infty} f_nx^n$</p>
-<p>若$G &#x3D; \sum_{n&#x3D;0}^{\infty} g_nx^n$</p>
-<p>加减: $\lbrack x^n \rbrack (F\pm G) &#x3D; f_n \pm g_n$</p>
-<p>乘法: $\lbrack x^n \rbrack (FG) &#x3D;  \sum_{i+j&#x3D;n}f_ig_j.$</p>
-<p>在运算中可以 只考虑 小于等于 $x^n$的部分</p>
-<p>满足,交换律,结合律,分配律, 被称作 环</p>
-<h3 id="形式的べき級数環の位相"><a href="#形式的べき級数環の位相" class="headerlink" title="形式的べき級数環の位相"></a>形式的べき級数環の位相</h3><p>形式的べき級数$F$は、最低次の項が高いほど、 $0$に近いと考えて扱います。このことを利用して、形式的べき級数の列の極限を定義することができます：</p>
-<p>【定義】</p>
-<p>形式的べき級数列$F1,F2,F3\cdots F$ に収束するとは、任意の$k$ に対してある$N$が存在して、$n\ge N$ ならば $F_n$ と $F$ の $k$ 次未満部分が一致することを指す。</p>
-<p>我没看懂翻译以后的XD</p>
-<h3 id="形式幂级数的倒数"><a href="#形式幂级数的倒数" class="headerlink" title="形式幂级数的倒数"></a>形式幂级数的倒数</h3><p>$FG &#x3D; 1$, 则$F &#x3D; \frac{1}{G}$</p>
-<p>也可以和正常分数类似的计算规则$\frac{F_1}{G_1}\pm\frac{F_2}{G_2}&#x3D;\frac{F_1G_2\pm F_2G_1}{G_1G_2}$</p>
-<p>最常用的一个</p>
-<p>$\frac{1}{1-x} &#x3D; 1 + x + x^2 + x^3 + x^4 + \cdots &#x3D; \sum_{n&#x3D;0}^{\infty}x^n$</p>
-<p>因为$(1-x)(1+x+x^2+x^3+\cdots) $, 而对于一个具体$x^n$ 前面乘了以后会变成$1-x^{\infty}$, 又高于$x^n$不会对$x^n$的系数有影响, 所以即使 从级数收敛角度看起来 $x \ge 1$ 时它不收敛, 但从求系数意义上它是合理 </p>
-<p>对于<strong>没有常数项的</strong>多项式 $F$, 也有, 原理也是相同的, 也需要注意没有常数项</p>
-<p>$\frac{1}{1-F} &#x3D; 1 + F + F^2 + F^3 + F^4 + \cdots  &#x3D; \sum_{n&#x3D;0}^{\infty}F^n.$</p>
-<h3 id="幂级数-示例"><a href="#幂级数-示例" class="headerlink" title="幂级数 示例"></a>幂级数 示例</h3><blockquote>
-<p>问题 N拆成正整数和的表达式</p>
-</blockquote>
-<p>前面已经有转换了</p>
-<p>$\lbrack x^N \rbrack \sum_{n&#x3D;0}^{\infty} (x+x^2+x^3+\cdots)^n$</p>
-<p>然后利用这里幂级数</p>
-<p>$ &#x3D; \lbrack x^N \rbrack \sum_{n&#x3D;0}^{\infty} (\frac{x}{1-x})^n$</p>
-<p>$ &#x3D; \lbrack x^N \rbrack \frac{1}{1- \frac{x}{1-x}}$</p>
-<p>$ &#x3D; \lbrack x^N \rbrack \frac{1-x}{1-2x}$</p>
-<p>$ &#x3D; \lbrack x^N \rbrack (1-x)(1+2x+4x^2+8x^3+\cdots)$</p>
-<p>$ &#x3D; 2^N - 2^{N-1}$</p>
-<p>$ &#x3D; 2^{N-1} $</p>
-<p>同样在分数过程也可以简化掉 分子</p>
-<p>$ &#x3D; \lbrack x^N \rbrack \frac{1-x}{1-2x}$</p>
-<p>$ &#x3D; \lbrack x^N \rbrack \frac{1}{2} + \frac{1}{2} \cdot \frac{1}{1-2x}$</p>
-<p>$ &#x3D; \lbrack x^N \rbrack \frac{1}{2} + \frac{1}{2}(1+2x+4x^2+8x^3+\cdots)$</p>
-<h3 id="因式分解-示例"><a href="#因式分解-示例" class="headerlink" title="因式分解 示例"></a>因式分解 示例</h3><blockquote>
-<p>问题 $\lbrack x^ay^b\rbrack(x+x^{-1}+y+y^{-1})^T$</p>
-</blockquote>
-<p>$ &#x3D; \lbrack x^ay^b \rbrack ((xy)^{-1}(xy+1)(x+y))^T$</p>
-<p>$ &#x3D; \lbrack x^ay^b \rbrack \sum_{i,j} \binom {T}{i}\binom{T}{j}x^{i+j-T}y^{i-j}.$</p>
-<p>只会有唯一的$(i,j)$</p>
-<h3 id="积累和-推到-dp转换"><a href="#积累和-推到-dp转换" class="headerlink" title="积累和 推到 dp转换"></a>积累和 推到 dp转换</h3><blockquote>
-<p>问题 $xi \in [0,a_i]$, 选择$x_1+\cdots+x_N &#x3D; M$, 找出方案数, $a_i \le M \le 10^5, N \le 100$</p>
-</blockquote>
-<p>$\lbrack x^M \rbrack \prod_{i&#x3D;1}^N (\sum_{j&#x3D;0}^{a_i} x^j)$</p>
-<p>$\lbrack x^M \rbrack \prod_{i&#x3D;1}^N \frac{1-x^{a_i+1}}{1-x}$</p>
-<hr>
-<p>分解成一个稀疏多项式(项少,就可以DP)的方法, $(1-x)Q &#x3D; P$, 那么$p_n &#x3D; q_n-q_{n-1}$, 有可以$q_n &#x3D; q_{n-1}+p_n$递推</p>
-<p>$1-x^{a_i+1}$ 也是类似, 相当于$dp[j] &#x3D; dp[j] - dp[j-(a_i+1)]$</p>
-<p>这样是$O(NM)$, 这里$NM \le 10^7$ 可做</p>
-<p>据说$N &#x3D; 1e5$ 也有方法可搞?</p>
-<h3 id="DP的推导返回"><a href="#DP的推导返回" class="headerlink" title="DP的推导返回"></a>DP的推导返回</h3><blockquote>
-<p>问题 $xi \in [0,a_i]$, 选择$x_1+\cdots+x_N &#x3D; M$, 找出方案数<br>但是Q个独立询问, 让$x_{p_j} &#x3D; c_j$<br>$a_i \le M \le 2000, N \le 2000, Q \le 500000$</p>
-</blockquote>
-<p>对i以外的前后缀来计算 $\prod$, 再用FFT 可以得到</p>
-<p>另一个思路是,能否接受除法</p>
-<p>先算出所有的$\prod$ 再除以被更改部分的</p>
-<h3 id="交换律-和-迭代平方法"><a href="#交换律-和-迭代平方法" class="headerlink" title="交换律 和 迭代平方法"></a>交换律 和 迭代平方法</h3><p>没看懂翻译</p>
-<hr>
-<p>鸽</p>
-<h3 id="负二项式定理"><a href="#负二项式定理" class="headerlink" title="负二项式定理"></a>负二项式定理</h3><p>$(1-rx)^{-d} &#x3D; \sum_{n&#x3D;0}^{\infty}\binom{n+d-1}{d-1}(rx)^n$</p>
-<p>证明:</p>
-<p>归纳+导数, 可证 <code>-d</code>成立,那么<code>-d-1</code>也成立</p>
-<p>这个在百度百科上也有</p>
-<p>$(1+x)^{-d} &#x3D; \sum_{n&#x3D;0}^{\infty} (-1)^n \binom{d+n-1}{n}x^n$</p>
-<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a href="https://maspypy.com/category/%e5%bd%a2%e5%bc%8f%e7%9a%84%e3%81%b9%e3%81%8d%e7%b4%9a%e6%95%b0%e8%a7%a3%e8%aa%ac">maspy</a></p>
-<p><a href="https://baike.baidu.com/item/%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%AE%9A%E7%90%86">百度百科 二项式定理推广</a></p>
-]]></content>
-      <categories>
-        <category>algorithm</category>
-      </categories>
-      <tags>
-        <tag>生成函数</tag>
       </tags>
   </entry>
   <entry>
@@ -13133,6 +12934,205 @@
         <tag>分治</tag>
         <tag>NTT</tag>
         <tag>归并</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>maspy 生成函数与问题解决</title>
+    <url>/Blog/2022-08-12-generate_function/</url>
+    <content><![CDATA[<h1 id="生成方程"><a href="#生成方程" class="headerlink" title="生成方程"></a>生成方程</h1><p>感谢google翻译和maspy大佬的几篇博客, 见下方链接</p>
+<p>用很多例子来实例如何使用 多项式乘积</p>
+<p>状態ごとに何らかの値が計算されているときに、その計算結果を多項式の形で持ちます。この際、 「多項式の次数」が「考えている状態」、「係数」が状態ごとの「計算した値」（多くの場合、数え上げ）を表すように多項式を持つのが原則です。</p>
+<p>括号内是或关系, 括号间幂次是加和关系,系数是代价倍数一般是1</p>
+<p>翻译了一下, 统一了一下格式,增加了一些步骤</p>
+<p>以下未强调的都是非负整数</p>
+<p>注意的是有不少都可以写成无限次方的上限,因为超过n不会影响n,看具体情况哪个更好用用哪个</p>
+<h2 id="maspy-1-如何把问题转化"><a href="#maspy-1-如何把问题转化" class="headerlink" title="maspy 1 如何把问题转化"></a>maspy 1 如何把问题转化</h2><blockquote>
+<p>问题1, $A&#x3D;\{2,3\},B&#x3D;\{2,4\},C&#x3D;\{3,5,7\} , a+b+c&#x3D;n$ 有多少种方法可以</p>
+</blockquote>
+<p>$\lbrack x^n \rbrack (x^2+x^3)(x^2+x^4)(x^3+x^5+x^7)$, 就是乘开后$n$次项的系数</p>
+<span id="more"></span>
+
+<blockquote>
+<p>问题2. $a \le 2,b\le 3,c\le 4, a+b+c &#x3D; n$ 有多少种</p>
+</blockquote>
+<p>$\lbrack x^n \rbrack (1+x+x^2)(1+x+x^2+x^3)(1+x+x^2+x^3+x^4)$</p>
+<blockquote>
+<p>问题3. 无限制的$a,b,c \ge 0, a+b+c&#x3D;n$ 有多少种</p>
+</blockquote>
+<p>$\lbrack x^n \rbrack (1+x+x^2+\cdots)^3$</p>
+<p>$\lbrack x^n \rbrack (1+x+x^2+\cdots+x^n)^3$, (因为高次不影响n</p>
+<blockquote>
+<p>问题4(ABC149E), $A&#x3D;\{a_1,a_2,\cdots,a_k\}, n &#x3D; a_i + a_j$ 有多少种</p>
+</blockquote>
+<p>$\lbrack x^n \rbrack (x^{a_1}+x^{a_2}+\cdots+x^{a_k})^2$</p>
+<blockquote>
+<p>问题5, 从1开始,每次+2或+3, 恰好n次移动到N的方案数</p>
+</blockquote>
+<p>$\lbrack x^{N-1} \rbrack (x^2+x^3)^n$, 从增量的角度</p>
+<p>$\lbrack x^{N} \rbrack x(x^2+x^3)^n$, 从状态的角度</p>
+<blockquote>
+<p>问题6, 从1开始,每次+2或+3, 移动到N的方案数</p>
+</blockquote>
+<p>$\lbrack x^{N-1} \rbrack \sum_{n&#x3D;0}^{\infty}(x^2+x^3)^n$</p>
+<p>$\lbrack x^{N-1} \rbrack \sum_{n&#x3D;0}^{\frac{N}{2}}(x^2+x^3)^n$</p>
+<blockquote>
+<p>问题7, 1元,5元,10元有无限多, 组合成n元方案数</p>
+</blockquote>
+<p>$\lbrack x^{n} \rbrack (1+x^1+x^2+x^3+\cdots)(1+x^5+x^{10}+x^{15}+\cdots)(1+x^{10}+x^{20}+x^{30}+\cdots)$</p>
+<blockquote>
+<p>问题8, 重量分别$w_i$, 总重量不超过$W$ 有多少方案</p>
+</blockquote>
+<p>$\sum_{n&#x3D;0}^W \lbrack x^n \rbrack (1+x^{w_1})(1+x^{w_2})\cdots (1+x^{w_k})$</p>
+<p>$\sum_{n&#x3D;0}^{W}[x^n]\prod_{i&#x3D;1}^k$</p>
+<blockquote>
+<p>问题9, $0\le a_i \le N$, $a_1+\cdots+a_8&#x3D;6N$ $a_i$的方案数</p>
+</blockquote>
+<p>$\lbrack x^{6N} \rbrack (1+x^1+x^2+\cdots+x^N)^8$</p>
+<blockquote>
+<p>问题10, $0\le a,b,c \le N$且为素数,$a+b+c$ 也是素数方案数</p>
+</blockquote>
+<p>$\sum_{p&#x3D;2}^{3N} \lbrack x^{p} \rbrack (x^2+x^3+x^5+x^7+\cdots+x^{prime,\le N})^3$, 且$p$为素数</p>
+<blockquote>
+<p>问题11, $N$ 拆成正整数求和表达式(关心顺序)</p>
+</blockquote>
+<p>$\sum_{n&#x3D;1}^{\infty} \lbrack x^{N} \rbrack (x^1+x^2+x^3+\cdots+x^N)^n$</p>
+<p>$\sum_{n&#x3D;1}^{N} \lbrack x^{N} \rbrack (x^1+x^2+x^3+\cdots+x^N)^n$</p>
+<p>$\lbrack x^{N} \rbrack \sum_{n&#x3D;1}^{N} (x^1+x^2+x^3+\cdots+x^N)^n$</p>
+<blockquote>
+<p>问题12, $N$ 拆成正整数求和表达式, 但是数字从小到大(不关心顺序)</p>
+</blockquote>
+<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{\infty} (\sum_{i&#x3D;0}^{\infty} x^{ki})$, 相当于数字相同的视作一致,只有每个的数字的个数</p>
+<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{n} (\sum_{i&#x3D;0}^{n} x^{ki})$</p>
+<blockquote>
+<p>问题13, $N$ 拆成多个不同整数的和, 但是数字从小到大(不关心顺序)</p>
+</blockquote>
+<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{\infty} (1+x^k)$, 选或不选</p>
+<p>$\lbrack x^{N} \rbrack \prod_{k&#x3D;1}^{N} (1+x^k)$</p>
+<blockquote>
+<p>问题14, $N,M &gt; 0, 0 &lt; A_1 \le A_2 \le \cdots \le A_N &#x3D; M$, 相邻$A_i$的差在$[3,5]$, 求方案数</p>
+</blockquote>
+<p>$\lbrack x^M \rbrack (x^1+x^2+\cdots+x^M)(x^3+x^4+x^5)^{N-1}$, 相当于一个是$A_1$ 的选择,后面是增加到$A_N$的选择</p>
+<blockquote>
+<p>问题15, $N,M &gt; 0, 0 &lt; A_1 \le A_2 \le \cdots \le A_N &lt; M$, 相邻$A_i$的差在$[3,5]$, 求方案数, 和上面不同的是最后</p>
+</blockquote>
+<p>$\sum_{m&#x3D;0}^{M-1} \lbrack x^m \rbrack (x^1+x^2+\cdots+x^m)(x^3+x^4+x^5)^{N-1}$, 相当于枚举$A_N$的值</p>
+<p>$\lbrack x^M \rbrack (x^1+x^2+\cdots+x^M)(x^3+x^4+x^5)^{N-1}(x^1+x^2+\cdots+x^M)$, 相当于想象多一个$A_{N+1} &#x3D; M$</p>
+<blockquote>
+<p>问题16, $[1,6]$的骰子,扔100次, 总和为$n$的概率</p>
+</blockquote>
+<p>$\lbrack x^{n} \rbrack (\frac{x^1+x^2+x^3+x^4+x^5+x^6}{6})^{100}$ 这里系数终于不是1了,而是概率倍数的贡献</p>
+<blockquote>
+<p>问题17, $p+q &#x3D; 1,p,q\ge 0$是 实数概率, $p$概率$+1$,$q$概率$-1$, 总和$&#x3D;100$的概率</p>
+</blockquote>
+<p>$\lbrack x^{n} \rbrack (px+qx^{-1})^{100}$ , 这里一个是再次展示了系数,一个是出现了负数幂次, 称作 Laurent polynomial, 几乎没有区别 </p>
+<p>$\lbrack x^{n+100} \rbrack x^{100}(px+qx^{-1})^{100}$</p>
+<p>$\lbrack x^{n+100} \rbrack (px^2+q)^{100}$</p>
+<blockquote>
+<p>问题18(AGC013E), 对N划分成有序的正整数的和, 划分后 获得价值 &#x3D; 所有正整数的平方的乘积, 求所有方案的 价值和</p>
+</blockquote>
+<p>$\lbrack x^N \rbrack \sum_{n&#x3D;0}^{N} (x+4x^2+9x^3+16x^4+\cdots+N^2x^N)^n$, 代价拆散到每个选择上</p>
+<h3 id="高维"><a href="#高维" class="headerlink" title="高维"></a>高维</h3><blockquote>
+<p>问题19, A:3元,4克; B:5元,6克, 每个最多选2个, 构成n元,m克的方案数</p>
+</blockquote>
+<p>$\lbrack x^ny^m \rbrack (1+x^3y^4+x^6y^8)(1+x^5y^6+x^{10}y^{12})$</p>
+<blockquote>
+<p>问题20, 1元,5元,10元,无限个, 用n个,组成m元方案数</p>
+</blockquote>
+<p>$\lbrack x^my^n \rbrack (1+x^1y^1+x^2y^2+x^3y^3+\cdots)(1+x^5y^1+x^{10}y^2+x^{15}y^3+\cdots)(1+x^{10}y^1+x^{20}y^2+x^{30}y^3+\cdots)$</p>
+<blockquote>
+<p>问题21(ARC012D), 每次随机$x\pm 1$或$y\pm 1$, 问$(0,0)$在恰好$T$次走到$(a,b)$的概率</p>
+</blockquote>
+<p>$\lbrack x^ay^b \rbrack (\frac{x+x^{-1}+y+y^{-1}}{4})^T$</p>
+<blockquote>
+<p>问题22, $x,y,z$ 每次随机一个$\pm 1$或 全部一起$\pm 1$, 问$(0,0,0)$在恰好$T$次走到$(a,b,c)$的方案数</p>
+</blockquote>
+<p>$\lbrack x^ay^bz^c \rbrack (x+x^{-1}+y+y^{-1}+z+z^{-1}+xyz+(xyz)^{-1})^T$, 很能表达或关系</p>
+<p><a href="https://maspypy.com/atcoder-k-one-or-all%ef%bc%88kupc-2019%ef%bc%89">21,22, maspy 具体计算方案</a></p>
+<blockquote>
+<p>问题23, $(x,y,z)$ 每次任意非0正增量,任意维度变化$\ge 0$, 至少一个维度变化$ &gt; 0$, 求原点到$(a,b,c)$的方案数</p>
+</blockquote>
+<p>$\lbrack x^ay^bz^c \rbrack \sum_{n&#x3D;0}^{\infty} ((1+x+x^2+x^3+\cdots)(1+y+y^2+y^3+\cdots)(1+z+z^2+z^3+\cdots) - 1)^n$</p>
+<blockquote>
+<p>问题24, $(x,y,z)$ 每次随机一个方向随机$\pm 1$, T次,$3a+4b+5c&#x3D;n$的概率</p>
+</blockquote>
+<p>$\sum_{3a+4b+5c&#x3D;n} \lbrack x^ay^bz^c \rbrack (\frac{x+x^{-1}+y+y^{-1}+z+z^{-1}}{6})^T$</p>
+<p>$\lbrack t^n \rbrack (\frac{t^3+t^{-3}+t^4+t^{-4}+t^5+t^{-5}}{6})^T$, 其实对各个坐标没限制 只对总和限制,$3,4,5$看成贡献倍数</p>
+<h2 id="maspy-2-如何计算"><a href="#maspy-2-如何计算" class="headerlink" title="maspy 2 如何计算"></a>maspy 2 如何计算</h2><h3 id="二项式定理"><a href="#二项式定理" class="headerlink" title="二项式定理"></a>二项式定理</h3><p>$(x+y)^n &#x3D; \sum_{i&#x3D;0}^{n} \binom{n}{i} x^iy^{n-i}$</p>
+<p>其中$\binom{n}{i} &#x3D; \frac{n!}{i!(n-i)!}$是排列数, 为了方便当$ i &lt; 0 $或$ i &gt; n$ 时令它为$0$</p>
+<p>$(x+y)^n &#x3D; \sum_{i&#x3D;0}^{\infty} \binom{n}{i} x^iy^{n-i}$</p>
+<h3 id="等比数列求和"><a href="#等比数列求和" class="headerlink" title="等比数列求和"></a>等比数列求和</h3><p>$r\neq 1$时</p>
+<p>$\sum_{i&#x3D;0}^{n} r^i &#x3D; \frac{1-r^{n+1}}{1-r}$</p>
+<h3 id="形式幂级数-运算法则"><a href="#形式幂级数-运算法则" class="headerlink" title="形式幂级数 运算法则"></a>形式幂级数 运算法则</h3><p>形式幂级数 $F &#x3D; \sum_{n&#x3D;0}^{\infty} f_nx^n$</p>
+<p>若$G &#x3D; \sum_{n&#x3D;0}^{\infty} g_nx^n$</p>
+<p>加减: $\lbrack x^n \rbrack (F\pm G) &#x3D; f_n \pm g_n$</p>
+<p>乘法: $\lbrack x^n \rbrack (FG) &#x3D;  \sum_{i+j&#x3D;n}f_ig_j.$</p>
+<p>在运算中可以 只考虑 小于等于 $x^n$的部分</p>
+<p>满足,交换律,结合律,分配律, 被称作 环</p>
+<h3 id="形式的べき級数環の位相"><a href="#形式的べき級数環の位相" class="headerlink" title="形式的べき級数環の位相"></a>形式的べき級数環の位相</h3><p>形式的べき級数$F$は、最低次の項が高いほど、 $0$に近いと考えて扱います。このことを利用して、形式的べき級数の列の極限を定義することができます：</p>
+<p>【定義】</p>
+<p>形式的べき級数列$F1,F2,F3\cdots F$ に収束するとは、任意の$k$ に対してある$N$が存在して、$n\ge N$ ならば $F_n$ と $F$ の $k$ 次未満部分が一致することを指す。</p>
+<p>我没看懂翻译以后的XD</p>
+<h3 id="形式幂级数的倒数"><a href="#形式幂级数的倒数" class="headerlink" title="形式幂级数的倒数"></a>形式幂级数的倒数</h3><p>$FG &#x3D; 1$, 则$F &#x3D; \frac{1}{G}$</p>
+<p>也可以和正常分数类似的计算规则$\frac{F_1}{G_1}\pm\frac{F_2}{G_2}&#x3D;\frac{F_1G_2\pm F_2G_1}{G_1G_2}$</p>
+<p>最常用的一个</p>
+<p>$\frac{1}{1-x} &#x3D; 1 + x + x^2 + x^3 + x^4 + \cdots &#x3D; \sum_{n&#x3D;0}^{\infty}x^n$</p>
+<p>因为$(1-x)(1+x+x^2+x^3+\cdots) $, 而对于一个具体$x^n$ 前面乘了以后会变成$1-x^{\infty}$, 又高于$x^n$不会对$x^n$的系数有影响, 所以即使 从级数收敛角度看起来 $x \ge 1$ 时它不收敛, 但从求系数意义上它是合理 </p>
+<p>对于<strong>没有常数项的</strong>多项式 $F$, 也有, 原理也是相同的, 也需要注意没有常数项</p>
+<p>$\frac{1}{1-F} &#x3D; 1 + F + F^2 + F^3 + F^4 + \cdots  &#x3D; \sum_{n&#x3D;0}^{\infty}F^n.$</p>
+<h3 id="幂级数-示例"><a href="#幂级数-示例" class="headerlink" title="幂级数 示例"></a>幂级数 示例</h3><blockquote>
+<p>问题 N拆成正整数和的表达式</p>
+</blockquote>
+<p>前面已经有转换了</p>
+<p>$\lbrack x^N \rbrack \sum_{n&#x3D;0}^{\infty} (x+x^2+x^3+\cdots)^n$</p>
+<p>然后利用这里幂级数</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \sum_{n&#x3D;0}^{\infty} (\frac{x}{1-x})^n$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \frac{1}{1- \frac{x}{1-x}}$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \frac{1-x}{1-2x}$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack (1-x)(1+2x+4x^2+8x^3+\cdots)$</p>
+<p>$ &#x3D; 2^N - 2^{N-1}$</p>
+<p>$ &#x3D; 2^{N-1} $</p>
+<p>同样在分数过程也可以简化掉 分子</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \frac{1-x}{1-2x}$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \frac{1}{2} + \frac{1}{2} \cdot \frac{1}{1-2x}$</p>
+<p>$ &#x3D; \lbrack x^N \rbrack \frac{1}{2} + \frac{1}{2}(1+2x+4x^2+8x^3+\cdots)$</p>
+<h3 id="因式分解-示例"><a href="#因式分解-示例" class="headerlink" title="因式分解 示例"></a>因式分解 示例</h3><blockquote>
+<p>问题 $\lbrack x^ay^b\rbrack(x+x^{-1}+y+y^{-1})^T$</p>
+</blockquote>
+<p>$ &#x3D; \lbrack x^ay^b \rbrack ((xy)^{-1}(xy+1)(x+y))^T$</p>
+<p>$ &#x3D; \lbrack x^ay^b \rbrack \sum_{i,j} \binom {T}{i}\binom{T}{j}x^{i+j-T}y^{i-j}.$</p>
+<p>只会有唯一的$(i,j)$</p>
+<h3 id="积累和-推到-dp转换"><a href="#积累和-推到-dp转换" class="headerlink" title="积累和 推到 dp转换"></a>积累和 推到 dp转换</h3><blockquote>
+<p>问题 $xi \in [0,a_i]$, 选择$x_1+\cdots+x_N &#x3D; M$, 找出方案数, $a_i \le M \le 10^5, N \le 100$</p>
+</blockquote>
+<p>$\lbrack x^M \rbrack \prod_{i&#x3D;1}^N (\sum_{j&#x3D;0}^{a_i} x^j)$</p>
+<p>$\lbrack x^M \rbrack \prod_{i&#x3D;1}^N \frac{1-x^{a_i+1}}{1-x}$</p>
+<hr>
+<p>分解成一个稀疏多项式(项少,就可以DP)的方法, $(1-x)Q &#x3D; P$, 那么$p_n &#x3D; q_n-q_{n-1}$, 有可以$q_n &#x3D; q_{n-1}+p_n$递推</p>
+<p>$1-x^{a_i+1}$ 也是类似, 相当于$dp[j] &#x3D; dp[j] - dp[j-(a_i+1)]$</p>
+<p>这样是$O(NM)$, 这里$NM \le 10^7$ 可做</p>
+<p>据说$N &#x3D; 1e5$ 也有方法可搞?</p>
+<h3 id="DP的推导返回"><a href="#DP的推导返回" class="headerlink" title="DP的推导返回"></a>DP的推导返回</h3><blockquote>
+<p>问题 $xi \in [0,a_i]$, 选择$x_1+\cdots+x_N &#x3D; M$, 找出方案数<br>但是Q个独立询问, 让$x_{p_j} &#x3D; c_j$<br>$a_i \le M \le 2000, N \le 2000, Q \le 500000$</p>
+</blockquote>
+<p>对i以外的前后缀来计算 $\prod$, 再用FFT 可以得到</p>
+<p>另一个思路是,能否接受除法</p>
+<p>先算出所有的$\prod$ 再除以被更改部分的</p>
+<h3 id="交换律-和-迭代平方法"><a href="#交换律-和-迭代平方法" class="headerlink" title="交换律 和 迭代平方法"></a>交换律 和 迭代平方法</h3><p>没看懂翻译</p>
+<hr>
+<p>鸽</p>
+<h3 id="负二项式定理"><a href="#负二项式定理" class="headerlink" title="负二项式定理"></a>负二项式定理</h3><p>$(1-rx)^{-d} &#x3D; \sum_{n&#x3D;0}^{\infty}\binom{n+d-1}{d-1}(rx)^n$</p>
+<p>证明:</p>
+<p>归纳+导数, 可证 <code>-d</code>成立,那么<code>-d-1</code>也成立</p>
+<p>这个在百度百科上也有</p>
+<p>$(1+x)^{-d} &#x3D; \sum_{n&#x3D;0}^{\infty} (-1)^n \binom{d+n-1}{n}x^n$</p>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a href="https://maspypy.com/category/%e5%bd%a2%e5%bc%8f%e7%9a%84%e3%81%b9%e3%81%8d%e7%b4%9a%e6%95%b0%e8%a7%a3%e8%aa%ac">maspy</a></p>
+<p><a href="https://baike.baidu.com/item/%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%AE%9A%E7%90%86">百度百科 二项式定理推广</a></p>
+]]></content>
+      <categories>
+        <category>algorithm</category>
+      </categories>
+      <tags>
+        <tag>生成函数</tag>
       </tags>
   </entry>
   <entry>
@@ -16987,6 +16987,7 @@
         <category>ABC</category>
       </categories>
       <tags>
+        <tag>线段树</tag>
         <tag>DP</tag>
         <tag>优先队列</tag>
       </tags>
