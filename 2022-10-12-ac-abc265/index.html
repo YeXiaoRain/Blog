@@ -27,7 +27,7 @@
 <meta property="og:description" content="G(线段树),Ex()">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2022-10-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-12T02:19:48.156Z">
+<meta property="article:modified_time" content="2022-10-12T02:39:50.120Z">
 <meta property="article:author" content="Xiao Ye">
 <meta property="article:tag" content="线段树">
 <meta name="twitter:card" content="summary">
@@ -143,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-012-Inversion"><span class="nav-text">G - 012 Inversion</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-No-capture-Lance-Game"><span class="nav-text">Ex - No-capture Lance Game</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-012-Inversion"><span class="nav-text">G - 012 Inversion</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-No-capture-Lance-Game"><span class="nav-text">Ex - No-capture Lance Game</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -261,7 +261,7 @@
       <span class="post-meta-item-text">發表於</span>
       
 
-      <time title="創建時間：2022-10-12 00:00:00 / 修改時間：10:19:48" itemprop="dateCreated datePublished" datetime="2022-10-12T00:00:00+08:00">2022-10-12</time>
+      <time title="創建時間：2022-10-12 00:00:00 / 修改時間：10:39:50" itemprop="dateCreated datePublished" datetime="2022-10-12T00:00:00+08:00">2022-10-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -298,14 +298,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>3.1k</span>
+      <span>3.6k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>8 分鐘</span>
+      <span>9 分鐘</span>
     </span>
 </div>
 
@@ -359,6 +359,23 @@
 <p>盈余&#x3D;&#x3D;0 的话, 才看相对运动的</p>
 <p>而相对运动就是nim的的游戏+sg函数</p>
 <hr>
+<p>注意到对称性, 所以 2(盈余&gt;&#x3D;1 方案数) + 盈余&#x3D;&#x3D;0 的方案数, 似乎没啥用</p>
+<p><code>dp[i][j] = </code> 前i行 先手-后手 &#x3D; j 的方案数</p>
+<p><code>dp[i][j+k] += dp[i-1][j] * f[k]</code>, 其中<code>f[k] = </code>一行 让先后手差为k的方案数, 如果两个相向 记录到0里, f可以预先处理</p>
+<p>所以 <code>8000 * 8000 * 30 * 30</code> 算出, 问题是这样似乎会tle</p>
+<p>上 fft算转移的话, 似乎也小不了多少, </p>
+<p>但是 考虑 实际上 dp[i][j] 表示 i次操作后 偏离j的方案数</p>
+<p>所以考虑分治+fft, 就只需要 8000 * 30 * log()^2 的样子, 可以算</p>
+<hr>
+<p>然后是 剩下相等的 部分</p>
+<p>其实只有28个mex值,</p>
+<p>考虑<code>dp[i][j][xor mex] = </code> 的方案数, 感觉很不妙啊, 和上面来说多了个xor mex值, 但好在 xor的值也就 &lt;32</p>
+<p>而同样的, <code>dp[i][j][xor mex]</code> 也表示 i次操作后,偏离&#x3D;j, 异或得到xor mex的方案数</p>
+<p>暴力 枚举xor0, xor1 去fft?</p>
+<p>这看起来 过不了啊</p>
+<p><code>= 32 * 32 * 8000 * 30 * (math.log(8000*30)/math.log(2))**2 = 78503733012.69037</code></p>
+<p>难道有什么神奇的二维 fft+fwt 的方案?</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>TODO</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这场现场做了, 前面做得慢,没看G和Ex</p>
 <p>G</p>
 <p>有时间还是随便做的, 区间操作 太明显了</p>
@@ -446,7 +463,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">36:44</span>
+    <span title="所需總閱讀時間">36:45</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
