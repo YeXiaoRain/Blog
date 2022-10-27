@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(排列组合)Ex(Stern-Brocot树)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc273">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/2022-10-20-ac-abc273/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(排列组合)Ex(Stern-Brocot树)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-10-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-27T00:30:58.517Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="TODO">
+<meta property="article:tag" content="排列组合">
+<meta property="article:tag" content="Stern-Brocot树">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/2022-10-20-ac-abc273/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/2022-10-20-ac-abc273/","path":"2022-10-20-ac-abc273/","title":"Atcoder abc273"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc273 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">207</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">15</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">197</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Row-Column-Sums-2"><span class="nav-text">G - Row Column Sums 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">207</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">197</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2022-10-20-ac-abc273/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc273 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(排列组合)Ex(Stern-Brocot树)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc273
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-10-20 00:00:00" itemprop="dateCreated datePublished" datetime="2022-10-20T00:00:00+08:00">2022-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-10-27 08:30:58" itemprop="dateModified" datetime="2022-10-27T08:30:58+08:00">2022-10-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2022-10-20-ac-abc273/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022-10-20-ac-abc273/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>4.9k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>12 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(排列组合)Ex(Stern-Brocot树)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc273/tasks">https://atcoder.jp/contests/abc273/tasks</a></p>
+<h1 id="G-Row-Column-Sums-2"><a href="#G-Row-Column-Sums-2" class="headerlink" title="G - Row Column Sums 2"></a>G - Row Column Sums 2</h1><p>求个数mod 998244353</p>
+<p>nxn的矩阵, 元素非负整数</p>
+<p>行i 和为ri</p>
+<p>列i 和为ci</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 5000</p>
+<p>ri,ci [0,1,2]</p>
+<p>3s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>这 ri, ci很有说法,</p>
+<p>显然 sum r &#x3D;&#x3D; sum c</p>
+<p>说明每行&#x2F;列只有4种情况 <code>全0,1个1,2个1,1个2</code></p>
+<p>而全零的行列可以直接删掉</p>
+<p>如果是一个2的情况, 那么显然对应到另一个2的</p>
+<p>因此变成</p>
+<p>一些 行列为2的成对 直接填2, 剩余的 只有 1个1 和2个1</p>
+<p>行 (a个1,b个2)</p>
+<p>列 (c个1,d个2)</p>
+<p>选出 t个填2的行列</p>
+<p>sum binom(b,t) * binom(d,t) * t!(其中行定,列匹配) * f(a,b-t,c,d-t)</p>
+<hr>
+<p>因为上面枚举了t</p>
+<p>希望能在小于O(N)的时间 算出 f(a,b,c,d) &#x3D; 行(a个1,b个2) 列(c个1,d个2) 全部拆成1和1+1的方案</p>
+<p>注意到a,c 不变 考虑最小的b,d 比如f(a,b,c,0)的情况, 比较好算, &#x3D; c!&#x2F;(c-a)! * binom(2b,2) * binom(2b-2,2) * binom(2b-4,2) …</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  1 1 1 1 1 1</span><br><span class="line">a</span><br><span class="line">b</span><br></pre></td></tr></table></figure>
+
+<p>然后考虑 每次b和d增1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  1 1 1 1 1 1 2</span><br><span class="line">a             j</span><br><span class="line">b</span><br><span class="line">2      i      x</span><br></pre></td></tr></table></figure>
+
+<p>如果这增的两个选了, 那么4种情况</p>
+<p>对应原来一种情况, 是原来一个(1,1) 指向的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  1 2</span><br><span class="line">1   j</span><br><span class="line">2 i x</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">对应原来一种情况, 是原来一个(1,2) 或(2,1) 指向的</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code>1 2
+</code></pre>
+<p>2 1   j<br>2   i x</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">对应原来一种情况, 是原来一个(2,2) 指向的</span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">    2 2</span><br><span class="line">    1</span><br><span class="line">2 1   j</span><br><span class="line">2   i x</span><br></pre></td></tr></table></figure>
+
+<p>对应 <code>[b-2][d-2]</code> 的情况 前面还插入了两个</p>
+<pre><code>    2 2
+2   1 j
+2   i x
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`f[b][d] = f[b-1][d-1] * (a+2*(b-1)) + f[b-2][d-2] * (d-1)*(b-1)`</span><br><span class="line"></span><br><span class="line">然后考虑说 新增的没有共点 ???????????????????????????????????</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      2
+      1
+      1
+2 1 1
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">上面 看起来是二维, 然而实际上b和d的差为定值, 所以是个一维的</span><br><span class="line"></span><br><span class="line">`diff=d-b &gt;= 0`</span><br><span class="line"></span><br><span class="line">`f[b] = f[b-1] * (a+2*b) + f[b-2] * (b+diff-1)*(b-1)`</span><br><span class="line"></span><br><span class="line">但是不共点的情况 咋讨论啊, 感觉好多啊, 不会了</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+  1
+  1
+11
+
+  1
+ 11
+11
+
+1 1
+  1
+11
+
+1 1
+ 11
+11
+
+ 11
+  1
+11
+
+  1
+1 1
+11
+
+ 11
+1 1
+11
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">难道 对 这种2x2 的形态进行计数, `f[i][状态=6]` ?</span><br><span class="line"></span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line"></span><br><span class="line">## 题解</span><br><span class="line"></span><br><span class="line">就暴力dp就完了...........</span><br><span class="line"></span><br><span class="line">0还是直接可以移除</span><br><span class="line"></span><br><span class="line">`dp[i][j] = ` 前i行填完, 剩余未填列是2的个数=j 的方案数</span><br><span class="line"></span><br><span class="line">那么对于到第i行, 显然 剩余的总个数可以计算,</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 2
+1x
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j+1] * (j+1)`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 1
+1x
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j] * (可选1)`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 11
+2xx
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j] * binom(可选1,2)`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 2
+2x
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j+1] * (j+1)`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 12
+2xx
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j+1] * (可选1) * (j+1)`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 22
+2xx
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j+2] * binom(j+2,2)`</span><br><span class="line"></span><br><span class="line">## 代码</span><br><span class="line"></span><br><span class="line">https://atcoder.jp/contests/abc273/submissions/35986764</span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">#include &lt;atcoder/modint&gt;</span><br><span class="line">using mint = atcoder::modint998244353;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line">#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span><br><span class="line">ll read()&#123;ll r;scanf(&quot;%lld&quot;,&amp;r);return r;&#125;</span><br><span class="line"></span><br><span class="line">int R[]=&#123;0,0,0&#125;;</span><br><span class="line">int C[]=&#123;0,0,0&#125;;</span><br><span class="line">int main()&#123;</span><br><span class="line">  int n = read();</span><br><span class="line">  rep(i,0,n)R[read()]++;</span><br><span class="line">  rep(i,0,n)C[read()]++;</span><br><span class="line">  if(R[1]+R[2]*2!=C[1]+C[2]*2)&#123;</span><br><span class="line">    printf(&quot;0\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">  &#125;</span><br><span class="line">  int c2 = C[2];</span><br><span class="line">  int s=C[1]+C[2]*2; // 剩余未用点数</span><br><span class="line">  vector&lt;mint&gt; f(c2+10,0);</span><br><span class="line">  f[c2] = 1;</span><br><span class="line">  auto y=[&amp;](int j)&#123;return s-2*j;&#125;; // j=剩余列2, s=已经用的点,c2所有列2的点, 返回剩余未用的1</span><br><span class="line">  rep(t,0,R[1])&#123; // row = 1</span><br><span class="line">    vector&lt;mint&gt; g(c2+10,0); // [0..c2] 减少边界判断</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j+1]*(j+1); // col = 2</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j]*y(j); // col = 1</span><br><span class="line">    s-=1;</span><br><span class="line">    rep(j,0,c2+1) if(y(j)&lt;0) g[j]=0;</span><br><span class="line">    f=g;</span><br><span class="line">  &#125;</span><br><span class="line">  rep(t,0,R[2])&#123; // row = 2</span><br><span class="line">    vector&lt;mint&gt; g(c2+10,0);</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j+1]*(j+1); // col = 2</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j+2]*((j+2)*(j+1)/2); // col = 2 2</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j]*(y(j)*(y(j)-1)/2); // col = 1 1</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j+1]*(j+1)*y(j+1); // col 1 2</span><br><span class="line">    s-=2;</span><br><span class="line">    rep(j,0,c2+1) if(y(j)&lt;0) g[j]=0;</span><br><span class="line">    f=g;</span><br><span class="line">  &#125;</span><br><span class="line">  printf(&quot;%d\n&quot;,f[0].val());</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+# Ex - Inv(0,1)ving Insert(1,0)n
+
+$A=((0,1),(1,0))$
+
+f(序列T) = 最小操作次数 让T所有元素 属于A, 如果没有方案则=0
+
+每次操作 选择A中相邻的$(a,b),(c,d)$,在它们之间插入$(a+c,b+d)$
+
+给长n的序列S, (元素两两不同)
+
+对所有的l&lt;=r, 求 sum f(S[l..r]) mod 998244353
+
+## 范围
+
+n 1e5
+
+ai,bi [0,1e9]
+
+6s
+
+1024mb
+
+## 我的思路
+
+看每次操作对A的影响, 令 Bi= Ai.left+Ai.right
+
+B = (1,1)
+
+每次操作相当于 两个之间插入了和
+
+先考虑说 单个序列的 f如何算, 上面的B似乎没有帮助
+
+考虑二维平面, 那么相当于向量和, 而向量和的图形也就是向量平行四边行的一个对角线, 在向量之间
+
+所以在只看夹角的情况, 每次是两个向量之间加了一个向量
+
+也就是 (0,1) (1,0) =&gt; (0,1) (1,1) (1,0)
+
+然后看间隔里是否有目标向量, 如果没有那么这个相邻不会再操作
+
+如果有, 那么这个间隔一定会操作
+
+从而找到方案
+
+判断无法实现, 显然根据二分的思想, 一定可以让一个目标向量落在两个之间
+
+(A)(B) 如果无法实现 目标向量
+
+那么 从值一个偏量 上一旦大于向量 则不可能
+
+理论上 有办法计算了
+
+---
+
+复杂度?
+
+例如(1,1e9), 显然可达, 但是需要1e9次, 也就是 显然模拟的效率肯定不行
+
+(A,B) 要合成 = C, 相当于解线性方程组 = 自身单独子问题
+
+C=5A+3B = solve( (0,1),(1,0) =&gt; (5,3))
+
+再从这个角度回到矩阵
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 0                  ? 5    5 ?</span><br><span class="line">0 1                  ? 3 or 3 ?</span><br><span class="line">    A = 1    B = 1 1</span><br><span class="line">        1 1        1</span><br></pre></td></tr></table></figure>
+
+也就是 单位矩阵 乘上 多个 A 和 B 最后得到 列向量有(5,3)的
+
+从这个视角
+
+就是建立一个树, 从根向下二叉, 每次就是 乘上矩阵 发展 对应的就是平面上的一个夹角, 每次询问就是 问一些点是否在树上, 且这些点到根的所有点(重复只统计一次)的点数和
+
+这里看出 这个最少次数 看上去 没有什么意义, 就是不做无关的操作就是最小的次数
+
+上面的只说了 当一个目标落在两个之间的不完全解决方案, 还需要有找分叉的解决方案
+
+转化成矩阵的好处就是可以 快速幂
+
+所以可以 直接快速幂 倍增找一个 向量是在哪个之间 从而实现分叉的查找, 同理
+
+---
+
+再回到平面上
+
+(arrow0,arrow1) 之间的一堆向量 按照夹角 排序 (j0,j1,j2,...)
+
+计算最小幂次 能让其中产生分割, 从而这个分叉是有长度的(来让树的点还是N级别), 然后原问题变成点集到根的距离和(重复边长只计算一次)
+
+然后 递归子问题, 从而建立树
+
+至此 单个问题可以解决
+
+---
+
+现在问题来到 sum f(s[l..r])
+
+变成一个和原题无关的树问题, 给一个有边长的有根树, 给点序列P
+
+求 sum P[l..r], 中的点到根的非重距离和
+
+感觉没法算 和
+
+反过来, 算树上每个edge 的贡献
+
+一条边有贡献等于它的叶向节点为根的子树里存在一个点被选
+
+所以如果能统计每个子树被选的次数就好了
+
+暴力算就是 子树所有点在区间上标识别
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">000010000000100000000101000111000</span><br><span class="line">    5x右侧...</span><br><span class="line">            8x右侧...</span><br><span class="line">                     9x右侧...</span><br><span class="line">                       2x右侧...</span><br></pre></td></tr></table></figure>
+
+一个区间覆盖了1就被统计一次, 把覆盖了1的区间的最左1作为这个区间贡献的统计点
+
+那上面的次数就是
+
+如果两个不重叠1的合并
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0010000100000</span><br><span class="line">0000101001000</span><br></pre></td></tr></table></figure>
+
+唯一知道的就是个数会变多, 但又比两个的和小, 相当于 去掉重复统计的部分
+
+干 树和区间不会
+
+## 题解
+
+好 也是建树, 根为[0/1,1/0], 每个树两个节点
+
+这叫做 Stern-Brocot树, 有 点(p,q) 互质 等价于 在树上
+
+题意转化, 和我想的一样 就是求树上需要多少节点/路径 能覆盖指定 S[l..r]对应的节点
+
+直接想 也是 通过判断相等/在左侧/在右侧 递归向下
+
+哈哈 也是想到(1e9,1) 这种 需要1e9, 特殊点的方向都想的一样的
+
+哦这里没有用矩阵, 而是直接代数上 考虑 (a+kc)/(b+kd), emmmmm 很有道理 因为毕竟上面矩阵的快速幂 等价其实也就是这个
+
+啊?????? 啥 就可以解了?
+
+省略了的 刚好是我不会的 艹了
+
+---
+
+TODO
+
+### Stern-Brocot树
+
+根[0/1,1/0]
+
+节点[a/b,c/d]的两个子节点`[a/b,(a+c)/(b+d)],[(a+c)/(b+d),c/d]`
+
+性质:
+
+每一层单调递增(对应二维平面射线显然)
+
+上面只有简分数: 所有a/b,c/d 都是最简分数(分子分母没有公约数) 根据上面的矩阵 知 矩阵的 行列式 始终为1, (|AB|=|A||B|) 所以 不会有公约数
+
+所以 说明如果点(p,q)要在树上 那么p,q 互质才有可能
+
+任何最简分数在树上:
+
+假设在左侧 `a/b &lt; p/q &lt; c/d =&gt; a/b &lt; p/q &lt; (a+c)/(b+d)`
+
+考虑矩阵运算与行列式
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">c p</span><br><span class="line">d q = cq-pd &gt;= 1</span><br><span class="line"></span><br><span class="line">p a</span><br><span class="line">q b = pb-aq &gt;= 1</span><br></pre></td></tr></table></figure>
+
+若小于(不等于)
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a+c p   c p   a p   c p   p a   c p</span><br><span class="line">b+d q = d q + b q = d q - q b &lt; d q</span><br></pre></td></tr></table></figure>
+
+一句话就是 一侧行列式值不变, 一侧行列式值单调递减 且均为正整数, 有理数离散, 不可能一直减, 所以 &#39;若小于&#39;会在有限次内不成立, 变成`等于`
+
+综上 充分必要
+
+# 总结
+
+G
+
+好吧 我好想把题想复杂了, 连最直接的都没想
+
+应该不要过早想优化和提取? 先试试直接的, 抑制一下见到就想开始简化的冲动
+
+Ex
+
+gcd想了一半, 没推下去, 按理说应该要能想到 互质等价的... 唉
+
+# 参考
+
+[官方题解](https://atcoder.jp/contests/abc273/editorial)
+</code></pre>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/2022-10-20-ac-abc273/" title="Atcoder abc273">https://yexiaorain.github.io/Blog/2022-10-20-ac-abc273/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/TODO/" rel="tag"><i class="fa fa-tag"></i> TODO</a>
+              <a href="/Blog/tags/%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88/" rel="tag"><i class="fa fa-tag"></i> 排列组合</a>
+              <a href="/Blog/tags/Stern-Brocot%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> Stern-Brocot树</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2022-10-19-ac-abc272/" rel="prev" title="Atcoder abc272">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc272
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">936k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">39:01</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/2022-10-20-ac-abc273/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
