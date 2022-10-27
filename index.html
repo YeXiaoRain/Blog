@@ -260,7 +260,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-10-27 08:30:58" itemprop="dateModified" datetime="2022-10-27T08:30:58+08:00">2022-10-27</time>
+      <time title="修改時間：2022-10-28 05:58:10" itemprop="dateModified" datetime="2022-10-28T05:58:10+08:00">2022-10-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -297,14 +297,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>4.9k</span>
+      <span>9.2k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>12 分鐘</span>
+      <span>23 分鐘</span>
     </span>
 </div>
 
@@ -490,6 +490,8 @@ C=5A+3B = solve( (0,1),(1,0) =&gt; (5,3))
 
 所以可以 直接快速幂 倍增找一个 向量是在哪个之间 从而实现分叉的查找, 同理
 
+如果是左一下右一下, 注意到每个向量坐标和 相当于和做Fibonacci, 不会超过log次
+
 ---
 
 再回到平面上
@@ -550,11 +552,13 @@ C=5A+3B = solve( (0,1),(1,0) =&gt; (5,3))
 
 啊?????? 啥 就可以解了?
 
-省略了的 刚好是我不会的 艹了
+省略了的 刚好是我不会的 艹了........................
 
 ---
 
-TODO
+怎么计算内
+
+还是上面那样, 然后树上合并的时候 用启发式, 每次把小的向大的中1个一个合并
 
 ### Stern-Brocot树
 
@@ -586,6 +590,12 @@ TODO
 
 综上 充分必要
 
+## 代码
+
+https://atcoder.jp/contests/abc273/submissions/36005069
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="keyword">using</span> vec=std::pair&lt;ll,ll&gt;; <span class="comment">// 二维向量,分数</span></span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="keyword">operator</span>&lt;(<span class="type">const</span> vec&amp;f0,<span class="type">const</span> vec&amp;f1)&#123; <span class="comment">// 夹角比较</span></span><br><span class="line">  <span class="keyword">return</span> f0.first*f1.second &lt; f1.first*f0.second;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// bool operator&gt;(const vec&amp;f0,const vec&amp;f1)&#123; // 夹角比较</span></span><br><span class="line"><span class="comment">//   return f0.first*f1.second &gt; f1.first*f0.second;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line">vec <span class="keyword">operator</span>+(<span class="type">const</span> vec&amp;f0,<span class="type">const</span> vec&amp;f1)&#123; <span class="comment">// 向量和</span></span><br><span class="line">  <span class="keyword">return</span> &#123;f0.first+f1.first,f0.second+f1.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line">vec <span class="keyword">operator</span>*(<span class="type">const</span> vec&amp;f0,<span class="type">const</span> <span class="type">int</span>&amp;k)&#123; <span class="comment">// 向量 数量积</span></span><br><span class="line">  <span class="keyword">return</span> &#123;k*f0.first,k*f0.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;pair&lt;vec,ll&gt;&gt; vp; <span class="comment">// &#123;&#123;x,y&#125;,idx&#125; 只放可能的</span></span><br><span class="line">set&lt;ll&gt; wall; <span class="comment">// 隔断的S的index</span></span><br><span class="line">set&lt;ll&gt; vst[<span class="number">100010</span>]; <span class="comment">// vst[树节点&#125; = 点下标集合</span></span><br><span class="line">mint cnt[<span class="number">100010</span>]; <span class="comment">// cnt[u] = 树上点u被区间覆盖计数</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> TMP=<span class="number">100005</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// dst &lt;- src ( r向l 合并, 如果大小不满足, 先交换再合并)</span></span><br><span class="line"><span class="comment">// src.clear(); (清空src)</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> dst,<span class="type">int</span> src,<span class="type">bool</span> init=<span class="literal">false</span><span class="comment">/* 用在初始时一侧为空的时候 计算代价 */</span>)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(dst==src)<span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">if</span>(dst&lt;<span class="number">0</span> || src&lt;<span class="number">0</span>)<span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">if</span>(vst[dst].<span class="built_in">empty</span>() &amp;&amp; vst[src].<span class="built_in">empty</span>())<span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">if</span>((!init) &amp;&amp; vst[dst].<span class="built_in">size</span>()&lt;vst[src].<span class="built_in">size</span>())&#123; <span class="comment">// 启发式 小向大, sum_轻儿子 = O(N log N)</span></span><br><span class="line">    <span class="built_in">swap</span>(vst[dst],vst[src]);</span><br><span class="line">    <span class="built_in">swap</span>(cnt[dst],cnt[src]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;nx : vst[src])&#123;</span><br><span class="line">    <span class="keyword">auto</span> it=wall.<span class="built_in">lower_bound</span>(nx); <span class="comment">// 通过不可选计算区间</span></span><br><span class="line">    ll rs=*it;</span><br><span class="line">    ll ls=*<span class="built_in">prev</span>(it); <span class="comment">// index区间 (ls...rs)</span></span><br><span class="line">    it=vst[dst].<span class="built_in">lower_bound</span>(nx);</span><br><span class="line">    <span class="keyword">if</span>(it!=vst[dst].<span class="built_in">end</span>())   rs=<span class="built_in">min</span>(rs,*it);</span><br><span class="line">    <span class="keyword">if</span>(it!=vst[dst].<span class="built_in">begin</span>()) ls=<span class="built_in">max</span>(ls,*<span class="built_in">prev</span>(it));</span><br><span class="line">    cnt[dst]+=(nx-ls)*(rs-nx); <span class="comment">// [ls...nx...rs]</span></span><br><span class="line">    vst[dst].<span class="built_in">insert</span>(nx);</span><br><span class="line">  &#125;</span><br><span class="line">  vst[src].<span class="built_in">clear</span>();</span><br><span class="line">  cnt[src]=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">height</span><span class="params">(vec l, vec r,vec del,<span class="type">int</span> side)</span></span>&#123;</span><br><span class="line">  ll lh=<span class="number">1</span>,rh=<span class="number">2e9</span>; <span class="comment">// c++20 iota_view + lower_bound</span></span><br><span class="line">  <span class="keyword">while</span>(lh&lt;=rh)&#123;</span><br><span class="line">    ll mh=(lh+rh)/<span class="number">2</span>;</span><br><span class="line">    vec nl,nr;</span><br><span class="line">    <span class="keyword">if</span>(side==<span class="number">0</span>)&#123; <span class="comment">// l &lt; r &lt; del, 已知 l+del &lt; r 求max(h), 使 l+h*del &lt; r</span></span><br><span class="line">      nl=l+del*mh;</span><br><span class="line">      nr=r;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// del  &lt; l  &lt; r, 已知 l &lt; del+r, 求max(h), 使 l &lt; del*h+r</span></span><br><span class="line">      nl=l;</span><br><span class="line">      nr=r+del*mh;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">max</span>(&#123;nl.first,nl.second,nr.first,nr.second&#125;)&gt;<span class="number">1e9</span>)&#123; <span class="comment">// 过大</span></span><br><span class="line">      rh=mh<span class="number">-1</span>;</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125; <span class="comment">// too low</span></span><br><span class="line">    <span class="keyword">if</span>(nl&lt;nr) lh=mh+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> rh=mh<span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> rh; <span class="comment">// rh+1==lh [1...rh 满足][lh.... 不满足</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mint res=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sbtree</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r,vec lp,vec rp,<span class="type">int</span> w=<span class="number">1</span><span class="comment">/*节点权重*/</span>)</span></span>&#123;<span class="comment">// vp[l..r] 左向量lp &lt; 右向量rp, 返回树的根的index</span></span><br><span class="line">  <span class="keyword">if</span>(l&gt;r)<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  vec mp=lp+rp; <span class="comment">// 向量和</span></span><br><span class="line">  <span class="comment">// [l,pos-1] &lt; mp &lt;= [pos,r]</span></span><br><span class="line">  <span class="type">int</span> pos=(<span class="type">int</span>)(<span class="built_in">lower_bound</span>(vp.<span class="built_in">begin</span>()+l,vp.<span class="built_in">begin</span>()+r+<span class="number">1</span>,mp,[](<span class="type">const</span> <span class="keyword">auto</span>&amp;vpitem,<span class="type">const</span> <span class="keyword">auto</span>&amp;searchv)&#123;</span><br><span class="line">     <span class="keyword">return</span> vpitem.first &lt; searchv;</span><br><span class="line">  &#125;) - vp.<span class="built_in">begin</span>());</span><br><span class="line">  <span class="type">int</span> mr=pos<span class="number">-1</span>,ml=pos; <span class="comment">// [l,mr] [ml,r]</span></span><br><span class="line">  <span class="type">int</span> key=<span class="number">-1</span>; <span class="comment">// 分割向量index, 用作树的index</span></span><br><span class="line">  <span class="keyword">if</span>(ml&lt;=r &amp;&amp; mp==vp[ml].first) &#123; <span class="comment">// 分割向量 在S中</span></span><br><span class="line">    key = vp[ml++].second; <span class="comment">// 在S的划分中 移除它 [l,mr=bl-1] [ml=bl+1,r]</span></span><br><span class="line">    vst[TMP].<span class="built_in">insert</span>(key); <span class="comment">// 主要是复用merge逻辑 先放tmp再merge进key</span></span><br><span class="line">    <span class="built_in">merge</span>(key,TMP,<span class="literal">true</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> lk=<span class="number">-1</span>,rk=<span class="number">-1</span>; <span class="comment">// l key, r key</span></span><br><span class="line">  <span class="keyword">if</span>(mr==r)&#123; <span class="comment">// 全在左侧 lp &lt; [l..mr=r] &lt; mp &lt; rp, 一次不够分割, 如果左右交替 则febnacci不会超过log次</span></span><br><span class="line">    ll h=<span class="built_in">height</span>(vp[r].first,rp,lp,<span class="number">1</span>); <span class="comment">// 快速计算幂次</span></span><br><span class="line">    lk=<span class="built_in">sbtree</span>(l,mr,lp,lp*h+rp,h);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span>(ml==l)&#123; <span class="comment">// 全在右侧 lp &lt; mp &lt; [l=ml..r] &lt; rp</span></span><br><span class="line">    ll h=<span class="built_in">height</span>(lp,vp[l].first,rp,<span class="number">0</span>); <span class="comment">// 快速计算幂次</span></span><br><span class="line">    rk=<span class="built_in">sbtree</span>(ml,r,lp+rp*h,rp,h);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; <span class="comment">// 每发生一次数组分裂, 最多n次</span></span><br><span class="line">    lk=<span class="built_in">sbtree</span>(l,mr,lp,mp);</span><br><span class="line">    rk=<span class="built_in">sbtree</span>(ml,r,mp,rp);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> root=<span class="built_in">max</span>(&#123;key,lk,rk&#125;); <span class="comment">// 非-1的 都可以作为 根的index, 至少有一个</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> k:&#123;key,lk,rk&#125;) <span class="built_in">merge</span>(root,k);</span><br><span class="line">  res+=cnt[root]*w;</span><br><span class="line">  <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    ll a=<span class="built_in">read</span>();</span><br><span class="line">    ll b=<span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">if</span>(a+b==<span class="number">1</span>)<span class="keyword">continue</span>; <span class="comment">// (0,1)(1,0)不消耗次数</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">gcd</span>(a,b)==<span class="number">1</span>)vp.<span class="built_in">push_back</span>(&#123;&#123;a,b&#125;,i&#125;);</span><br><span class="line">    <span class="keyword">else</span> wall.<span class="built_in">insert</span>(i); <span class="comment">// 一定不再的点产生切割</span></span><br><span class="line">  &#125;</span><br><span class="line">  wall.<span class="built_in">insert</span>(<span class="number">-1</span>);</span><br><span class="line">  wall.<span class="built_in">insert</span>(n);</span><br><span class="line">  <span class="comment">// 默认的sort 用的是自己和其它的operator&lt;(other), 而不是两两比较的operator&lt;(v0,v1)</span></span><br><span class="line">  <span class="built_in">sort</span>(vp.<span class="built_in">begin</span>(),vp.<span class="built_in">end</span>(),[](<span class="type">const</span> <span class="keyword">auto</span>&amp;l, <span class="type">const</span> <span class="keyword">auto</span>&amp;r)&#123;<span class="keyword">return</span> l.first&lt;r.first;&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(vp.<span class="built_in">size</span>()) <span class="built_in">sbtree</span>(<span class="number">0</span>,vp.<span class="built_in">size</span>()<span class="number">-1</span>,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,res.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 # 总结
 
 G
@@ -598,9 +608,15 @@ Ex
 
 gcd想了一半, 没推下去, 按理说应该要能想到 互质等价的... 唉
 
+但除了存在性的部分还是自己想出来了, 而且本身是倍增查找,即使没有存在性 也可以算出是否存在
+
+好 我不会的部分好像又是重轻儿子 和启发式合并的部分......... 总之就是 sum S_轻儿子 = O(N log N)
+
 # 参考
 
 [官方题解](https://atcoder.jp/contests/abc273/editorial)
+
+https://tjkendev.github.io/procon-library/python/math/stern-brocot-tree.html
 </code></pre>
 
       
@@ -664,7 +680,7 @@ gcd想了一半, 没推下去, 按理说应该要能想到 互质等价的... �
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-10-27 08:30:58" itemprop="dateModified" datetime="2022-10-27T08:30:58+08:00">2022-10-27</time>
+      <time title="修改時間：2022-10-28 05:58:10" itemprop="dateModified" datetime="2022-10-28T05:58:10+08:00">2022-10-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -824,7 +840,7 @@ gcd想了一半, 没推下去, 按理说应该要能想到 互质等价的... �
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-10-27 08:30:58" itemprop="dateModified" datetime="2022-10-27T08:30:58+08:00">2022-10-27</time>
+      <time title="修改時間：2022-10-28 05:58:10" itemprop="dateModified" datetime="2022-10-28T05:58:10+08:00">2022-10-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -979,7 +995,7 @@ gcd想了一半, 没推下去, 按理说应该要能想到 互质等价的... �
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-10-27 08:30:58" itemprop="dateModified" datetime="2022-10-27T08:30:58+08:00">2022-10-27</time>
+      <time title="修改時間：2022-10-28 05:58:10" itemprop="dateModified" datetime="2022-10-28T05:58:10+08:00">2022-10-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1124,7 +1140,7 @@ gcd想了一半, 没推下去, 按理说应该要能想到 互质等价的... �
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-10-27 08:30:58" itemprop="dateModified" datetime="2022-10-27T08:30:58+08:00">2022-10-27</time>
+      <time title="修改時間：2022-10-28 05:58:10" itemprop="dateModified" datetime="2022-10-28T05:58:10+08:00">2022-10-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1250,13 +1266,13 @@ gcd想了一半, 没推下去, 按理说应该要能想到 互质等价的... �
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="總字數">936k</span>
+    <span title="總字數">941k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">39:01</span>
+    <span title="所需總閱讀時間">39:11</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
