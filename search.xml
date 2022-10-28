@@ -2034,10 +2034,10 @@
         <category>USACO</category>
       </categories>
       <tags>
+        <tag>scc</tag>
         <tag>离散化</tag>
         <tag>启发式搜索</tag>
         <tag>迭代加深搜索</tag>
-        <tag>scc</tag>
         <tag>矩阵</tag>
       </tags>
   </entry>
@@ -2389,9 +2389,9 @@
         <category>USACO</category>
       </categories>
       <tags>
+        <tag>二分</tag>
         <tag>搜索</tag>
         <tag>剪枝</tag>
-        <tag>二分</tag>
         <tag>字符串hash</tag>
       </tags>
   </entry>
@@ -2471,9 +2471,9 @@
         <category>USACO</category>
       </categories>
       <tags>
+        <tag>凸函数</tag>
         <tag>搜索</tag>
         <tag>模拟退火</tag>
-        <tag>凸函数</tag>
       </tags>
   </entry>
   <entry>
@@ -3412,9 +3412,9 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>贪心</tag>
         <tag>树</tag>
         <tag>区间DP</tag>
+        <tag>贪心</tag>
         <tag>mex</tag>
       </tags>
   </entry>
@@ -6195,8 +6195,8 @@
       <tags>
         <tag>数学</tag>
         <tag>DP</tag>
-        <tag>树状数组</tag>
         <tag>二分</tag>
+        <tag>树状数组</tag>
         <tag>组合数</tag>
         <tag>bfs</tag>
         <tag>插入排序</tag>
@@ -6476,75 +6476,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Atcoder arc127 D Sum of Min of xor(分治,bits,xor)</title>
-    <url>/Blog/2021-09-29-ac_arc127d/</url>
-    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://atcoder.jp/contests/arc127/tasks/arc127_d">https://atcoder.jp/contests/arc127/tasks/arc127_d</a></p>
-<p>题目大意,(atcoder 的这个题没有“背景”，直接去看原题，就是题意</p>
-<p>给等长数组A,B, 对于两两坐标i,j, 计算$min(A_i \oplus A_j, B_i \oplus B_j )$</p>
-<p>求所有min的和</p>
-<p>范围</p>
-<p>$n \leq 250000 , A_i,B_i &lt; 2^{18}$</p>
-<h1 id="想"><a href="#想" class="headerlink" title="想"></a>想</h1><p>先做一些简单的分析,N 有点大，$N^2$的话肯定超时, 那么基本范围是$N ,  N log(N)$ 左右的</p>
-<p>$2^{18} &#x3D; 262144$</p>
-<hr>
-<p>min(x,y)+max(x,y) &#x3D; x+y</p>
-<hr>
-<p>一些 $\oplus$ 的常见知识, $(A \oplus B) &#x3D; (A + B) \bmod 2$, 其中<code>加</code>和<code>模</code>采取 <code>每位不进位</code>且<code>允许超过2的任意值</code>, 这个好处是能计数</p>
-<p>例如 5 &#x3D; 101,7&#x3D;111, 9 &#x3D; 1001</p>
-<p>$(0,1,0,1)+(0,1,1,1)+(1,0,0,1) &#x3D; (1,2,1,3) $</p>
-<p>$(1,2,1,3) \bmod 2 &#x3D; (1,0,1,1) $</p>
-<p>所以$5 \oplus 7 \oplus 9 &#x3D; 11$, 同时我们知道最高位1个1，2个0</p>
-<hr>
-<p>a &lt; b 那么 $a \oplus b$ 的最高位1出现在b</p>
-<p>反过来</p>
-<p>$a \oplus b$ 最高位出现在b , 那么 a &lt; b</p>
-<p>(归纳法易证</p>
-<hr>
-<p>$a \oplus (b+c+d+e+\cdots) &#x3D;$ 后面部分通过上面按位不进位加和统计的每一位 0 个数 或1个数，在看与a对应位是否相等</p>
-<p>通过前缀和或者扫描记录当前， 长度为n的数组的两两$\oplus$的和 的时间复杂度O(N) 就能完成</p>
-<hr>
-<p>综上，我们可以直接算出 min， 也可以去算max然后拿总和减去min</p>
-<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><p>把所有数看成18位，不足高位补零</p>
-<p>我们 关心$(A_i \oplus A_j) \oplus (B_i \oplus B_j) $ 的最高位的bit从哪里来，这样我们就知道哪个最大了</p>
-<p>$(A_i \oplus A_j) \oplus (B_i \oplus B_j) &#x3D; (A_i \oplus B_i) \oplus (A_j \oplus B_j) $</p>
-<hr>
-<p>令$C_i &#x3D; A_i \oplus B_i$</p>
-<p>w &#x3D; 18</p>
-<p>把$C_i$分类成两组, 一组是 第$w$位为$1$的，另一组是$w$位为$0$的</p>
-<p>每组内，循环这个方法并且w-1</p>
-<hr>
-<p>对于组之间的，</p>
-<p>$C_i$的$w$位为1, $C_j$的$w$位为0 , 对于高于w位的，因为通过上面的分治，两边保持一致，也就是$\oplus$以后都是0了不需要考虑</p>
-<p>对于$w$位为1 里面我们还可以分类为 $A_i$ 的w位是0或1两类</p>
-<p>$G_{x,y}$ w位是x，A的w位是y</p>
-<p>$G_{1,0},G_{0,0}$, 高位1来自B的$\oplus$</p>
-<p>$G_{1,0}, G_{0,1}$, 高位1来自A的$\oplus$</p>
-<p>$G_{1,1}, G_{0,0}$, 高位1来自A的$\oplus$</p>
-<p>$G_{1,1}, G_{0,1}$, 高位1来自B的$\oplus$</p>
-<p>也就是分组的时间复杂度就是$2^L$</p>
-<p>下面考虑</p>
-<p>$G_{i_0,i_1,i_2,\cdots} $ 与 $G_{j_0,j_1,j_2,\cdots}$ 中 如果高位来自A的$\oplus$</p>
-<p>那么贡献为</p>
-<p>$ \sum B_{i_?} \oplus B_{j_?}$</p>
-<p>也就是，上面想求总和提到过的方法, 通过按位计数，拿着一块求和的单个复杂度为$O(L\cdot size(G))$, 总复杂度为$O(L\cdot N)$</p>
-<hr>
-<p>然后注意处理$C_i$ 一致的组，这样的组里面，两两的异或值相同, 也需要上面的按位计数的求和</p>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 1000000007</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n-1;i&gt;=a;i--)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> A[<span class="number">250010</span>];</span><br><span class="line"><span class="type">int</span> B[<span class="number">250010</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> L = <span class="number">18</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 两两xor和 A[i0[?]]</span></span><br><span class="line"><span class="function">ll <span class="title">xorSum</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp; i0)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(i0.<span class="built_in">size</span>() == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; bits = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">20</span>,<span class="number">0</span>);</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,i0.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="keyword">if</span>(i &gt; <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">rep</span>(b,<span class="number">0</span>,L)&#123;</span><br><span class="line">        ans += ((A[i0[i]]&gt;&gt;b) % <span class="number">2</span>)?</span><br><span class="line">          ((ll)<span class="number">1</span> &lt;&lt; b) * (i - bits[b]):</span><br><span class="line">          ((ll)<span class="number">1</span> &lt;&lt; b) * (bits[b]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(b,<span class="number">0</span>,L)&#123;</span><br><span class="line">      bits[b]+=(A[i0[i]]&gt;&gt;b)%<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 任意左Arr[i0[?]] xor 任意右Arr[i1[?]] 的和</span></span><br><span class="line"><span class="function">ll <span class="title">xorSum</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp; i0,vector&lt;<span class="type">int</span>&gt; &amp; i1, <span class="type">int</span> * Arr)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(i0.<span class="built_in">size</span>() == <span class="number">0</span> || i1.<span class="built_in">size</span>() == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; bits = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">20</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,i0.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="built_in">rep</span>(b,<span class="number">0</span>,L)&#123;</span><br><span class="line">      bits[b]+=(Arr[i0[i]]&gt;&gt;b)%<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,i1.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="built_in">rep</span>(b,<span class="number">0</span>,L)&#123;</span><br><span class="line">      ans += ((Arr[i1[i]]&gt;&gt;b) % <span class="number">2</span>)?</span><br><span class="line">        ((ll)<span class="number">1</span> &lt;&lt; b) * (i0.<span class="built_in">size</span>() - bits[b]):</span><br><span class="line">        ((ll)<span class="number">1</span> &lt;&lt; b) * (bits[b]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// pwr 以上的位， idxs里面 A[i]^B[i] 两两相等</span></span><br><span class="line"><span class="function">ll <span class="title">f</span><span class="params">(<span class="type">int</span> pwr,vector&lt;<span class="type">int</span>&gt; &amp; idxs)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(pwr &lt; <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="comment">// (Ai xor Aj) xor (Bi xor Bj) = (Ai xor Bi) xor (Aj xor Bj) = 0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">xorSum</span>(idxs);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// groups</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; gC[<span class="number">2</span>] = &#123;&#123;&#125;,&#123;&#125;&#125;; <span class="comment">// w 位的 C</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; gCA[<span class="number">2</span>][<span class="number">2</span>] = &#123;&#123;&#123;&#125;,&#123;&#125;&#125;,&#123;&#123;&#125;,&#123;&#125;&#125;&#125;;<span class="comment">// w 位 C 和 A的 零一</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> i:idxs)&#123;</span><br><span class="line">    <span class="type">int</span> C = A[i]^B[i];</span><br><span class="line">    gC[(C&gt;&gt;pwr)%<span class="number">2</span>].<span class="built_in">pb</span>(i);</span><br><span class="line">    gCA[(C&gt;&gt;pwr)%<span class="number">2</span>][(A[i]&gt;&gt;pwr)%<span class="number">2</span>].<span class="built_in">pb</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">2</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(gC[i].<span class="built_in">size</span>() &lt; <span class="number">2</span>) <span class="keyword">continue</span>;</span><br><span class="line">    ans += <span class="built_in">f</span>(pwr<span class="number">-1</span>,gC[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// bit</span></span><br><span class="line">  <span class="built_in">rep</span>(bA0,<span class="number">0</span>,<span class="number">2</span>)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(bA1,<span class="number">0</span>,<span class="number">2</span>)&#123;</span><br><span class="line">      ans += (bA0 ^ bA1)?</span><br><span class="line">        <span class="built_in">xorSum</span>(gCA[<span class="number">0</span>][bA0],gCA[<span class="number">1</span>][bA1], B):</span><br><span class="line">        <span class="built_in">xorSum</span>(gCA[<span class="number">0</span>][bA0],gCA[<span class="number">1</span>][bA1], A);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n;</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,A+i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,B+i);</span><br><span class="line">  &#125;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;idxs;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    idxs.<span class="built_in">pb</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>,<span class="built_in">f</span>(L,idxs));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a href="https://atcoder.jp/contests/arc127/editorial/2697">https://atcoder.jp/contests/arc127/editorial/2697</a></p>
-]]></content>
-      <categories>
-        <category>Atcoder</category>
-        <category>ARC</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>枚举</tag>
-        <tag>分治</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Atcoder arc130 D, 树上DP,子树点乘代价合并,总代价为n方</title>
     <url>/Blog/2021-11-29-ac_arc130d/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://atcoder.jp/contests/arc130/tasks/arc130_d">https://atcoder.jp/contests/arc130/tasks/arc130_d</a></p>
@@ -6639,6 +6570,75 @@
       </categories>
       <tags>
         <tag>线段树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder arc127 D Sum of Min of xor(分治,bits,xor)</title>
+    <url>/Blog/2021-09-29-ac_arc127d/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://atcoder.jp/contests/arc127/tasks/arc127_d">https://atcoder.jp/contests/arc127/tasks/arc127_d</a></p>
+<p>题目大意,(atcoder 的这个题没有“背景”，直接去看原题，就是题意</p>
+<p>给等长数组A,B, 对于两两坐标i,j, 计算$min(A_i \oplus A_j, B_i \oplus B_j )$</p>
+<p>求所有min的和</p>
+<p>范围</p>
+<p>$n \leq 250000 , A_i,B_i &lt; 2^{18}$</p>
+<h1 id="想"><a href="#想" class="headerlink" title="想"></a>想</h1><p>先做一些简单的分析,N 有点大，$N^2$的话肯定超时, 那么基本范围是$N ,  N log(N)$ 左右的</p>
+<p>$2^{18} &#x3D; 262144$</p>
+<hr>
+<p>min(x,y)+max(x,y) &#x3D; x+y</p>
+<hr>
+<p>一些 $\oplus$ 的常见知识, $(A \oplus B) &#x3D; (A + B) \bmod 2$, 其中<code>加</code>和<code>模</code>采取 <code>每位不进位</code>且<code>允许超过2的任意值</code>, 这个好处是能计数</p>
+<p>例如 5 &#x3D; 101,7&#x3D;111, 9 &#x3D; 1001</p>
+<p>$(0,1,0,1)+(0,1,1,1)+(1,0,0,1) &#x3D; (1,2,1,3) $</p>
+<p>$(1,2,1,3) \bmod 2 &#x3D; (1,0,1,1) $</p>
+<p>所以$5 \oplus 7 \oplus 9 &#x3D; 11$, 同时我们知道最高位1个1，2个0</p>
+<hr>
+<p>a &lt; b 那么 $a \oplus b$ 的最高位1出现在b</p>
+<p>反过来</p>
+<p>$a \oplus b$ 最高位出现在b , 那么 a &lt; b</p>
+<p>(归纳法易证</p>
+<hr>
+<p>$a \oplus (b+c+d+e+\cdots) &#x3D;$ 后面部分通过上面按位不进位加和统计的每一位 0 个数 或1个数，在看与a对应位是否相等</p>
+<p>通过前缀和或者扫描记录当前， 长度为n的数组的两两$\oplus$的和 的时间复杂度O(N) 就能完成</p>
+<hr>
+<p>综上，我们可以直接算出 min， 也可以去算max然后拿总和减去min</p>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><p>把所有数看成18位，不足高位补零</p>
+<p>我们 关心$(A_i \oplus A_j) \oplus (B_i \oplus B_j) $ 的最高位的bit从哪里来，这样我们就知道哪个最大了</p>
+<p>$(A_i \oplus A_j) \oplus (B_i \oplus B_j) &#x3D; (A_i \oplus B_i) \oplus (A_j \oplus B_j) $</p>
+<hr>
+<p>令$C_i &#x3D; A_i \oplus B_i$</p>
+<p>w &#x3D; 18</p>
+<p>把$C_i$分类成两组, 一组是 第$w$位为$1$的，另一组是$w$位为$0$的</p>
+<p>每组内，循环这个方法并且w-1</p>
+<hr>
+<p>对于组之间的，</p>
+<p>$C_i$的$w$位为1, $C_j$的$w$位为0 , 对于高于w位的，因为通过上面的分治，两边保持一致，也就是$\oplus$以后都是0了不需要考虑</p>
+<p>对于$w$位为1 里面我们还可以分类为 $A_i$ 的w位是0或1两类</p>
+<p>$G_{x,y}$ w位是x，A的w位是y</p>
+<p>$G_{1,0},G_{0,0}$, 高位1来自B的$\oplus$</p>
+<p>$G_{1,0}, G_{0,1}$, 高位1来自A的$\oplus$</p>
+<p>$G_{1,1}, G_{0,0}$, 高位1来自A的$\oplus$</p>
+<p>$G_{1,1}, G_{0,1}$, 高位1来自B的$\oplus$</p>
+<p>也就是分组的时间复杂度就是$2^L$</p>
+<p>下面考虑</p>
+<p>$G_{i_0,i_1,i_2,\cdots} $ 与 $G_{j_0,j_1,j_2,\cdots}$ 中 如果高位来自A的$\oplus$</p>
+<p>那么贡献为</p>
+<p>$ \sum B_{i_?} \oplus B_{j_?}$</p>
+<p>也就是，上面想求总和提到过的方法, 通过按位计数，拿着一块求和的单个复杂度为$O(L\cdot size(G))$, 总复杂度为$O(L\cdot N)$</p>
+<hr>
+<p>然后注意处理$C_i$ 一致的组，这样的组里面，两两的异或值相同, 也需要上面的按位计数的求和</p>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 1000000007</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n-1;i&gt;=a;i--)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> A[<span class="number">250010</span>];</span><br><span class="line"><span class="type">int</span> B[<span class="number">250010</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> L = <span class="number">18</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 两两xor和 A[i0[?]]</span></span><br><span class="line"><span class="function">ll <span class="title">xorSum</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp; i0)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(i0.<span class="built_in">size</span>() == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; bits = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">20</span>,<span class="number">0</span>);</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,i0.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="keyword">if</span>(i &gt; <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">rep</span>(b,<span class="number">0</span>,L)&#123;</span><br><span class="line">        ans += ((A[i0[i]]&gt;&gt;b) % <span class="number">2</span>)?</span><br><span class="line">          ((ll)<span class="number">1</span> &lt;&lt; b) * (i - bits[b]):</span><br><span class="line">          ((ll)<span class="number">1</span> &lt;&lt; b) * (bits[b]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(b,<span class="number">0</span>,L)&#123;</span><br><span class="line">      bits[b]+=(A[i0[i]]&gt;&gt;b)%<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 任意左Arr[i0[?]] xor 任意右Arr[i1[?]] 的和</span></span><br><span class="line"><span class="function">ll <span class="title">xorSum</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp; i0,vector&lt;<span class="type">int</span>&gt; &amp; i1, <span class="type">int</span> * Arr)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(i0.<span class="built_in">size</span>() == <span class="number">0</span> || i1.<span class="built_in">size</span>() == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; bits = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">20</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,i0.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="built_in">rep</span>(b,<span class="number">0</span>,L)&#123;</span><br><span class="line">      bits[b]+=(Arr[i0[i]]&gt;&gt;b)%<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,i1.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="built_in">rep</span>(b,<span class="number">0</span>,L)&#123;</span><br><span class="line">      ans += ((Arr[i1[i]]&gt;&gt;b) % <span class="number">2</span>)?</span><br><span class="line">        ((ll)<span class="number">1</span> &lt;&lt; b) * (i0.<span class="built_in">size</span>() - bits[b]):</span><br><span class="line">        ((ll)<span class="number">1</span> &lt;&lt; b) * (bits[b]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// pwr 以上的位， idxs里面 A[i]^B[i] 两两相等</span></span><br><span class="line"><span class="function">ll <span class="title">f</span><span class="params">(<span class="type">int</span> pwr,vector&lt;<span class="type">int</span>&gt; &amp; idxs)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(pwr &lt; <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="comment">// (Ai xor Aj) xor (Bi xor Bj) = (Ai xor Bi) xor (Aj xor Bj) = 0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">xorSum</span>(idxs);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// groups</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; gC[<span class="number">2</span>] = &#123;&#123;&#125;,&#123;&#125;&#125;; <span class="comment">// w 位的 C</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; gCA[<span class="number">2</span>][<span class="number">2</span>] = &#123;&#123;&#123;&#125;,&#123;&#125;&#125;,&#123;&#123;&#125;,&#123;&#125;&#125;&#125;;<span class="comment">// w 位 C 和 A的 零一</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> i:idxs)&#123;</span><br><span class="line">    <span class="type">int</span> C = A[i]^B[i];</span><br><span class="line">    gC[(C&gt;&gt;pwr)%<span class="number">2</span>].<span class="built_in">pb</span>(i);</span><br><span class="line">    gCA[(C&gt;&gt;pwr)%<span class="number">2</span>][(A[i]&gt;&gt;pwr)%<span class="number">2</span>].<span class="built_in">pb</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">2</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(gC[i].<span class="built_in">size</span>() &lt; <span class="number">2</span>) <span class="keyword">continue</span>;</span><br><span class="line">    ans += <span class="built_in">f</span>(pwr<span class="number">-1</span>,gC[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// bit</span></span><br><span class="line">  <span class="built_in">rep</span>(bA0,<span class="number">0</span>,<span class="number">2</span>)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(bA1,<span class="number">0</span>,<span class="number">2</span>)&#123;</span><br><span class="line">      ans += (bA0 ^ bA1)?</span><br><span class="line">        <span class="built_in">xorSum</span>(gCA[<span class="number">0</span>][bA0],gCA[<span class="number">1</span>][bA1], B):</span><br><span class="line">        <span class="built_in">xorSum</span>(gCA[<span class="number">0</span>][bA0],gCA[<span class="number">1</span>][bA1], A);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n;</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,A+i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,B+i);</span><br><span class="line">  &#125;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;idxs;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    idxs.<span class="built_in">pb</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>,<span class="built_in">f</span>(L,idxs));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a href="https://atcoder.jp/contests/arc127/editorial/2697">https://atcoder.jp/contests/arc127/editorial/2697</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ARC</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>分治</tag>
+        <tag>枚举</tag>
       </tags>
   </entry>
   <entry>
@@ -6780,8 +6780,8 @@
       <tags>
         <tag>数学</tag>
         <tag>DP</tag>
-        <tag>前缀和</tag>
         <tag>分治</tag>
+        <tag>前缀和</tag>
       </tags>
   </entry>
   <entry>
@@ -6921,9 +6921,9 @@
       </categories>
       <tags>
         <tag>DP</tag>
+        <tag>二分</tag>
         <tag>线段树</tag>
         <tag>前缀和</tag>
-        <tag>二分</tag>
         <tag>单调队列</tag>
         <tag>区间覆盖</tag>
       </tags>
@@ -7846,8 +7846,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>贡献统计</tag>
         <tag>SOSDP</tag>
+        <tag>贡献统计</tag>
       </tags>
   </entry>
   <entry>
@@ -7910,8 +7910,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>贡献统计</tag>
         <tag>SOSDP</tag>
+        <tag>贡献统计</tag>
         <tag>联通块</tag>
       </tags>
   </entry>
@@ -8144,12 +8144,12 @@
       </categories>
       <tags>
         <tag>数学</tag>
+        <tag>二分图</tag>
         <tag>分治</tag>
         <tag>构造</tag>
         <tag>双指针</tag>
         <tag>滑窗</tag>
         <tag>跳点</tag>
-        <tag>二分图</tag>
       </tags>
   </entry>
   <entry>
@@ -8331,14 +8331,14 @@
       </categories>
       <tags>
         <tag>数学</tag>
-        <tag>树状数组</tag>
+        <tag>排列</tag>
         <tag>网络流</tag>
+        <tag>二分图</tag>
+        <tag>树状数组</tag>
         <tag>扫描线</tag>
         <tag>前缀和</tag>
         <tag>排序</tag>
         <tag>离线</tag>
-        <tag>二分图</tag>
-        <tag>排列</tag>
         <tag>拓扑排序</tag>
         <tag>差分</tag>
       </tags>
@@ -8470,10 +8470,10 @@
       </categories>
       <tags>
         <tag>数学</tag>
+        <tag>排列</tag>
         <tag>并查集</tag>
         <tag>前缀和</tag>
         <tag>构造</tag>
-        <tag>排列</tag>
         <tag>括号对</tag>
       </tags>
   </entry>
@@ -8623,10 +8623,10 @@
       <tags>
         <tag>数学</tag>
         <tag>DP</tag>
+        <tag>数论</tag>
         <tag>并查集</tag>
         <tag>集合论</tag>
         <tag>括号对</tag>
-        <tag>数论</tag>
       </tags>
   </entry>
   <entry>
@@ -8702,8 +8702,8 @@
         <category>Codeforces</category>
       </categories>
       <tags>
-        <tag>组合数</tag>
         <tag>树</tag>
+        <tag>组合数</tag>
         <tag>贡献统计</tag>
       </tags>
   </entry>
@@ -10222,8 +10222,8 @@
       </categories>
       <tags>
         <tag>网络流</tag>
-        <tag>分块</tag>
         <tag>分治</tag>
+        <tag>分块</tag>
       </tags>
   </entry>
   <entry>
@@ -10340,11 +10340,11 @@
       </categories>
       <tags>
         <tag>数学</tag>
+        <tag>环</tag>
         <tag>并查集</tag>
         <tag>gcd</tag>
         <tag>组合数</tag>
         <tag>图论</tag>
-        <tag>环</tag>
       </tags>
   </entry>
   <entry>
@@ -10729,10 +10729,10 @@
       </categories>
       <tags>
         <tag>DP</tag>
+        <tag>树</tag>
         <tag>异或</tag>
         <tag>前缀和</tag>
         <tag>贪心</tag>
-        <tag>树</tag>
         <tag>树上启发式合并</tag>
         <tag>NTT</tag>
       </tags>
@@ -11007,8 +11007,8 @@
         <category>algorithm</category>
       </categories>
       <tags>
-        <tag>FFT</tag>
         <tag>FWT</tag>
+        <tag>FFT</tag>
       </tags>
   </entry>
   <entry>
@@ -11407,12 +11407,12 @@
       </categories>
       <tags>
         <tag>DP</tag>
+        <tag>排列</tag>
         <tag>图</tag>
         <tag>容斥</tag>
-        <tag>网络流</tag>
-        <tag>scc</tag>
-        <tag>排列</tag>
         <tag>环</tag>
+        <tag>scc</tag>
+        <tag>网络流</tag>
         <tag>费用流</tag>
       </tags>
   </entry>
@@ -11531,16 +11531,16 @@
       </categories>
       <tags>
         <tag>DP</tag>
+        <tag>排列</tag>
         <tag>图</tag>
         <tag>容斥</tag>
-        <tag>网络流</tag>
-        <tag>scc</tag>
-        <tag>SOSDP</tag>
-        <tag>二分图</tag>
-        <tag>排列</tag>
         <tag>环</tag>
+        <tag>scc</tag>
+        <tag>网络流</tag>
         <tag>费用流</tag>
+        <tag>二分图</tag>
         <tag>霍尔定理</tag>
+        <tag>SOSDP</tag>
         <tag>子集反演</tag>
       </tags>
   </entry>
@@ -11820,12 +11820,12 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>二分</tag>
         <tag>凸函数</tag>
         <tag>树</tag>
         <tag>multiset</tag>
         <tag>王钦石二分</tag>
         <tag>Alien Trick</tag>
+        <tag>二分</tag>
         <tag>凹函数</tag>
       </tags>
   </entry>
@@ -11951,9 +11951,9 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>区间DP</tag>
-        <tag>分治</tag>
         <tag>根号分治</tag>
+        <tag>分治</tag>
+        <tag>区间DP</tag>
         <tag>问题转化</tag>
       </tags>
   </entry>
@@ -12063,10 +12063,10 @@
         <category>ABC</category>
       </categories>
       <tags>
+        <tag>FWT</tag>
         <tag>计算几何</tag>
         <tag>bitset</tag>
         <tag>meet-in-middle</tag>
-        <tag>FWT</tag>
       </tags>
   </entry>
   <entry>
@@ -12197,8 +12197,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>前缀和</tag>
         <tag>树</tag>
+        <tag>前缀和</tag>
         <tag>滑窗</tag>
         <tag>差分</tag>
         <tag>树的直径</tag>
@@ -12622,11 +12622,11 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>概率论</tag>
+        <tag>费用流</tag>
         <tag>二分</tag>
+        <tag>概率论</tag>
         <tag>线性规划</tag>
         <tag>对偶问题</tag>
-        <tag>费用流</tag>
       </tags>
   </entry>
   <entry>
@@ -12914,10 +12914,10 @@
       <tags>
         <tag>DP</tag>
         <tag>网络流</tag>
+        <tag>分治</tag>
         <tag>FFT</tag>
         <tag>字符串</tag>
         <tag>生成函数</tag>
-        <tag>分治</tag>
         <tag>NTT</tag>
         <tag>归并</tag>
       </tags>
@@ -14150,10 +14150,10 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>概率论</tag>
-        <tag>图论</tag>
         <tag>排列</tag>
         <tag>费用流</tag>
+        <tag>概率论</tag>
+        <tag>图论</tag>
         <tag>组合</tag>
         <tag>边覆盖</tag>
       </tags>
@@ -14538,8 +14538,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>并查集</tag>
         <tag>容斥</tag>
+        <tag>并查集</tag>
         <tag>组合数</tag>
         <tag>树上DP</tag>
         <tag>图论</tag>
@@ -14713,9 +14713,9 @@
       <tags>
         <tag>DP</tag>
         <tag>容斥</tag>
+        <tag>线性基</tag>
         <tag>矩阵</tag>
         <tag>状压DP</tag>
-        <tag>线性基</tag>
       </tags>
   </entry>
   <entry>
@@ -14853,8 +14853,8 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>线段树</tag>
         <tag>二分图</tag>
+        <tag>线段树</tag>
         <tag>摘要表示</tag>
         <tag>回文串</tag>
         <tag>Dilworth定理</tag>
@@ -15091,10 +15091,10 @@
       </categories>
       <tags>
         <tag>数学</tag>
-        <tag>并查集</tag>
-        <tag>概率论</tag>
         <tag>网络流</tag>
         <tag>树</tag>
+        <tag>并查集</tag>
+        <tag>概率论</tag>
       </tags>
   </entry>
   <entry>
@@ -15200,10 +15200,10 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>排列组合</tag>
         <tag>字典树</tag>
         <tag>字符串</tag>
         <tag>单调队列</tag>
+        <tag>排列组合</tag>
       </tags>
   </entry>
   <entry>
@@ -15443,10 +15443,10 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>排列组合</tag>
         <tag>概率论</tag>
         <tag>贡献统计</tag>
         <tag>min-max容斥</tag>
+        <tag>排列组合</tag>
         <tag>容斥原理</tag>
       </tags>
   </entry>
@@ -15677,8 +15677,8 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>dijkstra</tag>
         <tag>数论</tag>
+        <tag>dijkstra</tag>
         <tag>矩阵快速幂</tag>
         <tag>中国剩余定理</tag>
       </tags>
@@ -15799,9 +15799,9 @@
       </categories>
       <tags>
         <tag>DP</tag>
+        <tag>二分</tag>
         <tag>线段树</tag>
         <tag>矩阵</tag>
-        <tag>二分</tag>
         <tag>博弈论</tag>
         <tag>树形DP</tag>
       </tags>
@@ -15906,8 +15906,8 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>生成函数</tag>
         <tag>费用流</tag>
+        <tag>生成函数</tag>
         <tag>斯特林数</tag>
       </tags>
   </entry>
@@ -16148,9 +16148,9 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>排列组合</tag>
-        <tag>概率论</tag>
         <tag>线性基</tag>
+        <tag>概率论</tag>
+        <tag>排列组合</tag>
         <tag>线性代数</tag>
       </tags>
   </entry>
@@ -16463,9 +16463,9 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>排列组合</tag>
-        <tag>计算几何</tag>
         <tag>数论</tag>
+        <tag>计算几何</tag>
+        <tag>排列组合</tag>
       </tags>
   </entry>
   <entry>
@@ -17055,9 +17055,9 @@
         <category>ABC</category>
       </categories>
       <tags>
+        <tag>二分</tag>
         <tag>概率论</tag>
         <tag>计算几何</tag>
-        <tag>二分</tag>
       </tags>
   </entry>
   <entry>
@@ -17828,8 +17828,8 @@
       </categories>
       <tags>
         <tag>DP</tag>
-        <tag>概率论</tag>
         <tag>数论</tag>
+        <tag>概率论</tag>
         <tag>最小生成树</tag>
         <tag>BSGS</tag>
       </tags>
@@ -18199,9 +18199,9 @@
       </categories>
       <tags>
         <tag>DP</tag>
+        <tag>数论</tag>
         <tag>概率论</tag>
         <tag>生成函数</tag>
-        <tag>数论</tag>
         <tag>容斥原理</tag>
         <tag>多项式</tag>
         <tag>多点求值</tag>
@@ -18249,279 +18249,158 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">对应原来一种情况, 是原来一个(2,2) 指向的</span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">    2 2</span><br><span class="line">    1</span><br><span class="line">2 1   j</span><br><span class="line">2   i x</span><br></pre></td></tr></table></figure>
 
 <p>对应 <code>[b-2][d-2]</code> 的情况 前面还插入了两个</p>
-<pre><code>    2 2
-2   1 j
-2   i x
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">`f[b][d] = f[b-1][d-1] * (a+2*(b-1)) + f[b-2][d-2] * (d-1)*(b-1)`</span><br><span class="line"></span><br><span class="line">然后考虑说 新增的没有共点 ???????????????????????????????????</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      2
-      1
-      1
-2 1 1
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">上面 看起来是二维, 然而实际上b和d的差为定值, 所以是个一维的</span><br><span class="line"></span><br><span class="line">`diff=d-b &gt;= 0`</span><br><span class="line"></span><br><span class="line">`f[b] = f[b-1] * (a+2*b) + f[b-2] * (b+diff-1)*(b-1)`</span><br><span class="line"></span><br><span class="line">但是不共点的情况 咋讨论啊, 感觉好多啊, 不会了</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-  1
-  1
-11
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">    2 2</span><br><span class="line">2   1 j</span><br><span class="line">2   i x</span><br></pre></td></tr></table></figure>
 
-  1
- 11
-11
+<p><code>f[b][d] = f[b-1][d-1] * (a+2*(b-1)) + f[b-2][d-2] * (d-1)*(b-1)</code></p>
+<p>然后考虑说 新增的没有共点 ???????????????????????????????????</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">      2</span><br><span class="line">      1</span><br><span class="line">      1</span><br><span class="line">2 1 1</span><br></pre></td></tr></table></figure>
 
-1 1
-  1
-11
+<hr>
+<p>上面 看起来是二维, 然而实际上b和d的差为定值, 所以是个一维的</p>
+<p><code>diff=d-b &gt;= 0</code></p>
+<p><code>f[b] = f[b-1] * (a+2*b) + f[b-2] * (b+diff-1)*(b-1)</code></p>
+<p>但是不共点的情况 咋讨论啊, 感觉好多啊, 不会了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  1</span><br><span class="line">  1</span><br><span class="line">11</span><br><span class="line"></span><br><span class="line">  1</span><br><span class="line"> 11</span><br><span class="line">11</span><br><span class="line"></span><br><span class="line">1 1</span><br><span class="line">  1</span><br><span class="line">11</span><br><span class="line"></span><br><span class="line">1 1</span><br><span class="line"> 11</span><br><span class="line">11</span><br><span class="line"></span><br><span class="line"> 11</span><br><span class="line">  1</span><br><span class="line">11</span><br><span class="line"></span><br><span class="line">  1</span><br><span class="line">1 1</span><br><span class="line">11</span><br><span class="line"></span><br><span class="line"> 11</span><br><span class="line">1 1</span><br><span class="line">11</span><br></pre></td></tr></table></figure>
 
-1 1
- 11
-11
+<p>难道 对 这种2x2 的形态进行计数, <code>f[i][状态=6]</code> ?</p>
+<span id="more"></span>
 
- 11
-  1
-11
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>就暴力dp就完了………..</p>
+<p>0还是直接可以移除</p>
+<p><code>dp[i][j] = </code> 前i行填完, 剩余未填列是2的个数&#x3D;j 的方案数</p>
+<p>那么对于到第i行, 显然 剩余的总个数可以计算,</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 2</span><br><span class="line">1x</span><br></pre></td></tr></table></figure>
 
-  1
-1 1
-11
+<p><code>dp[i][j] += dp[i-1][j+1] * (j+1)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 1</span><br><span class="line">1x</span><br></pre></td></tr></table></figure>
 
- 11
-1 1
-11
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">难道 对 这种2x2 的形态进行计数, `f[i][状态=6]` ?</span><br><span class="line"></span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line"></span><br><span class="line">## 题解</span><br><span class="line"></span><br><span class="line">就暴力dp就完了...........</span><br><span class="line"></span><br><span class="line">0还是直接可以移除</span><br><span class="line"></span><br><span class="line">`dp[i][j] = ` 前i行填完, 剩余未填列是2的个数=j 的方案数</span><br><span class="line"></span><br><span class="line">那么对于到第i行, 显然 剩余的总个数可以计算,</span><br><span class="line"></span><br></pre></td></tr></table></figure>
- 2
-1x
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j+1] * (j+1)`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
- 1
-1x
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j] * (可选1)`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
- 11
-2xx
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j] * binom(可选1,2)`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
- 2
-2x
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j+1] * (j+1)`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
- 12
-2xx
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j+1] * (可选1) * (j+1)`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
- 22
-2xx
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">`dp[i][j] += dp[i-1][j+2] * binom(j+2,2)`</span><br><span class="line"></span><br><span class="line">## 代码</span><br><span class="line"></span><br><span class="line">https://atcoder.jp/contests/abc273/submissions/35986764</span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">#include &lt;atcoder/modint&gt;</span><br><span class="line">using mint = atcoder::modint998244353;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line">#define rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span><br><span class="line">ll read()&#123;ll r;scanf(&quot;%lld&quot;,&amp;r);return r;&#125;</span><br><span class="line"></span><br><span class="line">int R[]=&#123;0,0,0&#125;;</span><br><span class="line">int C[]=&#123;0,0,0&#125;;</span><br><span class="line">int main()&#123;</span><br><span class="line">  int n = read();</span><br><span class="line">  rep(i,0,n)R[read()]++;</span><br><span class="line">  rep(i,0,n)C[read()]++;</span><br><span class="line">  if(R[1]+R[2]*2!=C[1]+C[2]*2)&#123;</span><br><span class="line">    printf(&quot;0\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">  &#125;</span><br><span class="line">  int c2 = C[2];</span><br><span class="line">  int s=C[1]+C[2]*2; // 剩余未用点数</span><br><span class="line">  vector&lt;mint&gt; f(c2+10,0);</span><br><span class="line">  f[c2] = 1;</span><br><span class="line">  auto y=[&amp;](int j)&#123;return s-2*j;&#125;; // j=剩余列2, s=已经用的点,c2所有列2的点, 返回剩余未用的1</span><br><span class="line">  rep(t,0,R[1])&#123; // row = 1</span><br><span class="line">    vector&lt;mint&gt; g(c2+10,0); // [0..c2] 减少边界判断</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j+1]*(j+1); // col = 2</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j]*y(j); // col = 1</span><br><span class="line">    s-=1;</span><br><span class="line">    rep(j,0,c2+1) if(y(j)&lt;0) g[j]=0;</span><br><span class="line">    f=g;</span><br><span class="line">  &#125;</span><br><span class="line">  rep(t,0,R[2])&#123; // row = 2</span><br><span class="line">    vector&lt;mint&gt; g(c2+10,0);</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j+1]*(j+1); // col = 2</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j+2]*((j+2)*(j+1)/2); // col = 2 2</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j]*(y(j)*(y(j)-1)/2); // col = 1 1</span><br><span class="line">    rep(j,0,c2+1) g[j] += f[j+1]*(j+1)*y(j+1); // col 1 2</span><br><span class="line">    s-=2;</span><br><span class="line">    rep(j,0,c2+1) if(y(j)&lt;0) g[j]=0;</span><br><span class="line">    f=g;</span><br><span class="line">  &#125;</span><br><span class="line">  printf(&quot;%d\n&quot;,f[0].val());</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>dp[i][j] += dp[i-1][j] * (可选1)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 11</span><br><span class="line">2xx</span><br></pre></td></tr></table></figure>
 
-# Ex - Inv(0,1)ving Insert(1,0)n
+<p><code>dp[i][j] += dp[i-1][j] * binom(可选1,2)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 2</span><br><span class="line">2x</span><br></pre></td></tr></table></figure>
 
-$A=((0,1),(1,0))$
+<p><code>dp[i][j] += dp[i-1][j+1] * (j+1)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 12</span><br><span class="line">2xx</span><br></pre></td></tr></table></figure>
 
-f(序列T) = 最小操作次数 让T所有元素 属于A, 如果没有方案则=0
+<p><code>dp[i][j] += dp[i-1][j+1] * (可选1) * (j+1)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 22</span><br><span class="line">2xx</span><br></pre></td></tr></table></figure>
 
-每次操作 选择A中相邻的$(a,b),(c,d)$,在它们之间插入$(a+c,b+d)$
+<p><code>dp[i][j] += dp[i-1][j+2] * binom(j+2,2)</code></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc273/submissions/35986764">https://atcoder.jp/contests/abc273/submissions/35986764</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> R[]=&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">int</span> C[]=&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)R[<span class="built_in">read</span>()]++;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)C[<span class="built_in">read</span>()]++;</span><br><span class="line">  <span class="keyword">if</span>(R[<span class="number">1</span>]+R[<span class="number">2</span>]*<span class="number">2</span>!=C[<span class="number">1</span>]+C[<span class="number">2</span>]*<span class="number">2</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;0\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> c2 = C[<span class="number">2</span>];</span><br><span class="line">  <span class="type">int</span> s=C[<span class="number">1</span>]+C[<span class="number">2</span>]*<span class="number">2</span>; <span class="comment">// 剩余未用点数</span></span><br><span class="line">  <span class="function">vector&lt;mint&gt; <span class="title">f</span><span class="params">(c2+<span class="number">10</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">  f[c2] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">auto</span> y=[&amp;](<span class="type">int</span> j)&#123;<span class="keyword">return</span> s<span class="number">-2</span>*j;&#125;; <span class="comment">// j=剩余列2, s=已经用的点,c2所有列2的点, 返回剩余未用的1</span></span><br><span class="line">  <span class="built_in">rep</span>(t,<span class="number">0</span>,R[<span class="number">1</span>])&#123; <span class="comment">// row = 1</span></span><br><span class="line">    <span class="function">vector&lt;mint&gt; <span class="title">g</span><span class="params">(c2+<span class="number">10</span>,<span class="number">0</span>)</span></span>; <span class="comment">// [0..c2] 减少边界判断</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,c2+<span class="number">1</span>) g[j] += f[j+<span class="number">1</span>]*(j+<span class="number">1</span>); <span class="comment">// col = 2</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,c2+<span class="number">1</span>) g[j] += f[j]*<span class="built_in">y</span>(j); <span class="comment">// col = 1</span></span><br><span class="line">    s-=<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,c2+<span class="number">1</span>) <span class="keyword">if</span>(<span class="built_in">y</span>(j)&lt;<span class="number">0</span>) g[j]=<span class="number">0</span>;</span><br><span class="line">    f=g;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(t,<span class="number">0</span>,R[<span class="number">2</span>])&#123; <span class="comment">// row = 2</span></span><br><span class="line">    <span class="function">vector&lt;mint&gt; <span class="title">g</span><span class="params">(c2+<span class="number">10</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,c2+<span class="number">1</span>) g[j] += f[j+<span class="number">1</span>]*(j+<span class="number">1</span>); <span class="comment">// col = 2</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,c2+<span class="number">1</span>) g[j] += f[j+<span class="number">2</span>]*((j+<span class="number">2</span>)*(j+<span class="number">1</span>)/<span class="number">2</span>); <span class="comment">// col = 2 2</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,c2+<span class="number">1</span>) g[j] += f[j]*(<span class="built_in">y</span>(j)*(<span class="built_in">y</span>(j)<span class="number">-1</span>)/<span class="number">2</span>); <span class="comment">// col = 1 1</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,c2+<span class="number">1</span>) g[j] += f[j+<span class="number">1</span>]*(j+<span class="number">1</span>)*<span class="built_in">y</span>(j+<span class="number">1</span>); <span class="comment">// col 1 2</span></span><br><span class="line">    s-=<span class="number">2</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,c2+<span class="number">1</span>) <span class="keyword">if</span>(<span class="built_in">y</span>(j)&lt;<span class="number">0</span>) g[j]=<span class="number">0</span>;</span><br><span class="line">    f=g;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,f[<span class="number">0</span>].<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-给长n的序列S, (元素两两不同)
-
-对所有的l&lt;=r, 求 sum f(S[l..r]) mod 998244353
-
-## 范围
-
-n 1e5
-
-ai,bi [0,1e9]
-
-6s
-
-1024mb
-
-## 我的思路
-
-看每次操作对A的影响, 令 Bi= Ai.left+Ai.right
-
-B = (1,1)
-
-每次操作相当于 两个之间插入了和
-
-先考虑说 单个序列的 f如何算, 上面的B似乎没有帮助
-
-考虑二维平面, 那么相当于向量和, 而向量和的图形也就是向量平行四边行的一个对角线, 在向量之间
-
-所以在只看夹角的情况, 每次是两个向量之间加了一个向量
-
-也就是 (0,1) (1,0) =&gt; (0,1) (1,1) (1,0)
-
-然后看间隔里是否有目标向量, 如果没有那么这个相邻不会再操作
-
-如果有, 那么这个间隔一定会操作
-
-从而找到方案
-
-判断无法实现, 显然根据二分的思想, 一定可以让一个目标向量落在两个之间
-
-(A)(B) 如果无法实现 目标向量
-
-那么 从值一个偏量 上一旦大于向量 则不可能
-
-理论上 有办法计算了
-
----
-
-复杂度?
-
-例如(1,1e9), 显然可达, 但是需要1e9次, 也就是 显然模拟的效率肯定不行
-
-(A,B) 要合成 = C, 相当于解线性方程组 = 自身单独子问题
-
-C=5A+3B = solve( (0,1),(1,0) =&gt; (5,3))
-
-再从这个角度回到矩阵
-
+<h1 id="Ex-Inv-0-1-ving-Insert-1-0-n"><a href="#Ex-Inv-0-1-ving-Insert-1-0-n" class="headerlink" title="Ex - Inv(0,1)ving Insert(1,0)n"></a>Ex - Inv(0,1)ving Insert(1,0)n</h1><p>$A&#x3D;((0,1),(1,0))$</p>
+<p>f(序列T) &#x3D; 最小操作次数 让T所有元素 属于A, 如果没有方案则&#x3D;0</p>
+<p>每次操作 选择A中相邻的$(a,b),(c,d)$,在它们之间插入$(a+c,b+d)$</p>
+<p>给长n的序列S, (元素两两不同)</p>
+<p>对所有的l&lt;&#x3D;r, 求 sum f(S[l..r]) mod 998244353</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 1e5</p>
+<p>ai,bi [0,1e9]</p>
+<p>6s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>看每次操作对A的影响, 令 Bi&#x3D; Ai.left+Ai.right</p>
+<p>B &#x3D; (1,1)</p>
+<p>每次操作相当于 两个之间插入了和</p>
+<p>先考虑说 单个序列的 f如何算, 上面的B似乎没有帮助</p>
+<p>考虑二维平面, 那么相当于向量和, 而向量和的图形也就是向量平行四边行的一个对角线, 在向量之间</p>
+<p>所以在只看夹角的情况, 每次是两个向量之间加了一个向量</p>
+<p>也就是 (0,1) (1,0) &#x3D;&gt; (0,1) (1,1) (1,0)</p>
+<p>然后看间隔里是否有目标向量, 如果没有那么这个相邻不会再操作</p>
+<p>如果有, 那么这个间隔一定会操作</p>
+<p>从而找到方案</p>
+<p>判断无法实现, 显然根据二分的思想, 一定可以让一个目标向量落在两个之间</p>
+<p>(A)(B) 如果无法实现 目标向量</p>
+<p>那么 从值一个偏量 上一旦大于向量 则不可能</p>
+<p>理论上 有办法计算了</p>
+<hr>
+<p>复杂度?</p>
+<p>例如(1,1e9), 显然可达, 但是需要1e9次, 也就是 显然模拟的效率肯定不行</p>
+<p>(A,B) 要合成 &#x3D; C, 相当于解线性方程组 &#x3D; 自身单独子问题</p>
+<p>C&#x3D;5A+3B &#x3D; solve( (0,1),(1,0) &#x3D;&gt; (5,3))</p>
+<p>再从这个角度回到矩阵</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 0                  ? 5    5 ?</span><br><span class="line">0 1                  ? 3 or 3 ?</span><br><span class="line">    A = 1    B = 1 1</span><br><span class="line">        1 1        1</span><br></pre></td></tr></table></figure>
 
-也就是 单位矩阵 乘上 多个 A 和 B 最后得到 列向量有(5,3)的
-
-从这个视角
-
-就是建立一个树, 从根向下二叉, 每次就是 乘上矩阵 发展 对应的就是平面上的一个夹角, 每次询问就是 问一些点是否在树上, 且这些点到根的所有点(重复只统计一次)的点数和
-
-这里看出 这个最少次数 看上去 没有什么意义, 就是不做无关的操作就是最小的次数
-
-上面的只说了 当一个目标落在两个之间的不完全解决方案, 还需要有找分叉的解决方案
-
-转化成矩阵的好处就是可以 快速幂
-
-所以可以 直接快速幂 倍增找一个 向量是在哪个之间 从而实现分叉的查找, 同理
-
-如果是左一下右一下, 注意到每个向量坐标和 相当于和做Fibonacci, 不会超过log次
-
----
-
-再回到平面上
-
-(arrow0,arrow1) 之间的一堆向量 按照夹角 排序 (j0,j1,j2,...)
-
-计算最小幂次 能让其中产生分割, 从而这个分叉是有长度的(来让树的点还是N级别), 然后原问题变成点集到根的距离和(重复边长只计算一次)
-
-然后 递归子问题, 从而建立树
-
-至此 单个问题可以解决
-
----
-
-现在问题来到 sum f(s[l..r])
-
-变成一个和原题无关的树问题, 给一个有边长的有根树, 给点序列P
-
-求 sum P[l..r], 中的点到根的非重距离和
-
-感觉没法算 和
-
-反过来, 算树上每个edge 的贡献
-
-一条边有贡献等于它的叶向节点为根的子树里存在一个点被选
-
-所以如果能统计每个子树被选的次数就好了
-
-暴力算就是 子树所有点在区间上标识别
-
+<p>也就是 单位矩阵 乘上 多个 A 和 B 最后得到 列向量有(5,3)的</p>
+<p>从这个视角</p>
+<p>就是建立一个树, 从根向下二叉, 每次就是 乘上矩阵 发展 对应的就是平面上的一个夹角, 每次询问就是 问一些点是否在树上, 且这些点到根的所有点(重复只统计一次)的点数和</p>
+<p>这里看出 这个最少次数 看上去 没有什么意义, 就是不做无关的操作就是最小的次数</p>
+<p>上面的只说了 当一个目标落在两个之间的不完全解决方案, 还需要有找分叉的解决方案</p>
+<p>转化成矩阵的好处就是可以 快速幂</p>
+<p>所以可以 直接快速幂 倍增找一个 向量是在哪个之间 从而实现分叉的查找, 同理</p>
+<p>如果是左一下右一下, 注意到每个向量坐标和 相当于和做Fibonacci, 不会超过log次</p>
+<hr>
+<p>再回到平面上</p>
+<p>(arrow0,arrow1) 之间的一堆向量 按照夹角 排序 (j0,j1,j2,…)</p>
+<p>计算最小幂次 能让其中产生分割, 从而这个分叉是有长度的(来让树的点还是N级别), 然后原问题变成点集到根的距离和(重复边长只计算一次)</p>
+<p>然后 递归子问题, 从而建立树</p>
+<p>至此 单个问题可以解决</p>
+<hr>
+<p>现在问题来到 sum f(s[l..r])</p>
+<p>变成一个和原题无关的树问题, 给一个有边长的有根树, 给点序列P</p>
+<p>求 sum P[l..r], 中的点到根的非重距离和</p>
+<p>感觉没法算 和</p>
+<p>反过来, 算树上每个edge 的贡献</p>
+<p>一条边有贡献等于它的叶向节点为根的子树里存在一个点被选</p>
+<p>所以如果能统计每个子树被选的次数就好了</p>
+<p>暴力算就是 子树所有点在区间上标识别</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">000010000000100000000101000111000</span><br><span class="line">    5x右侧...</span><br><span class="line">            8x右侧...</span><br><span class="line">                     9x右侧...</span><br><span class="line">                       2x右侧...</span><br></pre></td></tr></table></figure>
 
-一个区间覆盖了1就被统计一次, 把覆盖了1的区间的最左1作为这个区间贡献的统计点
-
-那上面的次数就是
-
-如果两个不重叠1的合并
-
+<p>一个区间覆盖了1就被统计一次, 把覆盖了1的区间的最左1作为这个区间贡献的统计点</p>
+<p>那上面的次数就是</p>
+<p>如果两个不重叠1的合并</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0010000100000</span><br><span class="line">0000101001000</span><br></pre></td></tr></table></figure>
 
-唯一知道的就是个数会变多, 但又比两个的和小, 相当于 去掉重复统计的部分
-
-干 树和区间不会
-
-## 题解
-
-好 也是建树, 根为[0/1,1/0], 每个树两个节点
-
-这叫做 Stern-Brocot树, 有 点(p,q) 互质 等价于 在树上
-
-题意转化, 和我想的一样 就是求树上需要多少节点/路径 能覆盖指定 S[l..r]对应的节点
-
-直接想 也是 通过判断相等/在左侧/在右侧 递归向下
-
-哈哈 也是想到(1e9,1) 这种 需要1e9, 特殊点的方向都想的一样的
-
-哦这里没有用矩阵, 而是直接代数上 考虑 (a+kc)/(b+kd), emmmmm 很有道理 因为毕竟上面矩阵的快速幂 等价其实也就是这个
-
-啊?????? 啥 就可以解了?
-
-省略了的 刚好是我不会的 艹了........................
-
----
-
-怎么计算内
-
-还是上面那样, 然后树上合并的时候 用启发式, 每次把小的向大的中1个一个合并
-
-### Stern-Brocot树
-
-根[0/1,1/0]
-
-节点[a/b,c/d]的两个子节点`[a/b,(a+c)/(b+d)],[(a+c)/(b+d),c/d]`
-
-性质:
-
-每一层单调递增(对应二维平面射线显然)
-
-上面只有简分数: 所有a/b,c/d 都是最简分数(分子分母没有公约数) 根据上面的矩阵 知 矩阵的 行列式 始终为1, (|AB|=|A||B|) 所以 不会有公约数
-
-所以 说明如果点(p,q)要在树上 那么p,q 互质才有可能
-
-任何最简分数在树上:
-
-假设在左侧 `a/b &lt; p/q &lt; c/d =&gt; a/b &lt; p/q &lt; (a+c)/(b+d)`
-
-考虑矩阵运算与行列式
-
+<p>唯一知道的就是个数会变多, 但又比两个的和小, 相当于 去掉重复统计的部分</p>
+<p>干 树和区间不会</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>好 也是建树, 根为[0&#x2F;1,1&#x2F;0], 每个树两个节点</p>
+<p>这叫做 Stern-Brocot树, 有 点(p,q) 互质 等价于 在树上</p>
+<p>题意转化, 和我想的一样 就是求树上需要多少节点&#x2F;路径 能覆盖指定 S[l..r]对应的节点</p>
+<p>直接想 也是 通过判断相等&#x2F;在左侧&#x2F;在右侧 递归向下</p>
+<p>哈哈 也是想到(1e9,1) 这种 需要1e9, 特殊点的方向都想的一样的</p>
+<p>哦这里没有用矩阵, 而是直接代数上 考虑 (a+kc)&#x2F;(b+kd), emmmmm 很有道理 因为毕竟上面矩阵的快速幂 等价其实也就是这个</p>
+<p>啊?????? 啥 就可以解了?</p>
+<p>省略了的 刚好是我不会的 艹了……………………</p>
+<hr>
+<p>怎么计算内</p>
+<p>还是上面那样, 然后树上合并的时候 用启发式, 每次把小的向大的中1个一个合并</p>
+<h3 id="Stern-Brocot树"><a href="#Stern-Brocot树" class="headerlink" title="Stern-Brocot树"></a>Stern-Brocot树</h3><p>根[0&#x2F;1,1&#x2F;0]</p>
+<p>节点[a&#x2F;b,c&#x2F;d]的两个子节点<code>[a/b,(a+c)/(b+d)],[(a+c)/(b+d),c/d]</code></p>
+<p>性质:</p>
+<p>每一层单调递增(对应二维平面射线显然)</p>
+<p>上面只有简分数: 所有a&#x2F;b,c&#x2F;d 都是最简分数(分子分母没有公约数) 根据上面的矩阵 知 矩阵的 行列式 始终为1, (|AB|&#x3D;|A||B|) 所以 不会有公约数</p>
+<p>所以 说明如果点(p,q)要在树上 那么p,q 互质才有可能</p>
+<p>任何最简分数在树上:</p>
+<p>假设在左侧 <code>a/b &lt; p/q &lt; c/d =&gt; a/b &lt; p/q &lt; (a+c)/(b+d)</code></p>
+<p>考虑矩阵运算与行列式</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c p</span><br><span class="line">d q = cq-pd &gt;= 1</span><br><span class="line"></span><br><span class="line">p a</span><br><span class="line">q b = pb-aq &gt;= 1</span><br></pre></td></tr></table></figure>
 
-若小于(不等于)
-
+<p>若小于(不等于)</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a+c p   c p   a p   c p   p a   c p</span><br><span class="line">b+d q = d q + b q = d q - q b &lt; d q</span><br></pre></td></tr></table></figure>
 
-一句话就是 一侧行列式值不变, 一侧行列式值单调递减 且均为正整数, 有理数离散, 不可能一直减, 所以 &#39;若小于&#39;会在有限次内不成立, 变成`等于`
-
-综上 充分必要
-
-## 代码
-
-https://atcoder.jp/contests/abc273/submissions/36005069
-
+<p>一句话就是 一侧行列式值不变, 一侧行列式值单调递减 且均为正整数, 有理数离散, 不可能一直减, 所以 ‘若小于’会在有限次内不成立, 变成<code>等于</code></p>
+<p>综上 充分必要</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc273/submissions/36005069">https://atcoder.jp/contests/abc273/submissions/36005069</a></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="keyword">using</span> vec=std::pair&lt;ll,ll&gt;; <span class="comment">// 二维向量,分数</span></span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="keyword">operator</span>&lt;(<span class="type">const</span> vec&amp;f0,<span class="type">const</span> vec&amp;f1)&#123; <span class="comment">// 夹角比较</span></span><br><span class="line">  <span class="keyword">return</span> f0.first*f1.second &lt; f1.first*f0.second;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// bool operator&gt;(const vec&amp;f0,const vec&amp;f1)&#123; // 夹角比较</span></span><br><span class="line"><span class="comment">//   return f0.first*f1.second &gt; f1.first*f0.second;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line">vec <span class="keyword">operator</span>+(<span class="type">const</span> vec&amp;f0,<span class="type">const</span> vec&amp;f1)&#123; <span class="comment">// 向量和</span></span><br><span class="line">  <span class="keyword">return</span> &#123;f0.first+f1.first,f0.second+f1.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line">vec <span class="keyword">operator</span>*(<span class="type">const</span> vec&amp;f0,<span class="type">const</span> <span class="type">int</span>&amp;k)&#123; <span class="comment">// 向量 数量积</span></span><br><span class="line">  <span class="keyword">return</span> &#123;k*f0.first,k*f0.second&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;pair&lt;vec,ll&gt;&gt; vp; <span class="comment">// &#123;&#123;x,y&#125;,idx&#125; 只放可能的</span></span><br><span class="line">set&lt;ll&gt; wall; <span class="comment">// 隔断的S的index</span></span><br><span class="line">set&lt;ll&gt; vst[<span class="number">100010</span>]; <span class="comment">// vst[树节点&#125; = 点下标集合</span></span><br><span class="line">mint cnt[<span class="number">100010</span>]; <span class="comment">// cnt[u] = 树上点u被区间覆盖计数</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> TMP=<span class="number">100005</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// dst &lt;- src ( r向l 合并, 如果大小不满足, 先交换再合并)</span></span><br><span class="line"><span class="comment">// src.clear(); (清空src)</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> dst,<span class="type">int</span> src,<span class="type">bool</span> init=<span class="literal">false</span><span class="comment">/* 用在初始时一侧为空的时候 计算代价 */</span>)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(dst==src)<span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">if</span>(dst&lt;<span class="number">0</span> || src&lt;<span class="number">0</span>)<span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">if</span>(vst[dst].<span class="built_in">empty</span>() &amp;&amp; vst[src].<span class="built_in">empty</span>())<span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">if</span>((!init) &amp;&amp; vst[dst].<span class="built_in">size</span>()&lt;vst[src].<span class="built_in">size</span>())&#123; <span class="comment">// 启发式 小向大, sum_轻儿子 = O(N log N)</span></span><br><span class="line">    <span class="built_in">swap</span>(vst[dst],vst[src]);</span><br><span class="line">    <span class="built_in">swap</span>(cnt[dst],cnt[src]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;nx : vst[src])&#123;</span><br><span class="line">    <span class="keyword">auto</span> it=wall.<span class="built_in">lower_bound</span>(nx); <span class="comment">// 通过不可选计算区间</span></span><br><span class="line">    ll rs=*it;</span><br><span class="line">    ll ls=*<span class="built_in">prev</span>(it); <span class="comment">// index区间 (ls...rs)</span></span><br><span class="line">    it=vst[dst].<span class="built_in">lower_bound</span>(nx);</span><br><span class="line">    <span class="keyword">if</span>(it!=vst[dst].<span class="built_in">end</span>())   rs=<span class="built_in">min</span>(rs,*it);</span><br><span class="line">    <span class="keyword">if</span>(it!=vst[dst].<span class="built_in">begin</span>()) ls=<span class="built_in">max</span>(ls,*<span class="built_in">prev</span>(it));</span><br><span class="line">    cnt[dst]+=(nx-ls)*(rs-nx); <span class="comment">// [ls...nx...rs]</span></span><br><span class="line">    vst[dst].<span class="built_in">insert</span>(nx);</span><br><span class="line">  &#125;</span><br><span class="line">  vst[src].<span class="built_in">clear</span>();</span><br><span class="line">  cnt[src]=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">height</span><span class="params">(vec l, vec r,vec del,<span class="type">int</span> side)</span></span>&#123;</span><br><span class="line">  ll lh=<span class="number">1</span>,rh=<span class="number">2e9</span>; <span class="comment">// c++20 iota_view + lower_bound</span></span><br><span class="line">  <span class="keyword">while</span>(lh&lt;=rh)&#123;</span><br><span class="line">    ll mh=(lh+rh)/<span class="number">2</span>;</span><br><span class="line">    vec nl,nr;</span><br><span class="line">    <span class="keyword">if</span>(side==<span class="number">0</span>)&#123; <span class="comment">// l &lt; r &lt; del, 已知 l+del &lt; r 求max(h), 使 l+h*del &lt; r</span></span><br><span class="line">      nl=l+del*mh;</span><br><span class="line">      nr=r;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// del  &lt; l  &lt; r, 已知 l &lt; del+r, 求max(h), 使 l &lt; del*h+r</span></span><br><span class="line">      nl=l;</span><br><span class="line">      nr=r+del*mh;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">max</span>(&#123;nl.first,nl.second,nr.first,nr.second&#125;)&gt;<span class="number">1e9</span>)&#123; <span class="comment">// 过大</span></span><br><span class="line">      rh=mh<span class="number">-1</span>;</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125; <span class="comment">// too low</span></span><br><span class="line">    <span class="keyword">if</span>(nl&lt;nr) lh=mh+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> rh=mh<span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> rh; <span class="comment">// rh+1==lh [1...rh 满足][lh.... 不满足</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mint res=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sbtree</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r,vec lp,vec rp,<span class="type">int</span> w=<span class="number">1</span><span class="comment">/*节点权重*/</span>)</span></span>&#123;<span class="comment">// vp[l..r] 左向量lp &lt; 右向量rp, 返回树的根的index</span></span><br><span class="line">  <span class="keyword">if</span>(l&gt;r)<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  vec mp=lp+rp; <span class="comment">// 向量和</span></span><br><span class="line">  <span class="comment">// [l,pos-1] &lt; mp &lt;= [pos,r]</span></span><br><span class="line">  <span class="type">int</span> pos=(<span class="type">int</span>)(<span class="built_in">lower_bound</span>(vp.<span class="built_in">begin</span>()+l,vp.<span class="built_in">begin</span>()+r+<span class="number">1</span>,mp,[](<span class="type">const</span> <span class="keyword">auto</span>&amp;vpitem,<span class="type">const</span> <span class="keyword">auto</span>&amp;searchv)&#123;</span><br><span class="line">     <span class="keyword">return</span> vpitem.first &lt; searchv;</span><br><span class="line">  &#125;) - vp.<span class="built_in">begin</span>());</span><br><span class="line">  <span class="type">int</span> mr=pos<span class="number">-1</span>,ml=pos; <span class="comment">// [l,mr] [ml,r]</span></span><br><span class="line">  <span class="type">int</span> key=<span class="number">-1</span>; <span class="comment">// 分割向量index, 用作树的index</span></span><br><span class="line">  <span class="keyword">if</span>(ml&lt;=r &amp;&amp; mp==vp[ml].first) &#123; <span class="comment">// 分割向量 在S中</span></span><br><span class="line">    key = vp[ml++].second; <span class="comment">// 在S的划分中 移除它 [l,mr=bl-1] [ml=bl+1,r]</span></span><br><span class="line">    vst[TMP].<span class="built_in">insert</span>(key); <span class="comment">// 主要是复用merge逻辑 先放tmp再merge进key</span></span><br><span class="line">    <span class="built_in">merge</span>(key,TMP,<span class="literal">true</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> lk=<span class="number">-1</span>,rk=<span class="number">-1</span>; <span class="comment">// l key, r key</span></span><br><span class="line">  <span class="keyword">if</span>(mr==r)&#123; <span class="comment">// 全在左侧 lp &lt; [l..mr=r] &lt; mp &lt; rp, 一次不够分割, 如果左右交替 则febnacci不会超过log次</span></span><br><span class="line">    ll h=<span class="built_in">height</span>(vp[r].first,rp,lp,<span class="number">1</span>); <span class="comment">// 快速计算幂次</span></span><br><span class="line">    lk=<span class="built_in">sbtree</span>(l,mr,lp,lp*h+rp,h);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span>(ml==l)&#123; <span class="comment">// 全在右侧 lp &lt; mp &lt; [l=ml..r] &lt; rp</span></span><br><span class="line">    ll h=<span class="built_in">height</span>(lp,vp[l].first,rp,<span class="number">0</span>); <span class="comment">// 快速计算幂次</span></span><br><span class="line">    rk=<span class="built_in">sbtree</span>(ml,r,lp+rp*h,rp,h);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; <span class="comment">// 每发生一次数组分裂, 最多n次</span></span><br><span class="line">    lk=<span class="built_in">sbtree</span>(l,mr,lp,mp);</span><br><span class="line">    rk=<span class="built_in">sbtree</span>(ml,r,mp,rp);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> root=<span class="built_in">max</span>(&#123;key,lk,rk&#125;); <span class="comment">// 非-1的 都可以作为 根的index, 至少有一个</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> k:&#123;key,lk,rk&#125;) <span class="built_in">merge</span>(root,k);</span><br><span class="line">  res+=cnt[root]*w;</span><br><span class="line">  <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    ll a=<span class="built_in">read</span>();</span><br><span class="line">    ll b=<span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">if</span>(a+b==<span class="number">1</span>)<span class="keyword">continue</span>; <span class="comment">// (0,1)(1,0)不消耗次数</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">gcd</span>(a,b)==<span class="number">1</span>)vp.<span class="built_in">push_back</span>(&#123;&#123;a,b&#125;,i&#125;);</span><br><span class="line">    <span class="keyword">else</span> wall.<span class="built_in">insert</span>(i); <span class="comment">// 一定不再的点产生切割</span></span><br><span class="line">  &#125;</span><br><span class="line">  wall.<span class="built_in">insert</span>(<span class="number">-1</span>);</span><br><span class="line">  wall.<span class="built_in">insert</span>(n);</span><br><span class="line">  <span class="comment">// 默认的sort 用的是自己和其它的operator&lt;(other), 而不是两两比较的operator&lt;(v0,v1)</span></span><br><span class="line">  <span class="built_in">sort</span>(vp.<span class="built_in">begin</span>(),vp.<span class="built_in">end</span>(),[](<span class="type">const</span> <span class="keyword">auto</span>&amp;l, <span class="type">const</span> <span class="keyword">auto</span>&amp;r)&#123;<span class="keyword">return</span> l.first&lt;r.first;&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(vp.<span class="built_in">size</span>()) <span class="built_in">sbtree</span>(<span class="number">0</span>,vp.<span class="built_in">size</span>()<span class="number">-1</span>,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,res.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-# 总结
-
-G
-
-好吧 我好想把题想复杂了, 连最直接的都没想
-
-应该不要过早想优化和提取? 先试试直接的, 抑制一下见到就想开始简化的冲动
-
-Ex
-
-gcd想了一半, 没推下去, 按理说应该要能想到 互质等价的... 唉
-
-但除了存在性的部分还是自己想出来了, 而且本身是倍增查找,即使没有存在性 也可以算出是否存在
-
-好 我不会的部分好像又是重轻儿子 和启发式合并的部分......... 总之就是 sum S_轻儿子 = O(N log N)
-
-# 参考
-
-[官方题解](https://atcoder.jp/contests/abc273/editorial)
-
-https://tjkendev.github.io/procon-library/python/math/stern-brocot-tree.html
-</code></pre>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>好吧 我好想把题想复杂了, 连最直接的都没想</p>
+<p>应该不要过早想优化和提取? 先试试直接的, 抑制一下见到就想开始简化的冲动</p>
+<p>Ex</p>
+<p>gcd想了一半, 没推下去, 按理说应该要能想到 互质等价的… 唉</p>
+<p>但除了存在性的部分还是自己想出来了, 而且本身是倍增查找,即使没有存在性 也可以算出是否存在</p>
+<p>好 我不会的部分好像又是重轻儿子 和启发式合并的部分……… 总之就是 sum S_轻儿子 &#x3D; O(N log N)</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc273/editorial">官方题解</a></p>
+<p><a href="https://tjkendev.github.io/procon-library/python/math/stern-brocot-tree.html">https://tjkendev.github.io/procon-library/python/math/stern-brocot-tree.html</a></p>
 ]]></content>
       <categories>
         <category>Atcoder</category>
         <category>ABC</category>
       </categories>
       <tags>
+        <tag>树上启发式合并</tag>
         <tag>排列组合</tag>
         <tag>Stern-Brocot树</tag>
-        <tag>树上启发式合并</tag>
       </tags>
   </entry>
 </search>
