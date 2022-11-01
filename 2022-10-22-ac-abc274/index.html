@@ -19,17 +19,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="G(网络流)Ex(rolling hash,Nim积,Nimber)">
+    <meta name="description" content="G(网络流)Ex(rolling hash,Nim积,Nimber,二分)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Atcoder abc274">
 <meta property="og:url" content="https://yexiaorain.github.io/Blog/2022-10-22-ac-abc274/index.html">
 <meta property="og:site_name" content="YeXiaoRain Blog">
-<meta property="og:description" content="G(网络流)Ex(rolling hash,Nim积,Nimber)">
+<meta property="og:description" content="G(网络流)Ex(rolling hash,Nim积,Nimber,二分)">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2022-10-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-31T22:48:50.980Z">
+<meta property="article:modified_time" content="2022-11-01T14:36:24.070Z">
 <meta property="article:author" content="Xiao Ye">
 <meta property="article:tag" content="网络流">
+<meta property="article:tag" content="二分">
 <meta property="article:tag" content="字符串hash">
 <meta property="article:tag" content="TODO">
 <meta property="article:tag" content="rolling hash">
@@ -147,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Security-Camera-3"><span class="nav-text">G - Security Camera 3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-XOR-Sum-of-Arrays"><span class="nav-text">Ex - XOR Sum of Arrays</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nimber-Nim-add-xor-%E5%92%8C-Nim-product"><span class="nav-text">Nimber(Nim add(xor) 和 Nim product)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#oplus-%E5%8A%A0"><span class="nav-text">$\oplus$ 加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#otimes-%E4%B9%98"><span class="nav-text">$\otimes$ 乘</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97"><span class="nav-text">计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rolling-hash"><span class="nav-text">Rolling hash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Security-Camera-3"><span class="nav-text">G - Security Camera 3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-XOR-Sum-of-Arrays"><span class="nav-text">Ex - XOR Sum of Arrays</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E7%94%A8Nimber"><span class="nav-text">不用Nimber</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nimber-Nim-add-xor-%E5%92%8C-Nim-product"><span class="nav-text">Nimber(Nim add(xor) 和 Nim product)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#oplus-%E5%8A%A0"><span class="nav-text">$\oplus$ 加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#otimes-%E4%B9%98"><span class="nav-text">$\otimes$ 乘</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97"><span class="nav-text">计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rolling-hash"><span class="nav-text">Rolling hash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -249,7 +250,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="Atcoder abc274 | YeXiaoRain Blog">
-      <meta itemprop="description" content="G(网络流)Ex(rolling hash,Nim积,Nimber)">
+      <meta itemprop="description" content="G(网络流)Ex(rolling hash,Nim积,Nimber,二分)">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -271,7 +272,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-11-01 06:48:50" itemprop="dateModified" datetime="2022-11-01T06:48:50+08:00">2022-11-01</time>
+      <time title="修改時間：2022-11-01 22:36:24" itemprop="dateModified" datetime="2022-11-01T22:36:24+08:00">2022-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -308,18 +309,18 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>8.3k</span>
+      <span>9k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>21 分鐘</span>
+      <span>22 分鐘</span>
     </span>
 </div>
 
-            <div class="post-description">G(网络流)Ex(rolling hash,Nim积,Nimber)</div>
+            <div class="post-description">G(网络流)Ex(rolling hash,Nim积,Nimber,二分)</div>
         </div>
       </header>
 
@@ -379,6 +380,22 @@
 </blockquote>
 <p>关键就是 如何计算 $H(B \oplus C)$ 以后的hash</p>
 <p>用<strong>Nimber(Nim number)</strong></p>
+<h3 id="不用Nimber"><a href="#不用Nimber" class="headerlink" title="不用Nimber"></a>不用Nimber</h3><p>还是字符串hash, 但是 把乘法变成不一定可逆的bit矩阵运算</p>
+<p>$(v_0) \oplus (v_1 \cdot x) \oplus (v_2 \cdot x^2) \oplus \cdots$</p>
+<p>也就是这里的$\cdot$需要能让$\mathrm{H}(A) ? \mathrm{H}(B) &#x3D; \mathrm{H}(A \oplus B) $ 成立, 也就不能是数乘</p>
+<p>这里考虑$v_i \cdot x^{t} &#x3D; f_t(v_i)$</p>
+<p>然后$f_t(v) &#x3D; f_{2^{k_0}}(f_{2^{k_1}}(\cdots(v))), k_0 &gt; k_1 &gt; \cdots$, 其中$2^k$是对$t$的二进制从高到低拆分(唯一)</p>
+<p>而每个$f_{2^k}(v) $ 是一个 把数按照 bit 做线性变换(不一定可逆)的方案, 这样随机选方案就是一个办法</p>
+<hr>
+<p>这里因为是hash ,其实完全对逆运算没有要求, 虽然也可以造 bit * bit的可逆轮换矩阵,再矩阵前缀, 缺点是这样要n个矩阵</p>
+<p>而去掉 可逆的 需求, 直接二进制拆分+ 倍增想法 就可以有上面的</p>
+<p>所以实际需要的</p>
+<ol>
+<li>快速: (O(1) &#x2F;O(log n) 时间 计算一段的hash</li>
+<li>相等: 一个$\cdot$运算$(v_0) \oplus (v_1 \cdot x) \oplus (v_2 \cdot x^2) \oplus \cdots$</li>
+<li>hash难hack</li>
+</ol>
+<p>所以nimber有一点远大于要求了,</p>
 <h3 id="Nimber-Nim-add-xor-和-Nim-product"><a href="#Nimber-Nim-add-xor-和-Nim-product" class="headerlink" title="Nimber(Nim add(xor) 和 Nim product)"></a>Nimber(Nim add(xor) 和 Nim product)</h3><p>显然 xor 和 数乘 和 数加 不满足 交换结合率</p>
 <p>如果有 xor(nim add) 配套的 nim product, 那么就不需要使用 数乘 和 数加</p>
 <p>这里面运算的<code>加</code>为$\oplus$,<code>乘</code>为$\otimes$, 这样的field为<strong>Nimber</strong></p>
@@ -430,7 +447,7 @@
 <h3 id="Rolling-hash"><a href="#Rolling-hash" class="headerlink" title="Rolling hash"></a>Rolling hash</h3><p>hash(d) 比 d 有更高的熵entropy ???</p>
 <p>就是这里想hash比较来代替直接比, 把O(n) 变成O(1)</p>
 <p>hash函数</p>
-<p>$R(A) &#x3D; \left(\sum_{i&#x3D;1}^N A_i x^{N-i} \right) \bmod{p}$, ???为啥要次方要倒过来? 字符串对称一下不就是正着的吗</p>
+<p>$R(A) &#x3D; \left(\sum_{i&#x3D;1}^N A_i x^{N-i} \right) \bmod{p}$, ?为啥要次方要倒过来? 字符串对称一下不就是正着的吗? 是因为 这样的话就是前缀和只需要 加减与乘法不需要除法, 而如果次方是正着, 要么就是需要除法或者搭配后缀而不是前缀使用</p>
 <p>其中$x$是足够大的$[0,p)$中的质数, 运行时等概率</p>
 <p>性质1: 预处理后快速计算区间hash, 其实就是前缀和同样的想法</p>
 <p><code>R(A[l..r]) = R(A[0..r])-R(A[0..l-1])*x^l</code></p>
@@ -489,6 +506,7 @@
 
           <div class="post-tags">
               <a href="/Blog/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag"><i class="fa fa-tag"></i> 网络流</a>
+              <a href="/Blog/tags/%E4%BA%8C%E5%88%86/" rel="tag"><i class="fa fa-tag"></i> 二分</a>
               <a href="/Blog/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2hash/" rel="tag"><i class="fa fa-tag"></i> 字符串hash</a>
               <a href="/Blog/tags/TODO/" rel="tag"><i class="fa fa-tag"></i> TODO</a>
               <a href="/Blog/tags/rolling-hash/" rel="tag"><i class="fa fa-tag"></i> rolling hash</a>
@@ -546,7 +564,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">40:07</span>
+    <span title="所需總閱讀時間">40:09</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動

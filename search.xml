@@ -3419,30 +3419,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Codeforces 1303E(DP)</title>
-    <url>/Blog/2020-02-13-cfP1303E/</url>
-    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://codeforces.com/contest/1303/problem/E">https://codeforces.com/contest/1303/problem/E</a></p>
-<p>T组测试</p>
-<p>t和s是字符串</p>
-<p>s中能否找两个不共用下标的子序列(不要求连续)，t&#x3D;concat(s1,s2)</p>
-<h1 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h1><p>T&lt;&#x3D;100</p>
-<p>|s|,|t| &lt;&#x3D; 400</p>
-<h1 id="提解"><a href="#提解" class="headerlink" title="提解"></a>提解</h1><p>枚举t的分割位置</p>
-<p>dfs(s中当前匹配位置i,t前段匹配位置j,t后半匹配位置k)</p>
-<p>很明显超时。</p>
-<p>注意到上面dfs仅返回true&#x2F;false</p>
-<p>也就是dfs(i,j,k)&#x3D;1&#x2F;0这种</p>
-<p>可以改为（也有贪心关系）,<code>dp[i][j]=最多匹配的k</code></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><code>dfs(i,j,k)=1/0</code>可以考虑 <code>dp[i][j]=max/min(k)</code></p>
-]]></content>
-      <categories>
-        <category>Codeforces</category>
-      </categories>
-      <tags>
-        <tag>DP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Codeforces 1326D1</title>
     <url>/Blog/2020-03-20-cfP1326D2/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="http://codeforces.com/contest/1326/problem/D2">http://codeforces.com/contest/1326/problem/D2</a></p>
@@ -3481,6 +3457,30 @@
       </categories>
       <tags>
         <tag>贪心</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Codeforces 1303E(DP)</title>
+    <url>/Blog/2020-02-13-cfP1303E/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://codeforces.com/contest/1303/problem/E">https://codeforces.com/contest/1303/problem/E</a></p>
+<p>T组测试</p>
+<p>t和s是字符串</p>
+<p>s中能否找两个不共用下标的子序列(不要求连续)，t&#x3D;concat(s1,s2)</p>
+<h1 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h1><p>T&lt;&#x3D;100</p>
+<p>|s|,|t| &lt;&#x3D; 400</p>
+<h1 id="提解"><a href="#提解" class="headerlink" title="提解"></a>提解</h1><p>枚举t的分割位置</p>
+<p>dfs(s中当前匹配位置i,t前段匹配位置j,t后半匹配位置k)</p>
+<p>很明显超时。</p>
+<p>注意到上面dfs仅返回true&#x2F;false</p>
+<p>也就是dfs(i,j,k)&#x3D;1&#x2F;0这种</p>
+<p>可以改为（也有贪心关系）,<code>dp[i][j]=最多匹配的k</code></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><code>dfs(i,j,k)=1/0</code>可以考虑 <code>dp[i][j]=max/min(k)</code></p>
+]]></content>
+      <categories>
+        <category>Codeforces</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
       </tags>
   </entry>
   <entry>
@@ -7731,45 +7731,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Atcoder arc140 D(树的边与点,贡献统计,DP,特殊题目条件)</title>
-    <url>/Blog/2022-05-23-ac_arc140D/</url>
-    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://atcoder.jp/contests/arc140/tasks/arc140_d">https://atcoder.jp/contests/arc140/tasks/arc140_d</a></p>
-<p>初始有 n 个点，给定一个长度为 n 的数组 ai，若 ai≠−1，则有无向边 (i,ai)，若 ai&#x3D;−1，则点 i 可以连向 1∼n 任意点，求所有图的联通块个数之和</p>
-<p>n 2e3</p>
-<p>答案mod 998244353</p>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>考虑G中一个联通分量</p>
-<p>如果它有N点,N个边,那么它恰好有一个环</p>
-<p>这关键就在题目的特殊性上,因为(i-&gt;ai),即每个点连出一条边,所以n个点组成的联通分量一定恰好N个边, 题目条件特点!</p>
-<p>因此 题目变成统计环的 而不是统计联通分量</p>
-<p>然后先考虑 非-1的部分已经构成的环, 这部分如果再和其它相连,那么额外连的部分一定不会再有环,是个树,所以其它和它连的部分一定不会再贡献,</p>
-<p>所以在考虑-1构成环的话不会考虑已经初始有环的联通分量</p>
-<p>对于目前剩余没有环的联通分量是树,把这些树标号从1到k,并且b[i]表示这些树的点的个数, 注意到它一定只有一条未连接的边</p>
-<p>现在考虑一个环的构成, 一定是由一些树连成的</p>
-<p>树1-&gt;树2-&gt;树3-&gt;树k-&gt;树1</p>
-<p>我们不考虑没有参与到环中的其它树,即使它从联通分量角度连进来了, 我们之考虑对环的构成直接有贡献的树</p>
-<p>那么 如果是由 k个构成的,每一个的树的出点是固定的,但是入点的选择是上一个树的点的个数, 而它们排成环的方案是(k-1)! </p>
-<p>所以环的构成是$(k-1)! \times \prod_{i&#x3D;1}^{k} B_{x_i}$</p>
-<p>n 很小 n方 可以接受可以DP</p>
-<p>说是分治计算$\prod_{i&#x3D;1}^{K} (1 + B_ix)$可以做到 n log(n)</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a href="https://atcoder.jp/contests/arc140/submissions/31923069">https://atcoder.jp/contests/arc140/submissions/31923069</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> a[<span class="number">2010</span>];<span class="comment">// 读入</span></span><br><span class="line"><span class="type">int</span> fa[<span class="number">2010</span>]; <span class="comment">// 并查集父节点</span></span><br><span class="line"><span class="type">int</span> sz[<span class="number">2010</span>]; <span class="comment">// 点个数</span></span><br><span class="line"><span class="type">bool</span> cir[<span class="number">2010</span>]; <span class="comment">// 是否有环</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getfa</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x == fa[x]?x:(fa[x] = <span class="built_in">getfa</span>(fa[x]));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">link</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> fu = <span class="built_in">getfa</span>(u);</span><br><span class="line">  <span class="type">int</span> fv = <span class="built_in">getfa</span>(v);</span><br><span class="line">  <span class="keyword">if</span>(fu == fv)&#123;</span><br><span class="line">    cir[fu] = <span class="literal">true</span>; <span class="comment">// 有环</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  sz[fv] += sz[fu]; <span class="comment">// 大小</span></span><br><span class="line">  cir[fv] |= cir[fu]; <span class="comment">// 环</span></span><br><span class="line">  fa[fu] = fv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">mypow</span><span class="params">(ll v,<span class="type">int</span> pwr)</span></span>&#123;</span><br><span class="line">  ll r = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span>(pwr)&#123;</span><br><span class="line">    <span class="keyword">if</span>(pwr%<span class="number">2</span>)(r*=v)%=MOD;</span><br><span class="line">    (v*=v)%=MOD;</span><br><span class="line">    pwr/=<span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line">ll fac[<span class="number">2010</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// 阶乘</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  <span class="type">int</span> freecnt = <span class="number">0</span>; <span class="comment">// 自由度 -1 个数</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    fa[i] = i;</span><br><span class="line">    sz[i] = <span class="number">1</span>;</span><br><span class="line">    fac[i] = fac[i<span class="number">-1</span>]*i%MOD;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,a+i);</span><br><span class="line">    freecnt += a[i] == <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[i] == <span class="number">-1</span>)<span class="keyword">continue</span>;</span><br><span class="line">    <span class="built_in">link</span>(i,a[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; arr ;</span><br><span class="line">  <span class="type">int</span> circnt = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(fa[i] != i)<span class="keyword">continue</span>; <span class="comment">// 非联通块根</span></span><br><span class="line">    <span class="keyword">if</span>(cir[i])&#123; <span class="comment">// 环</span></span><br><span class="line">      circnt++;</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    arr.<span class="built_in">push_back</span>(sz[i]); <span class="comment">// 树 有一个自由度</span></span><br><span class="line">  &#125;</span><br><span class="line">  ll ans = circnt * <span class="built_in">mypow</span>(n,freecnt) % MOD; <span class="comment">// 本身就是环的贡献</span></span><br><span class="line">  <span class="function">vector&lt;ll&gt; <span class="title">mulsum</span><span class="params">(n+<span class="number">10</span>,<span class="number">0</span>)</span></span>; <span class="comment">// dp mulsum[树的个数] = sz乘积和</span></span><br><span class="line">  mulsum[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,(<span class="type">int</span>)arr.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="built_in">rep</span>(k,<span class="number">0</span>,i+<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="comment">// 注意前面一半只是 k+1个构成环的方案数, 对于环以外的 freecnt-k-1的自由度任意搭配 才是这些环对总答案的贡献值</span></span><br><span class="line">      (ans += fac[k] * mulsum[k] % MOD * arr[i] % MOD * <span class="built_in">mypow</span>(n,freecnt-k<span class="number">-1</span>) % MOD)%=MOD;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">per</span>(k,<span class="number">0</span>,i+<span class="number">1</span>)&#123;</span><br><span class="line">      (mulsum[k+<span class="number">1</span>] += mulsum[k]*arr[i])%=MOD;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我想了很久,都没有注意到题目条件特殊性带给联通分量的特殊性, 这还是不应该,应该加强这方面的反应</p>
-<p>其实也算是树的知识没有警醒我, 边&#x3D;点-1,那么就会反应到这里连通分量的边 &lt;&#x3D; 点 且 &gt;&#x3D; 点-1</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc140/editorial/3971">官方</a></p>
-]]></content>
-      <categories>
-        <category>Atcoder</category>
-        <category>ARC</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>DP</tag>
-        <tag>树</tag>
-        <tag>贡献统计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Codeforces 1679E(sosDP,子集和DP,动态规划,贡献统计)</title>
     <url>/Blog/2022-05-24-CF1679E/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://codeforces.com/contest/1679/problem/E">https://codeforces.com/contest/1679/problem/E</a></p>
@@ -7848,6 +7809,45 @@
         <tag>DP</tag>
         <tag>贡献统计</tag>
         <tag>SOSDP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Atcoder arc140 D(树的边与点,贡献统计,DP,特殊题目条件)</title>
+    <url>/Blog/2022-05-23-ac_arc140D/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://atcoder.jp/contests/arc140/tasks/arc140_d">https://atcoder.jp/contests/arc140/tasks/arc140_d</a></p>
+<p>初始有 n 个点，给定一个长度为 n 的数组 ai，若 ai≠−1，则有无向边 (i,ai)，若 ai&#x3D;−1，则点 i 可以连向 1∼n 任意点，求所有图的联通块个数之和</p>
+<p>n 2e3</p>
+<p>答案mod 998244353</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>考虑G中一个联通分量</p>
+<p>如果它有N点,N个边,那么它恰好有一个环</p>
+<p>这关键就在题目的特殊性上,因为(i-&gt;ai),即每个点连出一条边,所以n个点组成的联通分量一定恰好N个边, 题目条件特点!</p>
+<p>因此 题目变成统计环的 而不是统计联通分量</p>
+<p>然后先考虑 非-1的部分已经构成的环, 这部分如果再和其它相连,那么额外连的部分一定不会再有环,是个树,所以其它和它连的部分一定不会再贡献,</p>
+<p>所以在考虑-1构成环的话不会考虑已经初始有环的联通分量</p>
+<p>对于目前剩余没有环的联通分量是树,把这些树标号从1到k,并且b[i]表示这些树的点的个数, 注意到它一定只有一条未连接的边</p>
+<p>现在考虑一个环的构成, 一定是由一些树连成的</p>
+<p>树1-&gt;树2-&gt;树3-&gt;树k-&gt;树1</p>
+<p>我们不考虑没有参与到环中的其它树,即使它从联通分量角度连进来了, 我们之考虑对环的构成直接有贡献的树</p>
+<p>那么 如果是由 k个构成的,每一个的树的出点是固定的,但是入点的选择是上一个树的点的个数, 而它们排成环的方案是(k-1)! </p>
+<p>所以环的构成是$(k-1)! \times \prod_{i&#x3D;1}^{k} B_{x_i}$</p>
+<p>n 很小 n方 可以接受可以DP</p>
+<p>说是分治计算$\prod_{i&#x3D;1}^{K} (1 + B_ix)$可以做到 n log(n)</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a href="https://atcoder.jp/contests/arc140/submissions/31923069">https://atcoder.jp/contests/arc140/submissions/31923069</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> a[<span class="number">2010</span>];<span class="comment">// 读入</span></span><br><span class="line"><span class="type">int</span> fa[<span class="number">2010</span>]; <span class="comment">// 并查集父节点</span></span><br><span class="line"><span class="type">int</span> sz[<span class="number">2010</span>]; <span class="comment">// 点个数</span></span><br><span class="line"><span class="type">bool</span> cir[<span class="number">2010</span>]; <span class="comment">// 是否有环</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getfa</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x == fa[x]?x:(fa[x] = <span class="built_in">getfa</span>(fa[x]));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">link</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> fu = <span class="built_in">getfa</span>(u);</span><br><span class="line">  <span class="type">int</span> fv = <span class="built_in">getfa</span>(v);</span><br><span class="line">  <span class="keyword">if</span>(fu == fv)&#123;</span><br><span class="line">    cir[fu] = <span class="literal">true</span>; <span class="comment">// 有环</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  sz[fv] += sz[fu]; <span class="comment">// 大小</span></span><br><span class="line">  cir[fv] |= cir[fu]; <span class="comment">// 环</span></span><br><span class="line">  fa[fu] = fv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">mypow</span><span class="params">(ll v,<span class="type">int</span> pwr)</span></span>&#123;</span><br><span class="line">  ll r = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span>(pwr)&#123;</span><br><span class="line">    <span class="keyword">if</span>(pwr%<span class="number">2</span>)(r*=v)%=MOD;</span><br><span class="line">    (v*=v)%=MOD;</span><br><span class="line">    pwr/=<span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line">ll fac[<span class="number">2010</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// 阶乘</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  <span class="type">int</span> freecnt = <span class="number">0</span>; <span class="comment">// 自由度 -1 个数</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    fa[i] = i;</span><br><span class="line">    sz[i] = <span class="number">1</span>;</span><br><span class="line">    fac[i] = fac[i<span class="number">-1</span>]*i%MOD;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,a+i);</span><br><span class="line">    freecnt += a[i] == <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[i] == <span class="number">-1</span>)<span class="keyword">continue</span>;</span><br><span class="line">    <span class="built_in">link</span>(i,a[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; arr ;</span><br><span class="line">  <span class="type">int</span> circnt = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(fa[i] != i)<span class="keyword">continue</span>; <span class="comment">// 非联通块根</span></span><br><span class="line">    <span class="keyword">if</span>(cir[i])&#123; <span class="comment">// 环</span></span><br><span class="line">      circnt++;</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    arr.<span class="built_in">push_back</span>(sz[i]); <span class="comment">// 树 有一个自由度</span></span><br><span class="line">  &#125;</span><br><span class="line">  ll ans = circnt * <span class="built_in">mypow</span>(n,freecnt) % MOD; <span class="comment">// 本身就是环的贡献</span></span><br><span class="line">  <span class="function">vector&lt;ll&gt; <span class="title">mulsum</span><span class="params">(n+<span class="number">10</span>,<span class="number">0</span>)</span></span>; <span class="comment">// dp mulsum[树的个数] = sz乘积和</span></span><br><span class="line">  mulsum[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,(<span class="type">int</span>)arr.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="built_in">rep</span>(k,<span class="number">0</span>,i+<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="comment">// 注意前面一半只是 k+1个构成环的方案数, 对于环以外的 freecnt-k-1的自由度任意搭配 才是这些环对总答案的贡献值</span></span><br><span class="line">      (ans += fac[k] * mulsum[k] % MOD * arr[i] % MOD * <span class="built_in">mypow</span>(n,freecnt-k<span class="number">-1</span>) % MOD)%=MOD;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">per</span>(k,<span class="number">0</span>,i+<span class="number">1</span>)&#123;</span><br><span class="line">      (mulsum[k+<span class="number">1</span>] += mulsum[k]*arr[i])%=MOD;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我想了很久,都没有注意到题目条件特殊性带给联通分量的特殊性, 这还是不应该,应该加强这方面的反应</p>
+<p>其实也算是树的知识没有警醒我, 边&#x3D;点-1,那么就会反应到这里连通分量的边 &lt;&#x3D; 点 且 &gt;&#x3D; 点-1</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/arc140/editorial/3971">官方</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ARC</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>DP</tag>
+        <tag>树</tag>
+        <tag>贡献统计</tag>
       </tags>
   </entry>
   <entry>
@@ -15711,8 +15711,8 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>树状数组</tag>
         <tag>计算几何</tag>
+        <tag>树状数组</tag>
         <tag>构造</tag>
       </tags>
   </entry>
@@ -17213,8 +17213,8 @@
         <category>ABC</category>
       </categories>
       <tags>
-        <tag>概率论</tag>
         <tag>计算几何</tag>
+        <tag>概率论</tag>
         <tag>二分</tag>
       </tags>
   </entry>
@@ -18699,6 +18699,22 @@
 </blockquote>
 <p>关键就是 如何计算 $H(B \oplus C)$ 以后的hash</p>
 <p>用<strong>Nimber(Nim number)</strong></p>
+<h3 id="不用Nimber"><a href="#不用Nimber" class="headerlink" title="不用Nimber"></a>不用Nimber</h3><p>还是字符串hash, 但是 把乘法变成不一定可逆的bit矩阵运算</p>
+<p>$(v_0) \oplus (v_1 \cdot x) \oplus (v_2 \cdot x^2) \oplus \cdots$</p>
+<p>也就是这里的$\cdot$需要能让$\mathrm{H}(A) ? \mathrm{H}(B) &#x3D; \mathrm{H}(A \oplus B) $ 成立, 也就不能是数乘</p>
+<p>这里考虑$v_i \cdot x^{t} &#x3D; f_t(v_i)$</p>
+<p>然后$f_t(v) &#x3D; f_{2^{k_0}}(f_{2^{k_1}}(\cdots(v))), k_0 &gt; k_1 &gt; \cdots$, 其中$2^k$是对$t$的二进制从高到低拆分(唯一)</p>
+<p>而每个$f_{2^k}(v) $ 是一个 把数按照 bit 做线性变换(不一定可逆)的方案, 这样随机选方案就是一个办法</p>
+<hr>
+<p>这里因为是hash ,其实完全对逆运算没有要求, 虽然也可以造 bit * bit的可逆轮换矩阵,再矩阵前缀, 缺点是这样要n个矩阵</p>
+<p>而去掉 可逆的 需求, 直接二进制拆分+ 倍增想法 就可以有上面的</p>
+<p>所以实际需要的</p>
+<ol>
+<li>快速: (O(1) &#x2F;O(log n) 时间 计算一段的hash</li>
+<li>相等: 一个$\cdot$运算$(v_0) \oplus (v_1 \cdot x) \oplus (v_2 \cdot x^2) \oplus \cdots$</li>
+<li>hash难hack</li>
+</ol>
+<p>所以nimber有一点远大于要求了,</p>
 <h3 id="Nimber-Nim-add-xor-和-Nim-product"><a href="#Nimber-Nim-add-xor-和-Nim-product" class="headerlink" title="Nimber(Nim add(xor) 和 Nim product)"></a>Nimber(Nim add(xor) 和 Nim product)</h3><p>显然 xor 和 数乘 和 数加 不满足 交换结合率</p>
 <p>如果有 xor(nim add) 配套的 nim product, 那么就不需要使用 数乘 和 数加</p>
 <p>这里面运算的<code>加</code>为$\oplus$,<code>乘</code>为$\otimes$, 这样的field为<strong>Nimber</strong></p>
@@ -18750,7 +18766,7 @@
 <h3 id="Rolling-hash"><a href="#Rolling-hash" class="headerlink" title="Rolling hash"></a>Rolling hash</h3><p>hash(d) 比 d 有更高的熵entropy ???</p>
 <p>就是这里想hash比较来代替直接比, 把O(n) 变成O(1)</p>
 <p>hash函数</p>
-<p>$R(A) &#x3D; \left(\sum_{i&#x3D;1}^N A_i x^{N-i} \right) \bmod{p}$, ???为啥要次方要倒过来? 字符串对称一下不就是正着的吗</p>
+<p>$R(A) &#x3D; \left(\sum_{i&#x3D;1}^N A_i x^{N-i} \right) \bmod{p}$, ?为啥要次方要倒过来? 字符串对称一下不就是正着的吗? 是因为 这样的话就是前缀和只需要 加减与乘法不需要除法, 而如果次方是正着, 要么就是需要除法或者搭配后缀而不是前缀使用</p>
 <p>其中$x$是足够大的$[0,p)$中的质数, 运行时等概率</p>
 <p>性质1: 预处理后快速计算区间hash, 其实就是前缀和同样的想法</p>
 <p><code>R(A[l..r]) = R(A[0..r])-R(A[0..l-1])*x^l</code></p>
@@ -18787,6 +18803,7 @@
       </categories>
       <tags>
         <tag>网络流</tag>
+        <tag>二分</tag>
         <tag>字符串hash</tag>
         <tag>TODO</tag>
         <tag>rolling hash</tag>
