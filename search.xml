@@ -18998,4 +18998,54 @@
         <tag>二叉树</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Atcoder abc276</title>
+    <url>/Blog/2022-11-05-ac-abc276/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc276/tasks">https://atcoder.jp/contests/abc276/tasks</a></p>
+<h1 id="G-Count-Sequences"><a href="#G-Count-Sequences" class="headerlink" title="G - Count Sequences"></a>G - Count Sequences</h1><p>范围 [0,m] 单调递增 n个数, 且相邻 mod 3 不同</p>
+<p>问 方案数 mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e7</p>
+<p>m 1e7</p>
+<p>4s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>f(n,m) &#x3D; 范围 [0,m] 放n个数, 第一个放0 的方案数</p>
+<p>ans &#x3D; sum f(n,0..m)</p>
+<p>f(n,m) &#x3D; sum f(n-1,m-非3倍数)</p>
+<p>考虑 生成函数 f(n,m) 为 生成函数$F_n$的系数</p>
+<p>$F_1 &#x3D; 1+x+x^2+x^3+\cdots &#x3D; \frac{1}{1-x}$</p>
+<p>$ans &#x3D; \lbrack m \rbrack (F_n \cdot \frac{1}{1-x}) $</p>
+<p>$F_i &#x3D; F_{i-1} \cdot (x+x^2+x^4+x^5+x^7+x^8+\cdots)$</p>
+<p>$&#x3D; F_{i-1} \cdot \frac{x+x^2}{1-x^3}$</p>
+<p>$F_n &#x3D; F_1 \cdot (\frac{x+x^2}{1-x^3})^{n-1} $</p>
+<p>$ans &#x3D; \lbrack m \rbrack \frac{(x+x^2)^{n-1}}{(1-x)^2(1-x^3)^{n-1}}$</p>
+<p>然后 我暴力算 样例就TLE了</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>令 b1&#x3D;a1, 其它的为相邻ai的差, 那么和 &lt;&#x3D; m, b[2..]是mod 3非0的数</p>
+<p>每个bi考虑把它分成两部分</p>
+<p>3的倍数的部分 y 和 mod3 的部分x</p>
+<p>x的部分就是 第一个 0,1,2, 后面的1,2 </p>
+<p>sum y &lt;&#x3D; (m - sum x)&#x2F;3</p>
+<p>y 就是小球插球法, 可以均摊O(1), </p>
+<p>(n个非负数 和小于等于s, 不妨设s-这些数的和为最后一个数, 就是n+1个非负数和为s, n+1个正数 和为s+n+1, s+n个空隙插入n个板子 binom(s+n,n)</p>
+<p>然后 x的和 的出现次数 可以类似排列组合就没了</p>
+<p>和为s</p>
+<p>0 + n-1个(1,2) &#x3D; [n-1..2(n-1)] &#x3D; binom(n-1,s-(n-1))</p>
+<p>1 + n-1个(1,2) &#x3D; [n..2(n-1)+1] &#x3D; binom(n-1,s-1-(n-1))</p>
+<p>2 + n-1个(1,2) &#x3D; [n+1..2(n-1)+2] &#x3D; binom(n-1,s-2-(n-1))</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc276/submissions/36273738">https://atcoder.jp/contests/abc276/submissions/36273738</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/convolution&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD = <span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n;i--&gt;(int)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">14000000</span>;</span><br><span class="line">mint fac[N+<span class="number">10</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint ifac[N+<span class="number">10</span>];</span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m)</span></span>&#123;<span class="keyword">return</span> (m&gt;n||m&lt;<span class="number">0</span>)?<span class="number">0</span>:(fac[n]*ifac[m]*ifac[n-m]);&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N+<span class="number">1</span>) fac[i]=fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  ifac[N]=fac[N].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,N) ifac[i]=ifac[i+<span class="number">1</span>]*(i+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m=<span class="built_in">read</span>();</span><br><span class="line">  mint ans =<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(s12,<span class="number">0</span>,m+<span class="number">1</span>)&#123; <span class="comment">// mod part</span></span><br><span class="line">    mint s=<span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(fi,<span class="number">0</span>,<span class="number">3</span>) s+=<span class="built_in">binom</span>(n<span class="number">-1</span>,s12-fi-(n<span class="number">-1</span>));</span><br><span class="line">    ans += s*<span class="built_in">binom</span>(n+(m-s12)/<span class="number">3</span>,n);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>不会数数…哎</p>
+<p>其实1e7基本注定了连 n log n都是不行的, 要么就是 O(n) 要么就是数学怎么搞一搞 O(1)或者O(log n)</p>
+<p>Ex</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc276/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>排列组合</tag>
+      </tags>
+  </entry>
 </search>
