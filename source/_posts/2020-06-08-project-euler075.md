@@ -168,6 +168,29 @@ sys	0m22.575s
 
 所以 最大的只用枚举到 $\sqrt{\frac{l}{2}}$
 
+
+## 勾股数
+
+上面感觉很突兀,
+
+看了一下 https://personal.math.ubc.ca/~cass/courses/m446-03/pl322/parametrization.html 的文章发现了来源
+
+如果 a,b,c 能构成, 那么 (a/c,b/c) 在单位圆上, 且是 有理点, 那么和(1,0)的斜率也是有理数
+
+令为(A,B),  (B-0)/(A-1) = m, A^2+B^2=1, 解这个方程组
+
+!! 没有根号, A=(m^2-1)/(m^2+1), B=-2m/(m^2+1)
+
+令 m = -p/q, 带进去 就很自然了
+
+---
+
+这样的话 ,对于椭圆 x^2+by^2=z^2
+
+同样是(x/z,y/z) 在椭圆上, 然后过(1,0)
+
+就可以搞Project Euler 195了
+
 # code 
 
 ```rust
@@ -201,7 +224,6 @@ fn f(n:usize) -> HashMap<usize,usize>{
     }
     return ret;
 }
-
 
 fn main() {
     let (tx, rx) = mpsc::channel();
@@ -239,3 +261,5 @@ fn main() {
 https://en.wikipedia.org/wiki/Pythagorean_triple
 
 https://en.wikipedia.org/wiki/Formulas_for_generating_Pythagorean_triples
+
+https://personal.math.ubc.ca/~cass/courses/m446-03/pl322/parametrization.html
