@@ -19337,4 +19337,175 @@
         <tag>Tarjan</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Codeforces 1761</title>
+    <url>/Blog/2022-11-21-CF1761/</url>
+    <content><![CDATA[<p><a href="https://codeforces.com/contest/1761">https://codeforces.com/contest/1761</a></p>
+<h1 id="D-Carry-Bit"><a href="#D-Carry-Bit" class="headerlink" title="D. Carry Bit"></a>D. Carry Bit</h1><p>f(x,y) &#x3D; g(x)+g(y)-g(x+y)</p>
+<p>其中g(x) &#x3D; x二进制下的bit为1的个数</p>
+<p>问 $f(x,y) &#x3D; k$ 有多少个, 其中 $x,y \in [0,2^n)$, 答案mod 1e9+7</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n &lt; 1e6</p>
+<p>1s</p>
+<p>256mb</p>
+<h2 id="我的想法"><a href="#我的想法" class="headerlink" title="我的想法"></a>我的想法</h2><p>打了表</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 1 0 2 0 1 0 3 0 1 0 2 0 1 0 4</span><br><span class="line">0 0 1 1 0 0 2 2 0 0 1 1 0 0 3 3</span><br><span class="line">0 2 1 2 0 3 2 3 0 2 1 2 0 4 3 4</span><br><span class="line">0 0 0 0 1 1 1 1 0 0 0 0 2 2 2 2</span><br><span class="line">0 1 0 3 1 2 1 3 0 1 0 4 2 3 2 4</span><br><span class="line">0 0 2 2 1 1 2 2 0 0 3 3 2 2 3 3</span><br><span class="line">0 3 2 3 1 3 2 3 0 4 3 4 2 4 3 4</span><br><span class="line">0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1</span><br><span class="line">0 1 0 2 0 1 0 4 1 2 1 3 1 2 1 4</span><br><span class="line">0 0 1 1 0 0 3 3 1 1 2 2 1 1 3 3</span><br><span class="line">0 2 1 2 0 4 3 4 1 3 2 3 1 4 3 4</span><br><span class="line">0 0 0 0 2 2 2 2 1 1 1 1 2 2 2 2</span><br><span class="line">0 1 0 4 2 3 2 4 1 2 1 4 2 3 2 4</span><br><span class="line">0 0 3 3 2 2 3 3 1 1 3 3 2 2 3 3</span><br><span class="line">0 4 3 4 2 4 3 4 1 4 3 4 2 4 3 4</span><br></pre></td></tr></table></figure>
+
+<p>推了个 多项式的矩阵幂次, 然而 赛后才知道, 1e9+7 就是不希你用ntt因为原根极小等于没有</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(1,0)</span><br><span class="line">      (3, x)^n</span><br><span class="line">      (1,3x)</span><br><span class="line">            (1)</span><br><span class="line">            (1)</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>类似的, 可以dp</p>
+<p><code>dp[n][上半0/下半1][k]</code> 表示 [0..2^n) 里, 上半&#x2F;下半 中&#x3D;k个个数</p>
+<p><code>dp[n][0][k] = 3dp[n-1][0][k] + dp[n-1][1][k]</code></p>
+<p><code>dp[n][1][k] = 3dp[n-1][0][k-1] + dp[n-1][1][k-1]</code></p>
+<p><code>ans = sum dp[n][0,1][k]</code></p>
+<p>显然是一个<code>O(nk)</code>的dp, 1e6 过不了</p>
+<hr>
+<p>a[i] 表示a的第i个bit</p>
+<p>b[i] 表示b的第i个bit</p>
+<p>然后 其实 carry bit 意译为 进位, 其实 定义上意义是 运算发生的进位的次数</p>
+<p>1,1 的话, 始终进位 不用关心后面的</p>
+<p>0,0 的话, 始终不进位 不用关心后面的</p>
+<p>(0,1), (1,0) 的话, 也就是需要后面连着 一串 (0,1) (1,0) 然后接上一个(1,1)</p>
+<p>然后就<code>((0 and 1)* , (1,1)), ((0 and 1)* (0,0))</code> 注意的是最右可以放不是(0,0)结束的</p>
+<p>但这样实际上并不好算, 考虑把进位的连续的看作整体</p>
+<hr>
+<p>这样, 连续进位一段的最右是(1,1), 中间3种方案</p>
+<p>这样, 连续不进位一段的最右是(0,0), 中间3种方案, (最右特殊</p>
+<p>那么就是 有多少个进位与不进位的 分界点, 这些位置只有1个方案, 其它都是3个方案</p>
+<p>负1位看作不进位,</p>
+<p>所以枚举q个分界的位置, 那么剩下的有$3^{n-q}$个方案</p>
+<p>也就是 (q+1)&#x2F;2 个连续进位, 和 q+1-(q+1)&#x2F;2个连续的不进位</p>
+<p>那么就是把k个进位 放在连续的进位段, 和n-k个不进位放在连续的不进位段, 每段至少一个</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://codeforces.com/contest/1761/submission/182043486">https://codeforces.com/contest/1761/submission/182043486</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using ll = long long;</span><br><span class="line">const int MOD = 1000000007;</span><br><span class="line">#define rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span><br><span class="line">#define per(i,a,n) for (int i=n;i--&gt;(ll)a;)</span><br><span class="line">int read()&#123;int r;scanf(&quot;%d&quot;,&amp;r);return r;&#125;</span><br><span class="line"> </span><br><span class="line">ll mypow(ll v,int pwr)&#123;</span><br><span class="line">  if(pwr&lt;0) return 0;</span><br><span class="line">  ll ret=1;</span><br><span class="line">  while(pwr)&#123;</span><br><span class="line">    if(pwr&amp;1) (ret*=v)%=MOD;</span><br><span class="line">    (v*=v)%=MOD;</span><br><span class="line">    pwr/=2;</span><br><span class="line">  &#125;</span><br><span class="line">  return ret;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">const int N = 1000000;</span><br><span class="line">ll fac[N+10]=&#123;1&#125;;</span><br><span class="line">ll ifac[N+10];</span><br><span class="line"> </span><br><span class="line">ll binom(int n,int m)&#123;</span><br><span class="line">  return (m&gt;n || m&lt;0)?0:(fac[n]*ifac[m]%MOD*ifac[n-m]%MOD);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int main()&#123;</span><br><span class="line">  int n=read();</span><br><span class="line">  int k=read();</span><br><span class="line">  rep(i,1,N+1) fac[i]=fac[i-1]*i%MOD;</span><br><span class="line">  ifac[N]=mypow(fac[N],MOD-2);</span><br><span class="line">  per(i,0,N) ifac[i]=ifac[i+1]*(i+1)%MOD;</span><br><span class="line">  ll ans=0;</span><br><span class="line">  if(k==0)&#123;</span><br><span class="line">    ans=mypow(3,n);</span><br><span class="line">  &#125;else&#123;</span><br><span class="line">    rep(q,1,n+1)&#123; // q个变化</span><br><span class="line">      int one=(q+1)/2; // k个进位</span><br><span class="line">      int zero = (q+2)/2; // n-k+1个不进位(包含-1位)</span><br><span class="line">      (ans+=mypow(3,n-q)*binom(k-1,one-1)%MOD*binom(n-k+1-1,zero-1)%MOD )%=MOD;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  printf(&quot;%lld\n&quot;,ans);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="E-Make-It-Connected"><a href="#E-Make-It-Connected" class="headerlink" title="E. Make It Connected"></a>E. Make It Connected</h1><p>n点简单无向图, 让图联通</p>
+<p>任意次操作:</p>
+<p>每次操作 选一个点u, 颠倒所有和(u,v)的连接状态(也就是 原来连接变不连接, 原来不连接变链接)</p>
+<p>求一个方案</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>1s</p>
+<p>512mb</p>
+<p>n 4000</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然 翻转操作不要求顺序性, 其实是问选点集S, 改变 这些点和 (所有点-S) 之间的边</p>
+<p>显然可以看成多个联通块</p>
+<p>显然选一个最小的联通块的所以点作为S是一个方案</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1-2-3 4-5-6</span><br></pre></td></tr></table></figure>
+
+<p>然而 上面 选择3 的话 可以<code>3-(1,4,5,6)</code> 只用选1个</p>
+<hr>
+<p>如果有一个独立点, 选它即可, 否则任何联通块点数 &gt;&#x3D; 2</p>
+<p>按照这个角度的话, 如果任何连通块的话里有两个点没有直接相连, 那么就可以 选其中一个, 就是解</p>
+<p>否则的话 每个联通块内部都是两两相连</p>
+<blockquote>
+<p>&#x3D; 2个联通块的 有1个点的 方案吗?, 有2个点的方案吗?</p>
+</blockquote>
+<p>显然 1个点不行, 选它会让和原来联通块分离</p>
+<p>2个点: 两个点来自一个连通块, 同样的, 会让和原来的联通块分离</p>
+<p>2个点: 两个点来自不同的连通块, 如果联通块个数&gt;&#x3D;3 显然可以, 因为它们 分别连上对面的块, 和其它块</p>
+<p>如果 联通块个数为2的话, 只有选小的联通块, 似乎就没了</p>
+<hr>
+<p>然后炸了, wa 4,</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">7</span><br><span class="line">0100000</span><br><span class="line">1000000</span><br><span class="line">0001110</span><br><span class="line">0010100</span><br><span class="line">0011000</span><br><span class="line">0010001</span><br><span class="line">0000010</span><br></pre></td></tr></table></figure>
+
+<p>问题在于 连通时 非连通的点的选择上,  例如 <code>1-2-3-4</code> ,不能选择2, 这样会把1和3-4切断</p>
+<p>也就是选的点 做了颠倒后和分别的连通连通, 换句话说 u 和拆了以后的剩下的多个连通块 都不是满联通关系</p>
+<p>比如这种 虽然d会让图不连通, 但是又会连上a和f, 也是可以的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  b   e</span><br><span class="line"> / \ / \</span><br><span class="line">a   d   f</span><br><span class="line"> \ / \ /</span><br><span class="line">  c   g</span><br></pre></td></tr></table></figure>
+
+<p>证明 最小度的点可以满足,</p>
+<p>设 u 是一个非法点, u拆了以后, 剩下一个连通点集 都和u相连</p>
+<p><code>u (v0...vi) (v...) </code></p>
+<p>u和所有点连, 一定不是最小度, 否则<code>u</code>不合所有点连 所以 那么有 <code>u的度 = v集合的大小 + (&gt;=1 一定还有其它点)</code></p>
+<p>而<code>v点集</code>内的一定度 &lt;&#x3D; v集合的大小, 所以 du[u] &gt; du[v]</p>
+<p>证明了一个非法点 一定有du比它晓得点, 逆否命题得证</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a href="https://codeforces.com/contest/1761/submission/182054992">https://codeforces.com/contest/1761/submission/182054992</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> s[<span class="number">4010</span>][<span class="number">4010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,vector&lt;<span class="type">int</span>&gt;&amp;a, vector&lt;<span class="type">bool</span>&gt;&amp;vis)</span></span>&#123;</span><br><span class="line">  vis[u]=<span class="literal">true</span>;</span><br><span class="line">  a.<span class="built_in">push_back</span>(u);</span><br><span class="line">  <span class="built_in">rep</span>(v,<span class="number">0</span>,n) <span class="keyword">if</span>(v!=u &amp;&amp; s[u][v]==<span class="string">&#x27;1&#x27;</span> &amp;&amp; !vis[v]) <span class="built_in">dfs</span>(v,a,vis);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">w</span><span class="params">()</span></span>&#123;</span><br><span class="line">  n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s[i]);</span><br><span class="line">  <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">vis</span><span class="params">(n)</span></span>;</span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; connect;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="keyword">if</span>(!vis[i]) &#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; a;</span><br><span class="line">    <span class="built_in">dfs</span>(i,a,vis);</span><br><span class="line">    connect.<span class="built_in">push_back</span>(a);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>((<span class="type">int</span>)connect[<span class="number">0</span>].<span class="built_in">size</span>() == n)&#123; <span class="comment">// 全部一起</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;0\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;b:connect) <span class="keyword">if</span>((<span class="type">int</span>)b.<span class="built_in">size</span>()==<span class="number">1</span>)&#123; <span class="comment">// 独立点</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;1\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,b[<span class="number">0</span>]+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;b:connect) &#123; <span class="comment">// 同一个连通块中 最小的du</span></span><br><span class="line">    pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; du_u = &#123;b.<span class="built_in">size</span>()<span class="number">-1</span>,b[<span class="number">0</span>]&#125;; <span class="comment">// &#123;du,u&#125;</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> u:b) &#123;</span><br><span class="line">      <span class="type">int</span> du=<span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> v:b) du+= s[u][v]==<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">      du_u=<span class="built_in">min</span>(du_u,<span class="built_in">make_pair</span>(du,u));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>((<span class="type">int</span>)du_u.first != (<span class="type">int</span>)b.<span class="built_in">size</span>()<span class="number">-1</span>)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;1\n&quot;</span>);</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,du_u.second+<span class="number">1</span>);</span><br><span class="line">      <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 所有联通块 点数 &gt;= 2, 联通块个数 &gt;= 2, 所有联通块内部互连</span></span><br><span class="line">  <span class="keyword">if</span>(connect.<span class="built_in">size</span>() &gt;= <span class="number">3</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;2\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>,connect[<span class="number">0</span>][<span class="number">0</span>]+<span class="number">1</span>,connect[<span class="number">1</span>][<span class="number">0</span>]+<span class="number">1</span>);</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;<span class="comment">// 两个联通块</span></span><br><span class="line">    <span class="keyword">if</span>(connect[<span class="number">0</span>].<span class="built_in">size</span>() &gt; connect[<span class="number">1</span>].<span class="built_in">size</span>()) <span class="built_in">swap</span>(connect[<span class="number">0</span>],connect[<span class="number">1</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(<span class="type">int</span>)connect[<span class="number">0</span>].<span class="built_in">size</span>());</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> u:connect[<span class="number">0</span>]) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,u+<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> t = <span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">while</span>(t--) <span class="built_in">w</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="F1-F2-Anti-median"><a href="#F1-F2-Anti-median" class="headerlink" title="F1,F2. Anti-median"></a>F1,F2. Anti-median</h1><p>2m+1 长的数组, 如果 sort以后 正中的是同一个数值, 那么称作bad</p>
+<p>对于一个部分给定的 1~n 的排列, 问有多少中填写方式 让它的所有奇数长度子数组(长度&gt;&#x3D;3) 非bad</p>
+<h2 id="范围-2"><a href="#范围-2" class="headerlink" title="范围"></a>范围</h2><p>n 1000(F1), 1e6(F2)</p>
+<p>2s</p>
+<p>256mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>考虑 小的情况, 比如5个非法 是否3个非法</p>
+<p>然而<code>1 4 3 5 2</code>, 中间的<code>4 3 5</code> 是合法的</p>
+<p>但考虑到3个<code>a b c</code>, 考虑 中间填大于小于号, 发现 要么<code>a&gt;b&lt;c</code> 要么<code>a&lt;b&gt;c</code></p>
+<p>说明 整个数列也是 一大一小的间隔就可以 满足所有长3的子序列了</p>
+<hr>
+<p>考虑长5的序列 <code>a&lt;b&gt;c&lt;d&gt;e</code>, 这种的话, 显然<code>c &lt; a</code> 或者<code>c &lt; e</code></p>
+<p><code>a&lt;b&gt;c&lt;d&gt;e&lt;f&gt;g&lt;h&gt;i</code>, 长一点, 还是考虑长5</p>
+<p>若 c &lt; e, 那么必须 e &lt; g, 从而 g &lt; i,</p>
+<p>换句话说, 小于关系中, 存在一个<code>a[i-2] &gt; a[i] &lt; a[i+2]</code>,(<code>a[i-1] &gt; a[i] &lt; a[i+1]</code>), 然后向两侧, 都是 <code>&gt;</code>符号和 <code>&lt;</code>符号, 大概<code>&gt; &gt; &gt; &lt; &lt; &lt;</code>的形状</p>
+<p>对<code>a[i-1] &lt; a[i] &gt; a[i+1]</code> 的来说, 同样存在 <code>&lt; &lt; &lt; &lt; &gt; &gt; &gt; &gt;</code> 的关系</p>
+<hr>
+<p>所以是这样的形状</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">        x</span><br><span class="line">      x   x</span><br><span class="line">    x       x</span><br><span class="line">  x          x</span><br><span class="line">x          x</span><br><span class="line"> x       x</span><br><span class="line">   x   x</span><br><span class="line">     x</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>问题: 7个呢,9个呢…</p>
+<p>注意到 中间的子数组 依然满足这个形状, 只要证明这个形状的全长始终合法即可</p>
+<p>其实注意到 如果 <code>&lt; &lt; &lt; &gt; &gt; &gt;</code> 中<code>&lt; &lt; &lt;</code>中的, 那么 左侧的全小于它, 只有右侧全大于它才可能, 其它3种情况 对称 显然</p>
+<p>所以 所有奇数个都合法</p>
+<p>问题变成, 构建这种 错开的峰 谷 形状</p>
+<p>那么关心最大最小值的位置, 那么左右就是不相关的 两串 单调递增 序列,</p>
+<p>两串 单调递增 <code>1 ....... n</code>, <code>1 ....... n</code>, 中间有一些点的值被确定了</p>
+<p>这样很好算, 找第一小的<code>binom(c, 间隔)</code>, 第二小<code>binom(剩下个数, 间隔)</code> … 乘起来就行了</p>
+<p>每个都是 binom(v[i]-1-used[i-1], 间隔)</p>
+<p><code>used[i-1]</code> 注意到 如果比它小的来自两侧, 那么<code>used[i-1]</code> 不会变, 而如果单测 就有关</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">v0       v1</span><br><span class="line">   x   x</span><br><span class="line">     x</span><br></pre></td></tr></table></figure>
+
+<p>间隔类似的, 如果间隔始终在 右侧序列里, 间隔不会变, 如果在序列间 就会变</p>
+<p>所以有不少的 方案之间 中间的binom是不会变的, 变的都是两头的</p>
+<p>但具体咋讨论, 并不会</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>也是 先 考虑3个的一样的结论,(这里 用了<code>局部最大</code> 描述</p>
+<p>然后也是 考虑5个, 一样的结论</p>
+<p>如果 偶数项 局部最大, 那么有 偶数项先增后减, 奇数项先减后增</p>
+<p>如果 奇数项 局部最大, 那么有 奇数项先增后减, 偶数项先减后增</p>
+<hr>
+<p>然后 奇偶情况, 都是按照形状,考虑放成一个环(!!!),</p>
+<p><code>dp[l][r] = </code> 最大的 (r-l+1)个放在[l..r] 的方案数, 就可以n^2 dp了, (F1 可做)</p>
+<hr>
+<p>考虑 放n的位置, 然后从大向小放, 对于环来讲, 每次拼在左侧或者右侧</p>
+<p>但这样的顺序 并不能保证 满足题目 , (填写的时候一侧折反回来 , 导致没有局部性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">   9</span><br><span class="line"> 8</span><br><span class="line">     4</span><br><span class="line">7      3</span><br><span class="line">  6</span><br><span class="line">    5   2</span><br><span class="line">      1</span><br></pre></td></tr></table></figure>
+
+<p>什么情况呢 就是上面这种折反, 也就是 从大到小的前缀, 奇数个的个数(7,6,5:3个) 大于 偶数的个数(9,8:2个)</p>
+<p>作为后缀同理</p>
+<p>另一个观察, 如果确定x的位置, 那么 值x..n 的放置 要么在x左侧连续, 或者右侧连续, (在环上显然)</p>
+<p>于是变成状态转移, <code>x[i]..n</code> 的一个状态, 转移到 <code>x[i-1]</code>的一个状态, 而 这两个x就是 已知的相邻的值 对应的状态</p>
+<hr>
+<p>看成(0,0) 向右和向上移动 走到(a,b), 不要跨过某个 x&#x3D;y+c 的线 的统计</p>
+<p>其中 (a,b) 表示的是 a个偶项,b个奇项, 而不是n的左右, 这样的话</p>
+<p>对于[x..n] 在x<strong>左</strong>侧 的话, a,b 是与n的具体位置无关的!</p>
+<p>对于[x..n] 在x<strong>右</strong>侧 的话, a,b 是与n的具体位置无关的!</p>
+<p>且注意到n 和最大已知 所覆盖的连续段, 不会有其它的已知, 所以初始状态计数好了, 向下就容易转移,O(n)可搞</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><p>TODO</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 奇偶 变换 =&gt; arr</span><br><span class="line">ans = 0</span><br><span class="line">for n 在 奇/偶</span><br><span class="line">  for n在 次大值 左/右</span><br><span class="line">    for i = 已知 从大到小</span><br><span class="line">      f[i] = f[i+1] * 转移</span><br><span class="line">    ans += f[1]</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>状态极差(a题写了个 a&#x3D;&#x3D;b&#x3D;&#x3D;n 找了一年bug) + 脚本炸了(修了半天脚本), -169 分</p>
+<p>D</p>
+<p>给 1e9+7 就是不希望用 ntt</p>
+<p>我英语太菜, 完全没去考虑实际意义, 只会打个表..</p>
+<p>数数好难啊(不是</p>
+<p>E</p>
+<p>这E比D简单很多啊, 自己想出来了…</p>
+<p>F1, F2</p>
+<p>果然也是从小开始考虑 3个 5个,</p>
+<p>然后这个不管 奇偶 都是变成环(!!!!!!!!!!)再考虑, 啊 没想到, 啊 为啥我想不到呢, 事后看又觉得变环很自然, 没有智力</p>
+<p>其实 强写 也是有 渺茫的可能,  问题就在如何把这 反复存在的奇偶给搞定合在一起</p>
+<p>还有后面这个 放置, 说明 上面我想的binom还是有问题, 也是这种折反一圈导致的问题, 还是没有想到折反导致的问题 的特例情况</p>
+<p>然后就是这里 考虑连续段的想法, 虽然 我有想到 一个确定到一个确定 之间的变化, 但是没有去想每一步的变化(!!!!!!), 而直接跳步了, 如果能注意到每一步的变化都是连续一段, 也许就更容易反应出需要转化成环了</p>
+<p>G</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://codeforces.com/blog/entry/109256">官方</a></p>
+]]></content>
+      <categories>
+        <category>Codeforces</category>
+      </categories>
+      <tags>
+        <tag>TODO</tag>
+        <tag>图论</tag>
+        <tag>排列组合</tag>
+        <tag>智慧</tag>
+      </tags>
+  </entry>
 </search>
