@@ -225,11 +225,13 @@ $\displaystyle = \sum_{R\subseteq S} (-1)^{|S-R|} g(R)$
 
 ### Min-Max容斥
 
-$\displaystyle \max(S) = \sum_{T\subseteq S} (-1)^{|T|+1} \min(T)$, 核心原理就是奇偶正负抵消
+$\displaystyle \max(S) = \sum_{T\subseteq S} (-1)^{|T|-1} \min(T)$, 核心原理就是奇偶正负抵消
+
+对称 $\displaystyle \min(S) = \sum_{T\subseteq S} (-1)^{|T|-1} \max(T)$, 相当于所有元素乘上$-1$
 
 在期望中使用
 
-$\displaystyle E(\max(S)) = E(\sum_{T\subseteq S} (-1)^{|T|+1} \min(T)) = \sum_{T\subseteq S} (-1)^{|T|+1} E(\min(T))$
+$\displaystyle E(\max(S)) = E(\sum_{T\subseteq S} (-1)^{|T|-1} \min(T)) = \sum_{T\subseteq S} (-1)^{|T|-1} E(\min(T))$
 
 ---
 
