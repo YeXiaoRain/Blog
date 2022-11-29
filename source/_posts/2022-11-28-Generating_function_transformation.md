@@ -130,7 +130,7 @@ $\displaystyle =\sum_{i=0}^{\infty} a'_ i \sum_{j=0}^i \frac{x^j (-1)^{i-j}}{(i-
 
 $\displaystyle =\sum_{j=0}^{\infty} \frac{x^j}{j!}\sum_{i=j}^{\infty} a'_ i\frac{(-1)^{i-j}}{(i-j)!}$ 得证
 
-注意到 $ e^{-x} = \sum \frac{(-1)^{i}}{i!}$
+注意到 $ e^{-x} = \sum \frac{(-x)^{i}}{i!}$, 有些时候$a,b$在下标大于某个值$m$时都是$0$, 所以可以翻转$a_{i} = a_{m-i}$
 
 相当于$a,b$生成函数之间有 $a(x)=y(x)e^{-x}$, 这里还可以快速对序列 $a$ 和 $b$进行转换
 
