@@ -20141,4 +20141,51 @@
         <tag>反演</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Atcoder abc280</title>
+    <url>/Blog/2022-12-03-ac-abc280/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc280/tasks">https://atcoder.jp/contests/abc280/tasks</a></p>
+<h1 id="G-Do-Use-Hexagon-Grid-2"><a href="#G-Do-Use-Hexagon-Grid-2" class="headerlink" title="G - Do Use Hexagon Grid 2"></a>G - Do Use Hexagon Grid 2</h1><p>六边形地图</p>
+<p>(i,j) 和 (i+-1,j), (i,j+-1), (i+1,j+1) ,(i-1,j-1) 相邻</p>
+<p>给你n个点</p>
+<p>问有多少种方案能选一个非空点集, 使点集中两两距离不大于D</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 300</p>
+<p>xi,yi, [-1e9,1e9]</p>
+<p>d [1,1e10]</p>
+<p>3s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>先想 1维, 就是sort, 然后定必定要选的点从左到右, 找区间长d中的点个数的2的幂次 </p>
+<p>然后不是六边形的 2维, 类似的定(左,下)角的点, 但问题是 其它点个数不能再2的幂次了</p>
+<p>总觉得做过, 但是又完全不会</p>
+<p>n&#x3D;300 就可能 3次方的做法</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>一样也是先考虑变形, dis(x&#x3D;x0-x1,y&#x3D;y0-y1) &#x3D; max(|x|,|y|,|x-y|)</p>
+<p>那么每个点也这样变形 (x,y,x-y), 问题变成点集 在一个 正方体 DxDxD中</p>
+<hr>
+<p>然后怎么统计呢, 其实和一维一样的, 不过枚举的最小值,变成3个维度的最小(必选)</p>
+<p>那么 所在的正方形就是 (x0..x0+D,y1..y1+D,z2…z2+D)</p>
+<p>直接搞是O(n^4)</p>
+<p>考虑 最后一个维度 滑窗 一下 就是O(n^3)</p>
+<hr>
+<p>官方代码还搞了个cnt[8],花里胡哨的,感觉好复杂(如果真这样,就算我会写赛内也难调出), 通过指定点 而不是指定值 感觉会简单不少, 当两个点有坐标y相同时, 考虑用index更小的作为标识</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc280/submissions/37080844">https://atcoder.jp/contests/abc280/submissions/37080844</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> ll=<span class="type">long</span> <span class="type">long</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line">mint p2[<span class="number">310</span>]=&#123;<span class="number">1</span>&#125;; <span class="comment">// power 2</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  ll d=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) p2[i+<span class="number">1</span>]=p2[i]*<span class="number">2</span>;</span><br><span class="line">  vector&lt;array&lt;ll,3&gt; &gt;a;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> x=<span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> y=<span class="built_in">read</span>();</span><br><span class="line">    a.<span class="built_in">push_back</span>(&#123;x,y,x-y&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(<span class="built_in">begin</span>(a),<span class="built_in">end</span>(a)); <span class="comment">// 按照x排序</span></span><br><span class="line"></span><br><span class="line">  mint ans=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(iy,<span class="number">0</span>,n) <span class="built_in">rep</span>(iz,<span class="number">0</span>,n) &#123;<span class="comment">// 最小y取i, 最小z取j 指定最小 y,z, 滑窗x, [y..y+d,z..z+d]</span></span><br><span class="line">    <span class="keyword">auto</span> ok=[&amp;](<span class="type">int</span> i,<span class="type">int</span> j,<span class="type">int</span> k)-&gt;<span class="type">bool</span>&#123; <span class="comment">// a[j][k] &lt;= a[i][k] &lt;= a[j][k]+d ?</span></span><br><span class="line">      <span class="built_in">return</span> (i&gt;=j) ?</span><br><span class="line">        (a[j][k]&lt;=a[i][k] <span class="keyword">and</span> a[i][k]&lt;=a[j][k]+d):</span><br><span class="line">        (a[j][k]&lt; a[i][k] <span class="keyword">and</span> a[i][k]&lt;=a[j][k]+d); <span class="comment">// 下标小于不能取等</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">auto</span> oky=[&amp;](<span class="type">int</span> i)&#123;<span class="keyword">return</span> <span class="built_in">ok</span>(i,iy,<span class="number">1</span>);&#125;;</span><br><span class="line">    <span class="keyword">auto</span> okz=[&amp;](<span class="type">int</span> i)&#123;<span class="keyword">return</span> <span class="built_in">ok</span>(i,iz,<span class="number">2</span>);&#125;;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">oky</span>(iz) || !<span class="built_in">okz</span>(iy)) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> pos=<span class="number">0</span>; <span class="comment">// 双指针 后面的index</span></span><br><span class="line">    <span class="built_in">rep</span>(ix,<span class="number">0</span>,n)&#123; <span class="comment">// 第i作为x最小</span></span><br><span class="line">      <span class="keyword">auto</span> okx=[&amp;](<span class="type">int</span> i)&#123; <span class="keyword">return</span> <span class="built_in">ok</span>(i,ix,<span class="number">0</span>); &#125;;</span><br><span class="line">      <span class="keyword">while</span>(pos&lt;n&amp;&amp;a[pos][<span class="number">0</span>]&lt;=a[ix][<span class="number">0</span>]+d)&#123; <span class="comment">// 双指针滑窗</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">oky</span>(pos)<span class="keyword">and</span> <span class="built_in">okz</span>(pos)) cnt++;</span><br><span class="line">        pos++;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">oky</span>(ix) <span class="keyword">and</span> <span class="built_in">okz</span>(ix) <span class="keyword">and</span> <span class="built_in">okx</span>(iy) <span class="keyword">and</span> <span class="built_in">okx</span>(iz)) &#123;</span><br><span class="line">        <span class="type">int</span> distinct=<span class="number">3</span>-(<span class="built_in">int</span>(ix==iy)+<span class="built_in">int</span>(iy==iz)+<span class="built_in">int</span>(iz==ix));</span><br><span class="line">        <span class="keyword">if</span>(distinct==<span class="number">0</span>) distinct=<span class="number">1</span>;</span><br><span class="line">        ans+=p2[cnt-distinct];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">oky</span>(ix) <span class="keyword">and</span> <span class="built_in">okz</span>(ix))cnt--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Substring-Sort"><a href="#Ex-Substring-Sort" class="headerlink" title="Ex - Substring Sort"></a>Ex - Substring Sort</h1><p>TODO</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>平面距离还是不熟,  正常的(x,y) 距离就是变成 max(|x+y|,|x-y|) 去算的, 这里应该要能想到, 一旦有了这个,那么 上面的变化也就显然了</p>
+<p>然后这个枚举最小值的1维的思路其实也很好, 看到这里n这么小, 应该也要想到 枚举一个对小值点, 变成枚举3个维度的最小值点啊</p>
+<p>Ex</p>
+<p>TODO</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc280/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>TODO</tag>
+        <tag>切比雪夫距离</tag>
+        <tag>曼哈顿距离</tag>
+      </tags>
+  </entry>
 </search>
