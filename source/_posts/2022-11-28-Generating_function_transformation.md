@@ -38,6 +38,8 @@ $\displaystyle F(x) = \sum_{i=0}^{\infty} a_{i} \frac{x^i}{i!}$
 
 $\displaystyle G(x) = \sum_{i=0}^{\infty} b_{i} \frac{x^i}{i!}$
 
+<!--more-->
+
 ## 常见反演
 
 ### 前缀和反演(差分)
