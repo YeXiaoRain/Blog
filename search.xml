@@ -20231,4 +20231,49 @@
         <tag>单调栈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Atcoder abc281</title>
+    <url>/Blog/2022-12-11-ac-abc281/</url>
+    <content><![CDATA[<p><a href="https://atcoder.jp/contests/abc281/tasks">https://atcoder.jp/contests/abc281/tasks</a></p>
+<h1 id="G-Farthest-CIty"><a href="#G-Farthest-CIty" class="headerlink" title="G - Farthest CIty"></a>G - Farthest CIty</h1><p>问 n个点, 的简单连通图, 1到n的距离 严格大于所有1到其它点的距离的 图有多少个</p>
+<p>个数 mod m</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 500</p>
+<p>m [1e8,1e9]</p>
+<p>4s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>数数嘛, 对于一个具体的图, 考虑计算所有点到1的距离,看一下相邻点的性质, </p>
+<p>显然 相邻点的<code>距离</code>值 差不大于1</p>
+<p>所以有一个O(n^4) 的dp</p>
+<p><code>dp[最大距离为i][距离为i的有j个][距离&lt;=i的有k个] = 的方案数</code></p>
+<p>有转移 <code>dp[i][j0][k0] = dp[i-1][j1][k1] * binom(n-k1,j0)/j0个在剩下的中选/ * (2^(j1)-1)^j0(每个分别和前面j1的连接方式) * 2^(j0(j0-1)/2) (j0个内部的任意连接) , 其中 k0=k1+j0</code></p>
+<p>这样答案就是 <code>sum dp[1..n][1][n]</code></p>
+<p>要是能优化成O(n^3)就能过了, 比赛时想了半天, 发现i无关, 想说矩阵乘法快速幂次, binom拆一拆 搞了半天</p>
+<hr>
+<p>赛后又想了想, 可以完全不要 <code>i</code> 直接 <code>dp[用了k个点][最大距离的有j个点]</code>的方案数 就完了………………..</p>
+<p><code>dp[i0][j0] = dp[i1][j1] * binom(n-i1,j0) * (2^&#123;j1&#125;-1)^j0 * 2^(j0(j0-1)/2), 其中 i0=i1+j0</code></p>
+<p><code>ans=dp[n][1]</code></p>
+<p>其实这里有点问题, 因为中间选的时候不能选择 最后一个</p>
+<p>所以不妨 先把 n拿出来 最后考虑它</p>
+<p>这样转移方程不变</p>
+<p><code>ans= sum dp[n-1][j=1..n-1] * (2^j-1)</code></p>
+<hr>
+<p>然后加个预处理 去掉 中间的log复杂度</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a href="https://atcoder.jp/contests/abc281/submissions/37193246">https://atcoder.jp/contests/abc281/submissions/37193246</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line">ll dp[<span class="number">510</span>][<span class="number">510</span>]; <span class="comment">// dp[用i个点][最大距离有j个点]</span></span><br><span class="line">ll binom[<span class="number">510</span>][<span class="number">510</span>];</span><br><span class="line">ll p2[<span class="number">250010</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">ll cache[<span class="number">510</span>][<span class="number">510</span>]; <span class="comment">// cache[i][j] = (2^i-1)^j</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ll n=<span class="built_in">read</span>(); <span class="comment">// 500 n 点, 简单无向 联通图, 1-n严格长于1-其它</span></span><br><span class="line">  ll m=<span class="built_in">read</span>(); <span class="comment">// 1e8~1e9</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">501</span>) binom[i][i]=binom[i][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">501</span>) <span class="built_in">rep</span>(j,<span class="number">1</span>,i) binom[i][j]=(binom[i<span class="number">-1</span>][j]+binom[i<span class="number">-1</span>][j<span class="number">-1</span>])%m;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">250001</span>) p2[i]=p2[i<span class="number">-1</span>]*<span class="number">2</span>%m;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">501</span>) &#123;</span><br><span class="line">    cache[i][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    ll base=p2[i]<span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">1</span>,<span class="number">501</span>) cache[i][j]=cache[i][j<span class="number">-1</span>]*base%m;</span><br><span class="line">  &#125;</span><br><span class="line">  dp[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n) <span class="built_in">rep</span>(j,<span class="number">1</span>,i+<span class="number">1</span>) <span class="keyword">if</span>(dp[i][j]) <span class="built_in">rep</span>(j1,<span class="number">1</span>,n) <span class="keyword">if</span>(i+<span class="built_in">j1</span>&lt;=n<span class="number">-1</span>)&#123; <span class="comment">// 最后一个先不考虑, (i,j) =&gt; (i+j1,j1)</span></span><br><span class="line">    (dp[i+j1][j1] += dp[i][j]</span><br><span class="line">     *binom[n<span class="number">-1</span>-i][j1]%m</span><br><span class="line">     *cache[j][j1]%m</span><br><span class="line">     *p2[j1*(j1<span class="number">-1</span>)/<span class="number">2</span>]%m )%=m;</span><br><span class="line">  &#125;</span><br><span class="line">  ll ans=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n<span class="number">-1</span>) (ans+=dp[n<span class="number">-1</span>][i]*(p2[i]<span class="number">-1</span>)%m)%=m;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>没啥难的</p>
+<p>这… 为啥会多想一个维度, 哎 太菜了</p>
+<p>Ex</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://atcoder.jp/contests/abc281/editorial">官方题解</a></p>
+]]></content>
+      <categories>
+        <category>Atcoder</category>
+        <category>ABC</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>TODO</tag>
+      </tags>
+  </entry>
 </search>
