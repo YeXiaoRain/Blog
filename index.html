@@ -260,7 +260,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-12-11 05:28:30" itemprop="dateModified" datetime="2022-12-11T05:28:30+08:00">2022-12-11</time>
+      <time title="修改時間：2022-12-11 06:56:47" itemprop="dateModified" datetime="2022-12-11T06:56:47+08:00">2022-12-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -409,7 +409,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-12-11 05:28:30" itemprop="dateModified" datetime="2022-12-11T05:28:30+08:00">2022-12-11</time>
+      <time title="修改時間：2022-12-11 06:56:47" itemprop="dateModified" datetime="2022-12-11T06:56:47+08:00">2022-12-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -479,67 +479,14 @@
 <p>然后不是六边形的 2维, 类似的定(左,下)角的点, 但问题是 其它点个数不能再2的幂次了</p>
 <p>总觉得做过, 但是又完全不会</p>
 <p>n&#x3D;300 就可能 3次方的做法</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>一样也是先考虑变形, dis(x&#x3D;x0-x1,y&#x3D;y0-y1) &#x3D; max(|x|,|y|,|x-y|)</p>
-<p>那么每个点也这样变形 (x,y,x-y), 问题变成点集 在一个 正方体 DxDxD中</p>
-<hr>
-<p>然后怎么统计呢, 其实和一维一样的, 不过枚举的最小值,变成3个维度的最小(必选)</p>
-<p>那么 所在的正方形就是 (x0..x0+D,y1..y1+D,z2…z2+D)</p>
-<p>直接搞是O(n^4)</p>
-<p>考虑 最后一个维度 滑窗 一下 就是O(n^3)</p>
-<hr>
-<p>官方代码还搞了个cnt[8],花里胡哨的,感觉好复杂(如果真这样,就算我会写赛内也难调出), 通过指定点 而不是指定值 感觉会简单不少, 当两个点有坐标y相同时, 考虑用index更小的作为标识</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc280/submissions/37080844">https://atcoder.jp/contests/abc280/submissions/37080844</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> ll=<span class="type">long</span> <span class="type">long</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line">mint p2[<span class="number">310</span>]=&#123;<span class="number">1</span>&#125;; <span class="comment">// power 2</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  ll d=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) p2[i+<span class="number">1</span>]=p2[i]*<span class="number">2</span>;</span><br><span class="line">  vector&lt;array&lt;ll,3&gt; &gt;a;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> x=<span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> y=<span class="built_in">read</span>();</span><br><span class="line">    a.<span class="built_in">push_back</span>(&#123;x,y,x-y&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(<span class="built_in">begin</span>(a),<span class="built_in">end</span>(a)); <span class="comment">// 按照x排序</span></span><br><span class="line"></span><br><span class="line">  mint ans=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(iy,<span class="number">0</span>,n) <span class="built_in">rep</span>(iz,<span class="number">0</span>,n) &#123;<span class="comment">// 最小y取i, 最小z取j 指定最小 y,z, 滑窗x, [y..y+d,z..z+d]</span></span><br><span class="line">    <span class="keyword">auto</span> ok=[&amp;](<span class="type">int</span> i,<span class="type">int</span> j,<span class="type">int</span> k)-&gt;<span class="type">bool</span>&#123; <span class="comment">// a[j][k] &lt;= a[i][k] &lt;= a[j][k]+d ?</span></span><br><span class="line">      <span class="built_in">return</span> (i&gt;=j) ?</span><br><span class="line">        (a[j][k]&lt;=a[i][k] <span class="keyword">and</span> a[i][k]&lt;=a[j][k]+d):</span><br><span class="line">        (a[j][k]&lt; a[i][k] <span class="keyword">and</span> a[i][k]&lt;=a[j][k]+d); <span class="comment">// 下标小于不能取等</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">auto</span> oky=[&amp;](<span class="type">int</span> i)&#123;<span class="keyword">return</span> <span class="built_in">ok</span>(i,iy,<span class="number">1</span>);&#125;;</span><br><span class="line">    <span class="keyword">auto</span> okz=[&amp;](<span class="type">int</span> i)&#123;<span class="keyword">return</span> <span class="built_in">ok</span>(i,iz,<span class="number">2</span>);&#125;;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">oky</span>(iz) || !<span class="built_in">okz</span>(iy)) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> pos=<span class="number">0</span>; <span class="comment">// 双指针 后面的index</span></span><br><span class="line">    <span class="built_in">rep</span>(ix,<span class="number">0</span>,n)&#123; <span class="comment">// 第i作为x最小</span></span><br><span class="line">      <span class="keyword">auto</span> okx=[&amp;](<span class="type">int</span> i)&#123; <span class="keyword">return</span> <span class="built_in">ok</span>(i,ix,<span class="number">0</span>); &#125;;</span><br><span class="line">      <span class="keyword">while</span>(pos&lt;n&amp;&amp;a[pos][<span class="number">0</span>]&lt;=a[ix][<span class="number">0</span>]+d)&#123; <span class="comment">// 双指针滑窗</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">oky</span>(pos)<span class="keyword">and</span> <span class="built_in">okz</span>(pos)) cnt++;</span><br><span class="line">        pos++;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">oky</span>(ix) <span class="keyword">and</span> <span class="built_in">okz</span>(ix) <span class="keyword">and</span> <span class="built_in">okx</span>(iy) <span class="keyword">and</span> <span class="built_in">okx</span>(iz)) &#123;</span><br><span class="line">        <span class="type">int</span> distinct=<span class="number">3</span>-(<span class="built_in">int</span>(ix==iy)+<span class="built_in">int</span>(iy==iz)+<span class="built_in">int</span>(iz==ix));</span><br><span class="line">        <span class="keyword">if</span>(distinct==<span class="number">0</span>) distinct=<span class="number">1</span>;</span><br><span class="line">        ans+=p2[cnt-distinct];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">oky</span>(ix) <span class="keyword">and</span> <span class="built_in">okz</span>(ix))cnt--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Ex-Substring-Sort"><a href="#Ex-Substring-Sort" class="headerlink" title="Ex - Substring Sort"></a>Ex - Substring Sort</h1><p>给n个小写英文字母字符串, $m &#x3D; \sum_{i&#x3D;1}^N \frac{|S_i|(|S_i|+1)}{2}$</p>
-<p>那么有 m 个3元组<code>(ki=字符串index,li 该字符串内子串起始下标,ri,该字符串内子串结束下标)</code></p>
-<p>那么每个三元组 对应到一个子字符串, 现在把三元组按照子字符串的字典序排序, (如果两个不同三元组对应子串相同,那么这两个三元组的相对顺序任意)</p>
-<p>q个询问 每次问 排序后第qi个 三元组的任意一个可能值, 输出任意一个可能的(k_qi,l_qi,r_qi)</p>
-<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 1e5</p>
-<p>字符串总长 &lt;&#x3D; 1e5</p>
-<p>2s</p>
-<p>1024mb</p>
-<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>排序, 字符串里和排序有关的 感觉就SA</p>
-<p>所有子串 又 感觉SAM</p>
-<p>按照SA的思路</p>
-<p>就是 把字符串通过 int(‘a’-1) 进行拼接</p>
-<p>然后排后缀数组</p>
-<p>那么 去计算每个字符串 在 三元组中的顺序, 似乎可以二分?</p>
-<p>如何计算呢</p>
-<p>假设排序后</p>
-<p>s[i…], s[j…] 是相邻的, s[i..] 已经算出</p>
-<p>那么能在它们之间的, 是 s[j…] 的前缀(注意不可能还有 不是前缀而 大于 s[i..] 小于s[j..] 的), 且不是 s[i…]的前缀</p>
-<p>而有高度数组的话, 其实可选的字符串 就很明显了</p>
-<p>然后问题是有多少个, 那么就要看从 s[j..] 在SA周后面高度数组连续的</p>
-<p>这样似乎就可以算出 每个的下标? sa和高度数组h的时间复杂度肯定够, 但是 枚举前缀长度的话 这复杂度够吗???</p>
-<p>但是实际上统计的时候 向后看h数组, 可以按照h 进行离散的算, 每个h只会影响到前面一个 具体的位置</p>
-<p>似乎又可以算</p>
-<hr>
-<p>如果算好了, 那么就到了二分到某个之间</p>
-<p>如果再去查又是 我不会估计的复杂度</p>
-<p>所以还是在上面计算h的时候, 把h插入到哪一个之间也记录下来, 这样每个被影响的里面也记录了有序的离散点可以继续二分似乎就没了?</p>
-<hr>
-<p>还真就过了</p>
-<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc280/submissions/37108436">https://atcoder.jp/contests/abc280/submissions/37108436</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> ll=<span class="type">long</span> <span class="type">long</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 0-index + vector + sort</span></span><br><span class="line"><span class="comment">// sa 下标按照顺序排列</span></span><br><span class="line"><span class="comment">// rank 下标对应顺序index</span></span><br><span class="line"><span class="comment">// h sa 中相邻后缀 最长公共前缀 h[0] = 0; h[i] = 最长公共前缀(s[sa[i]..],s[sa[i-1]..])</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line">tuple&lt;vector&lt;<span class="type">int</span>&gt;,vector&lt;<span class="type">int</span>&gt;,vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">s_2_sa_rank_h</span>(<span class="type">const</span> vector&lt;T&gt;&amp; arr)&#123;</span><br><span class="line">  <span class="type">int</span> n = arr.<span class="built_in">size</span>();</span><br><span class="line">  string s=<span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) s+= <span class="built_in">char</span>(arr[i]);</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">rank</span><span class="params">(n)</span></span>;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">sa</span><span class="params">(n)</span></span>;</span><br><span class="line">  <span class="built_in">iota</span>(sa.<span class="built_in">begin</span>(),sa.<span class="built_in">end</span>(),<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) rank[i]=arr[i];</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> w=<span class="number">1</span>; w&lt;=<span class="number">2</span>*n; w*=<span class="number">2</span>) &#123; <span class="comment">// width</span></span><br><span class="line">    vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt;val;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n)val.<span class="built_in">push_back</span>(&#123;rank[i],i+w/<span class="number">2</span>&lt;n?rank[i+w/<span class="number">2</span>]:<span class="number">-1</span>&#125;);</span><br><span class="line">    <span class="built_in">sort</span>(sa.<span class="built_in">begin</span>(),sa.<span class="built_in">end</span>(), [&amp;](<span class="type">int</span> i,<span class="type">int</span> j)&#123; <span class="keyword">return</span> val[i]&lt;val[j]; &#125;);</span><br><span class="line">    rank[sa[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n) rank[sa[i]] = rank[sa[i<span class="number">-1</span>]] + <span class="built_in">int</span>(val[sa[i]]!=val[sa[i<span class="number">-1</span>]]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// height</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">h</span>(n);</span><br><span class="line">  <span class="type">int</span> k = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (rank[i] == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">if</span> (k) --k;</span><br><span class="line">    <span class="keyword">while</span> (arr[i + k] == arr[sa[rank[i] - <span class="number">1</span>] + k]) ++k;</span><br><span class="line">    h[rank[i]] = k;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123;sa,rank,h&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> tmp[<span class="number">100010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; si;</span><br><span class="line">  vector&lt;ll&gt; leni;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    si.<span class="built_in">push_back</span>(s.<span class="built_in">size</span>());</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,tmp);</span><br><span class="line">    <span class="type">int</span> sz=<span class="built_in">strlen</span>(tmp);</span><br><span class="line">    leni.<span class="built_in">push_back</span>(sz);</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,sz) s.<span class="built_in">push_back</span>(tmp[j]);</span><br><span class="line">    s.<span class="built_in">push_back</span>(<span class="string">&#x27;a&#x27;</span><span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;sa,rank,h;</span><br><span class="line">  <span class="built_in">tie</span>(sa,rank,h)=<span class="built_in">s_2_sa_rank_h</span>(s);</span><br><span class="line">  h.<span class="built_in">push_back</span>(<span class="number">0</span>); <span class="comment">// 减少边界逻辑</span></span><br><span class="line">  <span class="type">int</span> m=s.<span class="built_in">size</span>();</span><br><span class="line">  vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt;<span class="built_in">se</span>(m);<span class="comment">// start end</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; stk; <span class="comment">// 单调栈</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m) <span class="keyword">if</span>(s[sa[i]]!=<span class="string">&#x27;a&#x27;</span><span class="number">-1</span>)&#123;</span><br><span class="line">    <span class="keyword">while</span>(stk.<span class="built_in">size</span>())&#123;</span><br><span class="line">      <span class="keyword">if</span>(h[stk.<span class="built_in">back</span>()] &lt; h[i]) <span class="keyword">break</span>;</span><br><span class="line">      se[stk.<span class="built_in">back</span>()].second = i<span class="number">-1</span>;</span><br><span class="line">      stk.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    se[i].first=stk.<span class="built_in">size</span>()?stk.<span class="built_in">back</span>():i<span class="number">-1</span>;</span><br><span class="line">    stk.<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i:stk)se[i].second=m<span class="number">-1</span>;</span><br><span class="line">  vector&lt;array&lt;ll,4&gt; &gt; sxen; <span class="comment">// &#123;start idx,max len, end idx, min len&#125;</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m) <span class="keyword">if</span>(s[sa[i]]!=<span class="string">&#x27;a&#x27;</span><span class="number">-1</span>)&#123;</span><br><span class="line">    sxen.<span class="built_in">push_back</span>(&#123;se[i].first,h[i],se[i].second,<span class="built_in">max</span>(h[se[i].first],h[se[i].second+<span class="number">1</span>])+<span class="number">1</span>&#125;); <span class="comment">// 区间的</span></span><br><span class="line">    sxen.<span class="built_in">push_back</span>(&#123;i,m,i,<span class="built_in">max</span>(h[i],h[i+<span class="number">1</span>])+<span class="number">1</span>&#125;); <span class="comment">// 单个的</span></span><br><span class="line">  &#125;;</span><br><span class="line">  vector&lt;array&lt;ll,4&gt; &gt; next_sxen;</span><br><span class="line">  <span class="keyword">auto</span> saidx2sidx=[&amp;](<span class="type">int</span> i)&#123; <span class="keyword">return</span> <span class="built_in">int</span>(<span class="built_in">lower_bound</span>(<span class="built_in">begin</span>(si),<span class="built_in">end</span>(si),sa[i]+<span class="number">1</span>)-<span class="built_in">begin</span>(si))<span class="number">-1</span>; &#125;; <span class="comment">// 没int会RE</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> [starti,mxlen,endi,mnlen]:sxen)&#123; <span class="comment">// 去除无效的</span></span><br><span class="line">    <span class="comment">// si -&gt; 计算在哪个字符串</span></span><br><span class="line">    <span class="type">int</span> sidx=<span class="built_in">saidx2sidx</span>(starti);</span><br><span class="line">    mxlen=<span class="built_in">min</span>(mxlen,leni[sidx]-(sa[starti]-si[sidx]));</span><br><span class="line">    <span class="keyword">if</span>(mxlen&gt;=mnlen) next_sxen.<span class="built_in">push_back</span>(&#123;starti,mxlen,endi,mnlen&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  sxen=next_sxen;</span><br><span class="line">  <span class="built_in">sort</span>(<span class="built_in">begin</span>(sxen),<span class="built_in">end</span>(sxen)); <span class="comment">// 字典序排序</span></span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> q=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> idx=<span class="number">0</span>; <span class="comment">// &lt; idx 积累的和</span></span><br><span class="line">  ll cnt=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(q--)&#123;</span><br><span class="line">    ll qi=<span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">      <span class="keyword">auto</span> [starti,mxlen,endi,mnlen]=sxen[idx];</span><br><span class="line">      ll next_cnt = cnt + (endi-starti+<span class="number">1</span>)*(mxlen-mnlen+<span class="number">1</span>); <span class="comment">// qi 应该落在(cnt, next_cnt] 中</span></span><br><span class="line">      <span class="keyword">if</span>(next_cnt &lt; qi)&#123;</span><br><span class="line">        cnt=next_cnt;</span><br><span class="line">        idx++;</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="type">int</span> len=mnlen+(qi-cnt<span class="number">-1</span>)/(endi-starti+<span class="number">1</span>);</span><br><span class="line">        <span class="type">int</span> sidx=<span class="built_in">saidx2sidx</span>(starti);</span><br><span class="line">        <span class="type">int</span> l=sa[starti]-si[sidx]+<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d %d %d\n&quot;</span>,sidx+<span class="number">1</span>, l, l+len<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
-<p>平面距离还是不熟,  正常的(x,y) 距离就是变成 max(|x+y|,|x-y|) 去算的, 这里应该要能想到, 一旦有了这个,那么 上面的变化也就显然了</p>
-<p>然后这个枚举最小值的1维的思路其实也很好, 看到这里n这么小, 应该也要想到 枚举一个对小值点, 变成枚举3个维度的最小值点啊</p>
-<p>方向有点对,就是先想退化的例子,再推, 但是想出了部分退化,推没推成功</p>
-<p>Ex</p>
-<p>字符串类的常见工具</p>
-<p>hash: 比较很长的字符是否相等</p>
-<p>kmp: (最长前缀递归dp)给定字符串S, 在其余字符串 找任意位置的最长后缀 是S的前缀</p>
-<p>ac自动机: trie树+kmp思想, 对多个字符串建立字典trie树, 用于查询一个字符串的每个位置子字符串,是否在字典中出现次数</p>
-<p>SA: 一个字符串按后缀排序 以及 排序后相邻的高度数组</p>
-<p>SAM: 输入一个原始字符串，产生一个自动机，能识别一个给的新字符串是否是原始字符串的后缀, 以及(不同子串个数, 某个子串出现次数</p>
-<p>所以这题 我自己能搞出来 虽然编码花了不少时间, 但是从思路主干上看 完全不应该是铜牌题</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc280/editorial">官方题解</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Blog/2022-12-03-ac-abc280/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -601,7 +548,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-12-11 05:28:30" itemprop="dateModified" datetime="2022-12-11T05:28:30+08:00">2022-12-11</time>
+      <time title="修改時間：2022-12-11 06:56:47" itemprop="dateModified" datetime="2022-12-11T06:56:47+08:00">2022-12-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -669,119 +616,14 @@
 <p>egf(指数形 生成 函数), 构建EGF:</p>
 <p>$\displaystyle F(x) &#x3D; \sum_{i&#x3D;0}^{\infty} a_{i} \frac{x^i}{i!}$</p>
 <p>$\displaystyle G(x) &#x3D; \sum_{i&#x3D;0}^{\infty} b_{i} \frac{x^i}{i!}$</p>
-<h2 id="常见反演"><a href="#常见反演" class="headerlink" title="常见反演"></a>常见反演</h2><h3 id="前缀和反演-差分"><a href="#前缀和反演-差分" class="headerlink" title="前缀和反演(差分)"></a>前缀和反演(差分)</h3><p>从前缀和与差分开始 $\displaystyle a_n &#x3D; \sum_{i&#x3D;0}^n 1\cdot b_i \Longleftrightarrow b_n &#x3D; a_n - a_{n-1}$</p>
-<p>前缀和差分 本身不需要用到反演知识, 但从性质上也属于一种反演, 作为对比和样例很好说明问题</p>
-<p>前缀和 $\displaystyle a_n &#x3D; \sum_{i&#x3D;0}^n 1\cdot b_i$</p>
-<p>差分 $\displaystyle b_n &#x3D; a_n - a_{n-1}$</p>
-<p>以大小为$4$为例 <a target="_blank" rel="noopener" href="https://www.wolframalpha.com/input?key=&i=%7B%7B1,0,0,0%7D,%7B1,1,0,0%7D,%7B1,1,1,0%7D,%7B1,1,1,1%7D%7D%5E-1">wolframalpha</a></p>
-<p>$M_f &#x3D; \displaystyle \begin{pmatrix} 1&amp;0&amp;0&amp;0 \\ 1&amp;1&amp;0&amp;0 \\ 1&amp;1&amp;1&amp;0 \\ 1&amp;1&amp;1&amp;1 \end{pmatrix}, M_g &#x3D; \begin{pmatrix} 1&amp;0&amp;0&amp;0 \\ -1&amp;1&amp;0&amp;0 \\ 0&amp;-1&amp;1&amp;0 \\ 0&amp;0&amp;-1&amp;1 \end{pmatrix}, M_f\cdot M_g &#x3D; \begin{pmatrix} 1&amp;0&amp;0&amp;0 \\ 0&amp;1&amp;0&amp;0 \\ 0&amp;0&amp;1&amp;0 \\ 0&amp;0&amp;0&amp;1 \end{pmatrix}$</p>
-<hr>
-<p>$\displaystyle F(x) &#x3D; \sum_{i&#x3D;0}^{\infty} (\sum_{j&#x3D;0}^i 1\cdot b_j) \frac{x^i}{i!}$</p>
-<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \sum_{i&#x3D;j}^{\infty} \frac{x^i}{i!}$</p>
-<p>有$\displaystyle \int F(x) dx &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \sum_{i&#x3D;j}^{\infty} \frac{x^{i+1}}{(i+1)!} &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \sum_{i&#x3D;j+1}^{\infty} \frac{x^{i}}{i!}$</p>
-<p>即 $F(x) - (\int F(x) dx) &#x3D; \sum_{j&#x3D;0}^{\infty} b_j (\sum_{i&#x3D;j}^{\infty} \frac{x^{i}}{i!} -\sum_{i&#x3D;j+1}^{\infty} \frac{x^{i}}{i!}) &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \frac{x^j}{j!} &#x3D; G(x)$</p>
-<p>即$\displaystyle \sum_{i&#x3D;0}^{\infty} b_i \frac{x^i}{i!} &#x3D; G(x) &#x3D; F(x) - (\int F(x) dx) &#x3D; \sum_{i&#x3D;0}^{\infty} (a_i - a_{i-1}) \frac{x^i}{i!}$</p>
-<p>同样得到了$b_i &#x3D; a_i-a_{i-1}$</p>
-<hr>
-<p>二维前缀和</p>
-<p>两个维度在运算上其实互不影响, 所以两个维度的逆运算也是互不影响</p>
-<h3 id="二项式反演"><a href="#二项式反演" class="headerlink" title="二项式反演"></a>二项式反演</h3><p>$a_n &#x3D; \sum_{i&#x3D;0}^n \binom{n}{i} (-1)^i b_i \Leftrightarrow b_n &#x3D; \sum_{i&#x3D;0}^n \binom{n}{i} (-1)^i a_i$</p>
-<p>正向</p>
-<p>$\displaystyle F(x) &#x3D; \sum_{i&#x3D;0}^{\infty} (\sum_{j&#x3D;0}^i \binom{i}{j} (-1)^i b_j) \frac{x^i}{i!}$</p>
-<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \sum_{i&#x3D;j}^{\infty} \binom{i}{j} (-1)^i \frac{x^i}{i!}$</p>
-<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} (-1)^j \frac{b_j}{j!} x^j \sum_{i&#x3D;j}^{\infty} \frac{(-1)^{i-j}}{(i-j)!} x^{i-j}$</p>
-<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} (-1)^j \frac{b_j}{j!} x^j \sum_{i&#x3D;0}^{\infty} \frac{(-1)^i}{i!} x^i$</p>
-<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} \frac{b_j}{j!} (-x)^j e^{-x}$</p>
-<p>$\displaystyle &#x3D; G(-x) e^x$</p>
-<p>反过来</p>
-<p>$\displaystyle \sum_{i&#x3D;0}^{\infty} b_i \frac{x^i}{i!} &#x3D; G(x) &#x3D; F(-x) e^{-x}$</p>
-<p>这里依然可以像上面展开, 但是实际上发现 $G$和$F$之间是相同的转化关系 所以对称直接就有了, 不需要再推一次</p>
-<hr>
-<p>另一个形式 $a_n&#x3D;\sum \limits_{i&#x3D;n}^{\infty} {i\choose n} b_i \Leftrightarrow b_n &#x3D; \sum\limits_{i&#x3D;n}^{\infty}(-1)^{i-n}{i\choose n} a_i$</p>
-<p>$\displaystyle F(x) &#x3D; \sum_{i&#x3D;0}^{\infty} (\sum_{j&#x3D;i}^{\infty} \binom{j}{i} b_j) \frac{x^i}{i!}$</p>
-<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} j! b_j \sum_{i&#x3D;0}^j \frac{x^i}{i!(j-i)!i!}$</p>
-<p>并不能搞, 那就先变形一下$a’_ n &#x3D; n! a_n,b’_ n &#x3D; n! b_n$</p>
-<p>即要证 $a’_ n&#x3D;\sum\limits_{i&#x3D;n}^{\infty} \frac{b’_ i}{(i-n)!} \Leftrightarrow b’_ i &#x3D; \sum\limits_{i&#x3D;n}^{\infty}(-1)^{i-n} \frac{a’_ i}{(i-n)!}$</p>
-<p>$\displaystyle F(x) &#x3D; \sum\limits_{i&#x3D;0}^{\infty} (\sum_{j&#x3D;i}^{\infty} \frac{b’_ j}{(j-i)!}) \frac{x^i}{i!}$</p>
-<p>$\displaystyle &#x3D; \sum\limits_{j&#x3D;0}^{\infty} b’_ j \sum_{i&#x3D;0}^{j} \frac{x^i}{(j-i)!i!}$</p>
-<p>$\displaystyle &#x3D; \sum\limits_{j&#x3D;0}^{\infty} \frac{b’_ j}{j!} \sum_{i&#x3D;0}^{j} \binom{j}{i} x^i$</p>
-<p>$\displaystyle &#x3D; \sum\limits_{j&#x3D;0}^{\infty} \frac{b’_ j}{j!} (1+x)^j$</p>
-<p>$&#x3D;G(1+x)$</p>
-<p>反过来</p>
-<p>$\displaystyle \sum_{i&#x3D;0}^{\infty} b’_ i \frac{x^i}{i!} &#x3D;G(x)&#x3D;F(x-1)&#x3D;\sum_{i&#x3D;0}^{\infty} a’_ i \frac{(x-1)^i}{i!}$</p>
-<p>$\displaystyle &#x3D;\sum_{i&#x3D;0}^{\infty} a’_ i \frac{\sum_{j&#x3D;0}^i \binom{i}{j} x^j (-1)^{i-j}}{i!}$</p>
-<p>$\displaystyle &#x3D;\sum_{i&#x3D;0}^{\infty} a’_ i \sum_{j&#x3D;0}^i \frac{x^j (-1)^{i-j}}{(i-j)!j!}$</p>
-<p>$\displaystyle &#x3D;\sum_{j&#x3D;0}^{\infty} \frac{x^j}{j!}\sum_{i&#x3D;j}^{\infty} a’_ i\frac{(-1)^{i-j}}{(i-j)!}$ 得证</p>
-<p>注意到 $ e^{-x} &#x3D; \sum \frac{(-x)^{i}}{i!}$, 有些时候$a,b$在下标大于某个值$m$时都是$0$, 所以可以翻转$a_{i} &#x3D; a_{m-i}$</p>
-<p>相当于$a,b$生成函数之间有 $a(x)&#x3D;y(x)e^{-x}$, 这里还可以快速对序列 $a$ 和 $b$进行转换</p>
-<h3 id="Stirling反演"><a href="#Stirling反演" class="headerlink" title="Stirling反演"></a>Stirling反演</h3><p>$\displaystyle a_{n}&#x3D;\sum_{k&#x3D;0}^{n}\lbrace {\begin{matrix}n\\ k\end{matrix}}\rbrace b_{k} \Leftrightarrow b_{n}&#x3D;\sum_{k&#x3D;0}^{n}\lbrack {\begin{matrix}n\\ k\end{matrix}}\rbrack a_{k}$</p>
-<blockquote>
-<p>注: 这里的 第一类stirling数是带符号的, 如果要写成不带符号的则是$\lbrack \begin{matrix}n\\ k\end{matrix} \rbrack (-1)^{n-k}$</p>
-</blockquote>
-<p>同样的原理 ${\displaystyle {\widehat {F}}(z)&#x3D;{\widehat {G}}\left(e^{z}-1\right)}$</p>
-<hr>
-<p>$\displaystyle F(x) &#x3D; \sum_{i&#x3D;0}^{\infty} (\sum_{j&#x3D;0}^i \lbrace \begin{matrix} i \\ j \end{matrix} \rbrace b_j)\frac{x^i}{i!}$</p>
-<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \sum_{i&#x3D;j}^{\infty} \lbrace \begin{matrix} i \\ j \end{matrix} \rbrace \frac{x^i}{i!}$</p>
-<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \frac{(e^x-1)^j}{j!}$</p>
-<p>$&#x3D; G(e^x-1)$</p>
-<p>反过来</p>
-<p>$\displaystyle \sum_{i&#x3D;0}^{\infty} b_i \frac{x^i}{i!} &#x3D; G(x) &#x3D; F(\ln(x+1)) &#x3D; \sum_{i&#x3D;0}^{\infty} a_i \frac{(\ln(x+1))^i}{i!}$</p>
-<p>$\displaystyle &#x3D; \sum_{i&#x3D;0}^{\infty} a_i (\sum_{j&#x3D;i}^{\infty} \lbrack \begin{matrix} j \\ i \end{matrix}\rbrack \frac{x^j}{j!})$</p>
-<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} \frac{x^j}{j!} \sum_{i&#x3D;0}^{j} a_i \lbrack \begin{matrix} j \\ i \end{matrix}\rbrack $</p>
-<h3 id="莫比乌斯反演"><a href="#莫比乌斯反演" class="headerlink" title="莫比乌斯反演"></a>莫比乌斯反演</h3><p>$\displaystyle a_n&#x3D;\sum_{i\mid n} b_i \Leftrightarrow b_n&#x3D;\sum_{i\mid n}\mu(\frac{n}{i}) a_i$</p>
-<p>$\displaystyle b_n &#x3D; \sum_{i\mid n} b_i \cdot [i&#x3D;n]$</p>
-<p>$\displaystyle &#x3D; \sum_{i\mid n} b_{\frac{n}{i}} \cdot [i&#x3D;1]$</p>
-<p>$\displaystyle &#x3D; \sum_{i\mid n} b_{\frac{n}{i}} \sum_{d\mid i} \mu(d)$</p>
-<p>$\displaystyle &#x3D; \sum_{d\mid n} \mu(d) \sum_{d\mid i,i\mid n} b_{\frac{n}{i}}$</p>
-<p>$\displaystyle &#x3D; \sum_{d\mid n} \mu(d) \sum_{d\mid \frac{n}{k},k\mid n} b_k $</p>
-<p>$\displaystyle &#x3D; \sum_{j\mid n} \mu(\frac{n}{j})\sum_{\frac{n}{j} \mid \frac{n}{k},k\mid n} b_k$</p>
-<p>$\displaystyle &#x3D; \sum_{j\mid n} \mu(\frac{n}{j}) \sum_{k \mid j} b_k$</p>
-<p>$\displaystyle &#x3D; \sum_{j\mid n} \mu(\frac{n}{j}) a_j $</p>
-<hr>
-<p>莫反一般配合$\lbrack n &#x3D; 1 \rbrack$使用,</p>
-<p>因为$\displaystyle \sum_{d\mid n}\mu (d)&#x3D;{\begin{cases}1&amp;{\text{if }}n&#x3D;1,\\ 0&amp;{\text{if }}n&gt;1.\end{cases}}$</p>
-<p>这个根据wikipedia 似乎也可以 生成函数搞, 但实际操作起来还是 直接推导简单</p>
-<h3 id="子集反演"><a href="#子集反演" class="headerlink" title="子集反演"></a>子集反演</h3><p>$\displaystyle g(S) &#x3D; \sum_{T \subseteq S} f(T) \Leftrightarrow f(S) &#x3D; \sum_{T\subseteq S} (-1)^{|S-T|} g(T)$</p>
-<p>核心原理就是奇偶正负抵消</p>
-<p>类似 莫比乌斯的$\lbrack n&#x3D;1\rbrack$ , 这里需要的工具是$\displaystyle \lbrack S &#x3D; \varnothing \rbrack$</p>
-<p>$h(S) &#x3D; \sum_{T\subseteq S} (-1)^{|S-T|}$</p>
-<p>$&#x3D;\sum_{i&#x3D;0}^{|S|} \binom{|S|}{i} (-1)^{|S|-i}$</p>
-<p>$&#x3D;(1-1)^|S|$</p>
-<p>$\displaystyle &#x3D;\lbrack S &#x3D; \varnothing \rbrack$</p>
-<hr>
-<p>因此</p>
-<p>$\displaystyle f(S) &#x3D; \sum_{Q\subseteq S} f(Q) \lbrack S-Q &#x3D; \varnothing \rbrack$</p>
-<p>$\displaystyle &#x3D; \sum_{Q\subseteq S} f(Q) h(S-Q)$</p>
-<p>$\displaystyle &#x3D; \sum_{Q\subseteq S} f(Q) \sum_{T\subseteq S-Q} (-1)^{|S-Q-T|}$</p>
-<p>$\displaystyle &#x3D; \sum_{Q\subseteq S} f(Q) \sum_{T+Q\subseteq S} (-1)^{|S-(T+Q)|}$</p>
-<p>$\displaystyle &#x3D; \sum_{Q\subseteq S} f(Q) \sum_{Q\subseteq R \subseteq S} (-1)^{|S-R|}$</p>
-<p>$\displaystyle &#x3D; \sum_{R\subseteq S} (-1)^{|S-R|} \sum_{Q\subseteq R} f(Q) $</p>
-<p>$\displaystyle &#x3D; \sum_{R\subseteq S} (-1)^{|S-R|} g(R)$</p>
-<h3 id="Min-Max容斥"><a href="#Min-Max容斥" class="headerlink" title="Min-Max容斥"></a>Min-Max容斥</h3><p>$\displaystyle \max(S) &#x3D; \sum_{T\subseteq S} (-1)^{|T|-1} \min(T)$, 核心原理就是奇偶正负抵消</p>
-<p>对称 $\displaystyle \min(S) &#x3D; \sum_{T\subseteq S} (-1)^{|T|-1} \max(T)$, 相当于所有元素乘上$-1$</p>
-<p>在期望中使用</p>
-<p>$\displaystyle E(\max(S)) &#x3D; E(\sum_{T\subseteq S} (-1)^{|T|-1} \min(T)) &#x3D; \sum_{T\subseteq S} (-1)^{|T|-1} E(\min(T))$</p>
-<hr>
-<p>设集合内元素从小到大 排序了</p>
-<p>$\displaystyle \sum_{T\subseteq S} (-1)^{|T|-1} \min(T)$</p>
-<p>$\displaystyle &#x3D; \sum_{T\subseteq S,a_i &#x3D; min(T) } (-1)^{|T|-1} a_i$, 直接指定$T$</p>
-<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i \sum_{T\subseteq S,a_i &#x3D; min(T) } (-1)^{|T|-1}$, 先指定$a_i$ 再指定$T$</p>
-<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i \sum_{j&#x3D;1}^{n-i+1} \sum_{T\subseteq S,a_i &#x3D; min(T),|T|&#x3D;j } (-1)^{j-1}$, 先指定$a_i$, 再指定$T$的大小</p>
-<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i \sum_{j&#x3D;1}^{n-i+1} (-1)^{j-1} \sum_{T\subseteq S,a_i &#x3D; min(T),|T|&#x3D;j }$</p>
-<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i \sum_{j&#x3D;1}^{n-i+1} (-1)^{j-1} \binom{n-i}{j-1}$</p>
-<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i \sum_{j&#x3D;0}^{n-i} (-1)^{j} \binom{n-i}{j}$</p>
-<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i (1-1)^{n-i}$</p>
-<p>$\displaystyle &#x3D; a_n$</p>
-<p>$\displaystyle &#x3D; \max(S_n)$</p>
-<h3 id="单位根反演"><a href="#单位根反演" class="headerlink" title="单位根反演"></a>单位根反演</h3><h4 id="FFT"><a href="#FFT" class="headerlink" title="FFT"></a>FFT</h4><h4 id="NTT"><a href="#NTT" class="headerlink" title="NTT"></a>NTT</h4><h4 id="FWT"><a href="#FWT" class="headerlink" title="FWT"></a>FWT</h4><h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><h3 id="二项式反演-1"><a href="#二项式反演-1" class="headerlink" title="二项式反演"></a>二项式反演</h3><h3 id="Stirling反演-1"><a href="#Stirling反演-1" class="headerlink" title="Stirling反演"></a>Stirling反演</h3><h3 id="莫比乌斯反演-1"><a href="#莫比乌斯反演-1" class="headerlink" title="莫比乌斯反演"></a>莫比乌斯反演</h3><h3 id="子集反演-1"><a href="#子集反演-1" class="headerlink" title="子集反演"></a>子集反演</h3><h3 id="Min-Max容斥-1"><a href="#Min-Max容斥-1" class="headerlink" title="Min-Max容斥"></a>Min-Max容斥</h3><h3 id="单位根反演-1"><a href="#单位根反演-1" class="headerlink" title="单位根反演"></a>单位根反演</h3><h4 id="FFT-1"><a href="#FFT-1" class="headerlink" title="FFT"></a>FFT</h4><h4 id="NTT-1"><a href="#NTT-1" class="headerlink" title="NTT"></a>NTT</h4><h4 id="FWT-1"><a href="#FWT-1" class="headerlink" title="FWT"></a>FWT</h4><h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Generating_function_transformation">wikipedia 生成函数反演</a></p>
-<p><a href="https://yexiaorain.github.io/Blog/2022-10-19-ac-abc272/">abc 272 中使用二项式反演</a></p>
-<p><a target="_blank" rel="noopener" href="http://localhost:4000/Blog/2022-11-19-ac-abc278/">abc 278 stirling反演</a></p>
-<p><a href="https://yexiaorain.github.io/Blog/2022-09-19-ac-abc242/">abc 242 min-max容斥</a></p>
-<p><a href="https://yexiaorain.github.io/Blog/2022-07-31-ac_abc215/">abc 215 子集反演</a></p>
-<p><a href="https://yexiaorain.github.io/Blog/2019-01-06-MobiusInversionFormula/">莫比乌斯反演</a></p>
-<p><a target="_blank" rel="noopener" href="https://vfleaking.blog.uoj.ac/slide/87">https://vfleaking.blog.uoj.ac/slide/87</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/command-block/xuan-ku-fan-yan-mo-shu">洛谷 炫酷反演魔术</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Blog/2022-11-28-Generating_function_transformation/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -843,7 +685,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-12-11 05:28:30" itemprop="dateModified" datetime="2022-12-11T05:28:30+08:00">2022-12-11</time>
+      <time title="修改時間：2022-12-11 06:56:47" itemprop="dateModified" datetime="2022-12-11T06:56:47+08:00">2022-12-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -981,7 +823,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2022-12-11 05:28:30" itemprop="dateModified" datetime="2022-12-11T05:28:30+08:00">2022-12-11</time>
+      <time title="修改時間：2022-12-11 06:56:47" itemprop="dateModified" datetime="2022-12-11T06:56:47+08:00">2022-12-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1053,70 +895,14 @@
 <p>一个是 当前超过的是啥, 前面的乘积, 自由的状态, 剩余的未分配数</p>
 <hr>
 <p>等一下,上面读错题了, 是min不是max</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>答案 为 $[x^M]\ \prod_{i&#x3D;1}^{N} (x+2x^2+3x^3+\dots+ix^i+ix^{i+1}+ix^{i+2}+\dots).$</p>
-<p>很显然, i表示 第i个的值的选择情况, 幂次为实际选的数, 系数为乘法贡献, M为实际选的总和</p>
-<p>然后幂次大于 i的 系数就都是i了, 小于等于的就是本身</p>
-<p>$&#x3D; [x^M] \prod_{i&#x3D;1}^{N} i(x+x^2+x^3+\cdots) - ((i-1)x+(i-2)x^2+(i-3)x^3+\dots+(1)x^{i-1})$</p>
-<p>$&#x3D; [x^M] \prod_{i&#x3D;1}^{N} \frac{ix}{1-x} + \frac{x(-x^i+i(x-1)+1)}{(x-1)^2}$</p>
-<p>$&#x3D; [x^M] \prod_{i&#x3D;1}^{N} \frac{x(1-x^i)}{(1-x)^2}$</p>
-<p>$&#x3D; [x^{M-N}] \prod_{i&#x3D;1}^{N} \frac{(1-x^i)}{(1-x)^2}$</p>
-<p>$&#x3D; [x^{M-N}] \frac{\prod_{i&#x3D;1}^{N} (1-x^i)}{(1-x)^{2N}}$</p>
-<p>!!! 注意到的是分子上 通过五边形数定理 只有$O(\sqrt{N})$ 个幂次系数不为$0$</p>
-<p>$&#x3D; [x^{M-N}] \frac{\sum_{i&#x3D;1}^{k} a_k x^{e_k}}{(1-x)^{2N}}$</p>
-<p>然后 配合 广义二项式定理 + Lucas’ Theorem 就可以搞了</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc279/submissions/36912683">https://atcoder.jp/contests/abc279/submissions/36912683</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">200003</span>;</span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="keyword">using</span> ll=<span class="type">long</span> <span class="type">long</span>;</span><br><span class="line"></span><br><span class="line">mint fac[MOD]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint ifac[MOD];</span><br><span class="line"><span class="function">mint <span class="title">binom</span><span class="params">(ll n,ll m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(m &gt; n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span>(n &gt;= MOD) <span class="keyword">return</span> <span class="built_in">binom</span>(n/MOD,m/MOD)*<span class="built_in">binom</span>(n%MOD,m%MOD);<span class="comment">// lucas</span></span><br><span class="line">  <span class="keyword">return</span> fac[n]*ifac[m]*ifac[n-m];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ll n,m;</span><br><span class="line">  std::cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;MOD;i++)fac[i]=fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  ifac[MOD<span class="number">-1</span>]=fac[MOD<span class="number">-1</span>].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=MOD<span class="number">-2</span>;i&gt;=<span class="number">0</span>;i--)ifac[i]=ifac[i+<span class="number">1</span>]*(i+<span class="number">1</span>);</span><br><span class="line">  mint ans=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">auto</span> calc=[&amp;](ll k)&#123;</span><br><span class="line">    ll pwr = m-n-k*(<span class="number">3</span>*k<span class="number">-1</span>)/<span class="number">2</span>; <span class="comment">// Pentagonal Number Theorem, O(sqrt(n))</span></span><br><span class="line">    <span class="keyword">if</span>(pwr &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    ans += <span class="built_in">binom</span>(<span class="number">2</span>*n+pwr<span class="number">-1</span>,pwr)*((k&amp;<span class="number">1</span>)?<span class="number">-1</span>:<span class="number">1</span>);<span class="comment">// (-1)^k * (-1)^pwr * binom(-2n,pwr)</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">for</span>(ll k=<span class="number">0</span>;<span class="built_in">calc</span>(k);k++);</span><br><span class="line">  <span class="keyword">for</span>(ll k=<span class="number">-1</span>;<span class="built_in">calc</span>(k);k--);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="欧拉-五边形数定理-Pentagonal-Number-Theorem"><a href="#欧拉-五边形数定理-Pentagonal-Number-Theorem" class="headerlink" title="欧拉 五边形数定理 Pentagonal Number Theorem"></a>欧拉 五边形数定理 Pentagonal Number Theorem</h2><p>$\displaystyle \prod_{i&#x3D;1}^{\infty} (1-x^i) &#x3D; \sum_{n&#x3D;-\infty}^{\infty} (-1)^nx^{\frac{n(3n-1)}{2}}.$</p>
-<p>显然, 要证明就是 n 的 拆分成 <code>奇数个不同的正整数和</code>的个数 * -1 + <code>偶数个不同的正整数和</code>的个数 * 1 &#x3D; -1&#x2F;0&#x2F;1</p>
-<p>思路方向就是 想办法建立 奇偶拆分之间的一一对应, 这样只有特殊的1个无法匹配的话, 就贡献1或-1</p>
-<p>我拆不出来</p>
-<p>Franklin’s bijective proof</p>
-<p>Ferrers 图</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xxxxxx</span><br><span class="line">xxxxx</span><br><span class="line">xxxx</span><br><span class="line">xxx</span><br><span class="line">oo</span><br></pre></td></tr></table></figure>
-
-<p>底部个数记为m</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xxxxxxo</span><br><span class="line">xxxxxo</span><br><span class="line">xxxx</span><br><span class="line">xxx</span><br></pre></td></tr></table></figure>
-
-<p>顶部右侧45度 记作s</p>
-<p>性质:</p>
-<p>若 m &gt; s 则 把右侧45度 放到底部, 且只能操作一次(因为放完以后一定 news &gt;&#x3D; s &#x3D; newm)</p>
-<p>若 m &lt;&#x3D; s, 考虑把底部移动到右边, 同样至多操作一次(newm &gt; m &#x3D; news), 但是注意特殊情况 底部和45度共用一个点时 无法操作</p>
-<p>注意到上面能操作的时候 奇偶会改变, 所以奇偶建立了一一映射, 而至多有1种不满足</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xxxxx</span><br><span class="line">xxxx</span><br><span class="line">xxx</span><br></pre></td></tr></table></figure>
-
-<p>那么个数是 $\frac{s+(2s-1))s}{2}$ (简单的梯形公式)</p>
-<p>贡献是$(-1)^s$</p>
-<p>得证</p>
-<p>注意幂次是$O(s^2)$的, 换句话说, 反过来就是指定了幂次上界以后,就是$O(根号上界)$ 个的非零系数</p>
-<h2 id="广义二项式定理"><a href="#广义二项式定理" class="headerlink" title="广义二项式定理"></a>广义二项式定理</h2><p>牛顿广义二项式定理</p>
-<p>$(x+y)^{\alpha} &#x3D; \sum_{k&#x3D;0}^{\infty} \binom{\alpha}{k} x^{\alpha-k}y^k$</p>
-<p>其中 $\binom{\alpha}{k} &#x3D; \frac{\alpha(\alpha - 1)\cdots(\alpha-k+1)}{k!}$</p>
-<p>所以$\alpha$ 为负整数时</p>
-<p>$\binom{-n}{k} &#x3D; (-1)^k \binom{n+k-1}{k}$</p>
-<h2 id="Lucas’-Theorem"><a href="#Lucas’-Theorem" class="headerlink" title="Lucas’ Theorem"></a>Lucas’ Theorem</h2><p>用来求 $\binom{n}{m} \bmod p$, 其中$p$ 是质数</p>
-<p>$\binom{sp+q}{tp+r} \equiv \binom{s}{t}\binom{q}{r} \pmod{p}$</p>
-<p>proof</p>
-<p>$p$是质数 显然 $i \in [1,p-1]$ 时, $\binom{p}{i} \equiv 0 \pmod{p}$</p>
-<p>$(1+x)^{sp+q} \equiv ((1+x)^p)^s \cdot (1+x)^q$</p>
-<p>$\equiv (1+x^p)^s \cdot (1+x)^q $</p>
-<p>$\equiv (\sum_{i&#x3D;0}^s \binom{s}{i} x^{ip})(\sum_{j&#x3D;0}^q \binom{q}{j} x^j)$</p>
-<p>要求$tp+r$ 的系数, 显然 左边贡献的都是$p$的倍数的, 右边贡献的是小于p的</p>
-<p>得证</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这个G一个int overflow找了一年, 没看Ex</p>
-<p>Ex</p>
-<p>五边形数定理:</p>
-<p>五边形数定理作为雅可比三元积的特例出现。</p>
-<p>干 第一次又读错题目了, 读成了max,结果是min</p>
-<p>不过还是缺少 去向生成函数的方向思考, 即使看错成max,也可以同样去建立方程(至于能不能算另说), 没去朝这个方向想真是不应该</p>
-<p>广义二项式定理, 好像之前几次有涉及一点,这次终于把它补了</p>
-<p>Lucas 定理</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc279/editorial">官方题解</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=iJ8pnCO0nTY">Mathologer Youtube Euler’s pentagonal formula</a></p>
-<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Pentagonal_number_theorem">wikipedia Pentagonal number theorem</a></p>
-<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%AE%9A%E7%90%86/7134359">百度百科 二项式定理</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Blog/2022-11-26-ac-abc279/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
