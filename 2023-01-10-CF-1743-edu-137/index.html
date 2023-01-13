@@ -27,7 +27,7 @@
 <meta property="og:description" content="D(随机)E(DP)F(数学,贡献统计)G(fib,DP)">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2023-01-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-13T00:12:34.504Z">
+<meta property="article:modified_time" content="2023-01-13T00:53:52.326Z">
 <meta property="article:author" content="Xiao Ye">
 <meta property="article:tag" content="数学">
 <meta property="article:tag" content="随机">
@@ -271,7 +271,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2023-01-13 08:12:34" itemprop="dateModified" datetime="2023-01-13T08:12:34+08:00">2023-01-13</time>
+      <time title="修改時間：2023-01-13 08:53:52" itemprop="dateModified" datetime="2023-01-13T08:53:52+08:00">2023-01-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -308,14 +308,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>9.9k</span>
+      <span>10k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>25 分鐘</span>
+      <span>26 分鐘</span>
     </span>
 </div>
 
@@ -518,21 +518,8 @@
 
 <p>似乎并不行,</p>
 <hr>
-<p>突然想到一个证明</p>
-<p>因为fib-str不是周期串(proof, 不妨设 fib-str[i] 是最短的有子周期的字符串, 那么这个周期串同时是它的前缀也就是 fib-str[0..i-1] 的前缀, 周期串也是后缀, 也是 i-2,i-4的后缀, 可以找到一个更短但是前缀后缀重叠的, 也是周期串,最小性不满足)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">     ............................................</span><br><span class="line">     [    ][    ][    ][    ][    ]...</span><br><span class="line">j  : xxxxxyyyxxxxx</span><br><span class="line">j-1: xxxxx</span><br></pre></td></tr></table></figure>
-
-<p>或者在某个 [len(fib-str[j-1], len(fib-str[j])&#x2F;2) 之间</p>
-<p>但注意2倍周期 也同时是前后缀, 而两倍周期一定重叠, 所以又是可以找到更小的周期串, 和最小性冲突</p>
-<hr>
-<p>所以 如果fib-str[0…i]</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fib: xxxxxxxx|yyyyy</span><br><span class="line">    [0..........i]</span><br><span class="line">        j.......i</span><br><span class="line">             k</span><br></pre></td></tr></table></figure>
-
-<p>所以 j的位置 一定在 xxxxx一半以后, 否则 [j…k] 也是 xxxxx的前缀, 而单独看xxxxxxx 就会是周期序列, 而fib-str自身不是</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[j....i] = xxxxxxxx|yyyyy - (&gt; len(x)/2)</span><br></pre></td></tr></table></figure>
-
-<p>所以两次以后就变成 比y更短的子问题</p>
-<p>所以是log级别的!!!!!</p>
+<p>突然想到一个证明, XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 证明有问题</p>
+<p>&#x2F;&#x2F;    —-<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    因为fib-str不是周期串(proof, 不妨设 fib-str[i] 是最短的有子周期的字符串, 那么这个周期串同时是它的前缀也就是 fib-str[0..i-1] 的前缀, 周期串也是后缀, 也是 i-2,i-4的后缀, 可以找到一个更短但是前缀后缀重叠的, 也是周期串,最小性不满足)<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    <code>//         ............................................ //         [    ][    ][    ][    ][    ]... //    j  : xxxxxyyyxxxxx //    j-1: xxxxx //   </code><br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    或者在某个 [len(fib-str[j-1], len(fib-str[j])&#x2F;2) 之间<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    但注意2倍周期 也同时是前后缀, 而两倍周期一定重叠, 所以又是可以找到更小的周期串, 和最小性冲突<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    —<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    所以 如果fib-str[0…i]<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    <code>//    fib: xxxxxxxx|yyyyy //        [0..........i] //            j.......i //                 k //   </code><br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    所以 j的位置 一定在 xxxxx一半以后, 否则 [j…k] 也是 xxxxx的前缀, 而单独看xxxxxxx 就会是周期序列, 而fib-str自身不是<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    <code>//    [j....i] = xxxxxxxx|yyyyy - (&gt; len(x)/2) //   </code><br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    所以两次以后就变成 比y更短的子问题<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    所以是log级别的!!!!!<br>&#x2F;&#x2F;</p>
 <hr>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br><span class="line">10</span><br><span class="line">101</span><br><span class="line">10110</span><br><span class="line">10110110</span><br><span class="line">1011011010110</span><br><span class="line">101101101011010110110</span><br></pre></td></tr></table></figure>
 
@@ -650,7 +637,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">45:22</span>
+    <span title="所需總閱讀時間">45:23</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
