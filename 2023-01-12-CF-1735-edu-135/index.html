@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="F(二分图)G(子集,bitmask,DP)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Educational Codeforces Round 135">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/2023-01-12-CF-1735-edu-135/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="F(二分图)G(子集,bitmask,DP)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-01-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-15T00:00:43.882Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="二分图">
+<meta property="article:tag" content="bitmask">
+<meta property="article:tag" content="子集">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/2023-01-12-CF-1735-edu-135/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/2023-01-12-CF-1735-edu-135/","path":"2023-01-12-CF-1735-edu-135/","title":"Educational Codeforces Round 135"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Educational Codeforces Round 135 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">230</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">223</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#F-Fishermen"><span class="nav-text">F. Fishermen</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Illumination"><span class="nav-text">G. Illumination</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">230</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">223</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/2023-01-12-CF-1735-edu-135/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Educational Codeforces Round 135 | YeXiaoRain Blog">
+      <meta itemprop="description" content="F(二分图)G(子集,bitmask,DP)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Educational Codeforces Round 135
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-01-12 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-12T00:00:00+08:00">2023-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-15 08:00:43" itemprop="dateModified" datetime="2023-01-15T08:00:43+08:00">2023-01-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/Edu/" itemprop="url" rel="index"><span itemprop="name">Edu</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/2023-01-12-CF-1735-edu-135/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023-01-12-CF-1735-edu-135/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>9.3k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>23 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">F(二分图)G(子集,bitmask,DP)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://cftracker.netlify.app/contests">CF tracker</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/51208">Edu List</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1728">https://codeforces.com/contest/1728</a></p>
+<h1 id="F-Fishermen"><a href="#F-Fishermen" class="headerlink" title="F. Fishermen"></a>F. Fishermen</h1><p>n个钓鱼人</p>
+<p>第i个获得大小a[i]的鱼</p>
+<p>他们选一个报告的顺序, 报告鱼的大小b[i], 但是可能虚报</p>
+<p>第一个报告的 诚实报告</p>
+<p>其它人报告的 是最小的b[i]&#x3D;a[p[i]]的倍数 且 大于 前一个报告值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 2 3 2 2 8 3</span><br><span class="line">按顺序报 变成</span><br><span class="line">1 2 3 4 4 8 9</span><br></pre></td></tr></table></figure>
+
+<p>对于所有报告顺序, 让所有报告的 sum b[i] 最小</p>
+<p>输出sum b[i]的最小值即可</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1000</p>
+<p>ai [1,1e6]</p>
+<p>6s</p>
+<p>512mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>如果两两不同, 那么从小到大就好了, 因为b[i] &gt;&#x3D; a[i], 这是所有都取a[i] 是最小值</p>
+<p>如果 两个相同, 那么至少一个要虚报, 那么至少 2a[i]</p>
+<p>如果 三个相同, 那么&#x3D;&gt; a[i], 2a[i], 3a[i]</p>
+<p>但不只是让它们不同就完了, 因为翻倍后依然可能相同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2 2 2 3 3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2 4 6 3 6</span><br></pre></td></tr></table></figure>
+
+<p>这两个6还要处理</p>
+<p>但是一个6是变8, 一个是变9</p>
+<hr>
+<p>显然 如果a 有重复n次, 那么 a,2a,…,na 一定都有的,不会中间空着, 否则把更大的来填补可以让它更小</p>
+<hr>
+<p>感觉上 当倍增的时候遇到相同的, 那就让小的去增加,</p>
+<p>但实际上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2 2 2 2 3 3</span><br><span class="line">变成</span><br><span class="line">2 4 6 8</span><br><span class="line">3 6</span><br></pre></td></tr></table></figure>
+
+<p>如果是 2的6去变化, 那么要变成16, 不如3的6变成9</p>
+<p>而变化, 因为上面说了不会中间空着, 那就是每次找 最大的倍数去变</p>
+<p>这样靠差值最小来变化的贪心, 似乎是对的吗???? 但我证明不了</p>
+<hr>
+<p>然后 如果这样搞, 运算量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">600 个1, 300个2 这样大量重叠</span><br></pre></td></tr></table></figure>
+
+<p>似乎也就O(2n)?</p>
+<p>写了下, 不出所料 样例都没过</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  map&lt;ll,vector&lt;pair&lt;ll,<span class="type">int</span>&gt; &gt; &gt; v2tv; <span class="comment">// &#123;倍数, 原值&#125;</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> a=<span class="built_in">read</span>();</span><br><span class="line">    v2tv[a].<span class="built_in">push_back</span>(&#123;<span class="number">1</span>,a&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  map&lt;ll,ll&gt; v2mxt; <span class="comment">// v 到最大倍数</span></span><br><span class="line">  ll ans=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(v2tv.<span class="built_in">size</span>())&#123;</span><br><span class="line">    <span class="keyword">auto</span> [k,arr]=*v2tv.<span class="built_in">begin</span>();</span><br><span class="line">    v2tv.<span class="built_in">erase</span>(v2tv.<span class="built_in">begin</span>());</span><br><span class="line">    <span class="keyword">auto</span> keep=arr[<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="built_in">size</span>(arr))&#123;</span><br><span class="line">      <span class="keyword">auto</span> [kt,kv] = keep; <span class="comment">// keep &#123;t,v&#125;</span></span><br><span class="line">      <span class="keyword">auto</span> [nt,nv] = arr[i]; <span class="comment">// new &#123;t,v&#125;</span></span><br><span class="line">      <span class="keyword">if</span>(!v2mxt.<span class="built_in">count</span>(kv)) v2mxt[kv]=<span class="number">1</span>; <span class="comment">// kt 一定是1</span></span><br><span class="line">      <span class="keyword">if</span>(!v2mxt.<span class="built_in">count</span>(nv)) v2mxt[nv]=<span class="number">1</span>; <span class="comment">// nt 一定是1</span></span><br><span class="line"></span><br><span class="line">      ll nkt=v2mxt[kv]+<span class="number">1</span>;</span><br><span class="line">      ll nnt=v2mxt[nv]+<span class="number">1</span>;</span><br><span class="line">      <span class="keyword">if</span>(nkt*kv &lt; nnt*nv)&#123; <span class="comment">// 用keep</span></span><br><span class="line">        v2mxt[kv]=nkt;</span><br><span class="line">        v2tv[nkt*kv].<span class="built_in">push_back</span>(&#123;nkt,kv&#125;);</span><br><span class="line">        keep=arr[i];</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123; <span class="comment">// 用 arr[i]</span></span><br><span class="line">        v2mxt[nv]=nnt;</span><br><span class="line">        v2tv[nnt*nv].<span class="built_in">push_back</span>(&#123;nnt,nv&#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d -&gt; %lld\n&quot;</span>,keep.second,keep.first*keep.second);</span><br><span class="line">    ans+=k;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1 -&gt; 1</span><br><span class="line">2 -&gt; 2</span><br><span class="line">3 -&gt; 3</span><br><span class="line">2 -&gt; 4</span><br><span class="line">3 -&gt; 6</span><br><span class="line">8 -&gt; 8</span><br><span class="line">2 -&gt; 10</span><br><span class="line">34</span><br></pre></td></tr></table></figure>
+
+<p>问题就在6的地方是动2还是动3, 动2是先到8再到10, 这个8 能预判吗??</p>
+<p>并不会</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>b是<code>可能的</code> 的答案 的充要条件 是 b[i] 是 a[i] 倍数, 且b[i] 两两不同</p>
+<p><code>bi &lt;= n * a[i]</code>, 因为 每个&#x3D;a[i]数之所以要乘法, 就是为了必让和其它数碰撞,那么 不妨设其它数变化固定了, 那么最多占了 n-其它的个数 个位置, 所以剩下的位置 不小于 &#x3D;a[i]的个数, 所以显然<code>b[i] &lt;= n*a[i]</code></p>
+<p>然后构建二分图???!!!</p>
+<p>左侧 a[i] 右侧 (1~n) a[i]</p>
+<p>然后是二分图 带权匹配, 还要权最小</p>
+<p>但是最小费用流 跑 1e6 点, 1e6边的图 并不可行</p>
+<hr>
+<p>按照右侧点从小到大排序</p>
+<p>然后把左右交换!!!!, 用b 去配a, 而不是a去配b</p>
+<p>这样就是从小到大去配, 而且配了的, 即使交叉也是保持配了的</p>
+<p>如果配失败了, 不需要清空vis ,可以优化O(n^4) 到 O(n^3)</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1728/submission/189159290">https://codeforces.com/contest/1728/submission/189159290</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line">ll a[<span class="number">1010</span>];</span><br><span class="line"><span class="type">int</span> r2l[<span class="number">1010</span>]; <span class="comment">// [右侧点] =&gt; 已经配对的左侧点, 0表示未配对</span></span><br><span class="line">vector&lt;<span class="type">bool</span>&gt; vis;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; e[<span class="number">1000010</span>];</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">f</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">//</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> x:e[u]) <span class="keyword">if</span>(!vis[x]) &#123;</span><br><span class="line">    vis[x]=<span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span>(!r2l[x] || <span class="built_in">f</span>(r2l[x])) <span class="keyword">return</span> r2l[x]=u;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  vector&lt;ll&gt; val;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  vis.<span class="built_in">assign</span>(n+<span class="number">1</span>,<span class="literal">false</span>); <span class="comment">// 1-index</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    a[i]=<span class="built_in">read</span>();</span><br><span class="line">    <span class="built_in">rep</span>(p,<span class="number">1</span>,n+<span class="number">1</span>) val.<span class="built_in">push_back</span>(p*a[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(val.<span class="built_in">begin</span>(),val.<span class="built_in">end</span>()); <span class="comment">// 排序去重</span></span><br><span class="line">  val.<span class="built_in">erase</span>(<span class="built_in">unique</span>(val.<span class="built_in">begin</span>(),val.<span class="built_in">end</span>()),val.<span class="built_in">end</span>());</span><br><span class="line">  <span class="type">int</span> m=val.<span class="built_in">size</span>(); <span class="comment">// **左**侧点个数, 用值去配a,而不是a去配b</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(p,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> x=<span class="built_in">lower_bound</span>(val.<span class="built_in">begin</span>(),val.<span class="built_in">end</span>(),a[i]*p)-val.<span class="built_in">begin</span>()+<span class="number">1</span>; <span class="comment">// 1-index</span></span><br><span class="line">    e[x].<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">  ll res=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,m+<span class="number">1</span>) <span class="keyword">if</span>(<span class="built_in">f</span>(i)) &#123;</span><br><span class="line">    res+=val[i<span class="number">-1</span>];</span><br><span class="line">    <span class="keyword">if</span>(++cnt==n) <span class="keyword">break</span>; <span class="comment">// 最多就是n个匹配</span></span><br><span class="line">    <span class="built_in">fill</span>(<span class="built_in">begin</span>(vis),<span class="built_in">end</span>(vis),<span class="literal">false</span>); <span class="comment">// 成功才清除vis,失败vis过的点都是无法找到的,不需要清空下次还能减少判断</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,res);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="G-Illumination"><a href="#G-Illumination" class="headerlink" title="G. Illumination"></a>G. Illumination</h1><p>线段[0,d]内,有n灯, m个点关键点</p>
+<p>对于每个灯, 可以选择它的 power \in [0,d], 点x上i的灯, 可以照亮 [x-power[i], x+power[i]]</p>
+<p>一个合法 power 方案, 要每个关键点至少被一个灯照亮</p>
+<p>q个询问, 每个询问独立,</p>
+<ul>
+<li>如果 在 qi 位置 增加一个灯, 问添加后所有灯的所有合法power的方案数 mod 998244353</li>
+</ul>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>d [4,3e5]</p>
+<p>n [1,2e5]</p>
+<p>m [1,16]</p>
+<p>q 5e5</p>
+<p>8s</p>
+<p>512mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>m有点小, 但如果bitmask 再乘上n又有点大了</p>
+<p>这样每次独立的增加一个, 感觉上有点像区间维护 中间插东西, 需要线段树一类的去维护</p>
+<p>这q 5e5 感觉乱给的, 毕竟d才3e5, 不过都是3e5的量级 也差不多</p>
+<hr>
+<p>如果不是插入一次性给的点, 怎么算</p>
+<p><code>dp[i][j] = </code> 前i个点, 成功覆盖小于 pos[i] 的 关键点 超出距离为j的 方案数</p>
+<p>这样 状态 是 O(n * d) 太大了, 还要转移就更不行了</p>
+<hr>
+<p><code>dp[i][j] = </code>, 第i个关键点 左侧覆盖它 且index 最大的点是j, 且比i小的关键点全被覆盖的方案数</p>
+<p>感觉上信息不足, 超出的距离也有意义 需要记录, 而且还可以从右侧覆盖</p>
+<hr>
+<p>直接按照m个点切割成 m+1段区间</p>
+<p>计算 区间i内的点, 向左覆盖到最小的 关键点</p>
+<p><code>count[区间i][向左覆盖到最小的关键点][向右覆盖到最大的关键点] = </code> 方案数</p>
+<p>然后就可以</p>
+<p><code>dp[前i个区间中的点][向左][向右] = 方案数</code></p>
+<p><code>ans = dp[m+1][1][m]</code></p>
+<hr>
+<p>两个问题 count 如何计算, dp如何转移</p>
+<p><code>dp[i][l][r] = sum dp[i-1][l0][r0] * count[i][l1][r1]</code> 满足 (min(l0,l1) &#x3D; l, max(r0,r1) &#x3D; r)</p>
+<p>似乎好像 就是 [16x16] 的转移, 那么就是 其实就是 矩阵乘法+线段树维护? 但256^3 再 乘上q(5e5)实在有点大</p>
+<p>这q甚至似乎 256 * 256 都接受不了</p>
+<hr>
+<p>这个q显然可以离线按照顺序算</p>
+<p>所以在离线的加持下问题变成3段(或2段)</p>
+<p><code>左[l][r] , 当前[l][r], 右[l][r]</code></p>
+<p>要求它们组合情况下 <code>[1][m]</code> 的值</p>
+<hr>
+<p>其实问题回到 上面提出还未解决的问题, count怎么算</p>
+<p>再仔细一想, 其实不用切割,</p>
+<p>每个点可以表示成 [不覆盖关键点 的方案数, 覆盖1个的方案数….,覆盖16个的方案数]</p>
+<p>最多17个状态</p>
+<p>而实际上 变成这个状态后, 与实际的点在哪里 就属于冗余信息了.</p>
+<p>那么就是 <code>state[l][r] x point[17个状态] =&gt; new state[l][r]</code></p>
+<p>要做~7e5次这个运算, 因为5e5(3e5)次都是单独的, 所以n(2e5)次是批量还是单独 似乎对量级都影响不大了</p>
+<p>感觉表达式一写,它就是一种二维的什么卷积??</p>
+<p><code>c[i][j] = sum a[i0][j0] * b[i1][j1] ,  (i,j) = (min(i0,i1),max(j0,j1))</code></p>
+<p>统计一点</p>
+<p><code>i0=i,j0=j,i1&gt;=i, j1&lt;=j</code></p>
+<p><code>i0=i,j0&lt;j,i1&gt;=i, j1==j</code></p>
+<p><code>i0&gt;i,j0=j,i1==i, j1&lt;=j</code></p>
+<p><code>i0&gt;i,j0&lt;j,i1==i, j1==j</code></p>
+<p>配上二维前缀和, 可以优化到16 * 16, 似乎就能过了, <code>256*7*10**5= 179200000</code></p>
+<hr>
+<p>但实际上是不对的, 当两个不重叠的 [l,r] 合并 并不是 min, max</p>
+<p>而还是 bitmask</p>
+<p>f[bitmask] &#x3D; 方案数</p>
+<p>f[bitmask] * 新点 &#x3D;&gt; newf[bitmask]</p>
+<hr>
+<p>这就不一样了, 需要得到初始的f[bitmask]</p>
+<p>和 f[bitmask] * 新点 的 <code>[1&lt;&lt;m-1]</code> 的单点值即可</p>
+<p>单点 最多17种非0 bitmask, 但是<code>17 * (1&lt;&lt;m-1) * q</code> 也接受不了</p>
+<hr>
+<p>所以问题在于, 如何批量计算初始的f[bitmask]</p>
+<p>和 单点如何快速计算 <code>[1&lt;&lt;m-1]</code> 的值</p>
+<p>看起来前面是 <code>c[i] = sum a[i0]*b[i1], i=i0|i1</code>的卷积问题</p>
+<p>但即使 能够 线性(比log还小)得到, <code>2**16*2*10**5= 13107200000</code>, 似乎也不太能做</p>
+<hr>
+<p>而最后的 单点计算反而简单一些, 如果前面算好了, 可以把bitmask 转换成 <code>[左侧连续1的最右][右侧连续1的最左]</code></p>
+<p>再累和,去预处理 <code>[左侧连续1 &gt;= i][ 右侧连续1 &lt;= j]</code>的个数</p>
+<p>这样 单点的p 加入, 枚举17种 都是O(1)的了</p>
+<hr>
+<p>所以如果能快速算出前面的f[bitmask]这个题就AC了</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>也是先考虑静态</p>
+<p>但它不是考虑的插入计算, 而是考虑 所有 - 无效的方案, 然后无效的方案用容斥算</p>
+<p>容斥就很显然, 灯的照亮半径被左右 指定 无效的关键点限制最大长度, 所以 算完后 <code>ans=ways[mask]*(-1)^popcount(mask)</code></p>
+<p>而且容斥, 正好和我上面切割的想法一样, 因为 当指定相邻 i 和j不被照亮时, 它们中间的 对 ways贡献的倍数就是固定的</p>
+<p>所以容斥 先计算 <code>count[i][j] = </code>, i和j之间的方案数, 复杂度为 (&lt;&#x3D; m左关键点 * m右关键点 * n之间的点), 是可以接受的</p>
+<p>然后再转成 dp[前缀mask] &#x3D; 方案数, 来帮助计算 ways[mask] &#x3D; O(mask * m) 也是可以接受的,</p>
+<hr>
+<p>O(m) 每个询问??</p>
+<hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">11 3 2</span><br><span class="line">1 4 11</span><br><span class="line">2 7</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">11</span><br><span class="line">   0 1 2 3 4 5 6 7 8 9 10 11</span><br><span class="line">L    x     x               x</span><br><span class="line">P      x         x</span><br></pre></td></tr></table></figure>
+
+<p>这里通过 pways[mask] &#x3D; 钦定mask时 一个点的方案 * 距离 和 pways[mask 更大一个点] * 1&#x2F;距离来实现</p>
+<p>比如 对于灯L&#x3D;11 和 mask&#x3D;10,</p>
+<p>ways[10] &#x3D; pways[10] * pways[11]</p>
+<p>而关键点P&#x3D;7时, 它对 11的贡献是 <code>*4</code>, 而对于<code>10</code>的贡献是<code>*1/4</code></p>
+<p>关键点P&#x3D;2对<code>10</code>的贡献是<code>*9</code>,对<code>11</code>的贡献是<code>*2</code>, 所以 <code>ways[10]=18</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ways[00]=1 // 这个会被替换掉</span><br><span class="line">ways[10]=18</span><br><span class="line">ways[01]=72</span><br><span class="line">ways[11]=8</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><code>ans=sum ways[mask] * (-1)^popcount(mask)</code></p>
+<p><code>ans=sum (\prod f(mask,l[i])) * (-1)^popcount(mask)</code></p>
+<p><code>ans=sum (\prod f(mask,l[0..n-1])) * f(mask,x) * (-1)^popcount(mask)</code></p>
+<p>所以需要 预计算 让f(mask,x) &#x3D;&#x3D; d 的所有mask对应的 <code>sum (\prod f(mask,l[0..n-1])) * (-1)^popcount(mask)</code></p>
+<p>这样 一个灯x的和最近点j距离d的贡献, <code>mask = 是msk[x][j]含j的子集 且 不是msk[x][j]不含j的子集</code></p>
+<p>所以 按照<code>accways[mask]=sum ways[mask] * (-1)^popcount(mask)</code> 即可</p>
+<hr>
+<p>转换加权类和</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">accways[00]=1728</span><br><span class="line">accways[01]=1710</span><br><span class="line">accways[10]=1656</span><br><span class="line">accways[11]=1646</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>这样 <code>ans = sum d[x][j] * (accways[mask[x][j]] - accways[mask[x][j] - (1&lt;&lt;j)]) , j=0..m-1</code></p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1728/submission/189262201">https://codeforces.com/contest/1728/submission/189262201</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">998244353</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">binpow</span><span class="params">(ll a, ll p)</span></span>&#123;</span><br><span class="line">  ll r = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (p)&#123;</span><br><span class="line">    <span class="keyword">if</span> (p &amp; <span class="number">1</span>) (r*=a)%=MOD;</span><br><span class="line">    (a*=a)%=MOD;</span><br><span class="line">    p/=<span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> c[<span class="number">1</span>&lt;&lt;<span class="number">16</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> D=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m=<span class="built_in">read</span>();</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">inv</span><span class="params">(D+<span class="number">1</span>,<span class="number">1</span>)</span></span>; <span class="comment">// [i]=1/i</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>, D+<span class="number">1</span>) inv[i] = inv[MOD%i]*(MOD-MOD/i)%MOD;</span><br><span class="line"></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">b</span><span class="params">(n)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>, n) b[i]=<span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(m)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>, m) a[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">sort</span>(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>());</span><br><span class="line">  a.<span class="built_in">resize</span>(<span class="built_in">unique</span>(<span class="built_in">begin</span>(a),<span class="built_in">end</span>(a))-<span class="built_in">begin</span>(a));</span><br><span class="line">  m=a.<span class="built_in">size</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;m) c[i]=c[i&amp;(i<span class="number">-1</span>)]+<span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> all = (<span class="number">1</span> &lt;&lt; m) - <span class="number">1</span>;</span><br><span class="line">  <span class="function">vector&lt;ll&gt; <span class="title">pways</span><span class="params">(<span class="number">1</span> &lt;&lt; m, <span class="number">1</span>)</span></span>; <span class="comment">// f[mask] = 钦定mask不被覆盖 的方案数</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m) <span class="built_in">rep</span>(j,<span class="number">0</span>,n)&#123; <span class="comment">// b[j] 最近的不被覆盖的</span></span><br><span class="line">    <span class="type">int</span> d = <span class="built_in">abs</span>(b[j] - a[i]);</span><br><span class="line">    <span class="type">int</span> mask; <span class="comment">// 不被b[j] 覆盖的点的mask: 1...10...01...1</span></span><br><span class="line">    <span class="keyword">if</span> (b[j] &gt; a[i])&#123; <span class="comment">// [a[i]=b[j]-d...b[j]...b[j]+d]</span></span><br><span class="line">      <span class="type">int</span> r = <span class="built_in">lower_bound</span>(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>(), b[j] + d) - a.<span class="built_in">begin</span>();</span><br><span class="line">      mask = all ^ ((<span class="number">1</span> &lt;&lt; r) - <span class="number">1</span>) ^ ((<span class="number">1</span> &lt;&lt; (i + <span class="number">1</span>)) - <span class="number">1</span>);<span class="comment">// [0...i]...[r...m-1], 会左右同时包含等于</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;           <span class="comment">// [b[j]-d...b[j]...b[j]+d=a[i]]</span></span><br><span class="line">      <span class="type">int</span> l = <span class="built_in">lower_bound</span>(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>(), b[j] - d) - a.<span class="built_in">begin</span>();</span><br><span class="line">      mask = all ^ ((<span class="number">1</span> &lt;&lt; i) - <span class="number">1</span>) ^ ((<span class="number">1</span> &lt;&lt; l) - <span class="number">1</span>);<span class="comment">// [0...l-1]...[i..m-1] 左侧不会包含等于, 右侧包含等于,如样例3</span></span><br><span class="line">    &#125;</span><br><span class="line">    (pways[mask] *=d)%=MOD; <span class="comment">// 记录的达到这个状态的钦定下,有[0~d-1]种方案</span></span><br><span class="line">    (pways[mask-(<span class="number">1</span>&lt;&lt;i)] *=inv[d])%=MOD;<span class="comment">// 对相对小的取逆,保证每个点所乘的串只会有刚好mask的贡献,可能在第一种情况失去意义,但是如果把(d看成带左右优先级的话, 依然保有意义)</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ways[mask] = \prod pways[包含mask的]</span></span><br><span class="line">  vector&lt;ll&gt; ways = pways; <span class="comment">// f[mask] = 钦定mask不被覆盖 的方案数</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m)<span class="built_in">per</span>(mask,<span class="number">0</span>,all+<span class="number">1</span>)<span class="keyword">if</span>((mask&gt;&gt;i)&amp;<span class="number">1</span>)(ways[mask-(<span class="number">1</span>&lt;&lt;i)]*=ways[mask])%=MOD;<span class="comment">// 从大到小, 变成 ways[mask] = `&gt;= mask`的方案数, 这样就是 钦定[mask] = 方案数, 除了mask==0</span></span><br><span class="line">  ways[<span class="number">0</span>] = <span class="built_in">binpow</span>(D+<span class="number">1</span>, n);</span><br><span class="line"></span><br><span class="line">  vector&lt;ll&gt; accways = ways; <span class="comment">// accways[mask] = sum ways[submask \subset mask] * (-1)^c[submask];</span></span><br><span class="line">  <span class="built_in">rep</span>(mask,<span class="number">0</span>, <span class="number">1</span> &lt;&lt; m) (accways[mask] *= (c[mask]&amp;<span class="number">1</span>) ? <span class="number">-1</span> : <span class="number">1</span>)%=MOD; <span class="comment">// 乘上 -1幂次的权</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>, m) <span class="built_in">rep</span>(mask,<span class="number">0</span>, <span class="number">1</span> &lt;&lt; m) <span class="keyword">if</span> (!((mask&gt;&gt;i) &amp; <span class="number">1</span>)) (accways[mask|(<span class="number">1</span> &lt;&lt; i)]+=accways[mask])%=MOD; <span class="comment">// 从小到大</span></span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> q=<span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">while</span>(q--)&#123;</span><br><span class="line">    <span class="type">int</span> x=<span class="built_in">read</span>();</span><br><span class="line">    ll ans = <span class="built_in">binpow</span>(D+<span class="number">1</span>, n+<span class="number">1</span>); <span class="comment">// 所有方案</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,m)&#123;</span><br><span class="line">      <span class="type">int</span> d = <span class="built_in">abs</span>(x - a[i]);</span><br><span class="line">      <span class="type">int</span> mask;</span><br><span class="line">      <span class="keyword">if</span> (x &gt; a[i])&#123;</span><br><span class="line">        <span class="type">int</span> r = <span class="built_in">lower_bound</span>(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>(), x + d) - a.<span class="built_in">begin</span>();</span><br><span class="line">        mask = all ^ ((<span class="number">1</span> &lt;&lt; r) - <span class="number">1</span>) ^ ((<span class="number">1</span> &lt;&lt; (i + <span class="number">1</span>)) - <span class="number">1</span>);<span class="comment">// [0...i]...[r...m-1], 会左右同时包含等于</span></span><br><span class="line">      &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="type">int</span> l = <span class="built_in">lower_bound</span>(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>(), x - d) - a.<span class="built_in">begin</span>();</span><br><span class="line">        mask = all ^ ((<span class="number">1</span> &lt;&lt; i) - <span class="number">1</span>) ^ ((<span class="number">1</span> &lt;&lt; l) - <span class="number">1</span>);<span class="comment">// [0...l-1]...[i..m-1] 左侧不会包含等于, 右侧包含等于</span></span><br><span class="line">      &#125;</span><br><span class="line">      (ans += d*(accways[mask]-accways[mask-(<span class="number">1</span>&lt;&lt;i)])%MOD)%=MOD;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, (ans+MOD)%MOD);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这F全场9人过, G全场48人过</p>
+<p>F</p>
+<p>光是<code>b[i] &lt;= n * a[i]</code> 就没想到, 所以也完全没往二分图去想, 不过感觉 a-&gt;b 配对的 似乎就是 网络流和二分图相关的, 要建立联系</p>
+<p>然后这个把值反过来 和 二分图匹配时的性质, 来保证最小性 也是学到了, 有点意思!!!</p>
+<p>G</p>
+<p>思路流程还是感觉比较传统了,  都是先考虑静态, 再考虑插入</p>
+<p>这里 的 乘d 和 d的相反数, 感觉逻辑懂了, 但是没有很悟, 感觉还是很神奇, 因为我自己想的时候, 总想到 一个精确的[d0~d1]之间</p>
+<p>感觉是 <code>ways[mask] = f(点1) * f(点2) *...</code></p>
+<p>然后<code>f(点1) = p(短距离=大mask) * p(短距离的逆=相对小mask) * ... * p(正好距离=mask)</code>, 题解里的(sum-over-subsets (well, product-over-subsets in this case :)))</p>
+<p>以及这里 关于相等的经典处理, 就是按照额外顺序来让它们全部都不等</p>
+<p>然后这里反复的子集集合的变化, 虽然都可以证明, 但还是很不熟悉</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/106805">官方</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/2023-01-12-CF-1735-edu-135/" title="Educational Codeforces Round 135">https://yexiaorain.github.io/Blog/2023-01-12-CF-1735-edu-135/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/" rel="tag"><i class="fa fa-tag"></i> 二分图</a>
+              <a href="/Blog/tags/bitmask/" rel="tag"><i class="fa fa-tag"></i> bitmask</a>
+              <a href="/Blog/tags/%E5%AD%90%E9%9B%86/" rel="tag"><i class="fa fa-tag"></i> 子集</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2023-01-11-CF-1739-edu-136/" rel="prev" title="Educational Codeforces Round 136">
+                  <i class="fa fa-chevron-left"></i> Educational Codeforces Round 136
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">1.1m</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">45:55</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/2023-01-12-CF-1735-edu-135/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
