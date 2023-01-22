@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="题目$A(x) &#x3D; 1x + 1x^2 + 2x^3+ 3x^4+5x^5+8x^6+..$ 已知$A(x)$(整数) 求问,x为有理数时$A(x)$的取值序列 $xA(x) &#x3D; 1x^2 + 1x^3 + 2x^4+ 3x^5+5x^6+8x^7+..$ $(1-x)A(x) &#x3D; x + 1x^3 + 1x^4 + 2x^5+ 3x^6+5x^7+8x^8+..$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="project euler 137 (pell 方程右侧为-4 )">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/pe/137/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="题目$A(x) &#x3D; 1x + 1x^2 + 2x^3+ 3x^4+5x^5+8x^6+..$ 已知$A(x)$(整数) 求问,x为有理数时$A(x)$的取值序列 $xA(x) &#x3D; 1x^2 + 1x^3 + 2x^4+ 3x^5+5x^6+8x^7+..$ $(1-x)A(x) &#x3D; x + 1x^3 + 1x^4 + 2x^5+ 3x^6+5x^7+8x^8+..$">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-12-06T02:37:14.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.515Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="数学">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/pe/137/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/pe/137/","path":"pe/137/","title":"project euler 137 (pell 方程右侧为-4 )"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>project euler 137 (pell 方程右侧为-4 ) | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pell%E6%96%B9%E7%A8%8B"><span class="nav-text">pell方程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%B8%BA%E6%AD%A3"><span class="nav-text">如果为正</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-1"><span class="nav-text">Code 1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code2"><span class="nav-text">Code2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/pe/137/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="project euler 137 (pell 方程右侧为-4 ) | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          project euler 137 (pell 方程右侧为-4 )
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-12-06 10:37:14" itemprop="dateCreated datePublished" datetime="2020-12-06T10:37:14+08:00">2020-12-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Project-Euler/" itemprop="url" rel="index"><span itemprop="name">Project Euler</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/pe/137/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pe/137/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>976</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>5 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>$A(x) &#x3D; 1x + 1x^2 + 2x^3+ 3x^4+5x^5+8x^6+..$</p>
+<p>已知$A(x)$(整数) 求问,x为有理数时$A(x)$的取值序列</p>
+<p>$xA(x) &#x3D; 1x^2 + 1x^3 + 2x^4+ 3x^5+5x^6+8x^7+..$</p>
+<p>$(1-x)A(x) &#x3D; x + 1x^3 + 1x^4 + 2x^5+ 3x^6+5x^7+8x^8+..$</p>
+<p>$(1-x)A(x) &#x3D; x + x^2A(x)$</p>
+<p>$A(x)x^2 +(1+A(x))x - A(x) &#x3D; 0$</p>
+<p>$x &#x3D; \frac{\sqrt{1+2A(x)+5A(x)^2}-1-A(x) }{2A(x)}$ (只考虑正的取值)</p>
+<p>也就是找$1+2x+5x^2&#x3D;y^2$ 的解</p>
+<p>在pe 100 里面我们讨论过变形</p>
+<p>$5+10+25x^2&#x3D;5y^2$</p>
+<p>$4+(1+5x)^2&#x3D;5y^2$</p>
+<p>$(1+5x)^2-5y^2&#x3D;-4$</p>
+<p>形式上是个pell方程右侧换成-4</p>
+<h1 id="pell方程"><a href="#pell方程" class="headerlink" title="pell方程"></a>pell方程</h1><p>在做过66和100以后，回顾看看</p>
+<p>66是pell方程，解一定是渐进分数，且一定有解，所有解能由基础解的幂次生成</p>
+<p>100是pell方程右侧改为-1的方程，解一定是渐进分数，但没有证明到一定有解(d&#x3D;34时似乎真的没解)，通过连分数的递推寻找</p>
+<p>这里</p>
+<p>我们关心一下和佩尔方程的关系</p>
+<p>在pe66，100中我们的步骤是这样的</p>
+<p>$x^2-d y^2 &#x3D; \pm 1$</p>
+<p>$|\sqrt{d}-\frac{x}{y}| &#x3D; |\frac{dy^2-x}{y^2(\sqrt{d}+\frac{x}{y})}| &lt; \frac{1}{2y^2}$</p>
+<p>然后满足上面不等式的一定是连分数的渐进分数</p>
+<p>我们假设$x^2-dy^2 &#x3D; c$</p>
+<p>$\frac{x}{y} &#x3D; \sqrt{d+\frac{c}{y^2}}$</p>
+<p>上面式子的放缩部分是 $|\frac{c}{\sqrt{d}+\frac{x}{y}}| &lt; \frac{1}{2}$</p>
+<p>$ |\frac{4}{\sqrt{5}+\sqrt{5-\frac{4}{y^2} } }| &lt; \frac{1}{2}$</p>
+<p>当c比较大时 例如 $x^2-10y^2&#x3D;9$ 有三组解答 $(7,2)…$, $(13,4)…$,$(57,18),…$</p>
+<h1 id="如果为正"><a href="#如果为正" class="headerlink" title="如果为正"></a>如果为正</h1><p>考虑两组满足 $x^2-5y^2&#x3D;-4$的值</p>
+<p>根据pe100的结论，$(9+4\sqrt{5})^n$ 是 其佩尔方程的基础解对应的值</p>
+<p>$1&#x3D;\frac{x_0^2-dy_0^2}{x_1^2-dy_1^2} $</p>
+<p>$&#x3D; \frac{x_0+y_0\sqrt{d}}{x_1+y_1\sqrt{d}} \cdot \frac{x_0-y_0\sqrt{d}}{x_1-y_1\sqrt{d}}$</p>
+<p>$&#x3D; \frac{(x_0+y_0\sqrt{d})(x_1-y_1\sqrt{d})}{-4} \cdot \frac{(x_0-y_0\sqrt{d})(x_1+y_1\sqrt{d})}{-4}$</p>
+<p>$&#x3D; ((\frac{x_0x_1-y_0y_1d}{4})+(\frac{x_1y_0-x_0y_1}{4})\sqrt{d})((\frac{x_0x_1-y_0y_1d}{4})-(\frac{x_1y_0-x_0y_1}{4})\sqrt{d})$</p>
+<p>$&#x3D; (\frac{x_0x_1-y_0y_1d}{4})^2-(\frac{x_1y_0-x_0y_1}{4})^2 d $</p>
+<p>说明两个不同的<code>-4</code>的解, 如果能让$x_1y_0-x_0y_1 &#x3D; 0 (\pmod 4)$,那么它们之间一定是通过乘一个<code>=1</code>的解得到的,(之考虑y是因为如果y为整数且等式成立，那么x必为整数),也就是它们有同样的基础解</p>
+<p>如果y是偶数，$y &#x3D; 2k$,显然 x也是2的倍数，直接解 $(2x)^2-5(2y)^2&#x3D;-4$,$x^2-5y^2&#x3D;-1$ 解之即可</p>
+<p>如果y是奇数, x也是奇数</p>
+<p>根据mod 4进行分类</p>
+<p>$(4k_0+1,4k_1+1) ,(4k_0+3,4k_1+3)$ 有同样的基础解(如果有解) </p>
+<p>$(4k_0+1,4k_1+3) ,(4k_0+3,4k_1+1)$ 有同样的基础解(如果有解)</p>
+<p>所以最后分为3类</p>
+<p>注意到基础解的幂次可乘性, 考虑<code>(x,y)</code>为最小全正解，$x&gt;0,y&gt;0$</p>
+<p>$(x+y\sqrt{5})(9+4\sqrt{5})^{-1} &#x3D; (x+y\sqrt{5})(9-4\sqrt{5})$</p>
+<p>$ &#x3D; ((9x-20y)+(9y-4x)\sqrt{5})$ , 因为是最小正解，所以再次乘积后 $9x-20y &lt; 0$ 或 $9y-4x&lt;0$</p>
+<p>$ \frac{x}{y} &lt; \frac{20}{9} 或  \frac{x}{y} &gt; \frac{9}{4}$ </p>
+<p>$ \sqrt{5-\frac{4}{y^2}} &lt; \frac{20}{9} 或  \sqrt{5-\frac{4}{y^2}} &gt; \frac{9}{4}$ </p>
+<p>$\frac{2}{\sqrt{5}} \le y &lt; \frac{18}{\sqrt{5}} 约 8.049844718999243 $</p>
+<p>要尝试的y有限</p>
+<p>综上原题可解</p>
+<h1 id="Code-1"><a href="#Code-1" class="headerlink" title="Code 1"></a>Code 1</h1><p>尝试8以内</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">isSquare</span>(<span class="params">v</span>):</span><br><span class="line">    <span class="keyword">if</span> v == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    l = <span class="number">1</span></span><br><span class="line">    r = v</span><br><span class="line">    <span class="keyword">while</span> l+<span class="number">1</span> &lt; r:</span><br><span class="line">        m = (l+r)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> m*m == v:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">if</span> m*m &gt; v:</span><br><span class="line">            r = m</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            l = m</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">9</span>):</span><br><span class="line">        <span class="keyword">if</span> isSquare(<span class="number">5</span>*i*i-<span class="number">4</span>):</span><br><span class="line">            <span class="built_in">print</span>(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<p>运行得到基础解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 1</span><br><span class="line">4 2</span><br><span class="line">11 5</span><br></pre></td></tr></table></figure>
+
+<h1 id="Code2"><a href="#Code2" class="headerlink" title="Code2"></a>Code2</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    arr = [(<span class="number">1</span>,<span class="number">1</span>),(<span class="number">4</span>,<span class="number">2</span>),(<span class="number">11</span>,<span class="number">5</span>)]</span><br><span class="line">    cnt = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> cnt &lt; <span class="number">15</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(arr)):</span><br><span class="line">            x,y = arr[i]</span><br><span class="line">            <span class="keyword">if</span> x &gt; <span class="number">1</span> <span class="keyword">and</span> (x-<span class="number">1</span>)%<span class="number">5</span>==<span class="number">0</span>:</span><br><span class="line">                cnt+=<span class="number">1</span></span><br><span class="line">                <span class="built_in">print</span>((x-<span class="number">1</span>)//<span class="number">5</span>)</span><br><span class="line">            arr[i] = (<span class="number">9</span>*x+<span class="number">20</span>*y,<span class="number">9</span>*y+<span class="number">4</span>*x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/742181/find-all-integer-solutions-for-the-equation-5x2-y2-4">https://math.stackexchange.com/questions/742181/find-all-integer-solutions-for-the-equation-5x2-y2-4</a></p>
+<p><a target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/1088277/fermats-difference-equation-pells-equation">https://math.stackexchange.com/questions/1088277/fermats-difference-equation-pells-equation</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/pe/137/" title="project euler 137 (pell 方程右侧为-4 )">https://yexiaorain.github.io/Blog/pe/137/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/pe/066_new/" rel="prev" title="project euler 066 diophantine equation(关键内容重新整理版)">
+                  <i class="fa fa-chevron-left"></i> project euler 066 diophantine equation(关键内容重新整理版)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/arc/113/" rel="next" title="Atcoder arc113 E (数学+枚举+分类讨论)">
+                  Atcoder arc113 E (数学+枚举+分类讨论) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/pe/137/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

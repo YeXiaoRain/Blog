@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="题目https:&#x2F;&#x2F;atcoder.jp&#x2F;contests&#x2F;agc056&#x2F;tasks&#x2F;agc056_b 一个长度为n的排列 对于q个查询构成的大小为q向量有多少种 其中每次查询排列[l..r] 中最大值的下标 n &lt;&#x3D; 300 查询不重复, 合法(l &lt; r) 题解考虑把数字从大到小放入排列的位置. 假设把N放在位置pos,那么有三类区间  包含pos的 完全在pos左侧 完">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder agc1560 B, DP,分治,前缀和,数学">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/agc/056B/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="题目https:&#x2F;&#x2F;atcoder.jp&#x2F;contests&#x2F;agc056&#x2F;tasks&#x2F;agc056_b 一个长度为n的排列 对于q个查询构成的大小为q向量有多少种 其中每次查询排列[l..r] 中最大值的下标 n &lt;&#x3D; 300 查询不重复, 合法(l &lt; r) 题解考虑把数字从大到小放入排列的位置. 假设把N放在位置pos,那么有三类区间  包含pos的 完全在pos左侧 完">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-12-06T02:37:14.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.503Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="前缀和">
+<meta property="article:tag" content="分治">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/agc/056B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/agc/056B/","path":"atcoder/agc/056B/","title":"Atcoder agc1560 B, DP,分治,前缀和,数学"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder agc1560 B, DP,分治,前缀和,数学 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E4%B8%8D%E8%80%83%E8%99%91%E9%87%8D%E5%A4%8D"><span class="nav-text">先不考虑重复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%A4%8D"><span class="nav-text">重复</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E7%89%88"><span class="nav-text">改版</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/agc/056B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder agc1560 B, DP,分治,前缀和,数学 | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder agc1560 B, DP,分治,前缀和,数学
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-12-06 10:37:14" itemprop="dateCreated datePublished" datetime="2021-12-06T10:37:14+08:00">2021-12-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/AGC/" itemprop="url" rel="index"><span itemprop="name">AGC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/agc/056B/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/agc/056B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>4k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>20 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/agc056/tasks/agc056_b">https://atcoder.jp/contests/agc056/tasks/agc056_b</a></p>
+<p>一个长度为n的排列</p>
+<p>对于q个查询构成的大小为q向量有多少种</p>
+<p>其中每次查询排列[l..r] 中最大值的下标</p>
+<p>n &lt;&#x3D; 300</p>
+<p>查询不重复, 合法(l &lt; r)</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>考虑把数字从大到小放入排列的位置.</p>
+<p>假设把N放在位置pos,那么有三类区间</p>
+<ol>
+<li>包含pos的</li>
+<li>完全在pos左侧</li>
+<li>完全在pos右侧</li>
+</ol>
+<p>那么显然对于所有查询区间包含pos的,返回都是pos</p>
+<p>而对剩余的,如果把左侧位置的所有值保持相对顺序,右侧位置的所有值保持相对顺序, 然后调整值让左侧所有值大于右侧所有值, 对于输出的q维向量没有变化.(因为相对顺序不变,左侧和右侧内部,原来哪个位置大还是哪个大,且都在pos单侧互不影响), 因此不妨我们选定pos后如此调整</p>
+<h2 id="先不考虑重复"><a href="#先不考虑重复" class="headerlink" title="先不考虑重复"></a>先不考虑重复</h2><p>那么设计状态<code>dp[i][j][pos] =</code> 在<code>[i..j]</code>中, <code>pos</code>为最大值, 且属于<code>[i..j]</code>中某个<strong>完整</strong>区间的 方案数</p>
+<p>那么注意到上面,当我们选定了pos, 就是把区间划分成<code>[i..pos-1]pos[pos+1..j]</code></p>
+<p>原题的答案变为 <code>sum(dp[0][n-1][pos = 0..n-1])</code></p>
+<p>其中注意到,我们在对于无效的pos结果为0, 例如 pos不属于<code>[i..j]</code>中任何一个完整区间, 其对应的情景是最大值不属于任何一个区间,那么 这个位置删掉都行 更不用考虑值了</p>
+<p>那么上面的转移方程有</p>
+<p><code>dp[0][n-1][pos] = sum(dp[0][pos-1][0..pos-1]) * sum(dp[pos+1][n-1][pos+1..n-1])</code></p>
+<p>也就是 左侧 和 右侧分别独立计算.</p>
+<p>而这个计算规则实际上和原问题是同一个问题. 因此可以看成是分治</p>
+<p><code>dp[i][j][p] = sum(dp[i][p-1][i..p-1]) * sum(dp[p+1][j][p+1..j])</code></p>
+<p>其中 sum为零时,记为1,属于空方案</p>
+<hr>
+<p>引理: 分治中数值的大小无影响,只有输出有影响</p>
+<p>因为隔离性,假设右侧不动,来考虑左侧的排列数值变化,但产出向量不变,对结果有什么影响.</p>
+<p>假设左侧存在<code>[1..2][3..4]</code> 非重叠 或者 <code>[1..2][2..3]</code>重叠区间或其它任何状态, 那么可能不同的值,有相同的向量产生 </p>
+<p>一旦左侧的产出向量确定了, 注意到转移方程的剩余部分,一个是pos,那一定比左侧都大,而右侧根据它们的隔离性,比左侧都小,所以转移方程的任何剩余向量也不会受到影响.</p>
+<p>所以, 转移方程只与单侧的向量产生相关, 与具体值无关</p>
+<hr>
+<p>上面的东西,看上去搞个前缀和,再<code>for(len)for(左端点i)for(最大值下标pos)</code> 就搞完了</p>
+<h2 id="重复"><a href="#重复" class="headerlink" title="重复"></a>重复</h2><p>基本的东西有了,下面是精确计算值</p>
+<p>正如上面的例子<code>[1..2][3..4]</code></p>
+<p>如果是1234 输出是(2,4)</p>
+<p>如果是3412 输出也是(2,4)</p>
+<p>而对于dp来说,一个是按照 第4位 开始划分,一个是按照第2位开始划分的. 有重复的问题</p>
+<hr>
+<p>同样,对于<code>[1..2][2..3]</code> 来说</p>
+<p>如果312 和  213 也会重复.分别是第1位和第3位最大进行讨论的, 而它们的输出都是(1,3)</p>
+<p>注意, 这里 132 和231 不会重复统计</p>
+<hr>
+<p>一个办法是容斥(本文不会提到</p>
+<hr>
+<p>另一个就是发现其数学性质</p>
+<p>当在<code>[i..j]</code> 中 pos是最大值的下标 且属于其中某个完整区间时</p>
+<p>如果<code>[i..pos-1]</code> 中的最大值 在idx, 且idx和pos 在<code>[i..j]</code> 中不属于任何同一个完整区间, 那么 让idx变为 <code>[i..j]</code>中的最大值, pos改为次大值,总输出向量不变</p>
+<p>证明</p>
+<p>因为前面假设过, value[pos] &gt; 所有左侧值 &gt; 所有右侧值,所以pos最大,idx次大</p>
+<p>交换以后,value[idx] &gt; value[pos] &gt; 其它左侧值 &gt; 所有右侧值</p>
+<p>按情况讨论区间</p>
+<ol>
+<li>pos右侧的所有区间,因为包含的内容全在右侧值中,所以都不受影响</li>
+<li>包含pos的所有区间, 原本输出pos, 因为不包括idx,现在pos次大,所以依然输出pos</li>
+<li>pos左侧所有区间, 只有idx变大了,但对于所有左侧区间来说,相对顺序都没有变化, 所以左侧的也都没有变</li>
+</ol>
+<p>所以总的向量没有变</p>
+<hr>
+<p>以上证明了,如果<code>[i..pos-1]</code>中的最大值和pos在<code>[i..j]</code>中不属于同一个完整区间,那么会被重复统计. 所以</p>
+<p><code>dp[i][j][p] = sum(dp[i][p-1][i..p-1]) * sum(dp[p+1][j][p+1..j])</code></p>
+<p>要改为</p>
+<p><code>dp[i][j][p] = sum(dp[i][p-1][f(p)..p-1]) * sum(dp[p+1][j][p+1..j])</code></p>
+<p><code>f(p) =</code> 最小的 在<code>[i..j]</code>中和<code>p</code>属于同一个完整区间的 </p>
+<hr>
+<p>不漏从dp过程中已经保证了,上面我们只是提到了去重,而并不能说明所有重复都没有了.下面证明所有重复都没有了</p>
+<p>即是证明 任何输出向量,只会被至多统计一次</p>
+<p>不妨设某个 输出被统计了两次.</p>
+<p>根据统计过程, 如果它在首次被不同的最大值下标统计了,那么</p>
+<ol>
+<li>这两个下标属于同一个区间,和下标是最大值矛盾,一个区间只有一个下标是最大值</li>
+<li>这两个下标不属于任何同一个区间,那么根据上面的变化, 只会统计在左侧为更大值</li>
+</ol>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>基于 heno239 的代码 <a target="_blank" rel="noopener" href="https://atcoder.jp/contests/agc056/submissions/27693073">https://atcoder.jp/contests/agc056/submissions/27693073</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i, a, n) for (ll i = a; i &lt; n; i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i, a, n) for (ll i = n - 1; i &gt;= a; i--)</span></span><br><span class="line"><span class="keyword">constexpr</span> ll mod = <span class="number">998244353</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> all(v) (v).begin(), (v).end()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">modint</span> &#123;</span><br><span class="line">  <span class="type">int</span> n;</span><br><span class="line">  <span class="built_in">modint</span>() : <span class="built_in">n</span>(<span class="number">0</span>) &#123; ; &#125;</span><br><span class="line">  <span class="built_in">modint</span>(ll m) &#123;</span><br><span class="line">    <span class="keyword">if</span> (m &lt; <span class="number">0</span> || mod &lt;= m) &#123;</span><br><span class="line">      m %= mod;</span><br><span class="line">      <span class="keyword">if</span> (m &lt; <span class="number">0</span>)</span><br><span class="line">        m += mod;</span><br><span class="line">    &#125;</span><br><span class="line">    n = m;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> n; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">bool</span> <span class="keyword">operator</span>==(modint a, modint b) &#123;</span><br><span class="line">  <span class="keyword">return</span> a.n == b.n;</span><br><span class="line">&#125;</span><br><span class="line">modint <span class="keyword">operator</span>+=(modint&amp; a, modint b) &#123;</span><br><span class="line">  a.n += b.n;</span><br><span class="line">  <span class="keyword">if</span> (a.n &gt;= mod)</span><br><span class="line">    a.n -= mod;</span><br><span class="line">  <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line">modint <span class="keyword">operator</span>-=(modint&amp; a, modint b) &#123;</span><br><span class="line">  a.n -= b.n;</span><br><span class="line">  <span class="keyword">if</span> (a.n &lt; <span class="number">0</span>)</span><br><span class="line">    a.n += mod;</span><br><span class="line">  <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line">modint <span class="keyword">operator</span>*=(modint&amp; a, modint b) &#123;</span><br><span class="line">  a.n = ((ll)a.n * b.n) % mod;</span><br><span class="line">  <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line">modint <span class="keyword">operator</span>+(modint a, modint b) &#123;</span><br><span class="line">  <span class="keyword">return</span> a += b;</span><br><span class="line">&#125;</span><br><span class="line">modint <span class="keyword">operator</span>-(modint a, modint b) &#123;</span><br><span class="line">  <span class="keyword">return</span> a -= b;</span><br><span class="line">&#125;</span><br><span class="line">modint <span class="keyword">operator</span>*(modint a, modint b) &#123;</span><br><span class="line">  <span class="keyword">return</span> a *= b;</span><br><span class="line">&#125;</span><br><span class="line">modint <span class="keyword">operator</span>^(modint a, ll n) &#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">modint</span>(<span class="number">1</span>);</span><br><span class="line">  modint res = (a * a) ^ (n / <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">if</span> (n % <span class="number">2</span>)</span><br><span class="line">    res = res * a;</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">inv</span><span class="params">(ll a, ll p)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (a == <span class="number">1</span> ? <span class="number">1</span> : (<span class="number">1</span> - p * <span class="built_in">inv</span>(p % a, a)) / a + p);</span><br><span class="line">&#125;</span><br><span class="line">modint <span class="keyword">operator</span>/(modint a, modint b) &#123;</span><br><span class="line">  <span class="keyword">return</span> a * <span class="built_in">modint</span>(<span class="built_in">inv</span>(b, mod));</span><br><span class="line">&#125;</span><br><span class="line">modint <span class="keyword">operator</span>/=(modint&amp; a, modint b) &#123;</span><br><span class="line">  a = a / b;</span><br><span class="line">  <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; vle[<span class="number">305</span>];       <span class="comment">// [r pos] = &#123;l pos...&#125; 区间右端点到左端点</span></span><br><span class="line">modint dp[<span class="number">305</span>][<span class="number">305</span>][<span class="number">305</span>];   <span class="comment">// [l][r][x] = [l..r-1] 最大的是x的方案数, 其中不论l取值多少,x与[l,r-1]至少属于[l,r-1]中的一个完整区间</span></span><br><span class="line">modint rdp[<span class="number">305</span>][<span class="number">305</span>][<span class="number">305</span>];  <span class="comment">// rdp[l][r][i] =  dp[l][r][0..i-1] 的前缀和</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认 全false, 右端点在[l+1..r]之间，长度 &lt;= r-l 的区间是否存在</span></span><br><span class="line"><span class="type">bool</span> exi[<span class="number">305</span>][<span class="number">305</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> cl[<span class="number">305</span>];  <span class="comment">// 计算过程中[l..r-1] 中, cl[i] = 与i同属于完整区间属于[l..r-1]的 最左端点</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n, m;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">0</span>, m) &#123;</span><br><span class="line">    <span class="type">int</span> l, r;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;l, &amp;r);</span><br><span class="line">    vle[r].<span class="built_in">push_back</span>(l - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 同样右端点 左端点从小到大, 方便后面二分找满足条件的左端点</span></span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">0</span>, n + <span class="number">1</span>) <span class="built_in">sort</span>(<span class="built_in">all</span>(vle[i]));</span><br><span class="line">  <span class="built_in">rep</span>(len, <span class="number">1</span>, n + <span class="number">1</span>) &#123;    <span class="comment">// 枚举 长度[1..n], 因为每次划分是 左右两个更短的范围</span></span><br><span class="line">    <span class="built_in">rep</span>(r, len, n + <span class="number">1</span>) &#123;  <span class="comment">// 右端点从小到大 [len..n]</span></span><br><span class="line">      <span class="type">int</span> l = r - len;    <span class="comment">// 左侧端点 = 右端点-长度</span></span><br><span class="line">      <span class="type">int</span> nw = r; <span class="comment">// 遍历过程中,当前属于[l..r-1]的完整区间的最小左端点</span></span><br><span class="line">      <span class="built_in">per</span>(j, l + <span class="number">1</span>, r + <span class="number">1</span>) &#123;  <span class="comment">// j（右端点）从大到小 [l+1,r] 范围内的每个右端点</span></span><br><span class="line">        <span class="comment">// 第一个大于或等于某个元素的位置, 二分查找</span></span><br><span class="line">        <span class="type">int</span> t = <span class="built_in">lower_bound</span>(<span class="built_in">all</span>(vle[j]), l) - vle[j].<span class="built_in">begin</span>();</span><br><span class="line">        <span class="keyword">if</span> (t &lt; vle[j].<span class="built_in">size</span>()) &#123;  <span class="comment">// [nw,j] 区间小于等于 len</span></span><br><span class="line">          nw = <span class="built_in">min</span>(nw, vle[j][t]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 右端点 [j..r] 中的区间的最小左端点, 不存在的情况 r &gt; j - 1</span></span><br><span class="line">        cl[j - <span class="number">1</span>] = nw;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (nw == r) &#123;  <span class="comment">// 没有任何有效区间</span></span><br><span class="line">        exi[l][r] = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      exi[l][r] = <span class="literal">true</span>;  <span class="comment">// 右端点在 [l+1 ..r], 长度小于等于 len 的区间 存在</span></span><br><span class="line">      <span class="built_in">rep</span>(x, l, r) &#123;    <span class="comment">// [l..r-1]</span></span><br><span class="line">        <span class="keyword">if</span> (x &lt; cl[x])  <span class="comment">// 不存在 [l,r] 之间的小区间 包含 坐标x</span></span><br><span class="line">          <span class="keyword">continue</span>;</span><br><span class="line">        <span class="comment">// [l..x-1]x[x+1..r-1]</span></span><br><span class="line">        <span class="comment">// 存在右端在 [l+1..x], 长度小于 x-l 的区间,</span></span><br><span class="line">        <span class="comment">// sl = sum&#123;dp[l][x][cl[x]..x-1]&#125;</span></span><br><span class="line">        <span class="comment">// 注意这里, 当[l..x-1]不存在时是1, 而[l..x-1]存在时,因为防止重复统计可能[cl[x]..x-1]是0</span></span><br><span class="line">        modint sl = exi[l][x] ? rdp[l][x][x] - rdp[l][x][cl[x]] : (modint)<span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 存在右端在 [x+2..r], 长度小于 r-x-l 的区间,</span></span><br><span class="line">        <span class="comment">// sr = sum&#123;dp[x+1][r][x+1..r-1]&#125;</span></span><br><span class="line">        <span class="comment">// 而对于右侧 似乎可以直接判断前缀和是否非零,但实际上因为是取mod运算,可能为mod的倍数,所以还是需要一个exi的辅助数组</span></span><br><span class="line">        modint sr =</span><br><span class="line">            exi[x + <span class="number">1</span>][r] ? rdp[x + <span class="number">1</span>][r][r] - rdp[x + <span class="number">1</span>][r][x + <span class="number">1</span>] : (modint)<span class="number">1</span>;</span><br><span class="line">        dp[l][r][x] = sl * sr;  <span class="comment">// [l,r-1]中 最大的下标为x, 方案数</span></span><br><span class="line">        <span class="comment">// 下面由此输出</span></span><br><span class="line">        <span class="comment">// printf(&quot;%d %lld %lld =&gt; %d %d\n&quot;,l,r,x,(int)sl,(int)sr);</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">rep</span>(j, l, r) &#123;</span><br><span class="line">        <span class="comment">// [l..r-1]</span></span><br><span class="line">        <span class="comment">// rdp[l][r][j] = dp[l][r][0..j-1] 前缀和</span></span><br><span class="line">        rdp[l][r][j + <span class="number">1</span>] = rdp[l][r][j] + dp[l][r][j];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, (<span class="type">int</span>)rdp[<span class="number">0</span>][n][n]); <span class="comment">// [0,n-1] 最大下标[0..n-1]的方案数</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// [l          x-1]x[x+1          ]r</span></span><br><span class="line"><span class="comment">// x 是最大值</span></span><br><span class="line"><span class="comment">// dp[l][r][x] = 左边方案数 x 右边方案数, 其中右边的长度覆盖了x</span></span><br><span class="line"><span class="comment">//             = sum&#123;dp[l][x][cl[x]..x-1]&#125; * sum&#123;dp[x+1][r][x+1..r-1]&#125;</span></span><br><span class="line"><span class="comment">//             = x 是最大值，对左侧的影响当前 最近的是 cl[x]</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// 012345678</span></span><br><span class="line"><span class="comment">//  xx</span></span><br><span class="line"><span class="comment">//   xxx</span></span><br><span class="line"><span class="comment">//     xxx</span></span><br><span class="line"><span class="comment">//      xx</span></span><br><span class="line"><span class="comment">//        xx</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">9 5</span></span><br><span class="line"><span class="comment">2 3</span></span><br><span class="line"><span class="comment">3 5</span></span><br><span class="line"><span class="comment">5 7</span></span><br><span class="line"><span class="comment">6 7</span></span><br><span class="line"><span class="comment">8 9</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">l r x ==sl*sr</span></span><br><span class="line"><span class="comment">[l r) 左闭右开,所以 实际区间是[l..r-1]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">len = 2</span></span><br><span class="line"><span class="comment">1 3 1 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 3 2 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">5 7 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">5 7 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">7 9 7 =&gt; 1 1</span></span><br><span class="line"><span class="comment">7 9 8 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">len = 3</span></span><br><span class="line"><span class="comment">0 3 1 =&gt; 1 1</span></span><br><span class="line"><span class="comment">0 3 2 =&gt; 1 1 (0不属于完整区间,所以没有 0 3 0</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1 4 1 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 4 2 =&gt; 1 1 (虽然3和属于[2..4]的完整区间,但这里的区间是[1..3],3 不属于这之间的任何完整区间, 所以也没有 1,3,3</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2 5 2 =&gt; 1 1</span></span><br><span class="line"><span class="comment">2 5 3 =&gt; 1 1</span></span><br><span class="line"><span class="comment">2 5 4 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">4 7 4 =&gt; 1 2 (首次包含关系 区间,一个[4..6]一个[5..6],右侧 = dp[5][7][5] + dp[5][7][6] = 1+1 = 2, 也就是[4..6] 最大值在4时,不影响右侧不包含它的区间,右侧有两种值</span></span><br><span class="line"><span class="comment">4 7 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">4 7 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">5 8 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">5 8 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">6 9 7 =&gt; 1 1</span></span><br><span class="line"><span class="comment">6 9 8 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">len = 4</span></span><br><span class="line"><span class="comment">0 4 1 =&gt; 1 1</span></span><br><span class="line"><span class="comment">0 4 2 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1 5 1 =&gt; 1 3 (同 上面 4 7 4</span></span><br><span class="line"><span class="comment">1 5 2 =&gt; 1 1 (这个和下面两个都是 1 1, 但实际上有些不同, 下面两个的左边的1, 如果按照上面右侧的统计法,应该是 2 而不是1, 注意到上面算sl和sr是有区别的,一个是[cl[x]..x-1], 一个是[x+1..r], 如果一致应该是[l..x-1]而不是[cl[x]..x-1], 说面 左侧最大值, 一定要和x属于同一组,如果不同组, 让左侧更大,其它平移补位, 总输出不变. 所以下面两个都是1.</span></span><br><span class="line"><span class="comment">1 5 3 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 5 4 =&gt; 1 1 </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2 6 2 =&gt; 1 1</span></span><br><span class="line"><span class="comment">2 6 3 =&gt; 1 1</span></span><br><span class="line"><span class="comment">2 6 4 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">3 7 4 =&gt; 1 2</span></span><br><span class="line"><span class="comment">3 7 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">3 7 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">4 8 4 =&gt; 1 2</span></span><br><span class="line"><span class="comment">4 8 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">4 8 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">5 9 5 =&gt; 1 2</span></span><br><span class="line"><span class="comment">5 9 6 =&gt; 1 2</span></span><br><span class="line"><span class="comment">5 9 7 =&gt; 0 1</span></span><br><span class="line"><span class="comment">5 9 8 =&gt; 0 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">len = 5</span></span><br><span class="line"><span class="comment">0 5 1 =&gt; 1 3</span></span><br><span class="line"><span class="comment">0 5 2 =&gt; 1 1</span></span><br><span class="line"><span class="comment">0 5 3 =&gt; 1 1</span></span><br><span class="line"><span class="comment">0 5 4 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 6 1 =&gt; 1 3</span></span><br><span class="line"><span class="comment">1 6 2 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 6 3 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 6 4 =&gt; 1 1</span></span><br><span class="line"><span class="comment">2 7 2 =&gt; 1 4</span></span><br><span class="line"><span class="comment">2 7 3 =&gt; 1 4</span></span><br><span class="line"><span class="comment">2 7 4 =&gt; 1 2</span></span><br><span class="line"><span class="comment">2 7 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">2 7 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment">3 8 4 =&gt; 1 2</span></span><br><span class="line"><span class="comment">3 8 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">3 8 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment">4 9 4 =&gt; 1 4</span></span><br><span class="line"><span class="comment">4 9 5 =&gt; 1 2</span></span><br><span class="line"><span class="comment">4 9 6 =&gt; 1 2</span></span><br><span class="line"><span class="comment">4 9 7 =&gt; 0 1</span></span><br><span class="line"><span class="comment">4 9 8 =&gt; 0 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">len = 6</span></span><br><span class="line"><span class="comment">0 6 1 =&gt; 1 3</span></span><br><span class="line"><span class="comment">0 6 2 =&gt; 1 1</span></span><br><span class="line"><span class="comment">0 6 3 =&gt; 1 1</span></span><br><span class="line"><span class="comment">0 6 4 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 7 1 =&gt; 1 12</span></span><br><span class="line"><span class="comment">1 7 2 =&gt; 1 4</span></span><br><span class="line"><span class="comment">1 7 3 =&gt; 1 4</span></span><br><span class="line"><span class="comment">1 7 4 =&gt; 1 2</span></span><br><span class="line"><span class="comment">1 7 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 7 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment">2 8 2 =&gt; 1 4</span></span><br><span class="line"><span class="comment">2 8 3 =&gt; 1 4</span></span><br><span class="line"><span class="comment">2 8 4 =&gt; 1 2</span></span><br><span class="line"><span class="comment">2 8 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">2 8 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment">3 9 4 =&gt; 1 4</span></span><br><span class="line"><span class="comment">3 9 5 =&gt; 1 2</span></span><br><span class="line"><span class="comment">3 9 6 =&gt; 1 2</span></span><br><span class="line"><span class="comment">3 9 7 =&gt; 0 1</span></span><br><span class="line"><span class="comment">3 9 8 =&gt; 0 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">len = 7</span></span><br><span class="line"><span class="comment">0 7 1 =&gt; 1 12</span></span><br><span class="line"><span class="comment">0 7 2 =&gt; 1 4</span></span><br><span class="line"><span class="comment">0 7 3 =&gt; 1 4</span></span><br><span class="line"><span class="comment">0 7 4 =&gt; 1 2</span></span><br><span class="line"><span class="comment">0 7 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">0 7 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 8 1 =&gt; 1 12</span></span><br><span class="line"><span class="comment">1 8 2 =&gt; 1 4</span></span><br><span class="line"><span class="comment">1 8 3 =&gt; 1 4</span></span><br><span class="line"><span class="comment">1 8 4 =&gt; 1 2</span></span><br><span class="line"><span class="comment">1 8 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 8 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment">2 9 2 =&gt; 1 8</span></span><br><span class="line"><span class="comment">2 9 3 =&gt; 1 8</span></span><br><span class="line"><span class="comment">2 9 4 =&gt; 1 4</span></span><br><span class="line"><span class="comment">2 9 5 =&gt; 1 2</span></span><br><span class="line"><span class="comment">2 9 6 =&gt; 1 2</span></span><br><span class="line"><span class="comment">2 9 7 =&gt; 0 1</span></span><br><span class="line"><span class="comment">2 9 8 =&gt; 0 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">len = 8</span></span><br><span class="line"><span class="comment">0 8 1 =&gt; 1 12</span></span><br><span class="line"><span class="comment">0 8 2 =&gt; 1 4</span></span><br><span class="line"><span class="comment">0 8 3 =&gt; 1 4</span></span><br><span class="line"><span class="comment">0 8 4 =&gt; 1 2</span></span><br><span class="line"><span class="comment">0 8 5 =&gt; 1 1</span></span><br><span class="line"><span class="comment">0 8 6 =&gt; 1 1</span></span><br><span class="line"><span class="comment">1 9 1 =&gt; 1 24</span></span><br><span class="line"><span class="comment">1 9 2 =&gt; 1 8</span></span><br><span class="line"><span class="comment">1 9 3 =&gt; 1 8</span></span><br><span class="line"><span class="comment">1 9 4 =&gt; 1 4</span></span><br><span class="line"><span class="comment">1 9 5 =&gt; 1 2</span></span><br><span class="line"><span class="comment">1 9 6 =&gt; 1 2</span></span><br><span class="line"><span class="comment">1 9 7 =&gt; 0 1</span></span><br><span class="line"><span class="comment">1 9 8 =&gt; 0 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">len = 9</span></span><br><span class="line"><span class="comment">0 9 1 =&gt; 1 24</span></span><br><span class="line"><span class="comment">0 9 2 =&gt; 1 8</span></span><br><span class="line"><span class="comment">0 9 3 =&gt; 1 8</span></span><br><span class="line"><span class="comment">0 9 4 =&gt; 1 4</span></span><br><span class="line"><span class="comment">0 9 5 =&gt; 1 2</span></span><br><span class="line"><span class="comment">0 9 6 =&gt; 1 2</span></span><br><span class="line"><span class="comment">0 9 7 =&gt; 0 1</span></span><br><span class="line"><span class="comment">0 9 8 =&gt; 0 1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="改版"><a href="#改版" class="headerlink" title="改版"></a>改版</h2><p>对于上面代码改了主要几个部分</p>
+<p>把<code>[l,r]</code>改为左右都是闭区间了,不用考虑加减1的描述范围</p>
+<p>把所有下标按照题目变成<code>1-index</code>而不是上面的<code>0-index</code>,因为这样也方便前缀和不用单独处理下标0</p>
+<p>去掉了 大佬的modint, 假设没有modint的实现的情况下,直接加mod运算</p>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/agc056/submissions/27743665">https://atcoder.jp/contests/agc056/submissions/27743665</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i, a, n) for (ll i = a; i &lt; n; i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i, a, n) for (ll i = n - 1; i &gt;= a; i--)</span></span><br><span class="line"><span class="keyword">constexpr</span> ll mod = <span class="number">998244353</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> all(v) (v).begin(), (v).end()</span></span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; vle[<span class="number">305</span>];   <span class="comment">// [r pos] = &#123;l pos...&#125; 区间右端点到左端点</span></span><br><span class="line">ll dp[<span class="number">305</span>][<span class="number">305</span>][<span class="number">305</span>];   <span class="comment">// [l][r][x] = [l..r] 最大的是x的方案数, 其中不论l取值多少,x与[l,r]至少属于[l,r]中的一个完整区间</span></span><br><span class="line">ll rdp[<span class="number">305</span>][<span class="number">305</span>][<span class="number">305</span>];  <span class="comment">// dp 前缀和</span></span><br><span class="line"><span class="type">bool</span> exi[<span class="number">305</span>][<span class="number">305</span>];     <span class="comment">// 默认 全false, 在[l..r]之间 是否存在完整区间</span></span><br><span class="line"><span class="type">int</span> cl[<span class="number">305</span>];            <span class="comment">// 右端点 in [i..最右侧] = 区间的最小左端点</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n, m;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">0</span>, m) &#123;</span><br><span class="line">    <span class="type">int</span> l, r;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;l, &amp;r);</span><br><span class="line">    vle[r].<span class="built_in">push_back</span>(l);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">1</span>, n+<span class="number">1</span>) <span class="built_in">sort</span>(<span class="built_in">all</span>(vle[i]));</span><br><span class="line">  <span class="built_in">rep</span>(len, <span class="number">2</span>, n+<span class="number">1</span>) &#123;              <span class="comment">// 枚举 长度</span></span><br><span class="line">    <span class="built_in">rep</span>(r, len, n+<span class="number">1</span>) &#123;            <span class="comment">// 右端点 从小到大</span></span><br><span class="line">      <span class="type">int</span> l = r - len + <span class="number">1</span>;        <span class="comment">// 左侧端点 = 右端点 - 长度 +1</span></span><br><span class="line">      <span class="type">int</span> nw = r + <span class="number">1</span>;             <span class="comment">// 左端点, 在[l..r] 中</span></span><br><span class="line">      <span class="built_in">per</span>(j, l, r + <span class="number">1</span>) &#123;          <span class="comment">// j（右端点）从大到小 [l,r] 范围内的每个右端点</span></span><br><span class="line">        <span class="type">int</span> t = <span class="built_in">lower_bound</span>(<span class="built_in">all</span>(vle[j]), l) - vle[j].<span class="built_in">begin</span>();</span><br><span class="line">        <span class="keyword">if</span> (t &lt; vle[j].<span class="built_in">size</span>()) nw = <span class="built_in">min</span>(nw, vle[j][t]);</span><br><span class="line">        cl[j] = nw;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (nw == r+<span class="number">1</span>) &#123;            <span class="comment">// 没有任何有效区间</span></span><br><span class="line">        exi[l][r] = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      exi[l][r] = <span class="literal">true</span>;           <span class="comment">// 右端点在 [l+1 ..r], 长度小于等于 len 的区间 存在</span></span><br><span class="line">      <span class="built_in">rep</span>(x, l, r+<span class="number">1</span>) &#123;            <span class="comment">// [l..x-1]x[x+1..r]</span></span><br><span class="line">        <span class="keyword">if</span> (x &lt; cl[x]) <span class="keyword">continue</span>;  <span class="comment">// 不存在 [l,r] 之间的小区间 包含 坐标x</span></span><br><span class="line">        ll sl = exi[l][x<span class="number">-1</span>] ? rdp[l][x<span class="number">-1</span>][x<span class="number">-1</span>] - rdp[l][x<span class="number">-1</span>][cl[x]<span class="number">-1</span>] : <span class="number">1</span>;</span><br><span class="line">        ll sr = exi[x+<span class="number">1</span>][r] ? rdp[x+<span class="number">1</span>][r][r] - rdp[x + <span class="number">1</span>][r][x] : <span class="number">1</span>;</span><br><span class="line">        dp[l][r][x] = ((sl%mod) * (sr%mod))%mod;    <span class="comment">// [l,r-1]中 最大的下标为x, 方案数</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">rep</span>(j, l, r + <span class="number">1</span>) rdp[l][r][j] = (rdp[l][r][j<span class="number">-1</span>] + dp[l][r][j])%mod;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>, (rdp[<span class="number">1</span>][n][n]+mod)%mod); </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>官方题解 <a target="_blank" rel="noopener" href="https://atcoder.jp/contests/agc056/editorial/3045">https://atcoder.jp/contests/agc056/editorial/3045</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/agc/056B/" title="Atcoder agc1560 B, DP,分治,前缀和,数学">https://yexiaorain.github.io/Blog/atcoder/agc/056B/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E5%89%8D%E7%BC%80%E5%92%8C/" rel="tag"><i class="fa fa-tag"></i> 前缀和</a>
+              <a href="/Blog/tags/%E5%88%86%E6%B2%BB/" rel="tag"><i class="fa fa-tag"></i> 分治</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/arc/130E/" rel="prev" title="Atcoder arc130 E, 细节题，不会依然不会">
+                  <i class="fa fa-chevron-left"></i> Atcoder arc130 E, 细节题，不会依然不会
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/pe/516/" rel="next" title="project euler 516 (5-smooth,二分,前缀和,prime)">
+                  project euler 516 (5-smooth,二分,前缀和,prime) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/agc/056B/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(网络流)Ex(rolling hash,Nim积,Nimber(TODO证明),二分)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc274">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/274/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(网络流)Ex(rolling hash,Nim积,Nimber(TODO证明),二分)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-10-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.503Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="二分">
+<meta property="article:tag" content="网络流">
+<meta property="article:tag" content="TODO">
+<meta property="article:tag" content="字符串hash">
+<meta property="article:tag" content="rolling hash">
+<meta property="article:tag" content="Nimber">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/274/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/274/","path":"atcoder/abc/274/","title":"Atcoder abc274"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc274 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Security-Camera-3"><span class="nav-text">G - Security Camera 3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-XOR-Sum-of-Arrays"><span class="nav-text">Ex - XOR Sum of Arrays</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E7%94%A8Nimber"><span class="nav-text">不用Nimber</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nimber-Nim-add-xor-%E5%92%8C-Nim-product"><span class="nav-text">Nimber(Nim add(xor) 和 Nim product)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#oplus-%E5%8A%A0"><span class="nav-text">$\oplus$ 加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#otimes-%E4%B9%98"><span class="nav-text">$\otimes$ 乘</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97"><span class="nav-text">计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rolling-hash"><span class="nav-text">Rolling hash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/274/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc274 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(网络流)Ex(rolling hash,Nim积,Nimber(TODO证明),二分)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc274
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-10-22 00:00:00" itemprop="dateCreated datePublished" datetime="2022-10-22T00:00:00+08:00">2022-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/274/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/274/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>3.1k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>16 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(网络流)Ex(rolling hash,Nim积,Nimber(TODO证明),二分)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc274/tasks">https://atcoder.jp/contests/abc274/tasks</a></p>
+<h1 id="G-Security-Camera-3"><a href="#G-Security-Camera-3" class="headerlink" title="G - Security Camera 3"></a>G - Security Camera 3</h1><p>给定 h行W列, 一些地方是障碍</p>
+<p>问最少安装多少摄像头, 能监控所有非障碍区域, </p>
+<p>一次安装 在一个非障碍区域并监控它自身和朝向(4向)的一段连续的非障碍区域</p>
+<p>同一个地方可以安装多个不同向的</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>h,w 300</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>把连续一段横着 或者竖着 看作一个单位</p>
+<p>那么 对于(i,j) 所在的横的<code>r_x</code>, 和竖的<code>c_y</code></p>
+<p>有关系<code>r_x+c_y &gt;= 1</code></p>
+<p>所有 r和c的取值只能1&#x2F;0</p>
+<p>要 所有r+c 的和最小</p>
+<p>似乎是个线性规划?</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>就是网络流 最小割</p>
+<p>S和行一起表示选行(所以 行 到 T 容量1), T和行一起表示不选行</p>
+<p>T和列一起表示选列(所以 S 到 列 容量1), S和列一起表示不选列</p>
+<p>如果(i,j) 对应的行列同时不选则不合法, 列-&gt;行 容量无限大</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc274/submissions/36107290">https://atcoder.jp/contests/abc274/submissions/36107290</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;atcoder/maxflow&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="type">char</span> s[<span class="number">310</span>][<span class="number">310</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> h=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> w=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,h)<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s[i]);</span><br><span class="line">  <span class="keyword">auto</span> x=<span class="built_in">vector</span>(h,<span class="built_in">vector</span>(w,<span class="number">0</span>)); <span class="comment">// 以首个为行标识</span></span><br><span class="line">  <span class="keyword">auto</span> y=<span class="built_in">vector</span>(h,<span class="built_in">vector</span>(w,<span class="number">0</span>)); <span class="comment">// 以首个+hw为列标识</span></span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> S=<span class="number">2</span>*h*w;</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> T=S+<span class="number">1</span>;</span><br><span class="line">  atcoder::mf_graph&lt;<span class="type">int</span>&gt;<span class="built_in">g</span>(T+<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,h)<span class="built_in">rep</span>(j,<span class="number">0</span>,w)<span class="keyword">if</span>(s[i][j]==<span class="string">&#x27;.&#x27;</span>)&#123;</span><br><span class="line">    <span class="type">int</span> curi=i*w+j;</span><br><span class="line">    <span class="type">int</span> curj=curi+h*w;</span><br><span class="line">    x[i][j]=(i&amp;&amp;s[i<span class="number">-1</span>][j]==<span class="string">&#x27;.&#x27;</span>)?x[i<span class="number">-1</span>][j]:curi;</span><br><span class="line">    y[i][j]=(j&amp;&amp;s[i][j<span class="number">-1</span>]==<span class="string">&#x27;.&#x27;</span>)?y[i][j<span class="number">-1</span>]:curj;</span><br><span class="line">    <span class="keyword">if</span>(x[i][j]==curi)g.<span class="built_in">add_edge</span>(S,curi,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span>(y[i][j]==curj)g.<span class="built_in">add_edge</span>(curj,T,<span class="number">1</span>);</span><br><span class="line">    g.<span class="built_in">add_edge</span>(x[i][j],y[i][j],<span class="number">1000000000</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,g.<span class="built_in">flow</span>(S,T));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-XOR-Sum-of-Arrays"><a href="#Ex-XOR-Sum-of-Arrays" class="headerlink" title="Ex - XOR Sum of Arrays"></a>Ex - XOR Sum of Arrays</h1><p>S(B,C) &#x3D; 按位xor B和C 得到的序列(B和C长度相同)</p>
+<p>给定 非负长n序列A</p>
+<p>q个询问</p>
+<p>每次 问 S(A[l0..r0],A[l1..r1]) 的字典序 是否严格小于 A[l2..r2]</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 5e5</p>
+<p>ai [0,1e18]</p>
+<p>r0-l0&#x3D;r1-l1</p>
+<p>4s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>感觉可以先干掉 r,</p>
+<p>因为 可以先 [l.. 的后缀运算后, 再去r截断</p>
+<p>那么其实会得到的就是 <code>[l0... xor [l1... 与 [l2...</code> 首个不等关系的长度</p>
+<p>问题是 这样的话 其实是个三维状态 O(N^3)</p>
+<p>虽然倒着算可以让均摊时间到O(1)</p>
+<p><code>pos[l0][l1][l2] = (s[l0]^s[l1] != s[l2]) ? 1 : (pos[l0+1][l1+1][l2+1] + 1)</code></p>
+<p>然后 如果有r 其实就是和长度比就完了, O(1) 判断</p>
+<hr>
+<p>那么有啥办法能让pos快速计算(而不是存储), 或者状态压缩呢</p>
+<p>其实根据上面的来说, 每次计算是O(N) 每次暴力只需要O(NQ)</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><blockquote>
+<p>如果不是 xor 而是加法</p>
+</blockquote>
+<p>那么可以O(1) 算出任何H(S[l0..r0],S[l1..r1]) rolling hash</p>
+<p>那么 可以 倍增&#x2F;2分的思想 找到 两个结果首个不等的位置, 再做字符比较</p>
+<blockquote>
+<p>原问题</p>
+</blockquote>
+<p>关键就是 如何计算 $H(B \oplus C)$ 以后的hash</p>
+<p>用<strong>Nimber(Nim number)</strong></p>
+<h3 id="不用Nimber"><a href="#不用Nimber" class="headerlink" title="不用Nimber"></a>不用Nimber</h3><p>还是字符串hash, 但是 把乘法变成不一定可逆的bit矩阵运算</p>
+<p>$(v_0) \oplus (v_1 \cdot x) \oplus (v_2 \cdot x^2) \oplus \cdots$</p>
+<p>也就是这里的$\cdot$需要能让$\mathrm{H}(A) ? \mathrm{H}(B) &#x3D; \mathrm{H}(A \oplus B) $ 成立, 也就不能是数乘</p>
+<p>这里考虑$v_i \cdot x^{t} &#x3D; f_t(v_i)$</p>
+<p>然后$f_t(v) &#x3D; f_{2^{k_0}}(f_{2^{k_1}}(\cdots(v))), k_0 &gt; k_1 &gt; \cdots$, 其中$2^k$是对$t$的二进制从高到低拆分(唯一)</p>
+<p>而每个$f_{2^k}(v) $ 是一个 把数按照 bit 做线性变换(不一定可逆)的方案, 这样随机选方案就是一个办法</p>
+<hr>
+<p>这里因为是hash ,其实完全对逆运算没有要求, 虽然也可以造 bit * bit的可逆轮换矩阵,再矩阵前缀, 缺点是这样要n个矩阵</p>
+<p>而去掉 可逆的 需求, 直接二进制拆分+ 倍增想法 就可以有上面的</p>
+<p>所以实际需要的</p>
+<ol>
+<li>快速: (O(1) &#x2F;O(log n) 时间 计算一段的hash</li>
+<li>相等: 一个$\cdot$运算$(v_0) \oplus (v_1 \cdot x) \oplus (v_2 \cdot x^2) \oplus \cdots$</li>
+<li>hash难hack</li>
+</ol>
+<p>所以nimber有一点远大于要求了,</p>
+<h3 id="Nimber-Nim-add-xor-和-Nim-product"><a href="#Nimber-Nim-add-xor-和-Nim-product" class="headerlink" title="Nimber(Nim add(xor) 和 Nim product)"></a>Nimber(Nim add(xor) 和 Nim product)</h3><p>显然 xor 和 数乘 和 数加 不满足 交换结合率</p>
+<p>如果有 xor(nim add) 配套的 nim product, 那么就不需要使用 数乘 和 数加</p>
+<p>这里面运算的<code>加</code>为$\oplus$,<code>乘</code>为$\otimes$, 这样的field为<strong>Nimber</strong></p>
+<p>性质</p>
+<h4 id="oplus-加"><a href="#oplus-加" class="headerlink" title="$\oplus$ 加"></a>$\oplus$ 加</h4><p>xor 的性质老生长谈了, 可以看成按位拆开求和mod2 显然有交换,结合, $0$为零元</p>
+<p>实际上 <code>nim和</code> 还可以写成 递归定义 $x\oplus y&#x3D;\text{mex}\lbrace\lbrace x’\oplus y|x’ &lt; x\rbrace\cup\lbrace x\oplus y’|y’ &lt; y\rbrace\rbrace$</p>
+<p>两者等价, 首先$v &#x3D; x \oplus y $ 一定不在集合中 因为只有唯一的$y$能让$x \oplus y &#x3D; v$, 因此</p>
+<p>其次对所有 $0\le z &lt; x\oplus y$, 计算所有对应 $w &#x3D; x\oplus y \oplus z$, </p>
+<p>考虑$w$的高位1来源,只可能和$x,y,z$中的(注来不一定是$x,y,z$的最高位)</p>
+<p>又 $w\oplus z &#x3D; x\oplus y &gt; z$, 所以不可能来自$z$ (相当于从高到低做 bit xor, 而在w的高位时 xor后是0, z是1</p>
+<p>那么显然$w\oplus x &lt; x$ 或 $w\oplus y &lt; y$ (在w高位以上相等, 在w位 两个1 xor掉了</p>
+<p>因此可以写成递归的形式</p>
+<p>加的逆运算 $a \ominus b &#x3D; a \oplus b$ 显然</p>
+<h4 id="otimes-乘"><a href="#otimes-乘" class="headerlink" title="$\otimes$ 乘"></a>$\otimes$ 乘</h4><p>需要找 一个field(Commutable field (Wikipedia)), $A$为包含$[0,2^{2^n})$的集合</p>
+<p>$a \otimes b :&#x3D; \text{mex} \lbrace (a’ \otimes b) \oplus (a \otimes b’) \oplus (a’ \otimes b’) \vert 0 \le a’ \lt a, 0 \le b’ \lt b \rbrace.$</p>
+<p>交换 $a\otimes b&#x3D;b\otimes a$ 定义显然</p>
+<p>零元 $0\otimes a&#x3D;0$ 空集合 mex&#x3D;0</p>
+<p>乘法逆元 $a\otimes b &#x3D; 1$ 任意$a\neq 0$存在$b$</p>
+<p>单位元 $1\otimes a &#x3D;a$ 因为 一次取值$0$,另一测取值$[0,a-1]$, mex{0..a-1}&#x3D;a</p>
+<p>结合率 $a\otimes b \otimes c&#x3D; a\otimes(b\otimes c)$</p>
+<p>分配率 $(a\oplus b)\otimes c&#x3D; (a\otimes c)\oplus(b \otimes c)$</p>
+<hr>
+<p>大概想法是 需要满足上面这些那么有</p>
+<p>$a \otimes b \neq a’\otimes b, b\neq 0, \forall a’\neq a $</p>
+<p>$a \otimes b \neq a\otimes b’, a\neq 0, \forall b’\neq b $</p>
+<p>那么$(a\ominus a’)(b\ominus b’) \neq 0$, 非零元的乘运算非零(否则可以通过 乘法逆元 得出其中一个为零元)</p>
+<p>$a\otimes b \neq (a’\otimes b)\oplus(a\otimes b’)\ominus(a’\otimes b’)$, emmm感觉还是有点模糊</p>
+<p>而上面不等于和小于是等价的!(因为不等式是对称的, 同时不等于就是 大于或小于)</p>
+<p>$a \otimes b \neq a’\otimes b, b\neq 0, \forall a’ &lt; a $</p>
+<p>$a \otimes b \neq a\otimes b’, a\neq 0, \forall b’ &lt; b $</p>
+<h5 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h5><p>非负整数$k$满足$2^{2^k} &gt; a$, 则$a\times 2^{2^k} &#x3D; a\cdot 2^{2^k}$ (TODO proof</p>
+<p>$2^{2^k} \times 2^{2^k} &#x3D; \frac{3}{2} \cdot 2^{2^k} &#x3D; 3 \cdot 2^{2^k-1}$ (TODO proof</p>
+<p>对于 $a,b \in [0,2^{2^k})$</p>
+<p>$a&#x3D;a_0\cdot 2^{2^{k-1}}+a_1&#x3D; a_0\otimes 2^{2^{k-1}} \oplus a_1,b&#x3D;b_0\cdot 2^{2^{k-1}}+b_1&#x3D; b_0\otimes 2^{2^{k-1}} \oplus b_1$其中$a_0,a_1,b_0,b_1\in[0,2^{2^{k-1}})$, 因为 加的左侧低$n$位全为0</p>
+<p>$a\otimes b&#x3D;(a_0\otimes 2^{2^{k-1}}\oplus a_1)\otimes (b_0\otimes 2^{2^{k-1}}\oplus b_1)$</p>
+<p>$&#x3D;((a_0\otimes 2^{2^{k-1}})\otimes (b_0\otimes 2^{2^{k-1}}) ) \oplus ( (a_0\otimes 2^{2^{k-1}})\otimes b_1 ) \oplus (a_1\otimes (b_0\otimes 2^{2^{k-1}}) ) \oplus (a_1\otimes b_1 )$</p>
+<p>$&#x3D;((a_0\otimes b_0)\otimes (3 \cdot 2^{2^{k-1}-1})) \oplus  (2^{2^{k-1}}\cdot ((a_0\otimes b_1)\oplus (a_1\otimes b_0))\ ) \oplus (a_1\otimes b_1)$</p>
+<p>$&#x3D;((a_0\otimes b_0)\otimes (2^{2^{k-1}-1}\oplus 2^{2^{k-1}})) \oplus  (2^{2^{k-1}}\cdot ((a_0\otimes b_1)\oplus (a_1\otimes b_0))\ ) \oplus (a_1\otimes b_1)$</p>
+<p>$&#x3D;((a_0\otimes b_0)\otimes 2^{2^{k-1}-1})\oplus ((a_0\otimes b_0)\otimes 2^{2^{k-1}})) \oplus  (2^{2^{k-1}}\cdot ((a_0\otimes b_1)\oplus (a_1\otimes b_0))\ ) \oplus (a_1\otimes b_1)$</p>
+<p>$&#x3D;((a_0\otimes b_0)\otimes 2^{2^{k-1}-1}) \oplus (2^{2^{k-1}}\cdot ((a_0\otimes b_0)\oplus(a_0\otimes b_1)\oplus (a_1\otimes b_0))\ ) \oplus (a_1\otimes b_1)$</p>
+<p>也就是$k\to k-1$ 需要算6个nim乘</p>
+<p>但实际上中间的 $&#x3D;(a_0\oplus a_1)\otimes(b_0\oplus b_1) \ominus (a_1\otimes b_1)$</p>
+<p>$&#x3D;((a_0\otimes b_0)\otimes 2^{2^{k-1}-1}) \oplus (2^{2^{k-1}}\cdot ((a_0\oplus a_1)\otimes(b_0\oplus b_1) \ominus (a_1\otimes b_1))\ ) \oplus (a_1\otimes b_1)$</p>
+<p>也就是$O(4^k)$, 而注意到$2^{2^k}$增长很快, 所以如果值不大,$k$不会太大</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 2**(2**0)</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; 2**(2**1)</span><br><span class="line">4</span><br><span class="line">&gt;&gt;&gt; 2**(2**2)</span><br><span class="line">16</span><br><span class="line">&gt;&gt;&gt; 2**(2**3)</span><br><span class="line">256</span><br><span class="line">&gt;&gt;&gt; 2**(2**4)</span><br><span class="line">65536</span><br><span class="line">&gt;&gt;&gt; 2**(2**5)</span><br><span class="line">4294967296</span><br><span class="line">&gt;&gt;&gt; 2**(2**6)</span><br><span class="line">18446744073709551616</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>根据这个计算等式这里我们也可以得到性质 $[0,2^{2^k})$ 中的数 做nim乘法 结果 也在$[0,2^{2^k})$中, 因此不需要mod p, 可以 [0,2^{2^6})</p>
+<h3 id="Rolling-hash"><a href="#Rolling-hash" class="headerlink" title="Rolling hash"></a>Rolling hash</h3><p>hash(d) 比 d 有更高的熵entropy ???</p>
+<p>就是这里想hash比较来代替直接比, 把O(n) 变成O(1)</p>
+<p>hash函数</p>
+<p>$R(A) &#x3D; \left(\sum_{i&#x3D;1}^N A_i x^{N-i} \right) \bmod{p}$, ?为啥要次方要倒过来? 字符串对称一下不就是正着的吗? 是因为 这样的话就是前缀和只需要 加减与乘法不需要除法, 而如果次方是正着, 要么就是需要除法或者搭配后缀而不是前缀使用</p>
+<p>其中$x$是足够大的$[0,p)$中的质数, 运行时等概率</p>
+<p>性质1: 预处理后快速计算区间hash, 其实就是前缀和同样的想法</p>
+<p><code>R(A[l..r]) = R(A[0..r])-R(A[0..l-1])*x^l</code></p>
+<p>性质2: 碰撞率</p>
+<p>碰撞: 就是序列不等而hash相等</p>
+<p>即需要从随机性上满足, 同时需要难以被找到一个碰撞(不然可以hack,或者出题人造数据)</p>
+<p>两个长度$N$的hash相等 也就是 $\sum_{i&#x3D;1}^N(A_i-B_i)x^{N-i} \equiv 0 \pmod{p}$</p>
+<p>p是质数,$x$的选取等价的有[1..p-1],每个产生的贡献都不同(因为p是质数), 数量很多, 并且如果是runtime随机,难以猜测x,就无法构造反例, 所以如果 N远小于p, 就概率很小了???</p>
+<p>应该是均匀了, 所以很小? 任意取A,要得到与A相等都约为 1&#x2F;p, 而去掉真正相等还是约为1&#x2F;p?</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc274/submissions/36126910">https://atcoder.jp/contests/abc274/submissions/36126910</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> u64; <span class="comment">// 2^64 要用完</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for(u64 i=a;i&lt;(u64)n;i++)</span></span><br><span class="line"><span class="function">u64 <span class="title">read</span><span class="params">()</span></span>&#123;u64 r;<span class="built_in">scanf</span>(<span class="string">&quot;%llu&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N_MAX=<span class="number">1e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> SP=<span class="number">1</span>&lt;&lt;<span class="number">3</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> SN=<span class="number">1</span>&lt;&lt;SP;<span class="comment">//预计算 cache大小</span></span><br><span class="line">u64 A[N_MAX];</span><br><span class="line">u64 pw[N_MAX]=&#123;<span class="number">1</span>&#125;;<span class="comment">//pw[i]=basis**i,pw[0]=1</span></span><br><span class="line">u64 hs[N_MAX];<span class="comment">//hw[i]=前i个的在nimber下的hash,不需要mod[0,2^&#123;2^k&#125;)中的nimber做加乘结果还在[0,2^&#123;2^k&#125;)中</span></span><br><span class="line">u64 small[SN][SN];<span class="comment">//预计算</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="type">bool</span> is_pre=<span class="literal">false</span>&gt; <span class="comment">// 预计算</span></span><br><span class="line">u64 <span class="built_in">nim_product</span>(u64 a,u64 b,<span class="type">int</span> p=<span class="number">1</span>&lt;&lt;<span class="number">6</span>)&#123; <span class="comment">// a &lt; (1&lt;&lt;p), b &lt; (1&lt;&lt;p), p=1&lt;&lt;k</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="built_in">min</span>(a,b)&lt;=<span class="number">1</span>)<span class="keyword">return</span> a*b;</span><br><span class="line">  <span class="keyword">if</span>(!is_pre <span class="keyword">and</span> p&lt;=SP)<span class="keyword">return</span> small[a][b];</span><br><span class="line">  p&gt;&gt;=<span class="number">1</span>;<span class="comment">//2^k/2=2^&#123;k-1&#125;</span></span><br><span class="line">  u64 a0=(a&gt;&gt;p),a1=a&amp;((<span class="number">1ull</span>&lt;&lt;p)<span class="number">-1</span>); <span class="comment">// a=a0*2^&#123;2^&#123;k-1&#125;&#125;+a1;</span></span><br><span class="line">  u64 b0=(b&gt;&gt;p),b1=b&amp;((<span class="number">1ull</span>&lt;&lt;p)<span class="number">-1</span>); <span class="comment">// b=b0*2^&#123;2^&#123;k-1&#125;&#125;+b1;</span></span><br><span class="line">  u64 a1b1=<span class="built_in">nim_product</span>&lt;is_pre&gt;(a1,b1,p);</span><br><span class="line">  <span class="comment">// = ((a0\otimes b0)\otimes 2^&#123;2^&#123;k-1&#125;-1&#125;)</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">nim_product</span>&lt;is_pre&gt;(<span class="built_in">nim_product</span>&lt;is_pre&gt;(a0,b0,p),<span class="number">1ull</span>&lt;&lt;(p<span class="number">-1</span>),p)^</span><br><span class="line">    <span class="comment">// \oplus (2^&#123;2^&#123;k-1&#125;&#125;\cdot ((a0\oplus a1)\otimes(b0\oplus b1)\ominus (a1\oplus b1))\ )</span></span><br><span class="line">    ((<span class="built_in">nim_product</span>&lt;is_pre&gt;(a0^a1,b0^b1,p)^a1b1)&lt;&lt;p)^</span><br><span class="line">    <span class="comment">// \oplus (a1\otimes b1)</span></span><br><span class="line">    a1b1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">u64 <span class="title">get</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;<span class="keyword">return</span> <span class="built_in">nim_product</span>(hs[l],pw[r-l])^hs[r];&#125; <span class="comment">// hs[r]-hs[l]*(basis**(r-l))</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> N=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> Q=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N)A[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,SN)<span class="built_in">rep</span>(j,<span class="number">0</span>,SN)small[i][j]=<span class="built_in">nim_product</span>&lt;<span class="literal">true</span>&gt;(i,j,SP);</span><br><span class="line">  <span class="function">mt19937_64 <span class="title">rng</span><span class="params">(time(<span class="literal">NULL</span>))</span></span>;<span class="comment">//runtime random</span></span><br><span class="line">  u64 basis=<span class="built_in">rng</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N+<span class="number">1</span>)&#123;</span><br><span class="line">    pw[i]=<span class="built_in">nim_product</span>(pw[i<span class="number">-1</span>],basis);<span class="comment">//pw[i]=pw[i-1]*b</span></span><br><span class="line">    hs[i]=<span class="built_in">nim_product</span>(hs[i<span class="number">-1</span>],basis)^A[i<span class="number">-1</span>];<span class="comment">//hs[i]=hs[i-1]*b+a[i-1]</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(Q--)&#123;<span class="comment">//(l,r]</span></span><br><span class="line">    <span class="type">int</span> l0=<span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> r0=<span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> l1=<span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> r1=<span class="built_in">read</span>();<span class="comment">//l1-l0==r1-r0</span></span><br><span class="line">    <span class="type">int</span> l2=<span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> r2=<span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> l=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> r=<span class="built_in">min</span>(r2-l2,r0-l0)+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(l+<span class="number">1</span>&lt;r)&#123;<span class="comment">//二分找不等的点</span></span><br><span class="line">      <span class="type">int</span> m=(l+r)/<span class="number">2</span>;</span><br><span class="line">      ((<span class="built_in">get</span>(l0,l0+m)^<span class="built_in">get</span>(l1,l1+m)^<span class="built_in">get</span>(l2,l2+m))?r:l)=m;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,(l2+l!=r2 <span class="built_in">and</span>(l0+l==r0 <span class="built_in">or</span> (A[l0+l]^A[l1+l])&lt;A[l2+l]))?<span class="string">&quot;Yes&quot;</span>:<span class="string">&quot;No&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>vp了这场, 但是编码还是太慢没调出F(虽然只是return ret 写成 return w了</p>
+<p>G</p>
+<p>卡黄题了</p>
+<p>哎 典型的网络流 经典题</p>
+<p>Ex</p>
+<p>rolling hash</p>
+<p>nimber(抽象代数完全不会, TODO 更多相关内容)</p>
+<p>据说一些高维nim游戏需要nim 乘</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc274/editorial">官方题解</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/103785">Codeforces: Nimbers and Sprague-Grundy theorem</a></p>
+<p>NOI2009 冬令营论文《从“k倍动态减法游戏”出发探究一类组合游戏问题》 4.4.4</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Nimber">wikipedia Nimber</a></p>
+<p>proofwiki field: <a target="_blank" rel="noopener" href="https://proofwiki.org/wiki/Definition:Field_(Abstract_Algebra)">https://proofwiki.org/wiki/Definition:Field_(Abstract_Algebra)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.math.leidenuniv.nl/~hwl/PUBLICATIONS/1979b/art.pdf">https://www.math.leidenuniv.nl/~hwl/PUBLICATIONS/1979b/art.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ics.uci.edu/~eppstein/numth/">https://www.ics.uci.edu/~eppstein/numth/</a></p>
+<p><a target="_blank" rel="noopener" href="https://judge.yosupo.jp/problem/nim_product_64">https://judge.yosupo.jp/problem/nim_product_64</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chasedeath/p/14446796.html">https://www.cnblogs.com/chasedeath/p/14446796.html</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/274/" title="Atcoder abc274">https://yexiaorain.github.io/Blog/atcoder/abc/274/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E4%BA%8C%E5%88%86/" rel="tag"><i class="fa fa-tag"></i> 二分</a>
+              <a href="/Blog/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag"><i class="fa fa-tag"></i> 网络流</a>
+              <a href="/Blog/tags/TODO/" rel="tag"><i class="fa fa-tag"></i> TODO</a>
+              <a href="/Blog/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2hash/" rel="tag"><i class="fa fa-tag"></i> 字符串hash</a>
+              <a href="/Blog/tags/rolling-hash/" rel="tag"><i class="fa fa-tag"></i> rolling hash</a>
+              <a href="/Blog/tags/Nimber/" rel="tag"><i class="fa fa-tag"></i> Nimber</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/260/" rel="prev" title="Atcoder abc260">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc260
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/275/" rel="next" title="Atcoder abc275">
+                  Atcoder abc275 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/274/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

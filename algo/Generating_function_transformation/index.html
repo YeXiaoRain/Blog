@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="反演">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反演">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/algo/Generating_function_transformation/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="反演">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-11-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.495Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="反演">
+<meta property="article:tag" content="二项式反演">
+<meta property="article:tag" content="stirling反演">
+<meta property="article:tag" content="子集反演">
+<meta property="article:tag" content="莫比乌斯反演">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/algo/Generating_function_transformation/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/algo/Generating_function_transformation/","path":"algo/Generating_function_transformation/","title":"反演"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>反演 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E6%BC%94"><span class="nav-text">反演</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%90%86%E8%AE%BA"><span class="nav-text">基本理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%8F%8D%E6%BC%94"><span class="nav-text">常见反演</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BC%80%E5%92%8C%E5%8F%8D%E6%BC%94-%E5%B7%AE%E5%88%86"><span class="nav-text">前缀和反演(差分)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%8F%8D%E6%BC%94"><span class="nav-text">二项式反演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stirling%E5%8F%8D%E6%BC%94"><span class="nav-text">Stirling反演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94"><span class="nav-text">莫比乌斯反演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E9%9B%86%E5%8F%8D%E6%BC%94"><span class="nav-text">子集反演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Min-Max%E5%AE%B9%E6%96%A5"><span class="nav-text">Min-Max容斥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E4%BD%8D%E6%A0%B9%E5%8F%8D%E6%BC%94"><span class="nav-text">单位根反演</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FFT"><span class="nav-text">FFT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NTT"><span class="nav-text">NTT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FWT"><span class="nav-text">FWT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="nav-text">示例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%8F%8D%E6%BC%94-1"><span class="nav-text">二项式反演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stirling%E5%8F%8D%E6%BC%94-1"><span class="nav-text">Stirling反演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94-1"><span class="nav-text">莫比乌斯反演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E9%9B%86%E5%8F%8D%E6%BC%94-1"><span class="nav-text">子集反演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Min-Max%E5%AE%B9%E6%96%A5-1"><span class="nav-text">Min-Max容斥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E4%BD%8D%E6%A0%B9%E5%8F%8D%E6%BC%94-1"><span class="nav-text">单位根反演</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FFT-1"><span class="nav-text">FFT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NTT-1"><span class="nav-text">NTT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FWT-1"><span class="nav-text">FWT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0"><span class="nav-text">相关文章</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/algo/Generating_function_transformation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="反演 | YeXiaoRain Blog">
+      <meta itemprop="description" content="反演">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          反演
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-11-28 00:00:00" itemprop="dateCreated datePublished" datetime="2022-11-28T00:00:00+08:00">2022-11-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/algo/Generating_function_transformation/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="algo/Generating_function_transformation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>11 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">反演</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="反演"><a href="#反演" class="headerlink" title="反演"></a>反演</h1><p>已知$f$ 使得 $\displaystyle a_n &#x3D; \sum_{i&#x3D;0}^{\infty} f_{n,i} \cdot b_i$</p>
+<p>求$g$ 满足 $\displaystyle b_n &#x3D; \sum_{i&#x3D;0}^{\infty} g_{n,i} \cdot a_i$</p>
+<p>有不少的 $f_{n,&gt; n} &#x3D; 0$ 所以$\infty$ 对应的替换成$n$也是同样道理</p>
+<blockquote>
+<p>有不少文章从意义角度, 或者直接给表达式,让你验证正确性来写的, 而我没有智力, 总觉得很怪和难以理解, 这篇主要通过EGF和假设没有预知能力来写</p>
+</blockquote>
+<h2 id="基本理论"><a href="#基本理论" class="headerlink" title="基本理论"></a>基本理论</h2><p>对于一个明确反演, $f$实际是给定的常数序列, 看成<strong>矩阵乘法</strong>有(其中$a,b$ 为列向量)</p>
+<p>$a &#x3D; M_f\cdot b$</p>
+<p>则$b &#x3D; M_f^{-1}\cdot a &#x3D; M_g \cdot a$</p>
+<p>即$M_f \cdot M_g &#x3D; I$ (单位矩阵)</p>
+<p>即$\displaystyle \sum_{k&#x3D;0}^{\infty} M_{f,i,k} M_{g,k,j} &#x3D; \lbrack i&#x3D;j \rbrack $ 是充要条件</p>
+<p>一般题目中 知道$a$与$f$, 需要求$b$时使用</p>
+<p>下面一般步骤首先建立分别的EGF, 然后通过正向得到两个EGF的等价关系, 最后转换等价关系推得逆向的递推式</p>
+<p>egf(指数形 生成 函数), 构建EGF:</p>
+<p>$\displaystyle F(x) &#x3D; \sum_{i&#x3D;0}^{\infty} a_{i} \frac{x^i}{i!}$</p>
+<p>$\displaystyle G(x) &#x3D; \sum_{i&#x3D;0}^{\infty} b_{i} \frac{x^i}{i!}$</p>
+<span id="more"></span>
+
+<h2 id="常见反演"><a href="#常见反演" class="headerlink" title="常见反演"></a>常见反演</h2><h3 id="前缀和反演-差分"><a href="#前缀和反演-差分" class="headerlink" title="前缀和反演(差分)"></a>前缀和反演(差分)</h3><p>从前缀和与差分开始 $\displaystyle a_n &#x3D; \sum_{i&#x3D;0}^n 1\cdot b_i \Longleftrightarrow b_n &#x3D; a_n - a_{n-1}$</p>
+<p>前缀和差分 本身不需要用到反演知识, 但从性质上也属于一种反演, 作为对比和样例很好说明问题</p>
+<p>前缀和 $\displaystyle a_n &#x3D; \sum_{i&#x3D;0}^n 1\cdot b_i$</p>
+<p>差分 $\displaystyle b_n &#x3D; a_n - a_{n-1}$</p>
+<p>以大小为$4$为例 <a target="_blank" rel="noopener" href="https://www.wolframalpha.com/input?key=&i=%7B%7B1,0,0,0%7D,%7B1,1,0,0%7D,%7B1,1,1,0%7D,%7B1,1,1,1%7D%7D%5E-1">wolframalpha</a></p>
+<p>$M_f &#x3D; \displaystyle \begin{pmatrix} 1&amp;0&amp;0&amp;0 \\ 1&amp;1&amp;0&amp;0 \\ 1&amp;1&amp;1&amp;0 \\ 1&amp;1&amp;1&amp;1 \end{pmatrix}, M_g &#x3D; \begin{pmatrix} 1&amp;0&amp;0&amp;0 \\ -1&amp;1&amp;0&amp;0 \\ 0&amp;-1&amp;1&amp;0 \\ 0&amp;0&amp;-1&amp;1 \end{pmatrix}, M_f\cdot M_g &#x3D; \begin{pmatrix} 1&amp;0&amp;0&amp;0 \\ 0&amp;1&amp;0&amp;0 \\ 0&amp;0&amp;1&amp;0 \\ 0&amp;0&amp;0&amp;1 \end{pmatrix}$</p>
+<hr>
+<p>$\displaystyle F(x) &#x3D; \sum_{i&#x3D;0}^{\infty} (\sum_{j&#x3D;0}^i 1\cdot b_j) \frac{x^i}{i!}$</p>
+<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \sum_{i&#x3D;j}^{\infty} \frac{x^i}{i!}$</p>
+<p>有$\displaystyle \int F(x) dx &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \sum_{i&#x3D;j}^{\infty} \frac{x^{i+1}}{(i+1)!} &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \sum_{i&#x3D;j+1}^{\infty} \frac{x^{i}}{i!}$</p>
+<p>即 $F(x) - (\int F(x) dx) &#x3D; \sum_{j&#x3D;0}^{\infty} b_j (\sum_{i&#x3D;j}^{\infty} \frac{x^{i}}{i!} -\sum_{i&#x3D;j+1}^{\infty} \frac{x^{i}}{i!}) &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \frac{x^j}{j!} &#x3D; G(x)$</p>
+<p>即$\displaystyle \sum_{i&#x3D;0}^{\infty} b_i \frac{x^i}{i!} &#x3D; G(x) &#x3D; F(x) - (\int F(x) dx) &#x3D; \sum_{i&#x3D;0}^{\infty} (a_i - a_{i-1}) \frac{x^i}{i!}$</p>
+<p>同样得到了$b_i &#x3D; a_i-a_{i-1}$</p>
+<hr>
+<p>二维前缀和</p>
+<p>两个维度在运算上其实互不影响, 所以两个维度的逆运算也是互不影响</p>
+<h3 id="二项式反演"><a href="#二项式反演" class="headerlink" title="二项式反演"></a>二项式反演</h3><p>$a_n &#x3D; \sum_{i&#x3D;0}^n \binom{n}{i} (-1)^i b_i \Leftrightarrow b_n &#x3D; \sum_{i&#x3D;0}^n \binom{n}{i} (-1)^i a_i$</p>
+<p>正向</p>
+<p>$\displaystyle F(x) &#x3D; \sum_{i&#x3D;0}^{\infty} (\sum_{j&#x3D;0}^i \binom{i}{j} (-1)^i b_j) \frac{x^i}{i!}$</p>
+<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \sum_{i&#x3D;j}^{\infty} \binom{i}{j} (-1)^i \frac{x^i}{i!}$</p>
+<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} (-1)^j \frac{b_j}{j!} x^j \sum_{i&#x3D;j}^{\infty} \frac{(-1)^{i-j}}{(i-j)!} x^{i-j}$</p>
+<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} (-1)^j \frac{b_j}{j!} x^j \sum_{i&#x3D;0}^{\infty} \frac{(-1)^i}{i!} x^i$</p>
+<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} \frac{b_j}{j!} (-x)^j e^{-x}$</p>
+<p>$\displaystyle &#x3D; G(-x) e^x$</p>
+<p>反过来</p>
+<p>$\displaystyle \sum_{i&#x3D;0}^{\infty} b_i \frac{x^i}{i!} &#x3D; G(x) &#x3D; F(-x) e^{-x}$</p>
+<p>这里依然可以像上面展开, 但是实际上发现 $G$和$F$之间是相同的转化关系 所以对称直接就有了, 不需要再推一次</p>
+<hr>
+<p>另一个形式 $a_n&#x3D;\sum \limits_{i&#x3D;n}^{\infty} {i\choose n} b_i \Leftrightarrow b_n &#x3D; \sum\limits_{i&#x3D;n}^{\infty}(-1)^{i-n}{i\choose n} a_i$</p>
+<p>$\displaystyle F(x) &#x3D; \sum_{i&#x3D;0}^{\infty} (\sum_{j&#x3D;i}^{\infty} \binom{j}{i} b_j) \frac{x^i}{i!}$</p>
+<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} j! b_j \sum_{i&#x3D;0}^j \frac{x^i}{i!(j-i)!i!}$</p>
+<p>并不能搞, 那就先变形一下$a’_ n &#x3D; n! a_n,b’_ n &#x3D; n! b_n$</p>
+<p>即要证 $a’_ n&#x3D;\sum\limits_{i&#x3D;n}^{\infty} \frac{b’_ i}{(i-n)!} \Leftrightarrow b’_ i &#x3D; \sum\limits_{i&#x3D;n}^{\infty}(-1)^{i-n} \frac{a’_ i}{(i-n)!}$</p>
+<p>$\displaystyle F(x) &#x3D; \sum\limits_{i&#x3D;0}^{\infty} (\sum_{j&#x3D;i}^{\infty} \frac{b’_ j}{(j-i)!}) \frac{x^i}{i!}$</p>
+<p>$\displaystyle &#x3D; \sum\limits_{j&#x3D;0}^{\infty} b’_ j \sum_{i&#x3D;0}^{j} \frac{x^i}{(j-i)!i!}$</p>
+<p>$\displaystyle &#x3D; \sum\limits_{j&#x3D;0}^{\infty} \frac{b’_ j}{j!} \sum_{i&#x3D;0}^{j} \binom{j}{i} x^i$</p>
+<p>$\displaystyle &#x3D; \sum\limits_{j&#x3D;0}^{\infty} \frac{b’_ j}{j!} (1+x)^j$</p>
+<p>$&#x3D;G(1+x)$</p>
+<p>反过来</p>
+<p>$\displaystyle \sum_{i&#x3D;0}^{\infty} b’_ i \frac{x^i}{i!} &#x3D;G(x)&#x3D;F(x-1)&#x3D;\sum_{i&#x3D;0}^{\infty} a’_ i \frac{(x-1)^i}{i!}$</p>
+<p>$\displaystyle &#x3D;\sum_{i&#x3D;0}^{\infty} a’_ i \frac{\sum_{j&#x3D;0}^i \binom{i}{j} x^j (-1)^{i-j}}{i!}$</p>
+<p>$\displaystyle &#x3D;\sum_{i&#x3D;0}^{\infty} a’_ i \sum_{j&#x3D;0}^i \frac{x^j (-1)^{i-j}}{(i-j)!j!}$</p>
+<p>$\displaystyle &#x3D;\sum_{j&#x3D;0}^{\infty} \frac{x^j}{j!}\sum_{i&#x3D;j}^{\infty} a’_ i\frac{(-1)^{i-j}}{(i-j)!}$ 得证</p>
+<p>注意到 $ e^{-x} &#x3D; \sum \frac{(-x)^{i}}{i!}$, 有些时候$a,b$在下标大于某个值$m$时都是$0$, 所以可以翻转$a_{i} &#x3D; a_{m-i}$</p>
+<p>相当于$a,b$生成函数之间有 $a(x)&#x3D;y(x)e^{-x}$, 这里还可以快速对序列 $a$ 和 $b$进行转换</p>
+<h3 id="Stirling反演"><a href="#Stirling反演" class="headerlink" title="Stirling反演"></a>Stirling反演</h3><p>$\displaystyle a_{n}&#x3D;\sum_{k&#x3D;0}^{n}\lbrace {\begin{matrix}n\\ k\end{matrix}}\rbrace b_{k} \Leftrightarrow b_{n}&#x3D;\sum_{k&#x3D;0}^{n}\lbrack {\begin{matrix}n\\ k\end{matrix}}\rbrack a_{k}$</p>
+<blockquote>
+<p>注: 这里的 第一类stirling数是带符号的, 如果要写成不带符号的则是$\lbrack \begin{matrix}n\\ k\end{matrix} \rbrack (-1)^{n-k}$</p>
+</blockquote>
+<p>同样的原理 ${\displaystyle {\widehat {F}}(z)&#x3D;{\widehat {G}}\left(e^{z}-1\right)}$</p>
+<hr>
+<p>$\displaystyle F(x) &#x3D; \sum_{i&#x3D;0}^{\infty} (\sum_{j&#x3D;0}^i \lbrace \begin{matrix} i \\ j \end{matrix} \rbrace b_j)\frac{x^i}{i!}$</p>
+<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \sum_{i&#x3D;j}^{\infty} \lbrace \begin{matrix} i \\ j \end{matrix} \rbrace \frac{x^i}{i!}$</p>
+<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} b_j \frac{(e^x-1)^j}{j!}$</p>
+<p>$&#x3D; G(e^x-1)$</p>
+<p>反过来</p>
+<p>$\displaystyle \sum_{i&#x3D;0}^{\infty} b_i \frac{x^i}{i!} &#x3D; G(x) &#x3D; F(\ln(x+1)) &#x3D; \sum_{i&#x3D;0}^{\infty} a_i \frac{(\ln(x+1))^i}{i!}$</p>
+<p>$\displaystyle &#x3D; \sum_{i&#x3D;0}^{\infty} a_i (\sum_{j&#x3D;i}^{\infty} \lbrack \begin{matrix} j \\ i \end{matrix}\rbrack \frac{x^j}{j!})$</p>
+<p>$\displaystyle &#x3D; \sum_{j&#x3D;0}^{\infty} \frac{x^j}{j!} \sum_{i&#x3D;0}^{j} a_i \lbrack \begin{matrix} j \\ i \end{matrix}\rbrack $</p>
+<h3 id="莫比乌斯反演"><a href="#莫比乌斯反演" class="headerlink" title="莫比乌斯反演"></a>莫比乌斯反演</h3><p>$\displaystyle a_n&#x3D;\sum_{i\mid n} b_i \Leftrightarrow b_n&#x3D;\sum_{i\mid n}\mu(\frac{n}{i}) a_i$</p>
+<p>$\displaystyle b_n &#x3D; \sum_{i\mid n} b_i \cdot [i&#x3D;n]$</p>
+<p>$\displaystyle &#x3D; \sum_{i\mid n} b_{\frac{n}{i}} \cdot [i&#x3D;1]$</p>
+<p>$\displaystyle &#x3D; \sum_{i\mid n} b_{\frac{n}{i}} \sum_{d\mid i} \mu(d)$</p>
+<p>$\displaystyle &#x3D; \sum_{d\mid n} \mu(d) \sum_{d\mid i,i\mid n} b_{\frac{n}{i}}$</p>
+<p>$\displaystyle &#x3D; \sum_{d\mid n} \mu(d) \sum_{d\mid \frac{n}{k},k\mid n} b_k $</p>
+<p>$\displaystyle &#x3D; \sum_{j\mid n} \mu(\frac{n}{j})\sum_{\frac{n}{j} \mid \frac{n}{k},k\mid n} b_k$</p>
+<p>$\displaystyle &#x3D; \sum_{j\mid n} \mu(\frac{n}{j}) \sum_{k \mid j} b_k$</p>
+<p>$\displaystyle &#x3D; \sum_{j\mid n} \mu(\frac{n}{j}) a_j $</p>
+<hr>
+<p>莫反一般配合$\lbrack n &#x3D; 1 \rbrack$使用,</p>
+<p>因为$\displaystyle \sum_{d\mid n}\mu (d)&#x3D;{\begin{cases}1&amp;{\text{if }}n&#x3D;1,\\ 0&amp;{\text{if }}n&gt;1.\end{cases}}$</p>
+<p>这个根据wikipedia 似乎也可以 生成函数搞, 但实际操作起来还是 直接推导简单</p>
+<h3 id="子集反演"><a href="#子集反演" class="headerlink" title="子集反演"></a>子集反演</h3><p>$\displaystyle g(S) &#x3D; \sum_{T \subseteq S} f(T) \Leftrightarrow f(S) &#x3D; \sum_{T\subseteq S} (-1)^{|S-T|} g(T)$</p>
+<p>核心原理就是奇偶正负抵消</p>
+<p>类似 莫比乌斯的$\lbrack n&#x3D;1\rbrack$ , 这里需要的工具是$\displaystyle \lbrack S &#x3D; \varnothing \rbrack$</p>
+<p>$h(S) &#x3D; \sum_{T\subseteq S} (-1)^{|S-T|}$</p>
+<p>$&#x3D;\sum_{i&#x3D;0}^{|S|} \binom{|S|}{i} (-1)^{|S|-i}$</p>
+<p>$&#x3D;(1-1)^|S|$</p>
+<p>$\displaystyle &#x3D;\lbrack S &#x3D; \varnothing \rbrack$</p>
+<hr>
+<p>因此</p>
+<p>$\displaystyle f(S) &#x3D; \sum_{Q\subseteq S} f(Q) \lbrack S-Q &#x3D; \varnothing \rbrack$</p>
+<p>$\displaystyle &#x3D; \sum_{Q\subseteq S} f(Q) h(S-Q)$</p>
+<p>$\displaystyle &#x3D; \sum_{Q\subseteq S} f(Q) \sum_{T\subseteq S-Q} (-1)^{|S-Q-T|}$</p>
+<p>$\displaystyle &#x3D; \sum_{Q\subseteq S} f(Q) \sum_{T+Q\subseteq S} (-1)^{|S-(T+Q)|}$</p>
+<p>$\displaystyle &#x3D; \sum_{Q\subseteq S} f(Q) \sum_{Q\subseteq R \subseteq S} (-1)^{|S-R|}$</p>
+<p>$\displaystyle &#x3D; \sum_{R\subseteq S} (-1)^{|S-R|} \sum_{Q\subseteq R} f(Q) $</p>
+<p>$\displaystyle &#x3D; \sum_{R\subseteq S} (-1)^{|S-R|} g(R)$</p>
+<h3 id="Min-Max容斥"><a href="#Min-Max容斥" class="headerlink" title="Min-Max容斥"></a>Min-Max容斥</h3><p>$\displaystyle \max(S) &#x3D; \sum_{T\subseteq S} (-1)^{|T|-1} \min(T)$, 核心原理就是奇偶正负抵消</p>
+<p>对称 $\displaystyle \min(S) &#x3D; \sum_{T\subseteq S} (-1)^{|T|-1} \max(T)$, 相当于所有元素乘上$-1$</p>
+<p>在期望中使用</p>
+<p>$\displaystyle E(\max(S)) &#x3D; E(\sum_{T\subseteq S} (-1)^{|T|-1} \min(T)) &#x3D; \sum_{T\subseteq S} (-1)^{|T|-1} E(\min(T))$</p>
+<hr>
+<p>设集合内元素从小到大 排序了</p>
+<p>$\displaystyle \sum_{T\subseteq S} (-1)^{|T|-1} \min(T)$</p>
+<p>$\displaystyle &#x3D; \sum_{T\subseteq S,a_i &#x3D; min(T) } (-1)^{|T|-1} a_i$, 直接指定$T$</p>
+<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i \sum_{T\subseteq S,a_i &#x3D; min(T) } (-1)^{|T|-1}$, 先指定$a_i$ 再指定$T$</p>
+<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i \sum_{j&#x3D;1}^{n-i+1} \sum_{T\subseteq S,a_i &#x3D; min(T),|T|&#x3D;j } (-1)^{j-1}$, 先指定$a_i$, 再指定$T$的大小</p>
+<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i \sum_{j&#x3D;1}^{n-i+1} (-1)^{j-1} \sum_{T\subseteq S,a_i &#x3D; min(T),|T|&#x3D;j }$</p>
+<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i \sum_{j&#x3D;1}^{n-i+1} (-1)^{j-1} \binom{n-i}{j-1}$</p>
+<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i \sum_{j&#x3D;0}^{n-i} (-1)^{j} \binom{n-i}{j}$</p>
+<p>$\displaystyle &#x3D; \sum_{i&#x3D;1}^{n} a_i (1-1)^{n-i}$</p>
+<p>$\displaystyle &#x3D; a_n$</p>
+<p>$\displaystyle &#x3D; \max(S_n)$</p>
+<h3 id="单位根反演"><a href="#单位根反演" class="headerlink" title="单位根反演"></a>单位根反演</h3><h4 id="FFT"><a href="#FFT" class="headerlink" title="FFT"></a>FFT</h4><h4 id="NTT"><a href="#NTT" class="headerlink" title="NTT"></a>NTT</h4><h4 id="FWT"><a href="#FWT" class="headerlink" title="FWT"></a>FWT</h4><h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><h3 id="二项式反演-1"><a href="#二项式反演-1" class="headerlink" title="二项式反演"></a>二项式反演</h3><h3 id="Stirling反演-1"><a href="#Stirling反演-1" class="headerlink" title="Stirling反演"></a>Stirling反演</h3><h3 id="莫比乌斯反演-1"><a href="#莫比乌斯反演-1" class="headerlink" title="莫比乌斯反演"></a>莫比乌斯反演</h3><h3 id="子集反演-1"><a href="#子集反演-1" class="headerlink" title="子集反演"></a>子集反演</h3><h3 id="Min-Max容斥-1"><a href="#Min-Max容斥-1" class="headerlink" title="Min-Max容斥"></a>Min-Max容斥</h3><h3 id="单位根反演-1"><a href="#单位根反演-1" class="headerlink" title="单位根反演"></a>单位根反演</h3><h4 id="FFT-1"><a href="#FFT-1" class="headerlink" title="FFT"></a>FFT</h4><h4 id="NTT-1"><a href="#NTT-1" class="headerlink" title="NTT"></a>NTT</h4><h4 id="FWT-1"><a href="#FWT-1" class="headerlink" title="FWT"></a>FWT</h4><h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Generating_function_transformation">wikipedia 生成函数反演</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2022-10-19-ac-abc272/">abc 272 中使用二项式反演</a></p>
+<p><a target="_blank" rel="noopener" href="http://localhost:4000/Blog/2022-11-19-ac-abc278/">abc 278 stirling反演</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2022-09-19-ac-abc242/">abc 242 min-max容斥</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2022-07-31-ac_abc215/">abc 215 子集反演</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2019-01-06-MobiusInversionFormula/">莫比乌斯反演</a></p>
+<p><a target="_blank" rel="noopener" href="https://vfleaking.blog.uoj.ac/slide/87">https://vfleaking.blog.uoj.ac/slide/87</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/command-block/xuan-ku-fan-yan-mo-shu">洛谷 炫酷反演魔术</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/algo/Generating_function_transformation/" title="反演">https://yexiaorain.github.io/Blog/algo/Generating_function_transformation/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E5%8F%8D%E6%BC%94/" rel="tag"><i class="fa fa-tag"></i> 反演</a>
+              <a href="/Blog/tags/%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%8F%8D%E6%BC%94/" rel="tag"><i class="fa fa-tag"></i> 二项式反演</a>
+              <a href="/Blog/tags/stirling%E5%8F%8D%E6%BC%94/" rel="tag"><i class="fa fa-tag"></i> stirling反演</a>
+              <a href="/Blog/tags/%E5%AD%90%E9%9B%86%E5%8F%8D%E6%BC%94/" rel="tag"><i class="fa fa-tag"></i> 子集反演</a>
+              <a href="/Blog/tags/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" rel="tag"><i class="fa fa-tag"></i> 莫比乌斯反演</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1764/" rel="prev" title="Codeforces Global Round 24">
+                  <i class="fa fa-chevron-left"></i> Codeforces Global Round 24
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/280/" rel="next" title="Atcoder abc280">
+                  Atcoder abc280 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/algo/Generating_function_transformation/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

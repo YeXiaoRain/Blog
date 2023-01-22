@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="相关内容后缀自动机 最终产物一个数组sa 记录下标, 按照后缀字典序排序 以及需要的话一个记录rank的数组(和sa相反)  h[i] 表示排名为i的和排名为i-1的最长公共前缀长度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后缀数组 SA">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/algo/sa/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="相关内容后缀自动机 最终产物一个数组sa 记录下标, 按照后缀字典序排序 以及需要的话一个记录rank的数组(和sa相反)  h[i] 表示排名为i的和排名为i-1的最长公共前缀长度">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://oi-wiki.org/string/images/sa1.png">
+<meta property="article:published_time" content="2022-07-27T02:37:14.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.495Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="SA">
+<meta property="article:tag" content="SAM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://oi-wiki.org/string/images/sa1.png">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/algo/sa/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/algo/sa/","path":"algo/sa/","title":"后缀数组 SA"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>后缀数组 SA | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9"><span class="nav-text">相关内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E4%BA%A7%E7%89%A9"><span class="nav-text">最终产物</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SA"><span class="nav-text">SA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%A6%82%E4%BB%A3%E7%A0%81"><span class="nav-text">例如代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#height-%E6%95%B0%E7%BB%84"><span class="nav-text">height 数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector-sort-pair%E7%89%88%E6%9C%AC"><span class="nav-text">vector + sort + pair版本</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/algo/sa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="后缀数组 SA | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          后缀数组 SA
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-07-27 10:37:14" itemprop="dateCreated datePublished" datetime="2022-07-27T10:37:14+08:00">2022-07-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/algo/sa/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="algo/sa/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>5 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="相关内容"><a href="#相关内容" class="headerlink" title="相关内容"></a>相关内容</h1><p>后缀自动机</p>
+<h1 id="最终产物"><a href="#最终产物" class="headerlink" title="最终产物"></a>最终产物</h1><p>一个数组sa 记录下标, 按照后缀字典序排序</p>
+<p>以及需要的话一个记录rank的数组(和sa相反)</p>
+<p><img data-src="https://oi-wiki.org/string/images/sa1.png" alt="后缀数组"></p>
+<p>h[i] 表示排名为i的和排名为i-1的最长公共前缀长度</p>
+<span id="more"></span>
+
+<h1 id="SA"><a href="#SA" class="headerlink" title="SA"></a>SA</h1><p>就是字符串所有后缀, 按照字典序排序</p>
+<p>就是先按照每个位置开始长度为1排序, 变成数值顺序</p>
+<p>再按照长度2的前缀顺序排, 但是此时 不需要原字符串,而直接用算出的数值顺序拼接</p>
+<p>再按照长度4的前缀顺序排, 同上 相当于两个 长度2 的拼接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for step =&gt; 2 * step:</span><br><span class="line">  rank = sort(pair&lt; rank[i],rank[i+step] &gt;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="例如代码"><a href="#例如代码" class="headerlink" title="例如代码"></a>例如代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 1000000007</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1000000</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">eq</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; rk, <span class="type">int</span> x,<span class="type">int</span> y,<span class="type">int</span> w)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> rk[x] == rk[y] &amp;&amp; rk[x+w] == rk[y+w];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 0-index + 基数排序</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">calcsa</span><span class="params">(<span class="type">char</span> *s,<span class="type">int</span> n, vector&lt;<span class="type">int</span>&gt; &amp;sa,vector&lt;<span class="type">int</span>&gt; &amp;rk)</span></span>&#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> SIZE = <span class="built_in">max</span>(<span class="number">512</span>, n+<span class="number">1</span>); <span class="comment">// 字符集大小</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">cnt</span>(SIZE, <span class="number">0</span>); <span class="comment">// char 2 count</span></span><br><span class="line">  rk.<span class="built_in">resize</span>(<span class="number">2</span>*n); <span class="comment">// rank: 相等的前缀rank相等, 结束符rank = 0, 所以rank从1开始</span></span><br><span class="line">  sa.<span class="built_in">resize</span>(n); <span class="comment">// 后缀 index</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) ++cnt[rk[i] = s[i]]; <span class="comment">// 计数统计</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,SIZE) cnt[i] += cnt[i - <span class="number">1</span>]; <span class="comment">// 计数统计前缀</span></span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,n) sa[--cnt[rk[i]]] = i; <span class="comment">// 当前排序</span></span><br><span class="line">  &#123; <span class="comment">// n == 1</span></span><br><span class="line">    <span class="keyword">auto</span> oldrk = rk;</span><br><span class="line">    <span class="type">int</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n) &#123;</span><br><span class="line">      <span class="keyword">if</span> (i == <span class="number">0</span> || oldrk[sa[i]] != oldrk[sa[i<span class="number">-1</span>]]) p++;</span><br><span class="line">      rk[sa[i]] = p;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// rk = sort(&#123;rk[i],rk[i+w]&#125;</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> w = <span class="number">1</span>; w &lt; n; w *= <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="comment">// 从低位到高位排序, 先排低位 rank[i+w], 再排 rank[i+0]</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> d:&#123;w, <span class="number">0</span>&#125;)&#123;</span><br><span class="line">      cnt = <span class="built_in">vector</span>(SIZE,<span class="number">0</span>);</span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,n) ++cnt[rk[i + d]]; <span class="comment">// 所有 i+d 开始的计数统计</span></span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">1</span>,SIZE) cnt[i] += cnt[i - <span class="number">1</span>];<span class="comment">// 前缀和(基数排序</span></span><br><span class="line">      <span class="keyword">auto</span> idx = sa;</span><br><span class="line">      <span class="built_in">per</span>(i,<span class="number">0</span>,n) sa[--cnt[rk[idx[i] + d]]] = idx[i]; <span class="comment">// 保序</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">auto</span> oldrk = rk;</span><br><span class="line">    <span class="type">int</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n) &#123;</span><br><span class="line">      <span class="keyword">if</span> (i == <span class="number">0</span> || oldrk[sa[i]] != oldrk[sa[i<span class="number">-1</span>]] || oldrk[sa[i]+w] != oldrk[sa[i - <span class="number">1</span>] + w]) p++;</span><br><span class="line">      rk[sa[i]] = p;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  rk.<span class="built_in">resize</span>(n+<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">char</span> s[N+<span class="number">10</span>] = <span class="string">&quot;aabaaaab&quot;</span>;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">strlen</span>(s) ;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,n);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,s);</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; sa;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; rank;</span><br><span class="line">  <span class="built_in">calcsa</span>(s, n, sa, rank);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, sa[i]);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="height-数组"><a href="#height-数组" class="headerlink" title="height 数组"></a>height 数组</h2><p>而h数组, 首次相等的则 &#x3D; 1</p>
+<p>h[i] &#x3D; lcp(sa[i],sa[i-1])</p>
+<p>性质</p>
+<p>h[rk[i]] &gt;&#x3D; h[rk[i-1]] - 1</p>
+<p>设后缀i-1 &#x3D; “aAB”, a字符,A是h[i-1]对应字符串剩余部分,B是后缀的剩余部分</p>
+<p>那么后缀i &#x3D; “AB”</p>
+<p>因为后缀i-1 &#x3D; “aAB” 其实存在 “aAC”, “C &lt; B”, 且”C,B”公共前缀为空字符串</p>
+<p>那么也就说明”AC”也存在</p>
+<p>“AC”, “AB” 之间 如果还有其他的字符串,只能是”AD”形式 “C &lt; D &lt; B”, 那么长度至少为”|A|”, 得证</p>
+<p>所以 可以按照i的顺序暴力算</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> k = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">rep</span>(i,<span class="number">0</span>,n) &#123;</span><br><span class="line">  <span class="keyword">if</span> (rk[i] == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">  <span class="keyword">if</span> (k) --k;</span><br><span class="line">  <span class="keyword">while</span> (s[i + k] == s[sa[rk[i] - <span class="number">1</span>] + k]) ++k;</span><br><span class="line">  h[rk[i]] = k;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="vector-sort-pair版本"><a href="#vector-sort-pair版本" class="headerlink" title="vector + sort + pair版本"></a>vector + sort + pair版本</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 1000000007</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 0-index + vector + sort</span></span><br><span class="line"><span class="comment">// sa 下标按照顺序排列</span></span><br><span class="line"><span class="comment">// rank 下标对应顺序index</span></span><br><span class="line"><span class="comment">// h sa 中相邻后缀 最长公共前缀 h[0] = 0;</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">calc_sa_rank</span><span class="params">(vector&lt;T&gt;&amp; arr, vector&lt;<span class="type">int</span>&gt; &amp;sa,vector&lt;<span class="type">int</span>&gt; &amp;rank, vector&lt;<span class="type">int</span>&gt;&amp;h)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = arr.<span class="built_in">size</span>();</span><br><span class="line">  rank = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n,<span class="number">0</span>);</span><br><span class="line">  sa = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n,<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">iota</span>(sa.<span class="built_in">begin</span>(),sa.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br><span class="line">  <span class="built_in">sort</span>(sa.<span class="built_in">begin</span>(),sa.<span class="built_in">end</span>(), [&amp;](<span class="type">int</span> i,<span class="type">int</span> j)&#123;<span class="keyword">return</span> arr[i] &lt; arr[j];&#125;); <span class="comment">// 注意[&amp;] 不要[=] 会有复杂度问题</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n) rank[sa[i]] = rank[sa[i<span class="number">-1</span>]] + !(arr[sa[i]] == arr[sa[i<span class="number">-1</span>]]);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> w = <span class="number">1</span>; w &lt; n; w *= <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">auto</span> rank0 = rank;</span><br><span class="line">    <span class="keyword">auto</span> rk = [&amp;](<span class="type">int</span> i)&#123;<span class="keyword">return</span> i &lt; n ? rank0[i] : <span class="number">-1</span>;&#125;;</span><br><span class="line">    <span class="built_in">sort</span>(sa.<span class="built_in">begin</span>(),sa.<span class="built_in">end</span>(), [&amp;](<span class="type">int</span> i,<span class="type">int</span> j)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">rk</span>(i) != <span class="built_in">rk</span>(j) ? <span class="built_in">rk</span>(i) &lt; <span class="built_in">rk</span>(j) : <span class="built_in">rk</span>(i+w) &lt; <span class="built_in">rk</span>(j+w);</span><br><span class="line">    &#125;);</span><br><span class="line">    rank[sa[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n) rank[sa[i]] = rank[sa[i<span class="number">-1</span>]] + !(<span class="built_in">rk</span>(sa[i]) == <span class="built_in">rk</span>(sa[i<span class="number">-1</span>]) &amp;&amp; <span class="built_in">rk</span>(sa[i]+w) == <span class="built_in">rk</span>(sa[i<span class="number">-1</span>]+w));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// height</span></span><br><span class="line">  h = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n,<span class="number">0</span>);</span><br><span class="line">  <span class="type">int</span> k = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (rank[i] == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">if</span> (k) --k;</span><br><span class="line">    <span class="keyword">while</span> (arr[i + k] == arr[sa[rank[i] - <span class="number">1</span>] + k]) ++k;</span><br><span class="line">    h[rank[i]] = k;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">char</span> s[<span class="number">100</span>] = <span class="string">&quot;aabaaaab&quot;</span>;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">strlen</span>(s) ;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;s:%s\n&quot;</span>,s);</span><br><span class="line">  vector&lt;<span class="type">char</span>&gt; arr ;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) arr.<span class="built_in">pb</span>(s[i]);</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; sa;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; rank;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; h;</span><br><span class="line">  <span class="built_in">calc_sa_rank</span>(arr, sa, rank, h);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;sa:\n&quot;</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">printf</span>(<span class="string">&quot;%d %s\n&quot;</span>, sa[i], s + sa[i]);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\nrk:\n&quot;</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">printf</span>(<span class="string">&quot;%d %s\n&quot;</span>, rank[i], s + i);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\nhei:&quot;</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, h[i]);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/algo/sa/" title="后缀数组 SA">https://yexiaorain.github.io/Blog/algo/sa/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/SA/" rel="tag"><i class="fa fa-tag"></i> SA</a>
+              <a href="/Blog/tags/SAM/" rel="tag"><i class="fa fa-tag"></i> SAM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/algo/FWT/" rel="prev" title="从FFT 到 FWHT 快速沃尔什-阿达玛转换(Walsh Hadamard transform)">
+                  <i class="fa fa-chevron-left"></i> 从FFT 到 FWHT 快速沃尔什-阿达玛转换(Walsh Hadamard transform)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/213/" rel="next" title="Atcoder abc213">
+                  Atcoder abc213 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/algo/sa/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

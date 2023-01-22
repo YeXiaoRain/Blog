@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(博弈论,树形DP,二分)Ex(DP,线段树,矩阵)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc246">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/246/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(博弈论,树形DP,二分)Ex(DP,线段树,矩阵)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-09-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.499Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="博弈论">
+<meta property="article:tag" content="线段树">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="二分">
+<meta property="article:tag" content="矩阵">
+<meta property="article:tag" content="树形DP">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/246/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/246/","path":"atcoder/abc/246/","title":"Atcoder abc246"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc246 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Game-on-Tree-3"><span class="nav-text">G - Game on Tree 3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-01-Queries"><span class="nav-text">Ex - 01? Queries</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/246/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc246 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(博弈论,树形DP,二分)Ex(DP,线段树,矩阵)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc246
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-09-23 00:00:00" itemprop="dateCreated datePublished" datetime="2022-09-23T00:00:00+08:00">2022-09-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/246/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/246/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>8 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(博弈论,树形DP,二分)Ex(DP,线段树,矩阵)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc246/tasks">https://atcoder.jp/contests/abc246/tasks</a></p>
+<h1 id="G-Game-on-Tree-3"><a href="#G-Game-on-Tree-3" class="headerlink" title="G - Game on Tree 3"></a>G - Game on Tree 3</h1><p>n点,1为根的树</p>
+<p>除了根,点i上面还有值Ai</p>
+<p>棋子初始在1</p>
+<ol>
+<li>乙 选一个非根点,修改值Ai &#x3D; 0</li>
+<li>甲 把棋子移动到当前所在的一个子节点上, 随时可以结束游戏</li>
+</ol>
+<p>移动到叶子后结束</p>
+<p>分数&#x3D;结束游戏时棋子所在位置的值</p>
+<p>甲要让分尽量大, 乙要让分尽量小</p>
+<p>求分</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>ai 1e9</p>
+<p>6s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>一眼感觉树上dp, 因为乙要让分尽量小, 所以每次乙一定操作的是当前所在的剩余树上的点</p>
+<p>但感觉不一定操作最近的</p>
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">         0</span><br><span class="line">   1         1 </span><br><span class="line">100 100     100</span><br></pre></td></tr></table></figure>
+
+<p>那么,最大答案是1, 乙第一次移动的是左边某个叶子的100, 因为如果不是这样, 那么甲向左走,可以得到&gt;&#x3D;100 &gt; 1</p>
+<hr>
+<p>没啥想法对于局部性, <code>dp[i][j] = </code>点i为根的树已经删了j个点后剩余能得到的最大值, 但转移和范围 感觉都没想法</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>如果能判断 T能否得分 &gt;&#x3D; X, 那么就可以二分</p>
+<p>(我有想过这样二分, 但是感觉上, 判大于 我的思路也和直接算的思路一样, 没有啥额外想法)</p>
+<p>对于给定X, 考虑把树上 $\ge X$染黑, $&lt; X$染白, </p>
+<ol>
+<li>如果走到黑色,则甲胜利</li>
+<li>乙把一个黑涂白</li>
+<li>甲移动一次</li>
+</ol>
+<p>然后证明, 和总和是等价的</p>
+<p>???, 下面这样最大不是101吗?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   1         1</span><br><span class="line">100  100 100   100</span><br></pre></td></tr></table></figure>
+
+<p>艹 我读错题目了, 分数&#x3D;最后停留位置的分数,不是和, 甲可以在中途结束游戏</p>
+<hr>
+<p>那么 其实这个二分+染色就显然了</p>
+<p>然后就树上DP</p>
+<p><code>dp[u]</code> &#x3D; 以<code>u</code>为根, 最少需要<code>预先删除</code>的点的个数, 能让<code>乙</code>赢!</p>
+<p>所以<code>乙</code>胜利的条件就是<code>dp[1] = 0</code></p>
+<p>假设k 有k个子节点v1,v2,…,vk</p>
+<p>推<code>dp[u]</code> 和子节点<code>dp[vi]</code>的关系</p>
+<p>显然 <code>dp[u] = max(0, sum(dp[vi]) - 1) + color[u]</code></p>
+<p>首先u是黑色,则一定要删除</p>
+<p>然后如果有多于1个子节点预删除的个数不满足,那么这次处理后,一定有一个不满足的路径去走, 所以至多有一个子树的预删除少1个,</p>
+<p>然后就没了</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc246/submissions/35075031">https://atcoder.jp/contests/abc246/submissions/35075031</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n)for(int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">2e5</span>;</span><br><span class="line"><span class="type">int</span> a[N+<span class="number">10</span>];</span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt;g[N+<span class="number">10</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> fa,<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> s=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:g[u])<span class="keyword">if</span>(v!=fa)s+=<span class="built_in">dfs</span>(v,u,x);</span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">max</span>(s<span class="number">-1</span>,<span class="number">0</span>)+(a[u]&gt;=x);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)a[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(_,<span class="number">1</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> u=<span class="built_in">read</span>()<span class="number">-1</span>;<span class="comment">//0-index</span></span><br><span class="line">    <span class="type">int</span> v=<span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    g[u ].<span class="built_in">push_back</span>(v);</span><br><span class="line">    g[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> l=<span class="number">0</span>,r=<span class="number">1000000001</span>; <span class="comment">// l Takahashi win, r lose</span></span><br><span class="line">  <span class="keyword">while</span>(r-l&gt;<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> mid=(l+r)/<span class="number">2</span>;</span><br><span class="line">    (<span class="built_in">dfs</span>(<span class="number">0</span>,<span class="number">-1</span>,mid)?l:r)=mid;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,l);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-01-Queries"><a href="#Ex-01-Queries" class="headerlink" title="Ex - 01? Queries"></a>Ex - 01? Queries</h1><p>长N的<code>01</code>字符串S, 包含<code>?</code></p>
+<p>Q个询问,</p>
+<ol>
+<li>赋值 S[xi] &#x3D; ci</li>
+<li>S能形成的非连续子序列的种数,(所有<code>?</code>独立的考虑替换成0或1), mod 998244353</li>
+</ol>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n,q 1e5</p>
+<p>ci, <code>0</code>,<code>1</code>,<code>?</code></p>
+<p>6s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然不考虑动态变化</p>
+<p>先考虑如果一个给定的s,如何计算</p>
+<p>如果<code>?</code>  有k个,那么长k的所有串都能得到, 但是这样和0,1不好组合</p>
+<p>从dp角度</p>
+<p><code>dp[i][0/1]</code> 表示 以i结尾,且<code>s[i]==0/1</code>的方案数</p>
+<p>注意去重, 任意一个字符串能表示, 如果它结尾是1, 那么它的被统计次数应该被记录在当前最后一个1出现的位置, 如果结尾是0,也是被统计在最后一个0出现的位置, 所以</p>
+<p><code>ans = dp[最后一个1][1] + dp[最后一个0][0]</code></p>
+<p>转移<code>dp[i][1] = ???</code></p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>还是先考虑固定的字符串</p>
+<p><code>f[i][0/1]</code>  表示前i个, 结尾是<code>0/1</code>的子序列数量, <code>ans = f[n][1]+f[n][0]</code></p>
+<p><code>s[i] != 1</code> : <code>f[i][0] = f[i-1][0] + (f[i-1][1]+1)</code></p>
+<p><code>s[i] == 1</code> : <code>f[i][0] = f[i-1][0]</code></p>
+<p><code>s[i] != 0</code>:<code>f[i][1] = f[i-1][1] + (f[i-1][0]+1)</code></p>
+<p><code>s[i] == 0</code>:<code>f[i][1] = f[i-1][1]</code></p>
+<hr>
+<p>1 时的0转移,和0时的1转移很好解释, 因为不会产生新的对应结尾的</p>
+<p>但是<code>0</code>时的<code>0</code>转移没有那么显然</p>
+<p>比如<code>100</code></p>
+<p><code>dp[1][1] = 1</code>, 有<code>1</code></p>
+<p><code>dp[1][0] = 2</code> 有<code>10</code>,<code>0</code></p>
+<p><code>dp[2][0] = 2 + (1+1) = 4</code>, 有<code>0</code>,<code>00</code>,<code>10</code>,<code>100</code>,</p>
+<p>问题在于, 那些 前<code>i</code>个不能产生,但是拼上<code>0</code>以后可以产生的字符串</p>
+<p>考虑计数: 前i个产生字符串,再拼接上一个0 , <code>= (dp[i][0]+dp[i][1])+1</code>, 这个1表示空字符串拼上0</p>
+<p>去掉已经出现的<code>dp[i][0]</code> 个</p>
+<p>剩下的就是没有出现过的,<code>((dp[i][0]+dp[i][1])+1 - dp[i][0]) = (dp[i][1]+1) </code></p>
+<p>得证</p>
+<hr>
+<p>因此问题变成 线性转移, 啊不就是矩阵</p>
+<p><code>(dp[i][0] &amp; dp[i][1] &amp; 1)</code> * 转移矩阵</p>
+<p>不就是区间查询,区间修改,</p>
+<p>线段树之类维护一下就好了</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc246/submissions/35076203">https://atcoder.jp/contests/abc246/submissions/35076203</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_ROOT 1,0,n-1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_L (o&lt;&lt;1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_R (o&lt;&lt;1|1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mid (l+r)/2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_L_CHILD SEG_L,l,mid</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_R_CHILD SEG_R,mid+1,r</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function">T <span class="title">mul</span><span class="params">(<span class="type">const</span> T&amp;a,<span class="type">const</span> T&amp;b)</span></span>&#123;</span><br><span class="line">  T r = <span class="built_in">vector</span>(a.<span class="built_in">size</span>(),<span class="built_in">vector</span>&lt;mint&gt;(b[<span class="number">0</span>].<span class="built_in">size</span>(),<span class="number">0</span>));</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,a.<span class="built_in">size</span>())<span class="built_in">rep</span>(j,<span class="number">0</span>,b[<span class="number">0</span>].<span class="built_in">size</span>())<span class="built_in">rep</span>(k,<span class="number">0</span>,a[<span class="number">0</span>].<span class="built_in">size</span>()) r[i][j]+=a[i][k]*b[k][j];</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span>;</span><br><span class="line">vector&lt;vector&lt;mint&gt; &gt; t[N*<span class="number">4</span>+<span class="number">10</span>];</span><br><span class="line"><span class="type">char</span> s[N+<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span> c2i[<span class="number">256</span>];</span><br><span class="line">vector&lt;vector&lt;mint&gt; &gt; m[<span class="number">3</span>] = &#123;</span><br><span class="line">  &#123; <span class="comment">// 0</span></span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>&#125;</span><br><span class="line">  &#125;,&#123; <span class="comment">// 1</span></span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>&#125;</span><br><span class="line">  &#125;,&#123; <span class="comment">// ?</span></span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;vector&lt;mint&gt;&gt; <span class="built_in">build</span>(<span class="type">int</span> o,<span class="type">int</span> l, <span class="type">int</span> r) &#123;</span><br><span class="line">  <span class="keyword">if</span> (l == r) <span class="keyword">return</span> t[o] = m[c2i[(<span class="type">int</span>)s[l]]];</span><br><span class="line">  <span class="keyword">return</span> t[o] = <span class="built_in">mul</span>(<span class="built_in">build</span>(SEG_L_CHILD),<span class="built_in">build</span>(SEG_R_CHILD));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;vector&lt;mint&gt;&gt; <span class="built_in">update</span>(<span class="type">int</span> o, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> x, <span class="type">char</span> c) &#123;</span><br><span class="line">  <span class="keyword">if</span> (l == r) <span class="keyword">return</span> t[o] = m[c2i[(<span class="type">int</span>)c]];</span><br><span class="line">  <span class="keyword">if</span> (x &lt;= mid) <span class="keyword">return</span> t[o] = <span class="built_in">mul</span>(<span class="built_in">update</span>(SEG_L_CHILD,x,c),t[SEG_R]);</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> t[o] = <span class="built_in">mul</span>(t[SEG_L],<span class="built_in">update</span>(SEG_R_CHILD,x,c));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  vector&lt;vector&lt;mint&gt;&gt; pre = &#123;&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;&#125;;</span><br><span class="line">  vector&lt;vector&lt;mint&gt;&gt; suf = &#123;&#123;<span class="number">1</span>&#125;,&#123;<span class="number">1</span>&#125;,&#123;<span class="number">0</span>&#125;&#125;;</span><br><span class="line">  c2i[(<span class="type">int</span>)<span class="string">&#x27;0&#x27;</span>] = <span class="number">0</span>;</span><br><span class="line">  c2i[(<span class="type">int</span>)<span class="string">&#x27;1&#x27;</span>] = <span class="number">1</span>;</span><br><span class="line">  c2i[(<span class="type">int</span>)<span class="string">&#x27;?&#x27;</span>] = <span class="number">2</span>;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> q = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s);</span><br><span class="line">  <span class="built_in">build</span>(SEG_ROOT);</span><br><span class="line">  <span class="keyword">while</span> (q--) &#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">char</span> ch[<span class="number">3</span>];</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,ch);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">mul</span>(<span class="built_in">mul</span>(pre,<span class="built_in">update</span>(SEG_ROOT,x,ch[<span class="number">0</span>])),suf)[<span class="number">0</span>][<span class="number">0</span>].<span class="built_in">val</span>());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>读错题了</p>
+<p>但这样的话二分变黑白就很明显了, 然后就是树形dp, 但这个状态我是没想到的</p>
+<p>Ex</p>
+<p>我的dp还是 菜,完全不会, 这个递推表达式把我看楞了, 就是不知道怎么计算非重复的部分的个数</p>
+<p>反而后面线段树+矩阵倒是很熟了</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc246/editorial">官方题解</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/246/" title="Atcoder abc246">https://yexiaorain.github.io/Blog/atcoder/abc/246/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E5%8D%9A%E5%BC%88%E8%AE%BA/" rel="tag"><i class="fa fa-tag"></i> 博弈论</a>
+              <a href="/Blog/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 线段树</a>
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E4%BA%8C%E5%88%86/" rel="tag"><i class="fa fa-tag"></i> 二分</a>
+              <a href="/Blog/tags/%E7%9F%A9%E9%98%B5/" rel="tag"><i class="fa fa-tag"></i> 矩阵</a>
+              <a href="/Blog/tags/%E6%A0%91%E5%BD%A2DP/" rel="tag"><i class="fa fa-tag"></i> 树形DP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/245/" rel="prev" title="Atcoder abc245">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc245
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/247/" rel="next" title="Atcoder abc247">
+                  Atcoder abc247 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/246/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

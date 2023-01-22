@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(Möbius函数)H(生成函数,分治卷积)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc230">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/230/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(Möbius函数)H(生成函数,分治卷积)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-08-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.499Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="Möbius function">
+<meta property="article:tag" content="生成函数">
+<meta property="article:tag" content="分治卷积">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/230/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/230/","path":"atcoder/abc/230/","title":"Atcoder abc230"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc230 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-GCD-Permutation"><span class="nav-text">G - GCD Permutation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%84%E5%8A%A0"><span class="nav-text">附加</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%90%91%E6%80%9D%E8%B7%AF"><span class="nav-text">正向思路?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#H-Bullion"><span class="nav-text">H - Bullion</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%90%E5%88%B6"><span class="nav-text">限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E7%BB%93%E6%9E%84%E4%B8%8E%E5%87%BD%E6%95%B0%E7%BB%84%E5%90%88Combinatorial-%E2%80%9Cstructure%E2%80%9D-and-function-composition"><span class="nav-text">组合结构与函数组合Combinatorial “structure” and function composition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E9%9B%86%E5%90%88%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-text">可重集合的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0%E9%A2%98%E7%9B%AE"><span class="nav-text">回到题目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/230/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc230 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(Möbius函数)H(生成函数,分治卷积)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc230
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-09-01 00:00:00" itemprop="dateCreated datePublished" datetime="2022-09-01T00:00:00+08:00">2022-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/230/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/230/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>4.4k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>22 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(Möbius函数)H(生成函数,分治卷积)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc230/tasks">https://atcoder.jp/contests/abc230/tasks</a></p>
+<h1 id="G-GCD-Permutation"><a href="#G-GCD-Permutation" class="headerlink" title="G - GCD Permutation"></a>G - GCD Permutation</h1><p>给一个1~N的排列p</p>
+<p>问有多少个有序对 (i,j), (i&lt;&#x3D;j), 满足 gcd(i,j) !&#x3D; 1, gcd(p[i],p[j]) !&#x3D; 1</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>5s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>有点想暴力 然后证明复杂度?</p>
+<p>对于 (i,Pi), 取两个中较小的一个, 找所有包含它下标的, 用较大的去验证gcd</p>
+<p>最多有6个不同质数因子, 最坏情况 1&#x2F;2+1&#x2F;3+1&#x2F;5+1&#x2F;7+1&#x2F;11+1&#x2F;13 &#x3D; 1.3左右</p>
+<p>所以最坏情况是 找n个坐标</p>
+<p>先写个代码再说</p>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc230/submissions/34500571">https://atcoder.jp/contests/abc230/submissions/34500571</a></p>
+<hr>
+<p>显然 有很多是2 的倍数的,它们如果每个都会去访问n&#x2F;2, 那么已经就是n^2了, 肯定会超时</p>
+<hr>
+<p>想法就是 如果 (2的倍数,3的倍数) 之类做容斥? 但是我容斥完全不会</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>$\tilde{\mu}(n)&#x3D; 1,-1,0$</p>
+<p>1: 当n为奇数个不同的质数乘积</p>
+<p>-1: 当n为偶数个不同的质数乘积</p>
+<p>0: 其它</p>
+<p>相当于 Möbius函数 取相反数,且 $\mu(1) &#x3D; 0$</p>
+<p>那么满足 $\sum_{d|n} \tilde{\mu}(d)&#x3D;<br>\begin{cases}<br>0 &amp; (\text{if }n&#x3D;1)  \\<br>1 &amp; (\text{if }n\geq 2)<br>\end{cases}$</p>
+<p>这和Möbius函数 很像, <code>和= 1-Möbius的和</code></p>
+<hr>
+<p>定义函数</p>
+<p>$f(a,b;i,j) &#x3D; 1&#x2F;0$, 表示 i,j是a的倍数且 pi,pj 是b的倍数</p>
+<p>对于和$S&#x3D;\sum_{1\leq i\leq j\leq N} \sum_{a&#x3D;1}^N \sum_{b&#x3D;1}^N  \tilde{\mu}(a) \tilde{\mu}(b)f(a,b;i,j).$</p>
+<p>对于给定的$(i,j)$ 令$g&#x3D;GCD(i,j),g’&#x3D;GCD(p_i,p_j)$</p>
+<p>考虑右侧f要为1, 那么需要同时a是g的约数,b是g’的约数</p>
+<p>$\sum_{1\leq i\leq j\leq N} \sum_{a&#x3D;1}^N \sum_{b&#x3D;1}^N  \tilde{\mu}(a) \tilde{\mu}(b)f(a,b;i,j) &#x3D; \sum_{1\leq i\leq j\leq N} \sum_{a|g} \sum_{b|g’}  \tilde{\mu}(a) \tilde{\mu}(b)$</p>
+<p>$&#x3D; \sum_{1\leq i\leq j\leq N} \sum_{a|g} \tilde{\mu}(a) \sum_{b|g’}  \tilde{\mu}(b)$</p>
+<p>所以考虑右侧, 只要g,g’ 同时大于等于2,则为1, 否则为0</p>
+<p>$&#x3D; \sum_{1\leq i\leq j\leq N} (g \ge 2 , g’ \ge 2)$, 这里证明了和原题意等价, 因此S就是要求的答案</p>
+<hr>
+<p>令$num(a,b) &#x3D; (a|i,b|p_i)$ 的个数</p>
+<p>对于给定$(a,b)$ 有 $\sum_{1\le i\le j\le N}f(a,b;i,j)&#x3D;\frac{num(a,b)(num(a,b)+1)}{2}$, 相当于找出所有满足$(a|i,b|p_i)$ 的然后组成顺序对</p>
+<p>因此又有$S&#x3D;\sum_{a&#x3D;1}^N \sum_{b&#x3D;1}^N  \tilde{\mu}(a) \tilde{\mu}(b)<br>\frac{num(a,b)(num(a,b)+1)}{2}.$</p>
+<p>这样你可以计算S了, 虽然是N^2<br>但是实际上, 对于a, 因为有$(a|i,b|p_i)$, 所以 b 的可选值很小</p>
+<h3 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h3><p>讲了一下Möbius function 函数的定义,和约数和的结果, 提到了$\displaystyle\sum_{d|n} \tilde{\mu}(d)&#x3D;1-\sum_{d|n}\mu(d)$</p>
+<p>因此每个都可以被快速计算</p>
+<h2 id="正向思路"><a href="#正向思路" class="headerlink" title="正向思路?"></a>正向思路?</h2><p>其实从上面过程中还是能看见一点</p>
+<p>本身是要求 $&#x3D; \sum_{1\leq i\leq j\leq N} (GCD(i,j) \ge 2 , GCD(p_i,p_j) \ge 2)$</p>
+<p>有莫比乌斯函数知识有 $[x &#x3D; 1] &#x3D; \sum_{i|x} \mu(i)$, 这里$\mu$是莫比乌斯函数</p>
+<p>因此可以变形为</p>
+<p>$&#x3D; \sum_{1\leq i\leq j\leq N} (1-\sum_{t_0|GCD(i,j)} \mu(t_0))\cdot (1-\sum_{t_1|GCD(p_i,p_j)} \mu(t_1))$</p>
+<p>$&#x3D; \sum_{1\leq i\leq j\leq N} 1-(\sum_{1\leq i\leq j\leq N}\sum_{t_0|GCD(i,j)} \mu(t_0) + \sum_{1\leq i\leq j\leq N}\sum_{t_1|GCD(p_i,p_j)} \mu(t_1)) + \sum_{1\leq i\leq j\leq N}\sum_{t_0|GCD(i,j)} \mu(t_0) \sum_{t_1|GCD(p_i,p_j)} \mu(t_1)$</p>
+<p>3部分</p>
+<p>第一部分就是$i\le j$的个数</p>
+<p>第二部分,对于$t_0,t_1$ 分别考虑,都是类似的,找都是$t_0 &#x2F; t_1$的倍数</p>
+<p>第三部分,从$t_0,t_1$ 的角度看, 就是上面所谓的num(a,b) 一样的想法</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>map 850ms <a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc230/submissions/34500944">https://atcoder.jp/contests/abc230/submissions/34500944</a></p>
+<p>vector+vis 270ms <a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc230/submissions/34500900">https://atcoder.jp/contests/abc230/submissions/34500900</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 200000</span></span><br><span class="line"><span class="type">int</span> p[N+<span class="number">10</span>]; <span class="comment">// 读入,排列</span></span><br><span class="line"><span class="type">bool</span> pr[N+<span class="number">10</span>]; <span class="comment">// prime[i] = true/false</span></span><br><span class="line"><span class="type">int</span> mu[N+<span class="number">10</span>]; <span class="comment">// mu, 新定义的mu, mu(1) = 0, mu(i) = -莫比乌斯函数(i), i&gt; 1</span></span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt;d[N+<span class="number">10</span>]; <span class="comment">// d[v] = `v的mu不为0的因子`</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();;</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) p[i] = <span class="built_in">read</span>();</span><br><span class="line">  std::<span class="built_in">fill</span>(pr+<span class="number">2</span>,pr+n+<span class="number">1</span>,<span class="literal">true</span>);</span><br><span class="line">  std::<span class="built_in">fill</span>(mu+<span class="number">2</span>,mu+n+<span class="number">1</span>,<span class="number">-1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (pr[i]) &#123;</span><br><span class="line">      mu[i] *= <span class="number">-1</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">2</span>*i; j &lt;= n; j+=i) &#123;</span><br><span class="line">        pr[j] = <span class="literal">false</span>;</span><br><span class="line">        mu[j] *= ((j/i)%i) ? <span class="number">-1</span> :<span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mu[i] != <span class="number">0</span>) <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt;= n; j += i) d[j].<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(a,<span class="number">2</span>,n+<span class="number">1</span>) <span class="keyword">if</span>(mu[a] != <span class="number">0</span>) &#123; <span class="comment">// mu(a) * mu(b) * (num(a,b)(num(a,b)+1))/2</span></span><br><span class="line">    std::unordered_map&lt;<span class="type">int</span>, ll&gt; b2c; <span class="comment">// 对于给定a, 的b2c[b] = num(a,b)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = a; i &lt;= n; i += a) <span class="keyword">for</span> (<span class="type">int</span> b : d[p[i]]) b2c[b]++;<span class="comment">// a|i, b|p[i]</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> [b,c]: b2c) ans += mu[a] * mu[b] * (c * (c + <span class="number">1</span>)) / <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="H-Bullion"><a href="#H-Bullion" class="headerlink" title="H - Bullion"></a>H - Bullion</h1><p>无限数量的块分别重w1,w2,…,wk, 每个两两不同</p>
+<p>无限数量包,重量1</p>
+<p>包可以容纳 任意个非空包 和 任意个块</p>
+<p>安排一辆卡车, 运载力W,</p>
+<p>考虑 w&#x3D;2..W 的每个情况</p>
+<p>你需要 让最终外层包重量为w的打包方案数, 包可以嵌套,不能有空包</p>
+<p>物品重量相同视为相同, 包内没有顺序,看成可重集合</p>
+<p>输出对于每个w的方案数 mod 998244353</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>w 2.5e5</p>
+<p>8s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>先考虑给定w</p>
+<p>那么它的内容重量和&#x3D;w-1</p>
+<p>假设包的部分是重k, 那么剩余直接的块重量和为w-k-1</p>
+<p>所以f(w) &#x3D; sum g(k) h(w-k-1)</p>
+<p>g(x) &#x3D; 多个包裹总重量为x的方案数</p>
+<p>h(x) &#x3D; 多个块总重量为x的方案数</p>
+<p>像生成函数, 但不会了</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>这里也提到了上次的222H</p>
+<p>上次讲了些技术向的, 这次讲一些直觉向的</p>
+<hr>
+<p>上次写了生成方程, 希望an是它的系数, 但没明白讲, 如何用生成方程统计个数</p>
+<p>它这用三种区别</p>
+<p>序列 小写字母</p>
+<p>生成方程 大写字母</p>
+<p>集合 书法体大写字母</p>
+<hr>
+<p>简单例子, A每种ai个,每个i元,B卖bj个每个j元</p>
+<ol>
+<li><p>只从A或只从B买一个,可能的方案</p>
+</li>
+<li><p>从A和B买各买一个,可能的方案</p>
+</li>
+</ol>
+<p>更具体</p>
+<p>A, 1元的一个,2元的一个</p>
+<p>B, 1元的一个,3元的一个</p>
+<p>看成两个集合$\mathcal{A} &#x3D; \lbrace 1, 2 \rbrace ,\mathcal{B} &#x3D; \lbrace 1^\ast , 3^\ast \rbrace.$</p>
+<p>对于 1) 就是 $\mathcal{A} +\mathcal{B} &#x3D; \lbrace 1, 2 , 1^\ast , 3^\ast \rbrace $</p>
+<p>对于 2) 就是 $\mathcal{A} \times \mathcal{B} &#x3D; \lbrace 1, 2 \rbrace \times \lbrace 1^\ast , 3^\ast \rbrace &#x3D; \lbrace (1,1^\ast), (1,3^\ast), (2,1^\ast), (2,3^\ast) \rbrace$</p>
+<p>这是直接从集合角度的方案</p>
+<p>考虑, 用生成方程</p>
+<p>$A(x) &#x3D; \sum_{i} a_i x^i &#x3D; x^1+x^2 $</p>
+<p>$B(x) &#x3D; \sum_{j} b_j x^j &#x3D; x^1+x^3 $</p>
+<p>对于 1) 也是 $C &#x3D; A+B$, 幂次对应系数相加</p>
+<p>对于 2) 也是 $D &#x3D; A\times B$, 幂次对应系数 的乘积组成新的 和幂次 的系数</p>
+<p>这里也就是 集合的操作 和 生成函数操作之间是对应的</p>
+<hr>
+<p>例子2</p>
+<p>爬山,每次1步或者2步, 问爬到n步的方案数</p>
+<p>设集合$\mathcal{F} $ 表示任意步数的序列</p>
+<p>那么有$\mathcal{F} &#x3D; \lbrace \emptyset \rbrace + \lbrace (1) \rbrace \times \mathcal{F}+ \lbrace (2) \rbrace \times \mathcal{F}$, 表示不走, 第一次走一步以后的所有情况,第一次走两步以后的所有情况</p>
+<p>对应的生成方程$F(x) &#x3D; 1x^0 + F(x)x^1 + F(x)x^2$</p>
+<p>提取有$F(x) \frac{1}{1-x-x^2}$</p>
+<p>实际上也就是 $F(x) &#x3D; 1 + x + 2x^2 + 3x^3 + 5x^4 + 8x^5 + \dots$, ( 这里生成方程的转换好像需要点啥知识? 不会)</p>
+<p>其实就是系数是fibonacci数列</p>
+<p>这里说 生成方程 其实是一个 最小的必要信息容器,</p>
+<p>但不要过于依赖, 因为有时问题就算靠生成方程得到了系数表达式, 也难以计算</p>
+<h3 id="组合结构与函数组合Combinatorial-“structure”-and-function-composition"><a href="#组合结构与函数组合Combinatorial-“structure”-and-function-composition" class="headerlink" title="组合结构与函数组合Combinatorial “structure” and function composition"></a>组合结构与函数组合Combinatorial “structure” and function composition</h3><p>前面讲了 $+$ 和 $\times$ 的操作, 现在讲<code>build block</code></p>
+<p>要被计数的通常是组合的样子, 可以看成 C(集合) &#x3D; 方案数</p>
+<p>如果能得到C的表达式,那么把要求的传进去就能有答案</p>
+<p>然后就是 decompose的想法</p>
+<p>例如$SEQ(\mathcal{A})$ 表示 一个包含任意个 元素取自A中 的 序列</p>
+<p>$\mathrm{SEQ}(\mathcal{A}) &#x3D; \mathcal{E} + \mathcal{A} + \mathcal{A} \times \mathcal{A} + \mathcal{A} \times \mathcal{A} \times \mathcal{A} + \dots &#x3D; \sum_{i&#x3D;0}^\infty \mathcal{A}^i.$</p>
+<p>因此对应的生成方程为</p>
+<p>$S(x) &#x3D; 1 + A(x) + A(x)^2 + \dots &#x3D; \sum_{i&#x3D;0}^\infty A(x) &#x3D; \frac{1}{1 - A(x)}$</p>
+<p>例如上面的 爬山 ,就是$\mathcal{A} &#x3D; \lbrace 1,2 \rbrace, A(x) &#x3D; x^1+x^2$, 带入也能得到上面的式子</p>
+<hr>
+<p>现在考虑另外一个例子</p>
+<p>2维,从$(0,0)$出发 每次选择非0,$a,b\ge 0$ 的整值, 做 $(x,y) \to (x+a,x+y)$的移动, 问移动到$(N,N)$的方案数</p>
+<p>但如果从结构上去看</p>
+<p>对于每一步, 对应的集合是$\mathcal{A} &#x3D; (\mathcal{E} + \mathcal{H} + \mathcal{H}^2 + \dots) \times (\mathcal{E} + \mathcal{W} + \mathcal{W}^2 + \dots) - \mathcal{E}$, 分别一个表示横向一个纵向走一步,走非0的正整距离</p>
+<p>$&#x3D; \mathrm{SEQ}(\mathcal{H}) \times \mathrm{SEQ}(\mathcal{W}) - \mathcal{E}.$ (这里减的定义就是 加 逆元意义</p>
+<p>注意到$\mathcal{H} &#x3D; \lbrace 1 \rbrace$, 其 对应生成方程$H(x) &#x3D; x^1$</p>
+<p>因此$\mathcal{A}$对应生成方程$A(x,y) &#x3D; \frac{1}{(1-x)(1-y)} - 1$, 这是每一步的生成方程(如何解读1步的生成方程? 其实和集合对应 就是如果方程展开成非负幂次, 不同加项之间选且只能选一个, 展开后x的幂次与纵向步数相关,y的幂次和横向步数相关, 有一点就是永远不要想去带入x和y什么值 得到A的运算结果, 应该把x,y 看成无法和系数,幂次合并的特殊符号)</p>
+<p>而 走任意步的集合是$SEQ(\mathcal{A})$</p>
+<p>所以任意步的生成方程是</p>
+<p>$F(x,y) &#x3D; \frac{1}{1-A(x,y)} &#x3D; \frac{(1-x)(1-y)}{1-2x-2y+2xy}$</p>
+<p>要求的就是它的$\lbrack x^Ny^N \rbrack$</p>
+<p>技巧是拆掉分子, 分母还原成无穷等比的和, 再套二项式</p>
+<h3 id="可重集合的结构"><a href="#可重集合的结构" class="headerlink" title="可重集合的结构"></a>可重集合的结构</h3><p>令$MULTISET(\mathcal{A})$ 表示元素都取自$\mathcal{A}$ 的可重集合</p>
+<p>$A(x)$ 为原集合的生成方程</p>
+<p>那么有可重集合的生成方程为$B(x) &#x3D; exp \left( \sum_{0 &lt; k} \frac{A(x^k)}{k}\right)$</p>
+<hr>
+<p>证明:</p>
+<p>考虑问题, 很多球, 重$w$的球有$a_w$种, 同一种球无法区分</p>
+<p>考虑选一些球, $b_w$ &#x3D;重量和为$w$的方案数量</p>
+<p>$A,B$分别是$a,b$的生成方程</p>
+<hr>
+<p>考虑简单情况, 全部的重量都是1, 那么选一个的生成方程是$a_1x^1$</p>
+<p>令$r&#x3D;a_1$, 表示种数</p>
+<p>那么其实选的方案用集合表示是</p>
+<p>$\begin{aligned} &amp;(\mathcal{E}+\mathcal{C}_ 1+\mathcal{C}_ 1^2 + \dots) \times (\mathcal{E}+\mathcal{C}_ 2+\mathcal{C}_ 2^2 + \dots) \dots \times (\mathcal{E}+\mathcal{C}_ r+\mathcal{C}_ r^2 + \dots) &#x3D;\prod_ { i&#x3D;1 }^r \sum_ {j&#x3D;0}^\infty \mathcal{C}_ i^j.\end{aligned}$</p>
+<p>上面求过$SEQ$了,  这里每个集合也只包含$1$,所以生成方程为</p>
+<p>$ \frac{1}{(1-x)^r} &#x3D; \sum_{i&#x3D;0}^\infty \binom{r + i - 1}{r - 1} x^i.$</p>
+<hr>
+<p>对于全部重量是$k$的不同种球,有$a_k$个</p>
+<p>其集合结构为$\mathcal{B} &#x3D; \prod \left( \sum_{i&#x3D;0}^\infty \mathcal{D}_k \right)^{a_k}.$</p>
+<p>而这与上面全是1的区别在于 集合的元素是$k$, 上面的是$1$, 因此区别只是生成方程上面的$x^1$, 现在$x^k$</p>
+<p>因此显然生成方程为 $ B(x) &#x3D; \prod \left(\frac{1}{1-x^k}\right)^{a_k}.$</p>
+<hr>
+<p>那么对于不同重量之间的选择是互不影响的, 因此从结构上乘起来</p>
+<p>$\mathcal{B} &#x3D; \prod_{0 \lt k} \left( \sum_{i&#x3D;0}^\infty \mathcal{D}_k \right)^{a_k}.$</p>
+<p>同样的生成方程为 $ B(x) &#x3D; \prod_{0 \lt k} \left(\frac{1}{1-x^k}\right)^{a_k}.$</p>
+<p>最后就是$exp$ 和 $log$</p>
+<p>$B(x) &#x3D; \exp \log B(x) $ 注: a&#x3D;e^ln(a)</p>
+<p>$&#x3D; \exp \sum_{0 \lt k} -a_k \log (1 - x^k)$  注: ln(prod(a^i)) &#x3D; sum i ln(a)</p>
+<p>$&#x3D; \exp \sum_{0 \lt k} a_k \sum_{0 \lt i}  \frac{x^{ik}}{i}$ 幂级展开 ln(1-x) &#x3D; - sum x^i&#x2F;i</p>
+<p>$&#x3D; \exp \sum_{0 \lt i} \frac{1}{i} \sum_{0 \lt k}  a_k (x^i)^k$ 交换sum顺序</p>
+<p>$&#x3D; \exp \left(\sum_{0 \lt i} \frac{A(x^i)}{i} \right)$ 根据A的生成函数</p>
+<p>因此多重集合 与 原集合的生成函数关系得证</p>
+<blockquote>
+<p>这里还给了一个用 <code>Pólya’s enumeration theorem</code> 证明的办法 orz 见原文</p>
+</blockquote>
+<hr>
+<p>有一点问题是 exp 在实际得到后如何计算呢</p>
+<h3 id="回到题目"><a href="#回到题目" class="headerlink" title="回到题目"></a>回到题目</h3><p>定义集合符号</p>
+<p>非空包 $\mathcal{F}$</p>
+<p>一个块 $\mathcal{G}$</p>
+<p>一个包 $\mathcal{B}$</p>
+<p>一个空 $\mathcal{E}$</p>
+<p>那么显然关系是</p>
+<p>$\mathcal{F} &#x3D; \mathcal{B} \times (MULTISET(\mathcal{F}+\mathcal{G}) - \mathcal{E})$</p>
+<hr>
+<p>考虑它们4个的生成函数</p>
+<p>显然$F(x)$ 也是答案序列的生成函数</p>
+<p>$G(x) &#x3D; \sum_{1 \leq i \leq K} x^{w_i} $ 表示块,把重量相同 但是种类不同的通过系数加起来</p>
+<p>边界 $\lbrace x^0 \rbrace F(x) &#x3D; \lbrace x^1 \rbrace F(x) &#x3D; 0$</p>
+<p>剩下两个显然 $B(x) &#x3D; x$, $E(x) &#x3D; 1$</p>
+<p>令$H &#x3D; F+G$</p>
+<p>$F(x) &#x3D; x \left( \exp \left(\sum_{0 \lt k} \frac{H(x^k)}{k} \right) - 1\right)$</p>
+<hr>
+<p>接下来是算了</p>
+<p>微分后同时乘x 有</p>
+<p>$xF’(x) &#x3D; F(x) + (F(x) + x) \sum_{0 \lt k} x^{k} H’(x^k).$</p>
+<p>这正好是之前不知道如何处理exp, 现在看来, 通过微分&#x2F;积分 的形式 再创建出 同样表达式,再用F(x)替换掉即可</p>
+<p>令$J(x) &#x3D; \sum_{0 \lt k} x^{k} H’(x^k)$</p>
+<p>考虑n次项系数$(n \ge 2)$</p>
+<p>$nf_n &#x3D; f_n+\sum_{0 &lt; k &lt; n} f_k j_{n-k} + j_{n-1}$</p>
+<p>移项得到递推表达式</p>
+<p>$f_n &#x3D; \frac{1}{n - 1} \left(j_{n-1} + \sum_{0 \lt k \lt n} f_k j_{n-k}\right)$</p>
+<p>对于边界$f_0 &#x3D; f_1 &#x3D; j_0 &#x3D; 0$</p>
+<p>$j_n &#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} H’(x^k)$</p>
+<p>$&#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} H’(x^k)$</p>
+<p>$&#x3D; \lbrack x^n \rbrack \sum_{0 \lt k} x^{k} \sum_{i&#x3D;0} (i+1) h_{i+1} (x^k)^i$</p>
+<p>$&#x3D; \sum_{k | n} \lbrack x^n \rbrack \sum_{i&#x3D;1} i h_{i} (x^k)^i$</p>
+<p>$&#x3D; \sum_{k | n} \frac{n}{k} h_{\frac{n}{k}}$</p>
+<p>$&#x3D; \sum_{d | n} d h_d $</p>
+<p>$&#x3D; \sum_{d | n} d \cdot (f_d + j_d) $</p>
+<p>如果$f$知道, 那么$j$ 能快速计算</p>
+<p>而f这 很显示需要 分治FFT了</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc230/submissions/34519255">https://atcoder.jp/contests/abc230/submissions/34519255</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;atcoder/convolution.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;atcoder/modint.hpp&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"><span class="type">int</span> SZ;</span><br><span class="line">mint inv[<span class="number">500010</span>] = &#123;<span class="number">0</span>,<span class="number">1</span>&#125;;</span><br><span class="line">std::vector&lt;mint&gt; f, g, j;</span><br><span class="line"><span class="comment">// 提取数组一段 [L..R)</span></span><br><span class="line"><span class="function">std::vector&lt;mint&gt; <span class="title">get</span><span class="params">(std::vector&lt;mint&gt;&amp; v, <span class="type">int</span> L, <span class="type">int</span> R)</span> </span>&#123;<span class="keyword">return</span> &#123;v.<span class="built_in">begin</span>() + L, v.<span class="built_in">begin</span>() + R&#125;;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// f[n] = 1/(n-1) (j[n-1] + f * j), fft f * j</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dc</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123; <span class="comment">// 对于f做分治 fft, 每次调用前内部贡献都来自于[0..l),每次只完成[l..r)的计算,不在此函数中对[r,..)产生贡献, 每次先[l..mid) 再 [mid..r), 对于j做简单分治</span></span><br><span class="line">  <span class="keyword">if</span> (l + <span class="number">1</span> == r) &#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= <span class="number">2</span>) f[l] = (f[l] + j[l<span class="number">-1</span>]) * inv[l<span class="number">-1</span>]; <span class="comment">// 处理之前 一直是由比它小的贡献 f * j</span></span><br><span class="line">    <span class="keyword">if</span> (l &gt;= <span class="number">1</span>) <span class="keyword">for</span> (<span class="type">int</span> i = l; i &lt; SZ; i += l) j[i] += (f[l] + g[l]) * l; <span class="comment">// j[n] = sum d|n, d * (f[d] + g[d])</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> mid = (l + r) / <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">dc</span>(l, mid); <span class="comment">// [0..mid) 都完成了, 把它们贡献散布到[mid, r)</span></span><br><span class="line">  <span class="keyword">if</span> (l == <span class="number">0</span>) &#123; <span class="comment">// 注意不要算重了</span></span><br><span class="line">    <span class="keyword">auto</span> fj = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, <span class="number">0</span>, mid), <span class="built_in">get</span>(j, <span class="number">0</span>, mid));</span><br><span class="line">    <span class="built_in">rep</span>(i,mid,r) f[i] += fj[i];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">auto</span> fj1 = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, l, mid), <span class="built_in">get</span>(j, <span class="number">0</span>, r - l)); <span class="comment">// 两段必定不重复</span></span><br><span class="line">    <span class="keyword">auto</span> fj2 = atcoder::<span class="built_in">convolution</span>(<span class="built_in">get</span>(f, <span class="number">0</span>, r - l), <span class="built_in">get</span>(j, l, mid));</span><br><span class="line">    <span class="built_in">rep</span>(i,mid,r) f[i] += fj1[i - l] + fj2[i - l];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">dc</span>(mid, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> W = <span class="built_in">read</span>(); <span class="comment">// 求 [2..W]</span></span><br><span class="line">  <span class="type">int</span> K = <span class="built_in">read</span>();</span><br><span class="line">  SZ = <span class="number">1</span>; <span class="comment">// &gt;= n+1, 方便分治 不会重复计算</span></span><br><span class="line">  <span class="keyword">while</span> (SZ &lt;= W) SZ *= <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,SZ) inv[i] = (MOD-MOD/i) * inv[MOD%i];</span><br><span class="line">  f = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  g = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  j = std::<span class="built_in">vector</span>&lt;mint&gt;(SZ,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">while</span>(K--) g[<span class="built_in">read</span>()] += <span class="number">1</span>; <span class="comment">// g[n] = count(val == n)</span></span><br><span class="line">  <span class="built_in">dc</span>(<span class="number">0</span>, SZ); <span class="comment">// 分治fft</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,W+<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, f[i].<span class="built_in">val</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>感觉还是莫比乌斯反演相关的知识点</p>
+<p>这个S的定义 感觉凭空出现啊, 这题解有一点搞</p>
+<p>但如果不知道这种定义, 还是可以从莫比乌斯函数推导出的</p>
+<p>H</p>
+<p>不会啊</p>
+<p>虽然之前几场的生成函数题目学了, 但是都是说从最简单的选项,建立函数或方程, 然后运算,化简,提取系数</p>
+<p>这里通过集合和函数的关系, 感觉学了一点新的东西, 也就是 可以把一个集合操作变成另一个集合, 与 生成方程对应, 换句话说, 生成方程对应了操作,而操作对象是集合就好了, 这样一定程度上有”模块化”和”函数化”的感觉</p>
+<p>这个感觉和上次 列生成函数一样还有个好处,就是当结构不再只是层级的,而是会有可相互递归时, 集合就更直观感受</p>
+<p>以及exp消除这里办法是微分&#x2F;积分 同表达式 替换</p>
+<p>求解系数,没有直接表达式时, 用递推关系式+分治</p>
+<p>然后实现上之前213H也做了分治fft,但是自己依赖自己, 这里的话依赖两个, 要注意分治时不要重复计算, 所以一个办法是把长度做成2的幂次</p>
+<p>TODO Pólya’s enumeration theorem</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc230/editorial">官方题解</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2019-01-06-MobiusInversionFormula/">之前写的莫反笔记</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2019-03-23-cfP1139D/">莫反 CF 548 Div2 D</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2020-11-07-nowcoder8282D/">莫反NowCoder 8282 D</a></p>
+<p><a target="_blank" rel="noopener" href="http://localhost:4000/Blog/2022-08-08-ac_abc222/">222H 生成函数</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/230/" title="Atcoder abc230">https://yexiaorain.github.io/Blog/atcoder/abc/230/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/Mobius-function/" rel="tag"><i class="fa fa-tag"></i> Möbius function</a>
+              <a href="/Blog/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 生成函数</a>
+              <a href="/Blog/tags/%E5%88%86%E6%B2%BB%E5%8D%B7%E7%A7%AF/" rel="tag"><i class="fa fa-tag"></i> 分治卷积</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/229/" rel="prev" title="Atcoder abc229">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc229
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/231/" rel="next" title="Atcoder abc231">
+                  Atcoder abc231 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/230/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="D(随机)E(DP)F(数学,贡献统计)G(fib,DP)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Educational Codeforces Round 137">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/cf/edu/137-1743/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="D(随机)E(DP)F(数学,贡献统计)G(fib,DP)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-01-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.511Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="贡献统计">
+<meta property="article:tag" content="随机">
+<meta property="article:tag" content="fib">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/cf/edu/137-1743/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/cf/edu/137-1743/","path":"cf/edu/137-1743/","title":"Educational Codeforces Round 137"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Educational Codeforces Round 137 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#D-Problem-with-random-tests"><span class="nav-text">D. Problem with random tests</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#E-FTL"><span class="nav-text">E. FTL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#F-Intersection-and-Union"><span class="nav-text">F. Intersection and Union</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-2"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-2"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Antifibonacci-Cut"><span class="nav-text">G. Antifibonacci Cut</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-3"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-3"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-2"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/cf/edu/137-1743/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Educational Codeforces Round 137 | YeXiaoRain Blog">
+      <meta itemprop="description" content="D(随机)E(DP)F(数学,贡献统计)G(fib,DP)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Educational Codeforces Round 137
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-01-10 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-10T00:00:00+08:00">2023-01-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/Edu/" itemprop="url" rel="index"><span itemprop="name">Edu</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/cf/edu/137-1743/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cf/edu/137-1743/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>21 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">D(随机)E(DP)F(数学,贡献统计)G(fib,DP)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1743">https://codeforces.com/contest/1743</a></p>
+<h1 id="D-Problem-with-random-tests"><a href="#D-Problem-with-random-tests" class="headerlink" title="D. Problem with random tests"></a>D. Problem with random tests</h1><p>给你长 n的0&#x2F;1</p>
+<p>问它的两个子串(连续)的 bit or 的最大为多少</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e6</p>
+<p>4s</p>
+<p>512mb</p>
+<p>随机生成数据 不支持 hack</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>首先一个肯定是原串,为了最高位1</p>
+<p>那么剩下的一定是从最前连续1里面开始的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">11100001....</span><br><span class="line">3个1 len1=3</span><br><span class="line">   4个0 len0=4</span><br><span class="line">       ....</span><br></pre></td></tr></table></figure>
+
+<p>那么为了尽量高位填1, 如果len1 &lt;&#x3D; len0, 那就是都从第一个1开始,长度差为len1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">11110001.....</span><br><span class="line">len1=4</span><br><span class="line">    len0=3</span><br></pre></td></tr></table></figure>
+
+<p>但如果len1 &gt; len0</p>
+<p>那么可以选的 有从头开始,和从偏移一个开始, 这两个都会or掉第一节的0, 但是后面的情况是未知的</p>
+<p>看着禁止hack 似乎需要上string hash的意思?</p>
+<hr>
+<p>如果暴力找就是 候选的开头在</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">11111110001....</span><br><span class="line">xxxxx 这些位置都是候选</span><br></pre></td></tr></table></figure>
+
+<p>然后对于原串, 找每个0的位置, 反过来在候选中找是否为1, 不为1则剔除候选,</p>
+<p>这样感觉要n^2</p>
+<p>有点想后缀数组排序, 但问题是, 这里只有原串为0的对应位置需要是1(参与比较), 而原串已经是1的则可以忽略</p>
+<p>不会啊,干</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>取的两个一定是s前缀, 因为不是前缀变成前缀不会更差, 所以如果有最有解不是前缀,它门有等价的前缀方案</p>
+<p>然后一样的,其中一个是s(为了最高位的i)</p>
+<p>问题就是 s 和 s的前缀的计算, O(n^2)</p>
+<p>然后就是 因为保证了随机性,所以就是上面的 候选+检查有0的位置, 暴力就完了, XD</p>
+<p>随机题目暴力过?????? 随机完全不会 XD</p>
+<h1 id="E-FTL"><a href="#E-FTL" class="headerlink" title="E. FTL"></a>E. FTL</h1><p>2个武器, 每个伤害pi(瞬发),充能时间ti</p>
+<p>敌人 血h, 护甲s</p>
+<p>h&lt;&#x3D;0则死亡</p>
+<p>每次 单独用武器, 则 h -&#x3D; pi-s</p>
+<p>同时用两个武器 则 h -&#x3D; p1+p2-s</p>
+<p>问最短时间击杀敌人</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>pi,h,s [1,5000]</p>
+<p>s &lt; pi</p>
+<p>ti [1,1e12]</p>
+<p>4s</p>
+<p>512mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>这 5000就像是n^2的感觉, 但我完全没想到这个方向能怎么做状态</p>
+<p>一个暴力一点的就是</p>
+<p>map[h] &#x3D; vector{时间, cooldown1,cooldown2}</p>
+<p>这样每次 转移下一个状态, 可以单独等1, 单独等2, 和等两个一起用</p>
+<p>但实际上 cooldown 如果不想等的话, 等待更长的不会优于 等两个一起用</p>
+<p>所以是 等待短的 或 等待长的一起用, 延伸是两倍状态</p>
+<hr>
+<p>再观察到, 每次转移后, 一定两个中一个的cooldown &#x3D;&#x3D; 0</p>
+<p>所以</p>
+<p>map[h,cd1&#x3D;&#x3D;0] &#x3D; {time,cd2}</p>
+<p>map[h,cd2&#x3D;&#x3D;0] &#x3D; {time,cd1}</p>
+<hr>
+<p>map[h,cd1&#x3D;&#x3D;0]&#x3D;{t,cd2} 为例, 考虑具体转移</p>
+<p>单独用第一个</p>
+<p>当cd2 &gt;&#x3D; t1时, map[h-(p1-s),cd1&#x3D;&#x3D;0] &#x3D; {t+t1,cd2-t1}</p>
+<p>当cd2 &lt;  t1时, map[h-(p1-s),cd2&#x3D;&#x3D;0] &#x3D; {t+cd2,t1-cd2}</p>
+<p>等待第二个好一起用, 不妨设(t1&lt;&#x3D;t2)</p>
+<p>map[h-(p1+p2-s), t1&#x3D;&#x3D;0] &#x3D; {t+t1,t2-t1}</p>
+<hr>
+<p>那么问题来了, 可能出现 h相同cd1&#x3D;&#x3D;0的情况, 右侧出现 timeA &gt; timeB 但是 cd2A &lt; cd2B 的情况吗, 感觉右侧只记录 最小时间总不是太对?</p>
+<p>如果硬做, 这个状态数量是 2^5000, 因为h严格单调递减</p>
+<hr>
+<p>而且可能这种密铺, h&#x3D;501, s&#x3D;1, p1&#x3D;101,t1&#x3D;2,p2&#x3D;101,t2&#x3D;3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1 2 3 4 5 6</span><br><span class="line">x x|x x|x x|</span><br><span class="line">   100 100</span><br><span class="line">y y y|y y y|</span><br><span class="line">     100   201</span><br></pre></td></tr></table></figure>
+
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>在任何适合3种选择, 单独1,单独2, 等一起</p>
+<p>题解 说它们没想到 有效的 greedy和bruteforce</p>
+<p>尝试dp, 也是显然t 范围1e12 肯定不是state 的键值</p>
+<p>直接尝试 dp[damage] &#x3D; time 也并不能建立关系(跟我想用剩余血量是一样的, 并不能</p>
+<p>dp[damage] &#x3D; 最小的时间,造成damage, 且最后一次伤害是同时用两个造成的, (这个<code>且</code>是我太菜了,想不出)</p>
+<p>dp[0] &#x3D; 0</p>
+<p>那么就是考虑 相邻的同时用两次, 中间就都是单独用,那么单独用就是尽可能用更多了,</p>
+<p><code>T0 -&gt; T1</code> 能造成的伤害 为 <code>(p1+p2-s) + (T1-T0-t1)/t1 * (p1-s) + (T1-T0-t2)/t2 * (p2-s)</code></p>
+<p>似乎不太行</p>
+<p>反过来, damage层面考虑, 那么时间一定是 t1&#x2F;t2 的倍数, 如果都不是就还有留白时间,就不是最短了</p>
+<p>所以 分别考虑1号刚好和2号刚好</p>
+<p>比如1号刚好c次(包含最后一次)</p>
+<p>时间就是 T &#x3D; c * t1 &gt;&#x3D; t2</p>
+<p>所以有 <code>damage = (p1+p2-s) + (c-1) * (p1-s) + (c * t1 / t2 - 1) * (p2-s)</code></p>
+<p>反过来 1号刚好c次</p>
+<p><code>damage = (p1+p2-s) + (c-1) * (p2-s) + (c * t2 / t1 - 1) * (p1-s)</code></p>
+<p>这样 for damage: for c 就是 O(n^2) 了 可AC</p>
+<h1 id="F-Intersection-and-Union"><a href="#F-Intersection-and-Union" class="headerlink" title="F. Intersection and Union"></a>F. Intersection and Union</h1><p>n个 连续整数集合S_i &#x3D; [li,ri]</p>
+<p>然后集合就有 并,交 以及 \oplus 运算 &#x3D; 出现且仅出现在一个中的元素集合</p>
+<p>对于所有这三种操作构成的序列op, 求 $\sum_{op} |((S_1 op_1 S_2) op_2 S_3) \cdots op_{n-1} S_n |$, ||表示size</p>
+<p>mod 998244353</p>
+<h2 id="范围-2"><a href="#范围-2" class="headerlink" title="范围"></a>范围</h2><p>n 3e5</p>
+<p>li ,ri , [0,3e5]</p>
+<p>5s</p>
+<p>512mb</p>
+<h2 id="我的思路-2"><a href="#我的思路-2" class="headerlink" title="我的思路"></a>我的思路</h2><p>连续集合的交和并还很好, 有依然连续的性质, 但是这个 \oplus 就很搞</p>
+<p>但实际上 并不需要实际的结果, 只需要个数和</p>
+<p>那么就是 贡献统计</p>
+<p>考虑 点v 是否在结果中,如果在就贡献1</p>
+<p>f(n,v,true&#x2F;false) &#x3D; 前n个的所有操作 v是否在结果中 的方案数</p>
+<p>注意到 f(n,v,true) + f(n,v,false) &#x3D; 3^{n-1}</p>
+<p>那么考虑计算f(n,v,true)</p>
+<blockquote>
+<p>如果 S_n 中有v, 那么</p>
+</blockquote>
+<p>对于 并, 3^{n-2}</p>
+<p>对于 交, f(n-1,v,true)</p>
+<p>对于 \oplus, f(n-1,v,false)</p>
+<p>所以 v 的次数为 2 3^{n-2}</p>
+<blockquote>
+<p>如果 S_n 中没有v, 那么</p>
+</blockquote>
+<p>对于 并, f(n-1,v,true)</p>
+<p>对于 交, 0</p>
+<p>对于 \oplus, f(n-1,v,true)</p>
+<p>所以 v 的次数 为 2f(n-1,v,true)</p>
+<hr>
+<p>综上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f(n,v,true) =</span><br><span class="line">  v in S_n : 2 3^&#123;n-2&#125;</span><br><span class="line">  v not in S_n : 2 f(n-1,v,true)</span><br><span class="line"></span><br><span class="line">f(1,v,true) =</span><br><span class="line">  v in S_n : 1</span><br><span class="line">  v not in S_n : 0</span><br></pre></td></tr></table></figure>
+
+<p>所以就是倒着来 找 首个包含v的S</p>
+<p>怎么找呢 set维护连续线段</p>
+<p>S_n 的[li..ri] 贡献 为 <code>2 3^&#123;n-2&#125; * 个数</code></p>
+<p>那么 未找到覆盖的就是 <code>[0..li-1] [ri+1..3e5]</code>, 这个线段直接 <code>set&lt;pair&lt;int,int&gt;&gt;</code> 去维护</p>
+<p>然后 S_{n-1} , 这就是找 为覆盖中和 <code>[l_&#123;n-1&#125;,r_&#123;n-1&#125;]</code> 重叠的</p>
+<p>贡献就是 <code>2^2 3^&#123;n-3&#125; * 个数</code></p>
+<p>就没了</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1743/submission/188929257">https://codeforces.com/contest/1743/submission/188929257</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line">pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; lr[<span class="number">300010</span>];</span><br><span class="line">ll p2[<span class="number">300010</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">ll p3[<span class="number">300010</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// lr0 - lr1, return &#123;count, remain lr&#125;</span></span><br><span class="line">pair&lt;<span class="type">int</span>,vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; &gt; &gt;<span class="built_in">cut</span>(pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;lr0,pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;lr1)&#123;</span><br><span class="line">  vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt; ret;</span><br><span class="line">  <span class="keyword">auto</span> [l0,r0]=lr0;</span><br><span class="line">  <span class="keyword">auto</span> [l1,r1]=lr1;</span><br><span class="line">  <span class="type">int</span> cl=<span class="built_in">max</span>(l0,l1);</span><br><span class="line">  <span class="type">int</span> cr=<span class="built_in">min</span>(r0,r1);</span><br><span class="line">  <span class="keyword">if</span>(cl &gt; l0) ret.<span class="built_in">push_back</span>(&#123;l0,<span class="built_in">min</span>(r0,cl<span class="number">-1</span>)&#125;);</span><br><span class="line">  <span class="keyword">if</span>(cr &lt; r0) ret.<span class="built_in">push_back</span>(&#123;<span class="built_in">max</span>(l0,cr+<span class="number">1</span>),r0&#125;);</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="built_in">max</span>(<span class="number">0</span>,cr-cl+<span class="number">1</span>), ret&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n) p3[i]=p3[i<span class="number">-1</span>]*<span class="number">3</span>%MOD;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n) p2[i]=p2[i<span class="number">-1</span>]*<span class="number">2</span>%MOD;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) lr[i]=&#123;<span class="built_in">read</span>(),<span class="built_in">read</span>()&#125;;</span><br><span class="line">  set&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; &gt; s; <span class="comment">// 未覆盖线段</span></span><br><span class="line">  s.<span class="built_in">insert</span>(&#123;<span class="number">0</span>,<span class="number">300000</span>&#125;);</span><br><span class="line">  ll ans=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="keyword">auto</span> [l,r]=lr[i];</span><br><span class="line">    <span class="keyword">auto</span> ptr=s.<span class="built_in">lower_bound</span>(&#123;l,<span class="number">-1</span>&#125;);</span><br><span class="line">    vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt; rm;</span><br><span class="line">    vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt; add;</span><br><span class="line">    <span class="keyword">if</span>(ptr != s.<span class="built_in">begin</span>()) ptr=<span class="built_in">prev</span>(ptr);</span><br><span class="line">    ll c=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(ptr!=s.<span class="built_in">end</span>() <span class="keyword">and</span> ptr-&gt;first &lt;= r)&#123;</span><br><span class="line">      rm.<span class="built_in">push_back</span>(*ptr);</span><br><span class="line">      <span class="keyword">auto</span> [cnt, remain] = <span class="built_in">cut</span>(*ptr,&#123;l,r&#125;);</span><br><span class="line">      c+=cnt;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> o:remain) add.<span class="built_in">push_back</span>(o);</span><br><span class="line">      ptr=<span class="built_in">next</span>(ptr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> o:rm) s.<span class="built_in">erase</span>(o);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> o:add) s.<span class="built_in">insert</span>(o);</span><br><span class="line">    <span class="keyword">if</span>(c) &#123;</span><br><span class="line">      <span class="keyword">if</span>(i) (ans+=c*p2[n-i]%MOD*p3[i<span class="number">-1</span>]%MOD)%=MOD;</span><br><span class="line">      <span class="keyword">else</span> (ans+=c*p2[n-(i+<span class="number">1</span>)]%MOD*p3[(i+<span class="number">1</span>)<span class="number">-1</span>]%MOD)%=MOD;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="G-Antifibonacci-Cut"><a href="#G-Antifibonacci-Cut" class="headerlink" title="G. Antifibonacci Cut"></a>G. Antifibonacci Cut</h1><p>fib 字符串, 就是f[0]&#x3D;”0”, f[1]&#x3D;”1” f[i] &#x3D; f[i-1]+f[i-2] 拼接</p>
+<p>例如 0,1,10,101,10110,</p>
+<p>g(s) &#x3D; 把字符串切割成多个均不是 fib 字符串的 切割方案数</p>
+<p>给你n个字符串 si</p>
+<p>求 g(s1), g(s1+s2), g(s1+s2+s3), … 答案mod 998244353</p>
+<h2 id="范围-3"><a href="#范围-3" class="headerlink" title="范围"></a>范围</h2><p>n 3e3</p>
+<p>|si| 1e3</p>
+<p>12s</p>
+<p>4mb !!!!!!!!!!!!!!!!!!!!!!!!</p>
+<h2 id="我的思路-3"><a href="#我的思路-3" class="headerlink" title="我的思路"></a>我的思路</h2><p>这个memory 很异常, int32 &#x3D; 32&#x2F;8 &#x3D; 4bytes, 4mb &#x3D; 1m int32, 你甚至不能把这些字符串拼起来? 但 似乎用位表示就可以?3e6&#x2F;32 &lt; 1m</p>
+<hr>
+<p>抛开空间, 如何算呢?</p>
+<p>g(s) &#x3D; \sum (g(s[0..i]) * [s[i+1..] is not fib]) &#x3D; (\sum g(s[0..i])) - (\sum g(s[0..i]) and s[i+1..] is fib)</p>
+<p>一个就是前缀和, 一个就是特别要判断的</p>
+<p>而要判断的 根据fib的性质来说, 长度成幂次增长 , 所以 真正要比对的个数不多, 总长度? 也是O(n)吗? 因为上面构成可以看到, f[i-2]是f[i]的后缀, 所以 奇偶可以分开, 如果已经不是f[i-2] 了那肯定不是f[i], 所以直接暴力判断 是每次O(len), 那么总的会达到 O( (n|si|)^2), 这样暴力都不行</p>
+<p>那么再看转移 如果一段[l..r]是f[i-2], 那么其实要判断再向前[l’…r] 是不是f[i],只需要知道 前面一段[l’..l-1]是不是 f[i-1], 所以每次遍历只是log级别了, 时间问题就解决了</p>
+<p>如果是一般的空间限制,这个题目已经AC了, 但这题还有空间问题</p>
+<p>所以 其实可以维护一个叫 <code>isfib[i][lvl]</code>, 然而打表 fib</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">0 1</span><br><span class="line">1 1</span><br><span class="line">2 2</span><br><span class="line">3 3</span><br><span class="line">4 5</span><br><span class="line">5 8</span><br><span class="line">6 13</span><br><span class="line">7 21</span><br><span class="line">8 34</span><br><span class="line">9 55</span><br><span class="line">10 89</span><br><span class="line">11 144</span><br><span class="line">12 233</span><br><span class="line">13 377</span><br><span class="line">14 610</span><br><span class="line">15 987</span><br><span class="line">16 1597</span><br><span class="line">17 2584</span><br><span class="line">18 4181</span><br><span class="line">19 6765</span><br><span class="line">20 10946</span><br><span class="line">21 17711</span><br><span class="line">22 28657</span><br><span class="line">23 46368</span><br><span class="line">24 75025</span><br><span class="line">25 121393</span><br><span class="line">26 196418</span><br><span class="line">27 317811</span><br><span class="line">28 514229</span><br><span class="line">29 832040</span><br><span class="line">30 1346269</span><br><span class="line">31 2178309</span><br></pre></td></tr></table></figure>
+
+<p>发现要超过3e6 也会达到lvl\in [0,31], 这样空间上还有问题, 一个是 <code>isfib[i][lvl]</code> 要3e6 * 32bit 都不够, 就更不要说还要存g了</p>
+<hr>
+<p>那至少isfib 要想办法优化掉</p>
+<p>同样的 刚刚观察到 fib[n-2]是fib[n] 的后缀, 那么不如改成 <code>maxfib[i][odd/even] = 最大fib</code>, 注意到最大的&lt;&#x3D;31, 所以需要4个bit, odd和even合起来就是 1byte, 这样3e6 byte  可存下, 但是距离4mb 很接近几乎存不下其它的东西了</p>
+<hr>
+<p>这个g 我是真不知道了 how存</p>
+<h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><p>一样也是先想到</p>
+<p>dp[i] &#x3D; sum(dp[..i-1]) - sum(dp[j], s[j…i] is fib-str)</p>
+<p>同样两个问题也是dp存不下,和 需要快速判断 s[j..i] 是不是fib-str</p>
+<p>维护 (j,dp[j]) 列表 且 s[j..i] 是fib-str</p>
+<p>显然 f[i-1] 是 f[i] 的前缀 (除了f[0])</p>
+<p>因此 s[j…i] 是 fib[MAX] 的前缀,</p>
+<p>那么当增加一个 字符 时, 检查哪些(j,dpi) 不是前缀(不一定要是fib-str, 只需要是一个长fib-str前缀就行), 来移除非法的j</p>
+<ol>
+<li>生成 3e6 的fib-str</li>
+<li>或者用 prefix来指向 fib-str</li>
+</ol>
+<p>(j,dp[j]) 的大小 是log n的!!!???</p>
+<p>显然的是 i向前的 fib-str个数是 log 的, 但是 向前是fib-str 前缀的怎么也是log 的啊???</p>
+<hr>
+<p>proof</p>
+<p>想一个无限(足够)长的 fib-str</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fib-str:          1011010110110...</span><br><span class="line">s      :  xxxxxxxxxxxxxxxxxx</span><br><span class="line">                  j........i</span><br><span class="line">                     j1</span><br><span class="line">                         j2</span><br></pre></td></tr></table></figure>
+
+<p>不妨设 j 是最前的 是前缀的, j1 是j后面第一个, 那么一定存在一个 j2到j1距离 &#x3D; j1到j距离, (相当于字符串自己递归)</p>
+<p>这样看起来 n&#x2F;len 的和, 的样子</p>
+<p>那就是这个 len 是有说法的?</p>
+<hr>
+<p>其实就是 要证明</p>
+<p>fib-str 的 fib-str[0..i]的后缀 是 fib-str的前缀的个数是log i级别的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fib-str: xxxxxxxxxxx|yyyyyyy</span><br><span class="line">        [0.............i]</span><br><span class="line">        &quot;f[n-1].....&quot;</span><br><span class="line">        &quot;f[n]...............&quot;</span><br></pre></td></tr></table></figure>
+
+<p>如果能证明 y 之前只有首个x合法就 能证明是log级别的了</p>
+<hr>
+<p>归纳法</p>
+<p>先 <code>f[n-1]</code> 中(也就是上面一串x) 后缀是前缀的全在 它最后的<code>f[n-3]</code>里, 且是 某个后缀f的起始位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fib-str:  xxxxx xxx|yyyyy</span><br><span class="line">          yyyyy|zzz|yyyyy</span><br><span class="line">          j           i</span><br><span class="line">                j1....i</span><br></pre></td></tr></table></figure>
+
+<p>那么要证明的就是 <code>f[n-3]/f[n-5]/f[n-7]/... +&#39;1&#39; </code> 不是 <code>f[n]</code> 的前缀</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fn = 101 10</span><br><span class="line">     101 10</span><br><span class="line">       j+1</span><br><span class="line"></span><br><span class="line">fn = 10110 101</span><br><span class="line">        j  1 是前缀</span><br><span class="line">        j  10 不是前缀</span><br><span class="line"></span><br><span class="line">fn = 10110101 10110</span><br><span class="line">          j   1 是前缀</span><br><span class="line">          j   10 是前缀</span><br><span class="line">          j   101 是前缀</span><br><span class="line">          j   1011 不是前缀</span><br></pre></td></tr></table></figure>
+
+<p>似乎并不行,</p>
+<hr>
+<p>突然想到一个证明, XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 证明有问题</p>
+<p>&#x2F;&#x2F;    —-<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    因为fib-str不是周期串(proof, 不妨设 fib-str[i] 是最短的有子周期的字符串, 那么这个周期串同时是它的前缀也就是 fib-str[0..i-1] 的前缀, 周期串也是后缀, 也是 i-2,i-4的后缀, 可以找到一个更短但是前缀后缀重叠的, 也是周期串,最小性不满足)<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    <code>//         ............................................ //         [    ][    ][    ][    ][    ]... //    j  : xxxxxyyyxxxxx //    j-1: xxxxx //   </code><br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    或者在某个 [len(fib-str[j-1], len(fib-str[j])&#x2F;2) 之间<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    但注意2倍周期 也同时是前后缀, 而两倍周期一定重叠, 所以又是可以找到更小的周期串, 和最小性冲突<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    —<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    所以 如果fib-str[0…i]<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    <code>//    fib: xxxxxxxx|yyyyy //        [0..........i] //            j.......i //                 k //   </code><br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    所以 j的位置 一定在 xxxxx一半以后, 否则 [j…k] 也是 xxxxx的前缀, 而单独看xxxxxxx 就会是周期序列, 而fib-str自身不是<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    <code>//    [j....i] = xxxxxxxx|yyyyy - (&gt; len(x)/2) //   </code><br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    所以两次以后就变成 比y更短的子问题<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    所以是log级别的!!!!!<br>&#x2F;&#x2F;</p>
+<hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br><span class="line">10</span><br><span class="line">101</span><br><span class="line">10110</span><br><span class="line">10110110</span><br><span class="line">1011011010110</span><br><span class="line">101101101011010110110</span><br></pre></td></tr></table></figure>
+
+<p>官方题解代码给了个很神奇的编码方式, 但是有点绕, 我给它再简化了一下</p>
+<p>总的来说就是 fibstr[i] 就是编码值 末位 取反, 然后i -&gt; i+1 的话 编码每次 +1, 但是一旦末尾相邻1则进位</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1 -&gt; 1  :                    1 fib 1</span><br><span class="line">0 -&gt; 2  :                   10 fib 2</span><br><span class="line">1 -&gt; 4  :   11         -&gt;  100 fib 3</span><br><span class="line">1 -&gt; 5  :                  101     4</span><br><span class="line">0 -&gt; 8  :  110         -&gt; 1000 fib 5</span><br><span class="line">1 -&gt; 9  :                 1001     6</span><br><span class="line">0 -&gt; 10 :                 1010     7</span><br><span class="line">1 -&gt; 16 : 1011 -&gt; 1100 -&gt;10000 fib 8</span><br><span class="line">1 -&gt; 17 :                10001     9</span><br><span class="line">0 -&gt; 18 :                10010     10</span><br></pre></td></tr></table></figure>
+
+<p>感觉可以倒着想一下, 先令<code>code[fib[i]] = 2^i</code> 也是所有 fib 映射到2的幂次</p>
+<p>code[1]&#x3D;1,code[2]&#x3D;2,code[3]&#x3D;4,code[5]&#x3D;8,code[8]&#x3D;16,code[13]&#x3D;32</p>
+<p>那么它们之间的就用 fib的映射的 和来表示</p>
+<p>众所周知, 一个数只能唯一拆解成fib的和(不同时含相邻)</p>
+<p>所以上面这种末尾连续11就仅为 其实就是 相当于 不同时含相邻的限制</p>
+<p>因此 上面比如 <code>18 = 10010 =&gt; fib[2]+fib[5] = 2+8 = 10</code></p>
+<p>所以这个神奇的过程, 可以说是<code>newcode = idx2code(code2idx(code) + 1)</code> 的简化版</p>
+<p>至于末位和x是取反, 就是因为这种运算关系下, 就如拼接一样,8&#x3D;5+3 所以 [1..3]的末位 &#x3D; [6..8]的末位</p>
+<p>&#x2F;&#x2F; 可能官方题解看起来更复杂, 是为了0位表示f[0]而不是f[1]</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1743/submission/189036902">https://codeforces.com/contest/1743/submission/189036902</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD = <span class="number">998244353</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">go</span><span class="params">(<span class="type">int</span>&amp; a, <span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">auto</span> last_bit=[](<span class="type">int</span> v)&#123;<span class="keyword">return</span> v-(v&amp;(v<span class="number">-1</span>));&#125;;</span><br><span class="line">  <span class="keyword">if</span>(a%<span class="number">2</span> != <span class="number">1</span>-x) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 低位和x相反, seqn[fib[i]]= (1&lt;&lt;i)</span></span><br><span class="line">  <span class="comment">// newa = idx2code(code2idx(a)+1)</span></span><br><span class="line">  <span class="keyword">for</span>(a+=<span class="number">1</span>;a&amp;(<span class="number">2</span>*<span class="built_in">last_bit</span>(a));a+=<span class="built_in">last_bit</span>(a)) ; <span class="comment">// ...11 00..00 -&gt; ... 100 00..00, 末尾连续的1,要合并向上</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> s[<span class="number">1010</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> q=<span class="built_in">read</span>();</span><br><span class="line">  vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; w; <span class="comment">// &#123; cost, code[fib idx] &#125;</span></span><br><span class="line">  <span class="type">int</span> last = <span class="number">1</span>; <span class="comment">// 上一次答案</span></span><br><span class="line">  <span class="type">int</span> sum = <span class="number">1</span>; <span class="comment">// 前缀和</span></span><br><span class="line">  <span class="keyword">while</span>(q--)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s);</span><br><span class="line">    <span class="type">int</span> sz=<span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,sz)&#123;</span><br><span class="line">      <span class="type">int</span> c = s[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">      <span class="type">int</span> ndp = (sum-last)%MOD; <span class="comment">// 切割最后一个char</span></span><br><span class="line">      vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; neww;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> [cost, seqn]:w) <span class="keyword">if</span>(<span class="built_in">go</span>(seqn, c)) neww.<span class="built_in">push_back</span>(&#123;cost, seqn&#125;); <span class="comment">// 这里go()更新了seqn</span></span><br><span class="line">      w = neww;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> [cost, seqn]:w) <span class="keyword">if</span>(!(seqn&amp;(seqn<span class="number">-1</span>))) (ndp -= cost)%=MOD; <span class="comment">// fib在编码后都是2的幂次</span></span><br><span class="line">      <span class="keyword">if</span>(c == <span class="number">1</span>) w.<span class="built_in">push_back</span>(&#123;last, <span class="number">1</span>&#125;); <span class="comment">// code[fib[1]=1]=1</span></span><br><span class="line">      (sum += (last=ndp))%=MOD;</span><br><span class="line">      <span class="built_in">assert</span>(w.<span class="built_in">size</span>() &lt;= <span class="number">60</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(last+MOD)%MOD);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>D 也炸了, 对随机类的完全没感觉, 好家伙题解告诉我, 就是因为保证了随机性,就直接暴力检查就没了</p>
+<p>E 估计出题人也觉得状态dp没那么难吧</p>
+<p>这状态设计? 是我太菜, 感觉还是那个 dp[i] 除了i本身,还要附带一个特定的时刻, 比如有些就是i必须选中啊, i必须是某一段的结尾啊什么, 这里跟i没关系, 但是跟 其中的状态<code>同时</code>挂钩了</p>
+<p>看到5000能想n^2 和与damage&#x2F;health 作为state还是好的, 就是 以后要多思考 如何再增加一个<code>且</code></p>
+<p>F 感觉对我来说比E简单, 直接推一推,就出来了</p>
+<p>啊,题解咋又是线段树又是矩阵的?????? 干了, 看了jiangly,noimi,rainboy,dreamoon都写的线段树,physics0523似乎跟我的一样, 好家伙我还真不知道线段树怎么搞</p>
+<p>哦 我会了, 正着推 转移就是矩阵+线段树, 所以倒着搞就会特别简单</p>
+<p>G</p>
+<p>虽然也观察到了 f[n-1] 是 f[n]的前缀, 但是没想到怎么去用它</p>
+<p>我感觉这个题目最关键的是说,有效的j开始的前缀列表 是log级别, 观察到这个剩下的就没啥了</p>
+<p>然后这个编码还是有神奇</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/108153">官方</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/cf/edu/137-1743/" title="Educational Codeforces Round 137">https://yexiaorain.github.io/Blog/cf/edu/137-1743/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E8%B4%A1%E7%8C%AE%E7%BB%9F%E8%AE%A1/" rel="tag"><i class="fa fa-tag"></i> 贡献统计</a>
+              <a href="/Blog/tags/%E9%9A%8F%E6%9C%BA/" rel="tag"><i class="fa fa-tag"></i> 随机</a>
+              <a href="/Blog/tags/fib/" rel="tag"><i class="fa fa-tag"></i> fib</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/cf/edu/138-1749/" rel="prev" title="Educational Codeforces Round 138">
+                  <i class="fa fa-chevron-left"></i> Educational Codeforces Round 138
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/cf/edu/136-1739/" rel="next" title="Educational Codeforces Round 136">
+                  Educational Codeforces Round 136 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/cf/edu/137-1743/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

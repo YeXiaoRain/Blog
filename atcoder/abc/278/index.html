@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(Grundy&#39;s number)Ex(q-analog,stirling,排列组合,stirling反演)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc278">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/278/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(Grundy&#39;s number)Ex(q-analog,stirling,排列组合,stirling反演)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-11-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.503Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="斯特林数">
+<meta property="article:tag" content="stirling反演">
+<meta property="article:tag" content="排列组合">
+<meta property="article:tag" content="Grundy&#39;s number">
+<meta property="article:tag" content="q-analog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/278/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/278/","path":"atcoder/abc/278/","title":"Atcoder abc278"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc278 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Generalized-Subtraction-Game"><span class="nav-text">G - Generalized Subtraction Game</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-make-1"><span class="nav-text">Ex - make 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stirling-%E5%8F%8D%E6%BC%94"><span class="nav-text">Stirling 反演</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%B1%BBStirling%E6%95%B0"><span class="nav-text">第一类Stirling数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%B1%BBStirling%E6%95%B0"><span class="nav-text">第二类Stirling数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stirling%E5%8F%8D%E6%BC%94"><span class="nav-text">Stirling反演</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q-analog-q-%E6%A8%A1%E6%8B%9F"><span class="nav-text">q-analog (q-模拟)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#q-number"><span class="nav-text">q-number</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#q-factorial-q%E9%98%B6%E4%B9%98"><span class="nav-text">q-factorial (q阶乘)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#q-binomial-q%E4%BA%8C%E9%A1%B9%E5%BC%8F"><span class="nav-text">q-binomial (q二项式)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E9%A1%B9%E5%BC%8F-prod-i-x3D-0-n-frac-1-1-q-ix-x3D-sum-i-ge-0-x-i-binom-i-n-n-q"><span class="nav-text">二项式 $\prod_{i&#x3D;0}^{n}\frac{1}{1-q^ix} &#x3D; \sum_{i \ge 0} x^i \binom{i+n}{n}_ q$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%90%E7%A9%BA%E9%97%B4%E8%AE%A1%E6%95%B0-typical"><span class="nav-text">子空间计数(typical)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#mathbb-F-q-n-%E7%9A%84-r-%E7%BB%B4%E5%AD%90%E7%A9%BA%E9%97%B4%E7%9A%84%E6%95%B0%E9%87%8F%E4%B8%BA-binom-mathbf-n-mathbf-r-q"><span class="nav-text">$\mathbb{F}_ q^n$ 的 $r$维子空间的数量为$\binom{\mathbf{n}}{\mathbf{r}}_ q$</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-f-n-r"><span class="nav-text">关于$f(n,r)$</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8C%E9%A1%B9%E5%BC%8F%E9%80%92%E6%8E%A8"><span class="nav-text">二项式递推</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BB%A3%E6%95%B0%E8%AF%81%E6%98%8E-%E5%8F%A6%E5%A4%96%E4%B8%80%E5%8D%8A"><span class="nav-text">代数证明 另外一半</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0-prod-i-x3D-1-n-1-q-i-x-1-x3D-sum-r-x3D-0-n-q-binom-r-2-binom-n-r-q-x-r"><span class="nav-text">生成函数 $\prod_{i&#x3D;1}^{n-1} (q^i x + 1) &#x3D; \sum_{r&#x3D;0}^n q^{\binom{r}{2}} \binom{n}{r}_ q x^r$</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CF-1603F-October-18-2017"><span class="nav-text">CF 1603F October 18, 2017</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-2"><span class="nav-text">题解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/278/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc278 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(Grundy's number)Ex(q-analog,stirling,排列组合,stirling反演)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc278
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-11-19 00:00:00" itemprop="dateCreated datePublished" datetime="2022-11-19T00:00:00+08:00">2022-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/278/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/278/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>6.2k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>31 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(Grundy's number)Ex(q-analog,stirling,排列组合,stirling反演)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc278/tasks">https://atcoder.jp/contests/abc278/tasks</a></p>
+<h1 id="G-Generalized-Subtraction-Game"><a href="#G-Generalized-Subtraction-Game" class="headerlink" title="G - Generalized Subtraction Game"></a>G - Generalized Subtraction Game</h1><p>1..n 在桌子上, 给定l,r</p>
+<p>每次选 [x…x+len-1], 要保证 这一段目前都存在, 且 len \in [l..r], 然后移除被选的段</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 2000</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>这n一眼 是个n^2 的样子</p>
+<p>但 感觉可以搞事情, 如果第一次把整个砍成两个相等段, 那么 直接对称操作, 就保证先手必胜了?</p>
+<p>那么问题就在于 有没有可能, 因为 l&#x3D;&#x3D;r 时 有可能 砍的至少会差1</p>
+<p>所以 问题变成, 如果l &lt; r, 那么先手总可以从中间剖成两段对称操作win</p>
+<p>如果 l&#x3D;&#x3D;r ,那么每次选的都是定长, 问题变成<code>f[len]</code> 的操作次数</p>
+<p>这怎么搞?</p>
+<p>只能想到说, 比如 n &#x3D; 3l-1 时 先手怎么都是输, 因为剩下的 有且只有一个 [l,2l-1) 之间</p>
+<p>但是再往更长?</p>
+<p>看起来可以sg函数, 但总觉得这状态也太多了, 如何n^2 表示?</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>也是先 考虑 切半, 然后对称操作</p>
+<p>…. 好家伙, 直接说l&#x3D;&#x3D;r 时 用 Grundy’s number 做, 没说细节</p>
+<hr>
+<p>看了下snuke的代码, 似乎用了递归的意义,</p>
+<p>单个长度, 和两个长度都是 图中的点, 那么递归思想, 计算 单个i的时候, 比它小的都计算完了</p>
+<p>其实问题就在于 两个长度 (l0,l1) 的 sg中的值 是多少, 而这最简单就是</p>
+<p>(l0,l1,l2,l3…)</p>
+<p>和</p>
+<p>((l0,l1),l2,l3,…) 是等价的</p>
+<p>所以 (l0,l1) 的sg值 就是<code>sg[l0]^sg[l1]</code>(!!!!!!)</p>
+<p>所以其实只需要计算每个的<code>sg</code> 就行</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc278/submissions/36726288">https://atcoder.jp/contests/abc278/submissions/36726288</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">o</span><span class="params">(<span class="type">int</span> st,<span class="type">int</span> len)</span></span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>,st,len);</span><br><span class="line">  <span class="built_in">fflush</span>(stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">o</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s)</span></span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,s);</span><br><span class="line">  <span class="built_in">fflush</span>(stdout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n,l,r;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Grundy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(n+<span class="number">1</span>)</span></span>; <span class="comment">// dp[0..n] = 0 Grundy&#x27;s number</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) &#123; <span class="comment">// 枚举长度</span></span><br><span class="line">    <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">s</span><span class="params">(i+<span class="number">1</span>)</span></span>; <span class="comment">// s[0..i] = 0</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,i-l+<span class="number">1</span>) s[dp[j]^dp[i-l-j]] = <span class="literal">true</span>; <span class="comment">// 计算它的所有拆分的 xor</span></span><br><span class="line">    <span class="keyword">while</span> (s[dp[i]]) dp[i]++; <span class="comment">// mex</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n,<span class="number">1</span>)</span></span>; <span class="comment">// [0...n) = 1, [n] = 0, 0-index 表示 剩余的点</span></span><br><span class="line">  a.<span class="built_in">push_back</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">auto</span> fil = [&amp;](<span class="type">int</span> x, <span class="type">int</span> y) &#123; <span class="built_in">fill</span>(&amp;a[x],&amp;a[x+y],<span class="number">0</span>); &#125;; <span class="comment">// a[x..x+y-1] = 0</span></span><br><span class="line">  <span class="keyword">auto</span> f = [&amp;]() &#123;</span><br><span class="line">    vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; &gt; ls; <span class="comment">// &#123;len, start idx&#125;</span></span><br><span class="line">    <span class="type">int</span> now = <span class="number">0</span>; <span class="comment">// 当前连续的长度</span></span><br><span class="line">    <span class="type">int</span> x = <span class="number">0</span>; <span class="comment">// 所有连续段 的 grundy xor</span></span><br><span class="line">    <span class="type">int</span> si = <span class="number">0</span>; <span class="comment">// 起始的位置</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (a[i]) &#123; <span class="comment">// 为1</span></span><br><span class="line">        ++now;</span><br><span class="line">      &#125;<span class="keyword">else</span> &#123; <span class="comment">// 为 0</span></span><br><span class="line">        <span class="keyword">if</span> (now) &#123;</span><br><span class="line">          ls.<span class="built_in">push_back</span>(&#123;now,si&#125;);</span><br><span class="line">          x ^= dp[now];</span><br><span class="line">        &#125;</span><br><span class="line">        now = <span class="number">0</span>;</span><br><span class="line">        si = i+<span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> [w,si]: ls) <span class="built_in">rep</span>(j,<span class="number">0</span>,w-l+<span class="number">1</span>) <span class="keyword">if</span>((x^dp[w]^dp[j]^dp[w-l-j]) == <span class="number">0</span>)&#123;<span class="comment">// 枚举位置 一定存在一个方案 成立, 注意运算优先级加括号</span></span><br><span class="line">      <span class="built_in">o</span>(si+j+<span class="number">1</span>,l);</span><br><span class="line">      <span class="built_in">fil</span>(si+j,l);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">if</span> (dp[n]) &#123;</span><br><span class="line">    <span class="built_in">o</span>(<span class="string">&quot;First&quot;</span>);</span><br><span class="line">    <span class="built_in">f</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">o</span>(<span class="string">&quot;Second&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="type">int</span> x=<span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> y=<span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">if</span> (x &lt;= <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">    <span class="built_in">fil</span>(x<span class="number">-1</span>,y);</span><br><span class="line">    <span class="built_in">f</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  n=<span class="built_in">read</span>();</span><br><span class="line">  l=<span class="built_in">read</span>();</span><br><span class="line">  r=<span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">    <span class="built_in">Grundy</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; <span class="comment">// 对称就完事</span></span><br><span class="line">    <span class="built_in">o</span>(<span class="string">&quot;First&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> w:&#123;l,l+<span class="number">1</span>&#125;) <span class="keyword">if</span> ((n-w)%<span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="type">int</span> i = (n-w)/<span class="number">2</span>+<span class="number">1</span>; <span class="comment">// [1..i-1][i...i+w-1][i+w..n]</span></span><br><span class="line">      <span class="built_in">o</span>(i,w);</span><br><span class="line">      i += w<span class="number">-1</span>; <span class="comment">// [1..i-1] 与 [i+w..n] 的偏移量</span></span><br><span class="line">      <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="type">int</span> x=<span class="built_in">read</span>();</span><br><span class="line">        <span class="type">int</span> y=<span class="built_in">read</span>();</span><br><span class="line">        <span class="keyword">if</span> (x &lt;= <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">        x += (x&lt;i)?i:-i;</span><br><span class="line">        <span class="built_in">o</span>(x,y);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-make-1"><a href="#Ex-make-1" class="headerlink" title="Ex - make 1"></a>Ex - make 1</h1><p>非负序列 是好序列, 当且进当 存在子序列的元素xor &#x3D;1</p>
+<p>arr&#x3D;空序列</p>
+<p>每次$[0,2^b)$, 中选一个未被选择的数 放入arr尾部, 直到arr为 好序列</p>
+<p>求 恰好长n的序列 有多少个, $\bmod 998244353$</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 2e5</p>
+<p>b 1e7</p>
+<p>3s</p>
+<p>1024 mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>换据话说, 就是前面 n-1个都不满足, 而第n个满足</p>
+<p>这个b和n的范围, 感觉有O(n log n) O(b) 这类, 如果是n相关, 那么b可能就要数学公式里或者log b见了,</p>
+<p>然后 xor &#x3D; 1 是什么意思呢</p>
+<p>就是 高位 xor &#x3D; 0, 同时末位 xor !&#x3D; 0</p>
+<hr>
+<p>如果是xor &#x3D;&#x3D; 0 的话, 那么有 任意不同组的 xor 不一样(以前某场遇到过)</p>
+<p>但是 此题 可能是 有xor &#x3D;&#x3D; 0 的存在, 比如</p>
+<p>(2,4,6,8,16,24)</p>
+<p>感觉是 末位是1 的高位有几种, 末位是0 的高位所有xor的结果有几种</p>
+<p>但问题是 比如选了个末位是0 的, 更新状态也是问题</p>
+<p>显然 (偶数) 与 (偶数+1), 只能选1个</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>令</p>
+<p>$F(s) &#x3D; $长$s$的非好序列的个数</p>
+<p>$G(s) &#x3D; $长$s$的非好序列的个数(但可以重复取)</p>
+<p>$ans &#x3D; good(N) - good(N-1)\cdot(2^B-N+1)$ 即<code>恰好=N</code>的好序列, 可以变化成 长N的好序列 - 长N-1的好序列第n个随便选(乘 $(2^B - N + 1)$)</p>
+<p>(注意到 xor&#x3D;1定义为好序列的话, 非好序列中同一个值选多次依然是非好)</p>
+<p>$G(s) &#x3D; \sum_{t&#x3D;0}^s {s \brace t} F(t)$, 其中 ${s \brace t}$ 是长s的序列只有t个不同值的方案数 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Stirling_transform">https://en.wikipedia.org/wiki/Stirling_transform</a></p>
+<p>这样的话 可以反演$F(s) &#x3D; \sum_{t&#x3D;0}^s (-1)^{s-t} {s \brack t} G(t).$ , Stirling 反演</p>
+<hr>
+<p>然后如何算G (这就和CF1603F 一样了)</p>
+<p>$G(s) &#x3D; \sum_{r&#x3D;0}^s ((\prod_{i&#x3D;1}^{r} (2^B-2^i)) \binom{s}{r}_ 2)$</p>
+<p>$&#x3D; \sum_{r&#x3D;0}^s (2^{\binom{r}{2}} (\prod_{i&#x3D;1}^{r} (2^{B-i}-1)) \binom{s}{r}_ 2)$</p>
+<p>$&#x3D; \sum_{r&#x3D;0}^s (2^{\binom{r}{2}} (\prod_{i&#x3D;1}^{r} \frac{2^{B-i}-1}{2-1}) \binom{s}{r}_ 2)$</p>
+<p>$&#x3D; \sum_{r&#x3D;0}^s (2^{\binom{r}{2}} (\frac{\lbrack B-1 \rbrack_ 2 !}{\lbrack B-1-r \rbrack_ 2 !}) \binom{s}{r}_ 2)$</p>
+<p>$&#x3D; \lbrack \mathbf{B-1}\rbrack_ 2 ! \lbrack \mathbf{s}\rbrack_ 2 ! \sum_{r&#x3D;0}^s \left( \frac{2^{\frac{r(r+1)}{2}} }{ \lbrack \mathbf{B-1-r}\rbrack_ 2 ! \lbrack \mathbf{r}\rbrack_ 2 ! \lbrack \mathbf{s-r} \rbrack_ 2 !}\right)$</p>
+<p>这样的话 需要$O(n^2)$ 算, 但是注意到右边可以拆成 $G(s) &#x3D;C \sum_i h_0(i)h_1(s-i) $ 也就是标准的卷积形式了(C为与s,i无关的常数)</p>
+<p>$&#x3D; \lbrack \mathbf{B-1}\rbrack_ 2 ! \lbrack \mathbf{s}\rbrack_ 2 ! \sum_{r&#x3D;0}^s \left( \frac{2^{\frac{r(r+1)}{2}} }{ \lbrack \mathbf{B-1-r}\rbrack_ 2 ! \lbrack \mathbf{r}\rbrack_ 2 !}\right)\left(\frac{1}{\lbrack \mathbf{s-r} \rbrack_ 2 !}\right)$</p>
+<h3 id="Stirling-反演"><a href="#Stirling-反演" class="headerlink" title="Stirling 反演"></a>Stirling 反演</h3><h4 id="第一类Stirling数"><a href="#第一类Stirling数" class="headerlink" title="第一类Stirling数"></a>第一类Stirling数</h4><p>$\begin{bmatrix} n \\ m \\ \end{bmatrix}$ 表示n个不同元素, 划分成m个非空段(每个非空段 满足循环平移等价) 的方案数</p>
+<p>也就是 如果划分出 [1,2,3] 那么 和[2,3,1]等价和[3,1,2]等价, 但是和[3,2,1]等价</p>
+<p>$\begin{bmatrix}n\\ k\end{bmatrix}&#x3D;\begin{bmatrix}n-1\\ k-1\end{bmatrix}+(n-1)\begin{bmatrix}n-1\\ k\end{bmatrix}$ 一样的也是考虑 最后一个单独放还是插入到前面某个序列里</p>
+<p>边界$\begin{bmatrix}n\\ 0\end{bmatrix}&#x3D;[n&#x3D;0]$</p>
+<p>构造生成函数 $F_n(x)&#x3D;\sum\limits_{i&#x3D;0}^n\begin{bmatrix}n\\ i\end{bmatrix}x^i$</p>
+<p>根据递推公式$F_n(x)&#x3D;(n-1)F_{n-1}(x)+xF_{n-1}(x)$</p>
+<p>有 $F_n(x)&#x3D;\prod\limits_{i&#x3D;0}^{n-1}(x+i)&#x3D;\dfrac{(x+n-1)!}{(x-1)!}$</p>
+<h4 id="第二类Stirling数"><a href="#第二类Stirling数" class="headerlink" title="第二类Stirling数"></a>第二类Stirling数</h4><p>$\begin{Bmatrix} n \\ m \\ \end{Bmatrix}$表示n个不同元素放入m个无差别盒子且每个盒子非空的方案数</p>
+<p>$\begin{Bmatrix} n \\ m \\ \end{Bmatrix}&#x3D;\begin{Bmatrix} n-1 \\ m-1 \\ \end{Bmatrix}+m\begin{Bmatrix} n-1 \\ m \ \end{Bmatrix}$, 考虑最后一个单独放还是和前面的某些放一起</p>
+<p>$\begin{Bmatrix} 0 \\ 0 \\ \end{Bmatrix}&#x3D;1$</p>
+<p>$\begin{Bmatrix} n \\ m \\ \end{Bmatrix}&#x3D;\frac{1}{m !} \sum_{i&#x3D;0}^{m}(-1)^{i} \left( \begin{array}{c}{m} \\ {i}\end{array}\right)(m-i)^{n} &#x3D; \sum_{i&#x3D;0}^{n}\frac{(-1)^i(n-i)^n}{i!(m-i)!}$ 可以卷积算</p>
+<p>构造生成函数 $G_n(x)&#x3D;\sum\limits_{i&#x3D;0}^n\begin{Bmatrix}n\\ i\end{Bmatrix}x^i$</p>
+<h4 id="Stirling反演"><a href="#Stirling反演" class="headerlink" title="Stirling反演"></a>Stirling反演</h4><p>$\displaystyle f(n)&#x3D;\sum_{k&#x3D;0}^n \begin{Bmatrix}n\\ k \end{Bmatrix}g(k) \Longleftrightarrow g(n)&#x3D;\sum_{k&#x3D;0}^n(-1)^{n-k}\begin {bmatrix} n\\ k \end{bmatrix}f(k)$</p>
+<p>直接正确性的话,无论是带入证明 还是 证明两个矩阵相乘是单位矩阵($\displaystyle \sum_{k&#x3D;m}^n (-1)^{n-k}\begin{bmatrix}n\\k\end{bmatrix} \begin{Bmatrix}k\\m\end{Bmatrix}&#x3D;[m&#x3D;n] $ 和 $ \sum_{k&#x3D;m}^n (-1)^{n-k}\begin{Bmatrix}n\\ k\end{Bmatrix} \begin{bmatrix}k\\m\end{bmatrix}&#x3D;[m&#x3D;n]$)</p>
+<p>之前二项式反演里的技巧 <a href="https://yexiaorain.github.io/Blog/2022-10-19-ac-abc272/">https://yexiaorain.github.io/Blog/2022-10-19-ac-abc272/</a></p>
+<p>其实就是 $f(n) &#x3D; \sum_{i&#x3D;0}^{\infty} a_{n,i} g(i)$</p>
+<p>要找充要反演的 $g(n) &#x3D; \sum_{i&#x3D;0}^{\infty} b_{n,i} f(i)$</p>
+<p>而之前技巧就是 $x_i &#x3D; t(f,i), y_i &#x3D; s(g,i)$ 然后建立成$x_n &#x3D; \sum_{i&#x3D;0}^n u_{i} y_n-i$, 这样就有了 $X&#x3D;UY$ 和 $U^{-1}X&#x3D;Y$</p>
+<p>这个实际就是 OGF(原始 生成 函数),EGF(指数形 生成 函数)</p>
+<p>EGF也就是把OGF中系数$a_i$ 变成$\frac{a_i}{i!}$</p>
+<p>EGF 直接用就是求 排列数: 有 8 个元素，其中有 3 个a1  ， 2 个 a2 ， 3 个a3  。从中取 6个元素，求可能的排列数。</p>
+<p>$G(x) &#x3D; (1+\frac{x}{1!}+\frac{x^2}{2!}+\frac{x^3}{3!})(1+\frac{x}{1!}+\frac{x^2}{2!})(1+\frac{x}{1!}+\frac{x^2}{2!}+\frac{x^3}{3!})$</p>
+<p>$&#x3D;1!+\frac{3}{1!}x+\frac{9}{2!}x^2+\frac{26}{3!}x^3+\frac{70}{4!}x^4+\frac{170}{5!}x^5+\frac{350}{6!}x^6+\cdots$</p>
+<p>所以有350种</p>
+<p>EGF 会常用到 e^x的泰勒级数</p>
+<hr>
+<p>有了这些知识, 就可以开始基于EGF推了 (之前二项式反演也就是这样)</p>
+<p>$B(x) &#x3D; A(e^x − 1)$ (TODO ??????</p>
+<h3 id="q-analog-q-模拟"><a href="#q-analog-q-模拟" class="headerlink" title="q-analog (q-模拟)"></a>q-analog (q-模拟)</h3><p>在引入一个新的参数q后当q→1时原定理、等式或表达式的极限)</p>
+<p>在数学里，尤其是组合数学和特殊函数领域，一个定理、等式或者表达式的q-模拟是指在引入一个新的参数q后当q→1时原定理、等式或表达式的极限。最早地研究得较为深入的q-模拟是 19世纪被引入的基本超几何级数。</p>
+<p>q-模拟在包括分形、多重分形, 混沌动力系统的熵表达在内的多个研究领域都有应用。另外，在量子群 和 q-变形 代数的研究中也有应用。</p>
+<p>“经典” q-模拟开始于莱昂哈德·欧拉的研究工作，后来由F. H. Jackson 以及其他人所扩展。</p>
+<h4 id="q-number"><a href="#q-number" class="headerlink" title="q-number"></a>q-number</h4><p>定义一个自然数$n$的$q$模拟为$1+q^1+q^2+\ldots+q^{n-1}&#x3D;\dfrac{1-q^n}{1-q}$</p>
+<p>记作$\lbrack n\rbrack_q$ (是个关于q的多项式)</p>
+<p>这样在q趋于1时, 表达式趋近于n</p>
+<h4 id="q-factorial-q阶乘"><a href="#q-factorial-q阶乘" class="headerlink" title="q-factorial (q阶乘)"></a>q-factorial (q阶乘)</h4><p>类似的 $\prod_{i&#x3D;1}^n \lbrack i\rbrack_q &#x3D; \lbrack n \rbrack_q !$ 显然是用来 q趋于1时 整个趋于 $n!$</p>
+<p>有特点 $\sum_{p\in S_n}x^{inv(p)}&#x3D;\prod_{i&#x3D;0}^n(1+x+x^2\cdots x^i)&#x3D;\lbrack n\rbrack_x!$</p>
+<p>其中 $S_n$ 表示$n$个数的全排列, $p$表示一个具体排列, inv表示排列中的逆序对个数</p>
+<p>证明: 直接通过意义就可以证明, 第i项 中的$x^j$ 乘出来对应的意义是 i, 作为逆序对构成左侧有j个, 因为 当知道每个值 作为左侧有多少个时, 那么就对应了一个具体的p, 而p之间两两不同, 覆盖了所有 i 选则[0..i-1] 的所有组合</p>
+<p>注意 inv() 与 maj() 有相同的分布</p>
+<p>MacMahon 研究了 1,…,n 的可重集合, 的major index和&#x3D; 成对的数中第一个大于第二个, 第一个的下标</p>
+<p>如 major index(4,3,1,2) &#x3D; 1+2 &#x3D; 3 , inv(4,3,1,2) &#x3D; 5</p>
+<p>如 major index(4,1,3,2) &#x3D; 1+3 &#x3D; 4 , inv(4,1,3,2) &#x3D; 4</p>
+<table>
+<thead>
+<tr>
+<th>排列</th>
+<th>inv</th>
+<th>major index</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>123</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>132</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>213</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>231</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>312</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>321</td>
+<td>3</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<p>MacMahon 证明了 inv和major有相同的生成函数 TODO ??????</p>
+<h4 id="q-binomial-q二项式"><a href="#q-binomial-q二项式" class="headerlink" title="q-binomial (q二项式)"></a>q-binomial (q二项式)</h4><p>一样的想法, 就是 所有原来的值, 换成q-模拟的</p>
+<p>$\dbinom{n}{k}_ q&#x3D;\dfrac{\lbrack n\rbrack_ q!}{\lbrack k\rbrack_ q!\lbrack n-k\rbrack_ q!} &#x3D; \frac{\prod_{i&#x3D;n-k+1}^{n} \lbrack i\rbrack_ q}{\prod_{i&#x3D;1}^k\lbrack i \rbrack_ q}$</p>
+<p>表示的是 可重集合 {k个0, n-k个1}的全排列逆序对生成函数 TODO??????</p>
+<p>例如 0011010011 是 {5个0, 5个1} 的一个具体排列, inv(0011010011) &#x3D; 3+3+2 &#x3D; 8</p>
+<p>$\sum_{p\in S_{k,n-k}}\ q^{inv(p)}&#x3D;\dbinom{n}{k}_ q$</p>
+<p>根据定义显然$\binom{n}{k}_ q &#x3D;\binom{n}{n-k}_ q$</p>
+<h4 id="二项式-prod-i-x3D-0-n-frac-1-1-q-ix-x3D-sum-i-ge-0-x-i-binom-i-n-n-q"><a href="#二项式-prod-i-x3D-0-n-frac-1-1-q-ix-x3D-sum-i-ge-0-x-i-binom-i-n-n-q" class="headerlink" title="二项式 $\prod_{i&#x3D;0}^{n}\frac{1}{1-q^ix} &#x3D; \sum_{i \ge 0} x^i \binom{i+n}{n}_ q$"></a>二项式 $\prod_{i&#x3D;0}^{n}\frac{1}{1-q^ix} &#x3D; \sum_{i \ge 0} x^i \binom{i+n}{n}_ q$</h4><p>证明:数学归纳</p>
+<p>$F &#x3D; \sum_{i \ge 0} x^i \binom{i+n}{n}_ q$</p>
+<p>$&#x3D; \sum_{i \ge 0} x^i \binom{i+n-1}{n-1}_ q + q^n \sum_{i \ge 0} x^{i} \binom{i+n-1}{n}_ q$</p>
+<p>$&#x3D; \sum_{i \ge 0} x^i \binom{i+n-1}{n-1}_ q + q^n x \sum_{i \ge 0} x^{i} \binom{i+n}{n}_ q$</p>
+<p>$&#x3D; \frac{1}{\prod_{i&#x3D;0}^{n-1} (1-q^ix)} + q^n x F$</p>
+<p>$F &#x3D; \frac{1}{1 - q^nx} \prod_{i&#x3D;0}^{n - 1} \frac{1}{(1-q^ix)} &#x3D; \prod_{i&#x3D;0}^{n} \frac{1}{(1-q^ix)}$</p>
+<h4 id="子空间计数-typical"><a href="#子空间计数-typical" class="headerlink" title="子空间计数(typical)"></a>子空间计数(typical)</h4><p>事实上，q-二项式系数 与 向量空间的组合学有关。作为一个代表性的例子，考虑如何计算子空间的数量。</p>
+<p>$q$是任意质数(如果$q&#x3D;4$ 有$2(2,2)&#x3D;(0,0)$), $n$维向量空间 $\mathbb{F}_ q^n$ (mod q的线性空间(一般我们常用的是没有mod和mod2的))</p>
+<h5 id="mathbb-F-q-n-的-r-维子空间的数量为-binom-mathbf-n-mathbf-r-q"><a href="#mathbb-F-q-n-的-r-维子空间的数量为-binom-mathbf-n-mathbf-r-q" class="headerlink" title="$\mathbb{F}_ q^n$ 的 $r$维子空间的数量为$\binom{\mathbf{n}}{\mathbf{r}}_ q$"></a>$\mathbb{F}_ q^n$ 的 $r$维子空间的数量为$\binom{\mathbf{n}}{\mathbf{r}}_ q$</h5><p>令$a_{n, r} &#x3D; $ 在$\mathbb{F}_ q^n$ 中的 $r$维子空间数, 要证明 $a_{n,r} &#x3D; \dbinom{n}{r}_ q$</p>
+<p>令$f(n,r)$ 表示 , $n$维向量空间 中 $r$维子向量空间的基向量的序列(因为是序列,所以是有序的)</p>
+<p>有$a_{n, r} \times f(r, r) &#x3D; f(n, r)$ ($a$是无序的, 而$f$是有序的, 就需要乘上$f(r,r)$内部排序(对应的也像排列组合里 建立排列和组合的关系的 $r!$ 一样)</p>
+<p>这里是 $f(n,r)$ 是从n维空间 取r维的基, 第一个 $q^n-1$ 个取法, 第二个$q^n-q$个取法(要和前面的线性无关)</p>
+<p>$a_{n,r} &#x3D; \frac{f(n,r)}{f(r,r)} $</p>
+<p>$&#x3D; \frac{(q^n-1)(q^n-q)\cdots(q^n-q^{r-1})}{(q^r-1)(q^r-q)\cdots(q^n-q^{r-1})} $</p>
+<p>$&#x3D; \frac{(q^n-1)(q^{n-1}-1)\cdots(q^{n-(r-1)}-1)}{(q^r-1)(q^{r-1}-1)\cdots(q-1)} $</p>
+<p>$&#x3D; \frac{\frac{q^n-1}{q-1}\frac{q^{n-1}-1}{q-1}\cdots\frac{q^{n-(r-1)}-1}{q-1}}{\frac{q^r-1}{q-1}\frac{q^{r-1}-1}{q-1}\cdots\frac{q-1}{q-1}} $</p>
+<p>$&#x3D; \frac{\lbrack n \rbrack_ q\lbrack n-1 \rbrack_ q\cdots\lbrack n-(r-1) \rbrack_ q}{\lbrack r \rbrack_ q\lbrack r-1 \rbrack_ q\cdots\lbrack 1 \rbrack_ q}$</p>
+<p>$&#x3D; \binom{n}{r}_ q$ 得证</p>
+<h6 id="关于-f-n-r"><a href="#关于-f-n-r" class="headerlink" title="关于$f(n,r)$"></a>关于$f(n,r)$</h6><p>首先$q&#x3D;2$ 时 就是常见的 (0&#x2F;1,0&#x2F;1,…)的xor, 第一次 $2^n-1$种,第二次$2^n-2$种,第三次$2^n-2^2$种,…</p>
+<p>这里我一直没理解 $q\neq 2$ 的时候, 在想比如$q&#x3D;3$的时候怎么解释</p>
+<p>而$q&#x3D;3,n&#x3D;2$即$\mathbb{F}_ 3^2$ 可选基向量有$(0,0) (0,1) (0,2) (1,0) (1,1) (1,2) (2,0) (2,1) (2,2)$ (mod 3的 xor)</p>
+<p>加法运算 $(a_0,a_1) + (b_0,b_1) &#x3D; ((a_0+b_0)\bmod 3,(a_1+b_1)\bmod 3)$</p>
+<p>例如 $(1,1)$ 和 $(2,2)$ 线性相关(正常的线性代数), $(2,1)$ 和$(1,2)$线性相关(在$\bmod 3$下),</p>
+<p>注意的是, 虽然$(1,1)$ 和$(2,2)$ 线性相关, 但是这两个选择是不同的基向量选择方案, 所以第一次选择方案数依然是$q^n-1$, 第二次选择依然是$q^n-q$ …</p>
+<h5 id="二项式递推"><a href="#二项式递推" class="headerlink" title="二项式递推"></a>二项式递推</h5><p>要证明 $\binom{\mathbf{n}}{\mathbf{r}}_ q &#x3D; q^{n-r} \binom{\mathbf{n-1}}{\mathbf{r-1}}_ q + \binom{\mathbf{n-1}}{\mathbf{r}}_ q &#x3D; \binom{\mathbf{n-1}}{\mathbf{r-1}}_ q + q^r \binom{\mathbf{n-1}}{\mathbf{r}}_ q$</p>
+<hr>
+<p>对于空间中向量$v$, 定义$top(v)$ 表示 向量中 最大非零 的维度下标</p>
+<blockquote>
+<p>例如$\mathbb{F}_ 3^4$ 中,$top((2,1,2,0)) &#x3D; 3,top((0,2,0,0)) &#x3D; 2$</p>
+</blockquote>
+<p>然后$r$维的空间 <strong>一一映射</strong> 到 (大小为$r$个向量组 $b$), 其中$b$ 满足</p>
+<ul>
+<li>$top(b_i)$ 单调递增</li>
+<li>$b_i$的第 $top(b_i)$是$1$</li>
+<li>不同的$i &lt; j$, 在$b_j$ 中, 第 $i$ 位是0</li>
+</ul>
+<p>例如$\mathbb{F}_ 3^4$ 中 一个$r&#x3D;2$的空间</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(0,1,2,0)</span><br><span class="line">(1,2,0,0)</span><br></pre></td></tr></table></figure>
+
+<p>那么它对应的b是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">第二条性质, 最高位为1, 每个向量乘上最高位关于q的乘法模拟元</span><br><span class="line">(0,1,2,0) x 2 = (0,2,1,0)</span><br><span class="line">(1,2,0,0) x 2 = (2,1,0,0)</span><br><span class="line">第三条性质, 化为阶梯形</span><br><span class="line">(0,2,1,0) + (2,1,0,0) = (2,0,1,0)</span><br><span class="line">第一条性质, 所以b为</span><br><span class="line">(2,1,0,0)</span><br><span class="line">(2,0,1,0)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注: 转化后的基向量组$b$ 和 转化前的 基向量组 对应的是同一个空间, 也就是在$a_{n,r}$ 中它们的贡献是用一次</p>
+</blockquote>
+<p>那么就是考虑 $b$ 的计数,</p>
+<p>考虑$top(b_r) \neq n$ 也就是 最高的非零位 也不是$n$, 那么这样的向量组就和$n-1$里一样, 就是$a_{n-1,r}$</p>
+<p>考虑$top(b_r) &#x3D; n$, 也就是最后一个向量最高非零位是第$n$位, 注意到有限制, $b_r$的 其它向量的最高位都要是$0$, 所以剩下自由填写的有$(n-1) - (r-1) &#x3D; n-r$ 也就是$q^{n-r}$, 而$b_{1..r-1}$ 就对应$n-1$维度下的大小为$r-1$的向量组$b$</p>
+<p>$a_{n, r} &#x3D; q^{n-r} a_{n-1, r-1} + a_{n-1, r}$</p>
+<p>换回去就证明了</p>
+<p>$\binom{\mathbf{n}}{\mathbf{r}}_ q &#x3D; q^{n-r} \binom{\mathbf{n-1}}{\mathbf{r-1}}_ q + \binom{\mathbf{n-1}}{\mathbf{r}}_ q.$</p>
+<h6 id="代数证明-另外一半"><a href="#代数证明-另外一半" class="headerlink" title="代数证明 另外一半"></a>代数证明 另外一半</h6><p>代数证明就很无脑了, 简单快捷, 反而这意义证明, 让我绕了半天在大佬点拨无数次以后才理解</p>
+<p>$\binom{n}{k}_ {q}-\binom{n-1}{k-1}_ {q}$</p>
+<p>$&#x3D;(\frac{q^{n}-1}{q^{k}-1}-1) \binom{n-1}{k-1}_ {q} $</p>
+<p>$&#x3D;q^{k}(\frac{q^{n-k}-1}{q^{k}-1}) \binom{n-1}{k-1}_ {q} $</p>
+<p>$&#x3D; q^{k} \binom{n}{k-1}_ {q} $</p>
+<h5 id="生成函数-prod-i-x3D-1-n-1-q-i-x-1-x3D-sum-r-x3D-0-n-q-binom-r-2-binom-n-r-q-x-r"><a href="#生成函数-prod-i-x3D-1-n-1-q-i-x-1-x3D-sum-r-x3D-0-n-q-binom-r-2-binom-n-r-q-x-r" class="headerlink" title="生成函数 $\prod_{i&#x3D;1}^{n-1} (q^i x + 1) &#x3D; \sum_{r&#x3D;0}^n q^{\binom{r}{2}} \binom{n}{r}_ q x^r$"></a>生成函数 $\prod_{i&#x3D;1}^{n-1} (q^i x + 1) &#x3D; \sum_{r&#x3D;0}^n q^{\binom{r}{2}} \binom{n}{r}_ q x^r$</h5><p>也就是要证明 $a_{n, r} &#x3D; \binom{n}{r}_ q &#x3D; q^{-r(r+1)&#x2F;2} \lbrack x^r \rbrack \prod_{i&#x3D;1}^{n} (q^i x + 1);$</p>
+<p>令 $b_{n,r} &#x3D; a_{n,r} q^{r(r-1)&#x2F;2}$ 和 $f_n(x) &#x3D;\sum_{r} b_{n,r} x^r &#x3D; \prod_{i&#x3D;1}^{n} (q^i x + 1)$</p>
+<p>则有 $f_n(x) (q^{n+1} x + 1) &#x3D; f_n (qx) (qx + 1),$, 相当于所有x的地方变成qx, 而x每个地方都是1次</p>
+<p>对比第$r$项的系数,有</p>
+<p>$q^{n+1} b_{n,r-1} + b_{n,r} &#x3D; q^r (b_{n,r-1} + b_{n,r}) $</p>
+<p>即 $b_{n,r} &#x3D; \frac{q^r - q^{n+1}}{1-q^r}b_{n,r-1} &#x3D; \frac{(q^1 - q^{n+1}) \cdots (q^r - q^{n+1})}{(1-q^1) \cdots (1-q^r)} &#x3D; q^{r(r-1)&#x2F;2} \binom{n}{r}$</p>
+<p>归纳证明: 其实这里直接对 $\prod_{i&#x3D;1}^{n-1} (q^i x + 1) &#x3D; \sum_{r&#x3D;0}^n q^{\binom{r}{2}} \binom{n}{r}_ q x^r $ 左侧n归纳证明更容易(注意r的加减号和n与n-1) 简单无脑</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc278/submissions/36767147">https://atcoder.jp/contests/abc278/submissions/36767147</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/convolution&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n;i--&gt;(int)a;)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">10000000</span>;</span><br><span class="line">mint nq2[N+<span class="number">10</span>]=&#123;<span class="number">0</span>&#125;; <span class="comment">// n_&#123;q=2&#125;, q-number n, nq2[i]=1+q^1+q^2+..+q^i, q=2, nq2[i]=2**i-1</span></span><br><span class="line">mint facq2[N+<span class="number">10</span>]=&#123;<span class="number">1</span>&#125;; <span class="comment">// fac_&#123;q=2&#125;, q-factor n, = nq2[0]*nq[1]*...*nq2[i]</span></span><br><span class="line">mint ifacq2[N+<span class="number">10</span>]; <span class="comment">// ifac[i] = 1/facq[i]</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>(); <span class="comment">// 2e5</span></span><br><span class="line">  <span class="type">int</span> b=<span class="built_in">read</span>(); <span class="comment">// 1e7</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N+<span class="number">1</span>) nq2[i] = nq2[i<span class="number">-1</span>]*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N+<span class="number">1</span>) facq2[i] = facq2[i<span class="number">-1</span>]*nq2[i];</span><br><span class="line">  ifacq2[N] = facq2[N].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,N) ifacq2[i]=ifacq2[i+<span class="number">1</span>]*nq2[i+<span class="number">1</span>];</span><br><span class="line">  <span class="comment">// G(s) = \lbrack \mathbf&#123;B-1&#125;\rbrack_ 2 ! \lbrack \mathbf&#123;s&#125;\rbrack_ 2 ! \sum_&#123;r=0&#125;^s \left( \frac&#123;2^&#123;\frac&#123;r(r+1)&#125;&#123;2&#125;&#125; &#125;&#123; \lbrack \mathbf&#123;B-1-r&#125;\rbrack_ 2 ! \lbrack \mathbf&#123;r&#125;\rbrack_ 2 !&#125;\right)\left(\frac&#123;1&#125;&#123;\lbrack \mathbf&#123;s-r&#125; \rbrack_ 2 !&#125;\right)</span></span><br><span class="line">  <span class="function">vector&lt;mint&gt; <span class="title">h0</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">min</span>(n+<span class="number">1</span>,b)) h0[i] = <span class="built_in">mint</span>(<span class="number">2</span>).<span class="built_in">pow</span>((<span class="type">long</span> <span class="type">long</span>)i*(i+<span class="number">1</span>)/<span class="number">2</span>) * ifacq2[b<span class="number">-1</span>-i] * ifacq2[i];</span><br><span class="line">  <span class="function">vector&lt;mint&gt; <span class="title">h1</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>) h1[i] = ifacq2[i];</span><br><span class="line">  vector&lt;mint&gt; g=atcoder::<span class="built_in">convolution</span>(h0,h1);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>) g[i] *= facq2[b<span class="number">-1</span>]*facq2[i];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Stirling 反演</span></span><br><span class="line">  <span class="comment">// F(n) = \sum_&#123;t=0&#125;^n (-1)^&#123;n-t&#125; &#123;n \brack t&#125; G(t).</span></span><br><span class="line">  vector&lt;vector&lt;mint&gt; &gt; stirling1 = &#123;&#123;<span class="number">1</span>&#125;&#125;; <span class="comment">// 第一类stirling数 f_n = \prod_&#123;i=0&#125;^&#123;n-1&#125; (i+x), 注意会有n=1的时候</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n<span class="number">-1</span>) stirling1.<span class="built_in">push_back</span>(&#123;i,<span class="number">1</span>&#125;);</span><br><span class="line">  <span class="comment">// stirling f_&#123;n-1&#125;</span></span><br><span class="line">  <span class="keyword">while</span>(stirling1.<span class="built_in">size</span>()&gt;<span class="number">1</span>)&#123; <span class="comment">// 分治</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,stirling1.<span class="built_in">size</span>()/<span class="number">2</span>) stirling1[i] = atcoder::<span class="built_in">convolution</span>(stirling1[i*<span class="number">2</span>],stirling1[i*<span class="number">2</span>+<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">if</span>(stirling1.<span class="built_in">size</span>()&amp;<span class="number">1</span>) stirling1[stirling1.<span class="built_in">size</span>()/<span class="number">2</span>] = stirling1.<span class="built_in">back</span>();</span><br><span class="line">    stirling1.<span class="built_in">erase</span>(stirling1.<span class="built_in">begin</span>()+(stirling1.<span class="built_in">size</span>()+<span class="number">1</span>)/<span class="number">2</span>,stirling1.<span class="built_in">end</span>());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> f=[&amp;](<span class="type">int</span> n)&#123;</span><br><span class="line">    mint v = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>) v+= <span class="built_in">mint</span>(<span class="number">-1</span>).<span class="built_in">pow</span>((n-i)%<span class="number">2</span>) * stirling1[<span class="number">0</span>][i] * g[i];</span><br><span class="line">    <span class="keyword">return</span> v;</span><br><span class="line">  &#125;;</span><br><span class="line">  mint twob=<span class="built_in">mint</span>(<span class="number">2</span>).<span class="built_in">pow</span>(b); <span class="comment">// 2**b</span></span><br><span class="line">  mint good_n_1 = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n<span class="number">-1</span>) good_n_1*=(twob-i);</span><br><span class="line">  mint good_n = good_n_1*(twob-(n<span class="number">-1</span>));</span><br><span class="line">  good_n_1-=<span class="built_in">f</span>(n<span class="number">-1</span>);</span><br><span class="line">  stirling1[<span class="number">0</span>]=atcoder::<span class="built_in">convolution</span>(stirling1[<span class="number">0</span>],&#123;n<span class="number">-1</span>,<span class="number">1</span>&#125;); <span class="comment">// stirling f_&#123;n&#125;</span></span><br><span class="line">  good_n -= <span class="built_in">f</span>(n);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(good_n-good_n_1*(twob-n+<span class="number">1</span>)).<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="CF-1603F-October-18-2017"><a href="#CF-1603F-October-18-2017" class="headerlink" title="CF 1603F October 18, 2017"></a>CF 1603F October 18, 2017</h2><p>给 $n(10^9), k(10^7), x$</p>
+<p>问多少序列 a[1..n] 满足 任意 非空 子序列 的 xor 都不为x</p>
+<p>其中 $a[i] \in [0,2^k)$</p>
+<p>个数 $\bmod 998244353$</p>
+<p>$x \in [0,20]$</p>
+<p>4s</p>
+<p>512mb</p>
+<h3 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h3><p>$x&#x3D;0$ 时, 很简单, 就是n个线性无关的向量 构成线性空间</p>
+<p>$&#x3D; (2^k-1)(2^{k}-2)(2^k-2^{2})(2^k-2^{3})\cdots(2^k-2^{n-1})$</p>
+<p>注: 这里和 atcoder 里tutorial中的子空间计数的f表达式一样, 只是p&#x3D;2 (依然没有搞懂 如果p!&#x3D;2 这个f的表达式如何理解, 还是说子空间计数就是需要p&#x3D;2)</p>
+<p>x!&#x3D;0时</p>
+<p>类似的, 先考虑r个线性无关的向量, 第一个向量不能是 0和x, (2^k-2)</p>
+<p>第二个有4个不能选, (2^k-4), (0,x,v0,x^v0)</p>
+<p>第三个有8个不能选, (2^k-8), (0,x,x0,x^v0,v1)</p>
+<p>… (换句话说, x与这r个线性无关的向量构成了r+1 个线性无关的向量</p>
+<p>所以其实和x具体大小无关, 都是一样的个数</p>
+<p>所以方案数 &#x3D; (2^k-2)(2^k-4)(2^k-8) …, r个乘积项</p>
+<p>然后是 要一一对应的统计, 一共是n个向量</p>
+<p>那么就是选的r个位置, 每个的前面都不能表示它来作为标识</p>
+<p>然后就是插入和前面线性相关的向量,</p>
+<p>第一个前面可以插入的只有1种(0), 写生成函数就是 $1+x+x^2+\cdots&#x3D;\frac{1}{1-x}$</p>
+<p>第一个和第二之间可以插入的只有2种(0,x), 写生成函数就是 $1+2x+4x^2+\cdots&#x3D;\frac{1}{1-2x}$</p>
+<p>第二个和第三之间可以插入的只有4种(0,x,v0,x^v0), 写生成函数就是 $1+4x+16x^2+\cdots&#x3D;\frac{1}{1-4x}$</p>
+<p>一共插入 n-r个 ,所以就是$x^{n-r}$ 的系数 $\displaystyle [x^{n-r}] \prod_{i&#x3D;0}^r \dfrac{1}{1-2^ix}&#x3D;\displaystyle [x^{n-r}] \sum_{i\ge 0} x^i \binom{i+r}{r}_ 2 &#x3D; \binom{(n-r)+r}{r}_ 2$</p>
+<p>所以方案 $\sum_{r&#x3D;0}^n ((\prod_{i&#x3D;1}^{r} (2^k-2^i)) \binom{n}{r}_ 2)$</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>对称操作想得到, 但是Grundy’s number 还是不熟</p>
+<p>之前 SG 只 学会说 每个独立游戏 算 状态mex, 然后xor 等价 nim, 而这种有点递归感觉的第一次遇到</p>
+<p>位运算 计算优先级比 <code>==</code> 低, 还是无脑加括号好</p>
+<p>Ex</p>
+<p>等于的恰好变成, 不一定恰好的相减</p>
+<p>这tutorial 感觉各种神奇的东西, 但是 q&#x3D;1时 也成立, 我也不懂 究竟是 有我没理解到的地方还是真的笔误</p>
+<p>q-analog</p>
+<p>这感觉数学推通很容易, 但是按照各种举例的意义作为推通的桥梁反而很难, 不如推通后直接用</p>
+<p>n的q模拟 $\lbrack n\rbrack_q &#x3D; \sum_{i&#x3D;0}^{n-1} q^i &#x3D; \frac{1-q^n}{1-q}$</p>
+<p>q阶乘 定义 $\lbrack n \rbrack_q ! &#x3D; \prod_{i&#x3D;1}^n \lbrack i\rbrack_q$, 性质: 关于全排列 $\sum_{p\in S_n}x^{inv(p)}&#x3D;\lbrack n\rbrack_x!$</p>
+<p>q二项式 $\dbinom{n}{k}_ q&#x3D;\dfrac{\lbrack n\rbrack_ q!}{\lbrack k\rbrack_ q!\lbrack n-k\rbrack_ q!}$, 性质: 关于可重集合全排列 $\sum_{p\in S_{k,n-k}}\ q^{inv(p)}&#x3D;\dbinom{n}{k}_ q$</p>
+<p>$\binom{n}{m_1,m_2,\cdots,m_k}&#x3D;\frac{[n]_ {q} !}{[m_1]_ {q} ![m_2]_ {q} !\cdots [m_k]_ {q} !}$</p>
+<p>显然$\binom{n}{k}_ q &#x3D;\binom{n}{n-k}_ q$</p>
+<p>$\binom{\mathbf{n}}{\mathbf{k}}_ q &#x3D; q^{n-k} \binom{\mathbf{n-1}}{\mathbf{k-1}}_ q + \binom{\mathbf{n-1}}{\mathbf{k}}_ q &#x3D; \binom{\mathbf{n-1}}{\mathbf{k-1}}_ q + q^k \binom{\mathbf{n-1}}{\mathbf{k}}_ q$</p>
+<p>$\prod_{i&#x3D;0}^{n-1} (1+q^ix) &#x3D; \sum\limits_{i&#x3D;0}^n q^{\binom{i}{2}} {n \brack i}_ q x^i$</p>
+<p>$\prod_{i&#x3D;0}^n \frac{1}{(1-q^ix)} &#x3D; \sum_{i \ge 0} x^i \binom{i+n}{n}_ q$</p>
+<p>q-Vandermorde $\binom{n + m}{k}_ q &#x3D; \sum_{i&#x3D;0}^k q^{(n-i)(k-i)} \binom{n}{i}_ q \binom{m}{k-i}_ q$</p>
+<p>$\mathbb{F}_ q^n$意思是 n 维的模 q(q是质数)意义下的空间 , 向量数是$q^n$</p>
+<p>所以说起来, q模拟更像是 q趋于1时的很多经典表达式成立,所以采取的传统写法加个下标q, 而实际使用的是q不为1时一些统计, 而这些东西, 如果不关心q模拟, 直接去做数学推 反而更简单emmmmmm,</p>
+<p>然后就是Stirling反演, 又对反演懂了一点</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc278/editorial">官方题解</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/2022-10-19-ac-abc272/">之前二项式反演</a></p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Q-%E6%A8%A1%E6%8B%9F">https://baike.baidu.com/item/Q-%E6%A8%A1%E6%8B%9F</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/qwaszx/q-analog">https://www.luogu.com.cn/blog/qwaszx/q-analog</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zkyJuruo/p/15515243.html">https://www.cnblogs.com/zkyJuruo/p/15515243.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/amagaisite/p/16475758.html">https://www.cnblogs.com/amagaisite/p/16475758.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://people.qc.cuny.edu/faculty/christopher.hanusa/courses/636fa12/Documents/636fa12ch92c.pdf">cuny pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=YNzHqZATUE4">youtube q-analogues</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58142309">https://zhuanlan.zhihu.com/p/58142309</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/202494934">https://zhuanlan.zhihu.com/p/202494934</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/350774728">https://zhuanlan.zhihu.com/p/350774728</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Q-analog">https://en.wikipedia.org/wiki/Q-analog</a></p>
+<p><a target="_blank" rel="noopener" href="https://mathworld.wolfram.com/q-Analog.html">https://mathworld.wolfram.com/q-Analog.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://mathworld.wolfram.com/q-Bracket.html">https://mathworld.wolfram.com/q-Bracket.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://mathworld.wolfram.com/q-Factorial.html">https://mathworld.wolfram.com/q-Factorial.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://mathworld.wolfram.com/q-BinomialCoefficient.html">https://mathworld.wolfram.com/q-BinomialCoefficient.html</a></p>
+<p>LOJ 562</p>
+<p>SOJ 703</p>
+<p><a target="_blank" rel="noopener" href="http://thotsaporn.com/PermStat.pdf">http://thotsaporn.com/PermStat.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Stirling_transform">https://en.wikipedia.org/wiki/Stirling_transform</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Generating_function">https://en.wikipedia.org/wiki/Generating_function</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Generating_function_transformation">https://en.wikipedia.org/wiki/Generating_function_transformation</a></p>
+<p><a target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/3336817/derive-the-egf-of-stirling-number-of-the-second-kind-with-the-ogf-egf-conversion">https://math.stackexchange.com/questions/3336817/derive-the-egf-of-stirling-number-of-the-second-kind-with-the-ogf-egf-conversion</a></p>
+<p><a target="_blank" rel="noopener" href="http://real.mtak.hu/87770/1/1084.pdf">http://real.mtak.hu/87770/1/1084.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/math/0205301.pdf">https://arxiv.org/pdf/math/0205301.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/52817010">生成函数OGF FFjetyy 知乎</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53079223">生成函数EGF FFjetyy 知乎</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/80638891">第二类斯特林数EGF的暴力推导 FFjetyy 知乎</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/278/" title="Atcoder abc278">https://yexiaorain.github.io/Blog/atcoder/abc/278/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 斯特林数</a>
+              <a href="/Blog/tags/stirling%E5%8F%8D%E6%BC%94/" rel="tag"><i class="fa fa-tag"></i> stirling反演</a>
+              <a href="/Blog/tags/%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88/" rel="tag"><i class="fa fa-tag"></i> 排列组合</a>
+              <a href="/Blog/tags/Grundy-s-number/" rel="tag"><i class="fa fa-tag"></i> Grundy's number</a>
+              <a href="/Blog/tags/q-analog/" rel="tag"><i class="fa fa-tag"></i> q-analog</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/277/" rel="prev" title="Atcoder abc277">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc277
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1761/" rel="next" title="Codeforces 1761">
+                  Codeforces 1761 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/278/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

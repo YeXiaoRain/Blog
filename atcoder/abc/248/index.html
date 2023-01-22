@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(欧拉函数,DP,树上DP)Ex(线段树,单调队列,连续段计数)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc248">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/248/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(欧拉函数,DP,树上DP)Ex(线段树,单调队列,连续段计数)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-09-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.499Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="线段树">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="树上DP">
+<meta property="article:tag" content="单调队列">
+<meta property="article:tag" content="欧拉函数">
+<meta property="article:tag" content="连续段计数">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/248/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/248/","path":"atcoder/abc/248/","title":"Atcoder abc248"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc248 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-GCD-cost-on-the-tree"><span class="nav-text">G - GCD cost on the tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-Beautiful-Subsequences"><span class="nav-text">Ex - Beautiful Subsequences</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/248/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc248 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(欧拉函数,DP,树上DP)Ex(线段树,单调队列,连续段计数)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc248
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-09-25 00:00:00" itemprop="dateCreated datePublished" datetime="2022-09-25T00:00:00+08:00">2022-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/248/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/248/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>10 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(欧拉函数,DP,树上DP)Ex(线段树,单调队列,连续段计数)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc248/tasks">https://atcoder.jp/contests/abc248/tasks</a></p>
+<h1 id="G-GCD-cost-on-the-tree"><a href="#G-GCD-cost-on-the-tree" class="headerlink" title="G - GCD cost on the tree"></a>G - GCD cost on the tree</h1><p>n点无向树</p>
+<p>点i上有值ai</p>
+<p>C(u,v) &#x3D; 简单路径u..v上 点个数 乘 点上ai的gcd</p>
+<p>求所有点对的 C的和,mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e5</p>
+<p>ai [1,1e5]</p>
+<p>8s</p>
+<p>2048mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然暴力算 至少要 n^2</p>
+<p>注意到的是 Ai很小, 如果能变成 不同gcd结果的贡献值的和 就好了</p>
+<p>有点想做容斥, 但容斥的代价函数并不能用当前gcd</p>
+<p>如果选定一个点必定经过, 那么可能的gcd都是它的因数, 虽然这里log了,但是要找路径还是n, 这样依然是n^2 以上</p>
+<p>再看贡献<code>count(u..v) * gcd(a[u]...a[v])</code></p>
+<p>可以转化成, <code>u</code> 会贡献了覆盖了<code>u</code>的线段次数, 每次都是<code>u</code>的因子</p>
+<p>那么每个 v1…u…v2 在u上的贡献是 gcd(gcd(v1..u),gcd(v2..u)), 且v1,v2 不在u的同一个分叉上</p>
+<p><code>f[child v0] = sum c0[g] x^g</code></p>
+<p><code>f[child v1] = sum c1[g] x^g</code></p>
+<p><code>sf[v1,v2] = f[v1] + f[v2]</code></p>
+<p><code>ans += sf[0..i-1] * f[vi]</code> (k[gcd(g0,g1)] +&#x3D; k0[g0] * k1[g1]&#96;</p>
+<p>&#x3D; ((E+f[0]+f[1]+…+f[i]) ^ 2 - E^2 - f[0]^2 -f[1]^2 -…-f[i]^2)&#x2F;2</p>
+<hr>
+<p>换根dp ???</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>欧拉函数</p>
+<p>$\phi(n) &#x3D; $ 小于等于n与n互质的数的个数</p>
+<p>$n &#x3D; \sum_{d|n} count(gcd(x,n) &#x3D;&#x3D; d)$ ( 就是1到n之间 按照gcd的结果为d的个数统计</p>
+<p>$n &#x3D; \sum_{d|n} count(gcd(\frac{x}{d},\frac{n}{d}) &#x3D;&#x3D; 1)$</p>
+<p>$n &#x3D; \sum_{d|n} \phi(\frac{n}{d})$</p>
+<p>$n &#x3D; \sum_{d|n} \phi({d})$ 也就是n的所有因数的phi的和</p>
+<p>原文问题</p>
+<p>$ans &#x3D; \sum_{u\neq v, u &lt; v} dis(u,v) gcd(path(u,v))$</p>
+<p>$&#x3D; \sum_{u\neq v, u &lt; v} dis(u,v) \sum_{d | gcd(path(u,v))} \phi(d)$</p>
+<p>考虑对$\phi(d)$ 做次数统计, </p>
+<p>$&#x3D; \sum_{d} \phi(d) \sum_{u\neq v, u &lt; v, d|gcd(path(u,v))} dis(u,v)$</p>
+<p>也就是, 路径上都是d的倍数的路径长度和</p>
+<p>于是按照d对原图进行拆分成多个联通块, 注意到这样拆分不要d去找点,而是点直接得到d, 这样才能保证复杂度</p>
+<p>这样一个联通块中做所有路径长度和的统计</p>
+<hr>
+<p>同样和我上面的一样, 既然是路径长度统计, 相当于, 每一条路径, 上面每个点贡献+1</p>
+<p>所以等于 每个点 被覆盖的边的条数, 就是树上DP了</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc248/submissions/35150044">https://atcoder.jp/contests/abc248/submissions/35150044</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[N+<span class="number">10</span>];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[N+<span class="number">10</span>]; <span class="comment">// G[u] = &#123;v&#125;</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; ys2i[N+<span class="number">10</span>]; <span class="comment">// ys2i[因数] = &#123;点id&#125;</span></span><br><span class="line"><span class="type">bool</span> vis[N+<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span> siz[N+<span class="number">10</span>]; <span class="comment">// 当前子树大小</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dfs1</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> fa,<span class="type">int</span> d)</span> </span>&#123; <span class="comment">// return 子树大小</span></span><br><span class="line">  vis[u] = <span class="literal">true</span>;</span><br><span class="line">  siz[u] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:G[u]) <span class="keyword">if</span>(v!=fa &amp;&amp; a[v]%d==<span class="number">0</span>) siz[u] += <span class="built_in">dfs1</span>(v,u,d);</span><br><span class="line">  <span class="keyword">return</span> siz[u];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">mint <span class="title">dfs2</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> fa, <span class="type">int</span> sz<span class="comment">/*联通块总大小*/</span>, <span class="type">int</span> d)</span></span>&#123;</span><br><span class="line">  vis[u] = <span class="literal">false</span>;</span><br><span class="line">  mint r = <span class="number">0</span>;</span><br><span class="line">  mint pre = sz - siz[u] + <span class="number">1</span>; <span class="comment">// 父方向 节点数 包括u; 树上换根 + 前缀和dp</span></span><br><span class="line">  r += pre;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v : G[u]) <span class="keyword">if</span>(v!=fa &amp;&amp; a[v]%d==<span class="number">0</span>)&#123;</span><br><span class="line">    r += pre * siz[v]; <span class="comment">// 当前v级子树的点和 前面点覆盖了u的路径数</span></span><br><span class="line">    pre += siz[v];</span><br><span class="line">    r += <span class="built_in">dfs2</span>(v, u, sz, d);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> phi[N+<span class="number">10</span>]; <span class="comment">// phi(i)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#123; <span class="comment">// calc phi</span></span><br><span class="line">    <span class="built_in">iota</span>(phi,phi+N+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">p</span><span class="params">(N+<span class="number">1</span>,<span class="number">0</span>)</span></span>; <span class="comment">// prime vis</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">2</span>,N+<span class="number">1</span>) <span class="keyword">if</span>(!p[i]) <span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;=N;j+=i)&#123; <span class="comment">// j = ki</span></span><br><span class="line">      p[j] = <span class="literal">true</span>;</span><br><span class="line">      (phi[j] /= i) *= (i<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  &#123;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;<span class="built_in">ys</span>(N+<span class="number">1</span>); <span class="comment">// ys[i] = &#123;i的因数&#125;</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,N+<span class="number">1</span>) <span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;=N;j+=i) ys[j].<span class="built_in">push_back</span>(i); <span class="comment">// 计算因子</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n) &#123;</span><br><span class="line">      a[i] = <span class="built_in">read</span>(); <span class="comment">// 0-index</span></span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> x:ys[a[i]]) ys2i[x].<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">      <span class="type">int</span> u = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">      <span class="type">int</span> v = <span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">      G[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">      G[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  mint ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(d,<span class="number">1</span>,N+<span class="number">1</span>)&#123; <span class="comment">// \phi(d) * 路径上全是d的倍数的路径长度和 = \phi(d) * sum(每个点被边覆盖的次数)</span></span><br><span class="line">    mint r = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> u:ys2i[d]) <span class="keyword">if</span>(!vis[u]) <span class="built_in">dfs1</span>(u,u,d);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> u:ys2i[d]) <span class="keyword">if</span>(vis[u]) r += <span class="built_in">dfs2</span>(u,u,siz[u],d); </span><br><span class="line">    ans += phi[d] * r;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) ans -= a[i]; <span class="comment">// 去掉单点</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Beautiful-Subsequences"><a href="#Ex-Beautiful-Subsequences" class="headerlink" title="Ex - Beautiful Subsequences"></a>Ex - Beautiful Subsequences</h1><p>给 1-N的排列p 和 k</p>
+<p>问有多少区间[l..r]</p>
+<p>max(p[l..r])-min(p[l..r]) &lt;&#x3D; r-l+k</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 1.4e5</p>
+<p>k [0..3]</p>
+<p>6s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>k很小</p>
+<p>k&#x3D;0 时的意义就是 [l..r]对应的值也是连续的一段</p>
+<p>就是连续段计数问题</p>
+<p>这个用 单调栈 + 线段树</p>
+<p>到r时, 点l表示 l..r的情况</p>
+<p>&#x3D; max(a[l]..a[r]) - min(a[l]..a[r]) + l - r</p>
+<p>所以初始化, 所有 点&#x3D;l</p>
+<p>每次r移动, 等价于全部-1</p>
+<p>max 用单调递减栈维护, 对多个连续区间的max 做增量运算, (不要修改, 因为修改没法维护最小值</p>
+<p>min 用单调递增栈维护, 对多个连续区间的min 做增量运算</p>
+<p>每次贡献 &#x3D; 最小值出现的次数(最小值一定为零,因为长度1的时候&#x3D;0, 且不会小于0</p>
+<p>每个线段树节点状态就是 (对应区间最小值,和最小值的个数, lazy未下降的增量)</p>
+<hr>
+<p>那么这个题,似乎也可以这样搞, 把维护的最小值和最小值的个数,变成最小的值,和它与 +0,+1+2+3 的个数就行了?</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc248/submissions/35152743">https://atcoder.jp/contests/abc248/submissions/35152743</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_ROOT 1,0,n-1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_L (o&lt;&lt;1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_R (o&lt;&lt;1|1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mid (l+r)/2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_L_CHILD SEG_L,l,mid</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_R_CHILD SEG_R,mid+1,r</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">140000</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> K = <span class="number">4</span>;</span><br><span class="line"><span class="type">int</span> a[N+<span class="number">10</span>];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123; <span class="comment">// 维护 max[l..r] - min[l..r] + l - r</span></span><br><span class="line">  <span class="type">int</span> min; <span class="comment">// 最小值</span></span><br><span class="line">  <span class="type">int</span> lazy; <span class="comment">// lazy tag未向下传递的add</span></span><br><span class="line">  array&lt;<span class="type">int</span>,K&gt; cnt = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;; <span class="comment">// 最小值+0,+1,+2,+3出现的次数</span></span><br><span class="line">&#125;t[N*<span class="number">4</span>+<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// merge &#123;min,count array&#125;</span></span><br><span class="line">pair&lt;<span class="type">int</span>,array&lt;<span class="type">int</span>,K&gt;&gt; <span class="built_in">merge</span>(<span class="type">const</span> pair&lt;<span class="type">int</span>,array&lt;<span class="type">int</span>,K&gt; &gt;&amp;mc0,<span class="type">const</span> pair&lt;<span class="type">int</span>,array&lt;<span class="type">int</span>,K&gt;&gt;&amp;mc1)&#123;</span><br><span class="line">  <span class="keyword">auto</span> [m0,c0] = mc0;</span><br><span class="line">  <span class="keyword">auto</span> [m1,c1] = mc1;</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">min</span>(m0,m1);</span><br><span class="line">  array&lt;<span class="type">int</span>,K&gt; c = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,K) <span class="keyword">if</span>(m0+i&lt;m+K) c[m0+i-m] += c0[i];</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,K) <span class="keyword">if</span>(m1+i&lt;m+K) c[m1+i-m] += c1[i];</span><br><span class="line">  <span class="keyword">return</span> &#123;m,c&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">range_add</span><span class="params">(<span class="type">int</span> o,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  t[o].min+=v;</span><br><span class="line">  t[o].lazy+=v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">down</span><span class="params">(<span class="type">int</span> o)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!t[o].lazy) <span class="keyword">return</span>;</span><br><span class="line">  <span class="built_in">range_add</span>(SEG_L,t[o].lazy);</span><br><span class="line">  <span class="built_in">range_add</span>(SEG_R,t[o].lazy);</span><br><span class="line">  t[o].lazy=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> o,<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (l==r) &#123;</span><br><span class="line">    t[o].min = l;</span><br><span class="line">    t[o].cnt[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">build</span>(SEG_L_CHILD);</span><br><span class="line">  <span class="built_in">build</span>(SEG_R_CHILD);</span><br><span class="line">  <span class="built_in">tie</span>(t[o].min,t[o].cnt) = <span class="built_in">merge</span>(&#123;t[SEG_L].min,t[SEG_L].cnt&#125;,&#123;t[SEG_R].min,t[SEG_R].cnt&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> o, <span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> ql,<span class="type">int</span> qr,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (ql &lt;= l &amp;&amp; r &lt;= qr) <span class="keyword">return</span> <span class="built_in">range_add</span>(o,v);</span><br><span class="line">  <span class="built_in">down</span>(o);</span><br><span class="line">  <span class="keyword">if</span> (ql&lt;=mid) <span class="built_in">add</span>(SEG_L_CHILD,ql,qr,v);</span><br><span class="line">  <span class="keyword">if</span> (qr&gt; mid) <span class="built_in">add</span>(SEG_R_CHILD,ql,qr,v);</span><br><span class="line">  <span class="built_in">tie</span>(t[o].min,t[o].cnt) = <span class="built_in">merge</span>(&#123;t[SEG_L].min,t[SEG_L].cnt&#125;,&#123;t[SEG_R].min,t[SEG_R].cnt&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pair&lt;<span class="type">int</span>,array&lt;<span class="type">int</span>,K&gt;&gt; <span class="built_in">query</span>(<span class="type">int</span> o,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> ql,<span class="type">int</span> qr)&#123; <span class="comment">// &#123;min, count array&#125;</span></span><br><span class="line">  <span class="keyword">if</span> (ql &lt;= l &amp;&amp; r &lt;= qr) <span class="keyword">return</span> &#123;t[o].min,t[o].cnt&#125;;</span><br><span class="line">  <span class="built_in">down</span>(o);</span><br><span class="line">  <span class="keyword">auto</span> ret = <span class="built_in">pair</span>(<span class="number">0</span>,array&lt;<span class="type">int</span>,K&gt;&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;); <span class="comment">// &#123;min, count array&#125;</span></span><br><span class="line">  <span class="keyword">if</span> (ql&lt;=mid) ret = <span class="built_in">merge</span>(ret,<span class="built_in">query</span>(SEG_L_CHILD,ql,qr));</span><br><span class="line">  <span class="keyword">if</span> (qr&gt; mid) ret = <span class="built_in">merge</span>(ret,<span class="built_in">query</span>(SEG_R_CHILD,ql,qr));</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> k = <span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i] = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">build</span>(SEG_ROOT);</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; mx; <span class="comment">// 区间最大值 下标, 单调递减栈 维护</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; mn; <span class="comment">// 区间最小值 下标, 单调递增栈 维护</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    <span class="keyword">for</span>(;mx.<span class="built_in">size</span>()&amp;&amp;a[mx.<span class="built_in">back</span>()]&lt;a[i];mx.<span class="built_in">pop_back</span>())<span class="built_in">add</span>(SEG_ROOT,mx.<span class="built_in">size</span>()&gt;<span class="number">1</span>?mx[mx.<span class="built_in">size</span>()<span class="number">-2</span>]+<span class="number">1</span>:<span class="number">0</span>,mx.<span class="built_in">back</span>(),a[i]-a[mx.<span class="built_in">back</span>()]); <span class="comment">// [a[mx.size()-2]+1...a[mx.back()]] 全部增量</span></span><br><span class="line">    mx.<span class="built_in">push_back</span>(i);</span><br><span class="line">    <span class="keyword">for</span>(;mn.<span class="built_in">size</span>()&amp;&amp;a[mn.<span class="built_in">back</span>()]&gt;a[i];mn.<span class="built_in">pop_back</span>())<span class="built_in">add</span>(SEG_ROOT,mn.<span class="built_in">size</span>()<span class="number">-1</span>?mn[mn.<span class="built_in">size</span>()<span class="number">-2</span>]+<span class="number">1</span>:<span class="number">0</span>,mn.<span class="built_in">back</span>(),a[mn.<span class="built_in">back</span>()]-a[i]);</span><br><span class="line">    mn.<span class="built_in">push_back</span>(i);</span><br><span class="line">    <span class="keyword">auto</span> [_,c] = <span class="built_in">query</span>(SEG_ROOT,<span class="number">0</span>,i);</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,k+<span class="number">1</span>) ans += c[j];</span><br><span class="line">    <span class="built_in">add</span>(SEG_ROOT,<span class="number">0</span>,n<span class="number">-1</span>,<span class="number">-1</span>); <span class="comment">// r增加, 全部-1</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>欧拉函数, 不会啊 </p>
+<p>$n &#x3D; \sum_{d|n} \phi(d)$</p>
+<p>Ex</p>
+<p>惊了,我竟然能ac红题, 虽然我觉得G,我不会phi,更难, 这个就是个连续段计数的变形</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc248/editorial">官方题解</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.51nod.com/Challenge/Problem.html#problemId=1810">51 nod 1810 连续区间</a></p>
+<p><a target="_blank" rel="noopener" href="http://codeforces.com/problemset/problem/526/F">Codeforces 526F</a></p>
+<p><a target="_blank" rel="noopener" href="http://codeforces.com/problemset/problem/997/E">Codeforces 997E</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/248/" title="Atcoder abc248">https://yexiaorain.github.io/Blog/atcoder/abc/248/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 线段树</a>
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E6%A0%91%E4%B8%8ADP/" rel="tag"><i class="fa fa-tag"></i> 树上DP</a>
+              <a href="/Blog/tags/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/" rel="tag"><i class="fa fa-tag"></i> 单调队列</a>
+              <a href="/Blog/tags/%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 欧拉函数</a>
+              <a href="/Blog/tags/%E8%BF%9E%E7%BB%AD%E6%AE%B5%E8%AE%A1%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 连续段计数</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/247/" rel="prev" title="Atcoder abc247">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc247
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/249/" rel="next" title="Atcoder abc249">
+                  Atcoder abc249 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/248/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

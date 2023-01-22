@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="前情提要在之前做Project Euler 216 的时候 学了一下 如何利用别人的答案,在log n时间内判断n是否是一个 64位以内的质数的 Miller-Rabin 判别法 但如果这个数不是质数, 如何能拆解还没有解决 方法方法1回到最初的起点, for一遍 那也是$\sqrt(n)$ 而众所周知, $\sqrt {2^{64}} &#x3D; 2^{32} &#x3D; $ 4.2e9 单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pollard-Rho 质数拆分,分解">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/algo/pollard-rho/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="前情提要在之前做Project Euler 216 的时候 学了一下 如何利用别人的答案,在log n时间内判断n是否是一个 64位以内的质数的 Miller-Rabin 判别法 但如果这个数不是质数, 如何能拆解还没有解决 方法方法1回到最初的起点, for一遍 那也是$\sqrt(n)$ 而众所周知, $\sqrt {2^{64}} &#x3D; 2^{32} &#x3D; $ 4.2e9 单">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-06-03T02:37:14.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.495Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="质数">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/algo/pollard-rho/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/algo/pollard-rho/","path":"algo/pollard-rho/","title":"Pollard-Rho 质数拆分,分解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Pollard-Rho 质数拆分,分解 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="nav-text">前情提要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%951"><span class="nav-text">方法1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%952"><span class="nav-text">方法2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pollard-%E7%9A%84%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="nav-text">Pollard 的伪随机数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%92%8C%E7%BB%86%E8%8A%82"><span class="nav-text">实现和细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E5%AE%9A128%E8%B7%9D%E7%A6%BB"><span class="nav-text">固定128距离</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/algo/pollard-rho/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Pollard-Rho 质数拆分,分解 | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Pollard-Rho 质数拆分,分解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-06-03 10:37:14" itemprop="dateCreated datePublished" datetime="2022-06-03T10:37:14+08:00">2022-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/algo/pollard-rho/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="algo/pollard-rho/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>5 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h1><p>在之前做Project Euler 216 的时候</p>
+<p>学了一下 如何利用别人的答案,在log n时间内判断n是否是一个 64位以内的质数的 Miller-Rabin 判别法</p>
+<p>但如果这个数不是质数, 如何能拆解还没有解决</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h2><p>回到最初的起点, for一遍 那也是$\sqrt(n)$</p>
+<p>而众所周知, $\sqrt {2^{64}} &#x3D; 2^{32} &#x3D; $ 4.2e9</p>
+<p>单独算一次的时间复杂度都接受不了</p>
+<h2 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h2><p>相信随机的力量, 先特判是否质数</p>
+<p>在不停的随一个判断是否<code>gcd != 1</code> 来找因数</p>
+<hr>
+<p>问题是, 生日悖论(一个房间里有23个人，则他们中有两人生日相同的概率超过一半)</p>
+<p>换句话说, 反复生成随机数,有很高几率生成了不少一样的</p>
+<h2 id="Pollard-的伪随机数"><a href="#Pollard-的伪随机数" class="headerlink" title="Pollard 的伪随机数"></a>Pollard 的伪随机数</h2><p>问题变成 我们希望它概率上看起来随机,值上有不重复得不那么随机</p>
+<p>$x_{n+1} &#x3D; f(x_n) &#x3D; (x_n^2 + c) mod N$</p>
+<p>但也不一定如期望, 例如 x &#x3D; 0, c&#x3D; 24,N &#x3D; 9400, 很有规律, 因为这个递推式说白了就是下一项由上一项决定,肯定有循环,只是循环的早晚</p>
+<p>低空间,低时间判断环? 那不是经典面试题双指针吗?(floyd判环算法)</p>
+<p>初始$x_1 &#x3D; y_1$</p>
+<p>$x_{n+1} &#x3D; f(x_n)$</p>
+<p>$y_{n+1} &#x3D; f(f(y_n))$</p>
+<p>每次判断$gcd(|x_n - y_n|,N) &gt; 1$, 和是否到达环, 成环则换一个c来跑</p>
+<hr>
+<p>性质 |i-j| 是p的倍数,则 |f(i)-f(j)| 也是p的倍数</p>
+<p>如果看作环上指针, 也就意味这两个指针距离相等时,其它距离和这个距离相等的两个指针之差,都是p的倍数,</p>
+<p>而快慢指针每次会让距离+1, 而对于环上的视角, 其实追上慢指针相当于逐渐减少</p>
+<h2 id="实现和细节"><a href="#实现和细节" class="headerlink" title="实现和细节"></a>实现和细节</h2><p>据说$O(n^{\frac{1}{4}}\log n)$</p>
+<p>$N &#x3D; 4,N &#x3D; 1$ 需要特判</p>
+<p>素数平方提前判断</p>
+<p>让x&#x3D;0</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125; <span class="comment">// read</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">__int128_t</span> lll;</span><br><span class="line"><span class="function">ll <span class="title">quick_p</span><span class="params">(lll b, ll p,ll mod)</span></span>&#123;</span><br><span class="line">  lll r = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span>(p)&#123;</span><br><span class="line">    <span class="keyword">if</span>(p%<span class="number">2</span>)(r*=b)%=mod;</span><br><span class="line">    (b*=b)%=mod;</span><br><span class="line">    p/=<span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r % mod;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">miller_robin</span><span class="params">(ll v, ll base, ll startpwr)</span></span>&#123;</span><br><span class="line">  lll r = <span class="built_in">quick_p</span>(base,startpwr,v);</span><br><span class="line">  <span class="keyword">for</span>(ll p = startpwr; p &lt; v<span class="number">-1</span>; p *=<span class="number">2</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(r == v<span class="number">-1</span>) <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// -1 开始的序列</span></span><br><span class="line">    <span class="keyword">if</span>(r == <span class="number">1</span>) <span class="keyword">return</span> p == startpwr; <span class="comment">// 全1序列</span></span><br><span class="line">    (r*=r)%=v;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">is_prime_64</span><span class="params">(ll v)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(v == <span class="number">2</span>)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">if</span>(v &lt; <span class="number">2</span> || v % <span class="number">2</span> == <span class="number">0</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  ll p = v<span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">while</span>(p % <span class="number">2</span> == <span class="number">0</span>) p /= <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> base:&#123;<span class="number">2</span>, <span class="number">325</span>, <span class="number">9375</span>, <span class="number">28178</span>, <span class="number">450775</span>, <span class="number">9780504</span>, <span class="number">1795265022</span>&#125;)&#123;</span><br><span class="line">    <span class="keyword">if</span>(base % v == <span class="number">0</span>) <span class="keyword">continue</span>; <span class="comment">// don&#x27;t break may cause 4033 bug</span></span><br><span class="line">    <span class="comment">// 需要所有都能找到-1开始, 或奇数次开始 全1</span></span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">miller_robin</span>(v,base,p)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">my_sqrt</span><span class="params">(ll v)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(v &lt;= <span class="number">1</span>) <span class="keyword">return</span> v;</span><br><span class="line">  ll l = <span class="number">1</span>; <span class="comment">// 左ok</span></span><br><span class="line">  ll r = v; <span class="comment">// 右not ok</span></span><br><span class="line">  <span class="keyword">while</span>(r - l &gt; <span class="number">1</span>)&#123;</span><br><span class="line">    ll m = (l+r)/<span class="number">2</span>;</span><br><span class="line">    (v/m &lt; m ? r : l) = m; <span class="comment">// 防止 overflow</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> l;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">unsigned</span> seed = std::chrono::system_clock::<span class="built_in">now</span>().<span class="built_in">time_since_epoch</span>().<span class="built_in">count</span>();</span><br><span class="line"><span class="function">mt19937 <span class="title">rand_num</span><span class="params">(seed)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">randll</span><span class="params">(ll low,ll hi)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> low + (<span class="built_in">rand_num</span>() % <span class="built_in">static_cast</span>&lt;ll&gt;(hi - low + <span class="number">1</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">Pollard_Rho</span><span class="params">(ll N)</span> </span>&#123; <span class="comment">// 返回一个&gt; 1的因数</span></span><br><span class="line">  <span class="built_in">assert</span>(N &gt; <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">if</span> (N == <span class="number">4</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  lll ret = <span class="built_in">my_sqrt</span>(N); <span class="comment">// 质数平方 效率低 提前判断</span></span><br><span class="line">  <span class="keyword">if</span>(ret * ret == N) <span class="keyword">return</span> ret;</span><br><span class="line">  <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">    ll c = <span class="built_in">randll</span>(<span class="number">1</span>, N - <span class="number">1</span>); <span class="comment">// 生成随机的c</span></span><br><span class="line">    <span class="keyword">auto</span> f = [=](lll x) &#123; <span class="built_in">return</span> ((lll)x * x + c) % N; &#125;; <span class="comment">// ll 表示__int128，防溢出</span></span><br><span class="line">    ll t = <span class="number">0</span>, r = <span class="number">0</span>; <span class="comment">// 初始两个相同</span></span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">      t = <span class="built_in">f</span>(t); <span class="comment">// 1倍速度</span></span><br><span class="line">      r = <span class="built_in">f</span>(<span class="built_in">f</span>(r)); <span class="comment">// 2倍速度</span></span><br><span class="line">      ll d = <span class="built_in">gcd</span>(<span class="built_in">abs</span>(t - r), N);</span><br><span class="line">      <span class="keyword">if</span> (d &gt; <span class="number">1</span> &amp;&amp; d &lt; N) <span class="keyword">return</span> d;</span><br><span class="line">    &#125;<span class="keyword">while</span> (t != r);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 分解x为质因数, sorted</span></span><br><span class="line"><span class="function">vector&lt;ll&gt; <span class="title">fenjie</span><span class="params">(ll x)</span> </span>&#123;</span><br><span class="line">  vector&lt;ll&gt; res = &#123;&#125;;</span><br><span class="line">  deque &lt;ll&gt; arr = &#123;x&#125;;</span><br><span class="line">  <span class="keyword">while</span>(arr.<span class="built_in">size</span>())&#123;</span><br><span class="line">    ll v = arr.<span class="built_in">front</span>();</span><br><span class="line">    arr.<span class="built_in">pop_front</span>();</span><br><span class="line">    <span class="keyword">if</span>(v == <span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">is_prime_64</span>(v)) &#123;</span><br><span class="line">      res.<span class="built_in">pb</span>(v);</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ll divisor = <span class="built_in">Pollard_Rho</span>(v);</span><br><span class="line">    arr.<span class="built_in">push_back</span>(divisor);</span><br><span class="line">    arr.<span class="built_in">push_back</span>(v/divisor);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(res.<span class="built_in">begin</span>(),res.<span class="built_in">end</span>());</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="固定128距离"><a href="#固定128距离" class="headerlink" title="固定128距离"></a>固定128距离</h2><p>减少求gcd的次数, 128次 或者 即将乘起来是N的倍数</p>
+<p>大概是$O(n^{\frac{1}{4}})$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ll <span class="title">Pollard_Rho</span><span class="params">(ll N)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">assert</span>(N!=<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">if</span> (N == <span class="number">4</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">is_prime</span>(N)) <span class="keyword">return</span> N;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">is_prime_square</span>(N)) <span class="keyword">return</span> <span class="built_in">prime_square</span>(N);</span><br><span class="line">  <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    ll c = <span class="built_in">randint</span>(<span class="number">1</span>, N - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">auto</span> f = [=](ll x) &#123; <span class="built_in">return</span> ((lll)x * x + c) % N; &#125;;</span><br><span class="line">    ll t = <span class="number">0</span>, r = <span class="number">0</span>, p = <span class="number">1</span>, q;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">128</span>; ++i) &#123; <span class="comment">// 令固定距离C=128</span></span><br><span class="line">        t = <span class="built_in">f</span>(t), r = <span class="built_in">f</span>(<span class="built_in">f</span>(r));</span><br><span class="line">        <span class="keyword">if</span> (t == r || (q = (lll)p * <span class="built_in">abs</span>(t - r) % N) == <span class="number">0</span>) <span class="keyword">break</span>; <span class="comment">// 如果发现环，或者积即将为0，退出</span></span><br><span class="line">        p = q;</span><br><span class="line">      &#125;</span><br><span class="line">      ll d = <span class="built_in">gcd</span>(p, N);</span><br><span class="line">      <span class="keyword">if</span> (d &gt; <span class="number">1</span>) <span class="keyword">return</span> d;</span><br><span class="line">    &#125; <span class="keyword">while</span> (t != r);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/algo/pollard-rho/" title="Pollard-Rho 质数拆分,分解">https://yexiaorain.github.io/Blog/algo/pollard-rho/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+              <a href="/Blog/tags/%E8%B4%A8%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 质数</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/arc/141/" rel="prev" title="Atcoder arc141 C D E">
+                  <i class="fa fa-chevron-left"></i> Atcoder arc141 C D E
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1691F/" rel="next" title="Codeforces 1691F(贡献统计,组合数,树)">
+                  Codeforces 1691F(贡献统计,组合数,树) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/algo/pollard-rho/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

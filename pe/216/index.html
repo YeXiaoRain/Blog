@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="题目1&lt;&#x3D; n &lt;&#x3D;50’000’000 求让 $2n^2-1$ 为质数的有多少 尝试裸暴力显然我们枚举n,然后每个计算到 $\sqrt{n}$, 时间复杂度$O(n^{1.5})$ 在n取这么大,要大概一个小时, 显然不满足pe的期望1min 优化1显然如果 $ 2n^2-1 &#x3D; 0 (\bmod b)$ 那么有 $ 2(b+n)^2-1 &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="project euler 216 (质数判别)">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/pe/216/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="题目1&lt;&#x3D; n &lt;&#x3D;50’000’000 求让 $2n^2-1$ 为质数的有多少 尝试裸暴力显然我们枚举n,然后每个计算到 $\sqrt{n}$, 时间复杂度$O(n^{1.5})$ 在n取这么大,要大概一个小时, 显然不满足pe的期望1min 优化1显然如果 $ 2n^2-1 &#x3D; 0 (\bmod b)$ 那么有 $ 2(b+n)^2-1 &#x3D;">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-06-12T02:37:14.000Z">
+<meta property="article:modified_time" content="2023-01-22T08:42:13.515Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="质数">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/pe/216/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/pe/216/","path":"pe/216/","title":"project euler 216 (质数判别)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>project euler 216 (质数判别) | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">237</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">228</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%9D%E8%AF%95"><span class="nav-text">尝试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%B8%E6%9A%B4%E5%8A%9B"><span class="nav-text">裸暴力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%961"><span class="nav-text">优化1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%962"><span class="nav-text">优化2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E8%B4%A8%E6%95%B0"><span class="nav-text">如何判断质数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-1"><span class="nav-text">Level 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-2"><span class="nav-text">Level 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-3"><span class="nav-text">Level 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-4-Miller-Rabin"><span class="nav-text">Level 4 Miller-Rabin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-5"><span class="nav-text">Level 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-6-AKS"><span class="nav-text">Level 6 AKS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-text">其它</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code"><span class="nav-text">Code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-text">Ref</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">228</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/pe/216/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="project euler 216 (质数判别) | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          project euler 216 (质数判别)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-06-12 10:37:14" itemprop="dateCreated datePublished" datetime="2021-06-12T10:37:14+08:00">2021-06-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-01-22 16:42:13" itemprop="dateModified" datetime="2023-01-22T16:42:13+08:00">2023-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Project-Euler/" itemprop="url" rel="index"><span itemprop="name">Project Euler</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/pe/216/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pe/216/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>7 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>1&lt;&#x3D; n &lt;&#x3D;50’000’000</p>
+<p>求让 $2n^2-1$ 为质数的有多少</p>
+<h1 id="尝试"><a href="#尝试" class="headerlink" title="尝试"></a>尝试</h1><h2 id="裸暴力"><a href="#裸暴力" class="headerlink" title="裸暴力"></a>裸暴力</h2><p>显然我们枚举n,然后每个计算到 $\sqrt{n}$, 时间复杂度$O(n^{1.5})$</p>
+<p>在n取这么大,要大概一个小时, 显然不满足pe的期望1min</p>
+<h2 id="优化1"><a href="#优化1" class="headerlink" title="优化1"></a>优化1</h2><p>显然如果 $ 2n^2-1 &#x3D; 0 (\bmod b)$</p>
+<p>那么有 $ 2(b+n)^2-1 &#x3D; 0 (\bmod b)$, 且这是充要的</p>
+<p>这有两个好的性质,并不要求$2n^2-1$是质数或者合数</p>
+<p>对于给定b总能找到一个小于b的n</p>
+<hr>
+<p>看上去很美好,而实际操作上,也能降低一定的复杂度,不过这个方法空间要求很大,而上面的暴力是O(1)空间</p>
+<p>其2每次进行筛的时候也不算快,也有不少重复筛的</p>
+<h2 id="优化2"><a href="#优化2" class="headerlink" title="优化2"></a>优化2</h2><p>我们存不下$2n^2-1$的质数,但是可以预运算$\sqrt{2n^2-1}$的质数 进行一定的提速</p>
+<h1 id="如何判断质数"><a href="#如何判断质数" class="headerlink" title="如何判断质数"></a>如何判断质数</h1><h2 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h2><p>裸暴力,从2到开根</p>
+<h2 id="Level-2"><a href="#Level-2" class="headerlink" title="Level 2"></a>Level 2</h2><p>众所周知 费马小定理$a^{p-1} &#x3D; 1 (\bmod p), gcd(a,p) &#x3D; 1$</p>
+<p>当然这个表达式 p是质数一定成立,但是成立并不一定是质数</p>
+<h2 id="Level-3"><a href="#Level-3" class="headerlink" title="Level 3"></a>Level 3</h2><p>尝试多个a的费马小定理,</p>
+<p>依然是”概率”运气的判断,</p>
+<p>依然可能表达式成立,但p不是质数</p>
+<h2 id="Level-4-Miller-Rabin"><a href="#Level-4-Miller-Rabin" class="headerlink" title="Level 4 Miller-Rabin"></a>Level 4 Miller-Rabin</h2><p>把费马小定理的$p-1$拆解成$p-1 &#x3D; 2^k (2m+1), m\ge 0$</p>
+<p>也就是 2幂次和奇数的乘积</p>
+<p>如果p是质数,我们有 $2^{2^k(2m+1)} &#x3D; 1 (\bmod p)$</p>
+<p>也就是 $2^{2^{k-1}(2m+1)} &#x3D; \pm 1 (\bmod p)$</p>
+<p>如果 $2^{2^{k-1}(2m+1)} &#x3D; 1 (\bmod p)$</p>
+<p>那么 $2^{2^{k-2}(2m+1)} &#x3D; \pm 1 (\bmod p)$</p>
+<p>同样,我们可以尝试多个a</p>
+<p>这样的话”运气”能好很多,本身还是概率的做法</p>
+<h2 id="Level-5"><a href="#Level-5" class="headerlink" title="Level 5"></a>Level 5</h2><p><a target="_blank" rel="noopener" href="http://miller-rabin.appspot.com/">http://miller-rabin.appspot.com/</a></p>
+<p>我们用别人的答案!</p>
+<p>Jim Sinclair证明了如果a的取值把下面都测试一遍,那么在 $p&lt;2^{64}$时,都是能判断质数的!</p>
+<p>2, 325, 9375, 28178, 450775, 9780504, 1795265022</p>
+<p>还是Miller-Rabin,不过我们使用了已有成果,(好奇是证明,还是暴力枚举,毕竟是2011-04-20的事情了</p>
+<h2 id="Level-6-AKS"><a href="#Level-6-AKS" class="headerlink" title="Level 6 AKS"></a>Level 6 AKS</h2><p>上面要么慢,要么基于概率(或有限范围的历史答案)</p>
+<p>$(x-a)^n &#x3D; x^n-a (\bmod n), gcd(\forall a,n) &#x3D; 1$,</p>
+<p>n是质数时,根据2项式定理显然,</p>
+<p>如果n 合数, $(X-a)^n - X^n-a $ 看成 $X$为变量, 其余部分为系数</p>
+<p>那么 $X^i$的系数为$C(n,i) a^{n-i}$</p>
+<p>把合数表示成其构成的质数相乘$n &#x3D; p_1^m \cdots$, 那么2项式中$C(n,p_1) \neq 0 (\bmod p_1^m )$,因为$C(n,p_1) &#x3D; \frac{n!}{p!(n-p)!}&#x3D; \frac{(n-p+1)…(n)}{1…p}$ 分子只有n是p的倍数,分母只有p是n的倍数</p>
+<p>所以$C(n,p_1)a^{n-p_1} \neq 0 (\bmod p_1^m)$ (因为a和n互质,不会包含因子$p_1$) 也说明 $C(n,p_1)a^{n-p_1} \neq 0 (\bmod n)$</p>
+<p>注意我们$(X-a)^n - X^n-a $ 看成 $X$为变量, 其余部分为系数,后就是一个 f(X)的表达式, 有系数非零</p>
+<p>例如 n &#x3D; 4</p>
+<p>$(x+a)^4 &#x3D; x^4+C(4,1)ax^3+C(4,2)a^2x^2+C(4,3)a^3x+a^4 &#x3D; x^4 + C(4,2)a^2x^2+a^4 (\bmod 4)$</p>
+<p>$(x+a)^4 -(x^4+a) &#x3D; 6a^2x^2+a^4-a (\bmod 4)$</p>
+<p>想存在$x,gcd(a,4) &#x3D; 1$,使得 $6a^2x^2+a^4-a \neq (\bmod 4)$, 我们的确能找到 a&#x3D;1,x&#x3D;1,有些地方说,</p>
+<p>既然是关于x有系数的表达式,或者项数差异,说明它在模意义下非恒为零??? 这是模运算的什么定理吗</p>
+<blockquote>
+<p>小证? 写成 系数乘上 x的从1取到n的范得Vandermonde 矩阵, 系数和结果都对n取mod,所以只能全是零才有解? 甚至如果希望陪结果,可以反向推?<strong>脑补证明的感觉可能有误</strong>. 比如如果要按mod算的话,那vandermonde矩阵的n列就全是0和部分 位置XD</p>
+</blockquote>
+<p>但是要中间的系数全是n的倍数上面已经证明</p>
+<p>有的地方说主要是等式而不是值?</p>
+<p>TODO</p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>$(n-1)! &#x3D; -1 (\bmod p)$ 当且仅当 p为质数,陶哲轩的书上也有这个</p>
+<p>效率更差, 在一些特定场景有用</p>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line">typedef uint64_t ull;</span><br><span class="line">#define rep(i,a,n) for (ll i=a;i&lt;n;i++)</span><br><span class="line"></span><br><span class="line">// overflow</span><br><span class="line">ll quick_p(__int128_t b, ll p,const ll mod)&#123;</span><br><span class="line">  __int128_t r = 1;</span><br><span class="line">  while(p)&#123;</span><br><span class="line">    if(p%2)(r*=b)%=mod;</span><br><span class="line">    (b*=b)%=mod;</span><br><span class="line">    p/=2;</span><br><span class="line">  &#125;</span><br><span class="line">  return r%mod;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ll mr(ll base,ll v)&#123;</span><br><span class="line">  if(base &gt; v)return true;</span><br><span class="line">  ll startp = v-1;</span><br><span class="line">  while(startp%2 == 0)startp&gt;&gt;=1;</span><br><span class="line">  ll p = startp;</span><br><span class="line">  __int128_t r = quick_p(base,p,v);</span><br><span class="line">  while(p != v-1)&#123;</span><br><span class="line">    if(r == v-1)return true;</span><br><span class="line">    if(r == 1)return p == startp;</span><br><span class="line">    p*=2;</span><br><span class="line">    // overflow</span><br><span class="line">    (r*=r)%=v;</span><br><span class="line">  &#125;</span><br><span class="line">  return false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool is_prime_64(ll v)&#123;</span><br><span class="line">  if(v &lt; 2)return false;</span><br><span class="line">  if(v &lt; 4)return true;</span><br><span class="line">  // %6 = 1 or 5</span><br><span class="line">  if((v % 6) % 4 != 1)return false;</span><br><span class="line">  ll test_g[] = &#123;2, 325, 9375, 28178, 450775, 9780504, 1795265022&#125;;</span><br><span class="line">  rep(i,0,7)&#123;</span><br><span class="line">    if(!(mr(test_g[i],v)))return false;</span><br><span class="line">  &#125;</span><br><span class="line">  return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool isp(ll v)&#123;</span><br><span class="line">  rep(i,2,v)&#123;</span><br><span class="line">    if(i*i&gt;v)return true;</span><br><span class="line">    if(v%i == 0)return false;</span><br><span class="line">  &#125;</span><br><span class="line">  return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">  ll ans = 0;</span><br><span class="line">  rep(i,2,50&#x27;000&#x27;000+1)&#123;</span><br><span class="line">    if(i % 500&#x27;000 == 0)&#123;</span><br><span class="line">      printf(&quot;i:%lld\n&quot;,i);</span><br><span class="line">    &#125;</span><br><span class="line">    ans += is_prime_64(2*i*i-1);</span><br><span class="line">  &#125;</span><br><span class="line">  printf(&quot;ans:%lld\n&quot;,ans);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://brilliant.org/wiki/prime-testing/">https://brilliant.org/wiki/prime-testing/</a></p>
+<p><a target="_blank" rel="noopener" href="https://primes.utm.edu/prove/prove2_3.html">https://primes.utm.edu/prove/prove2_3.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cse.iitk.ac.in/users/manindra/algebra/primality_v6.pdf">2002 primes is P</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cs.tau.ac.il/~amnon/Classes/2019-Derandomization/Lectures/Lecture7-AKS-All.pdf">http://www.cs.tau.ac.il/~amnon/Classes/2019-Derandomization/Lectures/Lecture7-AKS-All.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/AKS_primality_test">https://en.wikipedia.org/wiki/AKS_primality_test</a></p>
+<p><a target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/2155958/lemma-2-1-of-aks-algorithm">系数与完整表达式的疑问也有人问过</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.sciencenet.cn/blog-3224443-1115018.html">http://blog.sciencenet.cn/blog-3224443-1115018.html</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/pe/216/" title="project euler 216 (质数判别)">https://yexiaorain.github.io/Blog/pe/216/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+              <a href="/Blog/tags/%E8%B4%A8%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 质数</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/pe/798/" rel="prev" title="project euler 709 (OEIS A000111)">
+                  <i class="fa fa-chevron-left"></i> project euler 709 (OEIS A000111)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/pe/218/" rel="next" title="project euler 218 (别写代码用数学)">
+                  project euler 218 (别写代码用数学) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">414k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">34:30</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/pe/216/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
