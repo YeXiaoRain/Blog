@@ -19,16 +19,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="F()G()">
+    <meta name="description" content="F(DP)G(容斥原理,集合)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Educational Codeforces Round 119">
 <meta property="og:url" content="https://yexiaorain.github.io/Blog/cf/edu/119-1620/index.html">
 <meta property="og:site_name" content="YeXiaoRain Blog">
-<meta property="og:description" content="F()G()">
+<meta property="og:description" content="F(DP)G(容斥原理,集合)">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2023-01-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-24T13:51:00.152Z">
+<meta property="article:modified_time" content="2023-01-26T23:41:31.385Z">
 <meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="容斥原理">
+<meta property="article:tag" content="集合">
 <meta name="twitter:card" content="summary">
 
 
@@ -85,7 +88,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">241</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">232</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">242</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">16</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">233</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
         </a>
@@ -142,7 +145,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#F-Bipartite-Array"><span class="nav-text">F. Bipartite Array</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G-Subsequences-Galore"><span class="nav-text">G. Subsequences Galore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4-1"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -157,7 +160,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/Blog/archives/">
-          <span class="site-state-item-count">241</span>
+          <span class="site-state-item-count">242</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -168,7 +171,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/Blog/tags/">
-        <span class="site-state-item-count">232</span>
+        <span class="site-state-item-count">233</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -244,7 +247,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="Educational Codeforces Round 119 | YeXiaoRain Blog">
-      <meta itemprop="description" content="F()G()">
+      <meta itemprop="description" content="F(DP)G(容斥原理,集合)">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -266,7 +269,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2023-01-24 21:51:00" itemprop="dateModified" datetime="2023-01-24T21:51:00+08:00">2023-01-24</time>
+      <time title="修改時間：2023-01-27 07:41:31" itemprop="dateModified" datetime="2023-01-27T07:41:31+08:00">2023-01-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -303,18 +306,18 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>14</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
+      <span>4 分鐘</span>
     </span>
 </div>
 
-            <div class="post-description">F()G()</div>
+            <div class="post-description">F(DP)G(容斥原理,集合)</div>
         </div>
       </header>
 
@@ -325,7 +328,56 @@
         <p><a target="_blank" rel="noopener" href="https://cftracker.netlify.app/contests">CF tracker</a></p>
 <p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/51208">Edu List</a></p>
 <p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1620">https://codeforces.com/contest/1620</a></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/98061">官方</a></p>
+<h1 id="F-Bipartite-Array"><a href="#F-Bipartite-Array" class="headerlink" title="F. Bipartite Array"></a>F. Bipartite Array</h1><p>给你1~n排列数组a</p>
+<p>问能否 给每个数乘上 1或-1,</p>
+<p>然后对所有逆序点连边, 让所有点能二分图</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>n 1e6</p>
+<p>2s</p>
+<p>256mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>考虑一个点是负数, 那么它前面所有点和它相连, 所以前面点和它 都在二分图对面, 所以它们之间不能有边, 所以它们需要单调递增,</p>
+<p>如果考虑n是正数, 同理 它右侧的点 需要单调递增</p>
+<p>如果n是负数,那么它左侧的点要单调递增</p>
+<hr>
+<p>问题是这样分割, 会产生n个分支?</p>
+<p>dfs 来控制 ?</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>没有长度为3的降序列!!!!!!!!!!</p>
+<p>所以 <code>dp[i][i的正负][长度为1/2的降序列] = </code> 最大值</p>
+<p>再记录一个反向状态来源就没了</p>
+<h2 id="G-Subsequences-Galore"><a href="#G-Subsequences-Galore" class="headerlink" title="G. Subsequences Galore"></a>G. Subsequences Galore</h2><p>n个字符串 数组a&#x3D;[s1,s2,…,sn] , f(a) &#x3D; 不同的字符串个数(空串也算) 至少是其中一个字符串的子序列(可以不连续)</p>
+<p>f([]) &#x3D; 0</p>
+<p>每个si 的字符都小写字母,且sorted,就是 <code>a*b*c*...</code></p>
+<p>问 a的 2^n个子数组(可以不连续) 的 ((f(a’) mod 998244353) * |a’| * (a’中s下标和) ) 的xor</p>
+<h2 id="范围-1"><a href="#范围-1" class="headerlink" title="范围"></a>范围</h2><p>n 23</p>
+<p>|si| 2e4</p>
+<p>10s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>既然 所有字符串都是 <code>a~z</code> 的任意的顺序排列, 那么子串也是</p>
+<p><code>a</code>的方案就是 max{si 中的a的个数}</p>
+<p><code>ab</code>的方案是 对于每个 a的个数c[a], max{si 中 a &gt;&#x3D; c[a], b的个数}, 相当于 随着c[a] 选择值的增加, 对应s的集合在递减, 导致b的个数也在递减</p>
+<p><code>abc</code> 就更复杂了, for c[a], for c[b], sum max(c[c])</p>
+<p>这样 for , 时间上就会不满足了</p>
+<hr>
+<p>其实从过程中也可以看到, 这里的子序列其实意义不大</p>
+<p>转换成 问有多少26维的向量, 至少小于s[i] 中的 一个</p>
+<p>那么 从增删的角度去考虑, 若当前集合 {s1,s2…} 现在多一个si, 有哪些 26维向量满足, &lt;&#x3D; si ,但是不小于之前集合中的任何一个</p>
+<p>感觉是个26维度的矩体的交的问题…, 似乎可以容斥掉???</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>对于字符串t, 它的characteristic mask 是n个bit的, 第i个bit 表示它是否是si的子串</p>
+<p>假设对于 a的子序列 的mask 为 x, 可以 SOSDP 来计算,</p>
+<hr>
+<p>$S&#x3D;\lbrace s_1,s_2,\cdots,s_n \rbrace, T \subseteq S$ 要求$f(T)$</p>
+<p>$f(T)$ 代表$T$ 中欧给你每个串的子序列之并的数量</p>
+<p>一个具体的$s_i$的子序列数量为$\prod (1+c_i)$</p>
+<p>但是求 子序列并,并不直接, 而子序列交很好求 $&#x3D;\prod (1+\min c_i)$</p>
+<p>基本的容斥, 把 有si看成属性, 那么 并的个数 $f(T) &#x3D; \sum_{Q\subseteq T} (-1)^{|Q|-1} \prod (1+\min_Q c_i)$</p>
+<p>就没了f(T)能算 就随便做了</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1620/submission/190579441">https://codeforces.com/contest/1620/submission/190579441</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> i32;</span><br><span class="line"><span class="type">const</span> i32 INF=<span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"><span class="comment">// mt19937_64 rnd(chrono::steady_clock::now().time_since_epoch().count()); // usage rnd()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for(ll i=(a);i&lt;(ll)(n);i++)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="type">int</span> cnt[<span class="number">30</span>][<span class="number">30</span>]; <span class="comment">// cnt[i][char]= 第i个字符串的char的个数</span></span><br><span class="line">ll s[<span class="number">1</span>&lt;&lt;<span class="number">24</span>];</span><br><span class="line">array&lt;<span class="type">int</span>,1&lt;&lt;23 &gt; mn; <span class="comment">// mn[mask] 最小的min c[char]</span></span><br><span class="line"><span class="type">char</span> tmp[<span class="number">20010</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">lowbit</span><span class="params">(<span class="type">int</span> x)</span></span>&#123; <span class="keyword">return</span> x &amp; (-x); &#125;</span><br><span class="line"><span class="type">int</span> popc[<span class="number">1</span>&lt;&lt;<span class="number">23</span>]; <span class="comment">// popcount even/odd 直接记录奇偶</span></span><br><span class="line"><span class="type">int</span> sidx[<span class="number">1</span>&lt;&lt;<span class="number">23</span>]; <span class="comment">// sum idx,(1-index)</span></span><br><span class="line"><span class="type">int</span> lg[<span class="number">1</span>&lt;&lt;<span class="number">23</span>]; <span class="comment">// lg(0)=0, lg(1)=1, lg(2)=2 lg(4)=3, 对应1-index</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ll n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123; <span class="comment">// 1-index</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,tmp);</span><br><span class="line">    ll m = <span class="built_in">strlen</span>(tmp);</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,m) cnt[i][tmp[j]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(msk,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n) &#123;</span><br><span class="line">    lg[msk]=lg[msk/<span class="number">2</span>]+<span class="number">1</span>;</span><br><span class="line">    popc[msk] = popc[msk&amp;(msk<span class="number">-1</span>)]+<span class="number">1</span>;</span><br><span class="line">    sidx[msk] = sidx[msk&amp;(msk<span class="number">-1</span>)]+lg[msk&amp;-msk];</span><br><span class="line">    s[msk] = (popc[msk]&amp;<span class="number">1</span>)?<span class="number">1</span>:<span class="number">-1</span>; <span class="comment">// 默认是空串, 预先给符号</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(ch,<span class="number">0</span>,<span class="number">26</span>)&#123; <span class="comment">// 字母</span></span><br><span class="line">    mn[<span class="number">0</span>] = INF;</span><br><span class="line">    <span class="built_in">rep</span>(msk,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n)&#123; <span class="comment">// 字符串选择mask</span></span><br><span class="line">      mn[msk] = <span class="built_in">min</span>(mn[msk-<span class="built_in">lowbit</span>(msk)],cnt[lg[<span class="built_in">lowbit</span>(msk)]][ch]); <span class="comment">// 字母ch 在字符串msk下的交的最大值</span></span><br><span class="line">      (s[msk] *= (mn[msk] + <span class="number">1</span>))%=MOD; <span class="comment">// = \prod (min c + 1)</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// s[字符串mask] = 子集的交 * (-1) 幂次权重</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(msk,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n) <span class="keyword">if</span>(msk &amp; (<span class="number">1</span>&lt;&lt;(i<span class="number">-1</span>))) (s[msk] += s[msk-(<span class="number">1</span>&lt;&lt;(i<span class="number">-1</span>))])%=MOD; <span class="comment">// 子集汇总</span></span><br><span class="line">  <span class="comment">// s[字符串mask 的子集] = sum (子集的交) = f(mask)</span></span><br><span class="line"></span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(msk,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n) ans ^= popc[msk]*sidx[msk]* ((s[msk]+MOD) % MOD); <span class="comment">// s[]可能是负值</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F. 我为啥自己观察不出 没有长度为3的降序列啊???????????</p>
+<p>G. 反而感觉 很显然的思路方向和过程, 比F简单, 以及对于是要具体算出每一个的猜测 而无法直接统计 mod 乘法以后的 xor 的想法也是对的</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/98061">官方</a></p>
 
     </div>
 
@@ -353,6 +405,11 @@
 </ul>
 </div>
 
+          <div class="post-tags">
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 容斥原理</a>
+              <a href="/Blog/tags/%E9%9B%86%E5%90%88/" rel="tag"><i class="fa fa-tag"></i> 集合</a>
+          </div>
 
         
 
@@ -363,6 +420,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/Blog/cf/edu/118-1613/" rel="next" title="Educational Codeforces Round 118">
+                  Educational Codeforces Round 118 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -399,13 +459,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="總字數">418k</span>
+    <span title="總字數">420k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">23:13</span>
+    <span title="所需總閱讀時間">23:20</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
