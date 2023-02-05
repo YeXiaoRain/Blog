@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="How many barely acute triangles are there with perimeter ≤ 25,000,000?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="project euler 223">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/pe/223/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="How many barely acute triangles are there with perimeter ≤ 25,000,000?">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-02-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-05T10:19:19.630Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="APT">
+<meta property="article:tag" content="NPT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/pe/223/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/pe/223/","path":"pe/223/","title":"project euler 223"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>project euler 223 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">245</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">17</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">237</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Doraki"><span class="nav-text">Doraki</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Orrin-Frink"><span class="nav-text">Orrin Frink</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#APT-almost-pythagorean-triple"><span class="nav-text">APT(almost pythagorean triple)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NPT-Nearly-Pythagorean-Triples-project-euler-224"><span class="nav-text">NPT(Nearly Pythagorean Triples) (project euler 224)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Note-on-Generateing-APT"><span class="nav-text">A Note on Generateing APT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x-2-y-2-z-2-x3D-u-2"><span class="nav-text">$x^2+y^2+z^2&#x3D;u^2$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ayoub"><span class="nav-text">Ayoub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pythagorean-quadruple"><span class="nav-text">Pythagorean quadruple</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-text">Ref</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">245</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">237</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/pe/223/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="project euler 223 | YeXiaoRain Blog">
+      <meta itemprop="description" content="How many barely acute triangles are there with perimeter ≤ 25,000,000?">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          project euler 223
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-02-04 00:00:00" itemprop="dateCreated datePublished" datetime="2023-02-04T00:00:00+08:00">2023-02-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-02-05 18:19:19" itemprop="dateModified" datetime="2023-02-05T18:19:19+08:00">2023-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Project-Euler/" itemprop="url" rel="index"><span itemprop="name">Project Euler</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/pe/223/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pe/223/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>7 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">How many barely acute triangles are there with perimeter ≤ 25,000,000?</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>如果Latex在解密后没有渲染，刷新网页即可, <a target="_blank" rel="noopener" href="https://github.com/D0n9X1n/hexo-blog-encrypt/issues/22">相关Issue</a></p>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>统计 整数对$(a,b,c)$个数 满足</p>
+<p>$1\le a \le b \le c$</p>
+<p>$a+b+c \le 25,000,000$</p>
+<p>$a^2+b^2&#x3D;c^2+1$</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>$(a-1)(a+1) &#x3D; (c-b)(c+b)$</p>
+<p>$a \le \frac{25,000,000}{3}$</p>
+<p>提前线性筛的方式处理 可能的$a$的一个质因子</p>
+<p>然后暴力 枚举a, 这样可以log 级别得到 a-1和a+1的分解</p>
+<p>然后 dfs(分解) 去凑 $c+b$和$c-b$, 注意奇偶性可以剪枝，然后$c+b&gt;c-b$也可以剪枝， $(c+b)-(c-b) &#x3D; 2b \ge 2a$也可以剪枝</p>
+<p>这样大概是 O(n * 分解的幂次之积) 的时间复杂度</p>
+<p>i7-7700HQ 单核python3 跑了 <code>810.686072 s</code>, 十多分钟有点慢</p>
+<span id="more"></span>
+
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>PT(Pythagorean triple): $a^2+b^2&#x3D;c^2$</p>
+<p>PPT(primitive Pythagorean triple): $a^2+b^2&#x3D;c^2$且$gcd(a,b,c) &#x3D; 1$</p>
+<p>APT(Almost Pythagorean triple): $a^2+b^2&#x3D;c^2+1$</p>
+<p>NPT(Nearly Pythagorean triple): $a^2+b^2&#x3D;c^2-1$</p>
+<h2 id="Doraki"><a href="#Doraki" class="headerlink" title="Doraki"></a>Doraki</h2><p>大佬说</p>
+<p>from a triplet (a,b,c), I get the next 3 triplets</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(2c + b - 2a, 2c + 2b - a, 3c + 2b - 2a)</span><br><span class="line">(2c + b + 2a, 2c + 2b + a, 3c + 2b + 2a)</span><br><span class="line">(2c - 2b + a, 2c - b + 2a, 3c - 2b + 2a)</span><br></pre></td></tr></table></figure>
+
+<p>Start from (1,1,1) and (1,2,2), be careful about duplicates when a&#x3D;b, and this is it.</p>
+<p>据说有人按照这个算法 用delphi实现，只跑了3.8s</p>
+<p>???为啥就刚好是这三个啊</p>
+<hr>
+<p>对于a^2+b^2&#x3D;c^2+k</p>
+<p><a target="_blank" rel="noopener" href="https://mathworld.wolfram.com/PythagoreanTriple.html">https://mathworld.wolfram.com/PythagoreanTriple.html</a></p>
+<p>如果有 (a,b,c) 满足</p>
+<p>那么上面的容易证明 $[1]^2+[2]^2-[3]^2 &#x3D; a^2+b^2-c^2 &#x3D; k$</p>
+<hr>
+<p>想法是</p>
+<p>$\begin{cases} a&#x3D;np+mq \\ b&#x3D;mp-nq \\ c&#x3D;mp+nq \\ k &#x3D; (np-mq)^2 \end{cases}$</p>
+<p>来源也是和上面 $(a-1)(a+1) &#x3D; (b-c)(b+c)$ 一样的方法， 就是把来源的因数给了新的符号而已</p>
+<p>然后配合上 Brahmagupta-fibonacci identity,</p>
+<p>${\displaystyle {\begin{aligned}\left(a^{2}+b^{2}\right)\left(c^{2}+d^{2}\right)&amp;{}&#x3D;\left(ac-bd\right)^{2}+\left(ad+bc\right)^{2}&amp;&amp;(1)\\&amp;{}&#x3D;\left(ac+bd\right)^{2}+\left(ad-bc\right)^{2}.&amp;&amp;(2)\end{aligned}}}$</p>
+<h2 id="Orrin-Frink"><a href="#Orrin-Frink" class="headerlink" title="Orrin Frink"></a>Orrin Frink</h2><p>见底部链接</p>
+<h3 id="APT-almost-pythagorean-triple"><a href="#APT-almost-pythagorean-triple" class="headerlink" title="APT(almost pythagorean triple)"></a>APT(almost pythagorean triple)</h3><p>首先 尝试了一些小的 (5,5,7)(4,7,8)(8,9,12) (7,11,13) (11,13,17) (10,15,18)</p>
+<p>发现 十进制下 c的末尾是2,3,7,8</p>
+<p>2,7,12,17… 构成等差数列(差5)</p>
+<p>8,13,18… 构成等差数列(差5)</p>
+<p>所以搞了个(哇，咋想着靠过来的)</p>
+<p>$x&#x3D;3t+2,y&#x3D;4t+1,z&#x3D;5t+2$, 容易证明满足</p>
+<p>$x&#x3D;3t+1,y&#x3D;4t+3,z&#x3D;5t+3$, 容易证明满足</p>
+<p>而3,4,5 本身就是 pythagorean 基础三元组， gcd(a,b,c) &#x3D; 1</p>
+<p>从三维角度看， 就是(3,4,5)方向的一条线上的点</p>
+<hr>
+<p>类似的思考， 对于任意的 $(p,q,r)$是 APT</p>
+<p>那么要通过它生成$(At+p,Bt+q,Ct+r)$</p>
+<p>需要有 $A^2+B^2&#x3D;C^2$</p>
+<p>$Ap+Bq&#x3D;Cr$</p>
+<p>因为是方向向量，所以任意整数倍也是解, 所以其实就是解个二元二次方程组, 所以下面的 结果可能 并不互质, gcd一下就好</p>
+<p>容易得到$(A,B,C) &#x3D; (pr+q,qr-p,r^2+1)$, $(A’,B’,C’) &#x3D; (pr+q,qr-p,r^2+1)$</p>
+<p>这里我们的结论是 任意合法的$(p,q,r)$ 如果延长的直线上都是合法的，且方向满足pythagorean三元组，那么方向向量有且只有两种</p>
+<hr>
+<p>对于一个基础 pythagoream 三元组, $(a,b,c) &#x3D; (2uv,u^2-v^2,u^2+v^2)$</p>
+<p>令 $(x,y,z)&#x3D;(at+p,bt+q,ct+r)$, $(x’,y’,z’)&#x3D;(at+p’,bt+q’,ct+r’)$</p>
+<p>其中 $p+p’&#x3D;a,q+q’&#x3D;b,r+r’&#x3D;c$</p>
+<p>$(x,y,z),(x’,y’,z’)$ 只要一个满足 APT,另一个也满足（根据正负对称性显然）</p>
+<p>注意到$(p,q,r)$是合法的, 根据上面结论，$r^2 + 1$ 是 $c$的倍数(??? c的质因子性质??? TODO)</p>
+<p>注意到$r$只用考虑在$[0,c)$ 之间取值, 因为如果不在这个范围，相当于把多的部分给t贡献就等价了</p>
+<p>任取一个 满足的r,剩下就是解关于p,q的方程ap+bq&#x3D;cr, (经典的扩展欧几里德)</p>
+<p>这里结论就是，给定a,b,c反过去找r,再找p,q 也可以得到多个解(??? 为啥说是2个 ??? TODO, c又不保证是质数, 我没有数论基础)</p>
+<p>综上，任意(p,q,r) 对应两个 (a,b,c), 所以枚举a,b,c反找(p,q,r)可以找到所有(p,q,r)</p>
+<hr>
+<p>用类似的方法，对于给定整数s, 可以解决 $x^2+y^2&#x3D;z^2+s^2$</p>
+<hr>
+<p>对于等腰 $a&#x3D;&#x3D;b$, 可以用 $x^2-2y^2&#x3D;-1$ 来解(pell 方程)</p>
+<h3 id="NPT-Nearly-Pythagorean-Triples-project-euler-224"><a href="#NPT-Nearly-Pythagorean-Triples-project-euler-224" class="headerlink" title="NPT(Nearly Pythagorean Triples) (project euler 224)"></a>NPT(Nearly Pythagorean Triples) (project euler 224)</h3><p>$x^2+y^2&#x3D;z^2-1$</p>
+<p>一些例子$(2,2,3) (4,8,9) (12,12,17) (8,32,33) (10,50,51) (22,46,51) (34,38,51)$</p>
+<p>上面办法并不能用了</p>
+<p>THEOREM: 如果$(p,q,r)$ 是APT, 那么$(2pr,2qr,2r^2+1)$ 是NPT, 反过来如果$(p,q,r)$是NPT,那么$(2p^2+1,2pq,2pr)$是APT</p>
+<p>易证</p>
+<p>这样也得到无限多NPT, 但并不是所有NPT能这样得到</p>
+<hr>
+<p>其实也是在解 $x^2+y^2+w^2 &#x3D; z^2$ 其中$w&#x3D;1$</p>
+<p>Catalan 1885年 证明了解是</p>
+<p>$x&#x3D;2(pr+qs),y&#x3D;2(qr-ps),w&#x3D;p^2+q^2-r^2-s^2,z&#x3D;p^2+q^2+r^2+s^2$</p>
+<p>那么当 $1&#x3D;w&#x3D;p^2+q^2-r^2-s^2$, 令$r^2+s^2 &#x3D; n$ 则$p^2+q^2&#x3D;n+1$</p>
+<p>$x&#x3D;2(pr+qs),y&#x3D;2(qr-ps),z&#x3D;2n+1$</p>
+<p>因此需要找 $n,n+1$且都能表示成平方和，就能得到$x,y,z$</p>
+<h2 id="A-Note-on-Generateing-APT"><a href="#A-Note-on-Generateing-APT" class="headerlink" title="A Note on Generateing APT"></a>A Note on Generateing APT</h2><p>tldr; 非一般情况，没啥营养</p>
+<p>举了个从$(3,4,5)$开始的实际例子</p>
+<p>但对于大的PPT, 难以找$(p,q,r)$</p>
+<blockquote>
+<p>?不太懂为什么原文要搞6个，很多是附属的方程， 两个就够了</p>
+</blockquote>
+<hr>
+<p>不妨设 选定的PPT $(a,b,c) &#x3D; (m^2-n^2,2mn,m^2+n^2)$</p>
+<p>令 $m&#x3D;i+1,n&#x3D;i$</p>
+<p>$(a,b,c) &#x3D; (2i-1,2i^2-2i,2i^2-2i+1)$</p>
+<p>要解方程组</p>
+<p>$p^2+q^2&#x3D;r^2&#x3D;1$</p>
+<p>$((2i-1)+p)^2+((2i^2-2i)+q)^2&#x3D;((2i^2-2i+1)+r)^2&#x3D;1$,  这里虽然没有t, 但是本质都是要 ap+bq&#x3D;cr</p>
+<p>即</p>
+<p>$p^2+q^2&#x3D;r^2&#x3D;1$</p>
+<p>$(2i-1)p+(2i^2-2i)q&#x3D;(2i^2-2i+1)r$</p>
+<p>显然有一个 q&#x3D;1,p&#x3D;r&#x3D;2i-1 的解</p>
+<p>对应的$(p’,q’,r’) &#x3D; (2i-2,2i^2-4i+1,2i^2-4i+2)$</p>
+<p>结论就是 特殊的PPT的一个APT可以快速得到</p>
+<h2 id="x-2-y-2-z-2-x3D-u-2"><a href="#x-2-y-2-z-2-x3D-u-2" class="headerlink" title="$x^2+y^2+z^2&#x3D;u^2$"></a>$x^2+y^2+z^2&#x3D;u^2$</h2><h3 id="Ayoub"><a href="#Ayoub" class="headerlink" title="Ayoub"></a>Ayoub</h3><p>所有除以u</p>
+<p>$x’&#x3D;\frac{x}{u},y’&#x3D;\frac{y}{u},z’&#x3D;\frac{z}{u}$</p>
+<p>即$x’^2+y’^2+z’^2&#x3D;1$, 解有理数方程</p>
+<p>然后就和 pythagorean的经典方法一样， 这就是个半径为1的球面， 上的有理数点一样的想法</p>
+<p>如果 $x’,y’,z’$ 其中有0, 那么就是 勾股定理了 $(\frac{m^2-n^2}{m^2+n^2},\frac{2mn}{m^2+n^2},0)$</p>
+<p>考虑经过这个点的一条线 $(x’,y’,z’) &#x3D; (\frac{m^2-n^2}{m^2+n^2}+rt,\frac{2mn}{m^2+n^2}+pt,0+qt)$,其中方向为$(r,p,q)$为整数</p>
+<p>那么和球面交就要满足$(\frac{m^2-n^2}{m^2+n^2}+rt)^2+(\frac{2mn}{m^2+n^2}+pt)^2+(qt)^2&#x3D;1$</p>
+<p>那么它是关于 t的二次方程</p>
+<p>t &#x3D; 0 是一个解</p>
+<p>$t&#x3D;\frac{-2r(m^2-n^2)-4mnp}{(m^2+n^2)(p^2+q^2+r^2)}$</p>
+<p>所以直接无脑把分母丢给$u$, 则有</p>
+<p>$x &#x3D; (m^2-n^2)(p^2+q^2-r^2) - 4mnpr$</p>
+<p>$y &#x3D; 2mn(r^2-p^2+q^2)-2rp(m^2-n^2)$</p>
+<p>$z &#x3D; -2qr(m^2-n^2) - 4mnpq$</p>
+<p>$u &#x3D; (m^2+n^2)(p^2+q^2+r^2)$</p>
+<p>那么 文中提到的 V. A. Lebesgue, U. Bainelli, C. Gill, J. A. Euler, Japanese Matsunango, P. Cossali 的6个方程，不过是这里的特例</p>
+<p>但是这个方程 不像 勾股定理的方程， 它无法<strong>直接</strong>给出所有解， 这里<strong>直接</strong>的意思是比如u&#x3D;27</p>
+<p>而 22^2+7^2+14^2 &#x3D; 27^2 不能找到m,n,p,q,r 让u&#x3D;27且得到上面的式子</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">xyzu</span>(<span class="params">m,n,p,q,r</span>):</span><br><span class="line">    x = (m*m-n*n)*(p*p+q*q-r*r) - <span class="number">4</span>*m*n*p*r</span><br><span class="line">    y = <span class="number">2</span>*m*n*(r*r-p*p+q*q) - <span class="number">2</span> *r *p*(m*m-n*n)</span><br><span class="line">    z = -<span class="number">2</span>*q*r*(m*m-n*n) - <span class="number">4</span>*m*n*p*q</span><br><span class="line">    u = (m*m+n*n)*(p*p+q*q+r*r)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;x=<span class="subst">&#123;x&#125;</span>\ty=<span class="subst">&#123;y&#125;</span>\tz=<span class="subst">&#123;z&#125;</span>\tu=<span class="subst">&#123;u&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> m <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">27</span>):</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(m,<span class="number">27</span>+<span class="number">1</span>):</span><br><span class="line">        m2n2=m*m+n*n</span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">0</span> <span class="keyword">or</span> <span class="number">27</span> % m2n2 != <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">27</span>+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> q <span class="keyword">in</span> <span class="built_in">range</span>(p,<span class="number">27</span>+<span class="number">1</span>):</span><br><span class="line">                <span class="keyword">if</span> m2n2*(p*p+q*q) &gt; <span class="number">27</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">for</span> r <span class="keyword">in</span> <span class="built_in">range</span>(q,<span class="number">27</span>+<span class="number">1</span>):</span><br><span class="line">                    <span class="keyword">if</span> m2n2*(p*p+q*q+r*r) &gt; <span class="number">27</span>:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                    <span class="keyword">if</span> m2n2*(p*p+q*q+r*r) == <span class="number">27</span>:</span><br><span class="line">                        xyzu(m, n, p, q, r)</span><br><span class="line">                        xyzu(m, n, p, q,-r)</span><br><span class="line">                        xyzu(m, n, p,-q, r)</span><br><span class="line">                        xyzu(m, n, p,-q,-r)</span><br><span class="line">                        xyzu(m, n,-p, q, r)</span><br><span class="line">                        xyzu(m, n,-p, q,-r)</span><br><span class="line">                        xyzu(m, n,-p,-q, r)</span><br><span class="line">                        xyzu(m, n,-p,-q,-r)</span><br><span class="line">                        xyzu(m,-n, p, q, r)</span><br><span class="line">                        xyzu(m,-n, p, q,-r)</span><br><span class="line">                        xyzu(m,-n, p,-q, r)</span><br><span class="line">                        xyzu(m,-n, p,-q,-r)</span><br><span class="line">                        xyzu(m,-n,-p, q, r)</span><br><span class="line">                        xyzu(m,-n,-p, q,-r)</span><br><span class="line">                        xyzu(m,-n,-p,-q, r)</span><br><span class="line">                        xyzu(m,-n,-p,-q,-r)</span><br></pre></td></tr></table></figure>
+
+<p>但从逻辑上， 这一定是可以得到所有的值的</p>
+<p>$(m,n,p,q,r) &#x3D; (1,1,7,-2,1)$ 就能得到$(x,y,z,u)&#x3D;(-28,-88,56,108) &#x3D; (-7,-22,14,27)$, 只是gcd&#x3D;4罢了</p>
+<h3 id="Pythagorean-quadruple"><a href="#Pythagorean-quadruple" class="headerlink" title="Pythagorean quadruple"></a>Pythagorean quadruple</h3><h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://projecteuler.net/problem=223">https://projecteuler.net/problem=223</a></p>
+<p><a target="_blank" rel="noopener" href="https://projecteuler.net/thread=223#25790">https://projecteuler.net/thread=223#25790</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.maa.org/sites/default/files/Ayoub09270.pdf">1984 Integral Solutions to the Equation x2 + y2 + z2 &#x3D; u2: A Geometrical Approach.</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.maa.org/sites/default/files/Orrin_Frink01279.pdf">1987 Orrin Frink</a></p>
+<p><a target="_blank" rel="noopener" href="https://veltech.edu.in/wp-content/uploads/2016/04/Paper-09-15.pdf">2005 A Note on Generating Almost Pythagorean Triples</a> &#x2F;&#x2F; <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1508.07562.pdf">arxiv A Note on Generating Almost Pythagorean Triples</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Brahmagupta%E2%80%93Fibonacci_identity">Brahmagupta–Fibonacci identity</a></p>
+<p><a target="_blank" rel="noopener" href="https://aperiodical.com/2021/07/the-hunt-for-almost-pythagorean-triples/">https://aperiodical.com/2021/07/the-hunt-for-almost-pythagorean-triples/</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Pythagorean_quadruple">Pythagorean quadruple</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.biodiversitylibrary.org/item/28477#page/543/mode/1up">比利时皇家科学、文学和艺术学院的公告 1885 t.9 531页</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/pe/223/" title="project euler 223">https://yexiaorain.github.io/Blog/pe/223/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+              <a href="/Blog/tags/APT/" rel="tag"><i class="fa fa-tag"></i> APT</a>
+              <a href="/Blog/tags/NPT/" rel="tag"><i class="fa fa-tag"></i> NPT</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1787/" rel="prev" title="Codeforces TypeDB Forces 2023 (Div. 1 + Div. 2)">
+                  <i class="fa fa-chevron-left"></i> Codeforces TypeDB Forces 2023 (Div. 1 + Div. 2)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">424k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">23:34</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/pe/223/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
