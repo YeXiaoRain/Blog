@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="B2(树,数学)C(树上启发式合并)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces Round 872 (Div. 1)">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/cf/1824/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="B2(树,数学)C(树上启发式合并)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-05-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-08T22:59:24.852Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="树">
+<meta property="article:tag" content="树上启发式合并">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/cf/1824/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/cf/1824/","path":"cf/1824/","title":"Codeforces Round 872 (Div. 1)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Codeforces Round 872 (Div. 1) | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">252</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">18</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">245</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#B2-LuoTianyi-and-the-Floating-Islands-Hard-Version"><span class="nav-text">B2 LuoTianyi and the Floating Islands (Hard Version)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-LuoTianyi-and-XOR-Tree"><span class="nav-text">C LuoTianyi and XOR-Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#D-LuoTianyi-and-the-Function"><span class="nav-text">D. LuoTianyi and the Function</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-2"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%8C%E8%A7%A3"><span class="nav-text">題解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">252</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">245</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/cf/1824/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Codeforces Round 872 (Div. 1) | YeXiaoRain Blog">
+      <meta itemprop="description" content="B2(树,数学)C(树上启发式合并)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Codeforces Round 872 (Div. 1)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-05-08 00:00:00" itemprop="dateCreated datePublished" datetime="2023-05-08T00:00:00+08:00">2023-05-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-05-09 06:59:24" itemprop="dateModified" datetime="2023-05-09T06:59:24+08:00">2023-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/Div1/" itemprop="url" rel="index"><span itemprop="name">Div1</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/cf/1824/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cf/1824/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>9 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">B2(树,数学)C(树上启发式合并)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1824">https://codeforces.com/contest/1824</a></p>
+<h1 id="B2-LuoTianyi-and-the-Floating-Islands-Hard-Version"><a href="#B2-LuoTianyi-and-the-Floating-Islands-Hard-Version" class="headerlink" title="B2 LuoTianyi and the Floating Islands (Hard Version)"></a>B2 LuoTianyi and the Floating Islands (Hard Version)</h1><p>n点边权1的树, 问对于任意k个不同<code>指定点</code>，到这k个<code>指定点</code>距离和最小的点的个数的期望值 mod 1e9+7</p>
+<p>k &lt;&#x3D; n &lt;&#x3D; 2e5</p>
+<p>2s</p>
+<p>256mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>k &#x3D; 奇数，显然有唯一重心, 期望为1</p>
+<p>k &#x3D; 偶数，对于点u, 则其所有链接的子树 不能有 <code>&gt; k/2</code>个指定点</p>
+<p>合法的方案数 cnt &#x3D; for u, for v is child of u, (binom(n,k) - sum binom(sz[v],j)binom(n-sz[v],k-j),j &lt;&#x3D; k&#x2F;2)</p>
+<p>但直接暴力显然TLE</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>考虑相邻点的距离和变化</p>
+<p>任选一个根，记<code>s[u] =</code> 子树u的<code>指定点</code>个数</p>
+<p>记<code>w[u]= u</code>到所有指定点的距离和</p>
+<p>v是u的子节点，那么<code>w[v] = w[u] - s[v] + (k-s[v])</code></p>
+<p>如果u是好的点，则一定满足任意v,有<code>k - 2s[v] &gt;= 0</code></p>
+<p>所以如果<code>u</code>是好的点，那么它的子节点中，最大的<code>s[v]</code>,满足<code>s[v] &lt;= k/2</code></p>
+<hr>
+<p>如果<code>u</code>是好的点，把<code>u</code>选做根, <code>v</code>是u的子节点且 <code>s[v]</code>最大</p>
+<p>那么注意到<code>s[v]</code>在除了<code>u</code>以外的所有<code>s[node]</code>中 最大</p>
+<p>也就是<code>k-2s[v]</code> 在所有<code>k-2s[node]</code>中最小</p>
+<p>且<code>k-2s[v] &gt;= 0</code></p>
+<p>若<code>k-2s[v] &gt; 0</code> 则所有<code>k-2s[node] &gt;= k-2s[v] &gt; 0</code>, 则所有相邻变化(从父向子)全为正, 所以只有根是good节点</p>
+<p>若<code>k-2s[v] == 0</code>, 则v也是好的点</p>
+<hr>
+<p>如果u和v都是好的点<code>u-pu-..-pv-v</code></p>
+<p>以u为根时, 有<code>s_u[v] &lt;= s_u[pu] &lt;= k/2</code></p>
+<p>以v为根时，有<code>s_v[pv] &lt;= k/2</code></p>
+<p>注意到 <code>s_u[v] + s_v[pv] = k</code>, 所以<code>s_u[v] = s_v[pv] = k/2</code></p>
+<p>因此<code>pv</code>也是好的点</p>
+<p>如此反复，<code>u..v</code>路径上的都是好的点</p>
+<hr>
+<p>那么这里还有问题是，当任选根时，<code>k - 2s[v] == 0</code>能保证<code>v</code>是好的点吗</p>
+<p>对于 <code>root...v</code>来说, 这条路经上的点<code>s[node in root..v] &gt;= s[v]</code> 即 <code>k-2s[node in root..v] &lt;= 0</code></p>
+<p>即对于<code>root..-pv-v</code></p>
+<p>考虑把<code>v</code>换成根，则<code>s_v[pv] = k/2</code>, 则在<code>v</code>为根时,<code>v</code>的子节点最大的<code>s &lt;= k/2</code>, 所以<code>w[v]</code>最小</p>
+<p>所以<code>v</code>是好的点</p>
+<hr>
+<p>p[v] &#x3D; 让v在某个指定方案下, 存在选根方案 <code>s[v] = k/2</code> 的概率</p>
+<p>这里有个问题是, 例如对于n&#x3D;7点菊花形状,k&#x3D;6时，中心是唯一好的点，但是它不满足<code>s[v] = k/2</code></p>
+<p>而这种情况，根据上面的好点路径上的点也是好点，</p>
+<p>所以对所有好点取lca,有唯一的lca,且满足它要么是根(s[v] &#x3D; k)，要么它的父节点不是好点<code>w[fa[lca]] &gt; w[lca]</code></p>
+<p><code>w[lca] = w[fa[lca]] - s[lca] + (k - s[lca]) &lt; w[fa[lca]]</code></p>
+<p><code>k-2s[lca] &lt; 0</code>, 它不满足</p>
+<p>而对于其它点，都可以通过lca到达，所以除了lca以外的都满足<code>s[v]=k/2</code></p>
+<p>因此：</p>
+<p>任选一个根, 对于每种指定点的情况的好点数 &#x3D; 1+count(s[v] &#x3D;&#x3D; k&#x2F;2)</p>
+<p>所以总的期望 &#x3D; 1 + sum(p_u), u &#x3D; 1..n</p>
+<p>而 <code>p[u] = binom(sz[u],k/2)binom(n-sz[u],k/2) / binom(n,k)</code></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1824/submission/205146076">https://codeforces.com/contest/1824/submission/205146076</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 1000000007</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for(ll i=(a);i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for(ll i=(n);i--&gt;(ll)(a);)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="function">ll <span class="title">mypow</span><span class="params">(ll v,ll pwr)</span></span>&#123;</span><br><span class="line">  ll r=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span>(pwr)&#123;</span><br><span class="line">    <span class="keyword">if</span>(pwr&amp;<span class="number">1</span>)(r*=v)%=MOD;</span><br><span class="line">    (v*=v)%=MOD;</span><br><span class="line">    pwr/=<span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; e[<span class="number">200010</span>];</span><br><span class="line">ll sz[<span class="number">200010</span>];</span><br><span class="line">ll n;</span><br><span class="line">ll k;</span><br><span class="line">ll fac[<span class="number">200010</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">ll ifac[<span class="number">200010</span>];</span><br><span class="line"><span class="function">ll <span class="title">binom</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (n &lt; m <span class="keyword">or</span> m &lt; <span class="number">0</span>)?<span class="number">0</span>:(fac[n]*ifac[m]%MOD*ifac[n-m]%MOD);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> fa)</span></span>&#123;</span><br><span class="line">  sz[u]=<span class="number">1</span>;</span><br><span class="line">  ll res=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:e[u]) <span class="keyword">if</span>(v != fa)&#123;</span><br><span class="line">    (res += <span class="built_in">dfs</span>(v, u))%=MOD;</span><br><span class="line">    sz[u] += sz[v];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (res + <span class="built_in">binom</span>(sz[u],k/<span class="number">2</span>)*<span class="built_in">binom</span>(n-sz[u],k/<span class="number">2</span>)%MOD)%MOD;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ios_base::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>); cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">  n=<span class="built_in">read</span>();</span><br><span class="line">  k=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) fac[i]=fac[i<span class="number">-1</span>]*i%MOD;</span><br><span class="line">  ifac[n]=<span class="built_in">mypow</span>(fac[n],MOD<span class="number">-2</span>);</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,n) ifac[i]=ifac[i+<span class="number">1</span>]*(i+<span class="number">1</span>)%MOD;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> u=<span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> v=<span class="built_in">read</span>();</span><br><span class="line">    e[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">    e[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(k%<span class="number">2</span>==<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="number">1</span>);</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, (<span class="built_in">dfs</span>(<span class="number">1</span>,<span class="number">1</span>)*<span class="built_in">mypow</span>(<span class="built_in">binom</span>(n,k),MOD<span class="number">-2</span>)+<span class="number">1</span>)%MOD);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="C-LuoTianyi-and-XOR-Tree"><a href="#C-LuoTianyi-and-XOR-Tree" class="headerlink" title="C LuoTianyi and XOR-Tree"></a>C LuoTianyi and XOR-Tree</h1><p>根1,有点值的树，一次操作可以修改一个点的值为任意非负数</p>
+<p>求最小操作次数, 让所有<code>root..leaf</code> 路径上的值的xor &#x3D; 0</p>
+<p>n 1e5</p>
+<p>ai 1e9</p>
+<p>2s</p>
+<p>256mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>虽然说是根到叶子，但是对于任意点u, 考虑它的多个子分支到叶子</p>
+<p>如果<code>u..leaf</code>有不相同的，那么至少一个 需要修改，</p>
+<p>一个一定tle的方法是</p>
+<p><code>dp[u][value] = times</code> 计算让u到所有叶子的xor为value的最小操作次数</p>
+<p>如果自顶向下 <code>ans = dp[root][0] = ?</code></p>
+<p><code>dp[u][val] = min( sum dp[v][val^a[u]], 1 + sum dp[v][val^newu])</code></p>
+<p>问题是 <code>newu</code> 如何选择</p>
+<hr>
+<p>另一个就是 如果不动root,所有非叶子改成0, 叶子改成v[root], 这就是最多动n-1个点的方案</p>
+<p>所以最佳方案中至少有一个点不动</p>
+<hr>
+<p>对于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  u</span><br><span class="line">x x y</span><br></pre></td></tr></table></figure>
+
+<p>如果修改1次，则可以变成<code>u^x</code>, 而如果修改两次，则可以变成任意值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  u</span><br><span class="line">x y z</span><br></pre></td></tr></table></figure>
+
+<p>如果修改2次，则可以变成<code>u^x / u^y / u^z</code>, 而如果修改3次，则可以变成任意值</p>
+<p>所以, 类似的从下向上, 一个点u修改<code>t[u]</code>次可以变成<code>array[leafs]</code>, 修改<code>t[u]+1</code>可以变成任意值</p>
+<p>所以问题是 找到这个<code>t[u]</code> 和 对应的<code>array[leafs]</code>, 注意到如果修改了u,那么说明其所有leaf都相等，所以修改u一定是任意值的次数代价，所以一定不修改u</p>
+<p>对于leaf, <code>t[leaf] = 0, array = leafself</code></p>
+<p>所以 首先通过<code>sum t[child of u]</code> 让所有子节点 变成内部一致</p>
+<p>然后对于leaf出现最多次数的<code>time[value array[child of u]]</code> 全部变成它</p>
+<p><code>t = (sum t[child of u]) + count(child of u) - max(t)</code></p>
+<p><code>array = a[u] ^ array[ value array(max)]</code></p>
+<p><code>[x y] + [y z] + [y z] + [w t] = [x y z] + 2次</code></p>
+<p>问题是, 合并过程 直接暴力 复杂度是多少?</p>
+<p>目测是 所有leaf向上的path数量, 如果是一个很偏的树，则是O(n^2)</p>
+<p>所以想法是 能否 做重儿子，然后轻儿子来合并，这样合并过程中，如果没有次数 &gt; 1 则 直接塞进去</p>
+<p>如果有次数 &gt; 1则新的结果大小 &lt; sum(轻儿子)</p>
+<p>那么就是如何稳定的表示 leaf,最直接的肯定是 leafid&#x2F;leafvalue</p>
+<p>又注意到如果选择leaf, 那么它们之前的一定没被修改，所以xor 可以用树上前缀xor来记录</p>
+<p>似乎就可以做了?</p>
+<p>写了半个小时，然后TLE 第73个点了 <a target="_blank" rel="noopener" href="https://codeforces.com/contest/1824/submission/205154650">https://codeforces.com/contest/1824/submission/205154650</a></p>
+<p>然后，不是按照初始大小，而是按照leaf记录个数的轻重儿子就过了？？？？ <a target="_blank" rel="noopener" href="https://codeforces.com/contest/1824/submission/205156402">https://codeforces.com/contest/1824/submission/205156402</a> 为啥？？？？？？？？？？</p>
+<p>我懂了。。。。。。<code>sz[u]+=sz[v]</code> 写成 <code>sz[v]+=sz[u]</code> 了</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1824/submission/205158975">https://codeforces.com/contest/1824/submission/205158975</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for(ll i=(a);i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for(ll i=(n);i--&gt;(ll)(a);)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[<span class="number">100010</span>];</span><br><span class="line"><span class="type">int</span> prea[<span class="number">100010</span>]; <span class="comment">// xor from root</span></span><br><span class="line"><span class="type">int</span> sz[<span class="number">100010</span>];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; e[<span class="number">100010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> f,<span class="type">int</span> val)</span></span>&#123;</span><br><span class="line">  sz[u]=<span class="number">1</span>;</span><br><span class="line">  prea[u] = val^a[u];</span><br><span class="line">  <span class="comment">// printf(&quot;prea[%d] = %d\n&quot;,u,prea[u]);</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">size</span>(e[u])) <span class="keyword">if</span>(e[u][i] == f)&#123; <span class="comment">// remove father</span></span><br><span class="line">    <span class="built_in">swap</span>(e[u][i],e[u].<span class="built_in">back</span>());</span><br><span class="line">    e[u].<span class="built_in">pop_back</span>();</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// printf(&quot;sz[%d]= %d\n&quot;,u,(int)size(e[u]));</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:e[u])&#123;</span><br><span class="line">    <span class="built_in">dfs</span>(v,u,prea[u]);</span><br><span class="line">    sz[u]+=sz[v]; <span class="comment">// fuck !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// heavy child</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">size</span>(e[u])) <span class="keyword">if</span>(sz[e[u][i]] &gt; sz[e[u][<span class="number">0</span>]]) <span class="built_in">swap</span>(e[u][i],e[u][<span class="number">0</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unordered_set&lt;<span class="type">int</span>&gt; cnt[<span class="number">100010</span>];</span><br><span class="line"><span class="type">int</span> ans[<span class="number">100010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span> u)</span></span>&#123;</span><br><span class="line">  <span class="comment">// printf(&quot;f(%d)\n&quot;,u);</span></span><br><span class="line">  <span class="keyword">if</span>(e[u].<span class="built_in">size</span>()==<span class="number">0</span>)&#123; <span class="comment">// leaf</span></span><br><span class="line">    <span class="comment">// printf(&quot;leaf %d\n&quot;,u);</span></span><br><span class="line">    cnt[u].<span class="built_in">insert</span>(prea[u]);</span><br><span class="line">    <span class="comment">// ans[u] = 0;</span></span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">f</span>(e[u][<span class="number">0</span>]);</span><br><span class="line">  ans[u] += ans[e[u][<span class="number">0</span>]];</span><br><span class="line">  <span class="built_in">swap</span>(cnt[u],cnt[e[u][<span class="number">0</span>]]);</span><br><span class="line">  unordered_map&lt;<span class="type">int</span>,<span class="type">int</span>&gt; res=&#123;&#125;;</span><br><span class="line">  <span class="type">int</span> maxc = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="built_in">size</span>(e[u]))&#123;</span><br><span class="line">    <span class="type">int</span> v=e[u][i];</span><br><span class="line">    <span class="built_in">f</span>(v);</span><br><span class="line">    ans[u] += ans[v];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> val:cnt[v])&#123;</span><br><span class="line">      <span class="keyword">if</span>(!res.<span class="built_in">count</span>(val))&#123;<span class="comment">// 首次出现在轻儿子</span></span><br><span class="line">        <span class="keyword">if</span>(cnt[u].<span class="built_in">count</span>(val))&#123; <span class="comment">// 重儿子有</span></span><br><span class="line">          res[val]++;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123; <span class="comment">// 重儿子没有</span></span><br><span class="line">          cnt[u].<span class="built_in">insert</span>(val);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      res[val]++;</span><br><span class="line">      maxc = <span class="built_in">max</span>(maxc,res[val]);</span><br><span class="line">    &#125;</span><br><span class="line">    cnt[v] = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(maxc &gt; <span class="number">1</span>)&#123;</span><br><span class="line">    cnt[u] = &#123;&#125;;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [val,c]:res) <span class="keyword">if</span>(c == maxc) cnt[u].<span class="built_in">insert</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">  ans[u] += e[u].<span class="built_in">size</span>() - maxc;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ios_base::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>); cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) a[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> u=<span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> v=<span class="built_in">read</span>()<span class="number">-1</span>;</span><br><span class="line">    e[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">    e[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">dfs</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">f</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans[<span class="number">0</span>] + (!cnt[<span class="number">0</span>].<span class="built_in">count</span>(<span class="number">0</span>)));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="D-LuoTianyi-and-the-Function"><a href="#D-LuoTianyi-and-the-Function" class="headerlink" title="D. LuoTianyi and the Function"></a>D. LuoTianyi and the Function</h1><p>给长n数组 a</p>
+<p>g(i,j) &#x3D; x, 满足(找最短的区间[x,j], 使得 a[x..j] 的值的集合 包含 a[i..j]的值的集合)</p>
+<p>g(i,j) &#x3D; 0, 若i &gt; j</p>
+<p>Q个询问, 每次给定l,r,x,y 计算 $\sum_{i \in [l,r]} \sum_{j\in [x,y] } g(i,j)$</p>
+<p>n,q &lt;&#x3D; 1e6</p>
+<p>ai \in [1,n]</p>
+<p>7s</p>
+<p>1024mb</p>
+<h2 id="我的思路-2"><a href="#我的思路-2" class="headerlink" title="我的思路"></a>我的思路</h2><p>可以离线,</p>
+<p>对于给定j, i&lt;&#x3D;j时，g(i,j) 随着i非严格单调递增</p>
+<p>问题是连 g(i,j) 暴力都是O(n^2)会TLE,</p>
+<p>然后如果用二维前缀, ans(l,r,x,y) &#x3D; presum(1,r,1,y) - presum(1,r,1,x-1) - presum(1,l-1,1,y) + presum(1,l-1,1,x-1)</p>
+<p>所以如果能计算 快速计算二维前缀就好了，同时本身二维前缀也可以作为直接的询问</p>
+<hr>
+<p>g(i,j) &#x3D; x</p>
+<p>g(i-1,j) &#x3D; x or i-1, 因为如果a[i-1]在[i..j]中出现，则在[x..j]中出现</p>
+<p>那么就是要 next[i-1] &gt; j</p>
+<p>也就是对于 所有<code>next[p] &gt; j 和 p = j</code>, <code>g(p,j) = p</code></p>
+<p>而<code>next[p] &lt;= j</code>,<code>g(p,j) = g(p+1,j)</code></p>
+<p>通过离线，考虑 for j, for i</p>
+<p>当j增大1时</p>
+<p>找所有a[pos]&#x3D;j+1的位置</p>
+<p>它们原来对应<code>[left[pos],pos]</code></p>
+<p>现在区间和右侧合并，修改为右侧的值</p>
+<p>每次区间修改, 和区间和查询?</p>
+<p>问题是前缀i 的和如何计算?</p>
+<h2 id="題解"><a href="#題解" class="headerlink" title="題解"></a>題解</h2><p>TODO</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>B2</p>
+<p>有点换根dp的感觉，就是考察相邻的变化 与0的关系</p>
+<p>依次证明(选根最多影响s,而不会影响是否为好点)</p>
+<ul>
+<li>通过指定好点u为根，u的子节点v子树的<code>s[v] &lt;= k/2</code></li>
+<li>通过指定好点u为根,好点u的子节点v子树满足<code>s[v] = k/2</code> 则v也是好点</li>
+<li>好点u和v的路径上的点也是好点</li>
+<li>任选点为根，则<code>s[v] = k/2</code>的点是好点</li>
+<li>任选点为根，则始终存在且唯一存在一个好点不满足<code>s[v] = k/2</code></li>
+</ul>
+<p>所以就是要推出这个好点的性质</p>
+<p>我似乎推到的和noimi想的一样的 <a target="_blank" rel="noopener" href="https://twitter.com/noimi_kyopro/status/1655580879387779080">https://twitter.com/noimi_kyopro/status/1655580879387779080</a> ,虽然当时也有考虑过相邻点的变化想法但是没有深入，还在想如何加速计算</p>
+<p>C</p>
+<p>赛时没看，赛后写了半个小时TLE,但是换了结果的轻重儿子就过了，为啥，感觉原来的也可以啊?</p>
+<p>看了官方题解，思路和我的一样的啊???</p>
+<p>总体比B简单很多，就是TLE没懂为啥</p>
+<p>我懂了。。。。。。<code>sz[u]+=sz[v]</code> 写成 <code>sz[v]+=sz[u]</code> 了</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/116328">官方题解</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/cf/1824/" title="Codeforces Round 872 (Div. 1)">https://yexiaorain.github.io/Blog/cf/1824/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+              <a href="/Blog/tags/%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 树</a>
+              <a href="/Blog/tags/%E6%A0%91%E4%B8%8A%E5%90%AF%E5%8F%91%E5%BC%8F%E5%90%88%E5%B9%B6/" rel="tag"><i class="fa fa-tag"></i> 树上启发式合并</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/nowcoder/51721/" rel="prev" title="nowcoder 牛客练习赛109">
+                  <i class="fa fa-chevron-left"></i> nowcoder 牛客练习赛109
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">439k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">24:24</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.2.0/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/cf/1824/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
