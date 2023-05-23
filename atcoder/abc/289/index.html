@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="Ex(inverse of polynomial,生成函数,NTT)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc289">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/289/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="Ex(inverse of polynomial,生成函数,NTT)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-05-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-23T18:35:51.145Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="NTT">
+<meta property="article:tag" content="生成函数">
+<meta property="article:tag" content="inverse of polynomial">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/289/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/289/","path":"atcoder/abc/289/","title":"Atcoder abc289"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc289 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">254</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">18</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">248</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-Trio"><span class="nav-text">Ex - Trio</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4"><span class="nav-text">范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">254</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">248</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/289/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc289 | YeXiaoRain Blog">
+      <meta itemprop="description" content="Ex(inverse of polynomial,生成函数,NTT)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc289
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-05-23 00:00:00" itemprop="dateCreated datePublished" datetime="2023-05-23T00:00:00+08:00">2023-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-05-24 02:35:51" itemprop="dateModified" datetime="2023-05-24T02:35:51+08:00">2023-05-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/289/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/289/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>5 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">Ex(inverse of polynomial,生成函数,NTT)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc289/tasks">https://atcoder.jp/contests/abc289/tasks</a></p>
+<h1 id="Ex-Trio"><a href="#Ex-Trio" class="headerlink" title="Ex - Trio"></a>Ex - Trio</h1><p>整点A,B,C 每个时刻 +1&#x2F;-1 等概率</p>
+<p>求 T时刻, A,B,C首次三个同时共点的概率 mod 998244353</p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>A,B,C,T [0,1e5]</p>
+<p>2s</p>
+<p>1025mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>p(t) &#x3D; t时刻首次共点</p>
+<p>q(t) &#x3D; t时刻共点</p>
+<p>h(t) &#x3D; 初始共点, t时候后依然共点</p>
+<p><code>p(t) = q(t) - sum(i &lt; t) p(i)h(t-i)</code></p>
+<p>首先如果能快速&#x2F;预处理求q和h，就是个分治的卷积</p>
+<p>那么问题是如何求q和h</p>
+<hr>
+<p>先sort A,B,C</p>
+<p>考虑间距(d0,d1)&#x3D;(AB,AC)， 这样的话，h不过是初始(d0,d1)&#x3D;(0,0)的q的特例而已，所以如何算q?</p>
+<p>那么是1&#x2F;8等概率</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(+0,+0)</span><br><span class="line">(+0,-2)</span><br><span class="line">(-2,+0)</span><br><span class="line">(-2,-2)</span><br><span class="line">(+2,+2)</span><br><span class="line">(+2,+0)</span><br><span class="line">(+0,+2)</span><br><span class="line">(+0,+0)</span><br></pre></td></tr></table></figure>
+
+<p>似乎比较难弄其 个数关系?</p>
+<p>容斥似乎也不好容斥</p>
+<hr>
+<p>换成距离考虑A增加dA,B增加dA+AB,C增加dA+AC</p>
+<p>P(t,d)&#x3D;t时间，增加d的概率:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">d = inccnt - deccnt</span><br><span class="line">t = inccnt + deccnt</span><br><span class="line">inccnt = (d+t)/2</span><br><span class="line">P(t,d) = binom(t,(d+t)/2) / 2^t</span><br></pre></td></tr></table></figure>
+
+<p>q(t) &#x3D; for dA: sum p(t,dA) * p(t,dA+AB) * p(t,dA+AC)</p>
+<p>这样 对于给定t 需要(幂次和binom可以预处理) O(t) 来算</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><strong>inverse of polynomial</strong></p>
+<p>f(t) &#x3D; t时刻首次一致概率</p>
+<p>g(t) &#x3D; t时刻一致的概率</p>
+<p>h(t) &#x3D; 初始一致 经过t一致的概率</p>
+<p>emmm 和我想的拆解一样的</p>
+<p>$f(t) &#x3D; g(t) - \sum_{0 \leq u \lt t} f(u) h(t - u).$</p>
+<p>也是 DP就是$O(n^2)$, 所以 分治卷积</p>
+<hr>
+<p>但是这里上生成函数</p>
+<p>$F(x) &#x3D; \sum_{i&#x3D;0}^\infty f(i) x^i, G(x) &#x3D; \sum_{i&#x3D;0}^\infty g(i) x^i, H(x) &#x3D; \sum_{i&#x3D;0}^\infty h(i) x^i.$</p>
+<p>$\begin{aligned} \sum_{t&#x3D;0}^\infty f(t) x^t &#x3D; \sum_{t&#x3D;0}^\infty \left( g(t) - \sum_{0 \leq u \lt t} f(u) h(t - u) \right) x^t \\  \to F(x) &#x3D; G(x) - F(x) (H(x) - h(0)),\end{aligned}$</p>
+<p>注意到$h(0) &#x3D; 1$带入有</p>
+<p>$F(x) &#x3D; \frac{G(x)}{H(x)}$</p>
+<p>因为只需要$F(T)$, 所以如果算出$\frac{1}{H(x)}$ 直接for一下就行，而生成方程的负一次方在abc269ex中有用过$O(T \log T)$</p>
+<p>综上 得到的结论是 只需要g,h (和我上面不会的一样)</p>
+<hr>
+<p>问题还是 求 初始在X,Y,Z, g(t) &#x3D; 在同一个位置的概率， h只是特例的X&#x3D;Y&#x3D;Z</p>
+<p>为了简单起见 $K &lt; 0$或$K$非整数,令$\frac{1}{K!}&#x3D;0,\binom{N}{K}&#x3D;0$</p>
+<p>$p(t,w)&#x3D;$, t时刻三个人在位置w</p>
+<p>$\displaystyle p(t,w) &#x3D; \frac{1}{2^{3t}}\binom{t}{\frac{t+w-X}{2}}\binom{t}{\frac{t+w-Y}{2}}\binom{t}{\frac{t+w-Z}{2}}$</p>
+<p>令$\displaystyle q(i) &#x3D; \frac{1}{\binom{i-X}{2}!\binom{i-Y}{2}!\binom{i-Z}{2}!}$,$\displaystyle r(i) &#x3D; \frac{1}{\binom{i+X}{2}!\binom{i+Y}{2}!\binom{i+Z}{2}!}$</p>
+<p>则$p(t,w) &#x3D; \frac{(t!)^3}{2^{3t}}q(t+w)r(t-w)$</p>
+<p>$\displaystyle p(t) &#x3D; \sum_{w} p(t,w) &#x3D; \frac{(t!)^3}{2^{3t}}\sum_{u}q(u)r(2t-u)$</p>
+<p>这样又变成卷积形式了！！！！</p>
+<hr>
+<p>编码, <code>x &lt;= y &lt;= z</code>, 转换成<code>0 &lt;= y-x &lt;= z-x</code></p>
+<p>$w \in [-t,+t]$</p>
+<p>$u&#x3D;i&#x3D;t+w \in[0,2t]$</p>
+<p>$2t-u \in[0,2t]$</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc289/submissions/41657051">https://atcoder.jp/contests/abc289/submissions/41657051</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/convolution&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)(a);)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> CMM&#123;</span><br><span class="line">  <span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Poly</span>&#123;</span><br><span class="line">      std::vector&lt;T&gt;_d;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">      <span class="built_in">Poly</span>(<span class="type">const</span> std::vector&lt;T&gt; &amp;d=&#123;&#125;):_d(d)&#123;&#125;;</span><br><span class="line">      <span class="keyword">friend</span> Poly <span class="keyword">operator</span>-(<span class="type">const</span> Poly&amp;p0,<span class="type">const</span> Poly&amp;p1)&#123;</span><br><span class="line">        std::vector&lt;T&gt;r=p0._d;</span><br><span class="line">        <span class="keyword">if</span>(p1._d.<span class="built_in">size</span>()&gt;r.<span class="built_in">size</span>())r.<span class="built_in">resize</span>(p1._d.<span class="built_in">size</span>());</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;(<span class="type">int</span>)p1._d.<span class="built_in">size</span>();i++)r[i]-=p1._d[i];</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">friend</span> Poly <span class="keyword">operator</span>*(<span class="type">const</span> Poly&amp;p0,<span class="type">const</span> Poly&amp;p1)&#123; <span class="comment">// ntt</span></span><br><span class="line">        <span class="keyword">return</span> atcoder::<span class="built_in">convolution</span>(p0._d,p1._d);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function">std::vector&lt;T&gt; <span class="title">coef</span><span class="params">()</span><span class="type">const</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> _d;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function">Poly <span class="title">Modn</span><span class="params">(<span class="type">int</span> n)</span> <span class="type">const</span></span>&#123; <span class="comment">// return (this) mod x^n</span></span><br><span class="line">        std::vector&lt;T&gt;r=_d;</span><br><span class="line">        <span class="keyword">if</span>((<span class="type">int</span>)r.<span class="built_in">size</span>()&gt;n) r.<span class="built_in">resize</span>(n);</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function">Poly <span class="title">Inv</span><span class="params">(<span class="type">int</span> n)</span> <span class="type">const</span></span>&#123; <span class="comment">// return this^&#123;-1&#125;, s.t. this this^&#123;-1&#125; \equiv 1 \pmod&#123;x^n&#125;</span></span><br><span class="line">        <span class="built_in">assert</span>(_d[<span class="number">0</span>] != <span class="number">0</span>);</span><br><span class="line">        Poly r = std::vector&lt;T&gt;&#123;_d[<span class="number">0</span>].<span class="built_in">inv</span>()&#125;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> pwr=<span class="number">1</span>;pwr&lt;n;pwr*=<span class="number">2</span>)&#123;</span><br><span class="line">          r = r.<span class="built_in">Modn</span>(pwr);</span><br><span class="line">          r = r * (<span class="built_in">Poly</span>(&#123;<span class="number">2</span>&#125;) - r * _d);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r.<span class="built_in">Modn</span>(n);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// --------</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">300000</span>; <span class="comment">// 2t+z</span></span><br><span class="line">mint fac[N+<span class="number">10</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint ifac[N+<span class="number">10</span>];</span><br><span class="line">mint inv2=<span class="built_in">mint</span>(<span class="number">2</span>).<span class="built_in">inv</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> poly=CMM::Poly&lt;mint&gt;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,N+<span class="number">1</span>) fac[i]=fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  ifac[N]=fac[N].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,N) ifac[i]=ifac[i+<span class="number">1</span>]*(i+<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">auto</span> _=[&amp;](<span class="type">int</span> p)&#123;<span class="built_in">return</span> (p&lt;<span class="number">0</span> || p%<span class="number">2</span>!=<span class="number">0</span>)?<span class="number">0</span>:ifac[p/<span class="number">2</span>];&#125;;</span><br><span class="line"></span><br><span class="line">  array&lt;ll,3&gt; xyz;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">3</span>) xyz[i]=<span class="built_in">read</span>();</span><br><span class="line">  ll t=<span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">auto</span> calc=[&amp;](<span class="type">int</span> X,<span class="type">int</span> Y,<span class="type">int</span> Z)-&gt;vector&lt;mint&gt;&#123;</span><br><span class="line">    <span class="comment">// u \in [0,2t],</span></span><br><span class="line">    vector&lt;mint&gt; <span class="built_in">q</span>(<span class="number">2</span>*t+<span class="number">1</span>,<span class="number">0</span>); <span class="comment">// q(u)= 1/(((u-X)/2)!((u-Y)/2)!((u-Z)/2)!)</span></span><br><span class="line">    <span class="function">vector&lt;mint&gt; <span class="title">r</span><span class="params">(<span class="number">2</span>*t+<span class="number">1</span>,<span class="number">0</span>)</span></span>; <span class="comment">// r(u)= 1/(((u+X)/2)!((u+Y)/2)!((u+Z)/2)!)</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">2</span>*t+<span class="number">1</span>) q[i]=_(i-X)*_(i-Y)*_(i-Z);</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="number">2</span>*t+<span class="number">1</span>) r[i]=_(i+X)*_(i+Y)*_(i+Z);</span><br><span class="line">    vector&lt;mint&gt; qr = atcoder::<span class="built_in">convolution</span>(q,r);</span><br><span class="line"></span><br><span class="line">    <span class="function">vector&lt;mint&gt; <span class="title">p</span><span class="params">(t+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">    mint times = <span class="number">1</span>; <span class="comment">// (i!)^3 / (2^&#123;3i&#125;)</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,t+<span class="number">1</span>) &#123;</span><br><span class="line">      p[i] = qr[<span class="number">2</span>*i]*times;</span><br><span class="line">      times *= ((i+<span class="number">1</span>)*inv2).<span class="built_in">pow</span>(<span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="built_in">sort</span>(<span class="built_in">begin</span>(xyz),<span class="built_in">end</span>(xyz));</span><br><span class="line">  <span class="keyword">auto</span> [X,Y,Z]=xyz;</span><br><span class="line">  <span class="keyword">auto</span> pxyz = <span class="built_in">calc</span>(<span class="number">0</span>,Y-X,Z-X);</span><br><span class="line">  <span class="keyword">auto</span> p0 = <span class="built_in">calc</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">auto</span> invp0 = <span class="built_in">poly</span>(p0).<span class="built_in">Inv</span>(<span class="number">2</span>*t+<span class="number">1</span>).<span class="built_in">coef</span>();</span><br><span class="line">  mint ans=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,t+<span class="number">1</span>) ans += pxyz[i]*invp0[t-i];</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Ex</p>
+<p>从拆解上和题解一样的想到的三个函数， 也能想到分治卷积， 这两个点说明前面补的ABC有收获效果(abc 212h)</p>
+<p>已经看到卷积了，但是完全没去想生成函数还是完全不应该的，应该形成条件反射的，但这里的作用也仅仅是 不需要了分治卷积了，而又多需要了生成函数的逆， 本身对g&#x2F;h的求是没有帮助的</p>
+<p>包括后面 的通过位置来累计概率也是想到了</p>
+<p>然后这里其实 题解里的 设 q,r 再次转化成卷积，说复杂也不复杂，说显然也很显然，但是自己就是没想到，等这个卷积有了，整个题目就没了</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc289/editorial">官方题解</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/289/" title="Atcoder abc289">https://yexiaorain.github.io/Blog/atcoder/abc/289/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/NTT/" rel="tag"><i class="fa fa-tag"></i> NTT</a>
+              <a href="/Blog/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 生成函数</a>
+              <a href="/Blog/tags/inverse-of-polynomial/" rel="tag"><i class="fa fa-tag"></i> inverse of polynomial</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1824/" rel="prev" title="Codeforces Round 872 (Div. 1)">
+                  <i class="fa fa-chevron-left"></i> Codeforces Round 872 (Div. 1)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">441k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">24:29</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/289/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
