@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="B(数学,暴力)C(xor hash,Catalan number)D(数学,树,DP,重轻链)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces Round 875 (Div. 1)">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/cf/1830/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="B(数学,暴力)C(xor hash,Catalan number)D(数学,树,DP,重轻链)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-05-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-29T00:42:13.802Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="树">
+<meta property="article:tag" content="xor hash">
+<meta property="article:tag" content="Catalan number">
+<meta property="article:tag" content="卡特兰数">
+<meta property="article:tag" content="重轻链">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/cf/1830/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/cf/1830/","path":"cf/1830/","title":"Codeforces Round 875 (Div. 1)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Codeforces Round 875 (Div. 1) | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">256</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">18</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">251</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#B-The-BOSS-Can-Count-Pairs"><span class="nav-text">B - The BOSS Can Count Pairs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-The-BOSS-Can-Count-Pairs"><span class="nav-text">C - The BOSS Can Count Pairs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#D-Mex-Tree"><span class="nav-text">D - Mex Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-2"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-2"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#F-The-Third-Grace"><span class="nav-text">F - The Third Grace</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-3"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-3"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">256</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">251</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/cf/1830/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Codeforces Round 875 (Div. 1) | YeXiaoRain Blog">
+      <meta itemprop="description" content="B(数学,暴力)C(xor hash,Catalan number)D(数学,树,DP,重轻链)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Codeforces Round 875 (Div. 1)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2023-05-29 00:00:00 / 修改時間：08:42:13" itemprop="dateCreated datePublished" datetime="2023-05-29T00:00:00+08:00">2023-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/Div1/" itemprop="url" rel="index"><span itemprop="name">Div1</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/cf/1830/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cf/1830/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>9 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">B(数学,暴力)C(xor hash,Catalan number)D(数学,树,DP,重轻链)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1830">https://codeforces.com/contest/1830</a></p>
+<h1 id="B-The-BOSS-Can-Count-Pairs"><a href="#B-The-BOSS-Can-Count-Pairs" class="headerlink" title="B - The BOSS Can Count Pairs"></a>B - The BOSS Can Count Pairs</h1><p>长度n数组 a,b</p>
+<p>计算多少对 i &lt; j 满足 <code>ai * aj = bi + bj</code></p>
+<p>t 1e4</p>
+<p>sum n 2e5</p>
+<p>ai,bi [1,n]</p>
+<p>4s</p>
+<p>512mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>加的范围保证了 &lt;&#x3D; 2n</p>
+<p>所以 对于同样的a 直接整合</p>
+<p>然后 2n (1+1&#x2F;2+1&#x2F;3+…), 所以真的枚举的 乘法对是满足范围的</p>
+<p>然后对于具体的 v0&#x3D;ai,v1&#x3D;aj</p>
+<p>那么对应 bi&#x2F;bj 是两个集合, 或者map[b]&#x3D;count</p>
+<p>每次选小的 去大的里面搜, 这复杂度不知道多少, 过了pretest,被hack tle了</p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1830/submission/207625447">https://codeforces.com/contest/1830/submission/207625447</a></p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>一样的，范围 &lt;&#x3D; 2n</p>
+<p>所以 min(ai,aj) &lt;&#x3D; sqrt(2n)</p>
+<p>也是<code>fr[ai][bi] =</code> 出现次数</p>
+<p>对于 ai&#x3D;aj 没啥难的, 我也实现了</p>
+<p>对于 ai !&#x3D; aj, 考虑 ai &gt;&#x3D; aj, aj &lt;&#x3D; sqrt(2n)</p>
+<p>$\displaystyle \sum_{i&#x3D;1}^n \sum_{a_j&#x3D;1}^{\min(a_i-1,\frac{2\cdot n}{a_i})} fr[a_j] [ a_i \cdot a_j-b_i ]$</p>
+<p>注意到 $\min(a_i-1,\frac{2n}{a_i}) \le \sqrt{2n}$</p>
+<p>所以时间复杂度为 $O(n\sqrt{n})$</p>
+<h1 id="C-The-BOSS-Can-Count-Pairs"><a href="#C-The-BOSS-Can-Count-Pairs" class="headerlink" title="C - The BOSS Can Count Pairs"></a>C - The BOSS Can Count Pairs</h1><p>长度n括号合法序列</p>
+<p>k个限制</p>
+<p>每个限制是 [li..ri]也是合法括号序列</p>
+<p>问方案数 mod 998244353</p>
+<p>n 3e5</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>首先经典括号序列就是 +1&#x2F;-1, 合法就是 前缀和处处非负，区间为0</p>
+<p>对于两个不相关的 区间 则互相不影响</p>
+<p>如果两个区间相交，因为两个的中间都大于等于两端，所以直接切割成3段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xxxx</span><br><span class="line">  yyyy</span><br></pre></td></tr></table></figure>
+
+<p>如果两个区间包裹，则相当于抛开中间的那部分,剩余长度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xxxxxxxx</span><br><span class="line">  yyyy</span><br></pre></td></tr></table></figure>
+
+<p>然后就是所有切出来的长度 的 方案的prod</p>
+<p>方案数 &#x3D; 卡特兰[len&#x2F;2]</p>
+<hr>
+<p>问题到了如何切割，</p>
+<p>我尝试了半天不知道有什么 快速的O(n)?的方法</p>
+<p>想出来的方法 要么是不知道复杂度的，要么是没正确性证明的</p>
+<p>想了 in&#x2F;out扫描线, 想了 set&#x2F;map 维护出入, 想了并查集，没想出具体怎么实现</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>首先 也是 卡特兰数</p>
+<p>然后 也是 +1&#x2F;-1转换</p>
+<p>然后 如果 s[下标顺序集合] 一定是 合法括号序列，则称它为一个group</p>
+<p>情况一: 就是上面我说的 包裹的情况 $l_1\le l_2\le r_2\le r_1$</p>
+<p>$[l_2,r_2]$</p>
+<p>$[l_1,l_2-1] \cup [r_2+1,r_1]$</p>
+<p>情况二: 就是上面我说的相交的情况 $l_1 \lt l_2 \le r_1 \lt r_2$</p>
+<p>$[l_1,l_2-1]$</p>
+<p>$[l_2,r_2]$</p>
+<p>$[r_2+1,r_1]$</p>
+<hr>
+<p>而上面的这种操作，可以得到 “被同样组区间覆盖的”属于同一个group</p>
+<hr>
+<p>然后就是 xor hash了</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1830/submission/207689079">https://codeforces.com/contest/1830/submission/207689079</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOD 998244353</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> CMM&#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> _mod = <span class="number">998244353</span>;</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">modint</span>&#123;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">      <span class="type">long</span> <span class="type">long</span> _v;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">      <span class="built_in">modint</span>() :_v(<span class="number">0</span>) &#123;  &#125;</span><br><span class="line">      <span class="built_in">modint</span>(<span class="type">long</span> <span class="type">long</span> _a) &#123;</span><br><span class="line">        _v = (_a &lt; <span class="number">0</span>)? _mod - ((-_a) % _mod) : (_a % _mod);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="type">int</span> <span class="title">val</span><span class="params">()</span><span class="type">const</span> </span>&#123; <span class="keyword">return</span> _v; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>+()<span class="type">const</span> &#123; <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>-()<span class="type">const</span> &#123; <span class="keyword">return</span> &#123; _mod - _v &#125;; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>+(<span class="type">const</span> modint&amp; rhs) <span class="type">const</span> &#123; <span class="keyword">return</span> <span class="built_in">modint</span>(*<span class="keyword">this</span>) += rhs; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>-(<span class="type">const</span> modint&amp; rhs) <span class="type">const</span> &#123; <span class="keyword">return</span> <span class="built_in">modint</span>(*<span class="keyword">this</span>) -= rhs; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>*(<span class="type">const</span> modint&amp; rhs) <span class="type">const</span> &#123; <span class="keyword">return</span> <span class="built_in">modint</span>(*<span class="keyword">this</span>) *= rhs; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>/(<span class="type">const</span> modint&amp; rhs) <span class="type">const</span> &#123; <span class="keyword">return</span> <span class="built_in">modint</span>(*<span class="keyword">this</span>) /= rhs; &#125;</span><br><span class="line"></span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>==(<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v == rhs._v; &#125;</span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>!=(<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v != rhs._v; &#125;</span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>&gt; (<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v &gt;  rhs._v; &#125;</span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>&gt;=(<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v &gt;= rhs._v; &#125;</span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>&lt;=(<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v &lt;= rhs._v; &#125;</span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>&lt; (<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v &lt;  rhs._v; &#125;</span><br><span class="line"></span><br><span class="line">      modint&amp; <span class="keyword">operator</span>+=(<span class="type">const</span> modint&amp; rhs) &#123;</span><br><span class="line">        (_v += rhs._v) %= _mod;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      modint&amp; <span class="keyword">operator</span>-=(<span class="type">const</span> modint&amp; rhs) &#123;</span><br><span class="line">        (_v += _mod - rhs._v) %= _mod;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      modint&amp; <span class="keyword">operator</span>*=(<span class="type">const</span> modint&amp; rhs) &#123;</span><br><span class="line">        _v = _v * rhs.<span class="built_in">val</span>() % _mod;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      modint&amp; <span class="keyword">operator</span>/=(<span class="type">const</span> modint&amp; rhs) &#123; <span class="comment">// 费马小定理</span></span><br><span class="line">        _v = _v * rhs.<span class="built_in">inv</span>().<span class="built_in">val</span>() % _mod ;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function">modint <span class="title">pow</span><span class="params">(<span class="type">long</span> <span class="type">long</span> pwr)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">res</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> _b(_v);</span><br><span class="line">        <span class="keyword">while</span> (pwr) &#123;</span><br><span class="line">          <span class="keyword">if</span> (pwr &amp; <span class="number">1</span>) (res *= _b) %= _mod;</span><br><span class="line">          (_b *= _b) %= _mod;</span><br><span class="line">          pwr /= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function">modint <span class="title">inv</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="built_in">assert</span>(_v != <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">pow</span>(_mod - <span class="number">2</span>);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for(ll i=(a);i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for(ll i=(n);i--&gt;(ll)(a);)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> mint=CMM::modint;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">300000</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">mt19937_64 <span class="title">gen</span><span class="params">(chrono::steady_clock::now().time_since_epoch().count())</span></span>;</span><br><span class="line"><span class="function">uniform_int_distribution&lt;ll&gt; <span class="title">rnd</span><span class="params">(<span class="number">0</span>,LLONG_MAX)</span></span>;</span><br><span class="line"></span><br><span class="line">mint fac[<span class="number">2</span>*N+<span class="number">10</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">mint ifac[<span class="number">2</span>*N+<span class="number">10</span>];</span><br><span class="line">mint cat2[<span class="number">2</span>*N+<span class="number">10</span>]; <span class="comment">// cat2[len] = catalan[len/2], cat2[2k+1]=0</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">w</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>(); <span class="comment">// 3e5</span></span><br><span class="line">  <span class="type">int</span> k = <span class="built_in">read</span>();</span><br><span class="line">  <span class="function">vector&lt;ll&gt; <span class="title">h</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="keyword">auto</span> add=[&amp;](<span class="type">int</span> l,<span class="type">int</span> r)&#123;</span><br><span class="line">    ll Hash = <span class="built_in">rnd</span>(gen);</span><br><span class="line">    h[l<span class="number">-1</span>] ^= Hash;</span><br><span class="line">    h[r] ^= Hash;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="built_in">add</span>(<span class="number">1</span>,n); <span class="comment">/// the initial string must be an RBS</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,k)&#123;</span><br><span class="line">    ll l=<span class="built_in">read</span>();</span><br><span class="line">    ll r=<span class="built_in">read</span>();</span><br><span class="line">    <span class="built_in">add</span>(l,r); <span class="comment">// 0-index</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n) h[i]^=h[i<span class="number">-1</span>]; <span class="comment">// prefix =&gt; value</span></span><br><span class="line">  h.<span class="built_in">pop_back</span>(); <span class="comment">// 去掉结束</span></span><br><span class="line">  <span class="built_in">sort</span>(<span class="built_in">begin</span>(h),<span class="built_in">end</span>(h));</span><br><span class="line">  mint ans=<span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> prei=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="keyword">if</span>(i+<span class="number">1</span>==n || h[i+<span class="number">1</span>] != h[prei])&#123;</span><br><span class="line">    ans=ans*cat2[i+<span class="number">1</span>-prei];</span><br><span class="line">    prei = i+<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">2</span>*N+<span class="number">1</span>) fac[i]=fac[i<span class="number">-1</span>]*i;</span><br><span class="line">  ifac[<span class="number">2</span>*N]=fac[<span class="number">2</span>*N].<span class="built_in">inv</span>();</span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">0</span>,<span class="number">2</span>*N) ifac[i]=ifac[i+<span class="number">1</span>]*(i+<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,N+<span class="number">1</span>) cat2[i*<span class="number">2</span>] = fac[<span class="number">2</span>*i]*ifac[i]*ifac[i+<span class="number">1</span>];</span><br><span class="line">  <span class="type">int</span> t = <span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">while</span>(t--) <span class="built_in">w</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="D-Mex-Tree"><a href="#D-Mex-Tree" class="headerlink" title="D - Mex Tree"></a>D - Mex Tree</h1><p>给定n点树，需要上色 0&#x2F;1</p>
+<p>path的value&#x3D; mex(路径上颜色)</p>
+<p>value(树) &#x3D; sum value(所有path(u&lt;&#x3D;v))</p>
+<p>求最大的 value(树)</p>
+<p>n 2e5</p>
+<p>3s</p>
+<p>256mb</p>
+<h2 id="我的思路-2"><a href="#我的思路-2" class="headerlink" title="我的思路"></a>我的思路</h2><p>上色只能上0&#x2F;1</p>
+<p>所以mex(0)&#x3D;1,mex(0,1)&#x3D;2,mex(1)&#x3D;0</p>
+<p>所以如果让树上黑白间隔，那么所有长度(点数)&gt;&#x3D;2的路径value都是2</p>
+<p>而选定根是黑或白则 其它颜色都定了</p>
+<p>则ans &#x3D; 2(长度&gt;&#x3D;2路径数) + (&#x3D;0的点数)</p>
+<p>问题是，这就是最大值吗?</p>
+<hr>
+<p>显然有反例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n个点-a-b-n点</span><br></pre></td></tr></table></figure>
+
+<p>如果a-b都染色1, 左右其它都是0, 则 对于1个点有2n贡献, 对于长度为2,只有a-b 贡献是0,其它贡献都是2, 对于长度&gt;&#x3D;2贡献都是2</p>
+<p>而a-b 不同染色，一个点的贡献是n+1,对于长度为2所有贡献都是2,对于长度&gt;&#x3D;2所有贡献都是2</p>
+<p>所以n足够大时，显然上面的 (2n)+(0) &gt;&#x3D; (n+1)+(2)</p>
+<hr>
+<p>树上dp</p>
+<p><code>dp[u]=</code> 从u向下的路径 {纯1的条数,纯0的条数，10都有的条数, 已经有的贡献最大值}</p>
+<p>而注意到 纯1和纯0与u的取值有关，u有取值后，另一个则为0</p>
+<p><code>dp[u][u是0/1] = </code> 从u向下的路径 {纯u的条数, 10都有的条数, 已经有的贡献最大值}</p>
+<p>又注意到 10都有的情况,因为后面不论怎么连都是贡献2了，可以直接计算剩余贡献了</p>
+<p><code>dp[u][u是0/1] = </code> 从u向下的路径 {纯u的条数, 已经有的贡献最大值}</p>
+<p>然而这看上去是 <code>O(n^2)</code> 的</p>
+<h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><p>也是先想的黑白间隔&#x2F;二分， 因为这样的总价值为 2(n(n+1)&#x2F;2) - O(n)</p>
+<p>假设 有大小为k的 同色连通分量，注意到会让价值 下降 $O(k^2)$</p>
+<p>而注意到 直接的黑白间隔 下降不超过$O(n)$,因此同色连通最大不超过$O(\sqrt{n})$</p>
+<p>也是dp,和我的dp不能说相似，只能说一模一样<code>dp[i][j][color]=</code> 子树i,同色联通大小为j,颜色为color</p>
+<hr>
+<p>时间复杂度<code>O(n\sqrt&#123;n&#125;)</code></p>
+<p>然后这里还卡了一下空间复杂度，希望是 线性空间复杂度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void dfs(u)&#123;</span><br><span class="line">  初始化state[u], 大小为 1</span><br><span class="line">  for(v:e[u])&#123;</span><br><span class="line">    dfs(v);</span><br><span class="line">    merge(state[v] to state[u])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1830/submission/207692852">https://codeforces.com/contest/1830/submission/207692852</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for(ll i=(a);i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for(ll i=(n);i--&gt;(ll)(a);)</span></span><br><span class="line"><span class="comment">// 只接受v=0/1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mex(v) (v^1)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="keyword">auto</span> chmin=[](<span class="keyword">auto</span>&amp;a,<span class="type">const</span> <span class="keyword">auto</span>&amp;b)&#123;a=<span class="built_in">min</span>(a,b);&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> lim = <span class="number">893</span>;<span class="comment">// sqrt(2e5)</span></span><br><span class="line"><span class="type">const</span> ll INF = <span class="number">0x3f3f3f3f&#x27;3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">w</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ll n=<span class="built_in">read</span>();</span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">e</span>(n + <span class="number">1</span>);</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">sz</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n)&#123;</span><br><span class="line">    <span class="type">int</span> u=<span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> v=<span class="built_in">read</span>();</span><br><span class="line">    e[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">    e[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">auto</span> dfs0 = [&amp;](<span class="keyword">auto</span> self, <span class="type">int</span> u, <span class="type">int</span> fa) -&gt; <span class="type">void</span> &#123; <span class="comment">// 重儿子放在最前面</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">size</span>(e[u])) <span class="keyword">if</span> (e[u][i] == fa) &#123; <span class="comment">// remove parent</span></span><br><span class="line">      <span class="built_in">swap</span>(e[u][i],e[u].<span class="built_in">back</span>());</span><br><span class="line">      e[u].<span class="built_in">pop_back</span>();</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    sz[u] = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">size</span>(e[u])) &#123;</span><br><span class="line">      <span class="type">int</span> &amp;v=e[u][i];</span><br><span class="line">      <span class="built_in">self</span>(self,v,u);</span><br><span class="line">      sz[u] += sz[v];</span><br><span class="line">      <span class="keyword">if</span>(sz[v] &gt; sz[e[u][<span class="number">0</span>]]) <span class="built_in">swap</span>(v,e[u][<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="built_in">dfs0</span>(dfs0,<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">auto</span> _=[&amp;](<span class="type">int</span> siz)&#123;<span class="keyword">return</span> <span class="built_in">min</span>(siz,lim);&#125;; <span class="comment">// bound</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">auto</span> dfs = [&amp;](<span class="keyword">auto</span> self, <span class="type">int</span> u) -&gt; array&lt;vector&lt;ll&gt;,<span class="number">2</span>&gt; &#123;</span><br><span class="line">    array&lt;vector&lt;ll&gt;,<span class="number">2</span>&gt; dp; <span class="comment">// 逆贡献尽量小 dp[color][同色连通块大小] = 逆贡献</span></span><br><span class="line">    <span class="built_in">rep</span>(c,<span class="number">0</span>,<span class="number">2</span>) dp[c].<span class="built_in">resize</span>(<span class="number">1</span> + <span class="number">1</span>, INF); <span class="comment">// care MLE</span></span><br><span class="line">    <span class="built_in">rep</span>(c,<span class="number">0</span>,<span class="number">2</span>) dp[c][<span class="number">1</span>] = <span class="number">2</span>-<span class="built_in">mex</span>(c);</span><br><span class="line">    sz[u] = <span class="number">1</span>; <span class="comment">// 重用</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v: e[u]) &#123;</span><br><span class="line">      <span class="keyword">auto</span> dpv = <span class="built_in">self</span>(self, v);</span><br><span class="line">      array&lt;vector&lt;ll&gt;, 2&gt; ndp;</span><br><span class="line">      <span class="built_in">rep</span>(c,<span class="number">0</span>,<span class="number">2</span>) ndp[c].<span class="built_in">resize</span>(_(sz[u])+_(sz[v])+<span class="number">1</span>,INF);</span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">1</span>,_(sz[u])+<span class="number">1</span>) <span class="built_in">rep</span>(j,<span class="number">1</span>,_(sz[v])+<span class="number">1</span>) <span class="built_in">rep</span>(c,<span class="number">0</span>,<span class="number">2</span>) &#123;</span><br><span class="line">        <span class="built_in">chmin</span>(ndp[c][i  ] , dp[c][i] + dpv[c^<span class="number">1</span>][j]);                 <span class="comment">// u-v 不同色</span></span><br><span class="line">        <span class="built_in">chmin</span>(ndp[c][i+j] , dp[c][i] + dpv[c][j] + i*j*(<span class="number">2</span>-<span class="built_in">mex</span>(c)) ); <span class="comment">// u-v 同色</span></span><br><span class="line">      &#125;</span><br><span class="line">      sz[u] += sz[v];</span><br><span class="line">      <span class="built_in">rep</span>(c,<span class="number">0</span>,<span class="number">2</span>) &#123;</span><br><span class="line">        dp[c].<span class="built_in">resize</span>(_(sz[u])+<span class="number">1</span>, INF);</span><br><span class="line">        <span class="built_in">rep</span>(i,<span class="number">1</span>,_(sz[u])+<span class="number">1</span>) dp[c][i] = ndp[c][i];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">auto</span> dp = <span class="built_in">dfs</span>(dfs, <span class="number">1</span>);</span><br><span class="line">  ll ans = INF;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,_(sz[<span class="number">1</span>])+<span class="number">1</span>) <span class="built_in">rep</span>(c,<span class="number">0</span>,<span class="number">2</span>) ans = <span class="built_in">min</span>(&#123;ans, dp[c][i]&#125;);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, n * (n + <span class="number">1</span>) - ans);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> t = <span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">while</span>(t--) <span class="built_in">w</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="F-The-Third-Grace"><a href="#F-The-Third-Grace" class="headerlink" title="F - The Third Grace"></a>F - The Third Grace</h1><p>n个区间,m个点(初始都未激活),有价值pi</p>
+<p>f(区间) &#x3D; 改区间中 下标最大的 已经激活的点pi</p>
+<p>问对于所有激活方案，求 max sum f(所有区间)</p>
+<p>n 1e6</p>
+<p>m 1e6</p>
+<p>pi [0,1e9]</p>
+<p>5s</p>
+<p>1024mb</p>
+<h2 id="我的思路-3"><a href="#我的思路-3" class="headerlink" title="我的思路"></a>我的思路</h2><p><code>dp[i] = </code> 激活i点 以及某些i右侧点的最大代价</p>
+<p><code>dp[i] = max(dp[j] + cnt( l &lt;= i and i &lt;= r &lt; j ) * p[i])</code></p>
+<p>O(n^2) 显然tle</p>
+<h2 id="题解-3"><a href="#题解-3" class="headerlink" title="题解"></a>题解</h2><p>TODO</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>B</p>
+<p>注意到 $\le 2n$, 但是没有多次运用, 问题在 这个合并并没有“降低多少复杂度”，甚至是不会算的复杂度</p>
+<p>这里通过 大于反过来$\min(x,\frac{?}{x})$是这里我自己完全没想到的关键一步,之前应该没见过这种技巧, 学了一手</p>
+<p>C</p>
+<p>首先这些基础的几点(catlan,交叉,包裹,ans&#x3D;prod catlan[len&#x2F;2])全部想到了，但是没有变成<code>group</code>的感觉，从而没有“被同样组区间覆盖的”属于同一个group的这个结论</p>
+<p>xor hash，这个应该是之前学过且仅学过一次</p>
+<p>感觉这里 区间切割成更小的区间， 可能就和 group 和 xor hash 关系应该更密切,应该建立想法联系</p>
+<p>D</p>
+<p>想到了 二分，也想到了dp,</p>
+<p>但是这个分析变化和 同色连通块的步骤，完全没想到，从而没有利用二分去限制dp中参数的大小</p>
+<p>另外一个点，就是 <code>和根同色的路径数 = 和根同色的连通块点数</code> 这个等式也没想到</p>
+<p>最后就是 空间限制，(Heavy-light Decomposition)不仅在一些题目中能解决时间问题，在这里还可以优化空间使用</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/116527">官方题解</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/100910">codeforces blog 7:complexity of certain tree DPs</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/113453">codeforces blog Using HLD to reduce memory</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/cf/1830/" title="Codeforces Round 875 (Div. 1)">https://yexiaorain.github.io/Blog/cf/1830/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 树</a>
+              <a href="/Blog/tags/xor-hash/" rel="tag"><i class="fa fa-tag"></i> xor hash</a>
+              <a href="/Blog/tags/Catalan-number/" rel="tag"><i class="fa fa-tag"></i> Catalan number</a>
+              <a href="/Blog/tags/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 卡特兰数</a>
+              <a href="/Blog/tags/%E9%87%8D%E8%BD%BB%E9%93%BE/" rel="tag"><i class="fa fa-tag"></i> 重轻链</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/290/" rel="prev" title="Atcoder abc290">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc290
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">446k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">24:45</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/cf/1830/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
