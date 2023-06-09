@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="Ex(meet-in-middle,常系数齐次线性递推,Botsan-Mori)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc300">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/300/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="Ex(meet-in-middle,常系数齐次线性递推,Botsan-Mori)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-06-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-06-09T14:43:32.448Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="meet-in-middle">
+<meta property="article:tag" content="常系数齐次线性递推">
+<meta property="article:tag" content="Botsan-Mori">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/300/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/300/","path":"atcoder/abc/300/","title":"Atcoder abc300"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc300 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">266</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">18</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">260</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-P-smooth-number"><span class="nav-text">G P-smooth number</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-Fibonacci-Revisited"><span class="nav-text">Ex - Fibonacci: Revisited</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Digit-DP-with-carries"><span class="nav-text">Digit DP with carries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8Adigit-DP"><span class="nav-text">解释digit DP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E7%90%86-B-Q-S-i"><span class="nav-text">引理 B,Q,S_i</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Botsan-Mori-algorithm-and-Application-to-linear-recurrence-relation"><span class="nav-text">Botsan-Mori algorithm and Application to linear recurrence relation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0%E9%A2%98%E7%9B%AE"><span class="nav-text">回到题目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">266</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">260</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/300/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc300 | YeXiaoRain Blog">
+      <meta itemprop="description" content="Ex(meet-in-middle,常系数齐次线性递推,Botsan-Mori)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc300
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-06-06 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-06T00:00:00+08:00">2023-06-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-06-09 22:43:32" itemprop="dateModified" datetime="2023-06-09T22:43:32+08:00">2023-06-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/300/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/300/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>8 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">Ex(meet-in-middle,常系数齐次线性递推,Botsan-Mori)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc300/tasks">https://atcoder.jp/contests/abc300/tasks</a></p>
+<h1 id="G-P-smooth-number"><a href="#G-P-smooth-number" class="headerlink" title="G P-smooth number"></a>G P-smooth number</h1><p>&lt;&#x3D; n 的，且所有质因子 &lt;&#x3D; p的数的个数</p>
+<p>n 1e16</p>
+<p>p 100</p>
+<p>4s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p><code>dfs(上限, 质数列表idx) = sum dfs(上限/ 质数[idx]^pwr, idx-1)</code></p>
+<p>然后对于底部做cache</p>
+<p>然而并不理想，有cache和没cache 1e15都需要 8~12s,</p>
+<p>跟别说1e18</p>
+<hr>
+<p>另一个角度是，既然题目都告诉了最大的范围的答案大约是2e10, 所以它大也不算大,</p>
+<p>所以考虑meet-in-middle</p>
+<p>似乎就过了</p>
+<span id="more"></span>
+
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc300/submissions/me">https://atcoder.jp/contests/abc300/submissions/me</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; p100;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">2</span>,<span class="number">100</span>) &#123; <span class="comment">// 暴力</span></span><br><span class="line">    <span class="type">bool</span> ok=<span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">2</span>,i) <span class="keyword">if</span>(i%j==<span class="number">0</span>) ok =<span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(ok) p100.<span class="built_in">push_back</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  map&lt;pair&lt;ll,<span class="type">int</span>&gt;,ll&gt; ans; <span class="comment">// ans[upbound,idx]</span></span><br><span class="line"></span><br><span class="line">  ll n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">auto</span> g=[&amp;](<span class="type">const</span> vector&lt;<span class="type">int</span>&gt; &amp;pp)&#123;</span><br><span class="line">    vector&lt;ll&gt; res = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> p:pp)&#123;</span><br><span class="line">      <span class="type">int</span> sz = res.<span class="built_in">size</span>();</span><br><span class="line">      <span class="keyword">for</span>(ll t=p;t&lt;=n;t*=p)&#123;</span><br><span class="line">        <span class="built_in">rep</span>(j,<span class="number">0</span>,sz) &#123;</span><br><span class="line">          <span class="keyword">if</span>(res[j] &gt; n/t) <span class="keyword">break</span>;</span><br><span class="line">          res.<span class="built_in">push_back</span>(res[j]*t);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">sort</span>(<span class="built_in">begin</span>(res),<span class="built_in">end</span>(res));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">auto</span> calc=[&amp;](<span class="type">const</span> vector&lt;ll&gt;&amp;v0,<span class="type">const</span> vector&lt;ll&gt;&amp;v1) -&gt; ll&#123;</span><br><span class="line">    ll ans = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> j=v1.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">size</span>(v0))&#123;</span><br><span class="line">      <span class="keyword">while</span>(j&gt;=<span class="number">0</span> <span class="built_in">and</span> (v0[i] &gt; n/v1[j] <span class="keyword">or</span> v0[i]*v1[j] &gt; n) ) j--; <span class="comment">// overflow</span></span><br><span class="line">      ans += j+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> p=<span class="built_in">read</span>();</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; pp[<span class="number">2</span>] = &#123;&#123;&#125;,&#123;&#125;&#125;;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">size</span>(p100)) &#123;</span><br><span class="line">    pp[i%<span class="number">2</span>].<span class="built_in">push_back</span>(p100[i]);</span><br><span class="line">    <span class="keyword">if</span>(p100[i] == p) <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,<span class="built_in">calc</span>(<span class="built_in">g</span>(pp[<span class="number">0</span>]),<span class="built_in">g</span>(pp[<span class="number">1</span>])));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Fibonacci-Revisited"><a href="#Ex-Fibonacci-Revisited" class="headerlink" title="Ex - Fibonacci: Revisited"></a>Ex - Fibonacci: Revisited</h1><p>$a_n &#x3D; \begin{cases} 1 &amp; (0 \leq n \lt K) \\ \displaystyle{\sum_{i&#x3D;1}^K} a_{n-i} &amp; (K \leq n). \\ \end{cases}$</p>
+<p>给定$N$, 求 $\displaystyle \sum_{m, m \mathrm{ AND } N &#x3D; m} a_m$</p>
+<p>$K \in [1,5\cdot 10^4]$</p>
+<p>$N\in [0,10^{18}]$</p>
+<p>6s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>完全没思路啊</p>
+<p>只能说m 是N二进制表示的子集</p>
+<p>如果 k &#x3D; 2, 那就是经典的fib, 矩阵快速幂 能算一个，但是不能 同时类和</p>
+<p>而这里注意到 m 有 N最高位 和 m 没有N最高位的一一对应</p>
+<p>f(v) &#x3D; (v,v-1,v-2,…,v-k+1) 的行向量</p>
+<p>b 是长度k的列向量&#x3D;(1,0,…,0)^T </p>
+<p>$a_v &#x3D; f(v) \cdot b$</p>
+<p>$t_i&#x3D;2^i$, 如果$v$的$i$位为$0$, 那么 </p>
+<p>$A$是转移矩阵</p>
+<p>$a_{v | t_i} &#x3D; f(v | t_i) \cdot b &#x3D; (f(v) \cdot A^{2^i}) \cdot b$</p>
+<p>因此,$I$为单位矩阵</p>
+<p>$\displaystyle \sum_{m,m\mathrm{AND} N}a_m &#x3D; f(0) \prod_{i, N \mathrm{AND} 2^i &#x3D; 2^i} (I+A^{2^i}) \cdot b$</p>
+<p>$f(0)&#x3D;b^T$</p>
+<hr>
+<p>问题变成如何计算 转移矩阵的 $2^i$ 幂次</p>
+<p>似乎缺少线性代数的知识</p>
+<p>因为这里K的确有点大 5e4了都, 别说做乘法，光是表示就很大，虽然本身是稀疏的，但是幂次以后应该就不是稀疏的了</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="Digit-DP-with-carries"><a href="#Digit-DP-with-carries" class="headerlink" title="Digit DP with carries"></a>Digit DP with carries</h3><p>有 $a_1,a_2,…,a_k$面额的硬币, 多少中方案组成N元(mod 998244353)</p>
+<p>$k \le 100, S&#x3D;\sum_{i} a_i \le 1000,N\le 10^{18}$</p>
+<p>可以变成digit dp, 大概橙色难度</p>
+<p>对于硬币a: <code>newdp[x] = dp[x]+dp[x-a]+dp[x-2a]+dp[x-3a]+...</code></p>
+<p>但对于使用<code>次数</code>可以拆分成 2的幂次, 于是变成 <code>for i=0..infty, for a, newdp[x] = dp[x]+dp[x-a*2^i]</code>, 注意这样拆分后外层是循环幂次，而内层是循环a数组</p>
+<p>而在执行到i时，注意到对于给定的<code>N mod 2^i</code> 不再会变</p>
+<p>而如果 <code>dp[N]</code> 的贡献来源有<code>dp[v]</code>,那么<code>dp[S = v + 2^i(1?+2?+4?+8?+...)(a_1?+a_2?+...+a_k)]</code></p>
+<p>及<code>v mod 2^i == N mod 2^i</code></p>
+<p>所以其它<code>v mod 2^i != N</code>的直接忽略掉</p>
+<p>所以规模也可以下降了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// carry[i] = carry[i*2^t + (原始N)%(2^t)]</span></span><br><span class="line">carry = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">2</span>S+<span class="number">1</span>,<span class="number">0</span>) <span class="comment">// 2S是因为每轮 新增长&lt;=S,而结果每次除以2, l/2+S &lt;= l</span></span><br><span class="line">carry[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span>(N)&#123; <span class="comment">// 每轮处理完 需要处理掉 mod 2 != N mod 2的, 题解这里写成M了，看了半天</span></span><br><span class="line">	<span class="keyword">for</span> i = <span class="number">1</span> to K &#123; <span class="keyword">for</span> k = <span class="number">2</span>S - a_i to <span class="number">0</span> &#123; <span class="comment">// 倒续为了不重复</span></span><br><span class="line">		<span class="comment">// 实际对应的是 += [k - 2^(t=轮次) * a[i]], 而轮次在每轮规模压缩下被除以2了</span></span><br><span class="line">		carry[k + a_i] += carry[k]</span><br><span class="line">	&#125; &#125;</span><br><span class="line">	<span class="keyword">for</span> k = <span class="number">0</span> to <span class="number">2</span>S + <span class="number">1</span> &#123;</span><br><span class="line">		p = <span class="number">2</span>k + (N mod <span class="number">2</span>) <span class="comment">// mod 2 != N mod 2的, 不会对答案有贡献 直接忽略</span></span><br><span class="line">		carry[k] = (p &lt; <span class="number">2</span>S+<span class="number">1</span>) ? carry[p] : <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">	N = <span class="built_in">floor</span>(N / <span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> carry[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="解释digit-DP"><a href="#解释digit-DP" class="headerlink" title="解释digit DP"></a>解释digit DP</h3><p>显然可以用生成函数表示上面的问题, $a_i$的选择方案就是</p>
+<p>$\displaystyle 1+x^{a_i}+x^{2a_i}+x^{3a_i}+\cdots &#x3D; \frac{1}{1-x^{a_i}}$</p>
+<p>答案显然就是 $\displaystyle [x^{N}] \prod_{i\in[1,k]} \frac{1}{1-x^{a_i}}$</p>
+<p>又$\displaystyle \frac{1}{1-x}&#x3D;\frac{1+x}{1-x^2}&#x3D;\frac{(1+x)(1+x^2)}{1-x^4}&#x3D;\frac{(1+x)(1+x^2)(1+x^4)}{1-x^8}&#x3D;\prod_{i\ge 0}(1+x^{2^i})$, 神奇的变换</p>
+<p>$\displaystyle F(x)&#x3D;\prod_{i\in[1,K]}(1+x^{a_1})$, 这里其实就对应于上面的每一轮处理了,</p>
+<p>那么答案$\displaystyle [x^N] \prod_{i\ge 0} F(x^{2^{i}})$</p>
+<hr>
+<h4 id="引理-B-Q-S-i"><a href="#引理-B-Q-S-i" class="headerlink" title="引理 B,Q,S_i"></a>引理 B,Q,S_i</h4><p>B能展开成 $B(x) &#x3D; \prod_{k \geq 0} Q_{k}(x^{2^k})$</p>
+<p>S_i&#x3D;0&#x2F;1 为取奇偶列$\mathcal{S}<em>i \left(\sum</em>{n \geq 0} a_n x^n \right) &#x3D; \sum_{m \geq 0} a_{2m + i} x^m$</p>
+<p>令$B_n(x) &#x3D; \prod_{k \geq 0} Q_{n + k}(x^{2^k})$ 这对应的就是每轮的剩余部分 去除以2的动作</p>
+<p>有$\lbrack x^N \rbrack A(x) B_n(x)$ </p>
+<p>$&#x3D; \lbrack x^{\lfloor N&#x2F;2 \rfloor} \rbrack \mathcal{S}_{N \bmod 2}(A(x) B_n(x))$</p>
+<p>$&#x3D;\lbrack x^{\lfloor N&#x2F;2 \rfloor} \rbrack \mathcal{S}<em>{N \bmod 2} (A(x) Q_n(x)) \prod</em>{k \geq 1} Q_{n+k}(x^{2^{k-1}})$</p>
+<p>$&#x3D; \lbrack x^{\lfloor N&#x2F;2 \rfloor} \rbrack \mathcal{S}<em>{N \bmod 2}(A(x) Q_n(x)) B</em>{n+1}(x).$</p>
+<hr>
+<p>回到digit DP 也就是令$Q_n&#x3D;F(x)$, 更精简的伪代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">A = <span class="number">1</span> <span class="comment">// 生成函数</span></span><br><span class="line">k = <span class="number">0</span> <span class="comment">// int</span></span><br><span class="line"><span class="keyword">while</span> N &gt; <span class="number">0</span> &#123;</span><br><span class="line">	A = <span class="built_in">S</span>(N mod <span class="number">2</span>, <span class="built_in">convolution</span>(A, Q_k))</span><br><span class="line">	k += <span class="number">1</span></span><br><span class="line">	N = <span class="built_in">floor</span>(N / <span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> [x^<span class="number">0</span>] A</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Botsan-Mori-algorithm-and-Application-to-linear-recurrence-relation"><a href="#Botsan-Mori-algorithm-and-Application-to-linear-recurrence-relation" class="headerlink" title="Botsan-Mori algorithm and Application to linear recurrence relation"></a>Botsan-Mori algorithm and Application to linear recurrence relation</h3><p>对于, linear recurrence relation. 同样适用</p>
+<p>因为上面的转换相当于  $\displaystyle a_n &#x3D; \sum_{i&#x3D;1}^d c_ia_{n-i}, n\ge d$</p>
+<p>所以对于$n \ge d$有 $\displaystyle [x^n](1-\sum_{i&#x3D;1}^d c_ix^i)A(x) &#x3D; 0$</p>
+<p>令$Q(x)&#x3D; 1-\sum_{i&#x3D;1}^d c_ix^i$,注意到$A(x)Q(x)$的最大非零幂次$\le d-1$</p>
+<p>$P(x) &#x3D; A(x)Q(x) &#x3D; (A(x) \mod x^d)Q(x) \mod x^d$</p>
+<p>$A(x) &#x3D; \frac{(A(x) \mod x^d)Q(x) \mod x^d}{Q(x)}$</p>
+<hr>
+<p>Botsan-Mori algorithm</p>
+<p>把$a_0,a_1,…$ 按照奇偶划分开</p>
+<p>偶$a_0,a_2,a_4,\cdots$</p>
+<p>奇$a_1,a_3,a_5,\cdots$</p>
+<p>首先显然有 $\lbrack x^N \rbrack A(x) &#x3D; \lbrack x^{\lfloor N&#x2F;2 \rfloor} \rbrack \mathcal{S}_{N \bmod 2} (A(x))$</p>
+<p>$\displaystyle \mathcal{S}_i\left(\frac{P(x)}{Q(x)}\right)$</p>
+<p>$\displaystyle &#x3D;\mathcal{S}_i\left(\frac{P(x)Q(-x)}{Q(x)Q(-x)}\right)$</p>
+<p>注意到$Q(x)Q(-x)$ 如果是偶项和奇项相乘的 一正一负抵消，所以结果只有偶次项, 所以分母不改变奇偶</p>
+<p>$\displaystyle &#x3D;\frac{\mathcal{S}_i (P(x)Q(-x))}{\mathcal{S}_0 (Q(x)Q(-x))}$</p>
+<p>$\displaystyle &#x3D;\frac{\mathcal{S}_i (P(x)Q(-x))}{Q(x^{\frac{1}{2}})Q(-x^{\frac{1}{2}})}$</p>
+<p>分子 就是 d log d 的卷积</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">input : <span class="built_in">P</span>(x), <span class="built_in">Q</span>(x), N`</span><br><span class="line">output : [x^N] <span class="built_in">P</span>(x) / <span class="built_in">Q</span>(x)`</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> N &gt; <span class="number">0</span> &#123;</span><br><span class="line">	<span class="built_in">P</span>(x) = <span class="built_in">S</span>(N mod <span class="number">2</span>, <span class="built_in">P</span>(x) <span class="built_in">Q</span>(-x))`</span><br><span class="line">	<span class="built_in">Q</span>(x) = <span class="built_in">S</span>(<span class="number">0</span>, <span class="built_in">Q</span>(x) <span class="built_in">Q</span>(-x))`</span><br><span class="line">	N = <span class="built_in">floor</span>(N / <span class="number">2</span>)`</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="built_in">P</span>(<span class="number">0</span>) / <span class="built_in">Q</span>(<span class="number">0</span>)`</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>另一方面</p>
+<p>$\displaystyle \frac{P(x)}{Q(x)}$</p>
+<p>$\displaystyle &#x3D; \frac{P(x)Q_0(-x)}{Q_0(x)Q_0(-x)}$</p>
+<p>$\displaystyle &#x3D; P(x)Q_0(-x) \times \frac{1}{Q_1(x^2)}$</p>
+<p>$\displaystyle &#x3D; P(x)Q_0(-x) \times \frac{Q_1(-x^2)}{Q_1(x^2)Q_1(-x^2)}$</p>
+<p>$\displaystyle &#x3D; P(x)Q_0(-x) \times Q_1(-x^2) \times \frac{1}{Q_2(x^4)}$</p>
+<p>$\displaystyle &#x3D; P(x) Q_0(-x) \times \prod_{n \geq 1} Q_n(-x^{2^n})$</p>
+<p>至此 题目中 如果是求单点， 都可以 $O(K\log K \log N)$算出来</p>
+<h3 id="回到题目"><a href="#回到题目" class="headerlink" title="回到题目"></a>回到题目</h3><p>上面的 Botsan-Mori 中</p>
+<p>在循环里, $A(x) &#x3D; S_{N\mod 2}(A(x))$</p>
+<p>而这里要 $m \mathrm{AND} N &#x3D; m$</p>
+<p>所以也就是改成</p>
+<p>$A(x) &#x3D; S_0(A(x))+S_1(A(x)), N\mod 2&#x3D;1$</p>
+<p>$A(x) &#x3D; S_0(A(x)), N\mod 2&#x3D;0$</p>
+<p>即可</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc300/submissions/42091386">https://atcoder.jp/contests/abc300/submissions/42091386</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/convolution&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="function">vector&lt;mint&gt; <span class="title">S</span><span class="params">(<span class="type">int</span> i,<span class="type">const</span> vector&lt;mint&gt;&amp;A)</span></span>&#123;</span><br><span class="line">  vector&lt;mint&gt; res;</span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">0</span>,<span class="built_in">size</span>(A)) <span class="keyword">if</span>((j&amp;<span class="number">1</span>)==i) res.<span class="built_in">push_back</span>(A[j]);</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line">vector&lt;mint&gt; <span class="keyword">operator</span>+(<span class="type">const</span> vector&lt;mint&gt;&amp;A,<span class="type">const</span> vector&lt;mint&gt;&amp;B)&#123;</span><br><span class="line">  <span class="function">vector&lt;mint&gt; <span class="title">res</span><span class="params">(max(size(A),size(B)),<span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">size</span>(res)) res[i] = (i&lt;(<span class="type">int</span>)<span class="built_in">size</span>(A)?A[i]:<span class="number">0</span>)+(i&lt;(<span class="type">int</span>)<span class="built_in">size</span>(B)?B[i]:<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">vector&lt;mint&gt; <span class="title">negX</span><span class="params">(<span class="type">const</span> vector&lt;mint&gt;&amp;A)</span></span>&#123; <span class="comment">// A(-x)</span></span><br><span class="line">  vector&lt;mint&gt; res=A;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">size</span>(A)) <span class="keyword">if</span>(i&amp;<span class="number">1</span>) res[i] = -res[i];</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ll k=<span class="built_in">read</span>();</span><br><span class="line">  ll n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="comment">// Q(x) = 1 - sum_&#123;i=1..k&#125; ci x^i</span></span><br><span class="line">  <span class="function">vector&lt;mint&gt; <span class="title">Q</span><span class="params">(k+<span class="number">1</span>,<span class="number">-1</span>)</span></span>;</span><br><span class="line">  Q[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="comment">// P(x) = ((A mod x^k) * Q) mod x^k</span></span><br><span class="line">  <span class="keyword">auto</span> P = atcoder::<span class="built_in">convolution</span>(Q, <span class="built_in">vector</span>&lt;mint&gt;(k, <span class="number">1</span>));</span><br><span class="line">  P.<span class="built_in">resize</span>(k);</span><br><span class="line">  <span class="comment">// 基于 Botsan_Mori 修改</span></span><br><span class="line">  <span class="keyword">while</span>(n)&#123; <span class="comment">// m &amp; n == n, sum [x^m] P(x)/Q(x)</span></span><br><span class="line">    <span class="keyword">auto</span> negxq = <span class="built_in">negX</span>(Q);</span><br><span class="line">    <span class="keyword">auto</span> p_negxq = atcoder::<span class="built_in">convolution</span>(P,negxq); <span class="comment">// P(x)Q(-x)</span></span><br><span class="line">    <span class="comment">// 原始Botsan_Mori, P=S(n&amp;1,p_nexq);</span></span><br><span class="line">    P = <span class="built_in">S</span>(<span class="number">0</span>,p_negxq) + ((n&amp;<span class="number">1</span>)?<span class="built_in">S</span>(<span class="number">1</span>,p_negxq):vector&lt;mint&gt;&#123;&#125;);</span><br><span class="line">    Q = <span class="built_in">S</span>(<span class="number">0</span>,atcoder::<span class="built_in">convolution</span>(Q,negxq)); <span class="comment">// Q(x)=S(0,Q(x)Q(-x))</span></span><br><span class="line">    n/=<span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,(P[<span class="number">0</span>]/Q[<span class="number">0</span>]).<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>卡了一下，还是自己想出来, 不过atcoder的机子真的快，我这边2s+,atcoder的只有955ms，不过也可能是我有几个编译参数的原因</p>
+<p>???什么 有人用和我想的一样的 记忆化 下降 卡过了??? 而且似乎它记忆的内容更多</p>
+<p>Ex</p>
+<p>题解各种 书写错误 看自闭了</p>
+<p>第一次见这个 Digit DP with carries, 常系数齐次线性递推</p>
+<p>线性递推 &#x3D; 生成方程 的卷积 感觉现在看很显然，自己却没想到</p>
+<p>bostan-mori 也是第一次见</p>
+<p>似乎这个用线性代数也有办法优化，但是线性代数忘完了</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc300/editorial">官方题解</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4723">luogu 常系数齐次线性递推 P4723</a></p>
+<p><a target="_blank" rel="noopener" href="https://qiita.com/ryuhe1/items/185e1a283f13ac638a53">Ryuhei Mori’s article</a> (Japanese)</p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/111862">Codeforces: Bostan-Mori, an elegant algorithm to compute k-th term of linear recurrence in O(dlgdlgk)</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2008.08822">bostan-mori, arxiv 2008: A Simple and Fast Algorithm for Computing the N-th Term of a Linearly Recurrent Sequence</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/300/" title="Atcoder abc300">https://yexiaorain.github.io/Blog/atcoder/abc/300/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/meet-in-middle/" rel="tag"><i class="fa fa-tag"></i> meet-in-middle</a>
+              <a href="/Blog/tags/%E5%B8%B8%E7%B3%BB%E6%95%B0%E9%BD%90%E6%AC%A1%E7%BA%BF%E6%80%A7%E9%80%92%E6%8E%A8/" rel="tag"><i class="fa fa-tag"></i> 常系数齐次线性递推</a>
+              <a href="/Blog/tags/Botsan-Mori/" rel="tag"><i class="fa fa-tag"></i> Botsan-Mori</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/299/" rel="prev" title="Atcoder abc299">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc299
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/301/" rel="next" title="Atcoder abc301">
+                  Atcoder abc301 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">460k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">25:35</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/300/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
