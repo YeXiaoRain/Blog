@@ -26,7 +26,7 @@
 <meta property="og:description" content="G(二维数组,小根堆,DP)Ex(Prüfer code)">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2023-06-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-06-18T14:32:01.671Z">
+<meta property="article:modified_time" content="2023-06-18T14:56:34.149Z">
 <meta property="article:author" content="Xiao Ye">
 <meta property="article:tag" content="二维数组">
 <meta property="article:tag" content="小根堆">
@@ -247,7 +247,7 @@
       <span class="post-meta-item-text">發表於</span>
       
 
-      <time title="創建時間：2023-06-18 00:00:00 / 修改時間：22:32:01" itemprop="dateCreated datePublished" datetime="2023-06-18T00:00:00+08:00">2023-06-18</time>
+      <time title="創建時間：2023-06-18 00:00:00 / 修改時間：22:56:34" itemprop="dateCreated datePublished" datetime="2023-06-18T00:00:00+08:00">2023-06-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -359,7 +359,7 @@
 <p><code>f(可放置叶子数量,剩余点个数)</code></p>
 <p>$f(l,n) &#x3D; \sum_{t&#x3D;0\cdots n} f(l-1 + t, n-t) \binom{n}{t}$， 这样在最左候选点放置t个</p>
 <p>令$g(i&#x3D;l+n,j&#x3D;n) &#x3D; f(l,n)$</p>
-<p>$g(i,j) &#x3D; f(i-j,j) &#x3D; \sum_{t&#x3D;0\cdots j} f(i-j-1+t,j-t) \binom{j}{t}$, 这里变形后需要额外处理 $i \le j,g(i,j) &#x3D; 0$吗？</p>
+<p>$g(i,j) &#x3D; f(i-j,j) &#x3D; \sum_{t&#x3D;0\cdots j} f(i-j-1+t,j-t) \binom{j}{t}$, 这里变形后需要额外处理 $i \le j,g(i,j) &#x3D; 0$吗???????????????????????????????????????????</p>
 <p>$&#x3D; \sum_{t&#x3D;0\cdots j} g((i-j-1+t) + (j-t),j-t) \binom{j}{t}$</p>
 <p>$&#x3D; \sum_{t&#x3D;0\cdots j} g(i-1,j-t) \binom{j}{t}$</p>
 <p>$&#x3D;j! \sum_{t&#x3D;0\cdots j} \frac {g(i-1,j-t)}{(j-t)!} \frac{1}{t!}$</p>
@@ -425,7 +425,12 @@
 <p>没怎么想也想出来了,这题评分怎么这么高不科学，</p>
 <p>Ex</p>
 <p>感觉比G难但是 评分却更低，第一次见 Prüfer code，学习了</p>
-<p>在大的思路还是在向生成方程靠拢，但是搞了一个我自己不会快速计算的 $h_n(x) &#x3D; h_{n-1}(x) E(x) \mod x^n$ </p>
+<p>在大的思路还是在向生成方程靠拢，但是搞了一个我自己不会快速计算的 $H_n(x) &#x3D; H_{n-1}(x) E(x) \mod x^n$ </p>
+<p>$\displaystyle F(x) &#x3D; \sum_{i+1\in S} \frac{1}{i!}x^i$</p>
+<p>$\displaystyle G_0(x) &#x3D; 1$</p>
+<p>$\displaystyle G_n(x) &#x3D; G_{n-1}(x) F(x) \mod x^n$ </p>
+<p>$\displaystyle (n-1)[x^{n-2}]G_n(x) &#x3D;?&#x3D; [x^{n-2}]F^n(x)$</p>
+<p>这对吗，以及如果对的话，这$F(x)$换成一般的也相等吗?</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc303/editorial">官方题解</a></p>
 
     </div>
@@ -509,7 +514,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">25:44</span>
+    <span title="所需總閱讀時間">25:45</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
