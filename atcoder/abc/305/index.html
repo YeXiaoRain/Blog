@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="Ex(Submodular set function,Alien DP,d-edge-shortest-path-monge)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc305">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/305/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="Ex(Submodular set function,Alien DP,d-edge-shortest-path-monge)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-06-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-06-30T06:51:12.102Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="Submodular set function">
+<meta property="article:tag" content="Alien DP">
+<meta property="article:tag" content="d-edge-shortest-path-monge">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/305/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/305/","path":"atcoder/abc/305/","title":"Atcoder abc305"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc305 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">270</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">18</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">267</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-Shojin"><span class="nav-text">Ex - Shojin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">270</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">267</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/305/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc305 | YeXiaoRain Blog">
+      <meta itemprop="description" content="Ex(Submodular set function,Alien DP,d-edge-shortest-path-monge)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc305
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-06-28 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-28T00:00:00+08:00">2023-06-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-06-30 14:51:12" itemprop="dateModified" datetime="2023-06-30T14:51:12+08:00">2023-06-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/305/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/305/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>12 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">Ex(Submodular set function,Alien DP,d-edge-shortest-path-monge)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc305/tasks">https://atcoder.jp/contests/abc305/tasks</a></p>
+<h1 id="Ex-Shojin"><a href="#Ex-Shojin" class="headerlink" title="Ex - Shojin"></a>Ex - Shojin</h1><p>N个问题, 难度(Ai,Bi)</p>
+<p>选择$D \in [1,N]$天 完成所有N个问题，即把N个问题分成D个连续非空子区间</p>
+<p>疲劳x 每天初始 &#x3D; 0，每天完成当前的区间中的问题</p>
+<p>区间内问题顺序可以任意调整，每次完成一个问题后  <code>x_new = A x_old+B</code></p>
+<p>给定X, 问 min D, 使得 sum x_每天结束&lt;&#x3D; X</p>
+<p>输出 (min D, 对于 min D时最小的sum x_每天结束)</p>
+<p>n 2e5</p>
+<p>X 1e8</p>
+<p>ai [1,1e5]</p>
+<p>1&lt;&#x3D; bi</p>
+<p>sum bi &lt;&#x3D; X</p>
+<p>3s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>先说一天内，如果指定了区间</p>
+<p>先i后j: $a_j(a_i x + b_i) + b_j$</p>
+<p>先j后i: $a_i(a_j x + b_j) + b_i$</p>
+<p>如果要 $a_j(a_i x + b_i) + b_j &lt; a_i(a_j x + b_j) + b_i$</p>
+<p>即 $a_j b_i + b_j &lt; a_i b_j + b_i$</p>
+<p>即 $(a_j-1) b_i &lt; (a_i-1) b_j$</p>
+<p>即 $\frac {a_j-1}{b_j} &lt; \frac{a_i-1}{b_i}$</p>
+<p>即每个元素 可以按照key &#x3D; $-\frac{a-1}{b}$ 排序</p>
+<p>反过来排序则是最大</p>
+<hr>
+<p>问题其实变成对于给定D, 求min</p>
+<p>对于min显然 随着D增加，min 单调递减，因为至少有一天两个问题，而后一个问题的额外代价 是 (Ax+B)-x &#x3D; (A-1)x+B, 而单独放一天则是B, 而<code>A&gt;=1</code></p>
+<p>有一个巨大的dp</p>
+<p><code>dp[i][d]</code> 以i结束，i前面划分了d天的 最小消耗</p>
+<p>就是求 <code>dp[n][min d] &lt;= x</code></p>
+<p><code>dp[i][d] = min(dp[j][d-1] + cost[j+1..i]), j&lt;i</code></p>
+<p>首先 状态就n^2,空间就n^2 ,转移看上去要n^2,时间就是n^4</p>
+<hr>
+<p>先说能否降低到n^3, 也就是<code>cost[i...j]</code> 有没有什么快速的计算方法或者预处理</p>
+<p>显然x&#x3D;Ax+B可以用矩阵乘法表示</p>
+<p>那么就可以用线段树按 上面 -(a-1)&#x2F;b 的顺序 维护</p>
+<p>一个区间就是区间内的变成 对应的矩阵，而区间外的 变成 单位矩阵</p>
+<p>那么计算一个区间<code>cost[i...j]</code>  无非就是<code>cost[i...j-1]</code> 基础上让 j在线段树中对应的 变为对应矩阵再计算完整线段树的 矩阵乘法结果，</p>
+<p>这样显然 循环 遍历<code>i,j</code> 能 n^2 log n 算出所有<code>cost[i..j]</code></p>
+<p>至少时间复杂度变成 n^3 + n^2 log n</p>
+<hr>
+<p>感觉 还缺了什么数学性质</p>
+<p>但对于相邻的两个区间，并不知道 相邻位置放在哪个区间好</p>
+<p>因为并不知道 它 排序后的位置，</p>
+<p>虽然可以 预估它放最前 和 最后的贡献变化，一个是预估，另一个是需要他前后的区间的信息</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>也是先考虑区间内，得到一样的性质</p>
+<hr>
+<p>令<code>f(S) = </code> 可重集合S最小代价, 有性质 $S\subseteq T \rightarrow f(S + \lbrace p \rbrace) - f(S) \le f(T + \lbrace p \rbrace) - f(T)$</p>
+<p>证明:</p>
+<p>若$A_p &#x3D; 1$, 则上式 为等式，因为p放在最后，额外贡献就是$B_p$</p>
+<p>考虑$A_p\ge 2$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">T:  v1,...,vi,p,vi+1,...,vn</span><br><span class="line">S:  w1,...,wj,p,wj+1,...,wm</span><br></pre></td></tr></table></figure>
+
+<p>显然w是v的子序列</p>
+<p>将解决问题的操作看作是仿射变换的应用。（换句话说 (x,1) 乘上 一系列矩阵）</p>
+<p>首先显然 如果序列s是t的子序列，则显然 s 处理后的 最终的合并后的 $(A_s,B_s)\le (A_t,B_t)$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">T:  (a&#x27;,b&#x27;),(A_p,B_p),(c&#x27;,d&#x27;)</span><br><span class="line">S:  (a,b),(A_p,B_p),(c,d)</span><br><span class="line"></span><br><span class="line">(a&#x27;,b&#x27;) &gt;= (a,b)</span><br><span class="line">(c&#x27;,d&#x27;) &gt;= (c,d)</span><br></pre></td></tr></table></figure>
+
+<p>$f(S+\lbrace p \rbrace) - f(S)$</p>
+<p>$&#x3D;[(c(A_p(ax+b)+B_p)+d)-(c(ax+b)+d)]_{x&#x3D;0}$</p>
+<p>$&#x3D;(c(A_pb+B_p)+d)-(cb+d)$</p>
+<p>$&#x3D;c((A_p-1)b+B_p)$</p>
+<p>$\ge c’((A_p-1)b’+B_p)$</p>
+<p>$&#x3D; f(T+\lbrace p \rbrace)-f(T)$</p>
+<p>得证</p>
+<p>即是 任何一个元素加入到集合 的贡献 不小于加入该集合子集的贡献</p>
+<hr>
+<p>性质 $A\ge 2$时, 有$f(S)+f(T)\le f(S\cup T) + f(S\cap T)$</p>
+<p>证明:</p>
+<p>$S&#x3D;T$时显然等式成立</p>
+<p>而注意到 令$U&#x3D;S-(S\cap T) &#x3D; (S\cup T) -T$且$(S\cap T)\subseteq T$</p>
+<p>根据上面的 $f(S) - f(S\cap T) \le f(S\cup T) - f(T)$ 无非是对$U$中的逐个加入 再不等式 合并</p>
+<p>得证</p>
+<hr>
+<p>The inequalities in these two propositions are called diminishing marginal utility and submodularity (with inequality sign flipped);  it seems that their equivalence are widely known in the field of combinational optimization. </p>
+<hr>
+<p>Mongeness and Alien DP(王钦石二分,”wqs 二分搜索”或“Lagrange 松弛”)</p>
+<p>考虑 $A_i \ge 2$</p>
+<p>简化期间，重新表述为最短路问题，定义N顶点有向有边权图G, 从顶点u到顶点v有向边成本$c(u,v)$为 $[u+1,v]$所需要的问题, K天的方案可以看成图G上 K条边构成的$0-N$的路径,</p>
+<p>对于$0\le i&lt; j&lt; k &lt; l \le N$有</p>
+<p>$c(i,l)+c(j,k) \ge c(i,k)+c(j,l)$, 根据上面证明的性质</p>
+<p>这个性质称为 Mongeness 或者四边形不等式</p>
+<p>$d(k) &#x3D; k$条边的最短长度,</p>
+<p>下凸性$d(n)-d(n-1) \ge d(n-1)-d(n-2)$</p>
+<hr>
+<p>拉格朗日 对偶问题</p>
+<p>$\mathcal{P}$ 是图G中所有<code>0-&gt;N</code>的路径集合</p>
+<p>$||P||$表示路径$P$的长度(边的条数)</p>
+<p>$c(P)$表示边权和</p>
+<p>对于$\forall \lambda \in \mathbb{Z}$</p>
+<p>长度$d$的最小代价 $\displaystyle \min_{P\in \mathcal{P},||P||&#x3D;d}c(P) &#x3D;\min_{P\in \mathcal{P},||P||&#x3D;d} (c(P)+\lambda(||P||-d))$, 显然 多出来的为0</p>
+<p>$\displaystyle \ge \min_{P\in \mathcal{P}} (c(P)+\lambda(||P||-d))$, 去掉了底部的限制, 拉格朗日 松弛, ($X\ge min(X,…)$的原理)</p>
+<p>从而以下式子成立</p>
+<p>$\displaystyle \min_{P\in \mathcal{P},||P||&#x3D;d}c(P) \ge \max_{\lambda\in\mathbb{Z}}\min_{P\in\mathcal{P}}(c(P)+\lambda(||P||-d))$</p>
+<p>这解释为调整$\lambda$ 获得最佳下限, 就涉及拉格朗日对偶问题, 一般来说，等毫不成立，在这个问题中等号成立(下面会证明)</p>
+<hr>
+<p>用$P^*_k$表示长度$k$的路径的一个最小代价方案</p>
+<blockquote>
+<p>定理 1 $c(P^*<em>k)-c(P^*</em>{k-1}) \le c(P^*_{k+1})-c(P^*_{k})$</p>
+</blockquote>
+<p>若存在$||P||&#x3D;||P’||&#x3D;k$ 两条路径满足 $c(P^*_{k+1})+c(P^*_{k-1})\ge c(P)+c(P’) \ge c(P^*_k)+c(P^*_k)$， 则可证明</p>
+<p>注意到右侧的不等式显然，因为$P^*$是最优的，现在考虑能否找到满足左侧的不等式</p>
+<p>$P^*_{k-1} &#x3D; (s_0,s_1,\cdots,s_{k-1})$</p>
+<p>$P^*_{k+1} &#x3D; (t_0,t_1,\cdots,t_{k+1})$</p>
+<p>这两个点列的首尾相同</p>
+<ul>
+<li>若存在 $s_i &#x3D; t_{i+1}$<ul>
+<li>令$P &#x3D;(s_0,s_1,\cdots,s_i,t_{i+2},t_{i+3},\cdots,t_{k+1})$</li>
+<li>令$P’ &#x3D;(t_0,t_1,\cdots,t_{i+1},s_{i+1},t_{i+2},\cdots,s_{k-1})$</li>
+<li>这样 相当于两条路径在一个固定距离的交叉点交换， $c(P^*_{k+1})+c(P^*_{k-1}) &#x3D; c(P)+c(P’)$ 上面左侧不等式的等号成立</li>
+</ul>
+</li>
+<li>则存在 $s_i &lt; t_{i+1} \land s_{i+1} &gt; t_{i+2}$, 因为 $s_0 &#x3D; 0 &lt; t_1, s_{k-1}&#x3D;N-1 &gt; t_{k}$, 所以如果没有相等，则总存在一个i满足<ul>
+<li>令$P &#x3D;(s_0,s_1,\cdots,s_i,t_{i+2},t_{i+3},\cdots,t_{k+1})$</li>
+<li>令$P’ &#x3D;(t_0,t_1,\cdots,t_{i+1},s_{i+1},t_{i+2},\cdots,s_{k-1})$</li>
+<li>这样的话有 $s_i  &lt; t_{i+1} &lt; t_{i+2} &lt; s_{i+1}$</li>
+<li>正是 上面 需要的前提条件 monge性（四边形不等式)</li>
+<li>$c(s_i,s_{i+1}) +c(t_{i+1},t_{i+2}) \ge c(s_i,t_{i+2}) + c(t_{x+1},s_{x+1})$</li>
+<li>即$c(P^*_{k+1})+c(P^*_{k-1}) \ge c(P)+c(P’)$  成立</li>
+</ul>
+</li>
+</ul>
+<p>所以定义1得证明, 即$c(P^*_k)$的下凸性</p>
+<hr>
+<p>定理2 存在$\lambda^<em>\in \mathbb{Z}$使得有 $\displaystyle P^</em><em>d\in \mathrm{argmin}</em>{P\in \mathcal{P}} (c(P)+\lambda^*(||P||-d))$ 成立</p>
+<p>根据定理1,可以找到$\lambda^*$满足$- (c(P _ {d + 1} ^ {\ast}) - c(P _ d ^ {\ast})) \leq \lambda ^ {\ast} \leq - (c(P _ d ^ {\ast}) - c(P _ {d - 1} ^ {\ast}))$</p>
+<p>那么只需要证明对于$\forall k, c(P^*_k)+\lambda^*(k-d) \ge c(P^*_d)$,且存在取等,即可证明定理2, 因为如果 k不是最短的路径的话$c(P_k)+\lambda^*(k-d) \ge c(P^*_k)+\lambda^*(k-d)$ 只会更大</p>
+<ul>
+<li>$k&#x3D;d$<ul>
+<li>$c(P^*_d) + \lambda^*(d-d)$</li>
+<li>$&#x3D;c(P^*_d)$</li>
+</ul>
+</li>
+<li>$k &lt; d$<ul>
+<li>$c(P^*_k) + \lambda^*(k-d)$</li>
+<li>$&#x3D;c(P^*<em>d) - \sum</em>{i&#x3D;k}^{d-1}(c(P^*_{i+1})-c(P^*_i)) + \lambda^*(k-d)$</li>
+<li>$\ge c(P^*<em>d) - (d-k)(c(P^*</em>{d})-c(P^*_{d-1})) + \lambda^*(k-d)$ (根据定理1)</li>
+<li>$\ge c(P^*_d) + (d-k)\lambda^* + \lambda^*(k-d)$ (根据$\lambda^*$的取值范围)</li>
+<li>$&#x3D; c(P^*_d)$</li>
+</ul>
+</li>
+<li>$k &gt; d$<ul>
+<li>$c(P^*_k) + \lambda^*(k-d)$</li>
+<li>$&#x3D;c(P^*<em>d) + \sum</em>{i&#x3D;d}^{k-1}(c(P^*_{i+1})-c(P^*_i)) + \lambda^*(k-d)$</li>
+<li>$\ge c(P^*<em>d) + (k-d)(c(P^*</em>{d})-c(P^*_{d-1})) + \lambda^*(k-d)$ (根据定理1)</li>
+<li>$\ge c(P^*_d) + (d-k)\lambda^* + \lambda^*(k-d)$ (根据$\lambda^*$的取值范围)</li>
+<li>$&#x3D; c(P^*_d)$</li>
+</ul>
+</li>
+</ul>
+<p>定理2 证毕，这里说明给定的$d$, 可以找到 $\lambda^<em>\in \mathbb{Z}$ 使得 存在长度为$d$的最小贡献的路径 刚好能取到表达式的min 且$&#x3D;c(P^</em>_d)$</p>
+<hr>
+<p>定理3  $\displaystyle \min _ {P \in \mathcal{P}, \lVert P \rVert &#x3D; d} c(P) &#x3D; \max _ {\lambda \in \mathbb{Z}} \min _ {P \in \mathcal{P}} (c(P) + \lambda (\lVert P \rVert - d))$</p>
+<p>首先根据定理2有 给定$d$ ，能找到 $\lambda^*$</p>
+<p>$\displaystyle \min_{P\in\mathcal{P},||P||&#x3D;d}c(P)$</p>
+<p>$&#x3D; c(P^*_d)$</p>
+<p>$&#x3D; c(P^*_d) + \lambda^*(d-d)$</p>
+<p>$&#x3D; c(P^*_d) + \lambda^*(||P^*_d||-d)$</p>
+<p>$\displaystyle \le \min_{P\in\mathcal{P}}(c(P)+\lambda^*(||P||-d)))$, 根据定理2, $P^*<em>d$是让这个表达式最小的$P$<br>$\displaystyle \le \max</em>{\lambda\in \mathbb{Z}}\min_{P\in\mathcal{P}}(c(P)+\lambda(||P||-d)))$, 根据 $X \le \max(X,\cdots,)$</p>
+<p>而 最上面有$\displaystyle \min_{P\in \mathcal{P},||P||&#x3D;d}c(P) \ge \max_{\lambda\in\mathbb{Z}}\min_{P\in\mathcal{P}}(c(P)+\lambda(||P||-d))$</p>
+<p>夹逼一下 所以是等于</p>
+<p>至此定理3说明了， 通过 拉格朗日增加lambda项的方法，可以用来计算$\displaystyle c(P^*<em>d) &#x3D; \max</em>{\lambda\in\mathbb{Z}}\min_{P\in\mathcal{P}}(c(P)+\lambda(||P||-d))$</p>
+<hr>
+<p>对于 $\displaystyle L(\lambda) &#x3D; \min_{P\in\mathcal{P}}(c(P)+\lambda(||P||-d))$ 实际是一次函数族的$\min$在点$\lambda$的值</p>
+<p>而一次函数族的min 是一个上凸函数, 所以$c(P^*_d)$可以用三分搜索来计算</p>
+<p>剩下的问题就是给定$\lambda$如何快速计算出$L(\lambda)$</p>
+<p>$\displaystyle L(\lambda) &#x3D; \min_{P\in\mathcal{P}}(c(P)+\lambda(||P||-d))$ </p>
+<p>$\displaystyle &#x3D; \min_{P\in\mathcal{P}}(c(P)+\lambda||P||-\lambda d)$ </p>
+<p>$\displaystyle &#x3D; -\lambda d + \min_{P\in\mathcal{P}}(c(P)+\lambda||P||)$ </p>
+<p>后面部分 实际上就是 所有路径的权重增加$\lambda$,去做最短路计算,而新图也满足Monge性质, 可以用 LARSCH algorithm(<a target="_blank" rel="noopener" href="https://noshi91.hatenablog.com/entry/2023/02/18/005856">https://noshi91.hatenablog.com/entry/2023/02/18/005856</a>) <a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/110844">https://codeforces.com/blog/entry/110844</a></p>
+<p>以及延伸还有 SMAWK algorithm</p>
+<hr>
+<p>回到原题目，其实我们只需要引理1即可</p>
+<p>下面问题是对于 下凸函数$d$ 找$K,d(K)$使得$d(K) \le X$</p>
+<p>Alien DP可能需要$O(N \log^2 X \log N)$ 可能会TLE</p>
+<p>同样注意到 既然是下凸，还可以用三分搜索</p>
+<p>令$F(x)$ 为 $(i,d(i)-X),i&#x3D;1\cdots N$ 点 构成的下凸函数</p>
+<p>$D$ 显然是$y&#x3D;F(x)$和$y&#x3D;0$的交点, 向整数rounded up(因为F单调递减)</p>
+<p>$G(p)$ 在Alien DP中 每个操作代价为p的最大代价(因为 alien dp就是  二分斜率k 找最小截距 $y_0&#x3D; F(x)-kx$, 所以对于给定k, alien dp 输出的是 (p,G(p) &#x3D; F(p)-kp)</p>
+<p>$D &#x3D; \lceil \max_p (\frac{G(p)}{p}) \rceil$, 中间的也是下凸函数，因此也D可以三分找到</p>
+<hr>
+<p>const int LG&#x3D;30; &#x2F;&#x2F; 这里还有一个性质是如果A&gt;&#x3D;2,那么长度len的 &gt;&#x3D; 2^{len-1},而上限又是X &lt;&#x3D; 1e8, 所以一组的最大长度就有了限制</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc305/submissions/43061175">https://atcoder.jp/contests/abc305/submissions/43061175</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)(a);)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> PWR=<span class="number">30</span>; <span class="comment">// 2^&#123;len-1&#125; &lt;= X &lt;= 1e8</span></span><br><span class="line"><span class="type">const</span> ll INF=<span class="number">3&#x27;00000&#x27;0000&#x27;0000</span>;<span class="comment">//&gt;= 2e5*1e8 + 1e8,还要满足1e5*inf+1e8&lt;=MAX_I64 乘法不越界</span></span><br><span class="line">ll w[<span class="number">200010</span>][PWR]; <span class="comment">// w[start 0-index][length=r-l]</span></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="function">array&lt;ll,2&gt; <span class="title">solve</span><span class="params">(ll k)</span></span>&#123; <span class="comment">// solve[k斜率] = &#123;d,G(d)=max(dp[d] = cost[d] - k * d)&#125; 划分成d段</span></span><br><span class="line">  vector&lt;array&lt;ll,2&gt; &gt; <span class="built_in">dp</span>(n+<span class="number">1</span>,&#123;INF,<span class="number">0</span>&#125;); <span class="comment">// 1-index, &#123;alien trick下的DP, 多少段 * -1&#125;</span></span><br><span class="line">  dp[<span class="number">0</span>]=&#123;<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">rep</span>(len,<span class="number">0</span>,PWR) &#123;</span><br><span class="line">    <span class="type">int</span> j=i+<span class="number">1</span>+len;</span><br><span class="line">    <span class="keyword">if</span>(j &gt; n) <span class="keyword">break</span>;</span><br><span class="line">    <span class="comment">// 这里主要是处理连续的一段k相等, 那么这一段返回y最小的，也就是x最大，所以段数最大的</span></span><br><span class="line">    dp[j] = <span class="built_in">min</span>(dp[j], &#123;dp[i][<span class="number">0</span>]+w[i][len]-k, dp[i][<span class="number">1</span>] - <span class="number">1</span>&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123;-dp[n][<span class="number">1</span>], dp[n][<span class="number">0</span>]+(-dp[n][<span class="number">1</span>])*k&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> X=<span class="built_in">read</span>();</span><br><span class="line">  ll S = <span class="number">0</span>;</span><br><span class="line">  vector&lt;ll&gt; A,B; <span class="comment">// 0-index</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">    ll a=<span class="built_in">read</span>();</span><br><span class="line">    ll b=<span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">if</span>(a&gt;<span class="number">1</span>) &#123;</span><br><span class="line">      A.<span class="built_in">push_back</span>(a);</span><br><span class="line">      B.<span class="built_in">push_back</span>(b);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// A == 1</span></span><br><span class="line">      X-=b; <span class="comment">// 放在区间的最后贡献只有b</span></span><br><span class="line">      S+=b;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  n=A.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">if</span>(!n) <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;1 %lld\n&quot;</span>,S)*<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">auto</span> cmp=[&amp;](ll i,ll j)&#123;<span class="built_in">return</span> (A[j]<span class="number">-1</span>)*B[i]&lt;(A[i]<span class="number">-1</span>)*B[j];&#125;; <span class="comment">// 同区间内性质</span></span><br><span class="line">  <span class="built_in">rep</span>(l,<span class="number">0</span>,n) &#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt;<span class="built_in">idx</span>(PWR);</span><br><span class="line">    <span class="built_in">iota</span>(<span class="built_in">begin</span>(idx),<span class="built_in">end</span>(idx),l);</span><br><span class="line">    <span class="built_in">rep</span>(len,<span class="number">0</span>,PWR) <span class="keyword">if</span>(l+len&lt;n)&#123; <span class="comment">// 计算所有可能贡献的区间的w, O(n log X log X)</span></span><br><span class="line">      <span class="built_in">per</span>(i,<span class="number">1</span>,len+<span class="number">1</span>)<span class="keyword">if</span>(<span class="built_in">cmp</span>(idx[i],idx[i<span class="number">-1</span>]))<span class="built_in">swap</span>(idx[i],idx[i<span class="number">-1</span>]);<span class="keyword">else</span> <span class="keyword">break</span>;<span class="comment">//暴力冒泡排序</span></span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,len+<span class="number">1</span>) w[l][len]=<span class="built_in">min</span>(w[l][len]*A[idx[i]]+B[idx[i]],INF); <span class="comment">// 暴力计算cost</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ll l=-X<span class="number">-1</span>,r=<span class="number">0</span>; <span class="comment">// l might ok(对应1个区间), r ok(对应分成N个), wqs 二分斜率, 截距 = y(x) - kx</span></span><br><span class="line">  <span class="keyword">while</span>(r-l &gt; <span class="number">1</span>) &#123; <span class="comment">// log X</span></span><br><span class="line">    ll mid=(l+r)/<span class="number">2</span>;</span><br><span class="line">    (<span class="built_in">solve</span>(mid)[<span class="number">1</span>] &lt;= X ? r : l) = mid;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> [seg,cost]=<span class="built_in">solve</span>(r);</span><br><span class="line">  <span class="comment">// 注意这里可能连续 [? ... seg] 斜率(&lt;0)都相等, f(?) &gt; X，而在中间某处也满足f() &lt;= X</span></span><br><span class="line">  ll dx = <span class="built_in">min</span>(seg<span class="number">-1</span>,(X-cost)/(-r));</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld %lld\n&quot;</span>,seg - dx, cost + dx * (-r) + S);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Ex</p>
+<p>自然的和题解一样考虑了子问题</p>
+<p>去掉A&#x3D;1感觉也很有用，去掉后转移的长度就被限制到log X级别了</p>
+<p>去考虑 相邻区间的划分了，没有去考虑说一个集合与子集 加入同样元素的变化贡献</p>
+<p>这题 现场还有8个大佬做出来了？？？</p>
+<p>（顺便说一句，这个 DP 源自 IOI（国际信息学奥林匹克）问题“Aliens”，所以更精确地称为“Aliens DP”可能更合适。根据上下文的不同，它也被称为“wqs 二分搜索”或“Lagrange 松弛”。）</p>
+<p>abc218H 里首次学过wqs二分，这是第二次见到</p>
+<p>顺便 这题 让我学了一下没见过的 四边形不等式 优化 DP</p>
+<p>然后是 四边形不等式 在 指定边数的相关性质</p>
+<hr>
+<p>然后实现起来比较怪的是，因为ax+b 很容易overflow, 而去取min 感觉会影响 凸性，而且这个INF似乎选起来总觉得各种别扭，而 关键点 就是 在当前指定斜率k下是否有(max - k d)超过 1e8, kd可以达到 1e8 2e5 &#x3D; 2e13, 所以max 要大于 2e13+1e8 的去放置才行,</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc305/editorial">官方题解</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Submodular_set_function#Definition">wikipedia Submodular_set_function</a></p>
+<p><a target="_blank" rel="noopener" href="https://noshi91.github.io/algorithm-encyclopedia/d-edge-shortest-path-monge">https://noshi91.github.io/algorithm-encyclopedia/d-edge-shortest-path-monge</a></p>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/dp/opt/quadrangle/">oi wiki 四边形不等式优化</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/305/" title="Atcoder abc305">https://yexiaorain.github.io/Blog/atcoder/abc/305/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/Submodular-set-function/" rel="tag"><i class="fa fa-tag"></i> Submodular set function</a>
+              <a href="/Blog/tags/Alien-DP/" rel="tag"><i class="fa fa-tag"></i> Alien DP</a>
+              <a href="/Blog/tags/d-edge-shortest-path-monge/" rel="tag"><i class="fa fa-tag"></i> d-edge-shortest-path-monge</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/304/" rel="prev" title="Atcoder abc304">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc304
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">469k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">26:04</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/305/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
