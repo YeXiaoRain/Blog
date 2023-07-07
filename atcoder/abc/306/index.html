@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(树,gcd)Ex(容斥原理,bitdp)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc306">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/306/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(树,gcd)Ex(容斥原理,bitdp)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-06-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-07T07:53:04.325Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="gcd">
+<meta property="article:tag" content="树">
+<meta property="article:tag" content="容斥原理">
+<meta property="article:tag" content="bitdp">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/306/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/306/","path":"atcoder/abc/306/","title":"Atcoder abc306"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc306 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">271</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">18</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">268</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Return-to-1"><span class="nav-text">G - Return to 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-Balance-Scale"><span class="nav-text">Ex - Balance Scale</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">271</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">268</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/306/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc306 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(树,gcd)Ex(容斥原理,bitdp)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc306
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-06-29 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-29T00:00:00+08:00">2023-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-07-07 15:53:04" itemprop="dateModified" datetime="2023-07-07T15:53:04+08:00">2023-07-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/306/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/306/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>6 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(树,gcd)Ex(容斥原理,bitdp)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc306/tasks">https://atcoder.jp/contests/abc306/tasks</a></p>
+<h1 id="G-Return-to-1"><a href="#G-Return-to-1" class="headerlink" title="G - Return to 1"></a>G - Return to 1</h1><p>n点,m有向边</p>
+<p>从1开始，每次 从当前点选一条边移动，问$10^{10^{100}}$次时能否回到1</p>
+<p>n,m 2e5</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>次数巨大，如果走k1次回到1，k2次回到1</p>
+<p>那么可以 gcd(k1,k2)次的足够大的倍数回到1， 因为 问题中的次数巨大，所以 ak1+bk2&#x3D;c gcd(k1,k2) &#x3D; 10^{10^{100}}能找到正解</p>
+<p>所以 问题是能否找到 两个不同的次数的 gcd 只有2和5的因子</p>
+<hr>
+<p>一个不会证明的想法是，计算从1出发到达每个点的不超过2种 距离，和逆向从1倒退不超过2种距离</p>
+<p>这样每个点 可以得到2x2种从1到1的距离</p>
+<p>对所有距离做gcd看看是否只有 2和5的因子</p>
+<p>但是这个做法，正确性 感觉不会证明</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>首先只保留和1强连通的点，（一个显然的化简）</p>
+<p>同样的结论，所有包含1的环的长度的gcd 是 这个巨大的数V的因子 即是Yes</p>
+<blockquote>
+<p>这里还证明了一下，其实说白了就是，能实现gcd,然后 V&#x3D;lcm * 大的数 + gcd * 小的数, 系数展开能保证非负</p>
+</blockquote>
+<p>然而 所有环可能无限集合，考虑以1为根从图种任意构造一个生成树</p>
+<p>对于质因子p, 所以如果 有回边长度 不是p的倍数，那么gcd中就不会包含p</p>
+<p>因为,剩余点都是1可达和和可达1的，那么考虑 <code>1-&gt; u -&gt; (多次环)-&gt; u -&gt; 1</code>那么长度为<code>1-&gt;u-&gt;1 + k 环</code>,</p>
+<p>显然 <code>gcd(a+kb),k=0..\infity = gcd(a,b)</code></p>
+<p>然而还有更弱限制的更强结论，只关心深度</p>
+<p>不需要是回边，只需要是非树边 <code>u-&gt;v</code></p>
+<p>那么 显然有两条路径 <code>1-&gt;(树边)-&gt;v-&gt;任意-&gt;1</code>,<code>1-&gt;(树边)-&gt;u-&gt;(非树边)-&gt;v-&gt;任意-&gt;1</code></p>
+<p><code>gcd(两条路径) = gcd(d[v] + len[v..1],d[u] + 1 + len[v..1])</code></p>
+<p><code>= gcd(路径1/路径2, d[u]+1-d[v])</code></p>
+<p>这样 就简化成 只和深度有关了，而且注意到本身 路径也是最后会涉及指向1的边, 所以至少存在一个 <code>(纯树边 + u-&gt;1)</code></p>
+<h1 id="Ex-Balance-Scale"><a href="#Ex-Balance-Scale" class="headerlink" title="Ex - Balance Scale"></a>Ex - Balance Scale</h1><p>长 N的 x[1…N] 具体未知</p>
+<p>比较权重M次</p>
+<p>S&#x3D;””</p>
+<p>第i次比较, x[Ai]放左侧, x[Bi]放右侧, S +&#x3D; “&gt;&#x2F;&#x3D;&#x2F;&lt;”</p>
+<p>N [1,17]</p>
+<p>1&lt;&#x3D; ai &lt; bi &lt;&#x3D; N</p>
+<p>3s</p>
+<p>1024mb</p>
+<p>问 对于所有不同的x, 能产生多少不同的S, mod 998244353</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>也就是 你可以钦定出多少个 ai,bi 的大小关系</p>
+<p>看起来 如果先做 等于钦定（复杂度？），是不会有任何冲突的</p>
+<p>做完等于钦定以后，那么就可以合并一下， 剩下的x[ai],x[bi]全部不等, 不等的话 只需要满足拓扑关系(无环)即可</p>
+<hr>
+<p>首先想一下 钦定等号</p>
+<p>f(n) &#x3D; 和1相等的 选i个, binom(n-1,i) * 剩余的 和1不等的方案数f(n-1-i)</p>
+<p>$f(n) &#x3D; \sum_{i\in[0,n-1]} \binom{n-1}{i} f(n-1-i)$</p>
+<p>还是很大</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">f = [<span class="number">0</span>] * <span class="number">20</span></span><br><span class="line">f[<span class="number">0</span>]=<span class="number">1</span></span><br><span class="line">f[<span class="number">1</span>]=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binom</span>(<span class="params">n,m</span>):</span><br><span class="line">    r = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,m+<span class="number">1</span>):</span><br><span class="line">        r *= (n+<span class="number">1</span>-i)</span><br><span class="line">        r //= i</span><br><span class="line">    <span class="keyword">return</span> r</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,<span class="number">18</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,i):</span><br><span class="line">        f[i] += binom(i-<span class="number">1</span>,j) * f[i-<span class="number">1</span>-j]</span><br><span class="line">    <span class="built_in">print</span>(i,f[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 2</span></span><br><span class="line"><span class="comment"># 3 5</span></span><br><span class="line"><span class="comment"># 4 15</span></span><br><span class="line"><span class="comment"># 5 52</span></span><br><span class="line"><span class="comment"># 6 203</span></span><br><span class="line"><span class="comment"># 7 877</span></span><br><span class="line"><span class="comment"># 8 4140</span></span><br><span class="line"><span class="comment"># 9 21147</span></span><br><span class="line"><span class="comment"># 10 115975</span></span><br><span class="line"><span class="comment"># 11 678570</span></span><br><span class="line"><span class="comment"># 12 4213597</span></span><br><span class="line"><span class="comment"># 13 27644437</span></span><br><span class="line"><span class="comment"># 14 190899322</span></span><br><span class="line"><span class="comment"># 15 1382958545</span></span><br><span class="line"><span class="comment"># 16 10480142147</span></span><br><span class="line"><span class="comment"># 17 82864869804</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>另一个就是每次 钦定最小的值，那一个问题是 状态 大概也是17!,</p>
+<p>在最小的时候 如果有相连的和它相等，则同时钦定， 而没有链接的“相等”实际上不会影响</p>
+<p>而 相连的只考虑index更大的，这样能完成去重吗?</p>
+<p><code>1-2,3-4</code></p>
+<p><code>1&lt;2,3&lt;4</code></p>
+<p>1和3 都是可以最小的时候</p>
+<hr>
+<p>另一个点就是，如果是多个连通块，连通块之间不影响</p>
+<p>所以考虑的只需要 连通块内的方案数，连通块之间方案数相乘即可</p>
+<hr>
+<p>如果，连通块有<code>桥</code></p>
+<p>显然 桥可以 大于&#x2F; 小于 &#x2F;等于，去掉桥 两边互不影响</p>
+<p>3 * f(左连通块) * f(右连通块)</p>
+<p>这个角度思考就是，找一个小割？？？</p>
+<hr>
+<p>对应的，就是如果点u 有一系列 小于点v,等于点u’,大于点w</p>
+<p>那么</p>
+<p>每个 v到u’路径至少一个<code>小于</code></p>
+<p>每个 v到w路径至少一个<code>小于</code></p>
+<p>每个 u’到w路径至少一个<code>小于</code></p>
+<hr>
+<p>想不出任何有效的</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>题意等价</p>
+<p>无向图N点M边</p>
+<p>对于 所有u-v, 要么正向边，要么反向边，要么合并点</p>
+<p>问有多少中方案 最终是DAG，</p>
+<p>使用 bit DP (Dynamic Programming), 逐个删除 入度为0 的点</p>
+<p>然而 当 点集被删除, 如果剩余点集合 还有 入度为零的 0, 会重复统计，需要想办法避免</p>
+<p>当删除一个点集, 被删除的需要是一个连通块(否则 其中会有非0入度.)</p>
+<hr>
+<p>这里对于一个点集，容斥的属性的定义是 一个连通块为最小点</p>
+<p>例如 (1-2-3-4)</p>
+<p>如果 对于一个实际的图 中 1和3是 最小点</p>
+<p>那么在统计时 分别被 (1是最小点，3是最小点，1是最小点 且 3是最小点) 进行统计</p>
+<p>这样的话就是简单的容斥了</p>
+<p>这里要注意的是 (1-2-3-4), 如果1-2是最小点，那么因为1-2是连通块，所以 只会被（1-2 是最小点统计)</p>
+<p>所以 <code>dp[mask] = dp[mask - submask] * (-1)^&#123;连通块个数(submask)+1&#125;</code></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc306/submissions/43311499">https://atcoder.jp/contests/abc306/submissions/43311499</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">dsu</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; f;</span><br><span class="line">  <span class="built_in">dsu</span>(<span class="type">int</span> sz)&#123;</span><br><span class="line">    f = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(sz);</span><br><span class="line">    <span class="built_in">iota</span>(<span class="built_in">begin</span>(f),<span class="built_in">end</span>(f),<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">fa</span><span class="params">(<span class="type">int</span> u)</span></span>&#123; <span class="keyword">return</span> (u == f[u])?u:(f[u]=<span class="built_in">fa</span>(f[u])); &#125;</span><br><span class="line">  <span class="function"><span class="type">bool</span> <span class="title">same</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v)</span></span>&#123; <span class="keyword">return</span> <span class="built_in">fa</span>(u) == <span class="built_in">fa</span>(v); &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v)</span></span>&#123; f[<span class="built_in">fa</span>(u)]=<span class="built_in">fa</span>(v); &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m=<span class="built_in">read</span>();</span><br><span class="line">  vector&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt; &gt; eg;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,m)  eg.<span class="built_in">push_back</span>(&#123;<span class="built_in">read</span>()<span class="number">-1</span>,<span class="built_in">read</span>()<span class="number">-1</span>&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">comp</span><span class="params">(<span class="number">1</span>&lt;&lt;n)</span></span>;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">popcnt</span><span class="params">(<span class="number">1</span>&lt;&lt;n)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n)&#123;</span><br><span class="line">    <span class="type">int</span> res = popcnt[i]=popcnt[i&amp;(i<span class="number">-1</span>)]+<span class="number">1</span>;</span><br><span class="line">    <span class="function">dsu <span class="title">uf</span><span class="params">(n)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [u,v]: eg) <span class="keyword">if</span>(((i&gt;&gt;u)&amp;<span class="number">1</span>) <span class="built_in">and</span> ((i&gt;&gt;v)&amp;<span class="number">1</span>) <span class="keyword">and</span> !uf.<span class="built_in">same</span>(u,v) )&#123;</span><br><span class="line">      uf.<span class="built_in">merge</span>(u,v);</span><br><span class="line">      res--;</span><br><span class="line">    &#125;</span><br><span class="line">    comp[i]=res;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">vector&lt;mint&gt; <span class="title">dp</span><span class="params">(<span class="number">1</span>&lt;&lt;n,<span class="number">0</span>)</span></span>;</span><br><span class="line">  dp[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="number">1</span>&lt;&lt;n) <span class="keyword">for</span>(<span class="type">int</span> j=(((<span class="number">1</span>&lt;&lt;n)<span class="number">-1</span>)&amp;i);j;j=((j<span class="number">-1</span>)&amp;i)) &#123;</span><br><span class="line">    dp[i] += dp[i-j] * ((comp[j]&amp;<span class="number">1</span>)?<span class="number">1</span>:<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,dp[(<span class="number">1</span>&lt;&lt;n)<span class="number">-1</span>].<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>G</p>
+<p>想到了 包含1的边长和gcd, 卡在了如何计算“所有路径的 gcd”，感觉知识点还是 树+回边&#x2F;跨边</p>
+<p>Ex</p>
+<p>等价题意也想得到</p>
+<p>剩下就是并查集，子集遍历和容斥原理</p>
+<p>不熟的还是容斥原理，其实不应该想不到的</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc306/editorial">官方题解</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/306/" title="Atcoder abc306">https://yexiaorain.github.io/Blog/atcoder/abc/306/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/gcd/" rel="tag"><i class="fa fa-tag"></i> gcd</a>
+              <a href="/Blog/tags/%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 树</a>
+              <a href="/Blog/tags/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 容斥原理</a>
+              <a href="/Blog/tags/bitdp/" rel="tag"><i class="fa fa-tag"></i> bitdp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/305/" rel="prev" title="Atcoder abc305">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc305
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">471k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">26:10</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/306/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
