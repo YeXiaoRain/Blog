@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="E(状态压缩,DP)F(z function,DP)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder arc058">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/arc/058/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="E(状态压缩,DP)F(z function,DP)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-07-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-10T12:00:11.507Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="状态压缩">
+<meta property="article:tag" content="z function">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/arc/058/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/arc/058/","path":"atcoder/arc/058/","title":"Atcoder arc058"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder arc058 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">275</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">18</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">271</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#E-Iroha-and-Haiku"><span class="nav-text">E -  Iroha and Haiku</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#F-Iroha-Loves-Strings"><span class="nav-text">F - Iroha Loves Strings</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#z-function"><span class="nav-text">z-function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-text">Ref</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">275</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">271</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/arc/058/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder arc058 | YeXiaoRain Blog">
+      <meta itemprop="description" content="E(状态压缩,DP)F(z function,DP)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder arc058
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-07-09 00:00:00" itemprop="dateCreated datePublished" datetime="2023-07-09T00:00:00+08:00">2023-07-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-07-10 20:00:11" itemprop="dateModified" datetime="2023-07-10T20:00:11+08:00">2023-07-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ARC/" itemprop="url" rel="index"><span itemprop="name">ARC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/arc/058/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/arc/058/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>9 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">E(状态压缩,DP)F(z function,DP)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc058/tasks">https://atcoder.jp/contests/arc058/tasks</a></p>
+<h1 id="E-Iroha-and-Haiku"><a href="#E-Iroha-and-Haiku" class="headerlink" title="E -  Iroha and Haiku"></a>E -  Iroha and Haiku</h1><p>有多少个 长度n,值域 [1,10]整数的数组a 满足 子区间</p>
+<p>sum a[x..y) &#x3D; X</p>
+<p>sum a[y..z) &#x3D; Y</p>
+<p>sum a[z..w) &#x3D; Z</p>
+<p>答案mod 1e9+7</p>
+<p>n [1,40]</p>
+<p>x [1,5]</p>
+<p>y [1,7]</p>
+<p>z [1,5]</p>
+<p>4s</p>
+<p>512mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p><del>范围这么小,可以打表!</del></p>
+<p>想的还是 容斥暴力</p>
+<p><code>总状态 =[5的实际状态][7的实际状态][5的实际状态]</code></p>
+<p>考虑首个匹配在哪个位置,</p>
+<p>sum (a[i…] 满足, a[&lt;i…] 不满足)</p>
+<p>问题是转移的话,似乎并不好转移</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>还是状态压缩</p>
+<p>但是 直接考虑反过来,就不需要容斥了</p>
+<p>ans &#x3D; 1- 不合法</p>
+<p>然后这里有个妙一点的表示法, <code>i =&gt; 2^&#123;i-1&#125;</code> 然后二进制拼接</p>
+<p><code>(3,2,4,5) =&gt; (2^2,2^1,2^3,2^4) =&gt; 10010100010000</code></p>
+<p>$2^{17} * 10 * 40 &#x3D; 52428800$</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc058/submissions/43441191">https://atcoder.jp/contests/arc058/submissions/43441191</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> ll MOD = <span class="number">1000&#x27;000&#x27;007</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> x=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> y=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> z=<span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">auto</span> _=[](<span class="type">int</span> v)&#123;<span class="keyword">return</span> <span class="number">1</span>&lt;&lt;(v<span class="number">-1</span>);&#125;; <span class="comment">// 数字 转为2进制表示</span></span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> end=_(x+y+z)|_(y+z)|_(z); <span class="comment">// end 结束状态</span></span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> msk=(<span class="number">1</span>&lt;&lt;(x+y+z))<span class="number">-1</span>;</span><br><span class="line">  <span class="function">vector <span class="title">dp</span><span class="params">(n+<span class="number">1</span>,vector&lt;ll&gt;(msk+<span class="number">1</span>,<span class="number">0</span>))</span></span>;</span><br><span class="line">  dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(j,<span class="number">0</span>,msk+<span class="number">1</span>) <span class="keyword">if</span>(dp[i<span class="number">-1</span>][j]!=<span class="number">0</span>) <span class="built_in">rep</span>(k,<span class="number">1</span>,<span class="number">10</span>+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> now = ((j&lt;&lt;k) | _(k)) &amp; msk;</span><br><span class="line">    <span class="keyword">if</span>((now&amp;end)!=end) (dp[i][now] += dp[i<span class="number">-1</span>][j]) %= MOD; <span class="comment">// 非法状态</span></span><br><span class="line">  &#125;</span><br><span class="line">  ll ans = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) (ans*=<span class="number">10</span>)%=MOD;</span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">0</span>,msk+<span class="number">1</span>) (ans -= dp[n][j])%=MOD;<span class="comment">//用总字串数减去不满足俳句字串数</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,(ans+MOD)%MOD);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="F-Iroha-Loves-Strings"><a href="#F-Iroha-Loves-Strings" class="headerlink" title="F - Iroha Loves Strings"></a>F - Iroha Loves Strings</h1><p>n个小写字母字符串</p>
+<p>选取一些 按照原来的顺序 拼接</p>
+<p>问能得到的 长度为K的字典序最小的字符串</p>
+<p>$n \in [1,2000]$</p>
+<p>$k \in [1,10^4]$</p>
+<p>$\sum_i |s_i| \le 10^6$</p>
+<p>5s</p>
+<p>750mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>如果 先上 SA</p>
+<p>那么问题是 它这里的 顺序限制 和 长度限制 还没有解决</p>
+<p>从空字符串开始的话,当前方案可以表示成SA中一个区间, 和一个起始坐标</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ab</span><br><span class="line">abc</span><br><span class="line">abcd</span><br><span class="line">acbd</span><br><span class="line">ca</span><br></pre></td></tr></table></figure>
+
+<p>然而因为字符串之间长度不固定,所以可能 abc的方案有的会跳到c开头,这样会拆分成很多段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for i in [1..K]:</span><br><span class="line">	state = array &#123; [index [l,r], start &gt;= pos &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果同一个状态, 遇到相同的字符并要跳出, 那么考虑 坐标小的作为pos跳出后的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ab</span><br><span class="line">ab</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>按照上面这样做, 每次的state 总个数 &lt;&#x3D; n, 总转移代价也是</p>
+<p>看起来可以做了</p>
+<p>而实际上, 因为length 恰好为K, 和这个做法并不满足</p>
+<p>因为这样每次贪心的是目前最小的字典序列 拼接,但是这种拼接可能无法达到恰好长度为K</p>
+<hr>
+<p>第一个想法就是 先<code>dp[end pos] = &#123;正向可达 s的idx&#125;</code></p>
+<p><code>for i in N: for pos(从大到小): dp[pos+len[i]].push(i)</code></p>
+<p>就最简单的全部是<code>a</code>, 那么方案数都是 binom(n,k), 所以不可能枚举所有方案, 也需要状态表示</p>
+<hr>
+<p>而上面这种方式, 其实按照这个顺序的话,当前的 <code>dp[end po]</code>虽然记录了一系列idx, 但从贡献角度来看,只用记录 字典序列最小的</p>
+<p>然而直接记录整个字符串 或者拼接index 都会挺大</p>
+<p>考虑 <code>dp[i] = vector&lt;状态(当前最后的s[idx]的idx,上一个dp[j][idx]的j和idx)&gt;</code>, 这样vector顶部 就是最后的最小的,</p>
+<p>如果能快速比较 两个链式状态,这个题就解决了</p>
+<p>然而只想到O(K)的暴力,这样还停留在 O(N K K)的复杂度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[.....][.....][.....]</span><br><span class="line">&lt;=?=&gt;</span><br><span class="line">[.........][........]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>一个就是, 长度倍增? 但连接部分不知道怎么处理</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>一样的先考虑 <code>dp[i][j] = </code>前i个字符串能够拼接的长度恰好为j的最小字典序的字符串</p>
+<p>显然状态 O(nk^2)</p>
+<p>转移也是一样的 <code>dp[i][j]</code>贡献<code>dp[i+1][j+|si|]</code></p>
+<hr>
+<p>然后这里的优化是 删除 无用的答案</p>
+<p><code>dp[i][j]=t</code>后面 <code>s[i+1..n]</code>不能 拼接成长度为<code>k-j</code> 的那么 不要这种<code>dp[i][j]</code></p>
+<p>如果有 <code>dp[i][j&#39;]=t&#39;</code>, 且 $t’[min(|t’|,|t|)] &lt; t[min(|t’|,|t|)]$(也就是 他们的最小长度,严格更小),那么也不需要这个<code>dp[i][j]</code>, 这里<code>j&#39;</code>和<code>j</code>的大小关系不限制,因为上一个 删除无效答案已经保证了总是能拼接出</p>
+<p>至此当进行到指定的i时, <code>dp[i][j]</code> 如果有值,那么它们两两之间构成前缀关系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dp[i] = &#x27;...................&#x27; 上述里面最长的 字符串 </span><br><span class="line">      =     1    1    1   11  0/1 表示对应长度能否被 前面i个拼出来</span><br><span class="line"></span><br><span class="line">				 1[.s[i+1].]</span><br></pre></td></tr></table></figure>
+
+<p>那么考虑 增加<code>s[i+1]</code></p>
+<p>从前到后找 1指向的后面拼接, 如果有位置 严格小于, 则变为<code>.....1....1[...1..[&lt;].....1]</code> 注意 新增的里面也可能有1, 只要在严格小于的前面的位置的1就可以保留</p>
+<p>而从前到后 也不是 先匹配的就最小</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> 1231235</span><br><span class="line">1  1  11</span><br><span class="line">[1234]</span><br><span class="line">   [1234] 先匹配了</span><br><span class="line">      [1234] 更小   </span><br></pre></td></tr></table></figure>
+
+<p>所以这里要比较所有</p>
+<p><code>[...1][si]</code></p>
+<hr>
+<p>这里需要下面的z-function, 可以O(n)计算 <code>z[i] = lcp(s,s[i..])</code> lcp最长公共前缀</p>
+<p>怎么用呢</p>
+<p>先拼接<code>t[i] = s[i] + dp[i]</code></p>
+<p>那么原来比较 <code>dp[i][0..j0] + s[i]</code> 与 <code>dp[i][0..j1] + s[i]</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dp0+si: [0......j0][si.......]</span><br><span class="line">dp1+si: [0............j1][si.......]</span><br><span class="line">                   [....]</span><br><span class="line">                         [...]</span><br><span class="line">                   </span><br></pre></td></tr></table></figure>
+
+
+<p>实际上 是先计算<code>dp[i][j0+1..]</code> 和 <code>s[i]</code>的 <code>lcp</code> 与 <code>len(j0+1..j1)</code> 的大小关系</p>
+<p>在t中就是 <code>lcp(t, t[|si|+j0+1]) = z[|si|+j0+1]</code></p>
+<p>如果 大于等于 <code>len(j0+1..j1)</code></p>
+<p>那么再 比较的是 $si[j1-j0…], si$ 的<code>lcp</code>与 <code>j0+|si|</code> 的大小关系</p>
+<p>那么在t中就是, $lcp(t[j1-j0..],t) &#x3D; z[j1-j0]$</p>
+<p>同样, 如果两个串之间是前缀关系,则保留长的</p>
+<p>至此<code>O(n)</code> 可以完成转移, 同时因为有了lcp,所以上面 0&#x2F;1 的可转移部分也可以完成</p>
+<h2 id="z-function"><a href="#z-function" class="headerlink" title="z-function"></a>z-function</h2><p><code>z[i] = lcp(s,s[i..])</code> lcp最长公共前缀</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">0-index:</span><br><span class="line"></span><br><span class="line">   0    z[i]-1</span><br><span class="line">   [    ]   </span><br><span class="line">            j</span><br><span class="line">s: [......i........]</span><br><span class="line">		 [......i........]</span><br><span class="line">	 len([.....]) = z[i]</span><br><span class="line">	           |</span><br><span class="line">	           i+z[i]-1</span><br></pre></td></tr></table></figure>
+
+<p>当$i &lt; j \le i+z[i]-1$ 时 <code>s[j..i+z[i]-1] = s[(j..i+z[i]-1)-i] = s[j-i..z[i]-1]</code></p>
+<p>若 <code>z[j-i] &lt; len(s[j-i..z[i]-1])</code>, 则$z[j] &#x3D; z[j-i]$</p>
+<p>若 <code>z[j-i] &gt;= len(s[j-i..z[i]-1])</code>, 则<code>s[j..i+z[i]-1] = s[(j-i..z[i]-1)-(j-i)] = s[0..z[i]-1-j+i]</code>比较 <code>s[i+z[i]-1+t]</code> 和 <code>s[z[i]-j+i-1+t]</code>, 其中<code>t=1...</code></p>
+<p>当$j$不在 任何 $[i,i+z[i]-1]$时, 也是逐个比较</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">calcZ</span><span class="params">(vector&lt;<span class="type">char</span>&gt; s)</span> </span>&#123;<span class="comment">// 0-indexed</span></span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">size</span>(s);</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">z</span><span class="params">(n, <span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="type">int</span> l = <span class="number">0</span>; <span class="comment">// 保持 r 最大</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">    <span class="type">int</span> r=l+z[l]<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(z[i-l] &lt; r-i+<span class="number">1</span>) z[i]=z[i-l];</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      z[i]=<span class="built_in">max</span>(<span class="number">0</span>,r-i+<span class="number">1</span>);</span><br><span class="line">      <span class="keyword">while</span>(i+z[i]&lt;n &amp;&amp; s[z[i]]==s[i+z[i]]) z[i]++;</span><br><span class="line">      l=i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  z[<span class="number">0</span>]=n;</span><br><span class="line">  <span class="keyword">return</span> z;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意到每次 if 成立都是O(1)的,而else里的while增加 会让r增加1,而r是单调递增有界的, 所以总的复杂度是O(n)</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc058/submissions/43460450">https://atcoder.jp/contests/arc058/submissions/43460450</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (int i=a;i&lt;(int)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (int i=n;i--&gt;(int)a;)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;<span class="type">int</span> r;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> K = <span class="number">10000</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">2000</span>;</span><br><span class="line">bitset&lt;K+10&gt; can[N+<span class="number">10</span>]; <span class="comment">// can[i...n][长度] = bool(后面i..n的字符能否品出 长度)</span></span><br><span class="line">bitset&lt;K+10&gt; dp[N+<span class="number">10</span>]; <span class="comment">// dp[1..i][长度] = bool(可能对答案贡献(后缀长度可能+前缀最小),且前缀1..i 可拼成</span></span><br><span class="line">string ans[<span class="number">2</span>]; <span class="comment">// ans[i] = 处理完前i个 最长的 可能的 字符串, 滚动i&amp;1</span></span><br><span class="line"><span class="function">string&amp;<span class="title">cs</span><span class="params">(<span class="type">int</span> i)</span></span>&#123;<span class="keyword">return</span> ans[i&amp;<span class="number">1</span>];&#125;</span><br><span class="line">vector&lt;string&gt; arr;</span><br><span class="line"><span class="type">char</span> tmp[K+<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">make_z</span><span class="params">(<span class="type">const</span> string&amp;s)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> l = <span class="number">0</span>; <span class="comment">// 保持r最大</span></span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">size</span>(s);</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">z</span><span class="params">(n,<span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n) &#123;</span><br><span class="line">    <span class="type">int</span> r = l + z[l] - <span class="number">1</span>;</span><br><span class="line">    z[i] = <span class="built_in">max</span>(<span class="number">0</span>,<span class="built_in">min</span>(r-i+<span class="number">1</span>,z[i-l]));</span><br><span class="line">    <span class="keyword">while</span>(i + z[i] &lt; n <span class="keyword">and</span> s[i + z[i]] == s[z[i]]) z[i]++;</span><br><span class="line">    <span class="keyword">if</span>(i + z[i] - <span class="number">1</span> &gt; r) l = i;</span><br><span class="line">  &#125;</span><br><span class="line">  z[<span class="number">0</span>] = n;</span><br><span class="line">  <span class="keyword">return</span> z;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// prefix[p] vs prefix[q] + arr[j]</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">cmp</span><span class="params">(<span class="type">const</span> vector&lt;<span class="type">int</span>&gt;&amp;z,<span class="type">int</span> i, <span class="type">int</span> p, <span class="type">int</span> q)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// [............]</span></span><br><span class="line">  <span class="comment">// [........p]..]</span></span><br><span class="line">  <span class="comment">// [.....q][si....]</span></span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> szs = <span class="built_in">size</span>(arr[i]);</span><br><span class="line">  <span class="keyword">if</span> (p &lt;= q) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> lcp = z[szs + q];</span><br><span class="line">  <span class="keyword">if</span> (lcp &gt;= szs || q + lcp &gt;= p) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> (<span class="built_in">cs</span>(i<span class="number">-1</span>)[q + lcp] &lt; arr[i][lcp]) ? <span class="number">-1</span> : <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// sign( (ans[i-1][0..p] + s[i])</span></span><br><span class="line"><span class="comment">//   -   (ans[i-1][0..q] + s[i]))</span></span><br><span class="line"><span class="comment">// &lt; -1, = 0, &gt; 1</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">cmp2</span><span class="params">(<span class="type">const</span> vector&lt;<span class="type">int</span>&gt;&amp;z,<span class="type">int</span> i,<span class="type">int</span> p, <span class="type">int</span> q)</span> </span>&#123; <span class="comment">// p,q 0-index</span></span><br><span class="line">  <span class="comment">// z = s[i] + &#x27;$&#x27; + ans[i-1]</span></span><br><span class="line">  <span class="comment">// [.....p][si......]</span></span><br><span class="line">  <span class="comment">// [..........q][si......]</span></span><br><span class="line">  <span class="comment">//         [   ]      lcp(si,ans[i-1][p+1..q])</span></span><br><span class="line">  <span class="comment">//              [   ] lcp(si,si[q-p..])</span></span><br><span class="line">  <span class="comment">//z:       0      szs-1</span></span><br><span class="line">  <span class="comment">// szs+1</span></span><br><span class="line">  <span class="type">int</span> szs = <span class="built_in">size</span>(arr[i]);</span><br><span class="line">  <span class="keyword">if</span> (p &gt; q) <span class="keyword">return</span> -<span class="built_in">cmp2</span>(z,i, q, p);</span><br><span class="line">  <span class="type">int</span> lcp = z[szs + p]; <span class="comment">// lcp(si,ans[i-1][p+1..q])</span></span><br><span class="line">  <span class="keyword">if</span> (lcp &lt; q - p) &#123;</span><br><span class="line">    <span class="keyword">if</span> (lcp &gt;= szs) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> (<span class="built_in">cs</span>(i<span class="number">-1</span>)[p + lcp] &lt; arr[i][lcp]) ? <span class="number">-1</span> : <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  lcp = z[q - p]; <span class="comment">// lcp(si,si[q-p..])</span></span><br><span class="line">  <span class="keyword">if</span> (q + lcp &gt;= p + szs) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> (arr[i][lcp] &lt; arr[i][q - p + lcp]) ? <span class="number">-1</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> k=<span class="built_in">read</span>();</span><br><span class="line">  arr.<span class="built_in">resize</span>(n+<span class="number">1</span>); <span class="comment">// 1-index</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,tmp);</span><br><span class="line">    <span class="type">int</span> sz=<span class="built_in">strlen</span>(tmp);</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,sz) arr[i].<span class="built_in">push_back</span>(tmp[j]);</span><br><span class="line">  &#125;</span><br><span class="line">  can[n + <span class="number">1</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Zeroes are shifted in, and bits that would go to an index out of range are dropped (ignored).</span></span><br><span class="line">  <span class="built_in">per</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) can[i] = can[i + <span class="number">1</span>] | (can[i + <span class="number">1</span>] &lt;&lt; (<span class="type">int</span>)<span class="built_in">size</span>(arr[i]));</span><br><span class="line"></span><br><span class="line">  dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="comment">// 不使用j的情况</span></span><br><span class="line">    <span class="built_in">cs</span>(i) = <span class="built_in">cs</span>(i - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">per</span>(j,<span class="number">0</span>,k+<span class="number">1</span>) <span class="keyword">if</span>(dp[i<span class="number">-1</span>][j] <span class="keyword">and</span> can[i+<span class="number">1</span>][k-j]) &#123; <span class="comment">// 对于上一个成立,对于当前不使用, 可能不成立</span></span><br><span class="line">      <span class="built_in">cs</span>(i) = <span class="built_in">cs</span>(i).<span class="built_in">substr</span>(<span class="number">0</span>,j); <span class="comment">// 先只用关心最长的即可</span></span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> sz = <span class="built_in">size</span>(arr[i]);</span><br><span class="line">    <span class="keyword">auto</span> z = <span class="built_in">make_z</span>(arr[i] + <span class="built_in">cs</span>(i - <span class="number">1</span>)); <span class="comment">// [0..sz-1][sz..sz+len(cs(i-1))-1]</span></span><br><span class="line">    z.<span class="built_in">push_back</span>(<span class="number">0</span>); <span class="comment">// cmp2 中 z[q-p] 可能超长</span></span><br><span class="line">    <span class="comment">// decide cs[i]</span></span><br><span class="line">    <span class="type">int</span> nxt = <span class="number">-1</span>; <span class="comment">// 只记录合成的(prefix[ans[i-1]] + s[i])最优的</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,k-sz+<span class="number">1</span>) <span class="keyword">if</span> (dp[i<span class="number">-1</span>][j] <span class="keyword">and</span> can[i+<span class="number">1</span>][k-(j+sz)]) &#123; <span class="comment">// j =&gt; j+sz</span></span><br><span class="line">      <span class="keyword">if</span> (nxt == <span class="number">-1</span>) &#123; <span class="comment">// 暂无方案</span></span><br><span class="line">        <span class="type">int</span> res = <span class="built_in">cmp</span>(z,i,<span class="built_in">size</span>(<span class="built_in">cs</span>(i)), j); <span class="comment">// 和 转移过来的 方案比</span></span><br><span class="line">        <span class="keyword">if</span> (res == <span class="number">1</span> || (res == <span class="number">0</span> <span class="keyword">and</span> j + sz &gt; (<span class="type">int</span>)<span class="built_in">size</span>(<span class="built_in">cs</span>(i)))) nxt = j; <span class="comment">// 更小,或前缀相等但是更长</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">cmp2</span>(z,i, nxt, j) &lt;= <span class="number">0</span>)&#123;</span><br><span class="line">        nxt = j;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (nxt == <span class="number">-1</span>) &#123;<span class="comment">// s[i] is not a suffix of cs[i]</span></span><br><span class="line">      <span class="comment">// 对于上一个成立, 对于当前不使用, 可能不成立,</span></span><br><span class="line">      <span class="comment">// 这种状态不清理其实也不影响,因为后面拼接时也有校验,不会产生贡献</span></span><br><span class="line">      <span class="built_in">rep</span>(j,<span class="number">0</span>,k+<span class="number">1</span>) <span class="keyword">if</span>(dp[i<span class="number">-1</span>][j] <span class="keyword">and</span> can[i+<span class="number">1</span>][k-j]) dp[i][j] = <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// ans [.............]</span></span><br><span class="line">      <span class="comment">//     [.....nxt][si.....]</span></span><br><span class="line">      <span class="comment">//                 | 匹配以后的0/1会变</span></span><br><span class="line">      <span class="built_in">cs</span>(i) = <span class="built_in">cs</span>(i - <span class="number">1</span>).<span class="built_in">substr</span>(<span class="number">0</span>, nxt) + arr[i];</span><br><span class="line">      <span class="comment">// 和原来相等的部分</span></span><br><span class="line">      <span class="built_in">rep</span>(j,<span class="number">0</span>,<span class="built_in">size</span>(<span class="built_in">cs</span>(i - <span class="number">1</span>))+<span class="number">1</span>) dp[i][j] = (dp[i - <span class="number">1</span>][j] <span class="keyword">and</span> can[i+<span class="number">1</span>][k-j] <span class="keyword">and</span> <span class="built_in">cmp</span>(z,i, j, nxt) == <span class="number">0</span>);</span><br><span class="line">      dp[i][<span class="built_in">size</span>(<span class="built_in">cs</span>(i))] = <span class="number">1</span>;</span><br><span class="line">      <span class="comment">// 又 前面 的 + arr[i] 拼成</span></span><br><span class="line">      <span class="built_in">rep</span>(j,<span class="number">0</span>, <span class="built_in">size</span>(<span class="built_in">cs</span>(i)) - sz) <span class="keyword">if</span>(dp[i - <span class="number">1</span>][j] <span class="keyword">and</span> can[i+<span class="number">1</span>][k-sz-j] <span class="keyword">and</span> <span class="built_in">cmp2</span>(z,i,j,nxt) == <span class="number">0</span>)dp[i][j+sz]=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,<span class="built_in">cs</span>(n).<span class="built_in">c_str</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>E</p>
+<p>一个是反过来考虑,一个是状态表示!!</p>
+<p>F</p>
+<p>这个”只留有用的”优化,想之前觉得不会有啥,仔细一想真的优化了不少</p>
+<p>后面这个z-function 第一次见,有点像kmp但不完全一样, 毕竟kmp的核心是求以这个位置结束 的后缀的最长lcp, 而z-function是以这个位置开始的最长lcp</p>
+<p>然后z-function 的 <code>z[0]</code> 感觉似乎没有地方会用到,实际要用到不用z-function这个值也是显然的</p>
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/solution/AT_arc058_c">https://www.luogu.com.cn/problem/solution/AT_arc058_c</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/arc/058/" title="Atcoder arc058">https://yexiaorain.github.io/Blog/atcoder/arc/058/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" rel="tag"><i class="fa fa-tag"></i> 状态压缩</a>
+              <a href="/Blog/tags/z-function/" rel="tag"><i class="fa fa-tag"></i> z function</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/2023-07-08-bestcoder2022/" rel="prev" title="百度之星2022 初赛">
+                  <i class="fa fa-chevron-left"></i> 百度之星2022 初赛
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">476k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">26:28</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/arc/058/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
