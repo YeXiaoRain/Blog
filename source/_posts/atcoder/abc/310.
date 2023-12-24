@@ -1,0 +1,189 @@
+---
+title: Atcoder abc309
+date: 2023-07-08
+tags: []
+category: [Atcoder,ABC]
+description: Ex(环)
+---
+
+<https://atcoder.jp/contests/abc309/tasks>
+
+# Ex - Simple Path Counting Problem
+
+N行 M列 grid
+
+长K整数数组A
+
+长L整数数组B
+
+$f(i,j) =$从$(1,A_i)$移动到$(N,B_j)$恰好$(N-1)$次的路径方案数
+
+其中每次移动$(+1,-1),(+1,+0),(+1,+1)$
+
+求$\displaystyle \sum_{i\in[1,K]}\sum_{j\in[1,L]} f(i,j) \pmod{998244353}$
+
+$1\le N\le 10^9$
+
+$1 \le M,K,L,\le 10^5$
+
+$1\le A_i,B_j\le M$
+
+10 s
+
+1024 MB
+
+## 我的思路
+
+这个 坐标的x始终+1,看起来没什么用啊
+
+所以$f(i,j)$等价于 $A_i$变为$B_j$,且每次$+1/+0/-1$,过程中不超过$[1,M]$范围的恰好$N-1$次的方案数
+
+如果 没有范围限制, 对于合法$X+Y*0-Z = B_j-A_i, X+Y+Z=N-1$的方案数有$\binom{N-1}{X,Z}$
+
+$\displaystyle \sum_{Z=1}^{N-1} \frac{(N-1)!}{Z!(B_j-A_i+Z)!((N-1)-Z-(B_j-A_i+Z))!}$
+
+其中令$\frac{1}{(<0)!} = 0$
+
+这种情况 只和 $B_j-A_i$的值有关,可以预处理(所有差在$[-(M-1),+(M-1)]$内 )+统计(??????????????????)就可以
+
+---
+
+似乎连统计两个数组的所有差都不会??
+
+好像 $f_A(x) = \sum count(A[i]=v)x^{-v}$
+
+$f_B(x) = \sum count(B[i]=v)x^{v}$
+
+$f_A(x)f_B(x)$ 应该就能统计
+
+然后为了不要处理负, $f'_A(x) = x^{\max{v}} f_A(x)$即可
+
+---
+
+其实这里还有个问题是 N很大的话 暴力计算阶乘够吗?
+
+---
+
+那么回到题目, 当有范围限制要如何做呢?
+
+似乎没有办法
+
+但这里既然想到生成函数
+
+$[x^j] f_i(x)$ 表示移动$i$次后路径值变为$j$的方案数
+
+$f_0(x) = x^{A_i}$
+
+$g(x) =$转移方程
+
+$f_i(x) = g(f_{i-1}(x))$
+
+求 $[x^{B_j}]f_{n-1}(x)$
+
+好像 为了$[1,M]$的范围 还是要处理 两端..
+
+---
+
+一个想法是, 去计算 2的幂次的转移变化, 这样的话 对于N就是log级别了
+
+但似乎 这会变成 $M * M$的矩阵,而不是一个简单的乘上一个函数
+
+<!--more-->
+
+## 题解
+
+显然 如果不考虑复杂度, 就是 O(NM)的dp
+
+$dp[i][j] = dp[i-1][j-1]+dp[i-1][j]+dp[i-1][j+1](2 \le i \le N,1 \le j \le M)$
+
+用一个叫做"method of mirror images"的技术
+
+把第二个维度翻倍，并做了取相反数, 也就是起始变成
+
+```
+0
+C_1
+C_2
+...
+0 (中间1个0) # 注意到对称性，这两侧在计算过程中永远为相反数
+...
+-C_2
+-C_1
+```
+
+这样就可以用ploy,
+
+令ploy为$f_i(x) = \sum_{j=0}^{2M+1}dp[i][j]x^j$
+
+有转移方程: $f_i(x) = f_{i-1}(x)\cdot (x^{-1}+1+x)$
+
+然后 x的指数 要mod (2M+2), 注意这里不是 ploy mod $x^{2M+2}$ 而是 结果的指数, 因为这里实际上可以看成
+
+`[0 c_1 c_2...][0...-c_2 -c_1] [0 c_1 c_2...]...` 这样无限长的循环拼接!!
+
+也就是 如果是 mod $x^?$ 这种在过程中处理不了，和每次修改边界系数处理不了，但是
+
+如果是指数mod，那就可以直接把 $x^{2M+2} = 1$, 所以可以最后结果 $\bmod (x^{2M+2}-1)$
+
+$f_N(x) = f_1(x)\cdot (x^{-1}+1+x)^{N-1} \bmod (x^{2M+2}-1)$
+
+## 代码
+
+<https://atcoder.jp/contests/abc309/submissions/47081712>
+
+```cpp
+#include <bits/stdc++.h>
+#include <atcoder/convolution>
+#include <atcoder/modint>
+const int MOD = 998244353;
+using mint = atcoder::static_modint<MOD>;
+using namespace std;
+#define rep(i, a, n) for (int i = a; i < (int)(n); i++)
+int read() { int r; scanf("%d", &r); return r; }
+
+int main() {
+  int n = read();
+  int m = read();
+  int k = read();
+  int l = read();
+  vector<mint> res(2 * m + 2, 0);
+  rep(i, 0, k) {
+    int off = read();
+    res[off]++;
+    res[2 * m + 2 - off]--;
+  }
+  // res * ((1+x+x^2)/x)^{n-1} mod (x^{2m+2}-1)
+  vector<mint> v(3, 1);  // 1+x+x^2
+  auto mul = [&](const vector<mint>& a, const vector<mint>& b) {  // a * b  % (x^{2m+2} - 1)
+    vector<mint> ret = atcoder::convolution(a, b);
+    while ((int)ret.size() > 2 * m + 2) {
+      ret[(ret.size() - 1) % (2 * m + 2)] += ret.back();
+      ret.pop_back();
+    }
+    return ret;
+  };
+  int p = n - 1;
+  while (p) { // * (1+x+x^2)^{n-1}
+    if (p & 1) res = mul(res, v);
+    v = mul(v, v);
+    p /= 2;
+  }
+  // assert(res[(n - 1) % (2 * m + 2)].val() == 0);
+  mint ans = 0;
+  rep(i, 0, l) ans += res[(read() + (n - 1)) % (2 * m + 2)]; // off -> (off+(n-1)) % (2m+2)
+  printf("%d\n", ans.val());
+  return 0;
+}
+```
+
+# 总结
+
+Ex
+
+method of mirror images 有点神奇，第一次见，还是配合ploy用的
+
+不过的确中间的 mod 和 每次手动设置边界的ploy的确 不可用，这点判断是正确的，但是像这样转化，让 中间 和 边界 不需要特殊处理，学了一手
+
+# 参考
+
+[官方题解](https://atcoder.jp/contests/abc309/editorial)
