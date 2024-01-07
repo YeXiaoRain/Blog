@@ -26,7 +26,7 @@
 <meta property="og:description" content="模逆元&#x2F;乘法逆元众所周知,如同线段树&#x2F;FFT一样,乘法逆元是CF的入门必会算法,然而我只能凭空写线段树 每次遇到需要用乘法逆元,我都是快速搜一个函数代码,复制进来用 之前也反复学懂了三四遍,始终没记住(毕竟用的频率不算高) 以下大自整理总结一下 什么是乘法逆元已知a和p求b, 其中gcd(a,p)&#x3D;1 $a^{ -1 } \equiv b{\pmod {n}}$ 求法费马小定理">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2018-12-29T17:37:14.000Z">
-<meta property="article:modified_time" content="2024-01-07T09:50:59.093Z">
+<meta property="article:modified_time" content="2024-01-07T09:51:52.301Z">
 <meta property="article:author" content="Xiao Ye">
 <meta property="article:tag" content="exgcd">
 <meta property="article:tag" content="gcd">
@@ -140,7 +140,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E9%80%86%E5%85%83-x2F-%E4%B9%98%E6%B3%95%E9%80%86%E5%85%83"><span class="nav-text">模逆元&#x2F;乘法逆元</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B9%98%E6%B3%95%E9%80%86%E5%85%83"><span class="nav-text">什么是乘法逆元</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B1%82%E6%B3%95"><span class="nav-text">求法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97"><span class="nav-text">扩展欧几里得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97-%E7%9A%84%E7%9F%A9%E9%98%B5%E7%90%86%E8%A7%A3"><span class="nav-text">扩展欧几里得 的矩阵理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E6%B1%82-lt-p-%E7%9A%84-%E6%A8%A1%E9%80%86%E5%85%83"><span class="nav-text">批量求 $&lt; p $ 的 模逆元</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%951"><span class="nav-text">方法1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%952"><span class="nav-text">方法2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-text">例题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E9%80%86%E5%85%83-%E4%B9%98%E6%B3%95%E9%80%86%E5%85%83"><span class="nav-text">模逆元&#x2F;乘法逆元</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B9%98%E6%B3%95%E9%80%86%E5%85%83"><span class="nav-text">什么是乘法逆元</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B1%82%E6%B3%95"><span class="nav-text">求法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97"><span class="nav-text">扩展欧几里得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97-%E7%9A%84%E7%9F%A9%E9%98%B5%E7%90%86%E8%A7%A3"><span class="nav-text">扩展欧几里得 的矩阵理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E6%B1%82-p-%E7%9A%84-%E6%A8%A1%E9%80%86%E5%85%83"><span class="nav-text">批量求 $&lt; p $ 的 模逆元</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%951"><span class="nav-text">方法1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%952"><span class="nav-text">方法2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-text">例题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -252,7 +252,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2024-01-07 17:50:59" itemprop="dateModified" datetime="2024-01-07T17:50:59+08:00">2024-01-07</time>
+      <time title="修改時間：2024-01-07 17:51:52" itemprop="dateModified" datetime="2024-01-07T17:51:52+08:00">2024-01-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -302,7 +302,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="模逆元-x2F-乘法逆元"><a href="#模逆元-x2F-乘法逆元" class="headerlink" title="模逆元&#x2F;乘法逆元"></a>模逆元&#x2F;乘法逆元</h1><p>众所周知,如同线段树&#x2F;FFT一样,乘法逆元是CF的入门必会算法,然而我只能凭空写线段树</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="模逆元-乘法逆元"><a href="#模逆元-乘法逆元" class="headerlink" title="模逆元&#x2F;乘法逆元"></a>模逆元&#x2F;乘法逆元</h1><p>众所周知,如同线段树&#x2F;FFT一样,乘法逆元是CF的入门必会算法,然而我只能凭空写线段树</p>
 <p>每次遇到需要用乘法逆元,我都是快速搜一个函数代码,复制进来用</p>
 <p>之前也反复学懂了三四遍,始终没记住(毕竟用的频率不算高)</p>
 <p>以下大自整理总结一下</p>
@@ -334,7 +334,7 @@
 <p>要注意的是如果 原来的数据有负数,零,需要在外部处理</p>
 <h1 id="扩展欧几里得-的矩阵理解"><a href="#扩展欧几里得-的矩阵理解" class="headerlink" title="扩展欧几里得 的矩阵理解"></a>扩展欧几里得 的矩阵理解</h1><p>${\begin{pmatrix} a &amp; p \\ 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix} } {\begin{pmatrix}x \\ y\end{pmatrix}} \Rightarrow {\begin{pmatrix}{a \cdot x + b \cdot y &#x3D; gcd(x,y) } \\ x \\ y \end{pmatrix}}$</p>
 <p>所以可以建立 <code>2*3</code>矩阵,然后对它做列变换,直到 得到<code>gcd(a,p)</code>, 这时的 列向量上的 第二第三个值就是<code>(x,y)</code></p>
-<h1 id="批量求-lt-p-的-模逆元"><a href="#批量求-lt-p-的-模逆元" class="headerlink" title="批量求 $&lt; p $ 的 模逆元"></a>批量求 $&lt; p $ 的 模逆元</h1><h2 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h2><p>妇孺皆知,质数的欧拉筛法,又 模逆元 有 可乘性,</p>
+<h1 id="批量求-p-的-模逆元"><a href="#批量求-p-的-模逆元" class="headerlink" title="批量求 $&lt; p $ 的 模逆元"></a>批量求 $&lt; p $ 的 模逆元</h1><h2 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h2><p>妇孺皆知,质数的欧拉筛法,又 模逆元 有 可乘性,</p>
 <p>所以 如果 <code>a=p1*p2</code>,那么 a的模逆元 &#x3D; <code>p1的模逆元*p2的模逆元</code> mod p</p>
 <p>只需要 <code>O(p+ exgcd平均时间 * ~n/ln n )</code></p>
 <h2 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h2><p>线性递推</p>
