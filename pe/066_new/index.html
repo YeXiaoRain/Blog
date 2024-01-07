@@ -18,19 +18,20 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="解pell方程就过程进行书写,去掉自己尝试思考的中间步骤,只留下有效的过程 初版文章 原题目https:&#x2F;&#x2F;projecteuler.net&#x2F;problem&#x3D;66 $d &#x3D; 1\to 1000$,d是非平方数 对于每个$d$ 求最小的正整数$x$使得$x^2-dy^2&#x3D;1$,其中$x$,$y$都是正整数, 最后对所有这些$x$求最大的$x$  本文针对给定的$d$讨论具体的方程">
+    <meta name="description" content="从零入门 pell 方程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="project euler 066 diophantine equation(关键内容重新整理版)">
 <meta property="og:url" content="https://yexiaorain.github.io/Blog/pe/066_new/index.html">
 <meta property="og:site_name" content="YeXiaoRain Blog">
-<meta property="og:description" content="解pell方程就过程进行书写,去掉自己尝试思考的中间步骤,只留下有效的过程 初版文章 原题目https:&#x2F;&#x2F;projecteuler.net&#x2F;problem&#x3D;66 $d &#x3D; 1\to 1000$,d是非平方数 对于每个$d$ 求最小的正整数$x$使得$x^2-dy^2&#x3D;1$,其中$x$,$y$都是正整数, 最后对所有这些$x$求最大的$x$  本文针对给定的$d$讨论具体的方程">
+<meta property="og:description" content="从零入门 pell 方程">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://yexiaorain.github.io/Blog/img/20201205pe066.png">
 <meta property="article:published_time" content="2020-12-05T02:37:14.000Z">
-<meta property="article:modified_time" content="2024-01-07T09:53:22.464Z">
+<meta property="article:modified_time" content="2024-01-07T15:59:52.498Z">
 <meta property="article:author" content="Xiao Ye">
 <meta property="article:tag" content="数学">
-<meta property="article:tag" content="pell eqn">
+<meta property="article:tag" content="pell">
+<meta property="article:tag" content="eqn">
 <meta name="twitter:card" content="&lt;twitter:card&gt;">
 <meta name="twitter:image" content="https://yexiaorain.github.io/Blog/img/20201205pe066.png">
 
@@ -91,7 +92,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">284</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">18</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">275</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">279</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">281</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
         </a>
@@ -157,18 +158,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/Blog/archives/">
-          <span class="site-state-item-count">284</span>
+          <span class="site-state-item-count">279</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/Blog/categories/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/Blog/tags/">
-        <span class="site-state-item-count">275</span>
+        <span class="site-state-item-count">281</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -232,7 +233,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="project euler 066 diophantine equation(关键内容重新整理版) | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="从零入门 pell 方程">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -254,7 +255,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2024-01-07 17:53:22" itemprop="dateModified" datetime="2024-01-07T17:53:22+08:00">2024-01-07</time>
+      <time title="修改時間：2024-01-07 23:59:52" itemprop="dateModified" datetime="2024-01-07T23:59:52+08:00">2024-01-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -298,6 +299,7 @@
     </span>
 </div>
 
+            <div class="post-description">从零入门 pell 方程</div>
         </div>
       </header>
 
@@ -691,7 +693,8 @@
 
           <div class="post-tags">
               <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
-              <a href="/Blog/tags/pell-eqn/" rel="tag"><i class="fa fa-tag"></i> pell eqn</a>
+              <a href="/Blog/tags/pell/" rel="tag"><i class="fa fa-tag"></i> pell</a>
+              <a href="/Blog/tags/eqn/" rel="tag"><i class="fa fa-tag"></i> eqn</a>
           </div>
 
         
@@ -742,13 +745,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="總字數">484k</span>
+    <span title="總字數">485k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">26:55</span>
+    <span title="所需總閱讀時間">26:57</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
