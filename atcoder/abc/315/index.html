@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(exgcd)Ex(分治卷积)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc315">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/315/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(exgcd)Ex(分治卷积)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-08-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-24T21:32:16.404Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="exgcd">
+<meta property="article:tag" content="分治卷积">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/315/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/315/","path":"atcoder/abc/315/","title":"Atcoder abc315"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc315 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">285</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">285</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Ai-Bj-Ck-X-1"><span class="nav-text">G - Ai + Bj + Ck &#x3D; X (1 &lt;&#x3D; i, j, k &lt;&#x3D; N)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ex-Typical-Convolution-Problem"><span class="nav-text">Ex - Typical Convolution Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">285</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">285</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/315/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc315 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(exgcd)Ex(分治卷积)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc315
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-08-19 00:00:00" itemprop="dateCreated datePublished" datetime="2023-08-19T00:00:00+08:00">2023-08-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2024-01-25 05:32:16" itemprop="dateModified" datetime="2024-01-25T05:32:16+08:00">2024-01-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/315/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/315/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>5 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(exgcd)Ex(分治卷积)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc315">https://atcoder.jp/contests/abc315</a></p>
+<h1 id="G-Ai-Bj-Ck-X-1"><a href="#G-Ai-Bj-Ck-X-1" class="headerlink" title="G - Ai + Bj + Ck &#x3D; X (1 &lt;&#x3D; i, j, k &lt;&#x3D; N)"></a>G - Ai + Bj + Ck &#x3D; X (1 &lt;&#x3D; i, j, k &lt;&#x3D; N)</h1><p>给定a,b,c,x,n 找满足限制的方案数</p>
+<p>n 1e6</p>
+<p>a,b,c [1,1e9]</p>
+<p>x 3e15</p>
+<p>2s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然 for i &#x3D; 1..n, 剩余部分exgcd算一算</p>
+<p>但是<a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc315/submissions/49589945">wa了17个点</a>，感觉我的exgcd应该是overflow了</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>和我过程一模一样但是没有代码, 会overflow的代码,(不过本身逻辑没问题用python可能就过了)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ax+by=c, gcd(a,b)=1, return &#123;x,y&#125;</span></span><br><span class="line"><span class="function">tuple&lt;ll,ll&gt; <span class="title">exgcd</span><span class="params">(ll a,ll b,ll c)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(b == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">assert</span>(a==<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> &#123;c, <span class="number">0</span>&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> [_x,_y] = <span class="built_in">exgcd</span>(b,a%b, c);</span><br><span class="line">  <span class="keyword">return</span> &#123;_y,_x - (a/b) * _y&#125;; <span class="comment">// overflow????</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修复后的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ax+by=gcd(a,b), 不传入c，返回&#123;x,y,gcd(a,b)&#125;</span></span><br><span class="line"><span class="function">tuple&lt;ll,ll,ll&gt; <span class="title">exgcd</span><span class="params">(ll a,ll b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(b == <span class="number">0</span>) <span class="keyword">return</span> &#123;<span class="number">1</span>,<span class="number">0</span>,a&#125;;</span><br><span class="line">  <span class="keyword">auto</span> [_x,_y,g] = <span class="built_in">exgcd</span>(b,a%b);</span><br><span class="line">  <span class="keyword">return</span> &#123;_y,_x - (a/b) * _y, g&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc315/submissions/me">https://atcoder.jp/contests/abc315/submissions/me</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="comment">// ax+by=gcd(a,b), return &#123;x,y,gcd(a,b)&#125;</span></span><br><span class="line"><span class="comment">// ((a/b)*b+a%b) x + by = gcd(a,b)</span></span><br><span class="line"><span class="comment">// b (y+(a/b)x) + (a%b) x = gcd(a,b)</span></span><br><span class="line"><span class="function">tuple&lt;ll,ll,ll&gt; <span class="title">exgcd</span><span class="params">(ll a,ll b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(b == <span class="number">0</span>) <span class="keyword">return</span> &#123;<span class="number">1</span>,<span class="number">0</span>,a&#125;;</span><br><span class="line">  <span class="keyword">auto</span> [_x,_y,g] = <span class="built_in">exgcd</span>(b,a%b);</span><br><span class="line">  <span class="keyword">return</span> &#123;_y,_x - (a/b) * _y, g&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">mod</span><span class="params">(ll a,ll b)</span></span>&#123;<span class="keyword">return</span> (a%b+b)%b;&#125; <span class="comment">// [0,b)</span></span><br><span class="line"><span class="function">ll <span class="title">floordiv</span><span class="params">(ll a,ll b)</span></span>&#123; <span class="keyword">return</span> (a-<span class="built_in">mod</span>(a,b))/b; &#125; <span class="comment">// a = kb + [0,b) return k</span></span><br><span class="line"><span class="function">ll <span class="title">ceildiv</span><span class="params">(ll a,ll b)</span></span>&#123; <span class="keyword">return</span> (a-<span class="built_in">mod</span>(a,b))/b + !!(<span class="built_in">mod</span>(a,b)); &#125; <span class="comment">// a = kb + (-b,0] return k</span></span><br><span class="line"><span class="function">ll <span class="title">gcd</span><span class="params">(ll a,ll b)</span></span>&#123; <span class="keyword">return</span> b==<span class="number">0</span>?a:<span class="built_in">gcd</span>(b,a%b); &#125;</span><br><span class="line"><span class="comment">// count( (x,y) \in[1,n]) ,  ax+by=c</span></span><br><span class="line"><span class="function">ll <span class="title">solve</span><span class="params">(ll a,ll b,ll c,ll n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(c &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">auto</span> [x,y,g] = <span class="built_in">exgcd</span>(a,b); <span class="comment">// gcd(a,b) = 1</span></span><br><span class="line">  <span class="keyword">if</span>(c % g != <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  a/=g; b/=g; c/=g;</span><br><span class="line">  <span class="built_in">assert</span>(a*x+b*y==<span class="number">1</span>); <span class="comment">// c*x*a+c*b*y==c</span></span><br><span class="line">  <span class="comment">// ax+by=1 =&gt; =c</span></span><br><span class="line">  <span class="comment">// find min(x &gt; 0)</span></span><br><span class="line">  <span class="comment">// 每次 x-=b,y+=a 结果不变</span></span><br><span class="line">  <span class="comment">// cax+byc=c</span></span><br><span class="line">  <span class="comment">// 找最小正数 = cx % b</span></span><br><span class="line">  x = ((c%b)*(x%b)%b+(b<span class="number">-1</span>))%b+<span class="number">1</span>; <span class="comment">// (0,b]</span></span><br><span class="line">  <span class="keyword">if</span>(a*x &gt; c) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  y = (c-a*x)/b;</span><br><span class="line">  <span class="built_in">assert</span>(a*x+b*y==c);</span><br><span class="line">  <span class="comment">// (x+kb,y-ka)</span></span><br><span class="line">  <span class="comment">// 1&lt;= x+kb &lt;= n</span></span><br><span class="line">  <span class="comment">// 1&lt;= y-ka &lt;= n</span></span><br><span class="line">  <span class="type">int</span> maxk = <span class="built_in">min</span>(<span class="built_in">floordiv</span>(n-x,b), <span class="built_in">floordiv</span>(y<span class="number">-1</span>,a));</span><br><span class="line">  <span class="type">int</span> mink = <span class="built_in">max</span>(<span class="built_in">ceildiv</span>(<span class="number">1</span>-x,b), <span class="built_in">ceildiv</span>(y-n,a));</span><br><span class="line">  <span class="keyword">return</span> mink&lt;=maxk?maxk-mink+<span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// ai + bj + ck = x count( (i,j,k) \in [1,n])</span></span><br><span class="line">  ll n = <span class="built_in">read</span>(); <span class="comment">// 1e6</span></span><br><span class="line">  ll a = <span class="built_in">read</span>(); <span class="comment">// [1,1e9]</span></span><br><span class="line">  ll b = <span class="built_in">read</span>(); <span class="comment">// [1,1e9]</span></span><br><span class="line">  ll c = <span class="built_in">read</span>(); <span class="comment">// [1,1e9]</span></span><br><span class="line">  ll x = <span class="built_in">read</span>(); <span class="comment">// [1,3e15]</span></span><br><span class="line">  ll m = <span class="built_in">gcd</span>(<span class="built_in">gcd</span>(a,b),<span class="built_in">gcd</span>(c,x));</span><br><span class="line">  a/=m; b/=m; c/=m; x/=m;</span><br><span class="line">  ll ans = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) ans += <span class="built_in">solve</span>(b,c,x-a*i,n);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 非常质朴的一道题</span></span><br><span class="line"><span class="comment">// 很有gcd/exgcd的想法</span></span><br><span class="line"><span class="comment">// a,b,c,x</span></span><br><span class="line"><span class="comment">// 就暴力for i,然后exgcd没了??</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Ex-Typical-Convolution-Problem"><a href="#Ex-Typical-Convolution-Problem" class="headerlink" title="Ex - Typical Convolution Problem"></a>Ex - Typical Convolution Problem</h1><p>$a_{1\cdots n} \in [1,2\cdot 10^5]$</p>
+<p>$f_0 &#x3D; 1$<br>$f_k &#x3D; a_k \cdot (\sum_{i+j&lt;k} f_i\cdot f_j)$</p>
+<p>求所有 $f_{1\cdots n}\mod 998244353$</p>
+<p>5s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>令 $G_k &#x3D; \sum_{i+j&#x3D;k} F_iF_j$</p>
+<p>$G &#x3D; F\star F$</p>
+<p>$F_k&#x3D;A_k(\sum_{i&lt;k} G_i)$</p>
+<p>似乎就是个二分过程中做卷积? 以前abc做过的</p>
+<p>ac了</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc315/submissions/49604273">https://atcoder.jp/contests/abc315/submissions/49604273</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/convolution&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">998244353</span>; <span class="comment">// 2^23 = 8388608, (MOD-1)%(2^23) == 0</span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)(a);)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="function">vector&lt;mint&gt; <span class="title">a</span><span class="params">(<span class="number">400010</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line"><span class="function">vector&lt;mint&gt; <span class="title">f</span><span class="params">(<span class="number">400010</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line"><span class="function">vector&lt;mint&gt; <span class="title">f2</span><span class="params">(<span class="number">400010</span>,<span class="number">0</span>)</span></span>; <span class="comment">// f2 = f*f</span></span><br><span class="line"><span class="function">vector&lt;mint&gt; <span class="title">pf2</span><span class="params">(<span class="number">400010</span>,<span class="number">0</span>)</span></span>; <span class="comment">// pf2[i] = pf2[i-1] + f2[i] , prefixsum</span></span><br><span class="line"><span class="comment">// 递归+二分+卷积</span></span><br><span class="line"><span class="comment">// 每次完成 [l,r) 的f计算和f2计算</span></span><br><span class="line"><span class="comment">// f2[i] = sum f[j]*f[i-j] = f*f</span></span><br><span class="line"><span class="comment">// f[i] = a[i] * sum f2[&lt;i] = ai * pf2[i]</span></span><br><span class="line"><span class="comment">// 计算[l,r)</span></span><br><span class="line"><span class="comment">//    - 且 [0,l) 之前已经计算好</span></span><br><span class="line"><span class="comment">//    - 且 [0,l) 内部卷积 对当前区间的贡献之前已经计算好</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">calc</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123; <span class="comment">// 保证长度是2的幂次, r-n = 2^k</span></span><br><span class="line">  <span class="keyword">if</span>(l+<span class="number">1</span>==r)&#123;</span><br><span class="line">    <span class="keyword">if</span>(l == <span class="number">0</span>) <span class="keyword">return</span> ;</span><br><span class="line">    f[l] = a[l] * pf2[l<span class="number">-1</span>];</span><br><span class="line">    f2[l] += f[l]*f[<span class="number">0</span>]*<span class="number">2</span>;</span><br><span class="line">    pf2[l] = pf2[l<span class="number">-1</span>] + f2[l];</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> mid=(l+r)/<span class="number">2</span>;</span><br><span class="line">  <span class="type">int</span> sz = r-l;</span><br><span class="line">  <span class="built_in">assert</span>((sz&amp;(sz<span class="number">-1</span>) ) ==<span class="number">0</span>); <span class="comment">// 长度是2的倍数</span></span><br><span class="line">  <span class="built_in">calc</span>(l,mid);</span><br><span class="line">  <span class="comment">// 计算 [l,mid) 对 [mid,r)的贡献</span></span><br><span class="line">  vector&lt;mint&gt; l2mid = &#123;&#125;;</span><br><span class="line">  <span class="built_in">rep</span>(i,l,mid) l2mid.<span class="built_in">push_back</span>(f[i]);</span><br><span class="line">  vector&lt;mint&gt; prefix= &#123;&#125;;</span><br><span class="line">  <span class="keyword">if</span>(l == <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,mid) prefix.<span class="built_in">push_back</span>(f[i]);</span><br><span class="line">    <span class="keyword">auto</span> c = atcoder::<span class="built_in">convolution</span>(l2mid,prefix); <span class="comment">//convolution([0...],[l...])</span></span><br><span class="line">    <span class="built_in">rep</span>(i,mid,r) f2[i] += c[i-l];</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,r-l) prefix.<span class="built_in">push_back</span>(f[i]);</span><br><span class="line">    <span class="keyword">auto</span> c = atcoder::<span class="built_in">convolution</span>(l2mid,prefix); <span class="comment">//convolution([0...],[l...])</span></span><br><span class="line">    <span class="built_in">rep</span>(i,mid,r) f2[i] += <span class="number">2</span>*c[i-l]; <span class="comment">// 平方！对称2次贡献</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">calc</span>(mid,r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) a[i]=<span class="built_in">read</span>();</span><br><span class="line">  pf2[<span class="number">0</span>] = f2[<span class="number">0</span>] = f[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> nn=n*<span class="number">2</span>;</span><br><span class="line">  <span class="keyword">while</span>((nn &amp; (nn+<span class="number">1</span>)) != <span class="number">0</span> ) nn = (nn&amp;(nn+<span class="number">1</span>))<span class="number">-1</span>; <span class="comment">// 长度 [0,nn] 是二的倍数</span></span><br><span class="line">  <span class="built_in">calc</span>(<span class="number">0</span>,nn+<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,f[i].<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc315/editorial">https://atcoder.jp/contests/abc315/editorial</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>第一次真的overflow了，我去官方的dropbox下载了数据，真的是overflow, 总的来说还是需要一个正确的不会overflow的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">oi test -i in/test_69.txt -o out/test_69.txt  </span><br><span class="line">[(&#x27;/home/cromarmot/Documents/computer/oiCode/dist/AtCoder/abc315/G/in/test_69.txt&#x27;, &#x27;/home/cromarmot/Documents/compu  </span><br><span class="line">ter/oiCode/dist/AtCoder/abc315/G/out/test_69.txt&#x27;)]  </span><br><span class="line">  </span><br><span class="line">[INFO]: Tester folder: /home/cromarmot/Documents/computer/oiCode/dist/AtCoder/abc315/G/TEST  </span><br><span class="line">[INFO]: Start compiling.  </span><br><span class="line">[INFO]: Run [clang++ -o Main Main.cpp -std=gnu++17 -O2 -g -Wall -Wcomma -Wextra -fsanitize=integer,undefined,null,al  </span><br><span class="line">ignment]  </span><br><span class="line">[INFO]: Successful compilation.  </span><br><span class="line">[INFO]: Execute: [[&#x27;./Main&#x27;]]  </span><br><span class="line">stderr: Main.cpp:15:25: runtime error: signed integer overflow: 13 * -790827376684848793 cannot be represented in ty  </span><br><span class="line">pe &#x27;long long&#x27;  </span><br><span class="line">SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior Main.cpp:15:25 in    </span><br><span class="line">Main.cpp:15:17: runtime error: signed integer overflow: -7402556864166049505 - 6611729487481200712 cannot be represe  </span><br><span class="line">nted in type &#x27;long long&#x27;  </span><br><span class="line">SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior Main.cpp:15:17 in    </span><br><span class="line">Main.cpp:29:3: runtime error: signed integer overflow: 701151656 * 3588519056455479667 cannot be represented in type  </span><br><span class="line">&#x27;long long&#x27;  </span><br><span class="line">SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior Main.cpp:29:3 in    </span><br><span class="line">Main.cpp:29:3: runtime error: signed integer overflow: 947037805 * 7318597677910819784 cannot be represented in type  </span><br><span class="line">&#x27;long long&#x27;  </span><br><span class="line">SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior Main.cpp:29:3 in    </span><br><span class="line">Main.cpp:29:3: runtime error: signed integer overflow: -9223335515789506216 + -9223341652767361684 cannot be represe  </span><br><span class="line">nted in type &#x27;long long&#x27;  </span><br><span class="line">SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior Main.cpp:29:3 in    </span><br><span class="line">  </span><br><span class="line">TestCase            test_69.txt =&gt; test_69.txt  </span><br><span class="line">Time spend          0.703432 s                   </span><br><span class="line">Virtual Memory      18.04 MB                     </span><br><span class="line">Files /home/cromarmot/Documents/computer/oiCode/dist/AtCoder/abc315/G/out/test_69.txt and /home/cromarmot/Documents/  </span><br><span class="line">computer/oiCode/dist/AtCoder/abc315/G/TEST/test_69.txt differ  </span><br><span class="line">  </span><br><span class="line">==============================================================================                                         </span><br><span class="line">1000000 165613875 701151656 947037805 85081109851091                                                                   </span><br><span class="line">                                                                                                                      </span><br><span class="line">-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  - -                                         </span><br><span class="line">34                                                            | 0                                                      </span><br><span class="line">                                                                                                                      </span><br><span class="line">==============================================================================</span><br></pre></td></tr></table></figure>
+
+<p>Ex 在补完了之前的abc的情况下不难</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/315/" title="Atcoder abc315">https://yexiaorain.github.io/Blog/atcoder/abc/315/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/exgcd/" rel="tag"><i class="fa fa-tag"></i> exgcd</a>
+              <a href="/Blog/tags/%E5%88%86%E6%B2%BB%E5%8D%B7%E7%A7%AF/" rel="tag"><i class="fa fa-tag"></i> 分治卷积</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/314/" rel="prev" title="Atcoder abc314">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc314
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/317/" rel="next" title="Atcoder abc317">
+                  Atcoder abc317 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">498k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">27:40</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/315/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
