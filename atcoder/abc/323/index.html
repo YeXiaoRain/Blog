@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(基尔霍夫定律（矩阵树定理），特征多项式（Hessenberg算法）)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc323">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/323/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(基尔霍夫定律（矩阵树定理），特征多项式（Hessenberg算法）)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-10-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-30T19:48:59.198Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="基尔霍夫定律">
+<meta property="article:tag" content="特征多项式">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/323/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/323/","path":"atcoder/abc/323/","title":"Atcoder abc323"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc323 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">290</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">287</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-Inversion-of-Tree"><span class="nav-text">G - Inversion of Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#O-N-4-%E7%9A%84%E5%8A%9E%E6%B3%95"><span class="nav-text">$O(N^4)$的办法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-N-3-%E7%9A%84%E5%8A%9E%E6%B3%95"><span class="nav-text">$O(N^3)$的办法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%A4%9A%E9%A1%B9%E5%BC%8FO-N-3"><span class="nav-text">特征多项式O(N^3)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E4%BC%BC%E7%9F%A9%E9%98%B5%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9B%B8%E7%AD%89"><span class="nav-text">相似矩阵行列式相等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E4%BC%BC%E7%9F%A9%E9%98%B5%E7%89%B9%E5%BE%81%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%9B%B8%E7%AD%89"><span class="nav-text">相似矩阵特征多项式相等</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">290</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">287</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/323/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc323 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(基尔霍夫定律（矩阵树定理），特征多项式（Hessenberg算法）)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc323
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-10-07 00:00:00" itemprop="dateCreated datePublished" datetime="2023-10-07T00:00:00+08:00">2023-10-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2024-01-31 03:48:59" itemprop="dateModified" datetime="2024-01-31T03:48:59+08:00">2024-01-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/323/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/323/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>8 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(基尔霍夫定律（矩阵树定理），特征多项式（Hessenberg算法）)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc321">https://atcoder.jp/contests/abc321</a></p>
+<h1 id="G-Inversion-of-Tree"><a href="#G-Inversion-of-Tree" class="headerlink" title="G - Inversion of Tree"></a>G - Inversion of Tree</h1><p>给定一个 1~n的排列p</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for k = 0..n-1:</span><br><span class="line">	求 对于n点树，满足((边端点 点的idx大小 和 p[点idx]大小 是相反的) 的边的个数 == k) 的树的个数 mod 998244353</span><br></pre></td></tr></table></figure>
+
+<p>n 500</p>
+<p>4s</p>
+<p>1024mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>因为这里要的相反不是 父子和p相反，而是<code>index</code>和<code>p[index]</code>相反， 所以如果要选根，选1就行</p>
+<p>然后问题是 如果在树上做dp,不光要记录满足树和子树的点树，还需要记录哪些点已经用了，感觉这状态有点多</p>
+<hr>
+<p>注意到$n\le 500$是有点小的，可能有$n^2,n^3$的考虑的方向，但实际上这里还有一个k,所以可能是$nk,n^2k,nk^2$一类的</p>
+<p>但直接的思路还是没有</p>
+<hr>
+<p>然后就是插入新点的想法</p>
+<p>如果有一个n-1点的方案，那么对于 <code>p[1]...p[n-1]</code>需要把所有大于$p[n]$的p进行减1,这样就是规模减1的子问题，</p>
+<p>但是问题是，这样的话，并没有看出n-1到n的转移</p>
+<p>首先钦定了根是1，所以(n,p(n))不是根，如果它是叶子，那么 一个n-1树上原来叶子<code>p[叶] &gt;= p[n]</code> 都会贡献到对应的k+1, 而原来<code>p[叶] &lt; p[n]</code> 会贡献到k</p>
+<p>那还不用说非叶子的，光是这里，就需要记录叶子的p和更大的p之间的关系的个数，那么更小的层数时要记的关联太多了</p>
+<hr>
+<p>似乎连一个暴力的计数法都没有</p>
+<hr>
+<p>然后 如果 &#x3D;&#x3D; k难求，可以考虑求 $\le k$ 然后做相邻相减</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>Kirchhoff’s theorem: 无自环可重边无向图的 基尔霍夫矩阵（拉普拉斯矩阵）的任意余子式的行列式 &#x3D; 树的个数</p>
+<p>而 定理中的证明过程有用到</p>
+<p>$B$是行表示点，列表示边的，值+1&#x2F;-1表示大小点的邻接矩阵</p>
+<p>$L&#x3D;B\cdot B^T$</p>
+<p>$L$去掉第i行第i列的主余子式 $&#x3D; \sum_{选n-1列} \mathrm{det}(B_{去掉i行选n-1列})\mathrm{det}(B_{去掉i行选n-1列}^T)$</p>
+<p>而如果我们让 满足本题统计的 逆向边乘上 $\sqrt{x}$, 其中$x$是生成函数里一样的$x$没有具体值的一个单位</p>
+<p>那么一个具体的树的贡献 就是</p>
+<p>$x^{满足题意统计的个数}$</p>
+<p>那么$[x^k] L$的主余子式,就是要求的$\mathrm{ans}_k$</p>
+<p>因此 $L_{i,j}$为$1$或$x$（看i和j的关系）求出的$L$的主余子式还是一个 生成函数</p>
+<hr>
+<p>因此问题变成了计算一个$M_0+M_1x$的行列式的问题，（因为本题对应的L只包含1(不满足题意统计),n-1(对角线的度),x(满足题意统计)</p>
+<hr>
+<h3 id="O-N-4-的办法"><a href="#O-N-4-的办法" class="headerlink" title="$O(N^4)$的办法"></a>$O(N^4)$的办法</h3><p>把$x&#x3D;0\cdots N$带入 求行列式</p>
+<p>再反过来求系数</p>
+<p>每次求行列式是$O(N^3)$因此总的是$O(N^4)$</p>
+<h3 id="O-N-3-的办法"><a href="#O-N-3-的办法" class="headerlink" title="$O(N^3)$的办法"></a>$O(N^3)$的办法</h3><p>把$\mathrm{det}(xI-M)$称作矩阵$M$的 特征多项式</p>
+<p>而特征多项式可以$O(N^3)$ <a target="_blank" rel="noopener" href="https://judge.yosupo.jp/problem/characteristic_polynomial">https://judge.yosupo.jp/problem/characteristic_polynomial</a></p>
+<p>所以需要转化</p>
+<p>如果$M_0+M_1x$中的$M_1$是regular的(行列式不为0)，可以通过初等行列变换(elementary row and column operations.)成I，即存在$I&#x3D;AM_1B$</p>
+<p>那么有$\det({M_0 + M_1 x })&#x3D; \frac{1}{\det A \det B}\det(A (M_0 + M_1 x)B) &#x3D; \frac{1}{\det A \det B}\det(AM_0B + I x),$<br>那么只要找到$AM_0B$再用 计算特征多项式的算法</p>
+<hr>
+<p>如果$M_1$是 not regular</p>
+<p>随机取一个$a$</p>
+<p>令$y &#x3D; x-a$有$x&#x3D;y+a$</p>
+<p>$\det({M_0 + M_1 x })&#x3D; \det({M_0 + M_1 (y+a) })&#x3D; \det({(M_0+M_1a) + M_1y})$</p>
+<p>注意到$\det({(M_0+M_1a) + M_1y})$与$\det({(M_0+M_1a)z + M_1})$ 在对应的特征多项式 的y幂次与z的幂次 正好 逆幂次对应系数</p>
+<p>所以 可以求$\det({(M_0+M_1a)z + M_1})$ , 而$M_0+M_1a$因为随机取的关系，有高概率是 regular的</p>
+<hr>
+<p>另一个想法是整体的想法, 当我们在 对$M_0+M_1x$ 进行基础行列变换时，它的整体是一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">              i当前要处理的列</span><br><span class="line">x+v00   v01  v02 ...</span><br><span class="line">  v10 x+v11  v12 ...</span><br><span class="line">  v20   v21  v22                       &lt;-- i当前要处理的行</span><br><span class="line">   .</span><br><span class="line">   .</span><br><span class="line">   .</span><br></pre></td></tr></table></figure>
+
+
+<p>如果对于$M_1$做变换时 在列上 找不到非0的系数，说明该列全为不带x的值，不妨把该列直接乘上x</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">              i当前要处理的列</span><br><span class="line">x+v00   v01  v02x ...</span><br><span class="line">  v10 x+v11  v12x ...</span><br><span class="line">  v20   v21  v22x                       &lt;-- i当前要处理的行</span><br><span class="line">   .         v23x</span><br><span class="line">   . </span><br><span class="line">   .</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这样整个行列式 被乘上了x, 最后做偏移量即可，比随机取一个a更<code>确定性</code>，而且对应的操作也就是把$M_0$的对应列搬到$M_1$，如果操作数大于n 直接表达式就为0了</p>
+<h2 id="特征多项式O-N-3"><a href="#特征多项式O-N-3" class="headerlink" title="特征多项式O(N^3)"></a>特征多项式O(N^3)</h2><p>$\mathrm{det}(I_nx-A_{n\times n})$</p>
+<ol>
+<li>利用相似矩阵特征多项式相同的性质将给定矩阵消成 <code>上 海森堡 矩阵</code>。</li>
+<li>使用行列式展开定理递推计算它的特征多项式。</li>
+</ol>
+<h4 id="相似矩阵行列式相等"><a href="#相似矩阵行列式相等" class="headerlink" title="相似矩阵行列式相等"></a>相似矩阵行列式相等</h4><p>$A\sim B$那么</p>
+<p>$|A|&#x3D;|P^{-1}BP|&#x3D;|P^{-1}||B||P|&#x3D;|P^{-1}||P||B|&#x3D;|P^{-1}P||B|&#x3D;|I||B|&#x3D;|B|$</p>
+<h4 id="相似矩阵特征多项式相等"><a href="#相似矩阵特征多项式相等" class="headerlink" title="相似矩阵特征多项式相等"></a>相似矩阵特征多项式相等</h4><p>$A\sim B$那么</p>
+<p>$|\lambda I -A|&#x3D;|P^{-1}(\lambda I -B)P|&#x3D;|P^{-1}||\lambda I-B||P|&#x3D;|P^{-1}||P||\lambda I-B|&#x3D;|\lambda I -B|$</p>
+<p>我们用上面的这个思路把矩阵变成 这样的形式（上 海森堡 矩阵）</p>
+<p>左乘行变换，右乘列变换，例如</p>
+<ul>
+<li>（第3<del>n行减去k倍第2行）A（第2列加上k倍的3</del>n列）就能完成第1列的 下方0</li>
+<li>（第4<del>n行减去k倍第3行）A（第3列加上k倍的4</del>n列）就能完成第2列的 下方0</li>
+</ul>
+<p>$$\begin{pmatrix} a_{1,1}&amp;a_{1,2}&amp;a_{1,3}&amp;\cdots&amp;a_{1,n}\\ a_{2,1}&amp;a_{2,2}&amp;a_{2,3}&amp;\cdots&amp;a_{2,n}\\ 0&amp;a_{3,2}&amp;a_{3,3}&amp;\cdots&amp;a_{3,n}\\ \vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\ 0&amp;0&amp;0&amp;\cdots&amp;a_{n,n} \end{pmatrix}$$</p>
+<p>$\displaystyle f_n(x)&#x3D;(x-a_{n,n})f_{n-1}(x)-\sum_{i&#x3D;1}^{n-1}f_{n-i-1}(x)\left( \prod_{j&#x3D;n-i+1}^n a_{j,j-1} \right) a_{n-i,n}$</p>
+<p>可以$O(n^3)$算出</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc323/submissions/49822377">https://atcoder.jp/contests/abc323/submissions/49822377</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)(a);)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt; <span class="comment">// det(Ix-A), T is your custom modint</span></span><br><span class="line"><span class="function">std::vector&lt;T&gt; <span class="title">characteristic_polynominal</span><span class="params">(std::vector&lt;std::vector&lt;T&gt;&gt; A)</span></span>&#123; <span class="comment">// copy(need modify), A[0-index]</span></span><br><span class="line">  <span class="type">int</span> n = A.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">if</span>(n == <span class="number">0</span>) <span class="keyword">return</span> vector&lt;T&gt;&#123;<span class="number">1</span>&#125;;</span><br><span class="line">  <span class="built_in">assert</span>(n == (<span class="type">int</span>)A[<span class="number">0</span>].<span class="built_in">size</span>());</span><br><span class="line">  <span class="comment">// 先转化成 上 海森堡 矩阵</span></span><br><span class="line">  <span class="built_in">rep</span>(j,<span class="number">0</span>,n<span class="number">-1</span>) &#123; <span class="comment">// 列</span></span><br><span class="line">    <span class="built_in">rep</span>(i,j+<span class="number">1</span>,n) <span class="keyword">if</span> (A[i][j] != <span class="number">0</span>) &#123; <span class="comment">// 取一个j列 行主元 非0的行</span></span><br><span class="line">      <span class="built_in">swap</span>(A[j+<span class="number">1</span>], A[i]); <span class="comment">// 交换</span></span><br><span class="line">      <span class="built_in">rep</span>(k,<span class="number">0</span>,n) <span class="built_in">swap</span>(A[k][j+<span class="number">1</span>], A[k][i]); <span class="comment">// 列交换</span></span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (A[j+<span class="number">1</span>][j]!=<span class="number">0</span>)&#123; <span class="comment">// 基础行/列变换,[i=j+2..n][j]置为0</span></span><br><span class="line">      T ajj_inv = A[j+<span class="number">1</span>][j].<span class="built_in">inv</span>();</span><br><span class="line">      <span class="built_in">rep</span>(i,j+<span class="number">2</span>,n)&#123;</span><br><span class="line">        T c = A[i][j] * ajj_inv;</span><br><span class="line">        <span class="built_in">rep</span>(k,j,n) A[i][k  ] -= A[j+<span class="number">1</span>][k] * c; <span class="comment">// row[i]  -=A[i][j]*A[j+1][j].inv()*row[j+1]</span></span><br><span class="line">        <span class="built_in">rep</span>(k,<span class="number">0</span>,n) A[k][j+<span class="number">1</span>] += A[k  ][i] * c; <span class="comment">// col[j+1]+=A[i][j]*A[j+1][j].inv()*col[i]</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 暴力展开最后一列</span></span><br><span class="line">  std::vector&lt;std::vector&lt;T&gt; &gt; <span class="built_in">f</span>(n+<span class="number">1</span>); <span class="comment">// 1-index</span></span><br><span class="line">  f[<span class="number">0</span>] = &#123;<span class="number">1</span>&#125;; <span class="comment">// |[0x0]| = 1</span></span><br><span class="line">  <span class="comment">// f[i+1] = x*f[i] - sum ( A[j=i..0][i] * (prod A[_=i..j+1][_-1]) * f[j])</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) &#123;</span><br><span class="line">    f[i+<span class="number">1</span>].<span class="built_in">push_back</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,<span class="built_in">size</span>(f[i])) f[i+<span class="number">1</span>].<span class="built_in">push_back</span>(f[i][j]); <span class="comment">// *x</span></span><br><span class="line">    T prod=<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">per</span>(j,<span class="number">0</span>,i+<span class="number">1</span>)&#123; <span class="comment">// i..0</span></span><br><span class="line">      T t = prod*A[j][i];</span><br><span class="line">      <span class="built_in">rep</span>(k,<span class="number">0</span>,<span class="built_in">size</span>(f[j])) f[i+<span class="number">1</span>][k] -= f[j][k]*t;</span><br><span class="line">      <span class="keyword">if</span>(j) prod *= A[j][j<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> f[n];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt; <span class="comment">// det(Ax+B), T is your custom modint</span></span><br><span class="line"><span class="function">std::vector&lt;T&gt; <span class="title">matrix_det</span><span class="params">(std::vector&lt;std::vector&lt;T&gt;&gt; A,std::vector&lt;std::vector&lt;T&gt;&gt;B)</span></span>&#123; <span class="comment">// copy(need modify), A[0-index]x+B</span></span><br><span class="line">  <span class="type">int</span> n = A.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">auto</span> op=[&amp;](<span class="keyword">auto</span> fn)&#123;<span class="built_in">fn</span>(A);<span class="built_in">fn</span>(B);&#125;; <span class="comment">// 同时操作A,B</span></span><br><span class="line">  <span class="comment">// Ax+B =&gt; LARx + LBR =&gt; Ix + B&#x27; 的形式</span></span><br><span class="line">  <span class="type">int</span> mul=<span class="number">0</span>; <span class="comment">// det(Ix+B&#x27;) = det(Ix+newB)/x^mul</span></span><br><span class="line">  T coef=<span class="number">1</span>; <span class="comment">// 从矩阵中统一提取出来的系数?</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) &#123;</span><br><span class="line">    <span class="comment">// 行变换 让A[i][i]!=0</span></span><br><span class="line">    <span class="keyword">auto</span> _=[&amp;]()&#123; <span class="built_in">rep</span>(j,i,n) <span class="keyword">if</span>(A[j][i] != <span class="number">0</span>)&#123; <span class="comment">// A,B 同时行变换, 让A[i][i] != 0</span></span><br><span class="line">      <span class="built_in">op</span>([&amp;](<span class="keyword">auto</span> &amp;M)&#123; <span class="built_in">swap</span>(M[i],M[j]);&#125;);</span><br><span class="line">      <span class="keyword">if</span>(i!=j) coef*=<span class="number">-1</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125; &#125;;</span><br><span class="line">    <span class="keyword">if</span>(A[i][i]==<span class="number">0</span>) &#123; <span class="comment">// i列全为不带x, A[0~n][i]==0, 则i列乘上x, 最后det/x</span></span><br><span class="line">      <span class="built_in">rep</span>(j,<span class="number">0</span>,n) <span class="built_in">swap</span>(A[j][i],B[j][i]);</span><br><span class="line">      mul++;</span><br><span class="line">      _();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(A[i][i]==<span class="number">0</span>) <span class="keyword">return</span> <span class="built_in">vector</span>&lt;T&gt;(n+<span class="number">1</span>,<span class="number">0</span>); <span class="comment">// 该列A,B全是0</span></span><br><span class="line">    T inv=A[i][i].<span class="built_in">inv</span>();</span><br><span class="line">    coef *= A[i][i];</span><br><span class="line">    <span class="comment">// A的[i][i] 行变成 1</span></span><br><span class="line">    <span class="built_in">op</span>([&amp;](<span class="keyword">auto</span>&amp;M)&#123; <span class="built_in">rep</span>(j,<span class="number">0</span>,n) M[i][j]=M[i][j]*inv; &#125;);</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,n) <span class="keyword">if</span>(j!=i <span class="keyword">and</span> A[j][i]!=<span class="number">0</span>) &#123; <span class="comment">// if(A[j][i]!=0) &#123; 把A中i列上，除了i行的全行变换 变成0</span></span><br><span class="line">      T x=A[j][i];</span><br><span class="line">      <span class="built_in">op</span>([&amp;](<span class="keyword">auto</span>&amp;M)&#123; <span class="built_in">rep</span>(k,<span class="number">0</span>,n) M[j][k]-=M[i][k]*x; &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(j,i+<span class="number">1</span>,n) <span class="keyword">if</span>(A[i][j] != <span class="number">0</span>)&#123; <span class="comment">// 列变换 可以省略吗？省略了似乎不能那样搬列了?</span></span><br><span class="line">      T x=A[i][j];</span><br><span class="line">      <span class="built_in">op</span>([&amp;](<span class="keyword">auto</span>&amp;M)&#123; <span class="built_in">rep</span>(k,<span class="number">0</span>,n) M[k][j]-=M[k][i]*x; &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Ix+B =&gt; Ix-B</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">rep</span>(j,<span class="number">0</span>,n) B[i][j]=-B[i][j];</span><br><span class="line">  <span class="keyword">auto</span> cp=<span class="built_in">characteristic_polynominal</span>(B); <span class="comment">// 即求B的特征方程</span></span><br><span class="line">  <span class="function">vector&lt;T&gt; <span class="title">ans</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,mul,n+<span class="number">1</span>) ans[i-mul]=cp[i]*coef;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ------------</span></span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">p</span><span class="params">(n,<span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) p[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="function">vector <span class="title">A</span><span class="params">(n,vector&lt;mint&gt;(n,<span class="number">0</span>))</span></span>; <span class="comment">// kirchhoff&#x27;s matrix, B+Ax</span></span><br><span class="line">  <span class="function">vector <span class="title">B</span><span class="params">(n,vector&lt;mint&gt;(n,<span class="number">0</span>))</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) <span class="built_in">rep</span>(j,i+<span class="number">1</span>,n) &#123; <span class="comment">// i &lt; j</span></span><br><span class="line">    vector&lt;vector&lt;mint&gt; &gt; *ptr= p[i] &gt; p[j] ? &amp;A: &amp;B;</span><br><span class="line">    (*ptr)[i][i]++;</span><br><span class="line">    (*ptr)[j][j]++;</span><br><span class="line">    (*ptr)[i][j]--;</span><br><span class="line">    (*ptr)[j][i]--;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> op=[&amp;](<span class="keyword">auto</span> fn)&#123;<span class="built_in">fn</span>(A);<span class="built_in">fn</span>(B);&#125;; <span class="comment">// 同时操作A,B</span></span><br><span class="line">  <span class="comment">// 求n-1阶主余子式 A[n-1,n-1] x + B[n-1,n-1]</span></span><br><span class="line">  <span class="built_in">op</span>([&amp;](<span class="keyword">auto</span>&amp;M)&#123;M.<span class="built_in">pop_back</span>();<span class="keyword">for</span>(<span class="keyword">auto</span> &amp;row:M)row.<span class="built_in">pop_back</span>();&#125;);</span><br><span class="line">  n--;</span><br><span class="line">  <span class="keyword">auto</span> ans=<span class="built_in">matrix_det</span>(A,B); <span class="comment">// det(Ax+B)</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,ans[i].<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>G: </p>
+<p>abc253出现过一次矩阵树定理</p>
+<p>所以 图的生成树问题就要向 基尔霍夫定理（矩阵树）想，第二次遇到了，回忆是做过但自己没想到</p>
+<p>Hessenberg算法第一次学 <a target="_blank" rel="noopener" href="https://judge.yosupo.jp/problem/characteristic_polynomial">https://judge.yosupo.jp/problem/characteristic_polynomial</a></p>
+<p>矩阵快速幂加速 <a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/923/E">https://codeforces.com/problemset/problem/923/E</a></p>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/math/linear-algebra/char-poly/">https://oi-wiki.org/math/linear-algebra/char-poly/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/323/" title="Atcoder abc323">https://yexiaorain.github.io/Blog/atcoder/abc/323/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E5%BE%8B/" rel="tag"><i class="fa fa-tag"></i> 基尔霍夫定律</a>
+              <a href="/Blog/tags/%E7%89%B9%E5%BE%81%E5%A4%9A%E9%A1%B9%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 特征多项式</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/321/" rel="prev" title="Atcoder abc321">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc321
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1889/" rel="next" title="Codeforces Round 906">
+                  Codeforces Round 906 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">504k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">27:59</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/323/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

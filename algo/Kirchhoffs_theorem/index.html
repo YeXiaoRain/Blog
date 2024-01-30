@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="Kirchhoff’s theorem(基尔霍夫定律)无自环，可重边无向图$G$的生成树个数 &#x3D; G的Laplacian矩阵(基尔霍夫矩阵)的$n-1$阶余子式的行列式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kirchhoff’s theorem(基尔霍夫定律)">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/algo/Kirchhoffs_theorem/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="Kirchhoff’s theorem(基尔霍夫定律)无自环，可重边无向图$G$的生成树个数 &#x3D; G的Laplacian矩阵(基尔霍夫矩阵)的$n-1$阶余子式的行列式">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-01-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-30T19:48:59.190Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="基尔霍夫定律">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/algo/Kirchhoffs_theorem/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/algo/Kirchhoffs_theorem/","path":"algo/Kirchhoffs_theorem/","title":"Kirchhoff’s theorem(基尔霍夫定律)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Kirchhoff’s theorem(基尔霍夫定律) | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">290</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">287</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kirchhoff%E2%80%99s-theorem-%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E5%BE%8B"><span class="nav-text">Kirchhoff’s theorem(基尔霍夫定律)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%AE%9A%E4%B9%89"><span class="nav-text">基本定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%90%86"><span class="nav-text">引理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E7%9F%A9%E9%98%B5-B"><span class="nav-text">关联矩阵$B$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Binet-Cauchy%E5%AE%9A%E7%90%86"><span class="nav-text">Binet-Cauchy定理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%B4%A81-L%E6%AF%8F%E8%A1%8C-%E6%AF%8F%E5%88%97-%E5%85%83%E7%B4%A0%E5%92%8C%E9%83%BD%E6%98%AF0"><span class="nav-text">性质1 L每行 每列 元素和都是0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%B4%A82-L%E8%A1%8C%E5%88%97%E5%BC%8F-%E4%B8%BA0"><span class="nav-text">性质2 L行列式 为0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%B4%A83-L%E4%BB%BB%E4%BD%95n-1%E9%98%B6-%E4%BD%99%E5%AD%90%E5%BC%8F%E7%9A%84%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9B%B8%E7%AD%89"><span class="nav-text">性质3 L任何n-1阶 余子式的行列式相等</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-0-%E4%BB%BB%E4%BD%95-n-1-%E9%98%B6%E4%B8%BB%E4%BD%99%E5%AD%90%E5%BC%8F%E7%9A%84%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9B%B8%E7%AD%89"><span class="nav-text">3.0 任何$n-1$阶主余子式的行列式相等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E4%BB%BB%E6%84%8Fn-1%E9%98%B6%E4%BD%99%E5%AD%90%E5%BC%8F%E7%9A%84%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9B%B8%E7%AD%89"><span class="nav-text">3.1 任意n-1阶余子式的行列式相等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E6%98%BE%E7%84%B6-%E6%A0%B9%E6%8D%AE-Binet-Cauchy-%E4%B9%9F%E8%83%BD%E5%BE%97%E5%88%B0%E5%AE%83%E6%98%BE%E7%84%B6%E6%98%AF%E5%8D%8A%E6%AD%A3%E5%AE%9A%E7%9F%A9%E9%98%B5"><span class="nav-text">3.2 显然 根据 Binet-Cauchy 也能得到它显然是半正定矩阵</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%B4%A84-n-1%E4%BD%99%E5%AD%90%E5%BC%8F%E7%9A%84%E8%A1%8C%E5%88%97%E5%BC%8F-%E5%89%A9%E4%BD%99%E9%9D%9E0%E7%89%B9%E5%BE%81%E5%80%BC%E7%9A%84%E4%B9%98%E7%A7%AF-%E9%99%A4%E4%BB%A5n"><span class="nav-text">性质4 n-1余子式的行列式 &#x3D; 剩余非0特征值的乘积 除以n</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3"><span class="nav-text">相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%A0%E9%A2%98"><span class="nav-text">习题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">290</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">287</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/algo/Kirchhoffs_theorem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Kirchhoff’s theorem(基尔霍夫定律) | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kirchhoff’s theorem(基尔霍夫定律)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-01-30 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-30T00:00:00+08:00">2024-01-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2024-01-31 03:48:59" itemprop="dateModified" datetime="2024-01-31T03:48:59+08:00">2024-01-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/algo/Kirchhoffs_theorem/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="algo/Kirchhoffs_theorem/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>6 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Kirchhoff’s-theorem-基尔霍夫定律"><a href="#Kirchhoff’s-theorem-基尔霍夫定律" class="headerlink" title="Kirchhoff’s theorem(基尔霍夫定律)"></a>Kirchhoff’s theorem(基尔霍夫定律)</h1><p>无自环，可重边无向图$G$的生成树个数 &#x3D; G的Laplacian矩阵(基尔霍夫矩阵)的$n-1$阶余子式的行列式</p>
+<span id="more"></span>
+
+<h2 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h2><p>对于一个无向图G,有N点,M边, 定义一个$N \times N$的Laplacian矩阵$L$</p>
+<p>$L_{i,j} &#x3D;$</p>
+<ul>
+<li>$i&#x3D;j$时为点$i$的度</li>
+<li>否则为点$i$到点$j$的重边数的相反数</li>
+</ul>
+<p>等价于<code>点的度数矩阵</code>减去<code>邻接矩阵</code></p>
+<h3 id="引理"><a href="#引理" class="headerlink" title="引理"></a>引理</h3><h4 id="关联矩阵-B"><a href="#关联矩阵-B" class="headerlink" title="关联矩阵$B$"></a>关联矩阵$B$</h4><p>定义$B_{n\times m}$为关联矩阵, $n$为点数,$m$为边数</p>
+<p>$B_{i,j}$ 表示 第$i$个点与第$j$条边(重边就拆成多条边)的关系</p>
+<ul>
+<li>$0$:无关系</li>
+<li>$1$:是第$j$条边的小点</li>
+<li>$-1$:是第$j$条边的大点</li>
+</ul>
+<p>那么有$B$与$B^T$的乘积也是<code>基尔霍夫矩阵</code></p>
+<p>即$L&#x3D;B\cdot B^T$</p>
+<p>证明: </p>
+<ul>
+<li>$L_{i,i} &#x3D; \sum_{j\in[1,m]} B_{i,j}\times (B^T)<em>{j,i} &#x3D; \sum</em>{j\in[1,m]} B_{i,j}\times B_{i,j}$ 每属于一条边则贡献为1,所以是度</li>
+<li>$L_{i,j} &#x3D; \sum_{k\in[1,m]} B_{i,k}\times (B^T)<em>{k,j} &#x3D; \sum</em>{j\in[1,m]} B_{i,k}\times B_{j,k}, i\neq j$ 所以边$k$连接点$i$和点$j$,贡献$-1$, 所以表示点$i,j$之间的边的相反数</li>
+</ul>
+<h4 id="Binet-Cauchy定理"><a href="#Binet-Cauchy定理" class="headerlink" title="Binet-Cauchy定理"></a>Binet-Cauchy定理</h4><p>$A_{n行\times m列},B_{m行\times n列},n\le m$, (若$n&gt;m$显然结果为$0$)</p>
+<p>$s$ 为从$m$中选出的$n$个数从小到大的一个排列</p>
+<p>$\displaystyle \mathrm{det}(AB)&#x3D; \begin{pmatrix} A_{n\times m} &amp; O_{m\times m} \\ -I_{n\times n} &amp; B_{m\times n} \end{pmatrix}&#x3D; (-1)^{nm+m} \begin{pmatrix} A &amp; O \\ I &amp; B \end{pmatrix}&#x3D;\sum_{s\in \binom{[m]}{n}} |A_{n,s}|\cdot|B_{s,n}|$</p>
+<h3 id="性质1-L每行-每列-元素和都是0"><a href="#性质1-L每行-每列-元素和都是0" class="headerlink" title="性质1 L每行 每列 元素和都是0"></a>性质1 L每行 每列 元素和都是0</h3><p>因为 邻接矩阵的每行每列元素和 都是对应行列的点的度数</p>
+<h3 id="性质2-L行列式-为0"><a href="#性质2-L行列式-为0" class="headerlink" title="性质2 L行列式 为0"></a>性质2 L行列式 为0</h3><p>因为有特征向量$(1,1,\cdots,1)^T$ 对应特征值$0$</p>
+<h3 id="性质3-L任何n-1阶-余子式的行列式相等"><a href="#性质3-L任何n-1阶-余子式的行列式相等" class="headerlink" title="性质3 L任何n-1阶 余子式的行列式相等"></a>性质3 L任何n-1阶 余子式的行列式相等</h3><h4 id="3-0-任何-n-1-阶主余子式的行列式相等"><a href="#3-0-任何-n-1-阶主余子式的行列式相等" class="headerlink" title="3.0 任何$n-1$阶主余子式的行列式相等"></a>3.0 任何$n-1$阶<strong>主</strong>余子式的行列式相等</h4><blockquote>
+<p>proof</p>
+</blockquote>
+<p>根据Binet-Cauchy定理</p>
+<p>基尔霍夫矩阵$L&#x3D;B\cdot B^T$ 去掉$i$行$i$列的$n-1$阶主余子式$&#x3D;\sum_{所有n-1列} \mathrm{det}(C)\cdot \mathrm{det}(C^T)$</p>
+<p>其中$C&#x3D;B$去掉$i$行选择$n-1$列的矩阵</p>
+<hr>
+<p>接下来从意义上看对于每个$n-1$列选择下, $\mathrm{det}(C\cdot C^T)$是什么</p>
+<p>在$B$中选了$n-1$列，对应的就是选了其中$n-1$条边,那么讨论这些边在原图中的形状</p>
+<ul>
+<li>如果这$n-1$条边在图中有环</li>
+</ul>
+<p>那么这个环上的边,$B$中对应的<code>列向量</code>之间做加减运算能得到全$0$列向量, 即线性相关, 而这对应$C$中同样的那些列向量中去掉第$i$个元素, 依然线性相关, 所以对<code>主余子式</code>的贡献$\mathrm{det}(C\cdot C^T)&#x3D;0$</p>
+<ul>
+<li>否则$n$点$n-1$条边无环 则只能是树</li>
+</ul>
+<p>对于这个具体的树, 考虑把第$i$个看作树的根</p>
+<p>那么任何叶子节点$u$，考虑它到根$i$的路径, 沿着路径, $C$中对应的<code>列向量</code>做列变换, 行列式等价 于 把这个叶子节点作为直接$i$的子节点的行列式 乘上$-1$的$0$次或$1$次，也就是列变换$X$,且$\mathrm{det}(X)&#x3D;1$, 所以新的$C’$的$\mathrm{det}(C’\cdot C’^T)&#x3D;\mathrm{det}(XCC^TX^T) &#x3D; 1\cdot \mathrm{det}(CC^T)\cdot 1$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">   u0                u0</span><br><span class="line">    | j0          j0/  \j1</span><br><span class="line">   u1         =&gt;   u1  u2(leaf)</span><br><span class="line">    | j1</span><br><span class="line">   u2(leaf)</span><br><span class="line"></span><br><span class="line">      j0  j1           j0  j1</span><br><span class="line">u0     1   0            1   1</span><br><span class="line">u1    -1   1  =&gt;       -1   0</span><br><span class="line">u2     0  -1            0  -1</span><br><span class="line">                            也就是列向量j1 += (-1)^0 j0</span><br></pre></td></tr></table></figure>
+
+
+<p>因此$\mathrm{det}({C})$&#x3D; 所有点都是点$i$直接子节点的行列式, (通过把所有点按照上面的方式进行直到都是根$i$的直接子节点)</p>
+<p>那么转化后的行列式 是 每列有且只有一个1或-1, 每行有且只有一个1或-1的的行列式</p>
+<p>所以$\mathrm{det}(C)&#x3D;$ 1&#x2F;-1</p>
+<p>因此$\mathrm{det}({C})\cdot\mathrm{det}({C^T})$贡献为$1$, 也就是树的贡献恒为1</p>
+<p>也就是 不论删去 哪个$i$行$i$列,的主余子式 &#x3D; 生成树个数</p>
+<h4 id="3-1-任意n-1阶余子式的行列式相等"><a href="#3-1-任意n-1阶余子式的行列式相等" class="headerlink" title="3.1 任意n-1阶余子式的行列式相等"></a>3.1 任意n-1阶余子式的行列式相等</h4><p>例如</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A=[ <span class="number">1</span>,<span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>;</span><br><span class="line">   <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>;</span><br><span class="line">    <span class="number">0</span>, <span class="number">1</span>,<span class="number">-1</span>,<span class="number">-1</span>]</span><br><span class="line">B=A*A&#x27;</span><br><span class="line">det(B([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">1</span>,<span class="number">2</span>]))</span><br><span class="line">det(B([<span class="number">1</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">3</span>]))</span><br><span class="line">det(B([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">3</span>]))</span><br></pre></td></tr></table></figure>
+
+<p>proof</p>
+<p>其实和 上面 n-1 主余子式是类似的, 通过Binet-Cauchy定理 和 树上意义 与 列向量关系</p>
+<p>$L$的去掉$i$行$j$列的余子式$&#x3D;\mathrm{det}((B去掉第i行) \star (B去掉第j行)^T) &#x3D;\sum_{选n-1列s} \mathrm{det}(C_{i,s})\mathrm{det}(C_{j,s}^T)$</p>
+<p>那么$n-1$列依然对应选$n-1$条边</p>
+<p>因此当有成环时, $B$中列向量线性相关，去掉行后$C$列向量依然线性相关,L的n-1阶余子式行列式依然是$0$</p>
+<p>那么对于不成环时, 依然是$C$行列式为$1$或$-1$</p>
+<p>那么只要证明了 若 其中一组n-1条边 (移除i对应行列式 与 移除j对应的行列式) 符号相同 则 任意n-1条边(…)符号相同</p>
+<p>先看 因为n-1点n-1边上面已经证明了行列式非0, 所以列向量线性无关</p>
+<p>因此对应的n点n-1边的列向量也线性无关</p>
+<p>两个树 对应的n点(行)n-1边(列)的矩阵T0,T1, 的列向量都是线性无关,</p>
+<p>且树之间可以转化, 也就是存在可逆矩阵M(行列式非0) 使得 T0 * M &#x3D; T1, 那么有</p>
+<p>(T0去掉行i) * M &#x3D; (T1去掉行i)</p>
+<p>(T0去掉行j) * M &#x3D; (T1去掉行j)</p>
+<p>即行列式有</p>
+<p>|T0去掉行i| * |M| &#x3D; |T1去掉行i|</p>
+<p>|T0去掉行j| * |M| &#x3D; |T1去掉行j|</p>
+<p>注意到 M 是与 i和j 无关的 只与 T0,T1的选取有关, 而且, |M| &#x3D; 1&#x2F;-1</p>
+<p>因此 |T0去掉行i| * |T0去掉行j| * |M|^2 &#x3D; |T1去掉行i| * |T1去掉行j|</p>
+<p>得到了对于给定的i和j, 每个图中的树 在 Binet-Cauchy 中 贡献的绝对值为1, 且符号一致</p>
+<p>综上</p>
+<p>任意n-1阶子矩阵的行列式 都是生成树的个数 * (-1)的某个次方</p>
+<p>TODO, 证明代数余子式 相等(即消掉-1)</p>
+<h4 id="3-2-显然-根据-Binet-Cauchy-也能得到它显然是半正定矩阵"><a href="#3-2-显然-根据-Binet-Cauchy-也能得到它显然是半正定矩阵" class="headerlink" title="3.2 显然 根据 Binet-Cauchy 也能得到它显然是半正定矩阵"></a>3.2 显然 根据 Binet-Cauchy 也能得到它显然是半正定矩阵</h4><p>因为 |(x’B)(x’B)^T| &gt;&#x3D; 0</p>
+<p>因此它的特征值 全非负</p>
+<h3 id="性质4-n-1余子式的行列式-剩余非0特征值的乘积-除以n"><a href="#性质4-n-1余子式的行列式-剩余非0特征值的乘积-除以n" class="headerlink" title="性质4 n-1余子式的行列式 &#x3D; 剩余非0特征值的乘积 除以n"></a>性质4 n-1余子式的行列式 &#x3D; 剩余非0特征值的乘积 除以n</h3><p>proof TODO, 似乎是线性代数的知识</p>
+<h1 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc253/editorial/4034">atcoder abc253 Ex 官方题解</a></p>
+<p><a href="https://yexiaorain.github.io/Blog/atcoder/abc/213/?highlight=213#G-Connectivity-2">abc 213 g</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem">https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem</a></p>
+<p>调和矩阵Laplacian matrix: <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Laplacian_matrix">https://en.wikipedia.org/wiki/Laplacian_matrix</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cauchy%E2%80%93Binet_formula">wikipedia Cauchy–Binet_formula</a></p>
+<p>周冬: 生成树的计数及其应用(ppt+doc 两个版本)</p>
+<h2 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h2><p>atcoder:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/jsc2021/tasks/jsc2021_g">jsc2021 g</a></li>
+<li><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc253/tasks/abc253_h">abc253 h</a></li>
+<li><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc323/tasks/abc323_g">abc323 g</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/algo/Kirchhoffs_theorem/" title="Kirchhoff’s theorem(基尔霍夫定律)">https://yexiaorain.github.io/Blog/algo/Kirchhoffs_theorem/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E5%BE%8B/" rel="tag"><i class="fa fa-tag"></i> 基尔霍夫定律</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/algo/hall_theorem/" rel="prev" title="Hall theorem">
+                  <i class="fa fa-chevron-left"></i> Hall theorem
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">504k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">27:59</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/algo/Kirchhoffs_theorem/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
