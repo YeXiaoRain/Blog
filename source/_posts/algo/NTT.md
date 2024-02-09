@@ -1,8 +1,12 @@
 ---
 title: 从FFT 到 NTT(快速数论变换)
 date: 2022-07-24 22:24:00
-tags: [FFT,NTT]
-category: [algorithm]
+tags:
+  - FFT
+  - NTT
+  - 原根
+category:
+  - algorithm
 mathjax: true
 ---
 
@@ -50,20 +54,133 @@ ${\displaystyle {\begin{bmatrix}f_{0}\\\\f_{1}\\\\\vdots \\\\f_{n-1}\end{bmatrix
 
 ## 原根
 
-$p > 0, a$ 是整数, $\delta_p(a) = \varphi(a), gcd(p,a) = 1$, 则$a$为$p$的一个原根
+$\varphi(n)$ 为欧拉函数, 表示$1$到$n$中与$n$互质的数的个数
 
-其中$\varphi(n)$ 为欧拉函数, 表示$1$到$n$中与$n$互质的数的个数
+$p > 0, a$ 是整数, $\delta_p(a) = \varphi(a), gcd(p,a) = 1$, 则称$a$为$p$的一个原根
+
+---
 
 若$gcd(a,p) = 1, p > 0$ 则$a$为$p$的一个原根的充要条件 $\{a^1,a^2,a^3,\cdots,a^{\varphi(p)}\}$ 是p的简化剩余系
 
-必要: $a$是$p$的原根, 根据阶中结论模n两两不同
+必要: $a$是$p$的原根, 根据阶中结论, 模$p$两两不同
 
-充分: 因为是简化剩余系, 所以两两不同, 所以说明 $ < \varphi(p)$ 的都不为1, 也说明$\delta_p(a) = \varphi(a)$
+充分: 因为是简化剩余系, 所以两两不同, 所以说明 $< \varphi(p)$ 的都不为1, 也说明$\delta_p(a) = \varphi(a)$
 
-完全剩余系: n的完全剩余系, 在模n的剩余类中各取一个元素，则这n个数就构成了模n的一个完全剩余系。例如{0,1,2,3,...,n-1} 是n的一个完全剩余系
+完全剩余系: n的完全剩余系, 在模n的剩余类中各取一个元素，则这n个数就构成了模n的一个完全剩余系。例如$\lbrace 0,1,2,3,...,n-1\rbrace$ 是n的一个完全剩余系
 
 简化剩余系: 完全剩余系中 与n互质 构成的
 
+### $\gcd(a,m)=1$ 则$\delta_m(a^k)=\dfrac{\delta_m(a)}{\gcd\left(\delta_m(a),k\right)}$
+
+$a^{k\delta_m(a^k)}=(a^{k})^{\delta_m(a^k)}\equiv 1\pmod{m}$
+
+所以$\delta_m(a) | k\delta_m(a^k)$
+
+所以$\frac{\delta_m(a)}{\gcd(\delta_m(a),k)} | \delta_m(a^k)$
+
+---
+
+另一方面
+
+$\displaystyle (a^k)^{\frac{\delta_m(a)}{\gcd(\delta_m(a),k)}}=(a^{\delta_m(a)})^{\frac{k}{\gcd(\delta_m(a),k)}}\equiv 1\pmod{p}$
+
+所以 $\delta_m(k)| \frac{\delta_m(a)}{\gcd(\delta_m(a),k)}$
+
+---
+
+综上 两个 互为倍数，所以相等
+
+### $\gcd(a,m)=\gcd(b,m)=1$ 则$\delta_m(ab)=\delta_m(a)\delta_m(b)\leftrightarrow \gcd(\delta_m(a),\delta_m(a))=1$
+
+
+$(ab)^{\mathrm{lcm}(\delta_m(a),\delta_m(b))}=((a)^{\delta_m(a)})^{\frac{\delta_m(b)}{\gcd(\delta_m(a),\delta_m(b))}}((b)^{\delta_m(b)})^{\frac{\delta_m(a)}{\gcd(\delta_m(a),\delta_m(b))}}\equiv 1\pmod{p}$
+
+所以 $\delta_m(ab) | \mathrm{lcm}(\delta_m(a),\delta_m(b))$
+
+也有 $\delta_m(ab) | \delta_m(a)\delta_m(b)$
+
+
+必要性:
+
+由于$\delta_m(ab)=\delta_m(a)\delta_m(b)$ 所以$\delta_m(a)\delta_m(b) | \mathrm{lcm}(\delta_m(a),\delta_m(b))$
+
+即$\gcd(\delta_m(a),\delta_m(b))=1$
+
+充分性:
+
+$\displaystyle 1\equiv ((ab)^{\delta_m(ab)})^{\delta_m(b)}=((a)^{\delta_m(ab)})^{\delta_m(b)}((b)^{\delta_m(b)})^{\delta_m(ab)} \equiv (a)^{\delta_m(ab)\delta_m(b)}\pmod p$
+
+因此$\delta_m(a)|\delta_m(ab)\delta_m(b)$
+
+因为$\gcd(\delta_m(a),\delta_m(b))=1$, 即$\delta_m(a) | \delta_m(ab)$
+
+对称可得$\delta_m(b)|\delta_m(ab)$
+
+再次因为$\gcd(\delta_m(a),\delta_m(b))=1$,所以$\delta_m(a)\delta_m(a) | \delta_m(ab)$
+
+因为$\delta_m(ab) | \delta_m(a)\delta_m(b)$
+
+所以$\delta_m(ab) = \delta_m(a)\delta_m(b)$
+
+充要性得证
+
+### 原根存在性定理
+
+$n$ 存在原根 当且仅当$n\in\lbrace 2,4,p^\alpha,2p^\alpha\rbrace$,其中$p$为就奇素数
+
+$n=2,4$ 显然存在
+
+$n=p^\alpha$
+
+... TODO
+
+#### 引理: 素数$p$一定有原根
+
+
+对于满足$\gcd(a,p) = 1$和$\gcd(b,p)=1$ 的$a,b$
+
+存在$c$使得$\delta_p(c)=\mathrm{lcm}(\delta_p(a),\delta_p(b))$
+
+首先表示$\left(\delta_m(a)=\prod_{i=1}^k{p_i^{\alpha_i}},\delta_m(b)=\prod_{i=1}^k{p_i^{\beta_i}} \right)$
+
+然后表示成$\delta_m(a)=XY,\delta_m(b)=ZW$
+
+其中
+
+- $Y=\prod_{i=1}^k{p_i^{[\alpha_i>\beta_i]\alpha_i}}$, 也就是 质因数中，在$\delta_p(a)$中幂次更大的
+- $X=\dfrac {\delta_m(a)}Y$ 剩余部分
+- $W=\prod_{i=1}^k{p_i^{[\alpha_i\le\beta_i]\beta_i}}$, 也就是 质因数中，在$\delta_p(b)$中幂次更大或等于的
+- $Z=\dfrac {\delta_m(b)}W$ 剩余部分
+
+有$\delta_m(a^X)=\frac{\delta_m(a)}{\gcd(\delta_m(a),X)}=\frac{XY}{\gcd(XY,X)}=Y$
+
+同理$\delta_m(b^Z)=\frac{\delta_m(b)}{\gcd(\delta_m(b),Z)}=\frac{ZW}{\gcd(ZW,Z)}=W$
+
+因为$\gcd(Y,W)=1$,
+
+$\delta_m(a^Xb^Z)=\delta_m(a^X)\delta_m(b^Z) =YW=\mathrm{lcm}(\delta_p(a),\delta_p(b))$
+
+所以存在$c=a^Xb^Z$使得
+
+---
+
+存在$\delta_p(g)=\mathrm{lcm}(\delta_p(1),\delta_p(2),\cdots,\delta_p(p-1))$
+
+所以对于$\forall j=1,2,\cdots,p-1, \delta_p(j)|\delta_p(g)$
+
+所以$\displaystyle (j^{\delta_p(j)})^{\frac{\delta_p(g)}{\delta_p(j)}}\equiv 1\pmod{p}$
+
+即都是$x^{\delta_p(g)}\equiv 1\pmod p$的根
+
+$\delta_p(g)\le p-1$
+
+$x^{\delta_p(g)}-1 \equiv k\prod_{j=1}^{p-1} (x-j) \pmod{p}$,$k$为与x无关的常数, 证明: 注意到 $x^{\delta_p(g)}-1\equiv 0\pmod{p}$,对左侧做 多项式带余数除法 除以$(x-j)$, 显然 对于其它$j$来说$x-j \not \equiv 0\pmod{p}$
+
+所以$\delta_p(g)\ge p-1$
+
+所以$\delta_p(g) = p-1$
+
+得证
 ## 回到NTT
 
 $p$为素数,$a$为$p$的一个原根, 有$\varphi(p) = p-1$
@@ -208,3 +325,4 @@ int main(){
 
 [我的FFT笔记](http://yexiaorain.github.io/Blog/2019-01-02-fftmul/)
 
+https://oi-wiki.org/math/number-theory/primitive-root/
