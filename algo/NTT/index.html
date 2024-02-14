@@ -26,7 +26,7 @@
 <meta property="og:description" content="NTT竟然Div2能出现NTT 虽然是在最后一题, 还是得学一学 解决什么问题是多项式乘法带模数的情况计算卷积 并且没有fft中会涉及到double, NTT 也就是关于任意 环(数学术语) 上的离散傅立叶变化(DFT), 有限域的情况下,通常成为数论变换 离散傅立叶变换回顾离散傅立叶变换, 就是 原函数(原向量) $\to$ DFT(离散傅立叶) $\to$ 点乘 $\to$ IDFT(逆傅立叶">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2022-07-24T14:24:00.000Z">
-<meta property="article:modified_time" content="2024-02-09T16:07:34.282Z">
+<meta property="article:modified_time" content="2024-02-14T03:03:26.164Z">
 <meta property="article:author" content="Xiao Ye">
 <meta property="article:tag" content="FFT">
 <meta property="article:tag" content="NTT">
@@ -90,7 +90,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">303</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">292</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">304</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">295</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
         </a>
@@ -141,7 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NTT"><span class="nav-text">NTT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-text">解决什么问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="nav-text">离散傅立叶变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B6"><span class="nav-text">阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E6%A0%B9"><span class="nav-text">原根</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gcd-a-m-1-%E5%88%99-delta-m-a-k-dfrac-delta-m-a-gcd-left-delta-m-a-k-right"><span class="nav-text">$\gcd(a,m)&#x3D;1$ 则$\delta_m(a^k)&#x3D;\dfrac{\delta_m(a)}{\gcd\left(\delta_m(a),k\right)}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gcd-a-m-gcd-b-m-1-%E5%88%99-delta-m-ab-delta-m-a-delta-m-b-leftrightarrow-gcd-delta-m-a-delta-m-a-1"><span class="nav-text">$\gcd(a,m)&#x3D;\gcd(b,m)&#x3D;1$ 则$\delta_m(ab)&#x3D;\delta_m(a)\delta_m(b)\leftrightarrow \gcd(\delta_m(a),\delta_m(a))&#x3D;1$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E6%A0%B9%E5%AD%98%E5%9C%A8%E6%80%A7%E5%AE%9A%E7%90%86"><span class="nav-text">原根存在性定理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E7%90%86-%E7%B4%A0%E6%95%B0-p-%E4%B8%80%E5%AE%9A%E6%9C%89%E5%8E%9F%E6%A0%B9"><span class="nav-text">引理: 素数$p$一定有原根</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0NTT"><span class="nav-text">回到NTT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-%E6%A8%A1%E6%9D%BF"><span class="nav-text">代码, 模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref"><span class="nav-text">Ref</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NTT"><span class="nav-text">NTT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-text">解决什么问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="nav-text">离散傅立叶变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B6"><span class="nav-text">阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E6%A0%B9"><span class="nav-text">原根</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gcd-a-m-1-%E5%88%99-delta-m-a-k-dfrac-delta-m-a-gcd-left-delta-m-a-k-right"><span class="nav-text">$\gcd(a,m)&#x3D;1$ 则$\delta_m(a^k)&#x3D;\dfrac{\delta_m(a)}{\gcd\left(\delta_m(a),k\right)}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gcd-a-m-gcd-b-m-1-%E5%88%99-delta-m-ab-delta-m-a-delta-m-b-leftrightarrow-gcd-delta-m-a-delta-m-a-1"><span class="nav-text">$\gcd(a,m)&#x3D;\gcd(b,m)&#x3D;1$ 则$\delta_m(ab)&#x3D;\delta_m(a)\delta_m(b)\leftrightarrow \gcd(\delta_m(a),\delta_m(a))&#x3D;1$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E6%A0%B9%E5%AD%98%E5%9C%A8%E6%80%A7%E5%AE%9A%E7%90%86"><span class="nav-text">原根存在性定理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E7%90%86-%E7%B4%A0%E6%95%B0-p-%E4%B8%80%E5%AE%9A%E6%9C%89%E5%8E%9F%E6%A0%B9"><span class="nav-text">引理: 素数$p$一定有原根</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%A6%E4%B8%80%E4%B8%AA%E8%AF%81%E6%98%8E"><span class="nav-text">另一个证明</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0NTT"><span class="nav-text">回到NTT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-%E6%A8%A1%E6%9D%BF"><span class="nav-text">代码, 模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref"><span class="nav-text">Ref</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/Blog/archives/">
-          <span class="site-state-item-count">303</span>
+          <span class="site-state-item-count">304</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -167,7 +167,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/Blog/tags/">
-        <span class="site-state-item-count">292</span>
+        <span class="site-state-item-count">295</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -253,7 +253,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2024-02-10 00:07:34" itemprop="dateModified" datetime="2024-02-10T00:07:34+08:00">2024-02-10</time>
+      <time title="修改時間：2024-02-14 11:03:26" itemprop="dateModified" datetime="2024-02-14T11:03:26+08:00">2024-02-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -286,7 +286,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>2k</span>
+      <span>2.2k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
@@ -383,6 +383,19 @@
 <p>所以$\delta_p(g)\ge p-1$</p>
 <p>所以$\delta_p(g) &#x3D; p-1$</p>
 <p>得证</p>
+<h5 id="另一个证明"><a href="#另一个证明" class="headerlink" title="另一个证明"></a>另一个证明</h5><p>显然 周期$t$一定是$p-1$的约数</p>
+<p>如果$d|p-1$,那么$x^{d}\equiv 1\pmod{p}$刚好有$d$个<strong>不同</strong>解</p>
+<p>证明: </p>
+<p>$(x^d-1)(1+x^d+x^{2d}+\cdots+x^{p-1-d})&#x3D;x^{p-1}-1$</p>
+<p>等式右侧，恰好p-1个不同根，</p>
+<p>左侧 第一个括号$x^d-1$最多$d$个不同解</p>
+<p>左侧 第二个括号，最多$p-1-d$个不同解,所以只能取等号</p>
+<hr>
+<p>$S_t$表示最小周期是t的x的集合$x^{t}\equiv 1\pmod{p}$</p>
+<p>归纳$|S_1|&#x3D;\phi(1)$</p>
+<p>$d|p-1$</p>
+<p>$|S_d| &#x3D; d - \sum_{c|d,c\neq d} |S_c| &#x3D; \phi(d)$, 第一个$d$是因为 上面的性质,包含所有周期更小的</p>
+<p>从而$|S_{p-1}|&#x3D;\phi(p-1)$</p>
 <h2 id="回到NTT"><a href="#回到NTT" class="headerlink" title="回到NTT"></a>回到NTT</h2><p>$p$为素数,$a$为$p$的一个原根, 有$\varphi(p) &#x3D; p-1$</p>
 <p>$n &#x3D; 2^k, n | (p-1), k &gt; 0$</p>
 <p>令 $g_n &#x3D; a^{\frac{p-1}{n}}$</p>
@@ -390,7 +403,7 @@
 <p>$g_n^{\frac{n}{2}} &#x3D; a^{\frac{p-1}{2}} &#x3D; -1 \pmod p$</p>
 <p>$g_{tn}^{tk} &#x3D; a^{\frac{tk(p-1)}{tn}}&#x3D;a^{\frac{k(p-1)}{n}}&#x3D;g_n^k$</p>
 <p>这里想用 $g_n^k$ 来替代$w_n^k$ </p>
-<p>(然后就直接可以替换了??? 不严格的语言证明是, 可以看成w为未知数, 那么$a * b &#x3D; c$ 不过是变成了c &#x3D; IFFT(FFT(a) FFT(b)) &#x3D; a * b</p>
+<p>(然后就直接可以替换了??? 不严格的语言证明是, 可以看成w为未知数, 那么$a \star b &#x3D; c$ 不过是变成了c &#x3D; IFFT(FFT(a) FFT(b)) &#x3D; a * b</p>
 <p>也就是 最终的只和$w$的$n$和$\frac{n}{2}$有关,否则 会有复平面的偏移</p>
 <p>所以$w_n^k &#x3D; e^{- i \frac{2 \pi}{N} nk}$ 也好</p>
 <p>所以$w_n^k &#x3D; g_n^k \pmod p$ 也好, 只要满足了$n$和$\frac{n}{2}$次方的性质即可</p>
@@ -488,13 +501,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="總字數">519k</span>
+    <span title="總字數">521k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">28:51</span>
+    <span title="所需總閱讀時間">28:58</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
