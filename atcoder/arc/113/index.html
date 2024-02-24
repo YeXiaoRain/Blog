@@ -18,18 +18,25 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
 
-    <meta name="description" content="题目https:&#x2F;&#x2F;atcoder.jp&#x2F;contests&#x2F;arc113&#x2F;tasks&#x2F;arc113_e 题目大意 给字符串,仅由a和b组成 操作: 任意选择两个相同的字母，把它们之间的内容 颠倒顺序，删掉这两个被选择的字母 你可以操作 0 到任意次 求字典序最大的结果 题解显然，可以把a看作0,b看作1,也就是1尽量靠前且尽量多，而在满足1尽量多的时候，让0也尽量多 显然 如果0有偶数个，可以不消">
+    <meta name="description" content="E (数学+枚举+分类讨论)F(题意转化,排序,一次函数,概率论,定积分,)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Atcoder arc113 E (数学+枚举+分类讨论)">
+<meta property="og:title" content="Atcoder arc113">
 <meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/arc/113/index.html">
 <meta property="og:site_name" content="YeXiaoRain Blog">
-<meta property="og:description" content="题目https:&#x2F;&#x2F;atcoder.jp&#x2F;contests&#x2F;arc113&#x2F;tasks&#x2F;arc113_e 题目大意 给字符串,仅由a和b组成 操作: 任意选择两个相同的字母，把它们之间的内容 颠倒顺序，删掉这两个被选择的字母 你可以操作 0 到任意次 求字典序最大的结果 题解显然，可以把a看作0,b看作1,也就是1尽量靠前且尽量多，而在满足1尽量多的时候，让0也尽量多 显然 如果0有偶数个，可以不消">
+<meta property="og:description" content="E (数学+枚举+分类讨论)F(题意转化,排序,一次函数,概率论,定积分,)">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-02-22T02:37:14.000Z">
-<meta property="article:modified_time" content="2024-02-21T22:14:19.259Z">
+<meta property="article:modified_time" content="2024-02-24T16:35:42.497Z">
 <meta property="article:author" content="Xiao Ye">
 <meta property="article:tag" content="数学">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="排序">
+<meta property="article:tag" content="概率论">
 <meta property="article:tag" content="枚举">
+<meta property="article:tag" content="分类讨论">
+<meta property="article:tag" content="题意转化">
+<meta property="article:tag" content="一次函数">
+<meta property="article:tag" content="定积分">
 <meta name="twitter:card" content="&lt;twitter:card&gt;">
 
 
@@ -37,10 +44,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/arc/113/","path":"atcoder/arc/113/","title":"Atcoder arc113 E (数学+枚举+分类讨论)"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/arc/113/","path":"atcoder/arc/113/","title":"Atcoder arc113"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Atcoder arc113 E (数学+枚举+分类讨论) | YeXiaoRain Blog</title>
+<title>Atcoder arc113 | YeXiaoRain Blog</title>
   
 
 
@@ -89,7 +96,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">308</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">296</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">309</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">301</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
         </a>
@@ -140,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#a%E7%BB%93%E6%9D%9F"><span class="nav-text">a结束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#b-%E7%BB%93%E6%9D%9F"><span class="nav-text">b 结束</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E6%9E%9Ca%E6%98%AF%E5%81%B6%E6%95%B0%E4%B8%AA"><span class="nav-text">如果a是偶数个</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a%E6%98%AF%E5%A5%87%E6%95%B0%E4%B8%AA"><span class="nav-text">a是奇数个</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ab%E7%BB%93%E5%B0%BE"><span class="nav-text">ab结尾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#abb%E7%BB%93%E5%B0%BE"><span class="nav-text">abb结尾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bbb%E7%BB%93%E5%B0%BE"><span class="nav-text">bbb结尾</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-b"><span class="nav-text">a+b+</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-text">其它</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code"><span class="nav-text">Code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-text">Ref</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#E"><span class="nav-text">E</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a%E7%BB%93%E6%9D%9F"><span class="nav-text">a结束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E7%BB%93%E6%9D%9F"><span class="nav-text">b 结束</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E6%9E%9Ca%E6%98%AF%E5%81%B6%E6%95%B0%E4%B8%AA"><span class="nav-text">如果a是偶数个</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#a%E6%98%AF%E5%A5%87%E6%95%B0%E4%B8%AA"><span class="nav-text">a是奇数个</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ab%E7%BB%93%E5%B0%BE"><span class="nav-text">ab结尾</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#abb%E7%BB%93%E5%B0%BE"><span class="nav-text">abb结尾</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#bbb%E7%BB%93%E5%B0%BE"><span class="nav-text">bbb结尾</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#a-b"><span class="nav-text">a+b+</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-text">其它</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#F-Social-Distance"><span class="nav-text">F - Social Distance</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-text">Ref</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -155,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/Blog/archives/">
-          <span class="site-state-item-count">308</span>
+          <span class="site-state-item-count">309</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -166,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/Blog/tags/">
-        <span class="site-state-item-count">296</span>
+        <span class="site-state-item-count">301</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -229,12 +236,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Atcoder arc113 E (数学+枚举+分类讨论) | YeXiaoRain Blog">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="Atcoder arc113 | YeXiaoRain Blog">
+      <meta itemprop="description" content="E (数学+枚举+分类讨论)F(题意转化,排序,一次函数,概率论,定积分,)">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Atcoder arc113 E (数学+枚举+分类讨论)
+          Atcoder arc113
         </h1>
 
         <div class="post-meta-container">
@@ -252,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2024-02-22 06:14:19" itemprop="dateModified" datetime="2024-02-22T06:14:19+08:00">2024-02-22</time>
+      <time title="修改時間：2024-02-25 00:35:42" itemprop="dateModified" datetime="2024-02-25T00:35:42+08:00">2024-02-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -289,39 +296,39 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">文章字數：</span>
-      <span>1.6k</span>
+      <span>4.2k</span>
     </span>
     <span class="post-meta-item" title="所需閱讀時間">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>5 分鐘</span>
+      <span>14 分鐘</span>
     </span>
 </div>
 
+            <div class="post-description">E (数学+枚举+分类讨论)F(题意转化,排序,一次函数,概率论,定积分,)</div>
         </div>
       </header>
 
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc113/tasks/arc113_e">https://atcoder.jp/contests/arc113/tasks/arc113_e</a></p>
-<p>题目大意</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="E"><a href="#E" class="headerlink" title="E"></a>E</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc113/tasks/arc113_e">https://atcoder.jp/contests/arc113/tasks/arc113_e</a></p>
 <p>给字符串,仅由a和b组成</p>
 <p>操作: 任意选择两个相同的字母，把它们之间的内容 颠倒顺序，删掉这两个被选择的字母</p>
 <p>你可以操作 0 到任意次</p>
 <p>求字典序最大的结果</p>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>显然，可以把a看作0,b看作1,也就是1尽量靠前且尽量多，而在满足1尽量多的时候，让0也尽量多</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>显然，可以把a看作0,b看作1,也就是1尽量靠前且尽量多，而在满足1尽量多的时候，让0也尽量多</p>
 <p>显然 如果0有偶数个，可以不消耗任何1,让结果以1开始</p>
 <p>如果以0结束，也同样可以不消耗任何1,让结果以1开始</p>
 <p>…</p>
 <p>那么就是如何分类是这个问题的关键，怎么尽量少的分化，覆盖所有情况。</p>
 <p>比赛里做出的人不多，有些cf红名大佬都没出 XD</p>
 <p>我在讨论时，从 起始字符，终止字符，字符个数，连续字符个数多个方面去分类，想也不用想，没写出来,(之讨论到了部分情况)</p>
-<hr>
-<p>直接看看 官方答案 怎么搞的。</p>
-<h2 id="a结束"><a href="#a结束" class="headerlink" title="a结束"></a>a结束</h2><p>显然</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="a结束"><a href="#a结束" class="headerlink" title="a结束"></a>a结束</h3><p>显然</p>
 <p>如果前面的a偶数个，能不删除b变成 <code>b*a+</code>的形式</p>
 <p>如果前面的a奇数个，能不删除b变成 <code>b*a*</code>的形式</p>
 <p>那么我们其实要求的变成了，如何尽可能的少删除a</p>
@@ -335,19 +342,19 @@
 <p>这样能做到总的操作次数最少 <code>= a(len=1) / 2 + a(len=1)%2 + a(len&gt;1)</code> (不包括最后的a串)</p>
 <p>例如 <code>aaabababababaaaaaa</code> ,a的连续串有4个1和1个3,所以删除次数 &#x3D; 4&#x2F;2 + 0 + 1 &#x3D; 3, 剩余a的个数&#x3D;原始个数-2x3</p>
 <p>至此，对于a结束的情况可以解了</p>
-<h2 id="b-结束"><a href="#b-结束" class="headerlink" title="b 结束"></a>b 结束</h2><p><code>abb</code> 和 <code>aabb</code> 结果就很不一样，看着这些连局部性都没有的串，很难受</p>
-<h3 id="如果a是偶数个"><a href="#如果a是偶数个" class="headerlink" title="如果a是偶数个"></a>如果a是偶数个</h3><p>那必定可以不损耗b，且损耗所有a</p>
-<h3 id="a是奇数个"><a href="#a是奇数个" class="headerlink" title="a是奇数个"></a>a是奇数个</h3><p>现在的情况，奇数个a+结尾是b</p>
+<h3 id="b-结束"><a href="#b-结束" class="headerlink" title="b 结束"></a>b 结束</h3><p><code>abb</code> 和 <code>aabb</code> 结果就很不一样，看着这些连局部性都没有的串，很难受</p>
+<h4 id="如果a是偶数个"><a href="#如果a是偶数个" class="headerlink" title="如果a是偶数个"></a>如果a是偶数个</h4><p>那必定可以不损耗b，且损耗所有a</p>
+<h4 id="a是奇数个"><a href="#a是奇数个" class="headerlink" title="a是奇数个"></a>a是奇数个</h4><p>现在的情况，奇数个a+结尾是b</p>
 <p>继续讨论结尾</p>
-<h4 id="ab结尾"><a href="#ab结尾" class="headerlink" title="ab结尾"></a>ab结尾</h4><p>奇数个a，显然a删不完，那么这个ab结尾的b肯定无法移动到前面</p>
+<h5 id="ab结尾"><a href="#ab结尾" class="headerlink" title="ab结尾"></a>ab结尾</h5><p>奇数个a，显然a删不完，那么这个ab结尾的b肯定无法移动到前面</p>
 <p>对于b的个数，把字符串删来剩下一个a,可以不损耗b的情况得到<code>b*ab</code></p>
 <p>所以，前缀b最多是b的个数-1,也是可达到的。</p>
 <p>这是可达也是最大可达的字符串，因为如果选了b，一定就变成个数-2,会比这个结果小</p>
-<h4 id="abb结尾"><a href="#abb结尾" class="headerlink" title="abb结尾"></a>abb结尾</h4><p>同上</p>
+<h5 id="abb结尾"><a href="#abb结尾" class="headerlink" title="abb结尾"></a>abb结尾</h5><p>同上</p>
 <p>我们可以得到 <code>b*abb</code>, 其中不会损耗任何b，前缀b的个数&#x3D;b总个数-2</p>
 <p>那 我们任何选择b的操作 都会 导致b的个数 &lt;&#x3D; 总个数-2,</p>
 <p>所以，这也是最大可达</p>
-<h4 id="bbb结尾"><a href="#bbb结尾" class="headerlink" title="bbb结尾"></a>bbb结尾</h4><p>（这种情况，我没有在赛内讨论到方案）</p>
+<h5 id="bbb结尾"><a href="#bbb结尾" class="headerlink" title="bbb结尾"></a>bbb结尾</h5><p>（这种情况，我没有在赛内讨论到方案）</p>
 <p>你看 <code>aaaaabbbbb</code>,<code>abaaaabbbb</code>, 就很不一样</p>
 <h5 id="a-b"><a href="#a-b" class="headerlink" title="a+b+"></a>a+b+</h5><p>显然，其实都没了翻转只有删除，那 <code>ab+</code> 就是结果了</p>
 <h5 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h5><p><code>a*b+a+b+</code></p>
@@ -371,13 +378,88 @@
 <p>综上，存在<code>b(a&#123;2,&#125;)</code> 则换它的b</p>
 <p>否则换<code>ba</code>的b</p>
 <p>最后和1一样计算a的个数</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>分类有点难，其实上面几种情况全都有推过，但是我在类型分化时加上了起始的 字符，这样的题解看下来，是不太需要讨论起始字符的。但是在推的过程中不知道怎么排除。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc113/submissions/20437840">https://atcoder.jp/contests/arc113/submissions/20437840</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n-1;i&gt;=a;i--)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line">ll t;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> s[<span class="number">200010</span>];</span><br><span class="line"><span class="type">char</span> s1[<span class="number">200010</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> cnt[<span class="number">2</span>] = &#123;<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cin&gt;&gt;t;</span><br><span class="line">  <span class="keyword">while</span>(t--)&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s);</span><br><span class="line">    <span class="type">int</span> n = <span class="built_in">strlen</span>(s);</span><br><span class="line">    cnt[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    cnt[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">      cnt[s[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// all same</span></span><br><span class="line">    <span class="keyword">if</span>(cnt[<span class="number">1</span>] == <span class="number">0</span> || cnt[<span class="number">0</span>] == <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,s);</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> a1 = <span class="number">0</span>; <span class="comment">// a eq 1</span></span><br><span class="line">    <span class="type">int</span> ag1 = <span class="number">0</span>; <span class="comment">// a greater than 1</span></span><br><span class="line">    <span class="type">int</span> cura = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">per</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">      <span class="keyword">if</span>(s[i] == <span class="string">&#x27;b&#x27;</span>)&#123;</span><br><span class="line">        <span class="built_in">per</span>(j,<span class="number">-1</span>,i)&#123;</span><br><span class="line">          <span class="keyword">if</span>(j &gt;= <span class="number">0</span> &amp;&amp; s[j] == <span class="string">&#x27;a&#x27;</span>)&#123;</span><br><span class="line">            cura++;</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(cura)&#123;</span><br><span class="line">              <span class="keyword">if</span>(cura == <span class="number">1</span>)&#123;</span><br><span class="line">                a1 ++;</span><br><span class="line">              &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                ag1 ++;</span><br><span class="line">              &#125;</span><br><span class="line">              cura = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// printf(&quot;[%d,%d]\n&quot;,a1,ag1);</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(s[n<span class="number">-1</span>] == <span class="string">&#x27;a&#x27;</span>)&#123;</span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">1</span>])&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">0</span>] - <span class="number">2</span>*(a1/<span class="number">2</span>+a1%<span class="number">2</span>+ag1))&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cnt[<span class="number">0</span>] % <span class="number">2</span> == <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">1</span>])&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(s[n<span class="number">-2</span>] == <span class="string">&#x27;a&#x27;</span>)&#123; <span class="comment">// even a and ends with ab</span></span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">1</span>]<span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;ab\n&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(s[n<span class="number">-3</span>] == <span class="string">&#x27;a&#x27;</span>)&#123; <span class="comment">// even a and ends with abb</span></span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">1</span>]<span class="number">-2</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;abb\n&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123; <span class="comment">// even a and ends with bbb</span></span><br><span class="line">      ll la = <span class="number">0</span>;</span><br><span class="line">      ll firstb = n;</span><br><span class="line">      <span class="built_in">rep</span>(i,<span class="number">0</span>,n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i] == <span class="string">&#x27;a&#x27;</span>)&#123;</span><br><span class="line">          la = <span class="built_in">max</span>(la,i);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          firstb = <span class="built_in">min</span>(firstb,i);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// a+b+</span></span><br><span class="line">      <span class="keyword">if</span>(firstb &gt; la)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">        <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">1</span>])&#123;</span><br><span class="line">          <span class="built_in">printf</span>(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123; <span class="comment">// .*b+a+b&#123;3,&#125;</span></span><br><span class="line">        <span class="type">bool</span> hasbaa = <span class="literal">false</span>;</span><br><span class="line">        <span class="built_in">rep</span>(i,<span class="number">0</span>,n<span class="number">-2</span>)&#123;</span><br><span class="line">          <span class="keyword">if</span>(s[i] == <span class="string">&#x27;b&#x27;</span> &amp;&amp; s[i+<span class="number">1</span>] == <span class="string">&#x27;a&#x27;</span> &amp;&amp; s[i+<span class="number">2</span>] == <span class="string">&#x27;a&#x27;</span>)&#123;</span><br><span class="line">            hasbaa = <span class="literal">true</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(hasbaa)&#123;</span><br><span class="line">          <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">1</span>]<span class="number">-2</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span>(ag1 &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">0</span>] - <span class="number">2</span>*(a1/<span class="number">2</span>+a1%<span class="number">2</span>+ag1<span class="number">-1</span>))&#123;</span><br><span class="line">              <span class="built_in">printf</span>(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">0</span>] - <span class="number">2</span>*((a1<span class="number">-1</span>)/<span class="number">2</span>+(a1<span class="number">-1</span>)%<span class="number">2</span>))&#123;</span><br><span class="line">              <span class="built_in">printf</span>(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123; <span class="comment">// a*(b+a)+b&#123;3,&#125;</span></span><br><span class="line">          <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">1</span>]<span class="number">-2</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span>(ag1 &gt; <span class="number">0</span>)&#123; <span class="comment">// a&#123;2,&#125;(b+a)+b&#123;3,&#125;</span></span><br><span class="line">            <span class="built_in">rep</span>(i,<span class="number">0</span>,cnt[<span class="number">0</span>] - (a1/<span class="number">2</span>)*<span class="number">2</span> - <span class="number">2</span>)&#123;</span><br><span class="line">              <span class="built_in">printf</span>(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123; <span class="comment">// a?(b+a)+b&#123;3,&#125;</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="F-Social-Distance"><a href="#F-Social-Distance" class="headerlink" title="F - Social Distance"></a>F - Social Distance</h1><p>给 长度N+1的整数序列 X, $X_0&#x3D;0,X_i&lt;X_{i+1}$</p>
+<p>$N$个人, 第$i$个人会等概率出现在$[X_{i-1},X_{i}]$ 之间的<strong>实数</strong>位置</p>
+<p>求 <code>Exp(最近的两个人的距离)</code> mod 998244353</p>
+<p>$n \in [2, 20]$</p>
+<p>$X_n\le 10^6$</p>
+<p>4s</p>
+<p>1024mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>exp + min, 第一个想的方向是 min-max容斥</p>
+<p>但这这里 感觉 实际选择的位置互相影响，没有啥直接的想法</p>
+<p>然后就是N&#x3D;20,有想 bitmask或者 bitmask + meet-in-middle</p>
+<p>这个问题是 状态的最后一个人的位置是实数，不是整点</p>
+<p>除非能得到一个关于 最后一个位置的简单的 函数，把“实数”的内容抛掉，不然的话实数是没法作为状态的定义域的部分的，状态的值域的部分</p>
+<hr>
+<p>然后就是把点表示成 <code>整数点+[0,1)</code> 的值，这样可以先排除一下无效的大值</p>
+<p>似乎也没有啥用</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>$F(x) &#x3D; P(X\ge x)&#x3D;\int_{x}^{\infty} p(x) dx$</p>
+<p>$E(x) &#x3D; \int_0^{\infty} yp(y)dy &#x3D; \int_0^{\infty} \int_0^yp(y)dxdy &#x3D; \int_0^{\infty} \int_x^{\infty}p(y)dydx &#x3D; \int_0^{\infty} F(x)dx$</p>
+<p>$f(z)&#x3D;$  答案 $\ge z$的概率</p>
+<p>考虑新的 N个区间$A_i&#x3D;[x_i-(i-1)z,x_{i+1}-(i-1)z]$</p>
+<p>那么需要 找 $y_i$ 单调递增 且 属于对应区间</p>
+<p>因为 属于区间保证了 $y_i+(i-1)z$就对应了实际的选点</p>
+<p>单调递增保证了$(y_{i+1}+iz)-(y_{i}+(i-1)z)&#x3D;(y_{i+1}-y_{i})+z &gt; z$</p>
+<p>令$v &#x3D;$上面区间的$2n$个端点从小到大排列</p>
+<p>$dp[i][j][k] &#x3D;$ 前$i$个点中, 和$i$在同一个区间的有$k$个点,且区间为$(v_j,v_{j+1}]$ 的概率</p>
+<p>$f(z) &#x3D; \sum dp[n][\forall][\forall]$</p>
+<hr>
+<p>对于转移</p>
+<p>考虑第$i+1$个点和第$i$不在一个区间</p>
+<p>$dp[i+1][j][1] &#x3D; \frac{|v_{j+1}-v_{j}|}{|A_{i+1}|} \sum_{j_0 &lt; j, k&#x3D;1\cdots i} dp[i][j_0][k], [v_j,v_{j+1}]\subset A_{i+1}$</p>
+<p>考虑第$i+1$个点和第$i$在一个区间</p>
+<p>注意到这是 $dp[i][j][k] \to dp[i+1][j][k+1]$的变化</p>
+<p>那么变化的是 $[v_{j},v_{j+1}]$ 中 点个数的变化,原来是$k$个有序,变为$k+1$个有序， 也就是从$\frac{1}{k!}$变为$\frac{1}{(k+1)!}$ 所以还需要多乘上$\frac{1}{k+1}$， <strong>而且需要最后k+1个都能放进这个区间且倒数第k+2个可以放出这个区间</strong></p>
+<p>因此对于给定$z$, 可以 多项式时间计算出, 大概是$N^3$状态数和$N$的转移，也就是$O(N^4)$的时间复杂度的样子</p>
+<hr>
+<p>然后对于不固定的$z$, 那么 同样的方法, 端点序列是一个$a-bz$ 的形式，且 $a,b$是确定的</p>
+<p>而 v中内部顺序变化最多$O(n^2)$次，所以枚举排序关系$O(n^2)$次,计算出关于$z$ 的多项式</p>
+<p>$\mathrm{ans}&#x3D;\int f(z) dz &#x3D; \int \sum dp[n][\forall][\forall] dz$</p>
+<hr>
+<p>计算所有影响v顺序的$z$分界线的 $\displaystyle \frac{x_{\mathrm{diff}}}{i_{\mathrm{diff}}}$</p>
+<p>枚举 v顺序，对应的分界线区间$[z_l,z_r]$</p>
+<p>计算 关于$z$的概率函数 注意到所有的dp过程 都会乘上$\prod \frac{1}{|A_i|}$,  所以这个最后可以统一处理</p>
+<p>去掉以后</p>
+<p>$dp[i+1][j][1] +&#x3D; |v_{j+1}-v_{j}|\left( \sum_{j_0 &lt; j, k&#x3D;1\cdots i} dp[i][j_0][k]\right), [v_j,v_{j+1}]\subset A_{i+1}$</p>
+<p>$dp[i+1][j][k+1] +&#x3D; \frac{|v_{j+1}-v_{j}|}{k+1}\left( dp[i][j][k]\right), [v_j,v_{j+1}]\subset A_{i+1}$</p>
+<p>然后这里$v_{j+1}-v_j &#x3D; b_j+k_jz$ 的替换</p>
+<p>而上面的第二个转移可以发现</p>
+<p>$\displaystyle dp[i+1][j][k+1] &#x3D;  \frac{|v_{j+1}-v_{j}|^k}{(k+1)!}\left( dp[i-k+1][j][1]\right), [v_j,v_{j+1}]\subset A_{i+1}$</p>
+<p>$\displaystyle &#x3D;\frac{|v_{j+1}-v_{j}|^{k+1} }{(k+1)!} \left( \sum_{j_0 &lt; j} dp[i][j_0][\forall]\right), [v_j,v_{j+1}]\subset A_{i+1}$</p>
+<p>即</p>
+<p>$\displaystyle dp[i][j][k]&#x3D;\frac{|v_{j+1}-v_{j}|^{k} }{k!} \left( \sum_{j_0 &lt; j} dp[i-1][j_0][\forall]\right), [v_j,v_{j+1}]\subset A_{i+1}$</p>
+<p><strong>这里需要注意的是:</strong></p>
+<ul>
+<li>$k$的取值$\ge 1$，需要 最后k个可以放入$[v_j,v_{j+1}]$</li>
+<li>且倒数第$k+1$个要能放到之前，而根据dp转移关系，这一点是在 $[1] &#x3D; ()$时保证的，所以前置的dp结果都保证了这一条</li>
+</ul>
+<p>令 $\displaystyle g[i][j]&#x3D;\left( \sum dp[i][j][\forall]\right)$</p>
+<p>$\displaystyle \mathrm{ans}&#x3D;\sum \int_{z_l}^{z_r} (\sum g[n][\forall] ) dz$, 其中$[z_l,z_r]$是钦定端点排序后对应的$z$的区间</p>
+<p>$\displaystyle dp[i][j][k]&#x3D;\frac{|v_{j+1}-v_{j}|^{k} }{k!} \sum g[i-1][&lt;j], [v_j,v_{j+1}]\subset A_{i+1}$</p>
+<p>$\displaystyle g[i][j]&#x3D;dp[i][j][\forall]&#x3D;\left(\sum_{k&#x3D;1}^{k_{i,j,\max }}\frac{|v_{j+1}-v_{j}|^{k} }{k!} \right)\sum g[i-1][&lt;j], [v_j,v_{j+1}]\subset A_{i+1}$<br>其中$k_{i,j,\max}&#x3D;$ 从$i$向前最多多少连续个点 都能够放进$[v_j,v_{j+1}]$</p>
+<p>而多项式积分$\displaystyle \int_{l}^{r} \sum_{a_i}x^i dx &#x3D; \displaystyle \sum \frac{a_i}{i+1}x^{i+1}|_l^{r}$</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc113/submissions/50545493">https://atcoder.jp/contests/arc113/submissions/50545493</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/convolution&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD=<span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)(a);)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">fra</span>&#123;ll a,b;&#125;; <span class="comment">// z的分割 a/b, a&gt;0,b&gt;0 1e6, 最简分数</span></span><br><span class="line"><span class="type">bool</span> <span class="keyword">operator</span> &lt;(<span class="type">const</span> fra&amp;x,<span class="type">const</span> fra&amp;y)&#123;<span class="keyword">return</span> x.a*y.b&lt;x.b*y.a;&#125;</span><br><span class="line"><span class="type">bool</span> <span class="keyword">operator</span> ==(<span class="type">const</span> fra&amp;x,<span class="type">const</span> fra&amp;y)&#123;<span class="keyword">return</span> x.a==y.a <span class="keyword">and</span> x.b==y.b;&#125;;</span><br><span class="line"><span class="keyword">using</span> linear=array&lt;ll,<span class="number">2</span>&gt;; <span class="comment">// &#123;b,k&#125;: bx^0+kx^1</span></span><br><span class="line">linear <span class="keyword">operator</span>-(<span class="type">const</span> linear&amp;x,<span class="type">const</span> linear&amp;y)&#123;<span class="keyword">return</span> &#123;x[<span class="number">0</span>]-y[<span class="number">0</span>],x[<span class="number">1</span>]-y[<span class="number">1</span>]&#125;;&#125;</span><br><span class="line"><span class="keyword">using</span> poly=vector&lt;mint&gt;;</span><br><span class="line">poly&amp; <span class="keyword">operator</span>+=(poly&amp;p0,<span class="type">const</span> poly&amp;p1)&#123; <span class="comment">// 多项式加法</span></span><br><span class="line">  <span class="keyword">if</span>(p1.<span class="built_in">size</span>() &gt; p0.<span class="built_in">size</span>()) p0.<span class="built_in">resize</span>(p1.<span class="built_in">size</span>());</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">size</span>(p1)) p0[i]+=p1[i];</span><br><span class="line">  <span class="keyword">return</span> p0;</span><br><span class="line">&#125;</span><br><span class="line">poly <span class="keyword">operator</span>*(<span class="type">const</span> poly&amp;p0,<span class="type">const</span> poly&amp;p1)&#123; <span class="keyword">return</span> <span class="built_in">convolution</span>(p0,p1); &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 22</span></span><br><span class="line"><span class="comment">// mint dp[N][N*2][N];// [i][j][k] 前i个 和i同区间的有k个,它们在[vj..vj+1]这区间里 概率</span></span><br><span class="line">poly g[N][N*<span class="number">2</span>];<span class="comment">// [i][j][k]=sum dp[i][j][forall] 前i个和i同区间的有任意个,它们在[vj..vj+1]这区间里z^k的系数</span></span><br><span class="line">mint inv[N];</span><br><span class="line">linear sr[N*<span class="number">2</span>];</span><br><span class="line">tuple&lt;<span class="type">double</span>,<span class="type">int</span>,linear&gt; fr[N*<span class="number">2</span>]; <span class="comment">// &#123;新端点, idx +左 -右, xi-? z的0次1次系数&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">x</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>) x[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,n+<span class="number">1</span>) inv[i]=<span class="built_in">mint</span>(i).<span class="built_in">inv</span>();</span><br><span class="line">  vector&lt;fra&gt; tp;</span><br><span class="line">  <span class="keyword">auto</span> addfrac=[&amp;](<span class="type">int</span> x,<span class="type">int</span> y) &#123; <span class="type">int</span> g=<span class="built_in">gcd</span>(x,y); tp.<span class="built_in">push_back</span>(&#123;x/g,y/g&#125;); &#125;;</span><br><span class="line">  <span class="built_in">addfrac</span>(<span class="number">0</span>,<span class="number">1</span>); <span class="comment">// 0=0/1, 不用加无限点是因为 最右[maxz,\infity)的区间方案为0, 可以省略</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(j,i+<span class="number">1</span>,n+<span class="number">1</span>) &#123; <span class="comment">// [xi-iz,x&#123;i+1&#125;-iz] [xj-jz,x&#123;j+1&#125;-jz]</span></span><br><span class="line">    <span class="type">int</span> dx=x[j]-x[i];</span><br><span class="line">    <span class="type">int</span> di=j-i;</span><br><span class="line">    <span class="built_in">addfrac</span>(dx,di); <span class="comment">// 头对头，尾对尾</span></span><br><span class="line">    <span class="keyword">if</span>(di&gt;<span class="number">1</span>) <span class="built_in">addfrac</span>(dx,di<span class="number">-1</span>); <span class="comment">// xi-iz, xj-(j-1)z</span></span><br><span class="line">    <span class="built_in">addfrac</span>(dx,di+<span class="number">1</span>); <span class="comment">// xi-&#123;i-1&#125;z, xj-jz</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">sort</span>(<span class="built_in">begin</span>(tp),<span class="built_in">end</span>(tp),[&amp;](<span class="type">const</span> fra&amp;a,<span class="type">const</span> fra&amp;b)&#123;<span class="keyword">return</span> a &lt; b;&#125;); <span class="comment">// 排序+去重</span></span><br><span class="line">  tp.<span class="built_in">resize</span>(<span class="built_in">unique</span>(<span class="built_in">begin</span>(tp),<span class="built_in">end</span>(tp))-<span class="built_in">begin</span>(tp));</span><br><span class="line">  mint ans=<span class="number">0</span>;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;<span class="built_in">lb</span>(n+<span class="number">1</span>,<span class="number">0</span>),<span class="built_in">rb</span>(n+<span class="number">1</span>,<span class="number">0</span>); <span class="comment">// lb[区间id]=左端点顺序idx,rb[区间id]=右端点顺序idx</span></span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">1</span>,<span class="built_in">size</span>(tp)) &#123; <span class="comment">// tp[i-1]~tp[i] 之间的排序</span></span><br><span class="line">    <span class="type">double</span> sp=(<span class="number">1.0</span>*tp[i<span class="number">-1</span>].a/tp[i<span class="number">-1</span>].b+<span class="number">1.0</span>*tp[i].a/tp[i].b)/<span class="number">2</span>; <span class="comment">// 取区间中点 来完成排序, 也可以不用double通过双端点比较完成</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">1</span>,n+<span class="number">1</span>) &#123; <span class="comment">// 区间[x[j-1]-jz, x[j]-jz]的端点</span></span><br><span class="line">      fr[j*<span class="number">2</span><span class="number">-1</span>]=&#123;x[j<span class="number">-1</span>]-j*sp, j,&#123;x[j<span class="number">-1</span>],-j&#125;&#125;;</span><br><span class="line">      fr[j*<span class="number">2</span><span class="number">-0</span>]=&#123;x[j  ]-j*sp,-j,&#123;x[j  ],-j&#125;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sort</span>(fr+<span class="number">1</span>,fr+n*<span class="number">2</span>+<span class="number">1</span>); <span class="comment">// 排序所有端点</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">1</span>,n*<span class="number">2</span>+<span class="number">1</span>) &#123;</span><br><span class="line">      <span class="type">int</span> id=<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(fr[j]);</span><br><span class="line">      <span class="keyword">if</span>(id&gt;<span class="number">0</span>)lb[id]=j; <span class="comment">// 左端点</span></span><br><span class="line">      <span class="keyword">else</span> rb[-id]=j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">1</span>,n*<span class="number">2</span>) sr[j] = <span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(fr[j+<span class="number">1</span>])-<span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(fr[j]); <span class="comment">// 区间长度 = dx+di*z</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">0</span>,n+<span class="number">1</span>) <span class="built_in">rep</span>(k,<span class="number">1</span>,n*<span class="number">2</span>+<span class="number">1</span>) g[j][k] = &#123;<span class="number">0</span>&#125;; <span class="comment">// clear;</span></span><br><span class="line">    g[<span class="number">0</span>][<span class="number">0</span>] = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">    <span class="comment">//g[i][j]=(sum_&#123;c=1..maxc&#125;(a0+a1x)^c/c!) sum g[i-1][&lt;j],maxc=i前最多连续?个坐标在tp[i-1..i]可选</span></span><br><span class="line">    <span class="built_in">rep</span>(j,<span class="number">1</span>,n+<span class="number">1</span>) &#123;</span><br><span class="line">      poly su = &#123;<span class="number">0</span>&#125;; <span class="comment">// sum g[i-1][&lt;j]</span></span><br><span class="line">      <span class="built_in">rep</span>(k,<span class="number">1</span>,n*<span class="number">2</span>+<span class="number">1</span>) &#123; <span class="comment">// 第j个放在 第k个端点区间</span></span><br><span class="line">        su += g[j<span class="number">-1</span>][k<span class="number">-1</span>];</span><br><span class="line">        poly tmp = su;</span><br><span class="line">        <span class="keyword">auto</span> [a0,a1] = sr[k]; <span class="comment">// 区间长度的 0次系数 1次系数</span></span><br><span class="line">        <span class="built_in">rep</span>(l,j,n+<span class="number">1</span>) &#123;</span><br><span class="line">          <span class="keyword">if</span>(k&lt;lb[l] <span class="keyword">or</span> rb[l]&lt;=k)<span class="keyword">break</span>; <span class="comment">// lb[l] &lt;= k &lt; rb[l]</span></span><br><span class="line">          tmp = tmp * poly&#123;a0*inv[l-j+<span class="number">1</span>],a1*inv[l-j+<span class="number">1</span>]&#125;; <span class="comment">// *(a0+a1x)/(l-j+1)</span></span><br><span class="line">          g[l][k] += tmp; <span class="comment">// g[l][k] += (a0+a1x)^c/c! (sum g[j-1][&lt;k]), c=l-j+1</span></span><br><span class="line">          <span class="built_in">assert</span>((<span class="type">int</span>)g[l][k].<span class="built_in">size</span>() &lt;= l+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    poly su = <span class="built_in">vector</span>&lt;mint&gt;(n+<span class="number">1</span>,<span class="number">0</span>); <span class="comment">// su = sum g[n][&lt;k]</span></span><br><span class="line">    <span class="built_in">rep</span>(k,<span class="number">1</span>,n*<span class="number">2</span>+<span class="number">1</span>) su += g[n][k];</span><br><span class="line"></span><br><span class="line">    mint li=<span class="built_in">mint</span>(tp[i<span class="number">-1</span>].a)/tp[i<span class="number">-1</span>].b;</span><br><span class="line">    mint ri=<span class="built_in">mint</span>(tp[i].a)/tp[i].b;</span><br><span class="line">    <span class="built_in">rep</span>(k,<span class="number">0</span>,n+<span class="number">1</span>) ans += su[k]*(ri.<span class="built_in">pow</span>(k+<span class="number">1</span>)-li.<span class="built_in">pow</span>(k+<span class="number">1</span>))/(k+<span class="number">1</span>); <span class="comment">// \int \sum a_i x^i = \sum a_i/(i+1) x^&#123;i+1&#125;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,n) ans/=(x[i+<span class="number">1</span>]-x[i]); <span class="comment">// 统一处理分母</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.<span class="built_in">val</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc113/editorial/">https://atcoder.jp/contests/arc113/editorial/</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>F:</p>
+<p>分类有点难，其实上面几种情况全都有推过，但是我在类型分化时加上了起始的 字符，这样的题解看下来，是不太需要讨论起始字符的。但是在推的过程中不知道怎么排除。</p>
 <p>第二是我分类的时候，奇偶的分类顺序比结束字符的高，又导致了过多的分类分叉 QAQ</p>
 <p>然后我还有想转换（从情况某某+操作转换到情况某某），这样看来这题也不太需要转换</p>
 <p>另外其实对于代码上做分类，不太怕重复，毕竟如果两个非类方式有重复，进任何一种都可以，怕的是漏掉了分类。</p>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><p>分类的顺序和内容做好了，还要啥代码呢</p>
-<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc113/submissions/20437840">https://atcoder.jp/contests/arc113/submissions/20437840</a></p>
-<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc113/editorial/792">https://atcoder.jp/contests/arc113/editorial/792</a></p>
+<p>Ex:</p>
+<p>这个区间缩小没想到太不应该了</p>
+<p>这里对点排序而不是缩减处理得很好，因为缩减涉及到min&#x2F;max操作，对于批量计算来说无法处理</p>
+<p>连续分布函数的期望表达式还是不熟</p>
+<p>然后就是 1次方程 的 顺序n^2个老生长谈的东西</p>
+<p>然后 就是关于v的多项式，其实有dp后面就相对显然，</p>
+<p>稍微做一下状态压缩，</p>
 
     </div>
 
@@ -395,7 +477,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>文章連結：</strong>
-      <a href="https://yexiaorain.github.io/Blog/atcoder/arc/113/" title="Atcoder arc113 E (数学+枚举+分类讨论)">https://yexiaorain.github.io/Blog/atcoder/arc/113/</a>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/arc/113/" title="Atcoder arc113">https://yexiaorain.github.io/Blog/atcoder/arc/113/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
@@ -405,14 +487,21 @@
 
           <div class="post-tags">
               <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E6%8E%92%E5%BA%8F/" rel="tag"><i class="fa fa-tag"></i> 排序</a>
+              <a href="/Blog/tags/%E6%A6%82%E7%8E%87%E8%AE%BA/" rel="tag"><i class="fa fa-tag"></i> 概率论</a>
               <a href="/Blog/tags/%E6%9E%9A%E4%B8%BE/" rel="tag"><i class="fa fa-tag"></i> 枚举</a>
+              <a href="/Blog/tags/%E5%88%86%E7%B1%BB%E8%AE%A8%E8%AE%BA/" rel="tag"><i class="fa fa-tag"></i> 分类讨论</a>
+              <a href="/Blog/tags/%E9%A2%98%E6%84%8F%E8%BD%AC%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 题意转化</a>
+              <a href="/Blog/tags/%E4%B8%80%E6%AC%A1%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 一次函数</a>
+              <a href="/Blog/tags/%E5%AE%9A%E7%A7%AF%E5%88%86/" rel="tag"><i class="fa fa-tag"></i> 定积分</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/Blog/atcoder/arc/111/" rel="prev" title="Atcoder arc111">
+                <a href="/Blog/atcoder/arc/112/" rel="prev" title="Atcoder arc111">
                   <i class="fa fa-chevron-left"></i> Atcoder arc111
                 </a>
             </div>
@@ -456,13 +545,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="總字數">528k</span>
+    <span title="總字數">534k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="所需總閱讀時間">29:21</span>
+    <span title="所需總閱讀時間">29:41</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
