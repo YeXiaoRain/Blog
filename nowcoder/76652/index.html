@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="D(贡献统计，期望，树，生成函数,NTT)E()F(DP,树)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nowcoder 牛客挑战赛73">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/nowcoder/76652/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="D(贡献统计，期望，树，生成函数,NTT)E()F(DP,树)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-03-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-16T22:58:21.436Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="NTT">
+<meta property="article:tag" content="生成函数">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="树">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/nowcoder/76652/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/nowcoder/76652/","path":"nowcoder/76652/","title":"nowcoder 牛客挑战赛73"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>nowcoder 牛客挑战赛73 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">312</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">302</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#D-S-%E8%80%81%E5%B8%88%E7%9A%84%E8%99%9A%E6%A0%91"><span class="nav-text">D S 老师的虚树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#E-S-%E8%80%81%E5%B8%88%E7%9A%84%E7%A4%BC%E7%89%A9"><span class="nav-text">E S 老师的礼物</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#F-S-%E8%80%81%E5%B8%88%E7%9A%84%E5%90%88%E5%B9%B6"><span class="nav-text">F S 老师的合并</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-2"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-2"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">312</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">302</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/nowcoder/76652/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="nowcoder 牛客挑战赛73 | YeXiaoRain Blog">
+      <meta itemprop="description" content="D(贡献统计，期望，树，生成函数,NTT)E()F(DP,树)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          nowcoder 牛客挑战赛73
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-03-15 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-15T00:00:00+08:00">2024-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2024-03-17 06:58:21" itemprop="dateModified" datetime="2024-03-17T06:58:21+08:00">2024-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/NowCoder/" itemprop="url" rel="index"><span itemprop="name">NowCoder</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/nowcoder/76652/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="nowcoder/76652/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>8 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">D(贡献统计，期望，树，生成函数,NTT)E()F(DP,树)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://ac.nowcoder.com/acm/contest/76652">https://ac.nowcoder.com/acm/contest/76652</a></p>
+<h1 id="D-S-老师的虚树"><a href="#D-S-老师的虚树" class="headerlink" title="D S 老师的虚树"></a>D <a target="_blank" rel="noopener" href="https://ac.nowcoder.com/acm/contest/76652/D">S 老师的虚树</a></h1><p>给n点定树T，<code>边</code>有颜色</p>
+<p>对于 点集S,包含点集S的最小<strong>连通</strong>点集V’对应的树为生成树T’</p>
+<p>w(S)&#x3D;T’中不同颜色边个数</p>
+<p>对于 <code>i=1..n</code></p>
+<p>计算 |S|&#x3D;i的w的期望Exp(w(S)),结果mod 998244353</p>
+<p>n 2e5</p>
+<p>2s</p>
+<p>512mb</p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>感觉就是算贡献，对于点为i的 点集合，对于颜色c的所有边来说，如果有横跨 边的两个点，那么贡献1,否则贡献0</p>
+<p>那么考虑不跨边更简单，也就是 贡献<code>i,c</code>&#x3D;所有情况 - 不跨边</p>
+<p>$&#x3D; \binom{n}{i}-\sum_{blk_j} \binom{blk_j}{i}$ 其中 blk是按照指定颜色切割的块</p>
+<p>那么 $ans_i&#x3D; C\binom{n}{i}-\sum_{blk_j} \binom{blk_j}{i}$,其中C是颜色总个数,blk是所有颜色独立的切割</p>
+<p>那么问题来了，每个颜色切割的块数 &#x3D; 当前颜色边数+1,</p>
+<p>所以右侧有 <code>n+C</code>个 <code>&lt;=2n</code>, 但是直接计算，对于每个i来说复杂度也是 $O(n)$的,总的复杂度会tle</p>
+<hr>
+<p>生成函数我也想过没想过怎么简化</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>一样的思路</p>
+<p>$ans_i&#x3D;\sum_{j} \binom{sz_j}{i} &#x3D; [x^i]\sum_{j}(1+x)^{sz_j}$</p>
+<p>$a_i&#x3D;$大小为i的块的个数</p>
+<p>$[x^i]\sum_{j}a_j(1+x)^j$</p>
+<p>$&#x3D;\sum_{j}x^j\sum_{i&#x3D;j}^n\binom{i}{j}a_i$</p>
+<p>$&#x3D;\sum_{j}x^j\sum_{i&#x3D;j}^n\frac{i!}{j!(i-j)!}a_i$</p>
+<p>$&#x3D;\sum_{j}\frac{x^j}{j!}\sum_{i&#x3D;j}^n(a_ii!)\frac{1}{(i-j)!}$</p>
+<p>所以需要处理的是右侧</p>
+<p>$r_j&#x3D;\sum_{i&#x3D;j}^n(a_ii!)\frac{1}{(i-j)!}$</p>
+<p>$t_j&#x3D;r_{n-j}&#x3D;\sum_{i&#x3D;n-j}^n(a_ii!)\frac{1}{(i-n+j)!}$</p>
+<p>令$k&#x3D;n-i$有$i&#x3D;n-k$</p>
+<p>$&#x3D;\sum_{k&#x3D;n-n}^{n-(n-j)}(a_{n-k}(n-k)!)\frac{1}{(j-k)!}$</p>
+<p>$&#x3D;\sum_{k&#x3D;0}^{j}(a_{n-k}(n-k)!)\frac{1}{(j-k)!}$</p>
+<p>即令 $[x^k]f(x)&#x3D;a_{n-k}(n-k)!$</p>
+<p>$[x^k]g(x)&#x3D;\frac{1}{k!}$</p>
+<p>$r_j&#x3D;t_{n-j}&#x3D;[x^{n-j}]f * g(x)$</p>
+<p>$ans_i&#x3D; \frac{1}{i!} r_i&#x3D;\frac{1}{i!} [x^{n-i}]f * g(x)$</p>
+<h1 id="E-S-老师的礼物"><a href="#E-S-老师的礼物" class="headerlink" title="E S 老师的礼物"></a>E <a target="_blank" rel="noopener" href="https://ac.nowcoder.com/acm/contest/76652/E">S 老师的礼物</a></h1><p>n个节点的树，只给定 每个节点i的最小邻居 ai</p>
+<p>你需要判断</p>
+<ul>
+<li>该树唯一存在 （需要输出具体树）</li>
+<li>存在多个方案</li>
+<li>该树不存在</li>
+</ul>
+<p>t 2e5组</p>
+<p>n 5e5</p>
+<p>1s</p>
+<p>512mb</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>首先 如果是合法的树，那么 上面的n条边（i-ai) 一定存在重边</p>
+<p>如果只存在一条重边且全部连通，那么树唯一，但不一定满足条件（检验一下每个点实际的最小邻居是否满足）</p>
+<p>然而这充要吗？</p>
+<hr>
+<p>如果给你一个树，你会怎么统计所有点的最小节点呢？</p>
+<p>首先是1, 把所有1相连的节点u,令 au&#x3D;1</p>
+<p>情况1： 这些点里包含2</p>
+<p>情况2： 这些点里不包含2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1-2-3: (a1=2,a2=1,a3=2)</span><br><span class="line">1-3-2: (a1=3,a2=3,a3=1)</span><br><span class="line">2-1-3: (a1=2,a2=1,a3=1)</span><br><span class="line">发现是可以区分的</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">4-1-3-2 （a1=3,a2=3,a3=1,a4=1)</span><br><span class="line">3-1-4-2 （a1=3,a2=4,a3=1,a4=1)</span><br><span class="line">也是能区分的</span><br></pre></td></tr></table></figure>
+
+<p>上面核心在于 有且只有1条重复边</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1-3-4-2 （a1=3,a2=4,a3=1,a4=2)</span><br><span class="line">也是可以区分的！！！！！！！！ 这个例子很神奇，感觉上了一些排除法的感觉，这里有2个重边</span><br><span class="line"></span><br><span class="line">然而</span><br><span class="line"></span><br><span class="line">3-1-4-5-2 (a1=3,a2=5,a3=1,a4=1,a5=2)</span><br><span class="line">4-1-3-5-2 (a1=3,a2=5,a3=1,a4=1,a5=2)</span><br><span class="line"></span><br><span class="line">也是两个重边，却没有唯一方案</span><br></pre></td></tr></table></figure>
+
+<p>如何评价呢</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">（a1=3,a2=4,a3=1,a4=2)得到的是</span><br><span class="line">1-3, 2-4 其中 额外连接需求是</span><br><span class="line"></span><br><span class="line">1(&gt;=3)-3(&gt;=1)</span><br><span class="line">2(&gt;=4)-4(&gt;=2)</span><br><span class="line"></span><br><span class="line">需要的是 对于后一个连通，有且只有一个点能在前置的点中找到连接方案，而注意到连接后 不会影响 每个点的连接需求，</span><br><span class="line"></span><br><span class="line">而后面的</span><br><span class="line">(a1=3,a2=5,a3=1,a4=1,a5=2)得到的是</span><br><span class="line">3(&gt;=1)-1(&gt;=3)-4(&gt;=1)</span><br><span class="line">2(&gt;=5)-5(&gt;=2)</span><br><span class="line"></span><br><span class="line">会发现 3,4 都能 和 5 配对</span><br></pre></td></tr></table></figure>
+
+<p>然后这里不是 前置，应该是其它连通块中找</p>
+<p>而且最终 所有的要连接到一起</p>
+<p>而且连接时 是 不能一个块有两个方案，但是可以块a的点 同时连块B和块C</p>
+<p>换句话说 链接 发生时，原本两个块不是同一块</p>
+<p>那么用二维坐标表示就是</p>
+<p><code>(x(&gt;=y))</code> 放置时，<code>add(点(x,y))</code></p>
+<p><code>(x(&gt;=y))</code>查询时，查询所有<code>点(&gt;=y,&lt;=x)</code> 并做并查集操作</p>
+<hr>
+<p>这样如果最后不是1个并查集那么 则该树不存在</p>
+<p>这样 如果出现了 已经合并的再次合并那么说明 至少2棵树，（注意最多合并n-1次，但中间如果跳过的话，可能无法合成所有该合并的点</p>
+<hr>
+<p>问题1，如果可行，这复杂度是 2d segtree  + 并查集</p>
+<p>问题2，当不满足时，如何在时间复杂度内判断是 不存在 还是 不唯一</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>先判断不存在：也就是连通性</p>
+<p>对所有$a_u\le v,a_v\le u$的$(u,v)$二元组连边</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">大根堆 = maxpq&#123;i,并查集标识&#125;</span><br><span class="line">小根堆 = minpq&#123;并查集中a[i]最小的，并查集标识&#125;</span><br><span class="line"></span><br><span class="line">for u =1...n:</span><br><span class="line">	那么 这时 所有 &lt; u的已经处理好了</span><br><span class="line">	首先 把 minpq中 所有 a[i] &lt;= u的点移动到大根堆里</span><br><span class="line">	也就是大根堆里的点 都满足 a[i] &lt;= u, 而大根堆里的比较项是i</span><br><span class="line">	然后对大根堆里的 a[u] &lt;= i的点 完成合并，这里从大到小合并，所以合并后的点除了最大点都可以删除（因为未来这些点全在大根堆里 也属于同一个并查集，而且比较核心是 a[v] &lt;= i）</span><br><span class="line">	最后 把 &#123;a[u],uf[u]&#125; 放入小根堆（因为可能a[u] &gt; u, 虽然并查集上是一块，但是不能参与和后面的直接合并）</span><br><span class="line">	所以这里有清除操作 可以set,也可以先取出来再放回去</span><br></pre></td></tr></table></figure>
+
+<p>emmmmmmmmmm 这样做的话 的确复杂度就很小了不会多个log了</p>
+<hr>
+<p>我看题解这里 <code>for v(ai)=n...1, for i in ai2i[v]</code></p>
+<p>然后 堆里的 都满足 <code>u &gt;= v(a[i])</code>, 找堆里<code>a[u] &lt;= i</code> </p>
+<hr>
+<p>这样的话 我的第二个问题就解决了，也就是能判断 无方案的情况了</p>
+<hr>
+<p>对于第一个问题 就是 无脑线段树</p>
+<p>存储时键为u,值为<code>a[u]</code></p>
+<p>所以每次查询 都是<code>query(a[u]~n, &lt;= u)</code>, 那么线段树维护区间最小值</p>
+<p>注意到这样做 单次复杂度最高是<code>O(n)</code> 但如果真的这样 会让 边超过n-1,也就是有效的 查询和合并次数 一定是 &lt;&#x3D; n-1的，否则 一旦某次 &gt; n-1 那么直接就退出了，而单次最多n, 所以 不会超时</p>
+<h1 id="F-S-老师的合并"><a href="#F-S-老师的合并" class="headerlink" title="F S 老师的合并"></a>F <a target="_blank" rel="noopener" href="https://ac.nowcoder.com/acm/contest/76652/F">S 老师的合并</a></h1><p>两个树T1,T2分别有n1,n2个节点,</p>
+<p>第一个树 根1,节点编号1~n1</p>
+<p>第二个树 根n1+1,节点编号n1+1~n1+n2</p>
+<p>问有多少个n1+n2点的有根树T满足，对于Ti中 任意两个点</p>
+<ul>
+<li>Ti中有 祖先关系的点 当且仅当 在T中也有祖先关系，</li>
+<li>在Ti中x的dfs序小于y, 当且仅当 在T中x的序小于y</li>
+</ul>
+<p>求满足的树T的个数 mod 998244353</p>
+<hr>
+<p>n1,n2 [1,100]</p>
+<p>3s</p>
+<p>512mb</p>
+<h2 id="我的思路-2"><a href="#我的思路-2" class="headerlink" title="我的思路"></a>我的思路</h2><p>首先T的根一定是1或n1+1,因为如果是其它节点，那么根据第一个 祖先的当且仅当关系，那它们的祖先有1或n1+1必定不对</p>
+<p>考虑最简单的图</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  1         4</span><br><span class="line">2   3     5   6</span><br></pre></td></tr></table></figure>
+
+<p>当钦定1是根以后，讨论4是否直接和1连，那么有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">4不和1的直接子节点穿插 = 1的子节点个数+1</span><br><span class="line"></span><br><span class="line">  1       1       1</span><br><span class="line">4 2 3   2 4 3   2 3 4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4 和1的直接子节点穿插 = f([4],[2]) + f([4],[3]) + f([4],[2 3])</span><br><span class="line"></span><br><span class="line">    1          1          1</span><br><span class="line">4[2]  3     2  4[3]     4[2 3]</span><br><span class="line"></span><br><span class="line">4 不和1直接相连 = f([2],[4]) + f([3],[4])</span><br><span class="line"></span><br><span class="line">   1           1</span><br><span class="line">2[4]  3      2   3[4]</span><br></pre></td></tr></table></figure>
+
+<p>有什么 发现，有什么问题呢</p>
+<p>这里 感觉上 点一定是连续的某个点的子节点的一段</p>
+<p>问题是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f([4],[2 3])</span><br><span class="line">    1</span><br><span class="line">    4</span><br><span class="line">[2 3] [5 6]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>这里 感觉 不如虚拟一个0节点为T的根</p>
+<p>那么<code>g([...],[....])</code> 就是 在两组根，内部保持顺序的情况下的方案数</p>
+<p><code>ans=g([1],[n1+1])</code></p>
+<p>如果这个能快速算出，那么似乎就是$O(n^4)$的问题了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">g(a[...],b[...])</span><br><span class="line"></span><br><span class="line">那么大概的形状是 这样的，也就是 对于a中 直接和祖先x相连的来说 他们未相连的 一定是对应b的后代</span><br><span class="line">      x</span><br><span class="line">  aaa bbbb aaaa bbbb</span><br><span class="line">  bbb aaaa bbbb aaaa</span><br></pre></td></tr></table></figure>
+
+<p>所以这里想的是dp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dp[i][j] = a消耗了前i个b消耗了前j个的方案数</span><br><span class="line"></span><br><span class="line">dp[i][j] += dp[i-1][j0&lt;=j] * g(a[i].child, b[j0+1..j]) # 这里a[i]和根连</span><br><span class="line"></span><br><span class="line">dp[i][j] += dp[i0&lt;=i][j-1] * g(a[i0+1..j],b[j].child) # 这里b[j]和根连</span><br><span class="line"></span><br><span class="line">g(a,b) = dp[len(a)][len(b)][a+b]</span><br></pre></td></tr></table></figure>
+
+<p>也就是 状态转移 总代价是n^4 就ac了</p>
+<h2 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.nowcoder.com/discuss/598273393213923328">https://www.nowcoder.com/discuss/598273393213923328</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>D - 虽然主拆解想到了，但是后面的没在草稿纸上展开，展开还是应该能发现是卷积的形式，我也感觉像但就是自己没 去做把下标逆转的操作，这应该是自己就能做出来的题目</p>
+<p>E- (u,v) 对于$a_u\le v,a_v\le u$的所有连线 检查连通性 没想到简单的并查集+堆就可以实现！！！！！ 后面也是，感觉主体的逻辑想的没问题，但是细节的复杂度还是没卡死，没卡到位。</p>
+<p>F - 这对知识要求比D和E小啊， 感觉也比D和E简单，就是个有点小怪的树上DP</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/nowcoder/76652/" title="nowcoder 牛客挑战赛73">https://yexiaorain.github.io/Blog/nowcoder/76652/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/NTT/" rel="tag"><i class="fa fa-tag"></i> NTT</a>
+              <a href="/Blog/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 生成函数</a>
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 树</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1936/" rel="prev" title="Codeforces Round 930 (Div. 1)">
+                  <i class="fa fa-chevron-left"></i> Codeforces Round 930 (Div. 1)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">543k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">30:09</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/nowcoder/76652/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
