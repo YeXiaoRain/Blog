@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(top tree, static top tree)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc351">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/351/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(top tree, static top tree)">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://img.atcoder.jp/abc351/1d95833aa7c30d78e72209d7a205a8f1.jpg">
+<meta property="og:image" content="https://img.atcoder.jp/abc351/95bc2ae83181f951e9075e0a87619777.jpg">
+<meta property="og:image" content="https://img.atcoder.jp/abc351/09f981f7cf3fcbb45f0be32b2fd1f0e0.png">
+<meta property="article:published_time" content="2024-04-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-23T09:56:22.177Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="top tree">
+<meta property="article:tag" content="static top tree">
+<meta property="article:tag" content="全局平衡二叉树">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:image" content="https://img.atcoder.jp/abc351/1d95833aa7c30d78e72209d7a205a8f1.jpg">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/351/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/351/","path":"atcoder/abc/351/","title":"Atcoder abc351"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc351 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">332</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">314</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#G-Hash-on-Tree"><span class="nav-text">G - Hash on Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TLDR"><span class="nav-text">TLDR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87-%E5%9C%A8-%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8A%E7%AE%A1%E7%90%86%E4%B8%80%E4%B8%AA%E6%A0%91%E7%9A%84DP"><span class="nav-text">目标: 在 线段树上管理一个树的DP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F-1-%E5%AF%B9%E4%BA%8E-perfect-binary-tree"><span class="nav-text">观察 1: 对于 perfect binary tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F-2-decomposition-of-tree-%E5%92%8C-tree-DP%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">观察 2:  decomposition of tree 和 tree DP的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static-top-tree"><span class="nav-text">static top tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3"><span class="nav-text">原始问题的解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Further-application-of-a-Static-top-tree"><span class="nav-text">Further application of a Static top tree</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83-%E6%80%BB%E7%BB%93"><span class="nav-text">参考+总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">332</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">314</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/351/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc351 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(top tree, static top tree)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc351
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-04-27 00:00:00" itemprop="dateCreated datePublished" datetime="2024-04-27T00:00:00+08:00">2024-04-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2024-10-23 17:56:22" itemprop="dateModified" datetime="2024-10-23T17:56:22+08:00">2024-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/351/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/351/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>16 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(top tree, static top tree)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc351">https://atcoder.jp/contests/abc351</a></p>
+<h2 id="G-Hash-on-Tree"><a href="#G-Hash-on-Tree" class="headerlink" title="G - Hash on Tree"></a>G - Hash on Tree</h2><p>给定n点树有根数</p>
+<p>值数组<code>a[n]</code></p>
+<p>f(u) &#x3D; a[u] , 如果u是叶子</p>
+<p>f(u) &#x3D; a[u] + prod f(child of u)如果u非叶子</p>
+<p>q次操作,每次 修改 <code>a[pos]=val</code>,每次修改后输出 f(1)</p>
+<p>n,q 2e5</p>
+<p>4s</p>
+<p>1024mb</p>
+<h3 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h3><p>首先这个是收到深度控制的,如果暴力的更新的话</p>
+<p>那么一个想法是能否flat掉这个行为</p>
+<p><code>[a,b,c]x[x,y,1] = [0,a*1+b*y,1]</code></p>
+<p><code>leaf = [0,ai,1]</code></p>
+<p><code>非叶子 = [ai,1,0]</code></p>
+<p>然而没找到 矩阵方法或者满足“结合率”的东西</p>
+<p>如果能有 矩阵或者结合律满足，就是个线段树维护，就好了</p>
+<p>其中 上面的乘还可以拆成左右的包裹，总之如果有办法就好了</p>
+<p>但是在尝试中发现要得到 a<em>1+b</em>y 这种总是伴随秩的下降，没啥办法</p>
+<hr>
+<p>第二个想的是上生成方程, 也没有弄出东西</p>
+<hr>
+<p>那么最后就是 能否树的结构通过 轻重链 来完成快速计算(q log n)? 也没想到具体维护方法</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>有很多解法，官方用的一个数据结构叫做 Static top tree.</p>
+<h3 id="TLDR"><a href="#TLDR" class="headerlink" title="TLDR"></a>TLDR</h3><p>感觉这题解详细但没强调关键，稍微总结一下下面</p>
+<ul>
+<li>切分方案(点u和它的子树) &#x3D; 点u的重链 和 点u的轻儿子们<ul>
+<li>线段树的中间状态是一个区间，而这里中间状态有两种<ul>
+<li>第一种状态：重链的<code>连续的一段</code> 和 这些点的所有亲儿子，这在下面叫做 path cluster</li>
+<li>第二种状态：点u和它的轻儿子的 <code>连续的一段</code>， 这在下面叫做 point cluster</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>类似的</th>
+<th>这里</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用 线段树 管理区间 点修改 和 区间查询</td>
+<td>用static top tree 管理 静态的tree dp</td>
+</tr>
+<tr>
+<td>线段树的非叶子结点，或者查询结果对应一个区间的状态</td>
+<td>static top tree的非叶子结点，或查询结果对应 一个point cluster&#x2F;path cluster</td>
+</tr>
+<tr>
+<td>数链剖分 揭露了重轻链 的复杂度优势</td>
+<td>这里也用了类似优势</td>
+</tr>
+<tr>
+<td>线段树的状态是 根据你需要设计的</td>
+<td>这里也是根据你需要设计的，只是因为有两种形式，所以这里有两种状态需要设计</td>
+</tr>
+<tr>
+<td>线段树的节点状态&#x2F;查询状态 &#x3D; 两个子状态的符合</td>
+<td>这里也需要复合，不过这里复合的子状态来源有5种</td>
+</tr>
+</tbody></table>
+<p>5种子状态符合</p>
+<ul>
+<li>单点: vertex(g中的点)-&gt;path</li>
+<li>重链上相邻两段复合: compress(path l,path r) -&gt; path</li>
+<li>一个节点的 连续轻儿子复合: rake(point l,point r) -&gt; point</li>
+<li>点u的完整子树 变为 点u父节点的 单个亲儿子: add_edge(path) -&gt; point</li>
+<li>点u的轻儿子 变成 点u为重链上的一个单点: add_vertex(point,g中的点) -&gt; path</li>
+</ul>
+<p>自底向上看就是</p>
+<ul>
+<li>一个点加入它所属于的重链<ul>
+<li>它自身无轻儿子: compress(compress(…compress(vertex(u))))</li>
+<li>有轻儿子,  compress(compress(…compress(add_vertex(rake(rake(…它的轻儿子们的二叉树)), u))))</li>
+</ul>
+</li>
+<li>一个点加入它不属于的上层重链<ul>
+<li>首先它会 按照上面的过程加入到它属于的重链，得到一个 path cluster, 令其为POINT</li>
+<li>然后  add_vertex(rake(rake(…rake(add_edge(POINT))))) 变成一个 更上层重链的一个单点PATH</li>
+<li>最后  compress(compress(…compress(PATH)))</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function 切割(u 和它的子树):</span><br><span class="line">  arr = [</span><br><span class="line">    (对([切割(w) for w in v的亲儿子们])构建按重量分割的二叉树)</span><br><span class="line">    for v in u的重链</span><br><span class="line">  ]</span><br><span class="line">  return 对arr构建按重量分割的二叉树</span><br></pre></td></tr></table></figure>
+
+<p>本题的point cluster可以表述成单个值</p>
+<p>而path cluster可以表述成 ax+b的形式，其中x指代的是 当前path向叶子延伸被截断的重链的部分</p>
+<h3 id="目标-在-线段树上管理一个树的DP"><a href="#目标-在-线段树上管理一个树的DP" class="headerlink" title="目标: 在 线段树上管理一个树的DP"></a>目标: 在 线段树上管理一个树的DP</h3><p>首先,考虑解决这个问题的必要操作</p>
+<p>首先考虑O(N)时间解决每个查询, 这很简单，就是树上DP,显然TLE</p>
+<p>如果能转化成序列问题</p>
+<ul>
+<li>修改 <code>a[i]=x</code></li>
+<li>查询 $A_1\oplus A_2\oplus \cdots \oplus A_N$</li>
+</ul>
+<p>若能转化，则可以segtree维护</p>
+<h3 id="观察-1-对于-perfect-binary-tree"><a href="#观察-1-对于-perfect-binary-tree" class="headerlink" title="观察 1: 对于 perfect binary tree"></a>观察 1: 对于 perfect binary tree</h3><p>然后就是 树上dp+记忆化+从节点到根的更新dp，因为 perfect binary tree, 所以深度在log级别，总时间复杂度为 <code>O(q log n)</code></p>
+<h3 id="观察-2-decomposition-of-tree-和-tree-DP的关系"><a href="#观察-2-decomposition-of-tree-和-tree-DP的关系" class="headerlink" title="观察 2:  decomposition of tree 和 tree DP的关系"></a>观察 2:  decomposition of tree 和 tree DP的关系</h3><p>为了展开观察，我们将从另一个角度来解释树状 DP。 事实上，树状图 DP 可以看作是<strong>通过合并子树生成有根树的过程</strong>，同时保留了一些信息。 现在我们来描述一下这一特性。</p>
+<p>在考虑通过合并生成树的过程时，有必要考虑反向操作：分解树的过程。 因此，我们首先考虑分解树的过程。 通过递归执行下面的(1)-(3)直到树上没有边为止，我们就可以把一棵有根树分解成顶点和边。 参见下图。</p>
+<ul>
+<li>(1) 删除一个根顶点。 在这里，不要删除与根顶点相邻的边，因为这些边的端点被认为是一个没有信息的顶点（我们称这样的顶点为虚拟顶点）。</li>
+<li>(2) 通过克隆虚拟顶点，分割出虚拟顶点连接的子树。</li>
+<li>(3) 从每条子树中删除虚拟顶点及其相邻的边。 现在，每个子树都形成了一个普通顶点。</li>
+</ul>
+<p><img data-src="https://img.atcoder.jp/abc351/1d95833aa7c30d78e72209d7a205a8f1.jpg" alt="atcoder example image 0"></p>
+<p>按照相反的顺序，子树逐渐合并，最终形成一棵有根的树。</p>
+<p>让我们用函数来表示合并过程。 定义以下四个函数。 在下文中，我们假定顶点附有信息且可区分，但边不附有信息且不可区分。</p>
+<ul>
+<li><code>vertex(v)</code>: 生成 点v</li>
+<li><code>add_vertex(t,v)</code>: 1的反向操作, 令 点v 是 树t 的virtual root</li>
+<li><code>merge(x,y)</code>: 2的反向操作, 把树x,树y的通过virtual节点合并成一个</li>
+<li><code>add_edge(t)</code>: 3的反向操作, 给有根树t 增加一个 virtual root</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; g; <span class="comment">// 邻接表</span></span><br><span class="line"></span><br><span class="line"><span class="function">Tree <span class="title">generate_tree</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123;<span class="comment">// 生成根为v的子树，子节点是临接表中的</span></span><br><span class="line">  <span class="keyword">if</span>(g[v].<span class="built_in">empty</span>()) <span class="keyword">return</span> <span class="built_in">vertex</span>(v);</span><br><span class="line">  vector&lt;Tree&gt; children;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; child : g[v]) &#123;</span><br><span class="line">    Tree t = <span class="built_in">generate_tree</span>(child);</span><br><span class="line">    children.<span class="built_in">push_back</span>(<span class="built_in">add_edge</span>(t));</span><br><span class="line">  &#125;</span><br><span class="line">  Tree t = children[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt; (<span class="type">int</span>)children.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">    t = <span class="built_in">merge</span>(t, children[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">add_vertex</span>(t, v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于这里来说</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"><span class="keyword">using</span> T = mint;</span><br><span class="line"><span class="function">T <span class="title">vertex</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123; <span class="keyword">return</span> A[v]; &#125;</span><br><span class="line"><span class="function">T <span class="title">add_vertex</span><span class="params">(T x, <span class="type">int</span> v)</span> </span>&#123; <span class="keyword">return</span> x + A[v]; &#125;</span><br><span class="line"><span class="function">T <span class="title">merge</span><span class="params">(T x, T y)</span> </span>&#123; <span class="keyword">return</span> x * y; &#125;</span><br><span class="line"><span class="function">T <span class="title">add_edge</span><span class="params">(T x)</span> </span>&#123; <span class="keyword">return</span> x; &#125; </span><br></pre></td></tr></table></figure>
+
+<p>wow !!! 有点东西，抽象出来之后 这是有点神奇</p>
+<p>这样来看, 树状DP 可以看作 通过合并子有根树 来生成一个新的有根树的过程。</p>
+<ul>
+<li>从叶顶点开始，考虑通过重复执行以下三种操作来合并子树：添加顶点、添加边以及合并根为虚拟顶点的根树。</li>
+<li>一般树具有以下两个特性，它们阻碍了高效的重新计算<ul>
+<li>长度最坏O(N)</li>
+<li>子节点最坏O(N)</li>
+</ul>
+</li>
+<li>顺便说一下，树形 DP 是一个合并子树的过程，同时保留一些信息<ul>
+<li>合并子树的过程可以按照合并子树的逆操作生成。</li>
+</ul>
+</li>
+</ul>
+<p>这两个事实产生了以下结果：</p>
+<ul>
+<li>如果我们能以二叉树的形式生成深度为 O(logN)的合并过程，那么树 DP 是否可以高效地重新计算呢？</li>
+</ul>
+<p>这种合并过程的实现就是static top tree。</p>
+<h3 id="static-top-tree"><a href="#static-top-tree" class="headerlink" title="static top tree"></a>static top tree</h3><p>注：虽然 Static top tree 的名称是 “Top tree”，但它与 Top tree（狭义）是完全不同的数据结构。 如果你想学习 Top 树，请不要混淆。</p>
+<ul>
+<li>更确切地说，静态顶层树是 “支持顶层树大部分功能的数据结构的静态版本，这种数据结构是通过管理 Splay 树中链接&#x2F;切割树上的正常边所维护的信息来实现的”（广义的顶层树）。<ul>
+<li>顺便说一下，我们还可以通过将一棵 Top 树（狭义上）变为静态来构建静态顶树。 有人将这种数据结构称为静态顶树。 我们在此跳过对它的介绍，但如果你有兴趣，请参阅 tatyam 的实现和注释(日语) <a target="_blank" rel="noopener" href="https://atcoder.jp/contests/joisp2024/submissions/51887735">https://atcoder.jp/contests/joisp2024/submissions/51887735</a></li>
+</ul>
+</li>
+</ul>
+<p>静态顶树是一棵深度为 O(logN)的二叉树，表示合并子树（实际上不是子树，稍后描述）的过程。</p>
+<p>为了说明如何构建静态顶树，我们首先解释合并过程的逆操作，即分解树的过程。 首先，对树应用 HLD 将每条边分为重边和轻边。 （如果您不了解 HLD，请参阅 ABC269 Ex 的题解）。</p>
+<p>然后，重复以下步骤 (1)-(4) 直到树上没有边为止。</p>
+<ul>
+<li>(1) 选择与根相连的<code>重路径</code>，并删除其中的<code>重边</code></li>
+<li>(2) 删除根顶点。 这里，不要删除与根相邻的边，因为这些边的端点被视为虚拟顶点。</li>
+<li>(3) 通过克隆虚拟顶点，将虚拟顶点连接的子树分割开来。</li>
+<li>(4) 从每个子树上删除虚拟顶点及其相邻的<code>轻边</code>。 现在每个子树都形成了一个普通顶点。</li>
+</ul>
+<p><img data-src="https://img.atcoder.jp/abc351/95bc2ae83181f951e9075e0a87619777.jpg" alt="atcoder 1-4 示例图"></p>
+<p>值得注意的是，分解过程中出现的图形不一定是有根树的子树。 也就是说，在步骤(1)中去除边后，可能会出现一个不能被视为有根树的图，这取决于去除边的顺序。 我们借用 “顶树 “这一术语，将分解过程中出现的图形称为cluster。</p>
+<p>如图所示，分解过程中会出现以下两种cluster：</p>
+<ul>
+<li>以非虚拟顶点为根的子树由零条或多条重边连接的cluster</li>
+<li>形成以虚拟顶点为根的子树的cluster。</li>
+</ul>
+<p><img data-src="https://img.atcoder.jp/abc351/09f981f7cf3fcbb45f0be32b2fd1f0e0.png" alt="atcoder 示例图 path cluster, point cluster"></p>
+<p>接下来，我们按照分解的逆操作，想出一种将cluster并为二叉树形式的方法。在分解过程中，会发生两种cluster合并：合并path cluster和合并point cluster。我们进一步借用 Top tree 的术语，将前者称为 compress，将后者称为 rake。</p>
+<p>static top tree的关键是在将cluster合并为二叉树形式时应用技巧，将深度保持在$O(\log N)$。但是，在 (2) 和 (4) 的逆运算中没有技巧的余地；我们可以改进的是逆运算：</p>
+<p>-（1）选择一条<code>重路径</code>并从中移除<code>重边</code>；<br>-（3）通过克隆虚拟顶点来分离与虚拟顶点相连的子树。</p>
+<p>直观地看，按照以下策略合并集群似乎是一个好主意：</p>
+<ul>
+<li>(1) 的逆操作：在“compose” path culsters时，确保合并过程形成完美的二叉树。</li>
+<li>(3) 的逆操作：在“rake”-ing path clusters时，确保合并过程形成完美的二叉树。</li>
+</ul>
+<p>这是一个非常合理的策略，因为一般树的两个属性阻碍了高效的计算：</p>
+<ul>
+<li>深度$O(N)$</li>
+<li>子节点$O(N)$</li>
+</ul>
+<p>分别通过compressing和raking实现</p>
+<p>在这种策略下，最差的的深度可能达到 $O(\log^2 N)$ 我们在此省略细节。原因与使用 HLD + 线段树处理路径查询的简单实现在最坏情况下成本为 $O(\log^2 N)$ 的性质相同。</p>
+<p>这就是为什么我们需要另一种ingeuity。“合并cluster以形成完美的二叉树”意味着“合并以使左右子节点具有（几乎）相同顶点的cluster。”事实上，我们可以证明后一种策略允许我们将整个合并过程的深度保持在 O(logN), （我们也省略了细节。原因与在最坏的情况下用 HLD + 线段树在<br>O(logN) 时间内处理路径查询的想法相同。参考：Nachia 的文章（日语）<a target="_blank" rel="noopener" href="https://www.mathenachia.blog/mergetech-and-logn/">https://www.mathenachia.blog/mergetech-and-logn/</a> ，errorgorn 的文章中的“平衡 HLD”一章 <a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/104997%E3%80%82%EF%BC%89">https://codeforces.com/blog/entry/104997。）</a></p>
+<p>通过上述技巧，合并cluster的过程可以用深度为O(logN) 的二叉树来表示。</p>
+<p>示例代码 <a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc351/submissions/52777033%EF%BC%88%E7%AC%AC">https://atcoder.jp/contests/abc351/submissions/52777033（第</a> 5 - 74 行）：我们参考了 maspy 和 tatyam 的实现。</p>
+<h3 id="原始问题的解"><a href="#原始问题的解" class="headerlink" title="原始问题的解"></a>原始问题的解</h3><p>现在我们用static top tree来描述原始问题的解决方案。</p>
+<p>合并cluster时需要以下五个函数：</p>
+<ul>
+<li>vertex(v)：生成仅由顶点 v 组成的path cluster的函数。</li>
+<li>compress(p, c)：执行 (1) 逆操作的函数，即合并path cluster p 和 c（其中 p 更靠近根）。</li>
+<li>add_vertex(t, v)：执行 (2) 逆操作的函数，即把顶点 v 分配给path cluster t 的根以形成新的path cluster。</li>
+<li>rake(x, y)：执行 (3) 逆操作的函数，即合并point cluster x 和 y。</li>
+<li>add_edge(t)：执行 (4) 逆操作的函数，即向path cluster t 添加虚拟根以形成point cluster。</li>
+</ul>
+<p>和树型DP一样，该问题可以通过定义树上需要存储的信息，以及构造与这五个函数对应的DP转换来解决。</p>
+<p>其中最难的是压缩，即合并path cluster。虽然合并point cluster在某种程度上可以看作是树DP的扩展，可以通过存储相同的信息来执行rake来实现，但合并path cluster意味着合并“特殊形状”的对象。</p>
+<p>这里，我们采用 Top tree的术语，将cluster外另一个cluster的顶点旁边的cluster顶点称为boundary顶点。path cluster基本上有两个boundary顶点，一个靠近根，一个离根更远。（当path cluster是根树时会出现例外，其中两个边界顶点指向同一个顶点。）根据问题，人们可以相对轻松地通过关注这两个边界顶点来构建 DP 的转换。</p>
+<p>经过适当的观察，可以发现path cluster必须存储 (a,b) 的值，使得“当哈希值为 x 的子树合并到以距离根较远的boundary顶点为根的子树时，以更靠近根的边界顶点为根的子树变为 ax+b”。通过像这样定义path cluster上的信息，compress 可以定义为 affine function 的组合。我们还可以定义其他函数，如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> mint = atcoder::modint998244353;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; A;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Path</span> &#123;</span><br><span class="line">  mint a, b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">using</span> Point = mint;</span><br><span class="line"><span class="function">Path <span class="title">vertex</span><span class="params">(<span class="type">int</span> i)</span> </span>&#123; <span class="keyword">return</span> &#123;<span class="number">1</span>, A[i]&#125;; &#125;</span><br><span class="line"><span class="function">Path <span class="title">compress</span><span class="params">(Path p, Path c)</span> </span>&#123; <span class="keyword">return</span> &#123;p.a * c.a, p.a * c.b + p.b&#125;; &#125;;</span><br><span class="line"><span class="function">Point <span class="title">rake</span><span class="params">(Point l, Point r)</span> </span>&#123; <span class="keyword">return</span> l * r; &#125;;</span><br><span class="line"><span class="function">Point <span class="title">add_edge</span><span class="params">(Path d)</span> </span>&#123; <span class="keyword">return</span> d.b; &#125;;</span><br><span class="line"><span class="function">Path <span class="title">add_vertex</span><span class="params">(Point d, <span class="type">int</span> i)</span> </span>&#123; <span class="keyword">return</span> &#123;d, A[i]&#125;; &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>适当抽象一棵静态顶树，任何问题都基本可以通过定义上述五个函数来解决，这跟线段树的抽象只需要两个函数很像吧？</p>
+<p>顺便说一下，线段树最初似乎被定义为不仅针对完美二叉树，而且针对一般的平衡二叉树的算法。（参考 <a target="_blank" rel="noopener" href="https://kmyk.github.io/blog/blog/2020/03/04/segment-tree-is-not-complete-binary-tree/">https://kmyk.github.io/blog/blog/2020/03/04/segment-tree-is-not-complete-binary-tree/</a> ，日语）根据这种解释，使用静态顶树更新树DP可以被认为有点类似于线段树。</p>
+<p>剩下的就是处理查询；这可以通过适当计算和更新 DP 来完成。</p>
+<p>Sample code (line 76 - 134) <a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc351/submissions/52777033">https://atcoder.jp/contests/abc351/submissions/52777033</a></p>
+<h3 id="Further-application-of-a-Static-top-tree"><a href="#Further-application-of-a-Static-top-tree" class="headerlink" title="Further application of a Static top tree"></a>Further application of a Static top tree</h3><p>TODO</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc351/submissions/58166606">https://atcoder.jp/contests/abc351/submissions/58166606</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/modint&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD = <span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">using</span> mint = atcoder::static_modint&lt;MOD&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)(a);)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span> </span>&#123; ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;r);<span class="keyword">return</span> r; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">Type</span> &#123; Vertex_NoLightChild, Compress_HeavyChainInner, Rake_LightChildInner, AddEdge_LightPath, AddVertex_Vertex2LightChilds &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// g must be a rooted tree</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">StaticTopTree</span> &#123;</span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; g; <span class="comment">// g是有根树,因此 g中需要保证只有 父-&gt;子的边</span></span><br><span class="line">  <span class="type">int</span> g_root;           <span class="comment">// g中root的index</span></span><br><span class="line">  <span class="type">int</span> stt_root;         <span class="comment">// an index of the root in static top tree</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; P, L, R;  <span class="comment">// 在stt中的 父节点, 左儿子, 右儿子, 其中 [0,n) 和 g中的[0,n) 对应</span></span><br><span class="line">  vector&lt;Type&gt; T;       <span class="comment">// 节点类型</span></span><br><span class="line">  <span class="type">int</span> add_buf;          <span class="comment">// a variable for the member function</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">using</span> id_sz = pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">StaticTopTree</span>(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; _g, <span class="type">int</span> _root = <span class="number">0</span>) : <span class="built_in">g</span>(_g), <span class="built_in">g_root</span>(_root) &#123;</span><br><span class="line">    <span class="type">int</span> n = g.<span class="built_in">size</span>();</span><br><span class="line">    P.<span class="built_in">resize</span>(<span class="number">4</span> * n, <span class="number">-1</span>);</span><br><span class="line">    L.<span class="built_in">resize</span>(<span class="number">4</span> * n, <span class="number">-1</span>);</span><br><span class="line">    R.<span class="built_in">resize</span>(<span class="number">4</span> * n, <span class="number">-1</span>);</span><br><span class="line">    T.<span class="built_in">resize</span>(<span class="number">4</span> * n, Type::Vertex_NoLightChild);</span><br><span class="line">    add_buf = n; <span class="comment">// 为了stt中[0,n) 和g中[0,n)对应</span></span><br><span class="line">    <span class="built_in">build</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">// 重链移到首位</span></span><br><span class="line">    <span class="type">int</span> su = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> smax = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span>&amp; v : g[u]) &#123;</span><br><span class="line">      <span class="type">int</span> sv = <span class="built_in">dfs</span>(v);</span><br><span class="line">      su += sv;</span><br><span class="line">      <span class="keyword">if</span> (smax &lt; sv) <span class="built_in">swap</span>(v, g[u][<span class="number">0</span>]);</span><br><span class="line">      smax = <span class="built_in">max</span>(smax, sv);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> su;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(<span class="type">int</span> o<span class="comment">/*在stt中的id*/</span>, <span class="type">int</span> l<span class="comment">/*左儿子*/</span>, <span class="type">int</span> r<span class="comment">/*右儿子*/</span>, Type t <span class="comment">/*类型*/</span>)</span> </span>&#123; <span class="comment">// return stt index</span></span><br><span class="line">    <span class="keyword">if</span> (o == <span class="number">-1</span>) o = add_buf++; <span class="comment">// 可以用vector 动态增加 size得到 index简化</span></span><br><span class="line">    P[o] = <span class="number">-1</span>;</span><br><span class="line">    L[o] = l;</span><br><span class="line">    R[o] = r;</span><br><span class="line">    T[o] = t;</span><br><span class="line">    <span class="keyword">if</span> (l != <span class="number">-1</span>) P[l] = o;</span><br><span class="line">    <span class="keyword">if</span> (r != <span class="number">-1</span>) P[r] = o;</span><br><span class="line">    <span class="keyword">return</span> o;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">id_sz <span class="title">merge</span><span class="params">(<span class="type">const</span> vector&lt;id_sz&gt;&amp; arr, Type t)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 整个功能，就是把 id_sz 数组 合并成 平衡的二叉树, </span></span><br><span class="line">    <span class="keyword">if</span> (arr.<span class="built_in">size</span>() == <span class="number">1</span>) <span class="keyword">return</span> arr[<span class="number">0</span>];</span><br><span class="line">    <span class="type">int</span> tot = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; [_, sz] : arr) tot += sz;</span><br><span class="line">    vector&lt;id_sz&gt; l_half, r_half;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; [u, sz] : arr) &#123;</span><br><span class="line">      (tot &gt; sz ? l_half : r_half).<span class="built_in">emplace_back</span>(u, sz);</span><br><span class="line">      tot -= sz * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">auto</span> [i, si] = <span class="built_in">merge</span>(l_half, t);</span><br><span class="line">    <span class="keyword">auto</span> [j, sj] = <span class="built_in">merge</span>(r_half, t);</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="built_in">add</span>(<span class="number">-1</span>, i, j, t), si + sj &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">id_sz <span class="title">compress</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">// 处理u开始的重链 u in g, return &#123;i in stt, ?&#125;</span></span><br><span class="line">    vector&lt;id_sz&gt; heavychain&#123; <span class="built_in">add_vertex</span>(u) &#125;; <span class="comment">// chs 存储 从u开始到叶子的重链</span></span><br><span class="line">    <span class="keyword">while</span> (!g[u].<span class="built_in">empty</span>()) heavychain.<span class="built_in">push_back</span>(<span class="built_in">add_vertex</span>(u = g[u][<span class="number">0</span>]));</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">merge</span>(heavychain, Type::Compress_HeavyChainInner);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">id_sz <span class="title">rake</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">// 处理u的轻儿子</span></span><br><span class="line">    <span class="comment">// 无轻儿子的点 &#123;-1, 0&#125;</span></span><br><span class="line">    <span class="comment">// 有轻儿子的点 merge(compress(儿子) for 儿子 in 轻儿子)</span></span><br><span class="line">    vector&lt;id_sz&gt; lightedges;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; (<span class="type">int</span>)g[u].<span class="built_in">size</span>(); i++) &#123; <span class="comment">// 轻儿子</span></span><br><span class="line">      <span class="keyword">auto</span> [j, sj] = <span class="built_in">compress</span>(g[u][i]);</span><br><span class="line">      lightedges.<span class="built_in">push_back</span>(&#123; <span class="built_in">add</span>(<span class="number">-1</span>, j, <span class="number">-1</span>, Type::AddEdge_LightPath), sj &#125;); <span class="comment">// 这里就是compress的size</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lightedges.<span class="built_in">empty</span>() ? <span class="built_in">make_pair</span>(<span class="number">-1</span>, <span class="number">0</span>) : <span class="built_in">merge</span>(lightedges, Type::Rake_LightChildInner);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">id_sz <span class="title">add_vertex</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> [j, sj] = <span class="built_in">rake</span>(u);</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="built_in">add</span>(u<span class="comment">/* [0,n) g和stt是一一对应 */</span>, j, <span class="number">-1</span>, j == <span class="number">-1</span> <span class="comment">/* 无轻儿子 */</span> ? Type::Vertex_NoLightChild : Type::AddVertex_Vertex2LightChilds), sj + <span class="number">1</span> &#125;; <span class="comment">// 这里size+1, 也就是每个g上的点 只在stt中被记录一次，而那一次是在处理重链时的add_vertex</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">dfs</span>(g_root);</span><br><span class="line">    stt_root = <span class="built_in">compress</span>(g_root).first;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; A;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Path</span> &#123; <span class="comment">// path cluster</span></span><br><span class="line">  mint a, b; <span class="comment">// ax+b</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">using</span> Point = mint; <span class="comment">// point cluster</span></span><br><span class="line"><span class="function">Path <span class="title">vertex</span><span class="params">(<span class="type">int</span> i)</span> </span>&#123; <span class="keyword">return</span> &#123; <span class="number">1</span>, A[i] &#125;; &#125;</span><br><span class="line"><span class="function">Path <span class="title">compress</span><span class="params">(Path p, Path c)</span> </span>&#123; <span class="keyword">return</span> &#123; p.a * c.a, p.a * c.b + p.b &#125;; &#125;; <span class="comment">// (p.a(c.a x+c.b)+p.b), p更靠近根</span></span><br><span class="line"><span class="function">Point <span class="title">rake</span><span class="params">(Point l, Point r)</span> </span>&#123; <span class="keyword">return</span> l * r; &#125;;</span><br><span class="line"><span class="function">Point <span class="title">add_edge</span><span class="params">(Path d)</span> </span>&#123; <span class="keyword">return</span> d.b; &#125;;</span><br><span class="line"><span class="function">Path <span class="title">add_vertex</span><span class="params">(Point d, <span class="type">int</span> i)</span> </span>&#123; <span class="keyword">return</span> &#123; d, A[i] &#125;; &#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> N = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> Q = <span class="built_in">read</span>();</span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">g</span>(N);</span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">1</span>, N) g[<span class="built_in">read</span>() - <span class="number">1</span>].<span class="built_in">push_back</span>(i);</span><br><span class="line">  A.<span class="built_in">resize</span>(N);</span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">0</span>, N) A[i] = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">  StaticTopTree stt&#123; g &#125;;</span><br><span class="line">  <span class="function">vector&lt;Path&gt; <span class="title">path</span><span class="params">(stt.L.size())</span></span>; <span class="comment">// path cluster</span></span><br><span class="line">  <span class="function">vector&lt;Point&gt; <span class="title">point</span><span class="params">(stt.L.size())</span></span>; <span class="comment">// point cluster</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">auto</span> update = [&amp;](<span class="type">int</span> k) &#123;</span><br><span class="line">    <span class="keyword">if</span> (stt.T[k] == Type::Vertex_NoLightChild) &#123;</span><br><span class="line">      path[k] = <span class="built_in">vertex</span>(k);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stt.T[k] == Type::Compress_HeavyChainInner) &#123;</span><br><span class="line">      path[k] = <span class="built_in">compress</span>(path[stt.L[k]], path[stt.R[k]]);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stt.T[k] == Type::Rake_LightChildInner) &#123;</span><br><span class="line">      point[k] = <span class="built_in">rake</span>(point[stt.L[k]], point[stt.R[k]]);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stt.T[k] == Type::AddEdge_LightPath) &#123;</span><br><span class="line">      point[k] = <span class="built_in">add_edge</span>(path[stt.L[k]]);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stt.T[k] == Type::AddVertex_Vertex2LightChilds) &#123;</span><br><span class="line">      path[k] = <span class="built_in">add_vertex</span>(point[stt.L[k]], k);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">assert</span>(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  <span class="keyword">auto</span> dfs = [&amp;](<span class="keyword">auto</span> rc, <span class="type">int</span> k) -&gt; <span class="type">void</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (stt.L[k] != <span class="number">-1</span>) <span class="built_in">rc</span>(rc, stt.L[k]);</span><br><span class="line">    <span class="keyword">if</span> (stt.R[k] != <span class="number">-1</span>) <span class="built_in">rc</span>(rc, stt.R[k]);</span><br><span class="line">    <span class="built_in">update</span>(k);</span><br><span class="line">    &#125;;</span><br><span class="line">  <span class="built_in">dfs</span>(dfs, stt.stt_root);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (Q--) &#123;</span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>() - <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> x = <span class="built_in">read</span>();</span><br><span class="line">    A[v] = x;</span><br><span class="line">    <span class="keyword">while</span> (v != <span class="number">-1</span>) &#123;</span><br><span class="line">      <span class="built_in">update</span>(v);</span><br><span class="line">      v = stt.P[v];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, path[stt.stt_root].b.<span class="built_in">val</span>());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考-总结"><a href="#参考-总结" class="headerlink" title="参考+总结"></a>参考+总结</h2><p>评分是 2920</p>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc351/editorial/9899">https://atcoder.jp/contests/abc351/editorial/9899</a></p>
+<p>我看luogu题解好像还是有人用矩阵搞出来了</p>
+<p>中文的static top tree似乎叫这个 全局平衡二叉树 <a target="_blank" rel="noopener" href="https://oi-wiki.org/ds/global-bst/">https://oi-wiki.org/ds/global-bst/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/ef36ensd">https://www.luogu.com.cn/article/ef36ensd</a></p>
+<p>相关练习 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4719">https://www.luogu.com.cn/problem/P4719</a></p>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/ds/top-tree/">https://oi-wiki.org/ds/top-tree/</a></p>
+<p>hld in atcoder abc 269 ex <a href="https://yexiaorain.github.io/Blog/atcoder/abc/269/">https://yexiaorain.github.io/Blog/atcoder/abc/269/</a></p>
+<p><a target="_blank" rel="noopener" href="https://negiizhao.blog.uoj.ac/blog/4912">https://negiizhao.blog.uoj.ac/blog/4912</a></p>
+<p>可视化 <a target="_blank" rel="noopener" href="https://maomao9-0.github.io/static-top-tree-visualisation">https://maomao9-0.github.io/static-top-tree-visualisation</a></p>
+<p><a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/75906f160b4e767f5acfcedb.html">https://wenku.baidu.com/view/75906f160b4e767f5acfcedb.html</a></p>
+<p>luogu 4211 全局平衡二叉树 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4211">https://www.luogu.com.cn/problem/P4211</a></p>
+<p>luogu P3384 【模板】重链剖分&#x2F;树链剖分 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3384">https://www.luogu.com.cn/problem/P3384</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/351/" title="Atcoder abc351">https://yexiaorain.github.io/Blog/atcoder/abc/351/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/top-tree/" rel="tag"><i class="fa fa-tag"></i> top tree</a>
+              <a href="/Blog/tags/static-top-tree/" rel="tag"><i class="fa fa-tag"></i> static top tree</a>
+              <a href="/Blog/tags/%E5%85%A8%E5%B1%80%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 全局平衡二叉树</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1951/" rel="prev" title="Codeforces Global Round 25">
+                  <i class="fa fa-chevron-left"></i> Codeforces Global Round 25
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/354/" rel="next" title="Atcoder abc354">
+                  Atcoder abc354 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">582k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">32:20</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/351/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="G(project_selection_problem)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atcoder abc347">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/atcoder/abc/347/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="G(project_selection_problem)">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://img.atcoder.jp/abc347/9e114a2837e86f198c883ea1b04526f0.png">
+<meta property="og:image" content="https://img.atcoder.jp/abc347/e7e551aa5f76677214cb1712a331108e.png">
+<meta property="article:published_time" content="2024-03-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-23T09:56:22.177Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="project_selection_problem">
+<meta property="article:tag" content="网络流">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:image" content="https://img.atcoder.jp/abc347/9e114a2837e86f198c883ea1b04526f0.png">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/atcoder/abc/347/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/atcoder/abc/347/","path":"atcoder/abc/347/","title":"Atcoder abc347"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Atcoder abc347 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">332</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">314</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#G-Grid-Coloring-2"><span class="nav-text">G - Grid Coloring 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">332</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">314</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/atcoder/abc/347/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Atcoder abc347 | YeXiaoRain Blog">
+      <meta itemprop="description" content="G(project_selection_problem)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Atcoder abc347
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-03-30 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-30T00:00:00+08:00">2024-03-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2024-10-23 17:56:22" itemprop="dateModified" datetime="2024-10-23T17:56:22+08:00">2024-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/" itemprop="url" rel="index"><span itemprop="name">Atcoder</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Atcoder/ABC/" itemprop="url" rel="index"><span itemprop="name">ABC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/atcoder/abc/347/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="atcoder/abc/347/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.8k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>6 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">G(project_selection_problem)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc347">https://atcoder.jp/contests/abc347</a></p>
+<h2 id="G-Grid-Coloring-2"><a href="#G-Grid-Coloring-2" class="headerlink" title="G - Grid Coloring 2"></a>G - Grid Coloring 2</h2><p>n * n</p>
+<p><code>a[i][j] \in [0,5]</code></p>
+<p>可以把0改为 1~5</p>
+<p>所有操作后</p>
+<p>代价&#x3D;4临的差的平方和</p>
+<p>求 最小代价的具体方案</p>
+<p>n 20</p>
+<p>2s</p>
+<p>1024mb</p>
+<h3 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h3><p>一个是插头dp 但是边界状态是 $5^n$</p>
+<p>不知道怎么利用1<del>5,因为只关心差，可以变换成 &#96;-2</del>2&#96;但没感觉有什么帮助</p>
+<p>有想网络流，但是不知道怎么表示 选与代价的关系。</p>
+<p>$(x-y)^2&#x3D;x^2-2xy+y^2$  感觉就是这个2xy不知道怎么处理</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>首先 显然不会有不改的(是)</p>
+<p>$\min _ {B\in\lbrace{1,2,3,4,5}\rbrace ^ {\lbrace1,2,\ldots,N\rbrace ^ 2}}\sum _ x\theta _ x(B _ x)+\sum _ {x\lt y}\phi _ {x,y}(B _ x,B _ y)$</p>
+<p>这里 $x$和$y$都是坐标,$x&lt;y$表示$x$的坐标的字典序更小</p>
+<p>$\theta _ x(b)&#x3D;\begin{cases}0&amp;\quad(A _ x&#x3D;0\vee b &#x3D; A _ x)\\+\infty&amp;\quad(\text{otherwise.})\end{cases}$</p>
+<p>$\phi _ {x&#x3D;(i,j),y&#x3D;(k,l)}(b _ 1,b _ 2)&#x3D;\begin{cases}0&amp;\quad(\vert i-k\vert+\vert j-l\vert\neq1)\\ (b _ 1-b _ 2) ^ 2&amp;\quad(\text{otherwise.})\end{cases}$</p>
+<p>那么对于所有$x,y$ $\phi(x,y)$是一个 Monge array(蒙赫阵列)???</p>
+<p>没有看懂这个 $\theta \phi$和后面建网络流有什么关系?</p>
+<hr>
+<p>建图</p>
+<p>果然 1,2,3,4,5的选择问题，变成了 &gt;&#x3D;1,&gt;&#x3D;2,&gt;&#x3D;3,&gt;&#x3D;4,&gt;&#x3D;5的选择</p>
+<p>因为选1,2,3,4,5是互斥的，而&gt;&#x3D;是依赖关系，这个在之前做2-sat的时候有遇到过类似的处理</p>
+<p><img data-src="https://img.atcoder.jp/abc347/9e114a2837e86f198c883ea1b04526f0.png" alt="example"></p>
+<p>$S\to x_{\ge k}\to T$，$S\to x_{\ge k} \to \cdots \to y_{\ge j}\to T$的形式</p>
+<p>那么 和$S$切断表示不满足，和T切断表示满足</p>
+<ul>
+<li>$x_{\ge k+1}\to x_{\ge k}$有$+\infty$边, 依赖关系显然</li>
+<li>对于$A_x\neq 0$<ul>
+<li>$A_x &gt; 1$ 则$S\to x_{\ge A_{x}}$ 有$+\infty$边，</li>
+<li>$A_x &lt; 5$,则$x_{\ge A_x+1}\to T$有$+\infty$边</li>
+</ul>
+</li>
+</ul>
+<p>![[Pasted image 20240908142502.png]]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 例如这里 容量全是+\infty</span><br><span class="line">A_x = 3</span><br><span class="line">S--------------|</span><br><span class="line">               |</span><br><span class="line">               v</span><br><span class="line">&gt;=5 -&gt; &gt;=4 -&gt; &gt;=3 -&gt; &gt;=2 -&gt; &gt;=1</span><br><span class="line">        |</span><br><span class="line">        |</span><br><span class="line">        ---------------------&gt;T</span><br></pre></td></tr></table></figure>
+
+<p>其实根据 定义 割断S表示不满足，割断T表示满足</p>
+<p>这里的构图保证了 &gt;&#x3D;3,&gt;&#x3D;2,&gt;&#x3D;1不会和S割断, &gt;&#x3D;5, &gt;&#x3D;4,不会和T割断</p>
+<p>这里发现 &gt;&#x3D;1始终需要满足，所以始终需要和T割断，又不直接产生代价 所以 &gt;&#x3D; 1连一条 容量0到T的边，因此 所有&gt;&#x3D;1的点也可以删除</p>
+<p>然后上面的 图如果难理解还(根据割的意义)可以再画成这样， 然后发现0和前后缀的 infty容量是可以省略的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 例如这里 容量全是+\infty</span><br><span class="line">A_x = 3</span><br><span class="line">                S</span><br><span class="line">                |</span><br><span class="line">  0      0    +infty +infty +infty</span><br><span class="line">                |</span><br><span class="line">                v</span><br><span class="line"> &gt;=5 -&gt; &gt;=4 -&gt; &gt;=3 -&gt; &gt;=2 -&gt; &gt;=1</span><br><span class="line">                |</span><br><span class="line">+infty +infty   0      0      0</span><br><span class="line">                |</span><br><span class="line">                v</span><br><span class="line">                T</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>对于相邻格子$x,y$</p>
+<ul>
+<li>$x_{\ge k} \to y_{\ge k}$ 容量$1$</li>
+<li>$x_{\ge k} \to y_{\ge l}, (l&lt;k)$ 容量$2$</li>
+</ul>
+<p>这就很妙了 $k^2&#x3D;1+3+\cdots+(2k+1)$</p>
+<p>这个图是透明度的背景差评</p>
+<p><img data-src="https://img.atcoder.jp/abc347/e7e551aa5f76677214cb1712a331108e.png"></p>
+<p>这是有点反向解释了，如果正向思考怎么想</p>
+<p>首先 还是根据而最开始的最小割的想法</p>
+<p>和S属于 同一块的（不一定相连S只保证割断T） 表示满足</p>
+<p>和T属于 同一块的（不一定相连T只保证割断S） 表示不满足</p>
+<p>那么 相邻块的可以割断的点就是 <code>x的满足的点  到  y的不满足的点 的边</code></p>
+<p>$A_x&#x3D;4,A_y&#x3D;1$</p>
+<p>$x_{\ge 1},x_{\ge 2},x_{\ge 3},x_{\ge 4}$ 到 $y_{\ge 2},y_{\ge 3},y_{\ge 4},y_{\ge 5}$ (这里的对称面是$y_{\ge{1}}$和$x_{\ge 5}$ 而这个不会有产出)</p>
+<p>这里指标性的是$x_{\ge 4}$和$y_{\ge 2}$</p>
+<p>有 $(j-i)^2 &#x3D;$ 统计$(a,b)$的个数，其中$a,b\in[i+1,j]$</p>
+<p>$&#x3D;(a,a), a\in[i+1,j]$的个数+$2 \cdot  (a,b),i&lt;a&lt;b\le j$的个数</p>
+<p>那么 <code>(a,a)</code>就是 $x_{\ge k}\to y_{\ge k}$的边, 权重1</p>
+<p>那么 <code>(a,b),a&lt;b</code>就是 $x_{\ge k}\to y_{\ge (&lt;k) }$的边, 权重2</p>
+<p>所以这里会 再次发现，$x_{\ge 1}$始终都是多余的，可以直接不要这种点</p>
+<hr>
+<p>这里让我感觉 不对劲的就是 这些0点，为啥 没有直接的S,T相连</p>
+<p>实际上可以看成有相连但是 容量为0，那这样切割会导致 少计算吗？</p>
+<p>其实是不会的，因为相邻点之间 会根据值切割，反过来说 如果相邻点不被切割，那么它们，要么同属于S,或同属于T 和具体取值产生了一一对应。</p>
+<hr>
+<p>最后来统计点数, S,T, 4 * n * n个点</p>
+<p>边</p>
+<p>N * N * 4 内部v+1 -&gt; v的约束</p>
+<p>列j和j+1的相邻  N * (N-1) * 2 * (1+2+3+4)</p>
+<p>最后是默认非零的点 点数 * (1 or 2), 这里如果想要边数量固定是2,那么需要加上 &gt;&#x3D;1 和 &gt;&#x3D; 6, 不过这两种点对于割的贡献为0,</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc347/submissions/57577620">https://atcoder.jp/contests/abc347/submissions/57577620</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atcoder/maxflow&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)(a);)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    <span class="type">int</span> N=<span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">    <span class="function">atcoder::mf_graph&lt;<span class="type">int</span>&gt; <span class="title">G</span><span class="params">(<span class="number">1</span> + <span class="number">4</span> * N * N + <span class="number">1</span>)</span></span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> S = <span class="number">0</span>, T = <span class="number">1</span> + <span class="number">4</span> * N * N;</span><br><span class="line">    <span class="comment">// v \in [1,4], A[i][j] &gt; v</span></span><br><span class="line">    <span class="type">const</span> <span class="keyword">auto</span> _&#123;[N](<span class="type">int</span> i, <span class="type">int</span> j, <span class="type">int</span> v)&#123; <span class="keyword">return</span> (i * N + j) * <span class="number">4</span> + v; &#125;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constexpr</span> <span class="type">int</span> inf = <span class="number">2</span> * <span class="number">20</span> * <span class="number">19</span> * <span class="number">16</span> + <span class="number">1</span>; <span class="comment">// Let inf a value greater than maximum possible cos</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Aij &gt; v+1 则 Aij &gt; v</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,N) <span class="built_in">rep</span>(j,<span class="number">0</span>,N) <span class="built_in">rep</span>(v,<span class="number">1</span>,<span class="number">4</span>) G.<span class="built_in">add_edge</span>(_(i, j, v + <span class="number">1</span>), _(i, j, v), inf);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// j 和 j+1相邻</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,N) <span class="built_in">rep</span>(j,<span class="number">0</span>,N<span class="number">-1</span>) <span class="built_in">rep</span>(v,<span class="number">1</span>,<span class="number">5</span>) &#123;</span><br><span class="line">      G.<span class="built_in">add_edge</span>(_(i, j    , v), _(i, j + <span class="number">1</span>, v), <span class="number">1</span>); <span class="comment">// v=v</span></span><br><span class="line">      G.<span class="built_in">add_edge</span>(_(i, j + <span class="number">1</span>, v), _(i, j    , v), <span class="number">1</span>);</span><br><span class="line">      <span class="built_in">rep</span>(u,<span class="number">1</span>,v) &#123; <span class="comment">// v &gt; u</span></span><br><span class="line">        G.<span class="built_in">add_edge</span>(_(i, j    , v), _(i, j + <span class="number">1</span>, u), <span class="number">2</span>);</span><br><span class="line">        G.<span class="built_in">add_edge</span>(_(i, j + <span class="number">1</span>, v), _(i, j    , u), <span class="number">2</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// i和i+1相邻</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,N<span class="number">-1</span>) <span class="built_in">rep</span>(j,<span class="number">0</span>,N) <span class="built_in">rep</span>(v,<span class="number">1</span>,<span class="number">5</span>) &#123;</span><br><span class="line">      G.<span class="built_in">add_edge</span>(_(i    , j, v), _(i + <span class="number">1</span>, j, v), <span class="number">1</span>); <span class="comment">// v=v</span></span><br><span class="line">      G.<span class="built_in">add_edge</span>(_(i + <span class="number">1</span>, j, v), _(i    , j, v), <span class="number">1</span>);</span><br><span class="line">      <span class="built_in">rep</span>(u,<span class="number">1</span>,v)&#123; <span class="comment">// v &gt; u</span></span><br><span class="line">        G.<span class="built_in">add_edge</span>(_(i    , j, v), _(i + <span class="number">1</span>, j, u), <span class="number">2</span>);</span><br><span class="line">        G.<span class="built_in">add_edge</span>(_(i + <span class="number">1</span>, j, v), _(i    , j, u), <span class="number">2</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 默认非零的点增加值限制</span></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,N) <span class="built_in">rep</span>(j,<span class="number">0</span>,N)&#123;</span><br><span class="line">      <span class="type">int</span> A=<span class="built_in">read</span>();</span><br><span class="line">      <span class="keyword">if</span>(A == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">if</span>(A &lt; <span class="number">5</span>) G.<span class="built_in">add_edge</span>(_(i, j, A), T             , inf); <span class="comment">// 保证 不满足 &gt; A</span></span><br><span class="line">      <span class="keyword">if</span>(A &gt; <span class="number">1</span>) G.<span class="built_in">add_edge</span>(S         , _(i, j, A - <span class="number">1</span>), inf); <span class="comment">// 保证 满足 &gt; A-1 也就是&gt;=A</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 最大流=最小割</span></span><br><span class="line">    G.<span class="built_in">flow</span>(S, T);</span><br><span class="line">    <span class="comment">// https://github.com/atcoder/ac-library/blob/master/atcoder/maxflow.hpp</span></span><br><span class="line">    <span class="comment">// min_cut 实现原理是dfs+有剩余容量可达性, 判断是否和S可达, 返回的是 [点]=是否可达</span></span><br><span class="line">    <span class="type">const</span> <span class="keyword">auto</span>&amp; cut&#123;G.<span class="built_in">min_cut</span>(S)&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,N) &#123;</span><br><span class="line">      <span class="built_in">rep</span>(j,<span class="number">0</span>,N)&#123;</span><br><span class="line">        <span class="type">int</span> B&#123;<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="built_in">rep</span>(v,<span class="number">1</span>,<span class="number">5</span>) B += cut[_(i, j, v)];</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,B);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc347/editorial/9689">https://atcoder.jp/contests/abc347/editorial/9689</a></p>
+<p>(This is the generation of so-called Project Selection Problem for k-ary variables. Detailed explanation (in Japanese) can be found in <a target="_blank" rel="noopener" href="https://tokoharuland.hateblo.jp/entry/2017/12/25/000003">articles by tokoharu-sakura</a> and <a target="_blank" rel="noopener" href="https://noshi91.hatenablog.com/entry/2021/06/29/044225">another by noshi91</a>.)</p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/101354">[Tutorial, Flows] Project Selection Problem</a></p>
+<p><a href="../../../algo/project_selection_problem">project_selection_problem 笔记</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总觉得这种依赖的选择转化成图论，之前有做过，所以也有向图论方向想，但是没有这样系统的学一下Project selection problem,感觉又会了一点点。</p>
+<p>上面的$\theta,\phi$的作用是, 由$\theta$来负责选定，而$\phi$是不关心 $A_x$与$b$是否相等的</p>
+<p>这个拆平方是真没学会，好像见过，又好像没有</p>
+<p>所以感觉最神奇的到头来 还是这个平方，前面的 图论转化 和 &gt;&#x3D; 转化 应该都能自己想到的</p>
+<p>另外之前有很多次 最小割&#x3D;最大流，但好像之前都是求容量，第一次用min_cut计算和S的连通性</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/atcoder/abc/347/" title="Atcoder abc347">https://yexiaorain.github.io/Blog/atcoder/abc/347/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/project-selection-problem/" rel="tag"><i class="fa fa-tag"></i> project_selection_problem</a>
+              <a href="/Blog/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag"><i class="fa fa-tag"></i> 网络流</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1943/" rel="prev" title="Codeforces Round 934 (Div. 1)">
+                  <i class="fa fa-chevron-left"></i> Codeforces Round 934 (Div. 1)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1942/" rel="next" title="CodeTON Round 8 (Div. 1 + Div. 2, Rated, Prizes!)">
+                  CodeTON Round 8 (Div. 1 + Div. 2, Rated, Prizes!) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">582k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">32:20</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/atcoder/abc/347/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

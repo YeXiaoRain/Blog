@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="问题$\pi (x)$$[1,n]$ 计算之间素数的个数,其中$n$可能达到$10^{12}$ 足够小的n(Sieve_of_Eratosthenes)https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Sieve_of_Eratosthenes 也就是 每次把 $i^2,i(i+1),i(i+2),\cdots$ 设为False 12345678def primes_with_sieve">
+<meta property="og:type" content="article">
+<meta property="og:title" content="素数计数函数">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/algo/prime_counting_function/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="问题$\pi (x)$$[1,n]$ 计算之间素数的个数,其中$n$可能达到$10^{12}$ 足够小的n(Sieve_of_Eratosthenes)https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Sieve_of_Eratosthenes 也就是 每次把 $i^2,i(i+1),i(i+2),\cdots$ 设为False 12345678def primes_with_sieve">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-06-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-23T09:56:22.169Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="prime">
+<meta property="article:tag" content="容斥原理">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/algo/prime_counting_function/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/algo/prime_counting_function/","path":"algo/prime_counting_function/","title":"素数计数函数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>素数计数函数 | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">332</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">314</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-pi-x"><span class="nav-text">问题$\pi (x)$</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%B3%E5%A4%9F%E5%B0%8F%E7%9A%84n-Sieve-of-Eratosthenes"><span class="nav-text">足够小的n(Sieve_of_Eratosthenes)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7-Legendre%E2%80%99s-Formula"><span class="nav-text">勒让德(Legendre’s Formula)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Meissel%E2%80%99s-Formula"><span class="nav-text">Meissel’s Formula</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lehmer%E2%80%99s-Formula"><span class="nav-text">Lehmer’s Formula</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lucy-Hedgehog"><span class="nav-text">Lucy_Hedgehog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4-%E4%BB%A3%E7%A0%81"><span class="nav-text">完整 代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98%E7%9B%AE"><span class="nav-text">练习题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">332</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">314</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/algo/prime_counting_function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="素数计数函数 | YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          素数计数函数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-06-26 00:00:00" itemprop="dateCreated datePublished" datetime="2024-06-26T00:00:00+08:00">2024-06-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2024-10-23 17:56:22" itemprop="dateModified" datetime="2024-10-23T17:56:22+08:00">2024-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/algo/prime_counting_function/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="algo/prime_counting_function/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>10 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="问题-pi-x"><a href="#问题-pi-x" class="headerlink" title="问题$\pi (x)$"></a>问题$\pi (x)$</h1><p>$[1,n]$ 计算之间素数的个数,其中$n$可能达到$10^{12}$</p>
+<h2 id="足够小的n-Sieve-of-Eratosthenes"><a href="#足够小的n-Sieve-of-Eratosthenes" class="headerlink" title="足够小的n(Sieve_of_Eratosthenes)"></a>足够小的n(Sieve_of_Eratosthenes)</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes</a></p>
+<p>也就是 每次把 $i^2,i(i+1),i(i+2),\cdots$ 设为False</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">primes_with_sieve</span>(<span class="params">N</span>):</span><br><span class="line">    is_prime = [<span class="number">1</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N+<span class="number">1</span>)]</span><br><span class="line">    is_prime[<span class="number">0</span>]=is_prime[<span class="number">1</span>]=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,N+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> is_prime[i]:</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i,N+<span class="number">1</span>,i):</span><br><span class="line">                is_prime[j] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> is_prime</span><br></pre></td></tr></table></figure>
+
+<h2 id="勒让德-Legendre’s-Formula"><a href="#勒让德-Legendre’s-Formula" class="headerlink" title="勒让德(Legendre’s Formula)"></a>勒让德(Legendre’s Formula)</h2><p><a target="_blank" rel="noopener" href="https://mathworld.wolfram.com/LegendresFormula.html">https://mathworld.wolfram.com/LegendresFormula.html</a></p>
+<p>核心想法是<strong>容斥原理</strong></p>
+<p>$\phi(x,a) &#x3D;$ 在$\le x$ 中,与前$a$个质数均互质的数, $x\in \mathbb{R},a\in \mathbb{Z}$</p>
+<p>显然$\phi(x,a) &#x3D; \phi(\lfloor x\rfloor,a)$</p>
+<p>显然$\phi(x,\ge \pi(x))&#x3D;\phi(x,\pi(x))&#x3D;1$</p>
+<p>$\displaystyle \phi(x,a)&#x3D;\lfloor x\rfloor-\sum \lfloor \frac{x}{p_i}\rfloor+\sum \lfloor \frac{x}{p_ip_j}\rfloor - \sum \lfloor \frac{x}{p_ip_jp_k}\rfloor+\cdots$</p>
+<p>而类似与上面的筛数法，也就是 $\phi(x,a&#x3D;\pi(\sqrt{x}))$ 留下的是$1$以及 $(\sqrt{x},x]$之间的质数的个数，所以有</p>
+<p>$\phi(x,a&#x3D;\pi(\sqrt{x})) &#x3D; \pi(x)-\pi(\sqrt{x})+1$</p>
+<p>因此$\pi(x) &#x3D; \phi(x,\pi(\sqrt{x}))+\pi(\sqrt{x})-1$</p>
+<hr>
+<p>满足递归关系 $\phi(x,a)&#x3D;\phi(x,a-1)-\phi(\frac{x}{p_a},a-1)$</p>
+<p>proof:</p>
+<p>根据定义 $\phi(x,a)$和$\phi(x,a-1)$ 中间的差值，其实就是$[1,x]$中 质因子含有$p_a$ 且不含有$p_{&lt;a}$ 的数</p>
+<p>也就是$v &#x3D; p_a\cdot t \le x$且$p_{&lt;a}\not{|}t$</p>
+<p>$t\le \frac{x}{p_a}$</p>
+<p>也就是 $\phi(\frac{x}{p_a},a-1)$</p>
+<hr>
+<p>令$m_k &#x3D;\prod_{i&#x3D;1\cdots k} p_i$ 由前$k$个质数乘起来的</p>
+<p>$\phi(m_k,k) &#x3D; \phi(m_k)$ 也就是欧拉函数(Totient Function) 表示 不大于$x$且和$x$互质的数的个数</p>
+<hr>
+<p>如果把$x$表示成 $x&#x3D;sm_k+t$, $t\in[0,m_k]$</p>
+<p>$\phi(sm_k+t,k) &#x3D; s\phi(m_k)+\phi(t,k)$</p>
+<p>这很显然，因为和前$k$个质数互质的数 一定形成 $[0,m_k)$的周期</p>
+<p>对于$\displaystyle t\in (\frac{m_k}{2},m_k]$</p>
+<p>$\phi(t,k)&#x3D;\phi(m_k)-\phi(m_k-t-1,k)$</p>
+<p>这个其实就是 $[1,m_k]$ 这一段切割+翻转了一下，$[1,t],[t+1,m_k]$,后面一段可以对应$[0,m_k-(t+1)]$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">primes_with_sieve</span>(<span class="params">N</span>):</span><br><span class="line">    is_prime = [<span class="number">1</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N+<span class="number">1</span>)]</span><br><span class="line">    is_prime[<span class="number">0</span>]=is_prime[<span class="number">1</span>]=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,N+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> is_prime[i]:</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i,N+<span class="number">1</span>,i):</span><br><span class="line">                is_prime[j] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> is_prime</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">primes_from_prime_bool</span>(<span class="params">arr</span>):</span><br><span class="line">    primes = [<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,<span class="built_in">len</span>(arr)):</span><br><span class="line">        <span class="keyword">if</span> arr[i]:</span><br><span class="line">            primes.append(i)</span><br><span class="line">    <span class="keyword">return</span> primes</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Sieve_of_Eratosthenes</span>(<span class="params">N</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(primes_with_sieve(N))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;Sieve_of_Eratosthenes(<span class="number">10</span>**<span class="number">2</span>)=&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;Sieve_of_Eratosthenes(<span class="number">10</span>**<span class="number">4</span>)=&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;Sieve_of_Eratosthenes(<span class="number">10</span>**<span class="number">6</span>)=&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Legendre_s_Formula</span>(<span class="params">N</span>):</span><br><span class="line">    <span class="keyword">import</span> math</span><br><span class="line">    sqrt_N=math.isqrt(N)</span><br><span class="line">    <span class="comment"># sieve for sqrt_N</span></span><br><span class="line">    pi = primes_with_sieve(sqrt_N)</span><br><span class="line">    primes = primes_from_prime_bool(pi)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,sqrt_N+<span class="number">1</span>):</span><br><span class="line">        pi[i]+=pi[i-<span class="number">1</span>]</span><br><span class="line">    pi_sqrt_N=pi[sqrt_N]</span><br><span class="line">    m_k = [<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(primes)):</span><br><span class="line">        m_k.append(m_k[-<span class="number">1</span>]*primes[i])</span><br><span class="line">        <span class="keyword">if</span> m_k[-<span class="number">1</span>] &gt; N:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    cnt = pi_sqrt_N-<span class="number">1</span> <span class="comment"># pi(N) = pi(sqrt(N))-1 +phi(n,pi(sqrt(n)))</span></span><br><span class="line">    task = [(<span class="number">1</span>,N,pi_sqrt_N)] <span class="comment"># coef, x, a</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">euler_phi</span>(<span class="params">val,k</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,k+<span class="number">1</span>):</span><br><span class="line">            val*=primes[i]-<span class="number">1</span></span><br><span class="line">            val//=primes[i]</span><br><span class="line">        <span class="keyword">return</span> val</span><br><span class="line"></span><br><span class="line">    itr = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> itr &lt; <span class="built_in">len</span>(task):</span><br><span class="line">        coef,x,a = task[itr]</span><br><span class="line">        <span class="comment"># task.pop(0)</span></span><br><span class="line">        <span class="keyword">if</span> a==<span class="number">1</span>:</span><br><span class="line">            cnt += coef*(x-x//<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">elif</span> x&lt;=<span class="number">1</span>:</span><br><span class="line">            cnt += coef*x;</span><br><span class="line">        <span class="keyword">elif</span> a&gt;=x:</span><br><span class="line">            <span class="keyword">assert</span> x&lt;=sqrt_N</span><br><span class="line">            cnt += coef*<span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> a &lt; <span class="built_in">len</span>(m_k) <span class="keyword">and</span> x &gt; m_k[a]:</span><br><span class="line">            <span class="comment"># phi(s m_k+t,k) = s phi(m_k,k) + phi(t,k)</span></span><br><span class="line">            cnt += coef*(x//m_k[a])*euler_phi(m_k[a],a)</span><br><span class="line">            task.append((coef            ,x%m_k[a],a))</span><br><span class="line">        <span class="keyword">elif</span> a &lt; <span class="built_in">len</span>(m_k) <span class="keyword">and</span> x*<span class="number">2</span> &gt; m_k[a] <span class="keyword">and</span> x &lt; m_k[a]:</span><br><span class="line">            cnt += coef*euler_phi(m_k[a],a)</span><br><span class="line">            task.append((coef*-<span class="number">1</span>,m_k[a]-x-<span class="number">1</span>,a))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            task.append((coef*-<span class="number">1</span>,x//primes[a],a-<span class="number">1</span>))</span><br><span class="line">            task.append((coef   ,x               ,a-<span class="number">1</span>))</span><br><span class="line">        itr+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cnt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;Legendre_s_Formula(<span class="number">10</span>**<span class="number">2</span>)=&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;Legendre_s_Formula(<span class="number">10</span>**<span class="number">4</span>)=&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;Legendre_s_Formula(<span class="number">10</span>**<span class="number">6</span>)=&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;Legendre_s_Formula(<span class="number">10</span>**<span class="number">8</span>)=&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Meissel’s-Formula"><a href="#Meissel’s-Formula" class="headerlink" title="Meissel’s Formula"></a>Meissel’s Formula</h2><p><a target="_blank" rel="noopener" href="https://mathworld.wolfram.com/MeisselsFormula.html">https://mathworld.wolfram.com/MeisselsFormula.html</a></p>
+<p>$\lfloor x\rfloor&#x3D;1+\sum_{1\le i\le a}\lfloor\frac{x}{p_i}\rfloor-\sum_{1\le i &lt; j\le a}\lfloor\frac{x}{p_ip_j}\rfloor+\cdots+(\pi(x)-a)+P_2(x,a)+P_3(x,a)+\cdots$<br>$P_i(x,a) &#x3D;$ 恰有$i$个质因子的数的个数, 且范围$\le x$,质因子不属于前$a$个</p>
+<p>前x &#x3D; 1 + (前a个质数的倍数的数) + (剩余质数) + (剩余和数)</p>
+<hr>
+<p>例如</p>
+<p>$P_2(x,a) &#x3D;\sum_{i\ge a+1}[\pi(\frac{x}{p_i})-(i-1)]$</p>
+<p>其实就是 枚举 $i \le j$中的最小的$i$</p>
+<p>那么值是 $p_ip_{j\ge i} \le x$</p>
+<p>也就有了上面 $p_j \le \frac{x}{p_i}$ 且 $j\ge i$</p>
+<hr>
+<p>$P_3(x,a)&#x3D;\sum_{i\ge a+1} P_2(\frac{x}{p_i},i-1)$ 同样的 先枚举最小的,这里似乎mathworld写错了，写成a了?</p>
+<p>$\displaystyle &#x3D;\sum_{i&#x3D;a+1}^c\sum_{j&#x3D;i}^{\pi(\sqrt{\frac{x}{p_i}})}[\pi(\frac{x}{p_ip_j})-(j-1)]$</p>
+<p>那么这里其实 注意到 如果再向$P_4$ 走那么 $p_i \le x^{\frac{1}{4}}$</p>
+<p>同时注意到$p_a &lt; p_i \le x^{\frac{1}{4}}$</p>
+<p>所以其实通过控制$a$的大小 可以控制$P_?$的零项</p>
+<p>例如$a&#x3D;\pi(\sqrt{x})$ 那么就是上面的勒让德，因为$P_{\ge 2}&#x3D;0$</p>
+<p>而Meissel’s的 表达式，就是 调整到让$P_{\ge 3}&#x3D;0$</p>
+<p>也就是$a&#x3D;\pi(x^{\frac{1}{3}})$</p>
+<hr>
+<p>回到上面 也就是</p>
+<p>前x &#x3D; 1 + (前a个质数的倍数的数) + (剩余质数) + (剩余和数仅含2个质因子的和数)<br>$\lfloor x\rfloor&#x3D;1+\sum_{1\le i\le a}\lfloor\frac{x}{p_i}\rfloor-\sum_{1\le i &lt; j\le a}\lfloor\frac{x}{p_ip_j}\rfloor+\cdots+(\pi(x)-a)+P_2(x,a)$<br>$\phi(x,a)&#x3D;1+\pi(x)-a+P_2(x,a)$</p>
+<p>$\pi(x) &#x3D; \phi(x,a)-1+a-P_2(x,a)$</p>
+<p>$\displaystyle P_2(x,a)&#x3D;\sum_{i\ge a+1}^{b&#x3D;\pi(x^{\frac{1}{2}})}[\pi(\frac{x}{p_i})-(i-1)]$</p>
+<p>$\displaystyle &#x3D;\sum_{i\ge a+1}^{b&#x3D;\pi(x^{\frac{1}{2}})}\pi(\frac{x}{p_i})-\sum_{i\ge a+1}^{b&#x3D;\pi(x^{\frac{1}{2}})}(i-1)$</p>
+<p>$\displaystyle &#x3D;\sum_{i\ge a+1}^{b&#x3D;\pi(x^{\frac{1}{2}})}\pi(\frac{x}{p_i})-\frac{1}{2}(a+b-1)(b-a)$ 这里似乎mathworld也没写对?</p>
+<p>$\displaystyle \pi(x) &#x3D; \phi(x,a)-1+a -\sum_{i\ge a+1}^{b}\pi(\frac{x}{p_i})+\frac{1}{2}(a+b-1)(b-a)$,其中$a&#x3D;\pi(x^{\frac{1}{3}}),b&#x3D;\pi(x^{\frac{1}{2}})$</p>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">primes_with_sieve</span>(<span class="params">N</span>):</span><br><span class="line">    is_prime = [<span class="number">1</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N+<span class="number">1</span>)]</span><br><span class="line">    is_prime[<span class="number">0</span>]=is_prime[<span class="number">1</span>]=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,N+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> is_prime[i]:</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i,N+<span class="number">1</span>,i):</span><br><span class="line">                is_prime[j] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> is_prime</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">primes_from_prime_bool</span>(<span class="params">arr</span>):</span><br><span class="line">    primes = [<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,<span class="built_in">len</span>(arr)):</span><br><span class="line">        <span class="keyword">if</span> arr[i]:</span><br><span class="line">            primes.append(i)</span><br><span class="line">    <span class="keyword">return</span> primes</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">meissel</span>(<span class="params">N</span>):</span><br><span class="line">    <span class="comment"># $\pi(x) = \phi(x,a)-1+a -\sum_&#123;i\ge a+1&#125;^&#123;b&#125;\pi(\frac&#123;x&#125;&#123;p_i&#125;)+\frac&#123;1&#125;&#123;2&#125;(a+b-1)(b-a)$,</span></span><br><span class="line">    <span class="comment"># 其中$a=\pi(x^&#123;\frac&#123;1&#125;&#123;3&#125;&#125;),b=\pi(x^&#123;\frac&#123;1&#125;&#123;2&#125;&#125;)$</span></span><br><span class="line">    <span class="keyword">import</span> math</span><br><span class="line">    sqrt_N=math.isqrt(N)</span><br><span class="line">    <span class="comment"># sieve for sqrt_N</span></span><br><span class="line">    pi = primes_with_sieve(sqrt_N)</span><br><span class="line">    primes = primes_from_prime_bool(pi) <span class="comment"># 1-index 即是个数也是下标</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,sqrt_N+<span class="number">1</span>):</span><br><span class="line">        pi[i]+=pi[i-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">meissel_recursive</span>(<span class="params">x</span>):</span><br><span class="line">        <span class="comment"># a = pi(x^1/3)</span></span><br><span class="line">        a = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(primes)):</span><br><span class="line">            <span class="keyword">if</span> primes[i]**<span class="number">3</span> &gt; x:</span><br><span class="line">                <span class="keyword">assert</span> i &gt; <span class="number">1</span></span><br><span class="line">                a = i-<span class="number">1</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="comment"># assert a == pi[math.floor(x**(1/3))] 浮点数问题</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># b = pi(x^1/2)</span></span><br><span class="line">        b = pi[math.isqrt(x)]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># (a,b]</span></span><br><span class="line">        cnt = a-<span class="number">1</span>+(a+b-<span class="number">1</span>)*(b-a)//<span class="number">2</span></span><br><span class="line">        <span class="comment"># -sum pi(x/p_i),i=a+1..b</span></span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> primes[a+<span class="number">1</span>:b+<span class="number">1</span>]:</span><br><span class="line">            <span class="keyword">if</span> x//p &lt; <span class="built_in">len</span>(pi):</span><br><span class="line">                cnt -= pi[x//p]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                cnt -= meissel_recursive(x//p)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># +phi(x,a)</span></span><br><span class="line">        task = [(<span class="number">1</span>,x,a)] <span class="comment"># coef, x, a</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">euler_phi</span>(<span class="params">val,k</span>):</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,k+<span class="number">1</span>):</span><br><span class="line">                val*=primes[i]-<span class="number">1</span></span><br><span class="line">                val//=primes[i]</span><br><span class="line">            <span class="keyword">return</span> val</span><br><span class="line"></span><br><span class="line">        itr = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> itr &lt; <span class="built_in">len</span>(task):</span><br><span class="line">            coef,x,a = task[itr]</span><br><span class="line">            <span class="comment"># task.pop(0)</span></span><br><span class="line">            <span class="keyword">if</span> a==<span class="number">1</span>:</span><br><span class="line">                cnt += coef*(x-x//<span class="number">2</span>)</span><br><span class="line">            <span class="keyword">elif</span> x&lt;=<span class="number">1</span>:</span><br><span class="line">                cnt += coef*x;</span><br><span class="line">            <span class="keyword">elif</span> a&gt;=x:</span><br><span class="line">                <span class="keyword">assert</span> x&lt;=sqrt_N</span><br><span class="line">                cnt += coef*<span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                task.append((coef*-<span class="number">1</span>,x//primes[a],a-<span class="number">1</span>))</span><br><span class="line">                task.append((coef   ,x               ,a-<span class="number">1</span>))</span><br><span class="line">            itr+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> cnt</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> meissel_recursive(N)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;meissel(<span class="number">10</span>**<span class="number">2</span>)=&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;meissel(<span class="number">10</span>**<span class="number">4</span>)=&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;meissel(<span class="number">10</span>**<span class="number">6</span>)=&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;meissel(<span class="number">10</span>**<span class="number">8</span>)=&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Lehmer’s-Formula"><a href="#Lehmer’s-Formula" class="headerlink" title="Lehmer’s Formula"></a>Lehmer’s Formula</h3><p><a target="_blank" rel="noopener" href="https://mathworld.wolfram.com/LehmersFormula.html">https://mathworld.wolfram.com/LehmersFormula.html</a></p>
+<p>目录分级，是Meissei的变化</p>
+<p>其实就是Lehmer是控制$a$的范围让$P_{\ge 3}&#x3D;0$</p>
+<p>而这里实际就是控制$a,b$的范围，让$P_{\ge 4}&#x3D;0$</p>
+<p>$\displaystyle \pi(x) &#x3D; \phi(x,a)-1+a-\sum_{a&lt;i\le b} (\pi(\frac{x}{p_i})-(i-1))-\sum_{i&#x3D;a+1}^{c}\sum_{j&#x3D;i}^{\pi(\sqrt{\frac{x}{p_i}})}[\pi(\frac{x}{p_ip_j})-(j-1)]$</p>
+<p>$a&#x3D;\pi(x^{\frac{1}{4}})$</p>
+<p>$b&#x3D;\pi(x^{\frac{1}{2}})$</p>
+<p>$c&#x3D;\pi(x^{\frac{1}{3}})$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">primes_with_sieve</span>(<span class="params">N</span>):</span><br><span class="line">    is_prime = [<span class="number">1</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N+<span class="number">1</span>)]</span><br><span class="line">    is_prime[<span class="number">0</span>]=is_prime[<span class="number">1</span>]=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,N+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> is_prime[i]:</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i,N+<span class="number">1</span>,i):</span><br><span class="line">                is_prime[j] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> is_prime</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">primes_from_prime_bool</span>(<span class="params">arr</span>):</span><br><span class="line">    primes = [<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,<span class="built_in">len</span>(arr)):</span><br><span class="line">        <span class="keyword">if</span> arr[i]:</span><br><span class="line">            primes.append(i)</span><br><span class="line">    <span class="keyword">return</span> primes</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Sieve_of_Eratosthenes</span>(<span class="params">N</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(primes_with_sieve(N))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">n_1_div_pwr</span>(<span class="params">n,pwr</span>): <span class="comment"># python3 只有isqrt没有1/3?</span></span><br><span class="line">    <span class="comment"># return int(n**(1/pwr)):</span></span><br><span class="line">    l = <span class="number">0</span></span><br><span class="line">    r = n+<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> r-l&gt;<span class="number">1</span>:</span><br><span class="line">        mid = (l+r)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> mid**pwr &gt; n:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            l = mid</span><br><span class="line">    <span class="keyword">return</span> l</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">meissel_lehmer</span>(<span class="params">N</span>):</span><br><span class="line">    <span class="comment"># $\pi(x) = \phi(x,a)-1+a</span></span><br><span class="line">    <span class="comment">#   - \sum_&#123;i=[a+1,b]&#125;(\pi(\frac&#123;x&#125;&#123;p_i&#125;)-(i-1))</span></span><br><span class="line">    <span class="comment">#   - \sum_&#123;i=[a+1,c]&#125; \sum_&#123;j=[i,\pi(\sqrt(x/p_i))(\pi(\frac&#123;x&#125;&#123;p_ip_j&#125;)-(j-1))</span></span><br><span class="line">    <span class="comment"># 其中 $a=\pi(x^&#123;\frac&#123;1&#125;&#123;4&#125;&#125;),</span></span><br><span class="line">    <span class="comment">#       b=\pi(x^&#123;\frac&#123;1&#125;&#123;2&#125;&#125;)$</span></span><br><span class="line">    <span class="comment">#       c=\pi(x^&#123;\frac&#123;1&#125;&#123;3&#125;&#125;)$</span></span><br><span class="line">    <span class="keyword">import</span> math</span><br><span class="line">    sqrt_N=math.isqrt(N)</span><br><span class="line">    pi = primes_with_sieve(sqrt_N)</span><br><span class="line">    primes = primes_from_prime_bool(pi) <span class="comment"># 1-index 即是个数也是下标</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,sqrt_N+<span class="number">1</span>):</span><br><span class="line">        pi[i]+=pi[i-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner_recursive</span>(<span class="params">x</span>):</span><br><span class="line">        <span class="keyword">if</span> x &lt; <span class="built_in">len</span>(pi):</span><br><span class="line">            <span class="keyword">return</span> pi[x]</span><br><span class="line">        a = <span class="built_in">max</span>(pi[n_1_div_pwr(x,<span class="number">4</span>)],<span class="number">1</span>)</span><br><span class="line">        c = <span class="built_in">max</span>(pi[n_1_div_pwr(x,<span class="number">3</span>)],a)</span><br><span class="line">        b = <span class="built_in">max</span>(pi[n_1_div_pwr(x,<span class="number">2</span>)],c)</span><br><span class="line"></span><br><span class="line">        cnt = a-<span class="number">1</span></span><br><span class="line">        <span class="comment"># -sum pi(x/p_i)-(i-1),i=a+1..b</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(a+<span class="number">1</span>,b+<span class="number">1</span>):</span><br><span class="line">            cnt -= inner_recursive(x//primes[i]) - (i-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">#   - \sum_&#123;i=[a+1,c]&#125; \sum_&#123;j=[i,\pi(\sqrt(x/p_i))(\pi(\frac&#123;x&#125;&#123;p_ip_j&#125;)-(j-1))</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(a+<span class="number">1</span>,c+<span class="number">1</span>):</span><br><span class="line">            mxj = pi[math.isqrt(x//primes[i])]</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i,mxj+<span class="number">1</span>):</span><br><span class="line">                cnt -= inner_recursive(x//primes[i]//primes[j])-(j-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># +phi(x,a)</span></span><br><span class="line">        task = [(<span class="number">1</span>,x,a)] <span class="comment"># coef, x, a</span></span><br><span class="line">        itr = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> itr &lt; <span class="built_in">len</span>(task):</span><br><span class="line">            coef,x,a = task[itr]</span><br><span class="line">            <span class="comment"># task.pop(0)</span></span><br><span class="line">            <span class="keyword">if</span> a==<span class="number">1</span>:</span><br><span class="line">                cnt += coef*(x-x//<span class="number">2</span>)</span><br><span class="line">            <span class="keyword">elif</span> x&lt;=<span class="number">1</span>:</span><br><span class="line">                cnt += coef*x;</span><br><span class="line">            <span class="keyword">elif</span> a&gt;=x:</span><br><span class="line">                <span class="keyword">assert</span> x&lt;=sqrt_N</span><br><span class="line">                cnt += coef*<span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                task.append((coef*-<span class="number">1</span>,x//primes[a],a-<span class="number">1</span>))</span><br><span class="line">                task[itr] = (coef   ,x           ,a-<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            itr+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> cnt</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> inner_recursive(N)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">11</span>):</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;meissel_lehmer\t<span class="subst">&#123;i=&#125;</span>,<span class="subst">&#123;meissel_lehmer(<span class="number">10</span>**i):<span class="number">15</span>&#125;</span>\t<span class="subst">&#123;time.time()-start_time&#125;</span>s&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p>我尝试在这个里也加了m_k但更慢了</p>
+<h2 id="Lucy-Hedgehog"><a href="#Lucy-Hedgehog" class="headerlink" title="Lucy_Hedgehog"></a>Lucy_Hedgehog</h2><p>Lucy的代码本身解决的是一定范围内 质数的和，和这里其实差不多，个数无非是每个权重为1</p>
+<p>$S(x,t)$ 为$[2,v]$ 所有整数中, 通过筛法循环筛完 前$t(\ge 0)\in \mathbb{Z}$个质数 后仍然剩余的数的个数</p>
+<p>显然,这些数要么是$\le p_t$的素数, 要么这些数的最小素因子$&gt; p_t$</p>
+<p>$ans&#x3D;S(n,\pi(\sqrt{n}))$</p>
+<hr>
+<ol>
+<li>$S(x,0) &#x3D; \sum_{i&#x3D;2}^x 1 &#x3D; x-1$ 所有数字都还没被筛掉</li>
+<li>$p_t^2 &gt; x$, $S(x,t)&#x3D;S(x,t-1)$</li>
+<li>$p_t^2 \le x$ 这种情况相对复杂</li>
+</ol>
+<p>$\displaystyle S(x,t) &#x3D; S(x,t-1) - \sum_{j\in[2,x],p_t是j的最小素因子}1$, 就是考虑 多删除$p_t$的倍数会多删除什么</p>
+<p>$\displaystyle S(x,t) &#x3D; S(x,t-1) - \sum_{j\in[1,\lfloor \frac{x}{p_t}\rfloor],j的最小素因子 \ge p_t}1$ 考虑$j_{new}&#x3D;j_{old}&#x2F;p_t$</p>
+<p>$\displaystyle S(x,t) &#x3D; S(x,t-1) - (S(\lfloor \frac{x}{t} \rfloor,t-1) - (t-1))$ </p>
+<p>其实这里已经可以看出，lucy的代码数学上并不更优秀，而是lucy用了记忆化和递推 来完成了而大量的cache，因为注意到 x 的值都是x除以多个p得到的</p>
+<p>那么其实只有 <code>[0...sqrt(x)][x/sqrt(x)...x/1]</code>, $O(\sqrt{x})$个可能的取值，于是可以优化</p>
+<p>而实际上，当我们单点求值时 还是像 勒让德 类似的方法只是增加了$[x&#x2F;sqrt(x)…x&#x2F;1]$的记忆化</p>
+<p>而 例如pe501需要 多点求值 时，其实更多的还是 只记忆化 $x^{1&#x2F;2}$或者$x^{2&#x2F;3},x^{3&#x2F;4}$ 来完成</p>
+<p>多点求值 会更优吗？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (ll i=n;i--&gt;(ll)a;)</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;<span class="keyword">using</span> minPQ=priority_queue&lt;T,vector&lt;T&gt;,greater&lt;T&gt;&gt;;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> i64 long long</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> i64 <span class="title">v2idx</span><span class="params">(i64 v, i64 N, i64 Ndr, i64 nv)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> v &gt;= Ndr ? (N/v - <span class="number">1</span>) : (nv - v);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">i64 <span class="title">primesum</span><span class="params">(i64 N)</span> </span>&#123;</span><br><span class="line">  i64 r = (i64)<span class="built_in">sqrt</span>(N);</span><br><span class="line">  i64 Ndr = N/r;</span><br><span class="line">  <span class="built_in">assert</span>(r*r &lt;= N <span class="built_in">and</span> (r+<span class="number">1</span>)*(r+<span class="number">1</span>) &gt; N);</span><br><span class="line">  i64 nv = r + Ndr - <span class="number">1</span>;</span><br><span class="line">  i64 *V = <span class="keyword">new</span> i64[nv];</span><br><span class="line">  i64 *S = <span class="keyword">new</span> i64[nv];</span><br><span class="line">  <span class="keyword">for</span> (i64 i=<span class="number">0</span>; i&lt;r; i++) V[i] = N/(i+<span class="number">1</span>); <span class="comment">// [N/1...N/r]</span></span><br><span class="line">  <span class="keyword">for</span> (i64 i=r; i&lt;nv; i++) V[i] = V[i<span class="number">-1</span>] - <span class="number">1</span>; <span class="comment">// [N/r-1...1]</span></span><br><span class="line">  <span class="keyword">for</span> (i64 i=<span class="number">0</span>; i&lt;nv; i++) S[i] = V[i]  - <span class="number">1</span>; <span class="comment">// [N/1-1...N/r-1 N/r-2...0]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (i64 p=<span class="number">2</span>; p&lt;=r; p++) <span class="keyword">if</span> (S[nv-p] &gt; S[nv-p+<span class="number">1</span>]) &#123; <span class="comment">// is prime</span></span><br><span class="line">    i64 sp = S[nv-p+<span class="number">1</span>]; <span class="comment">// S(p,p) = pi(p)</span></span><br><span class="line">    i64 p2 = p*p;</span><br><span class="line">    <span class="keyword">for</span> (i64 i=<span class="number">0</span>; i&lt;nv; i++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (V[i] &gt;= p2) &#123;</span><br><span class="line">        S[i] -= (S[<span class="built_in">v2idx</span>(V[i]/p, N, Ndr, nv)] - sp);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> S[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  i64 N = <span class="number">100&#x27;0000&#x27;0000</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, <span class="built_in">primesum</span>(N));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="完整-代码"><a href="#完整-代码" class="headerlink" title="完整 代码"></a>完整 代码</h2><h1 id="练习题目"><a href="#练习题目" class="headerlink" title="练习题目"></a>练习题目</h1><p><a target="_blank" rel="noopener" href="https://projecteuler.net/problem=501">project euler 501</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/665/problem/F">codeforces 665F</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Prime-counting_function">wikipedia prime counting function</a></p>
+<p><a target="_blank" rel="noopener" href="https://mathworld.wolfram.com/topics/PrimeCountingFunction.html">mathworld.wolfram prime counting function</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/29580448/answer/876479428">求十亿内所有质数的和，怎么做最快? - 穆罕默德·李的回答 - 知乎</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/44466">codeforces 665F tutorial</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/91632">codeforces blog counting primes</a></p>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/math/number-theory/min-25/">oiwiki Min_25筛</a></p>
+<p><a target="_blank" rel="noopener" href="https://projecteuler.net/thread=10;page=5#111677">Lucy_Hedgehog’s method</a></p>
+<p>Meisell-Lehmer’s method</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=dktH8hJadyU">Youtube- The Pattern to Prime Numbers?</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/44466">https://codeforces.com/blog/entry/44466</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/LzyRapx/p/8453170.html">https://www.cnblogs.com/LzyRapx/p/8453170.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/kimwalisch/primecount/">github primecount</a></p>
+<p><a target="_blank" rel="noopener" href="https://judge.yosupo.jp/problem/counting_primes">library-checker</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/algo/prime_counting_function/" title="素数计数函数">https://yexiaorain.github.io/Blog/algo/prime_counting_function/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/prime/" rel="tag"><i class="fa fa-tag"></i> prime</a>
+              <a href="/Blog/tags/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 容斥原理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/355/" rel="prev" title="Atcoder abc355">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc355
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1994/" rel="next" title="Codeforces Round 959 sponsored by NEAR">
+                  Codeforces Round 959 sponsored by NEAR <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">582k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">32:20</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/algo/prime_counting_function/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

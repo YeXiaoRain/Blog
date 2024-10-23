@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="拉格朗日反演">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lagrange inversion theorem">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/algo/Lagrange_inversion_theorem/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="拉格朗日反演">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-10-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-23T09:56:22.165Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="NTT">
+<meta property="article:tag" content="拉格朗日反演">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/algo/Lagrange_inversion_theorem/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/algo/Lagrange_inversion_theorem/","path":"algo/Lagrange_inversion_theorem/","title":"Lagrange inversion theorem"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Lagrange inversion theorem | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">332</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">314</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Lagrange-inversion-theorem-%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%8F%8D%E6%BC%94"><span class="nav-text">Lagrange inversion theorem 拉格朗日反演</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-text">证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B-%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0Catalan-number"><span class="nav-text">使用示例: 卡特兰数Catalan number</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3"><span class="nav-text">相关</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">332</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">314</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/algo/Lagrange_inversion_theorem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Lagrange inversion theorem | YeXiaoRain Blog">
+      <meta itemprop="description" content="拉格朗日反演">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Lagrange inversion theorem
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-10-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-10-09T00:00:00+08:00">2021-10-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2024-10-23 17:56:22" itemprop="dateModified" datetime="2024-10-23T17:56:22+08:00">2024-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/algo/Lagrange_inversion_theorem/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="algo/Lagrange_inversion_theorem/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>995</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>3 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">拉格朗日反演</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Lagrange-inversion-theorem-拉格朗日反演"><a href="#Lagrange-inversion-theorem-拉格朗日反演" class="headerlink" title="Lagrange inversion theorem 拉格朗日反演"></a>Lagrange inversion theorem 拉格朗日反演</h1><h2 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h2><p>给定F(x), 找G(x) 使得 G(F(x)) &#x3D; x, 也就是找反函数</p>
+<p><strong>这里有一点要用到,但是没有证明的是 $G(F(x)) &#x3D; x$ 则 $F(G(x)) &#x3D; x$</strong>, 只能说在$F(x)$的值域内$F(G(F(x)) &#x3D; F(x)$即$F(G(x)) &#x3D; x$可以证明, 但在值域外不知道如何证明…</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>如果$F,G$满足</p>
+<ul>
+<li>0次项系数均为0: $[x^0]F(x)&#x3D;[x^0]G(x)&#x3D;0$</li>
+<li>1次项系数均非0: $[x^1]F(x) \neq 0,[x^1]G(x) \neq 0$</li>
+</ul>
+<p>那么 $\lbrack x^n \rbrack G(x)^k &#x3D; \frac{k}{n} \lbrack x^{n-k} \rbrack \left(\frac{x}{F(x)}\right)^n.$</p>
+<p>$\lbrack x^n \rbrack G(x) &#x3D; \frac{1}{n} \lbrack x^{n-1} \rbrack \left(\frac{x}{F(x)}\right)^n.$</p>
+<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><p>辅助lemma: 任何 $F(0)&#x3D;0$(0次系数为0), $F’(0)\neq 0$ (?存在非0次的非0系数?????), 有对于$\forall k \in \mathbb{Z}$</p>
+<p>$\lbrack x^{-1} \rbrack F’(x) F(x)^k &#x3D; \lbrack k &#x3D; -1\rbrack$</p>
+<p>即$k&#x3D;-1$时$-1$次系数为$1$,否则$-1$次系数为$0$</p>
+<p>证明lemma:</p>
+<p>对于$k\neq -1$, 显然求导法则$\displaystyle F’(x) F(x)^k &#x3D; \frac{\left ( F(x)^{k+1} \right)’}{k+1}$, 所以$\le 0$的x的幂次的系数都是0</p>
+<p>对于$k &#x3D; -1$, $F(x) &#x3D; \sum_{i&gt;0} a_i x^i$</p>
+<p>$\displaystyle \frac{F’(x)}{F(x)} &#x3D; \frac{a_1+2a_2x+3a_3x^2+\cdots}{x(a_1+a_2x+a_3 x^2+\cdots}&#x3D; x^{-1} \frac{1 + 2\frac{a_2}{a_1}x + \cdots}{1 + \frac{a_2}{a_1}x + \cdots}$</p>
+<p>也就是右侧这个分式除完以后是$1+k_1x+k_2x^2+\cdots$的样子, 因此 -1 次方的系数是 1, lemma 证毕.</p>
+<p>这里 注意到 像$\frac{1}{1-x}$这种 对应的 $x^{-1}$的系数是0,因为它虽然写在分母上，但实际是泰勒展开到正，而$\frac{1}{x}$ 是不能在0点泰勒展开成正的?而去查 1&#x2F;x的泰勒展开，都是在点1的展开</p>
+<hr>
+<p>因此$G(F(x))^k &#x3D; x^k,k\ge 1,k\in \mathbb{Z}$, 的$G$ 满足条件</p>
+<p>$(\sum_{i} ([x^i]G^k(x))F(x)^i)’\cdot F’(x) &#x3D; kx^{k-1}$ (  同时对$x$求导, 以及按位展开式 $G^k(x)&#x3D;\sum_{i}([x^i]G^k(x))x^i$</p>
+<p>展开$\sum_i i(\lbrack x^i\rbrack G^k(x) ) F(x)^{i-1} F’(x) &#x3D; kx^{k-1}$, (基本的求导法则 $(ax^i)’ &#x3D; iax^{i-1}$, 注意到前两项都是常系数 而非生成函数</p>
+<p>$\sum_{i} i (\lbrack x^i \rbrack G^k(x)) F^{i-1-n}(x) F’(x) &#x3D; kx^{k-1}F^{-n}(x).$ ( 同乘上$F^{-n}$, 这里想用lemma, 也就是$[x^{-1}]F^?(x)F’(x)$, 同时最终目标是$[x^?]G(x)$</p>
+<p>$\lbrack x^{-1}\rbrack \left(\sum_{i} i (\lbrack x^i \rbrack G^k(x)) F^{i-1-n}(x) F’(x)\right) &#x3D; \lbrack x^{-1}\rbrack \left(kx^{k-1}F^{-n}(x)\right).$ (提取$-1$次项目的系数</p>
+<p>因为左侧$i (\lbrack x^i \rbrack G (x))$ 整个都是系数, 以及上面的lemma, 左侧只有$i-1-n&#x3D;-1$即$i&#x3D;n$时, $[x^{-1}]F^{i-1-n}(x)F’(x)$生成系数的内容才为$1$,其它则是$0$,</p>
+<p>$n[x^n]G^k(x) &#x3D; [x^{-1}]kx^{k-1}F^{-n}(x)$</p>
+<p>变形一下,就有了最初要证明的$\displaystyle \lbrack x^n \rbrack G(x) &#x3D; \frac{k}{n} \lbrack x^{n-k} \rbrack \left(\frac{x}{F(x)}\right)^n.$</p>
+<hr>
+<p>这玩意 百科上说建立了函数方程和幂级数之间的联系 !!??</p>
+<h2 id="使用示例-卡特兰数Catalan-number"><a href="#使用示例-卡特兰数Catalan-number" class="headerlink" title="使用示例: 卡特兰数Catalan number"></a>使用示例: 卡特兰数Catalan number</h2><p>$c_0 &#x3D; 1$</p>
+<p>$c_{n+1} &#x3D; \sum_{i&#x3D;0}^n c_{i} \cdot c_{n-i}$</p>
+<p>令$C$为以卡特兰数 1,1,2,5,14为系数的生成方程</p>
+<p>令$F(x) &#x3D; C(x) - 1$, 保证0次项系数为0, 1次系数非0</p>
+<p>那么$F(x) &#x3D; x(F(x)+1)^2$ , 根据卡特兰数本身推导的定义的到的</p>
+<p>令$G(x) &#x3D; \frac{x}{(x+1)^2}$</p>
+<p>那么有$G(F(x)) &#x3D; \frac{F(x)}{(F(x)+1)^2} &#x3D; x$</p>
+<p>那么$c_n$ 就有了</p>
+<p>因此</p>
+<p>$\begin{aligned} [x^n]F(x) &amp;&#x3D; \frac{1}{n} \lbrack x^{n-1} \rbrack \left(\frac{x}{G(x)}\right)^n \\ &amp;&#x3D; \frac{1}{n} \lbrack x^{n-1} \rbrack (x + 1)^{2n} \\ &amp;&#x3D; \frac{1}{n} \binom{2n}{n-1} &#x3D; \frac{1}{n+1} \binom{2n}{n}, \end{aligned}$</p>
+<h2 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc222/editorial/2765">https://atcoder.jp/contests/abc222/editorial/2765</a></p>
+<p>abc222ex</p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%8F%8D%E6%BC%94/20844121">拉格朗日反演</a></p>
+<p><a target="_blank" rel="noopener" href="https://chaoli.club/index.php/6072">超理论坛 拉格朗日反演</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/tiw-air-oao/post-ke-pu-xiang-la-ge-lang-ri-fan-yan-di-ji-zhong-xing-shi">洛谷 拉格朗日反演</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/algo/Lagrange_inversion_theorem/" title="Lagrange inversion theorem">https://yexiaorain.github.io/Blog/algo/Lagrange_inversion_theorem/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/NTT/" rel="tag"><i class="fa fa-tag"></i> NTT</a>
+              <a href="/Blog/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%8F%8D%E6%BC%94/" rel="tag"><i class="fa fa-tag"></i> 拉格朗日反演</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/arc/127/" rel="prev" title="Atcoder arc127">
+                  <i class="fa fa-chevron-left"></i> Atcoder arc127
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/arc/130/" rel="next" title="Atcoder arc130">
+                  Atcoder arc130 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">582k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">32:20</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/algo/Lagrange_inversion_theorem/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

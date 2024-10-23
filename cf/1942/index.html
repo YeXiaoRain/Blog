@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="E(实现)F(数学)G(分治卷积)H()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CodeTON Round 8 (Div. 1 + Div. 2, Rated, Prizes!)">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/cf/1942/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog">
+<meta property="og:description" content="E(实现)F(数学)G(分治卷积)H()">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-03-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-23T09:56:22.185Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="FFT">
+<meta property="article:tag" content="分治卷积">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/cf/1942/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/cf/1942/","path":"cf/1942/","title":"CodeTON Round 8 (Div. 1 + Div. 2, Rated, Prizes!)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CodeTON Round 8 (Div. 1 + Div. 2, Rated, Prizes!) | YeXiaoRain Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">332</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">314</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#E-Farm-Game-2s-256mb"><span class="nav-text">E. Farm Game(2s,256mb)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#F-Farmer-John%E2%80%99s-Favorite-Function-5s-256mb"><span class="nav-text">F. Farmer John’s Favorite Function(5s 256mb)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G-Bessie-and-Cards"><span class="nav-text">G Bessie and Cards</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-2"><span class="nav-text">我的思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">332</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">314</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/cf/1942/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CodeTON Round 8 (Div. 1 + Div. 2, Rated, Prizes!) | YeXiaoRain Blog">
+      <meta itemprop="description" content="E(实现)F(数学)G(分治卷积)H()">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CodeTON Round 8 (Div. 1 + Div. 2, Rated, Prizes!)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-03-30 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-30T00:00:00+08:00">2024-03-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2024-10-23 17:56:22" itemprop="dateModified" datetime="2024-10-23T17:56:22+08:00">2024-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/Div1-2/" itemprop="url" rel="index"><span itemprop="name">Div1+2</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/cf/1942/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cf/1942/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>16 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">E(实现)F(数学)G(分治卷积)H()</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1942">https://codeforces.com/contest/1942</a></p>
+<h2 id="E-Farm-Game-2s-256mb"><a href="#E-Farm-Game-2s-256mb" class="headerlink" title="E. Farm Game(2s,256mb)"></a>E. Farm Game(2s,256mb)</h2><p>在 区间<code>[1,l]</code>整数点上 放 ABABAB…或者BABABA… 一共n组AB或BA, 坐标不一定相邻</p>
+<ul>
+<li>玩家X可以选择任意多个X(和玩家ID相同),和一个方向（左或右），把所有选中的A沿着这个方向移动</li>
+<li>A先B后</li>
+<li>移动过程中字母不能重叠 不能出<code>[1,l]</code>范围，如果无法移动则输掉</li>
+</ul>
+<p>问 给定$l,n$ 有多少个初始状态 玩家A获胜</p>
+<h3 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h3><p>很像nim的游戏之类的</p>
+<p>那么考虑 每个AB之间的空位的和，如果空位和为奇数，那么总可以移动那个位置让AB之间的空位和减1,而对于空位和是偶数，不一定能增大，也不一定能减少，但只要是能操作则结果也是奇数，</p>
+<p>如果一轮操作后 空位和不变（否则变小），那么对应位置整体向同一个方向移动了两个字母</p>
+<p>所以 获胜状态 &#x3D; 所有AB间隔 空隙和&#x3D;奇数</p>
+<p>那么 l个位置 去掉 2n个占用位置，实际是切割成2n+1个 &gt;&#x3D;0 的段</p>
+<p>也就是 l-2n长度线段切割成 2n+1个 &gt;&#x3D;0整数段 且 偶数index的段的长度和&#x3D;奇数</p>
+<p>考虑所有段+1</p>
+<p>(l-2n)+(2n+1) 段 切割成 2n+1个 &gt;&#x3D;1 整数段,且偶数index的段的长度和 &#x3D; 奇数+n</p>
+<p>考虑 做顺序的置换，把所有偶数index段直接移动到最前，则方案还是一一对应</p>
+<p>(l-2n)+(2n+1) 段 切割成 2n+1个 &gt;&#x3D;1 整数段,且前n段的长度和 &#x3D; 奇数+n</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for 前n段的长度和 = i:</span><br><span class="line"> if i % 2 == (n+1) % 2:</span><br><span class="line">  ans += (i 切割 n)段 * (l+1-i 切割成 n+1) 段, 每个切割段 &gt;=1</span><br><span class="line"></span><br><span class="line">长度 x 切割成y个&gt;=1整数段，相当于 x-1个切割点中选择y-1个切割点</span><br><span class="line">cut(x,y) = binom(x-1,y-1)</span><br></pre></td></tr></table></figure>
+
+<p>最后答案 AB和BA反向需要乘上2</p>
+<p>然而 pretest1都没过 <a target="_blank" rel="noopener" href="https://codeforces.com/contest/1942/submission/256178349">https://codeforces.com/contest/1942/submission/256178349</a></p>
+<hr>
+<p>然后我发现读错题了，是 一次可以移动任意多个同方向，而不是一次一个</p>
+<p>那么思路也完全一样，就是 去挤压另一个</p>
+<p>所以 如果 存在 &gt; 0 个奇数空位，则A 总能 把这些 奇数空位全变偶数（0个奇数空位）</p>
+<p>如果 存在 0 个奇数空位，则全为偶数空位，则操作不确定，且操作后至少一个奇数空位</p>
+<p>所以 方案 &#x3D; 所有方案 - 全偶数空位方案</p>
+<p>一样的</p>
+<p>l-2n个位置切割2n+1个&gt;&#x3D;0整段，其中偶数index的长度全偶数</p>
+<p>(l-2n)+(2n+1)&#x3D;l+1个位置切割2n+1个&gt;&#x3D;1整段，其中偶数index的长度全奇数</p>
+<p>l+1个位置切割2n+1个&gt;&#x3D;1整段，其中前n段的长度全奇数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for 前n段长度和为i, i % 2 = n * 1 % 2:</span><br><span class="line"> 把 前n段每个长度+1, 则 前半</span><br><span class="line">  i+n长度 切割成 n 个 &gt;= 2的偶数段 (那么每2个看成一个)</span><br><span class="line">  (i+n)/2 长度 切割成 n 个 &gt;= 1的整数段</span><br><span class="line">  也就是 cut((i+n)/2,n)</span><br><span class="line"> cnt += cut((i+n)/2,n)*cut(l+1-i,n+1)</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+
+<p><code>ans = (binom(l,2n)-cnt)*2</code></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1942/submission/256179100">https://codeforces.com/contest/1942/submission/256179100</a></p>
+<span id="more"></span>
+
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>读错题是一生之敌</p>
+<h2 id="F-Farmer-John’s-Favorite-Function-5s-256mb"><a href="#F-Farmer-John’s-Favorite-Function-5s-256mb" class="headerlink" title="F. Farmer John’s Favorite Function(5s 256mb)"></a>F. Farmer John’s Favorite Function(5s 256mb)</h2><p>整数组 <code>a[n]</code></p>
+<p>$f(1)&#x3D;\sqrt{a_1}$</p>
+<p>$i&gt; 1,f(i)&#x3D;\sqrt{f(i-1)+a_i}$</p>
+<p>q个操作</p>
+<ul>
+<li>每次改变指定单个$a[k_j]&#x3D;x_j$</li>
+<li>并输出 $f(n)$ 向下取整</li>
+</ul>
+<p>n,q 2e5</p>
+<p>$a_i \in [0,10^{18}]$, 改动的也满足范围</p>
+<h3 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h3><p>第一个想法是 根号会导致值快速下降，也就是 ai 对于 an的贡献，虽然受到了前置和后置的“影响”，但是如果太远了应该就会失去效果</p>
+<p>对于$a\ge 0,b\ge 0$，有$\sqrt{a+b} \le \sqrt{a}+\sqrt{b}$, 因为 两边平方右侧多一个$2\sqrt{ab}$</p>
+<p>$\sqrt{\sqrt{\sqrt{a}+b}+c} &lt; \sqrt{a^{\frac{1}{4}}+b^{\frac{1}{2}}+c} &lt; a^{\frac{1}{8}}+\sqrt{b^{\frac{1}{2}}+c}$</p>
+<p>对于更长的表达式来说， 如果固定后面的值，那么a在变化时 对于上界（可能不可达）的影响 是 $a^{\frac{1}{2^{t}}}$, 其中$t$是长度</p>
+<hr>
+<p>又有 希望 $a\in[0,f(x)),b\in[0,x], a_n&#x3D;\sqrt{a_{n-1}+b} \le \sqrt{f(x)+x} &#x3D; f(x)$ 成立</p>
+<p>只需要</p>
+<p>$f(x)^2-f(x)-x&#x3D;0$</p>
+<p>$f(x)&#x3D;\frac{1\pm\sqrt{1+4x}}{2}$, 这里要取正号</p>
+<p>所以 回到原题，任何前缀$&lt;\frac{1+\sqrt{1+4\cdot 10^{18}}}{2}$ 大约是 $[10^9,10^9+1]$</p>
+<hr>
+<p>至此2个结论</p>
+<ul>
+<li>前缀的结果 $[0,10^9+1)$</li>
+<li>$2^{29}&#x3D;5,3687,0912 &lt; 10^{9} &lt; 10,7374,1824&#x3D;2^{30}$ 也就说明了 倒数个数 &gt; 40个 (忽略边界细节)的值，对最终上界影响 &lt; 2</li>
+</ul>
+<hr>
+<p>问题也是有的</p>
+<ol>
+<li>这样只是证明了对上界的影响，没有证明对 具体值的影响，虽然从体感上猜想应该也是类似的</li>
+<li>虽然很小，但是 这里不是求近似值（可以控制位数），如果真的正好让 值跨过一个整数，那么怎么记录呢？</li>
+</ol>
+<p>其实还有一个显然的性质，如果固定后面的值，前面的值变化，对结果是单调的影响的</p>
+<p>所以 如果 <code>[0,..最后40个值]</code>, <code>[1e9,..最后40个值]</code> 得到的整数部分一样（不只需要结果差距是1）那么答案显然了</p>
+<p>那么问题是如果不一样要如何判断? 因为实际上的确可以实现这样的微调</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">4 2 2 2 2 2.....2 的结果肯定是2，因为一直是 \sqrt&#123;2+2&#125;</span><br><span class="line">而可以通过微调很前面index 的值，-1导致最后结果 变为1</span><br></pre></td></tr></table></figure>
+
+<h3 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h3><p>hint1 考虑特殊情况，修改任何ai都会让 答案变小，就是上面我考虑的特殊情况，所以只考虑最后几个数是不行的</p>
+<p>hint2 如果 n &gt;&#x3D; 6 那么 a1 对于 f(n)的影响最多是1？ 啊，比我的结论的长度小了这么多？？？而且不是影响上界而是直接影响 目标值</p>
+<p>hint3 !!!!!!!!!!!!!!!!!!!! 可以每一次都做floor运算不影响结果, 哦好有道理 ！！！！</p>
+<p>hint4 把数组切割成 size b &gt;&#x3D; 6 的块</p>
+<hr>
+<ol>
+<li><p>4 2 2 2 … 2 所有 结果都是整数，所以减少任何数，对结果都会减少</p>
+</li>
+<li><p>推的方向对的但是 幂次自己傻了</p>
+</li>
+</ol>
+<p>$\sqrt{a+b}^2 &#x3D; (a+b)\le a+b+2\sqrt{ab} &#x3D; (\sqrt{a}+\sqrt{b})^2$</p>
+<p>$\sqrt{a+b} \le \sqrt{a}+\sqrt{b}$</p>
+<p>$\sqrt{a+b}-\sqrt{b}\le \sqrt{a}$</p>
+<p>$\sqrt{c+\sqrt{b+a}}-\sqrt{c+\sqrt{b}}\le \sqrt{\sqrt{b+a}-\sqrt{b}}\sqrt{\sqrt{a}}&#x3D;a^{\frac{1}{2^2}}$</p>
+<p>$2^6 &#x3D; 64$</p>
+<p>$10^{18} &lt; 2^{64}$</p>
+<hr>
+<p>hint3 感觉以前遇到过一次，很好证明，但很难从零想到</p>
+<p>如果 当前 的结果是 <code>[a,a+1)</code>,其中$a$是整数，那么下一个结果是 $[\sqrt{a+b},\sqrt{a+b+1})$</p>
+<p>$\sqrt{a+b+1}-\sqrt{a+b} &#x3D; \frac{1}{\sqrt{a+b+1}+\sqrt{a+b}} &lt; 1$</p>
+<p>注意只有可能整数的根号才是整数</p>
+<p>说明 $\sqrt{a+b},\sqrt{a+b+1}$的整数部分是一样的</p>
+<p>因此可以改成 $f(i)&#x3D;\lfloor \sqrt{f(i-1)+a_i}\rfloor$</p>
+<hr>
+<p>再把数组切割成6个一组，不是6的倍数补前导0</p>
+<p>对于一组 $a[l\cdots r]$</p>
+<p>令 $v(r) &#x3D; f(r)$ 当$f(l-1)&#x3D;0$时的值</p>
+<p>那么 随着$f(l-1)$的变化, 而$a[l\cdots r]$不变时, $f(r)\in[v(r),v(r)+1]$, (修改后的)</p>
+<p>令 $c(r) &#x3D;$ 最小的$f(l-1)$ 使得 $f(r) &#x3D; v(r)+1$</p>
+<p>这可以逆向计算 block得到</p>
+<hr>
+<p>注意到 每个block固定后变成了</p>
+<p><code>block[v,c]</code></p>
+<p>也就是 v表示 它的输出值是 v或v+1</p>
+<p>c表示 最小的上一个block输出值让它是v+1, 注意到c的性质 即是完成了 <code>v=&gt; v+1</code> 同时它刚好产生的整数</p>
+<hr>
+<p>用线段树维护</p>
+<p><code>block[v0,c0]</code> + <code>block[v1,c1]</code></p>
+<p>那么 得到的 一定是 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">block[v1,c0]:  </span><br><span class="line">		[0..c0-1] =&gt; v0     == c1-1</span><br><span class="line">		[c0..max] =&gt; v0+1   == c1</span><br><span class="line"></span><br><span class="line">block[v1,max+1]:  // 输出全是v1</span><br><span class="line">		[0..c0-1] =&gt; v0</span><br><span class="line">		[c0..max] =&gt; v0+1   &lt; c1</span><br><span class="line">		</span><br><span class="line">block[v1+1,max+1]:  // 输出全是v1+1</span><br><span class="line">		[0..c0-1] =&gt; v0     &gt;= c1</span><br><span class="line">		[c0..max] =&gt; v0+1</span><br></pre></td></tr></table></figure>
+
+<p>换个视角看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...... v0 ,  v0+1 ......</span><br><span class="line">               c1...      v1,max+1</span><br><span class="line">             c1              v1,c0</span><br><span class="line">    ...c1                    v1+1,max+1</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>另一方面，也可以不用线段树，根号分治，用$\sqrt{n}$大小的块， 每次更新一个块，再对所有块做计算</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1942/submission/257996167">https://codeforces.com/contest/1942/submission/257996167</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for(ll i=(a);i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for(ll i=(n);i--&gt;(ll)(a);)</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> B = <span class="number">470</span>; <span class="comment">// sqrt(2e5) 块大小</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MAX = <span class="number">2e5</span> + B + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> ll V=<span class="number">1&#x27;000&#x27;000&#x27;000&#x27;000&#x27;000&#x27;000</span>;</span><br><span class="line"><span class="type">int</span> numBlocks;</span><br><span class="line">ll A[MAX];</span><br><span class="line">ll v[MAX]; <span class="comment">// 块输出值为 v 或 v+1</span></span><br><span class="line">ll c[MAX]; <span class="comment">// 最小的c 使得值变为 v+1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">buildBlock</span><span class="params">(<span class="type">int</span> blk)</span></span>&#123;</span><br><span class="line">  <span class="comment">// [l,r)</span></span><br><span class="line">  <span class="type">int</span> l = blk * B;</span><br><span class="line">  <span class="type">int</span> r = l + B;</span><br><span class="line">  <span class="comment">// 正向计算 前面输出0的值v</span></span><br><span class="line">  ll cur = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,l,r) cur = <span class="built_in">floor</span>(<span class="built_in">sqrtl</span>((<span class="type">long</span> <span class="type">double</span>)cur + A[i]));</span><br><span class="line">  v[blk] = cur;</span><br><span class="line">  <span class="comment">// 逆向计算 == v+1的值</span></span><br><span class="line">  ll x = cur + <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">per</span>(i,l,r) &#123;</span><br><span class="line">    <span class="keyword">if</span> (x &gt; <span class="number">2e9</span>)&#123;</span><br><span class="line">      c[blk] = V+<span class="number">1</span>; <span class="comment">// 所有都不能</span></span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    x = x * x - A[i]; <span class="comment">// v能达到，所以v+1反推一定是正的</span></span><br><span class="line">  &#125;</span><br><span class="line">  c[blk] = x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">qry</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ll cur = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(b,<span class="number">0</span>,numBlocks) cur = (cur &gt;= c[b]) ? v[b] + <span class="number">1</span> : v[b];</span><br><span class="line">  <span class="keyword">return</span> cur;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> q=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> offset = (B - n % B) % B;</span><br><span class="line">  n += offset;</span><br><span class="line">  numBlocks = n / B;</span><br><span class="line">  <span class="built_in">rep</span>(i,offset,n) A[i]=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">rep</span>(b,<span class="number">0</span>,numBlocks) <span class="built_in">buildBlock</span>(b);</span><br><span class="line">  <span class="keyword">while</span> (q--)&#123;</span><br><span class="line">    ll k=<span class="built_in">read</span>()<span class="number">-1</span>+offset;</span><br><span class="line">    ll x=<span class="built_in">read</span>();</span><br><span class="line">    A[k] = x;</span><br><span class="line">    <span class="built_in">buildBlock</span>(k / B);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,<span class="built_in">qry</span>());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="G-Bessie-and-Cards"><a href="#G-Bessie-and-Cards" class="headerlink" title="G Bessie and Cards"></a>G Bessie and Cards</h2><p>a张 <code>draw 0</code></p>
+<p>b张 <code>draw 1</code></p>
+<p>c张 <code>draw 2</code></p>
+<p>5个特殊卡</p>
+<p>游戏开始时，所有牌都在随机洗好的牌组中。</p>
+<hr>
+<p>Bessie 开始抽取卡堆最顶5张卡</p>
+<p>然后 可以使用手上的<code>draw x</code>抽取顶上的<code>x</code>张卡,</p>
+<p>特殊卡不能用，剩余卡<code>&lt; x</code>则抽取全部</p>
+<p>目标是抽取所有的卡 则获胜</p>
+<hr>
+<p>对于 <code>(a+b+c+5)!</code> 种的随机洗牌结果, 求他获胜的概率 mod 998244353</p>
+<p>$a,b,c \in [0,20’0000]$</p>
+<p>2s</p>
+<p>256mb</p>
+<h3 id="我的思路-2"><a href="#我的思路-2" class="headerlink" title="我的思路"></a>我的思路</h3><p>考虑策略，如果当前手上有 <code>draw x</code> 则使用，所以 实际上相当于</p>
+<p><code>a[i]=draw的值</code></p>
+<p><code>prefix = 5</code></p>
+<p>然后一直循环 <code>prefix = 5 + presum[prefix]</code></p>
+<p>然后关心的是 5张特殊卡(对应的)全部拿到</p>
+<p>而操作上采取每次把所有手中的同时使用？</p>
+<p>所以 <code>5 -&gt; 5+前5张的draw的和</code></p>
+<p><code>dp[i] = </code>, 按这样操作能达到的<code>i</code>的位置，也就是中间跨过的不算</p>
+<p><code>dp[i]=true =&gt; dp[5+presum[i]]=true</code></p>
+<p>什么时候停止，也就是 <code>i==5+presum[i]</code></p>
+<p><code>5+presum[i] &gt; i</code> 就可以继续 多拿一张！（拆解draw x成1张1张的动作）</p>
+<p>因为 按照上面的方法 一轮操作中 <code>5+presum[oldi] = newi &gt; oldi</code>,1张1张拿的过程中的<code>for i = [oldi..newi)</code>, 而过程中的 <code>i &lt; newi = 5+presum[oldi] &lt;= 5+presum[i]</code>的</p>
+<hr>
+<p>所以问题变成 首个 <code>i==5+presum[i]</code>的位置 <code>&gt;=第5张特殊排的位置</code></p>
+<p>再变形一下</p>
+<p>首个 <code>5+presum[i]-i==0</code></p>
+<p>$5+\sum_i (a[i]-1) &#x3D;&#x3D; 0$， 这里i最小取5,</p>
+<p>也就是 值变成 <code>-1,0,1</code>, 然后前缀和保持 $&gt; 0$ 当$&#x3D;0$是要包含所有特殊牌</p>
+<hr>
+<p>因为方案中所有牌两两不同, 先把特殊牌和draw0 合并再提出</p>
+<p>计算 <code>f[sz][z] = </code> 首个 &#x3D;&#x3D;  0的 长度是sz, 其中有z个(draw 0)(-1)的 无差别0,1,2 在总长度里的方案数</p>
+<p>$ans +&#x3D; \sum f_{sz,z} \binom{z}{5} 5! a!b!c!$</p>
+<p><code>g[sz][z][s] = </code>前缀长度sz 全部 &gt; 0且当前和为s， (draw 0)有z个的前置方案数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">draw 0个数+draw 1个数+draw 2个数 = sz</span><br><span class="line">draw 0个数 = z &lt;= a+5</span><br><span class="line">(-1)*(draw 0个数)+0*(draw 1个数)+1*(draw 2个数)=s</span><br><span class="line">draw 2个数 = s+z &lt;= c</span><br><span class="line">draw 1个数 = sz -z -(s+z)&lt;= b</span><br></pre></td></tr></table></figure>
+
+<p>问题是这个状态是 $O(n^3)$的，转移倒是可以转移</p>
+<hr>
+<p>不过 -1,0,1 用x-y的图像看就是 首个交点0的位置 是sz，不过上面 <code>f[sz][z]</code>的状态数都是$O(n^2)$</p>
+<hr>
+<p>另一个观察是，这里的b完全不影响和0的交界，所以可以先剔除!!</p>
+<p>只考虑-1,1 最后再放入0</p>
+<p>这样的话，长度和1&#x2F;-1个数有了更紧密的关系</p>
+<p>(a+5)个 -1</p>
+<p>c个1</p>
+<p>那么显然 首次&#x3D;0时 用的 -1的个数为z的话，那么 用的1的个数是 z-5</p>
+<p><code>f[sz][z] = f[2z-5][z]</code></p>
+<p>f变成 z个-1,(z-5)个1, <code>prefix[0]=5</code>, 然后首次<code>=0</code> 是在<code>2z-5</code>的位置</p>
+<p>令 <code>h[2z-5] = binom(2z-5,z)</code> 有z个-1,z-5个1和为-5的 所有方案</p>
+<p>令 <code>g[2z] = binom(2z,z)</code> 有z个1,z个-1和为0 所有方案</p>
+<p>令 <code>f[2z-5]=</code> 长度<code>2z-5</code>是首次前缀&#x3D;0（和为-5）的方案</p>
+<p>容斥一下,  <code>f[2z-5] = h[2z-5] - sum f[j &lt; 2z-5] * g[2z-5 - j]</code> ，也就是去掉前面就&#x3D;0的</p>
+<p>这看起来就是个分治卷积?</p>
+<hr>
+<p>如果得到了<code>f</code></p>
+<p><code>ans = sum f[2z-5] binom(z,5)5!a!b!c! * b的插入其中的方案</code></p>
+<p>b个 切割成 a+c+5+1 段，每段的个数 &gt;&#x3D;0</p>
+<p>b+(a+c+5+1)个 切割成 a+c+5+1 段，每段的个数 &gt;&#x3D;1</p>
+<p>b+(a+c+5+1)-1个切割点 选择其中(a+c+5+1)-1个切割 点切割</p>
+<p><code>ans = sum f[2z-5] binom(z,5)5!a!b!c! * binom(b+(a+c+5),a+c+5)</code></p>
+<hr>
+<p>数学上优化一下  表达式计算</p>
+<p>new <code>f[z] = </code>有z个1,z+5个-1 首次前缀&#x3D;-5的方案</p>
+<p>new <code>h[z] = </code>有z个1,z+5个-1 的方案 &#x3D; $\binom{2z+5}{z}$</p>
+<p>new <code>g[z] = </code>有z个1,z个-1 的方案 &#x3D; $\binom{2z}{z}$</p>
+<p>类似的</p>
+<p><code>f[z] = h[z] - sum f[j &lt; z] * g[z-j]</code></p>
+<p><code>f[z] = h[z] - [x^z] f * g</code>, 令 <code>g[0]=0</code></p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1942/submission/258106122">https://codeforces.com/contest/1942/submission/258106122</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for(ll i=(a);i&lt;(ll)(n);i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for(ll i=(n);i--&gt;(ll)(a);)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span></span>&#123;ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;r);<span class="keyword">return</span> r;&#125;</span><br><span class="line"><span class="keyword">namespace</span> CMM&#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> _mod = <span class="number">998244353</span>;</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">modint</span>&#123;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">      <span class="type">long</span> <span class="type">long</span> _v;</span><br><span class="line">      <span class="function"><span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="title">umod</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> _mod; &#125;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">      <span class="built_in">modint</span>() :_v(<span class="number">0</span>) &#123;  &#125;</span><br><span class="line">      <span class="built_in">modint</span>(<span class="type">long</span> <span class="type">long</span> _a) &#123; <span class="comment">// dont use modint&#123;value&#125;, use modint(value)</span></span><br><span class="line">        _v = (_a &lt; <span class="number">0</span>)? <span class="built_in">umod</span>() - ((-_a) % <span class="built_in">umod</span>()) : (_a % <span class="built_in">umod</span>());</span><br><span class="line">        <span class="built_in">assert</span>(_v &gt;=<span class="number">0</span> <span class="keyword">and</span> _v &lt; <span class="built_in">umod</span>());</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="type">int</span> <span class="title">val</span><span class="params">()</span><span class="type">const</span> </span>&#123; <span class="keyword">return</span> _v; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>+()<span class="type">const</span> &#123; <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>-()<span class="type">const</span> &#123; <span class="keyword">return</span> &#123; <span class="built_in">umod</span>() - _v &#125;; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>+(<span class="type">const</span> modint&amp; rhs) <span class="type">const</span> &#123; <span class="keyword">return</span> <span class="built_in">modint</span>(*<span class="keyword">this</span>) += rhs; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>-(<span class="type">const</span> modint&amp; rhs) <span class="type">const</span> &#123; <span class="keyword">return</span> <span class="built_in">modint</span>(*<span class="keyword">this</span>) -= rhs; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>*(<span class="type">const</span> modint&amp; rhs) <span class="type">const</span> &#123; <span class="keyword">return</span> <span class="built_in">modint</span>(*<span class="keyword">this</span>) *= rhs; &#125;</span><br><span class="line">      modint <span class="keyword">operator</span>/(<span class="type">const</span> modint&amp; rhs) <span class="type">const</span> &#123; <span class="keyword">return</span> <span class="built_in">modint</span>(*<span class="keyword">this</span>) /= rhs; &#125;</span><br><span class="line"></span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>==(<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v == rhs._v; &#125;</span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>!=(<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v != rhs._v; &#125;</span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>&gt; (<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v &gt;  rhs._v; &#125;</span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>&gt;=(<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v &gt;= rhs._v; &#125;</span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>&lt;=(<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v &lt;= rhs._v; &#125;</span><br><span class="line">      <span class="type">bool</span> <span class="keyword">operator</span>&lt; (<span class="type">const</span> modint&amp; rhs)<span class="type">const</span> &#123; <span class="keyword">return</span> _v &lt;  rhs._v; &#125;</span><br><span class="line"></span><br><span class="line">      modint&amp; <span class="keyword">operator</span>+=(<span class="type">const</span> modint&amp; rhs) &#123;</span><br><span class="line">        (_v += rhs._v) %= <span class="built_in">umod</span>();</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      modint&amp; <span class="keyword">operator</span>-=(<span class="type">const</span> modint&amp; rhs) &#123;</span><br><span class="line">        (_v += <span class="built_in">umod</span>() - rhs._v) %= <span class="built_in">umod</span>();</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      modint&amp; <span class="keyword">operator</span>*=(<span class="type">const</span> modint&amp; rhs) &#123;</span><br><span class="line">        <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> z = _v;</span><br><span class="line">        z *= rhs._v;</span><br><span class="line">        _v = (<span class="type">unsigned</span> <span class="type">int</span>)(z % <span class="built_in">umod</span>());</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      modint&amp; <span class="keyword">operator</span>/=(<span class="type">const</span> modint&amp; rhs) &#123; <span class="comment">// 费马小定理</span></span><br><span class="line">        _v = _v * rhs.<span class="built_in">inv</span>().<span class="built_in">val</span>() % <span class="built_in">umod</span>();</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function">modint <span class="title">pow</span><span class="params">(<span class="type">long</span> <span class="type">long</span> pwr)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> <span class="title">res</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> _b(_v);</span><br><span class="line">        <span class="keyword">while</span> (pwr) &#123;</span><br><span class="line">          <span class="keyword">if</span> (pwr &amp; <span class="number">1</span>) (res *= _b) %= <span class="built_in">umod</span>();</span><br><span class="line">          (_b *= _b) %= <span class="built_in">umod</span>();</span><br><span class="line">          pwr /= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function">modint <span class="title">inv</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="built_in">assert</span>(_v != <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">pow</span>(<span class="built_in">umod</span>() - <span class="number">2</span>);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt; <span class="comment">// mod type T</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Binomial</span>&#123;</span><br><span class="line">      <span class="keyword">public</span>:</span><br><span class="line">        std::vector&lt;T&gt; fac;</span><br><span class="line">        std::vector&lt;T&gt; ifac;</span><br><span class="line">        std::vector&lt;T&gt; inv;</span><br><span class="line">        <span class="built_in">Binomial</span>()&#123;&#125;;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123; <span class="comment">// [0,n]</span></span><br><span class="line">          fac.<span class="built_in">resize</span>(n+<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">          ifac.<span class="built_in">resize</span>(n+<span class="number">1</span>);</span><br><span class="line">          inv.<span class="built_in">resize</span>(n+<span class="number">1</span>);</span><br><span class="line">          <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++) fac[i]=fac[i<span class="number">-1</span>]*i;</span><br><span class="line">          ifac[n]=fac[n].<span class="built_in">inv</span>();</span><br><span class="line">          <span class="keyword">for</span>(<span class="type">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--) ifac[i]=ifac[i+<span class="number">1</span>]*(i+<span class="number">1</span>);</span><br><span class="line">          <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++) inv[i]=fac[i<span class="number">-1</span>]*ifac[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function">T <span class="title">binom</span><span class="params">(ll n,ll m)</span></span>&#123; <span class="keyword">return</span> (n&lt;m <span class="keyword">or</span> m&lt;<span class="number">0</span>)?<span class="number">0</span>:fac[n]*ifac[m]*ifac[n-m]; &#125;</span><br><span class="line">        <span class="built_in">Binomial</span>(<span class="type">int</span> n)&#123; <span class="built_in">init</span>(n); &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">namespace</span> NTT&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> MOD = <span class="number">998244353</span>; <span class="comment">// 7*17*2^23 + 1</span></span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> MAXPWR = <span class="number">22</span>; <span class="comment">// 随着MOD改变, 2的幂次, 对应复平面单位向量的N = 2 &amp;&amp; MAXPWR;</span></span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> g = <span class="number">3</span>;<span class="comment">// 原根 随着MOD改变</span></span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> invg = <span class="number">332748118</span>;<span class="comment">// 原根模逆元 随着MOD 和 g 改变</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// bit 翻转</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">rev</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> len)</span> </span>&#123;</span><br><span class="line">      <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">while</span>(len -- )&#123;</span><br><span class="line">        ans &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">        ans |= x &amp; <span class="number">1</span>;</span><br><span class="line">        x &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">getlog2</span><span class="params">(<span class="type">int</span> n)</span></span>&#123; <span class="keyword">return</span> <span class="number">31</span> - __builtin_clz(n);&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function">      T <span class="title">mypow</span><span class="params">(T a, <span class="type">long</span> <span class="type">long</span> k)</span> </span>&#123; <span class="comment">//快速幂，a**k</span></span><br><span class="line">        T res = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (k) &#123;</span><br><span class="line">          <span class="keyword">if</span> (k &amp; <span class="number">1</span>) (res *= a); <span class="comment">// modint %= MOD;</span></span><br><span class="line">          (a *= a); <span class="comment">// modint %= MOD;</span></span><br><span class="line">          k &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> mint&gt;</span></span><br><span class="line"><span class="function">      <span class="type">void</span> <span class="title">NTT</span><span class="params">(std::vector&lt;mint&gt; &amp;A, <span class="type">int</span> flag = <span class="number">1</span> <span class="comment">/* 1: NTT, -1: INTT*/</span> )</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = A.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> ;</span><br><span class="line">        <span class="comment">// assert((n &amp; (n-1)) == 0); // 2 的幂次</span></span><br><span class="line">        <span class="type">int</span> lgn = <span class="built_in">getlog2</span>(n);</span><br><span class="line">        <span class="comment">// assert(lgn &lt;= MAXPWR);</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++) &#123; <span class="comment">// 同FFT</span></span><br><span class="line">          <span class="type">int</span> j = <span class="built_in">rev</span>(i, lgn);</span><br><span class="line">          <span class="keyword">if</span> (j &gt; i) std::<span class="built_in">swap</span>(A[i], A[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> pwr=<span class="number">0</span>;pwr&lt;lgn;pwr++)&#123;</span><br><span class="line">          <span class="type">int</span> m = <span class="number">1</span> &lt;&lt; pwr;</span><br><span class="line">          <span class="comment">// assert((MOD - 1) % (m&lt;&lt;1) == 0);</span></span><br><span class="line">          mint gn = <span class="built_in">mypow</span>&lt;mint&gt;(flag == <span class="number">1</span> ? g : invg, (MOD - <span class="number">1</span>) / (m &lt;&lt; <span class="number">1</span>)); <span class="comment">// 单位原根g_n</span></span><br><span class="line">          <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; n; k += (m&lt;&lt;<span class="number">1</span>)) &#123;</span><br><span class="line">            mint gi = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;m;j++)&#123;</span><br><span class="line">              mint U = A[k + j];</span><br><span class="line">              mint T = A[k + j + m] * gi;</span><br><span class="line">              A[k + j] = (U + T);</span><br><span class="line">              A[k + j + m] = (U - T);</span><br><span class="line">              gi *= gn;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(flag == <span class="number">-1</span>)&#123; <span class="comment">// 内置 / N</span></span><br><span class="line">          <span class="type">const</span> mint INVSIZE = <span class="built_in">mint</span>(n).<span class="built_in">inv</span>(); <span class="comment">//  mypow(n, MOD-2);</span></span><br><span class="line">          <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++) (A[i] *= INVSIZE) ; <span class="comment">// modint %= MOD;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function">      <span class="type">void</span> <span class="title">INTT</span><span class="params">(std::vector&lt;T&gt; &amp;A)</span></span>&#123; <span class="built_in">NTT</span>&lt;T&gt;(A,<span class="number">-1</span>);&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 卷积</span></span><br><span class="line">    <span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function">      std::vector&lt;T&gt; <span class="title">convolution</span><span class="params">(std::vector&lt;T&gt; v0, std::vector&lt;T&gt; v1)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> sz = v0.<span class="built_in">size</span>() + v1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span>(sz == <span class="number">0</span>)<span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        sz = <span class="number">1</span> &lt;&lt; (<span class="built_in">getlog2</span>(sz) + !!(sz &amp; (sz<span class="number">-1</span>))); <span class="comment">// 非2的幂次</span></span><br><span class="line">        v0.<span class="built_in">resize</span>(sz,<span class="number">0</span>);</span><br><span class="line">        v1.<span class="built_in">resize</span>(sz,<span class="number">0</span>);</span><br><span class="line">        <span class="built_in">NTT</span>&lt;T&gt;(v0);</span><br><span class="line">        <span class="built_in">NTT</span>&lt;T&gt;(v1);</span><br><span class="line">        <span class="function">std::vector&lt;T&gt; <span class="title">v2</span><span class="params">(sz,<span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;sz;i++) v2[i] = v0[i] * v1[i]; <span class="comment">// modint % MOD;</span></span><br><span class="line">        <span class="built_in">INTT</span>&lt;T&gt;(v2);</span><br><span class="line">        <span class="keyword">return</span> v2;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 平方 少一次 NTT</span></span><br><span class="line">    <span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function">      std::vector&lt;T&gt; <span class="title">poly_sq</span><span class="params">(std::vector&lt;T&gt; v0)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> sz = v0.<span class="built_in">size</span>() * <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(sz == <span class="number">0</span>)<span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        sz = <span class="number">1</span> &lt;&lt; (<span class="built_in">getlog2</span>(sz) + !!(sz &amp; (sz<span class="number">-1</span>))); <span class="comment">// 非2的幂次</span></span><br><span class="line">        v0.<span class="built_in">resize</span>(sz,<span class="number">0</span>);</span><br><span class="line">        <span class="built_in">NTT</span>&lt;T&gt;(v0);</span><br><span class="line">        <span class="function">std::vector&lt;T&gt; <span class="title">v2</span><span class="params">(sz,<span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;sz;i++) v2[i] = v0[i] * v0[i]; <span class="comment">// modint % MOD;</span></span><br><span class="line">        <span class="built_in">INTT</span>&lt;T&gt;(v2);</span><br><span class="line">        <span class="keyword">return</span> v2;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// ---------- template end ----------</span></span><br><span class="line"><span class="keyword">using</span> mint = CMM::modint;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=(<span class="number">1</span>&lt;&lt;<span class="number">18</span>); <span class="comment">// &gt; 2e5</span></span><br><span class="line">mint f[N+<span class="number">10</span>];</span><br><span class="line"><span class="comment">// f[x]=h[x] - sum f[j&lt;x]*g[x-j]</span></span><br><span class="line"><span class="function">CMM::Binomial&lt;mint&gt; <span class="title">B</span><span class="params">((<span class="number">1</span>&lt;&lt;<span class="number">20</span>)+<span class="number">1</span>)</span></span>; <span class="comment">//  &gt; 6e5+5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// [l,r)</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">calc</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(l+<span class="number">1</span>==r)&#123;</span><br><span class="line">    f[l] = B.<span class="built_in">binom</span>(<span class="number">2</span>*l+<span class="number">5</span>,l)-f[l];</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> mid=(l+r)/<span class="number">2</span>;</span><br><span class="line">  <span class="built_in">calc</span>(l,mid);</span><br><span class="line">  <span class="comment">// [l,mid) =&gt; [mid,r)</span></span><br><span class="line">  <span class="type">int</span> sz=r-l;</span><br><span class="line">  <span class="built_in">assert</span>((sz&amp;(sz<span class="number">-1</span>)) == <span class="number">0</span>);</span><br><span class="line">  vector&lt;mint&gt; flmid;</span><br><span class="line">  vector&lt;mint&gt; g;</span><br><span class="line">  <span class="built_in">rep</span>(i,l,mid) flmid.<span class="built_in">push_back</span>(f[i]);</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,sz) g.<span class="built_in">push_back</span>(B.<span class="built_in">binom</span>(<span class="number">2</span>*i,i));</span><br><span class="line">  <span class="comment">// g[0]=0;</span></span><br><span class="line">  <span class="keyword">auto</span> res = CMM::NTT::<span class="built_in">convolution</span>(flmid,g);</span><br><span class="line">  <span class="built_in">rep</span>(i,sz/<span class="number">2</span>,sz) f[l+i]+=res[i];</span><br><span class="line">  <span class="built_in">calc</span>(mid,r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">w</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> a=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> b=<span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> c=<span class="built_in">read</span>();</span><br><span class="line">  mint ans=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">min</span>(c,a)+<span class="number">1</span>) &#123; <span class="comment">// [i+5个-1,i个1], [a-i个-1,c-i个1</span></span><br><span class="line">    ans += f[i]*B.<span class="built_in">binom</span>(i+<span class="number">5</span>,<span class="number">5</span>)*B.<span class="built_in">binom</span>(a-i+c-i,c-i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 如果 总和 &gt; 0, 那么还有一种可能是始终没有 = 0</span></span><br><span class="line">  <span class="keyword">if</span>(c-a&gt;<span class="number">0</span>)&#123;</span><br><span class="line">    mint w = B.<span class="built_in">binom</span>(a+c+<span class="number">5</span>,c);</span><br><span class="line">    <span class="built_in">rep</span>(i,<span class="number">0</span>,<span class="built_in">min</span>(a,c)+<span class="number">1</span>) &#123;</span><br><span class="line">      w -= f[i]*B.<span class="built_in">binom</span>(a-i+c-i,c-i);</span><br><span class="line">    &#125;</span><br><span class="line">    ans += w*B.<span class="built_in">binom</span>(a+<span class="number">5</span>,<span class="number">5</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// printf(&quot;%d * %d %d\n&quot;,ans.val(),B.fac[5].val(),B.binom(b+a+c+5,a+c+5).val());</span></span><br><span class="line">  <span class="comment">// printf(&quot;fm = %d\n&quot;,B.fac[a+b+c+5].val());</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,((ans*B.fac[<span class="number">5</span>]*B.fac[a]*B.fac[b]*B.fac[c]*B.<span class="built_in">binom</span>(b+(a+c+<span class="number">5</span>),a+c+<span class="number">5</span>))/(B.fac[a+b+c+<span class="number">5</span>])).<span class="built_in">val</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">calc</span>(<span class="number">0</span>,N); <span class="comment">// 524288 &gt; 2*2e5</span></span><br><span class="line">  <span class="comment">// rep(i,0,5) printf(&quot;%lld %d\n&quot;,i,f[i].val());</span></span><br><span class="line">  <span class="type">int</span> t = <span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">while</span>(t--) <span class="built_in">w</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>VP了这场（4715 大概2101的表现（如果实际打会掉分, 但是可以领TON）），</li>
+<li>C2错了三次很僵硬，</li>
+<li>E自己没做出来更僵硬（赛后发现读错题了，艹，<br>这应该是自己能做出来的，如果做出来多个1400分 也只有（2240的表现分），而且不读错题，应该比D还简单）</li>
+</ul>
+<p>A(7min)</p>
+<p>B(12min)</p>
+<p>C1(7min)</p>
+<p>C2(26min), 罚时x3</p>
+<p>D(54min)</p>
+<p>E 很早就得到结论，然后瞎推生成函数推了半天，外加读错题，本身难度不高</p>
+<p>F</p>
+<p>hint3 总觉得以前遇到过一次，也很显然，但自己想就是想不到</p>
+<p>G</p>
+<p>虽然超时了，但是自己做出来了，感觉比F更不需要智力</p>
+<p>H()</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/cf/1942/" title="CodeTON Round 8 (Div. 1 + Div. 2, Rated, Prizes!)">https://yexiaorain.github.io/Blog/cf/1942/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+              <a href="/Blog/tags/FFT/" rel="tag"><i class="fa fa-tag"></i> FFT</a>
+              <a href="/Blog/tags/%E5%88%86%E6%B2%BB%E5%8D%B7%E7%A7%AF/" rel="tag"><i class="fa fa-tag"></i> 分治卷积</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/atcoder/abc/347/" rel="prev" title="Atcoder abc347">
+                  <i class="fa fa-chevron-left"></i> Atcoder abc347
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/cf/1951/" rel="next" title="Codeforces Global Round 25">
+                  Codeforces Global Round 25 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">582k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">32:20</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/cf/1942/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
