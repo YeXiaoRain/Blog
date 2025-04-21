@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="基础 前置内容 容斥原理 全序    定理: 对于满足 全序 关系并且其中元素满足可加减性的序列 $\lbrace x_i \rbrace$，设其长度为 n，并设$S&#x3D;\lbrace 1,2,3,\cdots,n \rbrace$，则有：  $\max_{i\in S}{x_i}&#x3D;\sum_{T\subseteq S}{(-1)^{|T|-1}\min_{j\in T}{x_j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="min-max容斥">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/algo/min_max/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+<meta property="og:description" content="基础 前置内容 容斥原理 全序    定理: 对于满足 全序 关系并且其中元素满足可加减性的序列 $\lbrace x_i \rbrace$，设其长度为 n，并设$S&#x3D;\lbrace 1,2,3,\cdots,n \rbrace$，则有：  $\max_{i\in S}{x_i}&#x3D;\sum_{T\subseteq S}{(-1)^{|T|-1}\min_{j\in T}{x_j">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-03-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-21T09:11:13.202Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="min_max">
+<meta property="article:tag" content="容斥原理">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/algo/min_max/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/algo/min_max/","path":"algo/min_max/","title":"min-max容斥"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>min-max容斥 | YeXiaoRain Blog(hexo的搜索高亮会破坏latex)</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog(hexo的搜索高亮会破坏latex)</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">336</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">319</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-text">证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BE%8B"><span class="nav-text">用例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%9A%84-k-th-min-max"><span class="nav-text">进一步的 k-th min&#x2F;max</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-text">例题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref"><span class="nav-text">ref</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">336</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">319</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/algo/min_max/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="min-max容斥 | YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          min-max容斥
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-03-28 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:00+08:00">2025-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2025-04-21 17:11:13" itemprop="dateModified" datetime="2025-04-21T17:11:13+08:00">2025-04-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/algo/min_max/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="algo/min_max/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>3 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><ul>
+<li>前置内容<ul>
+<li>容斥原理</li>
+<li>全序</li>
+</ul>
+</li>
+</ul>
+<p>定理: 对于满足 全序 关系并且其中元素满足可加减性的序列 $\lbrace x_i \rbrace$，设其长度为 n，并设$S&#x3D;\lbrace 1,2,3,\cdots,n \rbrace$，则有：</p>
+<ul>
+<li>$\max_{i\in S}{x_i}&#x3D;\sum_{T\subseteq S}{(-1)^{|T|-1}\min_{j\in T}{x_j}}$</li>
+<li>$\min_{i\in S}{x_i}&#x3D;\sum_{T\subseteq S}{(-1)^{|T|-1}\max_{j\in T}{x_j}}$</li>
+</ul>
+<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><ul>
+<li>我们需要集合满足<ul>
+<li>全序: 任意两个基础元素可比较大小</li>
+<li>需要零元素</li>
+<li>然后每个元素有逆元，这里(-1)乘法表示取逆元</li>
+<li>不需要可加，这里的加号只是把不同的连在一起</li>
+</ul>
+</li>
+<li>例子 {🍟,🍔,🌭}<ul>
+<li>全序 🍟 &lt; 🍔 &lt; 🌭</li>
+<li>零元 0+(🍟)&#x3D;🍟</li>
+<li>逆元 (🍟)+(-🍟)&#x3D;0</li>
+</ul>
+</li>
+</ul>
+<p>$🌭 &#x3D;\max (\lbrace🍟,🍔,🌭 \rbrace)$</p>
+<p>$&#x3D; \sum_{T\subset S} (-1)^{|T|-1} \min(T)$</p>
+<p>$&#x3D; (-1)^{1-1}\min(\lbrace🍟 \rbrace)+(-1)^{1-1}\min(\lbrace 🍔 \rbrace)+(-1)^{1-1}\min(\lbrace 🌭 \rbrace)  + (-1)^{2-1}\min(\lbrace 🍟,🍔  \rbrace)+(-1)^{2-1}\min(\lbrace 🍔, 🌭 \rbrace)+(-1)^{2-1}\min(\lbrace 🌭,🍟 \rbrace)+(-1)^{3-1}\min(\lbrace 🍟,🍔,🌭 \rbrace)$</p>
+<p>$&#x3D;🍟+🍔+🌭+(-🍟)+(-🍔)+(-🍟)+🍟$</p>
+<p>$&#x3D;🌭$</p>
+<hr>
+<p>简单的逻辑证明，含有最大元和未含有最小元的产生1-1 对应的关系，其中(空集)和(只含有最大元)的1-1对应</p>
+<ul>
+<li>那么 这个1-1对应导致了一个他们的min相同，而(-1)幂次一个奇一个偶，所以都抵消了</li>
+<li>所以只剩下 只含有最大元的</li>
+</ul>
+<h2 id="用例"><a href="#用例" class="headerlink" title="用例"></a>用例</h2><p>首先这个玩意很直接，几乎不会直接使用</p>
+<p>然而 在概率论中计算期望会用到，</p>
+<p>$E(\max_{i\in S}x_i)&#x3D;\sum_{T\subset S}(-1)^{|T|-1} E(\min_{j\in T} x_j)$ </p>
+<p>$E(\min_{i\in S}x_i)&#x3D;\sum_{T\subset S}(-1)^{|T|-1} E(\max_{j\in T} x_j)$ </p>
+<p>不同的是，这里$x_i$更多是其中一个自由变量，有时写作$X_i$</p>
+<ul>
+<li>证明: 其实一句话，E是 线性函数</li>
+</ul>
+<h2 id="进一步的-k-th-min-max"><a href="#进一步的-k-th-min-max" class="headerlink" title="进一步的 k-th min&#x2F;max"></a>进一步的 k-th min&#x2F;max</h2><p>$\text{k-th} \max_{i\in S} x_i &#x3D;\sum_{T\subset S,|T|\ge k} (-1)^{|T|-k} \binom{|T|-1}{k-1}\min_{j\in T} x_j$</p>
+<ul>
+<li>证明: 其实类似的, 记结果为😺, 我们固定$\min$ 来看抵消<ul>
+<li>$\min &#x3D;$😺 时，那么只能选最大k个, 那么就是$(-1)^{k-k}\binom{k-1}{k-1} 😺&#x3D;😺$</li>
+<li>$\min &lt; 😺$ 时 希望证明 $\sum_{t&#x3D;k}^{n+1} \binom{n}{t-1} (-1)^{t-k}\binom{t-1}{k-1} &#x3D;0, n \ge t-1 \ge k-1 \ge 0$<ul>
+<li>n表示 比😺 大的个数</li>
+<li>在其中选了t-1个（加上😺就是t个） </li>
+<li>这种情况下的贡献 就是后一半</li>
+<li>为了简洁，用$t_{new}&#x3D;t-1,k_{new}&#x3D;k-1$替换</li>
+<li>希望证明 $\sum_{t&#x3D;k}^n \binom{n}{t} (-1)^{t-k}\binom{t}{k} &#x3D;0,n \ge t \ge k \ge 0, n &gt; k$</li>
+<li>$&#x3D;\sum_t (-1)^{t-k}\frac{n!}{(t)!(n-t)!}\frac{(t)!}{(k)!(t-k)!}$</li>
+<li>$&#x3D;\sum_t (-1)^{t-k}\frac{n!}{(k)!(n-k)!}\frac{(n-k)!}{(n-t)!(t-k)!}$</li>
+<li>$&#x3D;\sum_t (-1)^{t-k} \binom{n}{k} \binom{n-k}{t-k}$</li>
+<li>$&#x3D;\binom{n}{k} \sum_t (-1)^{t-k}  \binom{n-k}{t-k}$</li>
+<li>$&#x3D;\binom{n}{k} \sum_{s&#x3D;t-k&#x3D;0}^{n-k} (-1)^{s}  \binom{n-k}{s}$</li>
+<li>$&#x3D;\binom{n}{k} (1-1)^{n-k}$</li>
+<li>$&#x3D;0$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>类似的，根据E的线性的性质，有期望的形式</p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc242/tasks/abc242_h">2022-03 2835分 abc242H</a></p>
+<ul>
+<li>区间$[1,n]$,$n\le 400$</li>
+<li>m个子区间$[l_i,r_i]$,$m \le 400$</li>
+<li>每次 1&#x2F;m 概率选择一个区间 涂黑</li>
+<li>问全部区间都涂黑的 期望时间</li>
+<li>$t_i&#x3D;$第i个首次被涂黑的时间</li>
+<li>$E(\min T)&#x3D;$ 集合T中,任何一个首次被涂黑的时间</li>
+<li>$E(\max T)&#x3D;$ 集合T中,全部被涂黑的期望时间</li>
+<li>配合$dp[i][j]&#x3D;$前i个,第i个被选中,j个覆盖了已选集合的 加权和 可做</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1687/problem/E">2022-06 3500分 cf(1687&#x2F;R796)E</a></p>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc331/tasks/abc331_g">2023-12 2668分 abc331G</a></p>
+<ul>
+<li>盒子里有 写着i的卡片有$C_i$张, $1\le i \le n \le 2e5$</li>
+<li>每次 抽出一张 记录数字, 放回盒子</li>
+<li>问 期望次数 1~n全至少出现一次</li>
+<li>$t_i&#x3D;$数字i首次抽到的时间</li>
+<li>$E(\min T)&#x3D;$ 集合T中,任何一个首次抽到</li>
+<li>$E(\max T)&#x3D;$ 集合T中,全部被抽过一次的期望时间</li>
+<li>$\displaystyle \mathrm{ans}&#x3D;\sum_{T\subset S} (-1)^{|T|+1} \frac{N}{\sum_{i\in T}C_i}$<ul>
+<li>同样 分类讨论$\min$也就是右侧，然后去想办法算左侧-1幂次的加权和</li>
+<li>而左侧 把T展开，就是 生成函数系数</li>
+<li>$\displaystyle -(1-x^{sz_1})(1-x^{sz_2})\cdots(1-x^{sz_m})$的系数，就是要求的内容, 一点poly技巧即可</li>
+</ul>
+</li>
+</ul>
+<h2 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h2><p><a target="_blank" rel="noopener" href="https://oi-wiki.org/math/combinatorics/inclusion-exclusion-principle/#min-max-%E5%AE%B9%E6%96%A5">oiwiki 容斥原理 min_max</a></p>
+<p>algo&#x2F;反演 里面有提到 min_max 容斥</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/algo/min_max/" title="min-max容斥">https://yexiaorain.github.io/Blog/algo/min_max/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/min-max/" rel="tag"><i class="fa fa-tag"></i> min_max</a>
+              <a href="/Blog/tags/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 容斥原理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/cf/2077/" rel="prev" title="odeforces Round 1008 (Div. 1)">
+                  <i class="fa fa-chevron-left"></i> odeforces Round 1008 (Div. 1)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">587k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">32:38</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/algo/min_max/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

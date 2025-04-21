@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="F(笛卡尔树,DP,min-max卷积)G()H()I()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces Global Round 28">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/cf/2048/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+<meta property="og:description" content="F(笛卡尔树,DP,min-max卷积)G()H()I()">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-12-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-21T09:11:13.218Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="笛卡尔树">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/cf/2048/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/cf/2048/","path":"cf/2048/","title":"Codeforces Global Round 28"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Codeforces Global Round 28 | YeXiaoRain Blog(hexo的搜索高亮会破坏latex)</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog(hexo的搜索高亮会破坏latex)</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">336</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">319</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#F-Kevin-and-Math-Class"><span class="nav-text">F. Kevin and Math Class</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#E-Kevin-and-Matrices"><span class="nav-text">E Kevin and Matrices</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E8%8A%82"><span class="nav-text">小节</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">336</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">319</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/cf/2048/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Codeforces Global Round 28 | YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+      <meta itemprop="description" content="F(笛卡尔树,DP,min-max卷积)G()H()I()">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Codeforces Global Round 28
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-12-19 00:00:00" itemprop="dateCreated datePublished" datetime="2024-12-19T00:00:00+08:00">2024-12-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2025-04-21 17:11:13" itemprop="dateModified" datetime="2025-04-21T17:11:13+08:00">2025-04-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/Div1-2/" itemprop="url" rel="index"><span itemprop="name">Div1+2</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/cf/2048/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cf/2048/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>4 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">F(笛卡尔树,DP,min-max卷积)G()H()I()</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/2048">https://codeforces.com/contest/2048</a></p>
+<h1 id="F-Kevin-and-Math-Class"><a href="#F-Kevin-and-Math-Class" class="headerlink" title="F. Kevin and Math Class"></a>F. Kevin and Math Class</h1><p>a[n]</p>
+<p>b[n]</p>
+<p>目标 让所有ai&#x3D;1, 求最小操作次数</p>
+<p>每次操作选择l,r</p>
+<p>令 x&#x3D;min(b[l..r])</p>
+<p>a[l..r]&#x2F;&#x3D;x (向上取整)</p>
+<p>范围</p>
+<p>2s</p>
+<p>1024mb</p>
+<p>n 2e5</p>
+<p><code>ai [1,1e18]</code></p>
+<p><code>bi [1,1e18]</code></p>
+<h2 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h2><p>如果向下取整很常见，会注意到 顺序可换 x&#x2F;a&#x2F;b&#x3D;x&#x2F;b&#x2F;a</p>
+<p>那么向上取整，x in (kab,(k+1)ab], 同样是顺序可换</p>
+<p>想法1.</p>
+<p>如果最小的b 对应的a不是1,那么需要一次全区间</p>
+<p>这样一些操作后，可以把a按照1的存在切割成多个块。没想到然后怎么用</p>
+<p>想法2.</p>
+<p>另一个是b&#x3D;2的话，那么至少存在一个方案，每次全部操作，是log级别，所以 最优次数智慧更少，也没想到怎么用</p>
+<p>想法3.</p>
+<p>预处理，如果 相邻的 i,j&#x3D;i+1有  ai &gt;&#x3D; aj, bi &lt;&#x3D; bj, 那么i每次操作带上j, 这样只要ai&#x3D;1了那么aj必定等于1, 这样可以得到 相邻的a,b大小关系是一致的，也没啥用</p>
+<p>想法4.</p>
+<p>想贪心，用操作后的最大值来表示，但很快找到反例</p>
+<ul>
+<li>a&#x3D;100 1 100</li>
+<li>b&#x3D;100 2 100</li>
+</ul>
+<p>这样 操作一次后的局部最优是 50 1 50, 而这无法达到最终的最少次数，</p>
+<span id="more"></span>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>笛卡尔树</p>
+<p>建立小根笛卡尔树（这玩意能想出来，但怎么用没啥想法）</p>
+<p>只会操作 笛卡尔树上的区间（显然）</p>
+<p>然后是 笛卡尔树上dp 啊 这就是第一次搞了</p>
+<p>$f_{u,i}$ 表示 只考虑$u$ 子树内的所有位置进行i次操作之后区间内$a_x$的最大最小是多少，</p>
+<p>$f_{u,k}&#x3D;\min_{i+j&#x3D;k} min(max(f_{lu,i},f_{ru,j},a_u))$</p>
+<p>然后考虑 这个位置的除法操作</p>
+<p>$f_{u,k+1} \leftarrow \lceil \frac{f_{u,k}}{b_u}\rceil$</p>
+<p>这样状态数 是 O(n * log a) 的</p>
+<p>合并代价 是min-max卷积 等价于 归并排序(合并时每个状态的均摊代价为常数），可以 总复杂度O(n log a)</p>
+<h1 id="E-Kevin-and-Matrices"><a href="#E-Kevin-and-Matrices" class="headerlink" title="E Kevin and Matrices"></a>E <a target="_blank" rel="noopener" href="https://codeforces.com/contest/2048/problem/G">Kevin and Matrices</a></h1><p>所有n行m列，每个值在[1,v]中整数的矩阵中，有多少满足</p>
+<p>min(行max) &lt;&#x3D; max(列min)</p>
+<p>求个数 mod 998244353</p>
+<p>范围 </p>
+<p>6s</p>
+<p>256mb</p>
+<p>n * v 1e6</p>
+<p>m 1e9</p>
+<h2 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h2><p>先是找特性的抽象</p>
+<p>不妨设左边的值为w</p>
+<p>那么意味着 每行的max &gt;&#x3D; w,其中一个是w,不妨设 aij&#x3D;w</p>
+<p>那么 对于aij同行的其它值 &lt;&#x3D;w, min(aij所在列)&lt;&#x3D;w, 这样说明右边值&lt;&#x3D;w</p>
+<p>w&lt;&#x3D;右侧&lt;&#x3D;w,说明右侧只能是w</p>
+<hr>
+<p>所以对于给定w问题变化为 左右同时&#x3D;w时的值</p>
+<p>先不考虑重复的话，我们给每个值变成 (ai,i,j) 也就是不光有值还能标识位置，我们希望左右的min,max输出不只是值而且还包括位置。</p>
+<p>那么希望 左侧输出的三元组 &#x3D; 右侧输出三元组， 这里当有多个三元组都可以输出时，我们可以钦定</p>
+<p>若 <code>a[ij] = (w,i,j)</code>且被两边选择为 输出值</p>
+<p>那么</p>
+<ul>
+<li>被左边选择，需要 同行不大于它，其它行的max 不小于它</li>
+<li>被右边选择，需要 同列不小于它，其它列的min 不大于它</li>
+</ul>
+<p>这两个性质的交 就是： 同行不大于它且同列不小于它</p>
+<p>对应的方案数 &#x3D; $w^{m-1} * (v-w+1)^{n-1}$</p>
+<hr>
+<p>然后如何解决重复的问题呢？</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><ul>
+<li><p>提示 #1</p>
+<p>  左式能小于右式吗？</p>
+</li>
+<li><p>提示 #2</p>
+<p>  考虑式子中取到最值的位置，它们有什么性质？</p>
+</li>
+<li><p>提示 #3</p>
+<p>  考虑容斥原理。</p>
+</li>
+<li><p>提示 #4</p>
+<p>  二项式定理。</p>
+</li>
+</ul>
+<p>依然是只能相等，</p>
+<p>对于取到 最值的两个位置P,Q</p>
+<ul>
+<li>那么 P,Q如果不同行同列，那么它们的交叉点也是取到最值！！！！！<ul>
+<li>在这个观察下+归纳下，满足上面性质的所有w构成子矩阵</li>
+</ul>
+</li>
+</ul>
+<p>然后容斥，定义一个属性是(k,i,j)</p>
+<p>注意到 容斥关系</p>
+<ul>
+<li>如果k不同，那么它们的交的 贡献为0</li>
+<li>如果k相同，f(属性 集合) &#x3D; (-1)^{属性个数} (状态)</li>
+</ul>
+<p>对于 (值&#x3D;k,子矩阵大小 i * j)：</p>
+<p>$\binom{n}{i}\binom{m}{j}k^{i(m-j)}(v-k+1)^{(n-i)j}v^{(n-i)(m-j)}$</p>
+<p>分别表示，&#x3D;k的行选择，&#x3D;k的列选择，这些行剩余部分&lt;&#x3D;k,这些列剩余部分&gt;&#x3D;k, 整个矩阵剩余部分随便填</p>
+<p>这题解(-1)的幂次没看懂???</p>
+<h2 id="小节"><a href="#小节" class="headerlink" title="小节"></a>小节</h2><p>F:</p>
+<p>感觉它也用到了顺序不影响的性质，然后这个 笛卡尔区间 带次数的 max,就比我那个想的max 有意义了 和 满足局部性了，这样才能dp</p>
+<p>这里的 核心拆解在于 笛卡尔区间的拆分</p>
+<p>我上面想的 按ai&#x3D;1的拆分，就缺少这种二分性 和 形状固定性（因为ai会随着计算变化）</p>
+<p>所以 这个关键看到bi 建立笛卡尔树能想到是关键</p>
+<ul>
+<li>所以总结是：笛卡尔树的划分，可能带来新的局部性</li>
+</ul>
+<p>G:</p>
+<p>这个子矩阵没观察出来真不应该，倒是知道向容斥想</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/cf/2048/" title="Codeforces Global Round 28">https://yexiaorain.github.io/Blog/cf/2048/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/%E7%AC%9B%E5%8D%A1%E5%B0%94%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 笛卡尔树</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/algo/Dilworth/" rel="prev" title="Dilworth">
+                  <i class="fa fa-chevron-left"></i> Dilworth
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/algo/Cartesian_tree/" rel="next" title="Cartesian tree 笛卡尔树">
+                  Cartesian tree 笛卡尔树 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">587k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">32:38</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/cf/2048/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
