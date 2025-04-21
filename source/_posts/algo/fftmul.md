@@ -5,7 +5,7 @@ tags: [FFT]
 category: [algorithm]
 mathjax: true
 ---
-to 
+to
 FFT,IFT,DFT,IDFT
 
 # FFT 大数乘法
@@ -135,11 +135,11 @@ $= {\mathcal {F}}\\\{f\\\}(\nu ) \cdot {\mathcal {F}}\\\{f\\\}(\nu)$
 
 先处理傅里叶变换的部分,首先离散傅里叶变换DFT的定义为 $x \to X$
 
-$X_{k}=\sum _ {n=0}^{N-1}x _ {n}e^{-\frac{2 \pi i}{N}kn}\qquad k=0,\dots ,N-1.$ 
+$X_{k}=\sum _ {n=0}^{N-1}x _ {n}e^{-\frac{2 \pi i}{N}kn}\qquad k=0,\dots ,N-1.$
 
 IDFT
 
-$X_{k}=\frac{1}{N} \sum _ {n=0}^{N-1}x _ {n}e^{\frac{2 \pi i}{N}kn}\qquad k=0,\dots ,N-1.$ 
+$X_{k}=\frac{1}{N} \sum _ {n=0}^{N-1}x _ {n}e^{\frac{2 \pi i}{N}kn}\qquad k=0,\dots ,N-1.$
 
 **注: 有的地方系数不是$1$和$\frac{1}{N}$,是两个 $\frac{1}{\sqrt{N}}$**, 本质上没有区别,也不影响后面的推导的核心内容
 
@@ -152,11 +152,11 @@ $X_{k}=\frac{1}{N} \sum _ {n=0}^{N-1}x _ {n}e^{\frac{2 \pi i}{N}kn}\qquad k=0,\d
 ${\displaystyle W=\left(\omega^{jk}\right)_ {j,k=0,\ldots ,N-1}}$
 
 ${\displaystyle W={\begin{bmatrix}
-1&1&1&1&\cdots &1\\\
-1&\omega &\omega ^{2}&\omega ^{3}&\cdots &\omega ^{N-1}\\\
-1&\omega ^{2}&\omega ^{4}&\omega ^{6}&\cdots &\omega ^{2(N-1)}\\\
-1&\omega ^{3}&\omega ^{6}&\omega ^{9}&\cdots &\omega ^{3(N-1)}\\\
-\vdots &\vdots &\vdots &\vdots &\ddots &\vdots \\\
+1&1&1&1&\cdots &1\\\\
+1&\omega &\omega ^{2}&\omega ^{3}&\cdots &\omega ^{N-1}\\\\
+1&\omega ^{2}&\omega ^{4}&\omega ^{6}&\cdots &\omega ^{2(N-1)}\\\\
+1&\omega ^{3}&\omega ^{6}&\omega ^{9}&\cdots &\omega ^{3(N-1)}\\\\
+\vdots &\vdots &\vdots &\vdots &\ddots &\vdots \\\\
 1&\omega ^{N-1}&\omega ^{2(N-1)}&\omega ^{3(N-1)}&\cdots &\omega ^{(N-1)(N-1)}
 \end{bmatrix}},{\displaystyle \omega =e^{-\frac{2\pi i}{N}}}}$
 

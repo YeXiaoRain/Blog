@@ -20,11 +20,16 @@ $c_{i} = \sum_{i=j \bigoplus k}a_{j} b_{k}$
 
 ---
 
+
 前置知识 FFT(DFT)
 
 DFT:
 
-${\displaystyle {\begin{bmatrix}f_{0}\\\\f_{1}\\\\\vdots \\\\f_{n-1}\end{bmatrix}}={\begin{bmatrix}1&1&1&\cdots &1\\\\1&\alpha &\alpha ^{2}&\cdots &\alpha ^{n-1}\\\\1&\alpha ^{2}&\alpha ^{4}&\cdots &\alpha ^{2(n-1)}\\\\\vdots &\vdots &\vdots &&\vdots \\\\1&\alpha ^{n-1}&\alpha ^{2(n-1)}&\cdots &\alpha ^{(n-1)(n-1)}\\\\\end{bmatrix}}{\begin{bmatrix}v_{0}\\\\v_{1}\\\\\vdots \\\\v_{n-1}\end{bmatrix}}.}$
+${\displaystyle {\begin{bmatrix}f_{0}\\\\
+f_{1}\\\\
+\vdots \\\\
+f_{n-1}\end{bmatrix}}={\begin{bmatrix}1&1&1&\cdots &1\\\\
+1&\alpha &\alpha ^{2}&\cdots &\alpha ^{n-1}\\\\1&\alpha ^{2}&\alpha ^{4}&\cdots &\alpha ^{2(n-1)}\\\\\vdots &\vdots &\vdots &&\vdots \\\\1&\alpha ^{n-1}&\alpha ^{2(n-1)}&\cdots &\alpha ^{(n-1)(n-1)}\\\\\end{bmatrix}}{\begin{bmatrix}v_{0}\\\\v_{1}\\\\\vdots \\\\v_{n-1}\end{bmatrix}}.}$
 
 <!--more-->
 
@@ -32,7 +37,7 @@ ${\displaystyle {\begin{bmatrix}f_{0}\\\\f_{1}\\\\\vdots \\\\f_{n-1}\end{bmatrix
 
 核心等式
 
-$\operatorname{FFT}(a * b) = \operatorname{FFT}(a) \cdot \operatorname{FFT}(b)$
+$\mathrm{FFT}(a \otimes b)$ = $\mathrm{FFT}(a) \cdot \mathrm{FFT}(b)$
 
 快速变换, $x$原向量,$N$大小, $idx$ 下标
 
@@ -143,12 +148,12 @@ void ForT(vector<modint> &f,int flag = 1/* 1:正变换,-1:逆变换 */) {
 
 ## And 卷积(Fast and transform)
 
-$c_{i} = \sum_{i = j \& k}a_{j} b_{k}$
+$c_{i} = \sum_{i = j \\& k}a_{j} b_{k}$
 
 和Or的部分同理
 
 1. 定义变换$fandt(a)_ i = \sum_{i|j = j} a_j$
-2. 证明 $fandt(a) \odot fandt(b) = fandt(\left(\sum_{i = j \& k}a_{j} b_{k}\right))$
+2. 证明 $fandt(a) \odot fandt(b) = fandt(\left(\sum_{i = j \\& k}a_{j} b_{k}\right))$
 3. 利用分块关系,实现fast
 
 最终代码
@@ -174,7 +179,7 @@ $\operatorname{FWHT}(\left(\sum_{i=j \bigoplus k}a_{j} b_{k}\right)) = \operator
 
 其实和上面一样,依然是三步,定义转换,证明等式,实现fast
 
-定义符号 $x\otimes y=\text{popcount}(x \& y) \bmod 2$, 即 $x$位与$y$后的二进制表示的$1$的个数再$\bmod 2$
+定义符号 $x\otimes y=\text{popcount}(x \\& y) \bmod 2$, 即 $x$位与$y$后的二进制表示的$1$的个数再$\bmod 2$
 
 有性质$(i \otimes j) \oplus (i \otimes k) = i \otimes (j \oplus k)$
 

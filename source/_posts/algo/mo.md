@@ -1,6 +1,6 @@
 ---
-title: 莫队算法入门
-date: 2020-08-28 10:37:14
+title: 莫队
+date: 2020-08-28
 tags: [莫队]
 category: [algorithm]
 mathjax: true
