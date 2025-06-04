@@ -22,7 +22,7 @@ ${\displaystyle \delta }$  是 Kronecker delta, λ(n) 是 Liouville 函数, ω(n
 
 ## 性质
 
-${\displaystyle \sum _ {d\mid n}\mu (d)={\begin{cases}1&{\text{if }}n=1,\\\0&{\text{if }}n>1.\end{cases}}}$
+${\displaystyle \sum _ {d\mid n}\mu (d)={\begin{cases}1&{\text{if }}n=1,\\\\ 0&{\text{if }}n>1.\end{cases}}}$
 
 有的地方写作
 
