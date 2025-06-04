@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="splay 性质: 二叉查找树: 左子树小于根节点，右子树大于根节点 均摊O(log n)时间复杂度 伸展树: 每次访问节点后，将该节点旋转到根节点位置  m次splay 大小n的代价为 (n+m) log n https:&#x2F;&#x2F;www.cs.usfca.edu&#x2F;~galles&#x2F;visualization&#x2F;SplayTree.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="splay tree 伸展树">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/algo/splay/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+<meta property="og:description" content="splay 性质: 二叉查找树: 左子树小于根节点，右子树大于根节点 均摊O(log n)时间复杂度 伸展树: 每次访问节点后，将该节点旋转到根节点位置  m次splay 大小n的代价为 (n+m) log n https:&#x2F;&#x2F;www.cs.usfca.edu&#x2F;~galles&#x2F;visualization&#x2F;SplayTree.html">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-06-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-04T20:08:58.324Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="splay">
+<meta property="article:tag" content="伸展树">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/algo/splay/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/algo/splay/","path":"algo/splay/","title":"splay tree 伸展树"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>splay tree 伸展树 | YeXiaoRain Blog(hexo的搜索高亮会破坏latex)</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog(hexo的搜索高亮会破坏latex)</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">339</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">322</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#splay"><span class="nav-text">splay</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C"><span class="nav-text">操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2-%E5%A2%9E%E5%8A%A0"><span class="nav-text">查询&#x2F;增加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-text">复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99"><span class="nav-text">相关资料</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">339</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">322</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/algo/splay/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="splay tree 伸展树 | YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          splay tree 伸展树
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-06-03 00:00:00" itemprop="dateCreated datePublished" datetime="2025-06-03T00:00:00+08:00">2025-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2025-06-05 04:08:58" itemprop="dateModified" datetime="2025-06-05T04:08:58+08:00">2025-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/algo/splay/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="algo/splay/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>3.4k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>11 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="splay"><a href="#splay" class="headerlink" title="splay"></a>splay</h1><ol>
+<li>性质: 二叉查找树: 左子树小于根节点，右子树大于根节点</li>
+<li>均摊O(log n)时间复杂度</li>
+<li>伸展树: 每次访问节点后，将该节点旋转到根节点位置</li>
+</ol>
+<p>m次splay 大小n的代价为 (n+m) log n</p>
+<p><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/SplayTree.html">https://www.cs.usfca.edu/~galles/visualization/SplayTree.html</a></p>
+<span id="more"></span>
+
+
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>rotate(x):</p>
+<ul>
+<li>x 变为自己父节点, 保持二叉搜索树性质<ul>
+<li>根据x与父节点关系，有左旋和右旋, 注意到对称性，只研究一边 右旋</li>
+<li>相关： 这个和红黑&#x2F;avl 里的旋转一样, 只是红黑维护颜色性质，而avl维护深度性质，</li>
+<li>zig(右旋)，zag(左旋)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> a                                        c</span><br><span class="line">/ \                                      / \</span><br><span class="line">b   c     -&gt; rotate(c) = zag(a) -&gt;      a   e </span><br><span class="line">    / \   &lt;- zig(c) = rotate(a) &lt;-     / \</span><br><span class="line">  d   e                               b   d </span><br></pre></td></tr></table></figure>
+
+<p><strong>注意下面的x,这些表示节点id不表示值</strong>, 需要值的话 增加val[x]去记录, 因为树的形状保证了值的大小关系，所以只有插入&#x2F;查找的时候需要具体的值，而旋转的时候不会改变值，只是改变树结构，所以不需要具体的val</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意到上面b,e其实都没有动的，只有a,c,d之间的关系以及a的父节点在动</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="comment">// 这里需要 保证x不是根, 一个办法是根的父节点增加一个虚根，下面的代码就可以有一致性了, virtual_root</span></span><br><span class="line">  <span class="comment">// assert(x != root);</span></span><br><span class="line">  <span class="comment">// assert(x != l[virtual_root]);</span></span><br><span class="line">  <span class="type">int</span> f = fa[x];</span><br><span class="line">  <span class="keyword">if</span>(x == r[f])&#123; <span class="comment">// zag 左旋</span></span><br><span class="line">    r[f] = l[x];</span><br><span class="line">    <span class="keyword">if</span>(l[x]) fa[l[x]] = f;</span><br><span class="line">    l[x] = f;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; <span class="comment">// zig 右旋</span></span><br><span class="line">    l[f] = r[x];</span><br><span class="line">    <span class="keyword">if</span>(r[x]) fa[r[x]] = f;</span><br><span class="line">    r[x] = f;</span><br><span class="line">  &#125;</span><br><span class="line">  fa[x] = fa[f];</span><br><span class="line">  fa[f] = x;</span><br><span class="line">  ((l[fa[x]] == f)?l[fa[x]]:r[fa[x]]) = x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>splay(x,root):</p>
+<ul>
+<li><p>将x旋转到root所在的位置(代替root所在位置), 其中root原来需要是x的祖先节点</p>
+</li>
+<li><p>x到root距离</p>
+<ul>
+<li>距离&#x3D;0，直接结束</li>
+<li>距离&#x3D;1, rotate(x) 即可</li>
+<li>距离&gt;&#x3D;2<ul>
+<li>且 x是fa[x]左儿子,fa[x]是fa[fa[x]]左儿子( 同为左儿子，或同为右儿子), 先旋转父节点，再旋转子节点: rotate(fa[x]), rotate(x)</li>
+<li>有拐点(是父的左，父是父父的右，或者是父的右，父是父父的左), 旋转x两次: rotate(x), rotate(x)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">splay</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> target)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(x==target)<span class="keyword">return</span>;<span class="comment">// 本身是root</span></span><br><span class="line">  <span class="keyword">auto</span> direction = [&amp;](<span class="type">int</span> x)&#123; <span class="keyword">return</span> x==l[fa[x]]; &#125;;</span><br><span class="line">  <span class="type">int</span> tf = fa[target];</span><br><span class="line">  <span class="keyword">while</span>(fa[x] != tf)&#123;</span><br><span class="line">    <span class="keyword">if</span>(fa[x] == target)&#123;</span><br><span class="line">      <span class="built_in">rotate</span>(x);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="built_in">rotate</span>(<span class="built_in">direction</span>(x) == <span class="built_in">direction</span>(fa[x])?<span class="built_in">rotate</span>(fa[x]):<span class="built_in">rotate</span>(x));</span><br><span class="line">      <span class="built_in">rotate</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显然 上面操作保持了二叉的性质，但没有直接证明 log n的性质</p>
+<h2 id="查询-增加"><a href="#查询-增加" class="headerlink" title="查询&#x2F;增加"></a>查询&#x2F;增加</h2><p>正常的二叉树搜索，但是如果搜索到，同时splay(x,root)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> ptr = root;</span><br><span class="line">  <span class="keyword">while</span>(<span class="built_in">not_null</span>(ptr)) &#123; <span class="comment">// 非null 节点 根据需要设计, 例如-1, 不要和root冲突了</span></span><br><span class="line">    <span class="keyword">if</span>(val[ptr] == v)&#123;</span><br><span class="line">      <span class="built_in">splay</span>(ptr,root)</span><br><span class="line">      <span class="keyword">return</span> ptr;</span><br><span class="line">    &#125;</span><br><span class="line">    nextptr = (v &gt; val[ptr])?r[ptr]:l[ptr];</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">is_null</span>(nextptr))&#123; <span class="comment">// 没找到也要splay，否则长链反复查询这里就会炸了</span></span><br><span class="line">      <span class="built_in">splay</span>(ptr,root)</span><br><span class="line">      <span class="keyword">return</span> null;</span><br><span class="line">    &#125;</span><br><span class="line">    ptr = nextptr</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">assert</span>(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">return</span> ptr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123; <span class="comment">// 也可以自定义 类型</span></span><br><span class="line">  <span class="type">int</span> ptr = root;</span><br><span class="line">  <span class="keyword">while</span>(<span class="built_in">not_null</span>(ptr)) &#123; <span class="comment">// 非null 节点 根据需要设计, 例如-1, 不要和root冲突了</span></span><br><span class="line">    <span class="keyword">if</span>(val[ptr] == v) &#123; <span class="comment">// 只应该插入不存在的</span></span><br><span class="line">      <span class="built_in">assert</span>(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    nextptr = (v &gt; val[ptr])?r[ptr]:l[ptr];</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">is_null</span>(nextptr))&#123;</span><br><span class="line">      nextptr = ((v &gt; val[ptr])?r[ptr]:l[ptr]) = <span class="built_in">new_node</span>();</span><br><span class="line">      fa[nextptr] = ptr;</span><br><span class="line">      val[nextptr] = v;</span><br><span class="line">      <span class="built_in">splay</span>(nextptr,root);</span><br><span class="line">      <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    ptr = nextptr;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">assert</span>(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">return</span> ptr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>合并 树u,树v, 其中u全部小于树v<br>join(u,v)</p>
+<ul>
+<li>u 最大的节点一直走右节点x</li>
+<li>splay(u,rootu)</li>
+<li>r[x] &#x3D; rootv</li>
+<li>fa[rootv] &#x3D; x</li>
+</ul>
+<p>split(x) 和删除类似</p>
+<ul>
+<li>splay(x,root)</li>
+<li>左右就是切割出来的</li>
+</ul>
+<p>删除x</p>
+<ul>
+<li>splay(x,root)</li>
+<li>join(l[x],r[x])</li>
+</ul>
+<p>扩展: 查询个数</p>
+<ul>
+<li>增加size字段, 在上面旋转中维护</li>
+</ul>
+<p>区间:</p>
+<ul>
+<li>双开区间 <code>(i....j)</code></li>
+<li>splay(i,root)</li>
+<li>splay(j,r[i])</li>
+<li>l[j] 就是区间</li>
+</ul>
+<p>lazy tag</p>
+<ul>
+<li>类似segment tree 表示对子树的批量操作</li>
+</ul>
+<h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>势能分析法</p>
+<ol>
+<li>单个节点势能 &#x3D; w(u) &#x3D; log(size(u)), 子树大小的log</li>
+<li>$\varphi(tree) &#x3D; \sum w(u)$, 整个树势能 &#x3D; 所有节点势能和</li>
+<li>操作代价 $c_i&#x3D; t_i + \varphi_i - \varphi_{i-1}$ 单次代价 + 势能变化</li>
+</ol>
+<p>性质:</p>
+<ol>
+<li>父节点势能更大 w(fa[u]) &gt; w(u)</li>
+<li>根节点势能不变 w(root) &#x3D; w(new root)</li>
+<li>size(p)&gt;&#x3D; size(x)+size(y) 则 2w(p)-w(x)-w(y) &gt;&#x3D; log 4<ul>
+<li>证明: 右侧 $&#x3D; \log(\frac{size(p)^2}{(size(x)size(y))})$</li>
+<li>$\ge \log(\frac{(size(x)+size(y))^2}{(size(x)size(y))})$</li>
+<li>$\ge \log 4$</li>
+<li>对于log 我们取 $\log_2$, 则得到 2</li>
+</ul>
+</li>
+</ol>
+<p>分析: 操作前f是父节点,x是子节点,g是<code>fa[f]</code></p>
+<ul>
+<li>zig 操作<ul>
+<li>w是操作前,w’是操作后</li>
+<li>受到影响只有x,f</li>
+<li>w(f) &#x3D; w’(x) 操作前f势能 &#x3D; 操作后x势能</li>
+<li>$w’(x) \ge w’(f)$</li>
+<li>$c_i &#x3D; 1 + w’(f) + w’(x) - w(f) - w(x)$, $t_i$记作1</li>
+<li>$c_i &#x3D; 1 + w’(f) - w(x)$</li>
+<li>$\le 1 + w’(x) - w(x)$</li>
+</ul>
+</li>
+<li>zig-zig<ul>
+<li>$c_i &#x3D; 2 + \sum w’ - \sum w$</li>
+<li>$&#x3D; 2 + w’(f) +w’(g) - w(x) - w(f)$</li>
+<li>$\le (2w’(x)-w(x)-w’(g)) + w’(f) +w’(g) - w(x) - w(f)$</li>
+<li>$&#x3D; 2(w’(x)-w(x)) + w’(f) - w(f)$</li>
+<li>$\le 3(w’(x)-w(x))$</li>
+</ul>
+</li>
+<li>zig-zag<ul>
+<li>$c_i \le 2(w’(x)-w(x))$ 类似的</li>
+</ul>
+</li>
+<li>splay<ul>
+<li>zig至多一次，若干次 zig-zig&#x2F;zig-zag 一类的</li>
+<li>总的代价在 $3(w^{t}(x)-w(x))+1\le 3\log n + 1$</li>
+</ul>
+</li>
+</ul>
+<p>我没有懂这个势能证明 与 代价之间如何建立最终的证明的</p>
+<p>这个能证明，在当前的势能评价体系下，每次操作的 势能评价都是log级别的，但是 没有看到 总操作代价 与 势能函数 之间建立的 数值关系？</p>
+<ul>
+<li>搜了几篇 都是 感觉上 让结构更好势能更小了，我也有这个“感觉”，但没有什么严谨的玩意？</li>
+</ul>
+<hr>
+<p>下面的题目会发现，如果用到了一些翻转, 那么这个“值”其实难以维护的，但是能维护相对关系</p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a target="_blank" rel="noopener" href="https://oi-wiki.org/ds/splay">https://oi-wiki.org/ds/splay</a></p>
+<p>Tyvj1728 luogu3369, <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3369">https://www.luogu.com.cn/problem/P3369</a></p>
+<p>Tyvj1728 luogu6136, <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6136">https://www.luogu.com.cn/problem/P6136</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span> </span>&#123; ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;r);<span class="keyword">return</span> r; &#125;</span><br><span class="line"><span class="comment">// Tyvj1728 luogu3369</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Splay</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> fa;</span><br><span class="line">    array&lt;<span class="type">int</span>, 2&gt; ch;</span><br><span class="line">    T val;</span><br><span class="line">    <span class="type">int</span> cnt;</span><br><span class="line">    <span class="type">int</span> sz;</span><br><span class="line">  &#125;;</span><br><span class="line">  vector&lt;Node&gt; t; <span class="comment">// tree</span></span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> EMPTY = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> root = EMPTY;</span><br><span class="line">  <span class="function"><span class="type">bool</span> <span class="title">isRoot</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="keyword">return</span> t[u].fa == EMPTY; &#125;;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">direction</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="built_in">assert</span>(!<span class="built_in">isRoot</span>(u));<span class="keyword">return</span> t[t[u].fa].ch[<span class="number">1</span>] == u; &#125;; <span class="comment">// u is not root</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">getSize</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="keyword">return</span> (u == EMPTY) ? <span class="number">0</span> : t[u].sz; &#125;;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">pushUp</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; t[u].sz = t[u].cnt + <span class="built_in">getSize</span>(t[u].ch[<span class="number">0</span>]) + <span class="built_in">getSize</span>(t[u].ch[<span class="number">1</span>]); &#125;;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">cp</span><span class="params">(<span class="type">int</span> c, <span class="type">int</span> p, <span class="type">int</span> d)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (c != EMPTY) t[c].fa = p;</span><br><span class="line">    <span class="keyword">if</span> (p != EMPTY) t[p].ch[d] = c;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">isRoot</span>(u)) <span class="keyword">return</span>;</span><br><span class="line">    <span class="type">int</span> fu = t[u].fa;</span><br><span class="line">    <span class="type">int</span> ffu = t[fu].fa;</span><br><span class="line">    <span class="type">int</span> du = <span class="built_in">direction</span>(u);</span><br><span class="line">    <span class="type">int</span> cu = t[u].ch[!du];</span><br><span class="line">    <span class="built_in">cp</span>(u, ffu, ffu == EMPTY ? <span class="number">-1</span> : <span class="built_in">direction</span>(fu));</span><br><span class="line">    <span class="built_in">cp</span>(fu, u, !du);</span><br><span class="line">    <span class="built_in">cp</span>(cu, fu, du);</span><br><span class="line">    <span class="keyword">if</span> (t[u].fa == EMPTY) root = u;</span><br><span class="line">    <span class="built_in">pushUp</span>(fu);</span><br><span class="line">    <span class="built_in">pushUp</span>(u);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">splay</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> p)</span> </span>&#123; <span class="comment">// u放到原来p的位置, 保证p是u的祖先</span></span><br><span class="line">    <span class="built_in">assert</span>(u != EMPTY);</span><br><span class="line">    <span class="built_in">assert</span>(p != EMPTY);</span><br><span class="line">    <span class="type">int</span> fp = t[p].fa;</span><br><span class="line">    <span class="keyword">while</span> (t[u].fa != fp) &#123;</span><br><span class="line">      <span class="type">int</span> fu = t[u].fa;</span><br><span class="line">      <span class="keyword">if</span> (fu != p) <span class="built_in">rotate</span>(<span class="built_in">direction</span>(u) == <span class="built_in">direction</span>(fu) ? fu : u);</span><br><span class="line">      <span class="built_in">rotate</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ----</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">near</span><span class="params">(T v)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 注意 调用near以后至少应该调用一次splay来 维持势能平均代价</span></span><br><span class="line">    <span class="comment">// near有一定的不确定性</span></span><br><span class="line">    <span class="comment">// 如果存在v返回的一定是对应的ptr</span></span><br><span class="line">    <span class="comment">// 如果不存在v，那么返回的是离它最近的，可能比它大可能比它小的一个ptr, 其对应可插入位置一定是EMPTY</span></span><br><span class="line">    <span class="type">int</span> u = root;</span><br><span class="line">    <span class="keyword">if</span> (u == EMPTY) <span class="keyword">return</span> EMPTY;</span><br><span class="line">    <span class="built_in">assert</span>(u != EMPTY);</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (t[u].val == v) <span class="keyword">return</span> u;</span><br><span class="line">      <span class="type">int</span> nextu = t[u].ch[t[u].val &lt; v];</span><br><span class="line">      <span class="keyword">if</span> (nextu == EMPTY) <span class="keyword">return</span> u;</span><br><span class="line">      u = nextu;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">assert</span>(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">return</span> EMPTY;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(T v)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> createu = [&amp;](<span class="type">int</span> f) &#123;</span><br><span class="line">      <span class="type">int</span> u = t.<span class="built_in">size</span>();</span><br><span class="line">      t.<span class="built_in">push_back</span>(Node&#123; f,&#123;EMPTY,EMPTY&#125;,v,<span class="number">1</span>,<span class="number">1</span> &#125;);</span><br><span class="line">      <span class="keyword">return</span> u;</span><br><span class="line">      &#125;;</span><br><span class="line">    <span class="keyword">if</span> (root == EMPTY) &#123;</span><br><span class="line">      <span class="built_in">assert</span>(t.<span class="built_in">size</span>() == <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">return</span> root = <span class="built_in">createu</span>(EMPTY);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> nu = <span class="built_in">near</span>(v);</span><br><span class="line">    <span class="keyword">if</span> (t[nu].val == v) &#123;</span><br><span class="line">      t[nu].cnt++;</span><br><span class="line">      <span class="built_in">pushUp</span>(nu); <span class="comment">// sz[nu]++</span></span><br><span class="line">      <span class="built_in">splay</span>(nu, root);</span><br><span class="line">      <span class="keyword">return</span> nu;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> u = t[nu].ch[t[nu].val &lt; v] = <span class="built_in">createu</span>(nu);</span><br><span class="line">    <span class="built_in">splay</span>(u, root);</span><br><span class="line">    <span class="keyword">return</span> u;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">remove</span><span class="params">(T v)</span> </span>&#123; <span class="comment">// 保证存在</span></span><br><span class="line">    <span class="type">int</span> nu = <span class="built_in">near</span>(v);</span><br><span class="line">    <span class="built_in">assert</span>(t[nu].val == v);</span><br><span class="line">    t[nu].cnt--;</span><br><span class="line">    <span class="built_in">pushUp</span>(nu);</span><br><span class="line">    <span class="built_in">splay</span>(nu, root);</span><br><span class="line">    <span class="keyword">if</span> (t[nu].cnt == <span class="number">0</span>) &#123; <span class="comment">// 真实删除</span></span><br><span class="line">      <span class="keyword">if</span> (t[nu].ch[<span class="number">0</span>] == EMPTY) &#123; <span class="comment">// 没有 左子树</span></span><br><span class="line">        <span class="built_in">cp</span>(root = t[nu].ch[<span class="number">1</span>], EMPTY, <span class="number">-1</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="type">int</span> lu = t[nu].ch[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">while</span> (t[lu].ch[<span class="number">1</span>] != EMPTY) lu = t[lu].ch[<span class="number">1</span>];</span><br><span class="line">        <span class="built_in">splay</span>(lu, t[nu].ch[<span class="number">0</span>]); <span class="comment">// 左子树最大值 移动到</span></span><br><span class="line">        <span class="type">int</span> ru = t[nu].ch[<span class="number">1</span>];</span><br><span class="line">        <span class="built_in">cp</span>(ru, lu, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">cp</span>(lu, EMPTY, <span class="number">-1</span>);</span><br><span class="line">        root = lu;</span><br><span class="line">        <span class="built_in">pushUp</span>(lu);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (t.<span class="built_in">size</span>() <span class="keyword">and</span> t.<span class="built_in">back</span>().cnt == <span class="number">0</span>) t.<span class="built_in">pop_back</span>();</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">lessthan</span><span class="params">(T v)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> nu = <span class="built_in">near</span>(v);</span><br><span class="line">    <span class="keyword">if</span> (nu == EMPTY) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">splay</span>(nu, root);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">getSize</span>(t[nu].ch[<span class="number">0</span>]) + (t[nu].val &lt; v ? t[nu].cnt : <span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">T <span class="title">kth</span><span class="params">(<span class="type">int</span> k)</span> </span>&#123; <span class="comment">// 返回的节点的值</span></span><br><span class="line">    <span class="type">int</span> u = root;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (k &lt;= <span class="built_in">getSize</span>(t[u].ch[<span class="number">0</span>])) &#123; <span class="comment">// 左子树</span></span><br><span class="line">        u = t[u].ch[<span class="number">0</span>];</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k &lt;= <span class="built_in">getSize</span>(t[u].ch[<span class="number">0</span>]) + t[u].cnt) &#123;<span class="comment">// 根</span></span><br><span class="line">        <span class="built_in">splay</span>(u, root);</span><br><span class="line">        <span class="keyword">return</span> t[u].val;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123; <span class="comment">// 右子树</span></span><br><span class="line">        k -= <span class="built_in">getSize</span>(t[u].ch[<span class="number">0</span>]) + t[u].cnt;</span><br><span class="line">        u = t[u].ch[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (u == EMPTY) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">T <span class="title">prev</span><span class="params">(T v)</span> </span>&#123; <span class="comment">// return 值</span></span><br><span class="line">    <span class="type">int</span> nu = <span class="built_in">near</span>(v);</span><br><span class="line">    <span class="keyword">if</span> (nu == EMPTY) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">splay</span>(nu, root);</span><br><span class="line">    <span class="keyword">if</span> (t[nu].val &lt; v) <span class="keyword">return</span> t[nu].val;</span><br><span class="line">    <span class="type">int</span> ptr = t[nu].ch[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span> (t[ptr].ch[<span class="number">1</span>] != EMPTY)ptr = t[ptr].ch[<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">splay</span>(ptr, root);</span><br><span class="line">    <span class="keyword">return</span> t[ptr].val;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">next</span><span class="params">(T v)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> nu = <span class="built_in">near</span>(v);</span><br><span class="line">    <span class="keyword">if</span> (nu == EMPTY) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">splay</span>(nu, root);</span><br><span class="line">    <span class="keyword">if</span> (t[nu].val &gt; v) <span class="keyword">return</span> t[nu].val;</span><br><span class="line">    <span class="type">int</span> ptr = t[nu].ch[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">while</span> (t[ptr].ch[<span class="number">0</span>] != EMPTY) ptr = t[ptr].ch[<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">splay</span>(ptr, root);</span><br><span class="line">    <span class="keyword">return</span> t[ptr].val;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">luogu3369</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 插入（可重复）</span></span><br><span class="line">  <span class="comment">// 删除（保证存在）</span></span><br><span class="line">  <span class="comment">// 比x小的个数，（x不一定存在）</span></span><br><span class="line">  <span class="comment">// 从小到大排列, 第k大的数</span></span><br><span class="line">  <span class="comment">// prev 比x小的最大的</span></span><br><span class="line">  <span class="comment">// next 比x打的最小的</span></span><br><span class="line">  <span class="keyword">auto</span> splay = <span class="built_in">Splay</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">  <span class="type">int</span> t = <span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">while</span> (t-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="type">int</span> op = <span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">if</span> (op == <span class="number">1</span>) &#123;</span><br><span class="line">      splay.<span class="built_in">add</span>(<span class="built_in">read</span>());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="number">2</span>) &#123;</span><br><span class="line">      splay.<span class="built_in">remove</span>(<span class="built_in">read</span>());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="number">3</span>) &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, splay.<span class="built_in">lessthan</span>(<span class="built_in">read</span>()) + <span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="number">4</span>) &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, splay.<span class="built_in">kth</span>(<span class="built_in">read</span>()));</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="number">5</span>) &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, splay.<span class="built_in">prev</span>(<span class="built_in">read</span>()));</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="number">6</span>) &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, splay.<span class="built_in">next</span>(<span class="built_in">read</span>()));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">luogu6136</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// https://www.luogu.com.cn/discuss/765099 注意 这个数据可能不满足题意，没有修改逻辑，增加了几个查询的失败返回0，然后就过了</span></span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="comment">// 插入（可重复）</span></span><br><span class="line">  <span class="comment">// 删除（保证存在）</span></span><br><span class="line">  <span class="comment">// 比x小的个数，（x不一定存在）</span></span><br><span class="line">  <span class="comment">// 从小到大排列, 第k大的数</span></span><br><span class="line">  <span class="comment">// prev 比x小的最大的</span></span><br><span class="line">  <span class="comment">// next 比x打的最小的</span></span><br><span class="line">  <span class="keyword">auto</span> splay = <span class="built_in">Splay</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">0</span>, n) splay.<span class="built_in">add</span>(<span class="built_in">read</span>());</span><br><span class="line">  <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> last = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (m-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="type">int</span> op = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">read</span>() ^ last;</span><br><span class="line">    <span class="keyword">if</span> (op == <span class="number">1</span>) &#123;</span><br><span class="line">      splay.<span class="built_in">add</span>(v);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="number">2</span>) &#123;</span><br><span class="line">      splay.<span class="built_in">remove</span>(v);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="number">3</span>) &#123;</span><br><span class="line">      last = (splay.<span class="built_in">lessthan</span>(v) + <span class="number">1</span>);</span><br><span class="line">      ans ^= last;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="number">4</span>) &#123;</span><br><span class="line">      last = splay.<span class="built_in">kth</span>(v);</span><br><span class="line">      ans ^= last;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="number">5</span>) &#123;</span><br><span class="line">      last = splay.<span class="built_in">prev</span>(v);</span><br><span class="line">      ans ^= last;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="number">6</span>) &#123;</span><br><span class="line">      last = splay.<span class="built_in">next</span>(v);</span><br><span class="line">      ans ^= last;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">luogu6136</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>luogu p3391【模板】文艺平衡树 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3391">https://www.luogu.com.cn/problem/P3391</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (ll i=a;i&lt;(ll)n;i++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span> </span>&#123; ll r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;r);<span class="keyword">return</span> r; &#125;</span><br><span class="line"><span class="comment">// Tyvj1728 luogu3369</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Splay</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> fa;</span><br><span class="line">    array&lt;<span class="type">int</span>, 2&gt; ch;</span><br><span class="line">    T val; <span class="comment">// 这里只有 初始参与比较，后续不参与比较, 翻转后不再按照val比较</span></span><br><span class="line">    <span class="type">int</span> sz;</span><br><span class="line">    <span class="type">int</span> flip = <span class="number">0</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">  vector&lt;Node&gt; t; <span class="comment">// tree</span></span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> EMPTY = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> root = EMPTY;</span><br><span class="line">  <span class="function"><span class="type">bool</span> <span class="title">isRoot</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="keyword">return</span> t[u].fa == EMPTY; &#125;;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">direction</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="built_in">assert</span>(!<span class="built_in">isRoot</span>(u));<span class="keyword">return</span> t[t[u].fa].ch[<span class="number">1</span>] == u; &#125;; <span class="comment">// u is not root</span></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">pushUp</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="keyword">if</span> (u == EMPTY)<span class="keyword">return</span>; t[u].sz = <span class="number">1</span> + <span class="built_in">getSize</span>(t[u].ch[<span class="number">0</span>]) + <span class="built_in">getSize</span>(t[u].ch[<span class="number">1</span>]); &#125;;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">getSize</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="keyword">return</span> u == EMPTY ? <span class="number">0</span> : t[u].sz; &#125;;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">flip</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (u == EMPTY)<span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">swap</span>(t[u].ch[<span class="number">0</span>], t[u].ch[<span class="number">1</span>]); <span class="comment">// 当前层完成操作</span></span><br><span class="line">    t[u].flip ^= <span class="number">1</span>; <span class="comment">// 向下未传递lazy标记</span></span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">pushDown</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (t[u].flip) &#123;</span><br><span class="line">      t[u].flip = <span class="number">0</span>;</span><br><span class="line">      <span class="built_in">flip</span>(t[u].ch[<span class="number">0</span>]);</span><br><span class="line">      <span class="built_in">flip</span>(t[u].ch[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">cp</span><span class="params">(<span class="type">int</span> c, <span class="type">int</span> p, <span class="type">int</span> d)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (c != EMPTY) t[c].fa = p;</span><br><span class="line">    <span class="keyword">if</span> (p != EMPTY) t[p].ch[d] = c;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">isRoot</span>(u)) <span class="keyword">return</span>;</span><br><span class="line">    <span class="type">int</span> fu = t[u].fa;</span><br><span class="line">    <span class="type">int</span> ffu = t[fu].fa;</span><br><span class="line">    <span class="type">int</span> du = <span class="built_in">direction</span>(u);</span><br><span class="line">    <span class="type">int</span> cu = t[u].ch[!du];</span><br><span class="line">    <span class="built_in">cp</span>(u, ffu, ffu == EMPTY ? <span class="number">-1</span> : <span class="built_in">direction</span>(fu));</span><br><span class="line">    <span class="built_in">cp</span>(fu, u, !du);</span><br><span class="line">    <span class="built_in">cp</span>(cu, fu, du);</span><br><span class="line">    <span class="keyword">if</span> (t[u].fa == EMPTY) root = u;</span><br><span class="line">    <span class="built_in">pushUp</span>(fu);</span><br><span class="line">    <span class="built_in">pushUp</span>(u);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123; <span class="comment">// 从上到下pushDown，所以递归</span></span><br><span class="line">    <span class="keyword">if</span> (u != root) <span class="built_in">update</span>(t[u].fa);</span><br><span class="line">    <span class="built_in">pushDown</span>(u);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">splay</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> p)</span> </span>&#123; <span class="comment">// u放到原来p的位置, 保证p是u的祖先</span></span><br><span class="line">    <span class="built_in">assert</span>(u != EMPTY);</span><br><span class="line">    <span class="built_in">assert</span>(p != EMPTY);</span><br><span class="line">    <span class="type">int</span> fp = t[p].fa;</span><br><span class="line">    <span class="keyword">while</span> (t[u].fa != fp) &#123;</span><br><span class="line">      <span class="type">int</span> fu = t[u].fa;</span><br><span class="line">      <span class="keyword">if</span> (fu != p) <span class="built_in">rotate</span>(<span class="built_in">direction</span>(u) == <span class="built_in">direction</span>(fu) ? fu : u);</span><br><span class="line">      <span class="built_in">rotate</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ----</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">near</span><span class="params">(T v)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 注意 调用near以后至少应该调用一次splay来 维持势能平均代价</span></span><br><span class="line">    <span class="comment">// near有一定的不确定性</span></span><br><span class="line">    <span class="comment">// 如果存在v返回的一定是对应的ptr</span></span><br><span class="line">    <span class="comment">// 如果不存在v，那么返回的是离它最近的，可能比它大可能比它小的一个ptr, 其对应可插入位置一定是EMPTY</span></span><br><span class="line">    <span class="type">int</span> u = root;</span><br><span class="line">    <span class="keyword">if</span> (u == EMPTY) <span class="keyword">return</span> EMPTY;</span><br><span class="line">    <span class="built_in">assert</span>(u != EMPTY);</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (t[u].val == v) <span class="keyword">return</span> u;</span><br><span class="line">      <span class="type">int</span> nextu = t[u].ch[t[u].val &lt; v];</span><br><span class="line">      <span class="keyword">if</span> (nextu == EMPTY) <span class="keyword">return</span> u;</span><br><span class="line">      u = nextu;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">assert</span>(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">return</span> EMPTY;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(T v)</span> </span>&#123; <span class="comment">// 保证只在开始添加，没有pushDown</span></span><br><span class="line">    <span class="keyword">auto</span> createu = [&amp;](<span class="type">int</span> f) &#123;</span><br><span class="line">      <span class="type">int</span> u = t.<span class="built_in">size</span>();</span><br><span class="line">      t.<span class="built_in">push_back</span>(Node&#123; f,&#123;EMPTY,EMPTY&#125;,v,<span class="number">1</span>,<span class="number">0</span> &#125;);</span><br><span class="line">      <span class="keyword">return</span> u;</span><br><span class="line">      &#125;;</span><br><span class="line">    <span class="keyword">if</span> (root == EMPTY) &#123;</span><br><span class="line">      <span class="built_in">assert</span>(t.<span class="built_in">size</span>() == <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">return</span> root = <span class="built_in">createu</span>(EMPTY);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> nu = <span class="built_in">near</span>(v);</span><br><span class="line">    <span class="type">int</span> u = t[nu].ch[t[nu].val &lt; v] = <span class="built_in">createu</span>(nu);</span><br><span class="line">    <span class="built_in">splay</span>(u, root);</span><br><span class="line">    <span class="keyword">return</span> u;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function">T <span class="title">kth</span><span class="params">(<span class="type">int</span> k)</span> </span>&#123; <span class="comment">// 返回的节点</span></span><br><span class="line">    <span class="type">int</span> u = root;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="built_in">pushDown</span>(u);</span><br><span class="line">      <span class="keyword">if</span> (k &lt;= <span class="built_in">getSize</span>(t[u].ch[<span class="number">0</span>])) &#123; <span class="comment">// 左子树</span></span><br><span class="line">        u = t[u].ch[<span class="number">0</span>];</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k &lt;= <span class="built_in">getSize</span>(t[u].ch[<span class="number">0</span>]) + <span class="number">1</span>) &#123;<span class="comment">// 根</span></span><br><span class="line">        <span class="keyword">return</span> u;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123; <span class="comment">// 右子树</span></span><br><span class="line">        k -= <span class="built_in">getSize</span>(t[u].ch[<span class="number">0</span>]) + <span class="number">1</span>;</span><br><span class="line">        u = t[u].ch[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (u == EMPTY) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">          <span class="built_in">assert</span>(<span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">dump</span><span class="params">(<span class="type">int</span> u, vector&lt;<span class="type">int</span>&gt;&amp; res)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (u == EMPTY)<span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">pushDown</span>(u);</span><br><span class="line">    <span class="built_in">dump</span>(t[u].ch[<span class="number">0</span>], res);</span><br><span class="line">    res.<span class="built_in">push_back</span>(t[u].val);</span><br><span class="line">    <span class="built_in">dump</span>(t[u].ch[<span class="number">1</span>], res);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dump</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; ret;</span><br><span class="line">    <span class="built_in">dump</span>(root, ret);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">luogu3391</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// https://www.luogu.com.cn/discuss/765099 注意 这个数据可能不满足题意，没有修改逻辑，增加了几个查询的失败返回0，然后就过了</span></span><br><span class="line">  <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">  <span class="type">int</span> m = <span class="built_in">read</span>();</span><br><span class="line">  <span class="comment">// 插入（可重复）</span></span><br><span class="line">  <span class="comment">// 删除（保证存在）</span></span><br><span class="line">  <span class="comment">// 比x小的个数，（x不一定存在）</span></span><br><span class="line">  <span class="comment">// 从小到大排列, 第k大的数</span></span><br><span class="line">  <span class="comment">// prev 比x小的最大的</span></span><br><span class="line">  <span class="comment">// next 比x打的最小的</span></span><br><span class="line">  <span class="keyword">auto</span> splay = <span class="built_in">Splay</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">0</span>, n + <span class="number">2</span>) splay.<span class="built_in">add</span>(i); <span class="comment">// [0...n+1], 也保证了值和node对应</span></span><br><span class="line">  <span class="keyword">while</span> (m-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="type">int</span> l = <span class="built_in">read</span>();</span><br><span class="line">    <span class="type">int</span> r = <span class="built_in">read</span>();</span><br><span class="line">    <span class="comment">// 是区间不是值</span></span><br><span class="line">    <span class="keyword">if</span> (l &gt; r) <span class="keyword">continue</span>;</span><br><span class="line">    <span class="comment">// l-1 &lt; l&lt;=r &lt; r+1</span></span><br><span class="line">    <span class="comment">// flip [l...r]</span></span><br><span class="line">    <span class="comment">// splay(l-1,root);// 传递的应该是node id</span></span><br><span class="line">    <span class="comment">// splay(r+1,t[root].ch[1]);</span></span><br><span class="line">    <span class="comment">// flip(t[t[root].ch[1]].ch[0]);</span></span><br><span class="line">    <span class="type">int</span> lu = splay.<span class="built_in">kth</span>(l); <span class="comment">// </span></span><br><span class="line">    splay.<span class="built_in">update</span>(lu);</span><br><span class="line">    splay.<span class="built_in">splay</span>(lu, splay.root);</span><br><span class="line">    <span class="type">int</span> ru = splay.<span class="built_in">kth</span>(r + <span class="number">2</span>); <span class="comment">// </span></span><br><span class="line">    splay.<span class="built_in">update</span>(ru);</span><br><span class="line">    splay.<span class="built_in">splay</span>(ru, splay.t[lu].ch[<span class="number">1</span>]);</span><br><span class="line">    splay.<span class="built_in">flip</span>(splay.t[ru].ch[<span class="number">0</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> ret = splay.<span class="built_in">dump</span>();</span><br><span class="line">  <span class="built_in">rep</span>(i, <span class="number">1</span>, <span class="built_in">size</span>(ret) - <span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, ret[i]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">luogu3391</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/algo/splay/" title="splay tree 伸展树">https://yexiaorain.github.io/Blog/algo/splay/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/splay/" rel="tag"><i class="fa fa-tag"></i> splay</a>
+              <a href="/Blog/tags/%E4%BC%B8%E5%B1%95%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 伸展树</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/cf/2097/" rel="prev" title="Codeforces Round 1021">
+                  <i class="fa fa-chevron-left"></i> Codeforces Round 1021
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/algo/lct/" rel="next" title="lct link-cut-tree 动态树 实链剖分">
+                  lct link-cut-tree 动态树 实链剖分 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">597k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">33:11</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/algo/splay/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
