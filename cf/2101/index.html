@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yexiaorain.github.io","root":"/Blog/","images":"/Blog/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/Blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/Blog/js/config.js"></script>
+
+    <meta name="description" content="D(LIS,DP)E(DP,点分治)F()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces Round 1024">
+<meta property="og:url" content="https://yexiaorain.github.io/Blog/cf/2101/index.html">
+<meta property="og:site_name" content="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+<meta property="og:description" content="D(LIS,DP)E(DP,点分治)F()">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-05-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-04T15:55:41.000Z">
+<meta property="article:author" content="Xiao Ye">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="栈">
+<meta property="article:tag" content="点分治">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+
+
+<link rel="canonical" href="https://yexiaorain.github.io/Blog/cf/2101/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://yexiaorain.github.io/Blog/cf/2101/","path":"cf/2101/","title":"Codeforces Round 1024"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Codeforces Round 1024 | YeXiaoRain Blog(hexo的搜索高亮会破坏latex)</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/Blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/Blog/atom.xml" title="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">YeXiaoRain Blog(hexo的搜索高亮会破坏latex)</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-archives"><a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">340</span></a></li><li class="menu-item menu-item-yearmonth"><a href="/Blog/yearmonth/" rel="section"><i class="fa fa-calendar-days fa-fw"></i>年月</a></li><li class="menu-item menu-item-categories"><a href="/Blog/categories/" rel="section"><i class="fa fa-shapes fa-fw"></i>分類<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">323</span></a></li><li class="menu-item menu-item-rss"><a href="/Blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#D-Mani-and-Segments"><span class="nav-text">D Mani and Segments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-text">题解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#E-Kia-Bakes-a-Cake"><span class="nav-text">E Kia Bakes a Cake</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF-1"><span class="nav-text">我的思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao Ye"
+      src="https://avatars.githubusercontent.com/u/7298239?v=4">
+  <p class="site-author-name" itemprop="name">Xiao Ye</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/Blog/archives/">
+          <span class="site-state-item-count">340</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/Blog/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/Blog/tags/">
+        <span class="site-state-item-count">323</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yexiaorain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yexiaorain" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yexiaorain@gmail.com" title="E-Mail → mailto:yexiaorain@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://atcoder.jp/users/cromarmot" title="https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;cromarmot" rel="noopener" target="_blank">AtCoder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://codeforces.com/profile/YeXiaoRain" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;YeXiaoRain" rel="noopener" target="_blank">Codeforces</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://yexiaorain.github.io/Blog/cf/2101/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/7298239?v=4">
+      <meta itemprop="name" content="Xiao Ye">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Codeforces Round 1024 | YeXiaoRain Blog(hexo的搜索高亮会破坏latex)">
+      <meta itemprop="description" content="D(LIS,DP)E(DP,点分治)F()">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Codeforces Round 1024
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-05-11 00:00:00" itemprop="dateCreated datePublished" datetime="2025-05-11T00:00:00+08:00">2025-05-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2025-07-04 23:55:41" itemprop="dateModified" datetime="2025-07-04T23:55:41+08:00">2025-07-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/Blog/categories/Codeforces/Div1/" itemprop="url" rel="index"><span itemprop="name">Div1</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/Blog/cf/2101/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cf/2101/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>9 分鐘</span>
+    </span>
+</div>
+
+            <div class="post-description">D(LIS,DP)E(DP,点分治)F()</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/2101">https://codeforces.com/contest/2101</a></p>
+<h2 id="D-Mani-and-Segments"><a href="#D-Mani-and-Segments" class="headerlink" title="D Mani and Segments"></a>D Mani and Segments</h2><p>给定1~n排列，问有多少子串满足</p>
+<p>LIS+LDS&#x3D;len+1</p>
+<p>3s</p>
+<h3 id="我的思路"><a href="#我的思路" class="headerlink" title="我的思路"></a>我的思路</h3><p>排列保证了两两不同</p>
+<p> lis:  dp[i] &#x3D;  idx_lower_bound(a[i])-1</p>
+<p> 显然 lis 和 lds如果两两不同，那么它们的共有元素最多有一个</p>
+<p> 有一个共有元素时: lis-1 + lds-1 + 1 &lt;&#x3D; size(所有元素) &#x3D; len</p>
+<pre><code>             (len+1) - 1 &lt;= size(所有元素) = len
+</code></pre>
+<p> 没有有元素时:     lis + lds &lt;&#x3D; size(所有元素) &#x3D; len</p>
+<pre><code>             (len+1) &lt;= size(所有元素) = len
+</code></pre>
+<p> 说明了 恰好有一个共有元素，且两个序列占满整个数组</p>
+<p> 钦定这个共有元素</p>
+<p> 它向左延伸，要么链接更小要么链接更大, 必须要满足匹配，向右同理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fix i</span><br><span class="line">   min = a[i]</span><br><span class="line">   max = a[i]</span><br><span class="line">   for j = i+1 ... n:</span><br><span class="line">       if a[j] &gt; max:</span><br><span class="line">           max=a[j]</span><br><span class="line">       elif a[j] &lt; min:</span><br><span class="line">           min = a[j]</span><br><span class="line">       else:</span><br><span class="line">           break</span><br></pre></td></tr></table></figure>
+
+<p> 当出现纯单调序列时，这个共有元素不是唯一的</p>
+<pre><code>   1  3 4 5 6 2, 这样共有也不是唯一的， 上面方案没有完成去重的问题
+
+   1 4 3 2 5, 这样 共有的一定不是最大或者最小，
+</code></pre>
+<p> 校验方案:</p>
+<pre><code>   dp[i][0] = i作为下降时, 上升侧的最小值
+
+   dp[i][1] = i作为上升时, 下降侧的最大值
+
+   dp[i][0] = min(dp[i-1][0] if a[i] &lt; a[i-1], a[i-1] if a[i] &lt; dp[i][1],  INF)
+
+   dp[i][1] = max(dp[i-1][1] if a[i] &gt; a[i-1], a[i-1] if a[i] &gt; dp[i][0], -INF)
+</code></pre>
+<p> 这个dp会受到 前面内容的影响, 感觉局部性还不如钦定共有</p>
+<p> 反面: 什么是不合法的</p>
+<pre><code> a&lt;b,c&lt;d
+   d   b
+ c   a
+</code></pre>
+<p> a,b无法同时连bc，所以一个连b一个连c，显然不行, 其中a,d相邻</p>
+<p> 好像也不好搞</p>
+<p> 另一个角度 如果 a[l..r] 合法</p>
+<p> 那么 a[l..mid], a[mid…r] 也合法，因为从共有元素角度看，如果包含，那么就有包含的方案，如果不包含发生了分裂，也就是 切割的mid处 可以作为共有点</p>
+<p> 所以 合法的l..r 的任何切割 总有一半是切割点是共有点</p>
+<p> 还是单独来，就钦定共有点，但是保证共有点是可选区间最左点</p>
+<span id="more"></span>
+
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>首先 交差于一点是对的</p>
+<p>后续变成二维空间长方形覆盖面积统计就好了</p>
+<p>以i为钦定交差点，的左合法可选2，右合法可选4</p>
+<p>那么也就是二维平面上 $x \in [i-1,i],y\in [i,i+4]$ 的矩形</p>
+<p>那么就是n 个顶点在<code>[i,i]</code> 向左上方延伸的矩形的覆盖面积和</p>
+<p>而且有特点, <code>i &lt; j</code>, 那么x的最小值 也有同样的偏序关系, y的最大值同样有偏序关系</p>
+<p>那么 每次的增量 &#x3D; <code>i_x_len * i_y_len</code>(新矩形面积)-(last_max_x-i_x_min)*(last_max_y-i_y_min) (和上一个重叠的面积)， 因为上面的特性保证了 若和前面任何一个有重叠都在和上一个矩形的重叠范围内，这里稍微要注意的就是取个max(value,0), 简化写法，（虽然不会出现相邻单点，因为任意三个数必定可行</p>
+<p>这个是很关键的，因为如果下一个作为交叉点，左侧合法要尽量的长，那么当前位置 属于上升还是下降是唯一确定的</p>
+<p>这里唯一确定不只对下一位（下一位比较显然）</p>
+<p>对于未来也是这样, 如果 a[i] &gt; a[i+1], 那么a[i]放在DEC里，如果未来j 与i有关，而i在INC里，那么i+1没有合法位置，j就不可能和i有关，若有关都是在DEC里</p>
+<p>另一方面 上面的while保证了不论放哪里，stack里都是两个单调的</p>
+<p>而p控制了长度, 对于i合法的D&#x2F;I, 倒回去一定能产生</p>
+<p>而引起p的变化, 只需要stack顶部即可，stack的残余部分没有任何用啊</p>
+<h2 id="E-Kia-Bakes-a-Cake"><a href="#E-Kia-Bakes-a-Cake" class="headerlink" title="E Kia Bakes a Cake"></a>E Kia Bakes a Cake</h2><p>6s</p>
+<p>512mb</p>
+<p>n 2e5</p>
+<p>|s| &#x3D; n, 01串s</p>
+<p>树T 有n个点</p>
+<p>k &#x3D; s中1的个数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for i in 1..n:</span><br><span class="line">    if s[i] == 1:</span><br><span class="line">         创建点 i</span><br><span class="line">    weight[i][j] = dis(i,j) in T, 其中 s[i]==1,s[j]==1</span><br></pre></td></tr></table></figure>
+
+<p>这样得到 k个点的完全图，无向，但边有权重</p>
+<p>简单路径 如果经过的边 每条权重 &gt;&#x3D; 上一条的2倍, 那么是好的简单路径（那么总长不会太长 log级别）</p>
+<p>对于每个i(s[i]&#x3D;&#x3D;1)</p>
+<p>计算从i开始的 最大简单路径长度</p>
+<h3 id="我的思路-1"><a href="#我的思路-1" class="headerlink" title="我的思路"></a>我的思路</h3><p>换句话说，不用新建立图</p>
+<p>就是在原来的树T上移动，有点点标为1，有的点是0，每次从1到1，然后长度要大于上次移动的2倍距离，问每个1点出发的最大次数</p>
+<p>然后 simple path的要求就是每个点最多访问一次</p>
+<p>首先说，如果贪心能到的最近的点，怎么保证后续的点能2倍</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A-1-B-3-C-4-D</span><br><span class="line">从C出发，先D再A可以两次，先B再D可以两次（这样也就是B,D在不同分支））</span><br><span class="line">A-1-B-2-C-4-D-8-E-16-F-32-G</span><br><span class="line">从B开始向右5次到G，向左ACEG 更短</span><br></pre></td></tr></table></figure>
+
+<p>对于simple path限制的观察是，不会出现，因为最后一次如果是从 a-b,那么上一次&lt;&#x3D;1&#x2F;2距离，再上一次&lt;&#x3D;1&#x2F;4 距离 所以前面距离和 不会等于当前距离，，所以如果重复到前面的点，那么一定不满足2倍距离，</p>
+<p>那么这样的话，就不用记录走过哪些点</p>
+<p>一个想法是所有点“一起”走，但问题是没有贪心 怎么知道哪些点</p>
+<p><code>ans[i] = max(dp[j][dis(i,j)])+1</code></p>
+<p><code>dp[i][d] = max(dp[j][dis(i,j)]+1, dis(i,j) &gt;= 2*d)</code></p>
+<p>但是这个n感觉 做不了n^2</p>
+<h3 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h3><p>hint1 也是我上面观察到的 路径中不会出现重复的点</p>
+<p>hint2 路径长度是log级别</p>
+<p>hint3 如何使用 动态规划</p>
+<p>hint4 如何优化动态规划？我没想出</p>
+<p>首先就是 长度不会超过n-1,所以log(n)级别的答案</p>
+<p>然后显然不会重复点</p>
+<p><code>dp[i][j]</code> 从j开始走i步 的 最大weight, 倒着更新</p>
+<p>为了优化这一点，我们使用了中心点分解的后缀技巧，每次都保留最多两个后缀</p>
+<hr>
+<p>也就是 <code>dp[i][j]</code> 的结果，可以去更新 j为中心, 半径为 <code>dp[i][j]/2</code> 的点v的 <code>dp[i+1][v]</code> 的值</p>
+<p>也就是 for i(step)</p>
+<p>然后又批量的 每个点的半径更新，这个就是点分治来优化效率</p>
+<p>对于点分治的当前的根root, 和一个点v 以及半径r，首先处理root和v的直接更新，常数代价，然后处理v的r覆盖会超过（越过root）的更新</p>
+<p>这部分 记录 要更新的深度和之前的深度，例如 v—root—w, 那么 <code>(h[v]+h[w])*2 &lt; dp[i][v]</code>, 所以先lazy的记录 h[w] 的范围对应的 <code>&#123;h[v]&#125;</code>, 再批量更新即可</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/2101/submission/327408612">https://codeforces.com/contest/2101/submission/327408612</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> i64;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> i32;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rep(i,a,n) for (i32 i=a;i&lt;(i32)n;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> per(i,a,n) for (i32 i=n;i--&gt;(i32)a;)</span></span><br><span class="line"><span class="function">i64 <span class="title">read</span><span class="params">()</span> </span>&#123; i64 r;<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;r);<span class="keyword">return</span> r; &#125;</span><br><span class="line"><span class="comment">// ----------------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">70000</span> + <span class="number">10</span>, lg = <span class="number">17</span>; <span class="comment">// log2(70000)</span></span><br><span class="line"><span class="type">char</span> s[N]; <span class="comment">// 读入, 节点1-index</span></span><br><span class="line"><span class="type">int</span> a[N];</span><br><span class="line"><span class="type">int</span> dp[lg + <span class="number">1</span>][N]; <span class="comment">// dp[step][vertex i] 从i向后走step步, 可以接受的上一次最大距离</span></span><br><span class="line"><span class="type">int</span> sz[N];<span class="comment">// subtree size</span></span><br><span class="line"><span class="type">int</span> cut[N]; <span class="comment">// 点分治时的标记</span></span><br><span class="line"><span class="type">int</span> h[N]; <span class="comment">// height</span></span><br><span class="line"><span class="type">int</span> branch[N]; <span class="comment">// 是根的哪个分支</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[N]; <span class="comment">// 原树的临接表</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; centG[N]; <span class="comment">// 点分治的临接表 centG[i] = list[i的临接子块的 重心], 都是父向子的边</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setMax</span><span class="params">(T&amp; a, T b)</span> </span>&#123; a = <span class="built_in">max</span>(a, b); &#125;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> foru for(int u : G[v]) <span class="keyword">if</span> (u != p and cut[u] != 1)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs0</span><span class="params">(<span class="type">int</span> v, <span class="type">int</span> p)</span> </span>&#123; <span class="comment">// 计算子树大小和高度, h[root]=0</span></span><br><span class="line">    sz[v] = <span class="number">1</span>;</span><br><span class="line">    h[v] = (p == <span class="number">0</span> ? <span class="number">0</span> : h[p] + <span class="number">1</span>);</span><br><span class="line">    foru&#123;</span><br><span class="line">        <span class="built_in">dfs0</span>(u, v);</span><br><span class="line">        sz[v] += sz[u];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">findCent</span><span class="params">(<span class="type">int</span> v, <span class="type">int</span> p, <span class="type">int</span> halfsz)</span> </span>&#123; <span class="comment">// 保证v的子树 &gt; 一半节点</span></span><br><span class="line">    <span class="function">foru <span class="title">if</span> <span class="params">(sz[u] &gt; halfsz)</span> <span class="keyword">return</span> <span class="title">findCent</span><span class="params">(u, v, halfsz)</span></span>; <span class="comment">// 如果u存在唯一</span></span><br><span class="line">    <span class="keyword">return</span> v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">createCentTree</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123; <span class="comment">// 传入任意点 处理该点连通块的分治，返回连通块的重心</span></span><br><span class="line">    <span class="built_in">dfs0</span>(v, <span class="number">0</span>); <span class="comment">// 以v为根</span></span><br><span class="line">    <span class="type">int</span> cent = <span class="built_in">findCent</span>(v, <span class="number">0</span>, sz[v] / <span class="number">2</span>); <span class="comment">// 点分治(按j)</span></span><br><span class="line">    cut[cent] = <span class="number">1</span>; <span class="comment">// 标记切割</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> u : G[cent]) <span class="keyword">if</span> (cut[u] != <span class="number">1</span>) centG[cent].<span class="built_in">push_back</span>(<span class="built_in">createCentTree</span>(u));</span><br><span class="line">    <span class="keyword">return</span> cent;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">using</span> hb = pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;;<span class="comment">// height, branch</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span> &#123;</span><br><span class="line">    array&lt;hb, 3&gt; mx; <span class="comment">// [0]用于插入,[1],[2]用于保存最大的 // x 新增, mx1,mx2 之前的, 因为对同一个深度染色，只有不同分支最大两个是有效的</span></span><br><span class="line">    <span class="built_in">node</span>() &#123; <span class="built_in">rep</span>(i, <span class="number">0</span>, <span class="number">3</span>) mx[i] = &#123; <span class="number">-1e9</span>,-i - <span class="number">1</span> &#125;; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function">vector&lt;node&gt; <span class="title">suff</span><span class="params">(<span class="number">2</span> * N + <span class="number">1</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">(<span class="type">int</span> v, <span class="type">int</span> idx)</span> </span>&#123;<span class="comment">// 当前根为v, 执行所有点与v之间的互相dp更新，以及所有跨过v的dp更新(跨过的更新用suff优化)</span></span><br><span class="line">    <span class="built_in">dfs0</span>(v, <span class="number">0</span>);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">0</span>, <span class="number">2</span> * sz[v] + <span class="number">1</span>) suff[i] = <span class="built_in">node</span>();</span><br><span class="line">    <span class="keyword">auto</span> markhb = [&amp;](node&amp; y, hb x) &#123;</span><br><span class="line">        y.mx[<span class="number">0</span>] = x; <span class="comment">// 插入x</span></span><br><span class="line">        <span class="built_in">sort</span>(<span class="built_in">begin</span>(y.mx), <span class="built_in">end</span>(y.mx));</span><br><span class="line">        <span class="keyword">if</span> (y.mx[<span class="number">1</span>].second == y.mx[<span class="number">2</span>].second) <span class="built_in">swap</span>(y.mx[<span class="number">0</span>], y.mx[<span class="number">1</span>]); <span class="comment">// 同分支保留大的, 或者说保持 mx[1],mx[2]是不同的分支</span></span><br><span class="line">        &#125;;</span><br><span class="line">    function&lt;<span class="type">void</span>(<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>)&gt; dfs1 = [&amp;](<span class="type">int</span> v, <span class="type">int</span> p, <span class="type">int</span> root) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="number">2</span> * h[v] &lt;= dp[idx - <span class="number">1</span>][root]) <span class="built_in">setMax</span>(dp[idx][v], h[v]); <span class="comment">// v -(h[v])-&gt; root -(dp0[root])-&gt;...</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="number">2</span> * h[v] &lt;= dp[idx - <span class="number">1</span>][v]) <span class="built_in">setMax</span>(dp[idx][root], h[v]); <span class="comment">// root -(h[v])-&gt; v -(dp0[v])-&gt;...</span></span><br><span class="line">        branch[v] = p == <span class="number">0</span> ? <span class="number">0</span> : (p == root ? v : branch[p]);</span><br><span class="line">        <span class="keyword">if</span> (branch[v] != <span class="number">0</span> &amp;&amp; dp[idx - <span class="number">1</span>][v] &gt;= h[v] * <span class="number">2</span>) &#123; <span class="comment">// v为中心 dp0[v]/2为半径更新dp，会经过 根root</span></span><br><span class="line">            <span class="type">int</span> wh = <span class="built_in">min</span>(dp[idx - <span class="number">1</span>][v] - <span class="number">2</span> * h[v], <span class="number">2</span> * sz[root]); <span class="comment">// 染色 的剩余深度</span></span><br><span class="line">            <span class="built_in">markhb</span>(suff[wh], &#123; h[v], branch[v] &#125;); <span class="comment">// 先标记在wh，再通过下面的per, 赋值到所有&lt;= wh</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function">foru <span class="title">dfs1</span><span class="params">(u, v, root)</span></span>;</span><br><span class="line">        &#125;;</span><br><span class="line">    function&lt;<span class="type">void</span>(<span class="type">int</span>, <span class="type">int</span>)&gt; dfs2 = [&amp;](<span class="type">int</span> v, <span class="type">int</span> p) &#123;</span><br><span class="line">        <span class="keyword">if</span> (p != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">auto</span> [h1, b1] = suff[<span class="number">2</span> * h[v]].mx[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">auto</span> [h2, b2] = suff[<span class="number">2</span> * h[v]].mx[<span class="number">2</span>];</span><br><span class="line">            <span class="built_in">setMax</span>(dp[idx][v], (b2 == branch[v] ? h1 : h2) + h[v]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function">foru <span class="title">dfs2</span><span class="params">(u, v)</span></span>; <span class="comment">// 递归调用</span></span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">dfs1</span>(v, <span class="number">0</span>, v); <span class="comment">// 所有点与v的更新，要跨过v的点用markhb标记 深度 和 分支</span></span><br><span class="line">    <span class="built_in">per</span>(i, <span class="number">1</span>, <span class="number">2</span> * sz[v]) <span class="keyword">for</span> (<span class="type">int</span> t : &#123; <span class="number">1</span>, <span class="number">2</span> &#125;) <span class="built_in">markhb</span>(suff[i], suff[i + <span class="number">1</span>].mx[t]); <span class="comment">// 简单的后缀转换</span></span><br><span class="line">    <span class="built_in">dfs2</span>(v, <span class="number">0</span>); <span class="comment">// 执行染色</span></span><br><span class="line">    cut[v] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> u : centG[v]) <span class="built_in">solve</span>(u, idx);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">w</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = <span class="built_in">read</span>();</span><br><span class="line">    <span class="comment">// clear</span></span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">0</span>, lg + <span class="number">1</span>) <span class="built_in">rep</span>(j, <span class="number">1</span>, n + <span class="number">1</span>) dp[i][j] = <span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n + <span class="number">1</span>)  G[i] = &#123;&#125;;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n + <span class="number">1</span>)  centG[i] = &#123;&#125;;</span><br><span class="line">    <span class="comment">// read</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, s + <span class="number">1</span>); <span class="comment">// 1-index</span></span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n + <span class="number">1</span>)  a[i] = (s[i] == <span class="string">&#x27;1&#x27;</span>);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) &#123;</span><br><span class="line">        <span class="type">int</span> u = <span class="built_in">read</span>();</span><br><span class="line">        <span class="type">int</span> v = <span class="built_in">read</span>();</span><br><span class="line">        G[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">        G[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 点分治</span></span><br><span class="line">    <span class="built_in">fill</span>(cut, cut + n + <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="type">int</span> root = <span class="built_in">createCentTree</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n + <span class="number">1</span>) <span class="keyword">if</span> (a[i] == <span class="number">1</span>) dp[<span class="number">0</span>][i] = <span class="number">2</span> * n;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, lg + <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">fill</span>(cut + <span class="number">1</span>, cut + n + <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">solve</span>(root, i);</span><br><span class="line">        <span class="built_in">rep</span>(j, <span class="number">1</span>, n + <span class="number">1</span>) <span class="keyword">if</span> (a[j] != <span class="number">1</span>) dp[i][j] = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n + <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i] == <span class="number">0</span>) &#123; <span class="built_in">printf</span>(<span class="string">&quot;-1 &quot;</span>); <span class="keyword">continue</span>; &#125;</span><br><span class="line">        <span class="built_in">per</span>(j, <span class="number">0</span>, lg + <span class="number">1</span>)  <span class="keyword">if</span> (dp[j][i] &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, j + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> t = <span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">while</span> (t--) <span class="built_in">w</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>作者： </strong>Xiao Ye
+  </li>
+  <li class="post-copyright-link">
+      <strong>文章連結：</strong>
+      <a href="https://yexiaorain.github.io/Blog/cf/2101/" title="Codeforces Round 1024">https://yexiaorain.github.io/Blog/cf/2101/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版權聲明： </strong>本網誌所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 許可協議。轉載請註明出處！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/Blog/tags/DP/" rel="tag"><i class="fa fa-tag"></i> DP</a>
+              <a href="/Blog/tags/%E6%A0%88/" rel="tag"><i class="fa fa-tag"></i> 栈</a>
+              <a href="/Blog/tags/%E7%82%B9%E5%88%86%E6%B2%BB/" rel="tag"><i class="fa fa-tag"></i> 点分治</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Blog/cf/2097/" rel="prev" title="Codeforces Round 1021">
+                  <i class="fa fa-chevron-left"></i> Codeforces Round 1021
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Blog/algo/splay/" rel="next" title="splay tree 伸展树">
+                  splay tree 伸展树 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao Ye</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">600k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">33:20</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/comments.js"></script><script src="/Blog/js/utils.js"></script><script src="/Blog/js/schemes/muse.js"></script><script src="/Blog/js/next-boot.js"></script><script src="/Blog/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/Blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/Blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://yexiaorain.github.io/Blog/cf/2101/"}</script>
+  <script src="/Blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"yexiaorain","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/Blog/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>
